@@ -10,7 +10,7 @@ use regex::Regex;
 use std::collections::HashMap;
 use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
-use value::{Map, Value, parse_yaml, parse_yaml_file, ruby_regex};
+use value::{Map, Value, parse_yaml, parse_yaml_bytes, parse_yaml_file, ruby_regex};
 
 /// RuboCop's own default.yml, vendored from the release rbcop targets (MIT, see config/LICENSE).
 pub const DEFAULT_YML: &str = include_str!("../../config/default.yml");
@@ -404,9 +404,7 @@ impl Resolved {
 
     fn merged_for_cop(&self, name: &str) -> Map {
         let mut params = name.rsplit_once('/').and_then(|(d, _)| self.hash.map(d)).cloned().unwrap_or_default();
-        for (k, v) in self.hash.map(name).cloned().unwrap_or_default().0 {
-            params.insert(k, v);
-        }
+        params.insert_all(self.hash.map(name).cloned().unwrap_or_default().0);
         params
     }
 
@@ -558,9 +556,7 @@ impl Resolved {
             _ => None,
         };
         let mut params = dept_map;
-        for (k, v) in cop.0 {
-            params.insert(k, v);
-        }
+        params.insert_all(cop.0);
         if let Some(u) = union {
             params.insert("Exclude", u);
         }
@@ -879,15 +875,15 @@ impl Store {
             return Ok(m);
         }
         let start = self.emitted.len();
-        let text = std::fs::read_to_string(path).map_err(|e| match e.kind() {
+        let text = std::fs::read(path).map_err(|e| match e.kind() {
             // ConfigLoader.read_file's ConfigNotFoundError.
             std::io::ErrorKind::NotFound => format!("Configuration file not found: {}", path.display()),
             _ => format!("{}: {e}", path.display()),
         })?;
-        if text.contains("<%") {
+        if text.windows(2).any(|w| w == b"<%") {
             self.warnings.push(format!("{}: ERB in config is not supported; parsed as plain YAML", path.display()));
         }
-        let mut hash = match parse_yaml_file(&text, &path.display().to_string())? {
+        let mut hash = match parse_yaml_bytes(&text, &path.display().to_string())? {
             Value::Map(m) => Arc::unwrap_or_clone(m),
             // `yaml_tree_to_hash(yaml_tree) || {}`
             Value::Null | Value::Bool(false) => Map::default(),
@@ -2060,16 +2056,20 @@ fn should_union(derived: &Map, base: &Map, root_mode: &Map, key: &str) -> bool {
 
 /// ConfigLoaderResolver#merge (§3).
 fn merge(base: &Map, derived: &Map, root_mode: &Map, unset_nil: bool) -> Map {
-    let mut result = base.clone();
+    // `base.merge(derived)` entry by entry; a removed key is None until the end. Keys are looked
+    // up through an index, so a mapping with many keys merges in linear time.
+    let mut result: Vec<(String, Option<Value>)> = base.0.iter().map(|(k, v)| (k.clone(), Some(v.clone()))).collect();
+    let index: HashMap<&str, usize> = base.0.iter().enumerate().map(|(i, (k, _))| (k.as_str(), i)).collect();
     for (key, dv) in &derived.0 {
-        let Some(bv) = base.get(key) else {
-            result.insert(key.clone(), dv.clone());
+        let Some(&i) = index.get(key.as_str()) else {
+            result.push((key.clone(), Some(dv.clone())));
             continue;
         };
-        if unset_nil && *dv == Value::Null {
-            result.remove(key);
+        let bv = &base.0[i].1;
+        result[i].1 = if unset_nil && *dv == Value::Null {
+            None
         } else if let (Value::Map(b), Value::Map(d)) = (bv, dv) {
-            result.insert(key.clone(), Value::Map(merge(b, d, root_mode, unset_nil).into()));
+            Some(Value::Map(merge(b, d, root_mode, unset_nil).into()))
         } else if should_union(derived, base, root_mode, key) {
             let mut union = seq(Some(bv.clone()));
             for v in seq(Some(dv.clone())) {
@@ -2077,27 +2077,69 @@ fn merge(base: &Map, derived: &Map, root_mode: &Map, unset_nil: bool) -> Map {
                     union.push(v);
                 }
             }
-            result.insert(key.clone(), Value::Seq(union.into()));
+            Some(Value::Seq(union.into()))
         } else {
-            result.insert(key.clone(), dv.clone());
-        }
+            Some(dv.clone())
+        };
     }
-    result
+    Map(result.into_iter().filter_map(|(k, v)| v.map(|v| (k, v))).collect())
 }
 
-/// Config#make_excludes_absolute: every `Exclude` string becomes absolute against `base`.
+/// Config#make_excludes_absolute: every `Exclude` string becomes absolute against `base`. `map!`
+/// changes the Array itself, so a value aliased to it (`Foo: *excludes`) changes too.
 fn make_excludes_absolute(hash: &mut Map, base: &Path) {
+    let mut memo = HashMap::new();
+    for (_, v) in &hash.0 {
+        let Some(Value::Seq(items)) = v.as_map().and_then(|m| m.get("Exclude")) else { continue };
+        let absolute = items.iter().map(|item| match item {
+            Value::Str(s) if !s.starts_with('/') => Value::Str(normalize(&base.join(s)).display().to_string()),
+            item => item.clone(),
+        });
+        memo.insert(Arc::as_ptr(items) as usize, Some(Value::Seq(Arc::new(absolute.collect()))));
+    }
+    if memo.is_empty() {
+        return;
+    }
     for (_, v) in hash.0.iter_mut() {
-        let Value::Map(m) = v else { continue };
-        let Some(Value::Seq(items)) = Arc::make_mut(m).get_mut("Exclude") else { continue };
-        for item in Arc::make_mut(items).iter_mut() {
-            if let Value::Str(s) = item
-                && !s.starts_with('/')
-            {
-                *s = normalize(&base.join(&*s)).display().to_string();
-            }
+        if let Some(new) = replace_shared(v, &mut memo) {
+            *v = new;
         }
     }
+}
+
+/// `v` with the collections in `memo` (by address) replaced, or None if it holds none of them.
+/// Each collection is rebuilt once, so values shared before stay shared (and an alias bomb is
+/// walked once per collection).
+fn replace_shared(v: &Value, memo: &mut HashMap<usize, Option<Value>>) -> Option<Value> {
+    let addr = match v {
+        Value::Seq(a) => Arc::as_ptr(a) as usize,
+        Value::Map(m) => Arc::as_ptr(m) as usize,
+        _ => return None,
+    };
+    if let Some(done) = memo.get(&addr) {
+        return done.clone();
+    }
+    memo.insert(addr, None);
+    let new = match v {
+        Value::Seq(items) => {
+            let changed: Vec<_> = items.iter().map(|i| replace_shared(i, memo)).collect();
+            changed.iter().any(Option::is_some).then(|| {
+                let items = items.iter().zip(changed).map(|(old, new)| new.unwrap_or_else(|| old.clone()));
+                Value::Seq(Arc::new(items.collect()))
+            })
+        }
+        Value::Map(m) => {
+            let changed: Vec<_> = m.0.iter().map(|(_, v)| replace_shared(v, memo)).collect();
+            changed.iter().any(Option::is_some).then(|| {
+                let pairs =
+                    m.0.iter().zip(changed).map(|((k, old), new)| (k.clone(), new.unwrap_or_else(|| old.clone())));
+                Value::Map(Arc::new(Map(pairs.collect())))
+            })
+        }
+        _ => None,
+    };
+    memo.insert(addr, new.clone());
+    new
 }
 
 /// Config#base_dir_for_path_parameters (§5).

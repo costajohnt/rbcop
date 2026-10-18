@@ -6,43 +6,82 @@ use crate::config::value::{Map, Value, tokenizes_to_string};
 use crate::yaml::ScalarStyle;
 use crate::yaml::emitter::{Event, emit};
 use regex::Regex;
-use std::sync::LazyLock;
+use std::collections::HashMap;
+use std::sync::{Arc, LazyLock};
 
 /// The mapping as Psych dumps it, without the leading `---` line.
-// ponytail: a value shared through a YAML alias is written out again where Psych writes `&1`/`*1`.
 pub fn dump(map: &Map) -> String {
-    let mut events = vec![Event::StreamStart, Event::DocumentStart { implicit: false }];
-    visit_map(&mut events, map);
-    events.extend([Event::DocumentEnd { implicit: true }, Event::StreamEnd]);
-    let text = emit(&events);
+    let mut d =
+        Dumper { events: vec![Event::StreamStart, Event::DocumentStart { implicit: false }], ..Default::default() };
+    visit_map(&mut d, map);
+    d.events.extend([Event::DocumentEnd { implicit: true }, Event::StreamEnd]);
+    let text = emit(&d.events);
     text.split_once('\n').map_or(String::new(), |(_, rest)| rest.to_string())
 }
 
-fn visit_map(events: &mut Vec<Event>, map: &Map) {
-    events.push(Event::MappingStart { tag: None, implicit: true, flow: false });
+/// The events so far, with YAMLTree's Registrar: an Array or Hash met again (the same object, here
+/// the same `Arc`) is written as an alias, and its first occurrence gets the anchor, numbered in
+/// the order the aliases are met.
+#[derive(Default)]
+struct Dumper {
+    events: Vec<Event>,
+    /// A visited collection's address: the index of its start event and its anchor number.
+    seen: HashMap<usize, (usize, Option<usize>)>,
+    anchors: usize,
+}
+
+impl Dumper {
+    /// Registers the collection at `addr`, or, met before, writes its alias and returns true.
+    fn alias(&mut self, addr: usize) -> bool {
+        let Some((start, id)) = self.seen.get_mut(&addr) else {
+            self.seen.insert(addr, (self.events.len(), None));
+            return false;
+        };
+        let id = *id.get_or_insert_with(|| {
+            self.anchors += 1;
+            self.anchors
+        });
+        if let Event::SequenceStart { anchor, .. } | Event::MappingStart { anchor, .. } = &mut self.events[*start] {
+            *anchor = Some(id.to_string());
+        }
+        self.events.push(Event::Alias { anchor: id.to_string() });
+        true
+    }
+}
+
+fn visit_map(d: &mut Dumper, map: &Map) {
+    d.events.push(Event::MappingStart { anchor: None, tag: None, implicit: true, flow: false });
     for (k, v) in &map.0 {
         // Keys do not keep the Symbol/String distinction; a `:name` key is taken as a Symbol.
         let key =
             if k.chars().count() > 1 && k.starts_with(':') { Value::Sym(k.clone()) } else { Value::Str(k.clone()) };
-        visit(events, &key);
-        visit(events, v);
+        visit(d, &key);
+        visit(d, v);
     }
-    events.push(Event::MappingEnd);
+    d.events.push(Event::MappingEnd);
 }
 
 fn scalar(tag: Option<&str>, value: String, plain: bool, quoted: bool, style: ScalarStyle) -> Event {
     Event::Scalar { tag: tag.map(String::from), value, plain_implicit: plain, quoted_implicit: quoted, style }
 }
 
-fn visit(events: &mut Vec<Event>, v: &Value) {
+fn visit(d: &mut Dumper, v: &Value) {
     let event = match v {
-        Value::Map(m) => return visit_map(events, m),
-        Value::Seq(items) => {
-            events.push(Event::SequenceStart { tag: None, implicit: true, flow: false });
-            for item in items.iter() {
-                visit(events, item);
+        Value::Map(m) => {
+            if !d.alias(Arc::as_ptr(m) as usize) {
+                visit_map(d, m);
             }
-            events.push(Event::SequenceEnd);
+            return;
+        }
+        Value::Seq(items) => {
+            if d.alias(Arc::as_ptr(items) as usize) {
+                return;
+            }
+            d.events.push(Event::SequenceStart { anchor: None, tag: None, implicit: true, flow: false });
+            for item in items.iter() {
+                visit(d, item);
+            }
+            d.events.push(Event::SequenceEnd);
             return;
         }
         Value::Null => scalar(Some("tag:yaml.org,2002:null"), String::new(), true, false, ScalarStyle::Any),
@@ -64,7 +103,7 @@ fn visit(events: &mut Vec<Event>, v: &Value) {
         Value::Sym(s) => scalar(None, s.clone(), true, false, ScalarStyle::Any),
         Value::Str(s) => visit_string(s),
     };
-    events.push(event);
+    d.events.push(event);
 }
 
 /// Psych::Visitors::YAMLTree#visit_String: a literal block for a line break not ending the
@@ -166,5 +205,20 @@ mod tests {
         };
         assert_eq!(dump(&m), "a: \":x\"\nb: :x\nc:\n- \":y\"\n- :y\n");
         assert_eq!(m.str("b"), Some(":x"));
+    }
+    // Psych `YAML.load(<this>, aliases: true).to_yaml` (#592): shared values get anchors numbered
+    // as their aliases are met, and an alias bomb dumps in a few lines.
+    #[test]
+    fn shared_values_as_anchors_and_aliases() {
+        let src = "a: &p [a, b]\nb: *p\nc: &m {x: &x [1, 2], y: *x}\nd: *m\ne: &e []\nf: *e\n";
+        let Value::Map(m) = crate::config::value::parse_yaml(src).unwrap() else { panic!() };
+        let expected = "a: &1\n- a\n- b\nb: *1\nc: &3\n  x: &2\n  - 1\n  - 2\n  \"y\": *2\nd: *3\ne: &4 []\nf: *4\n";
+        assert_eq!(dump(&m), expected);
+        let mut bomb = String::from("m0: &m0 {a: 1}\n");
+        for i in 1..=40 {
+            bomb.push_str(&format!("m{i}: &m{i} {{l: *m{}, r: *m{}}}\n", i - 1, i - 1));
+        }
+        let Value::Map(m) = crate::config::value::parse_yaml(&bomb).unwrap() else { panic!() };
+        assert!(dump(&m).ends_with("m40:\n  l: *40\n  r: *40\n"));
     }
 }

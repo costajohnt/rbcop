@@ -214,6 +214,35 @@ fn many_corrections_stay_linear() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// A config mapping with many keys (#600): loading and merging look keys up through an index.
+/// 80000 keys under one parameter and 40000 cop parameters (a warning each) took 53 s and 35 s,
+/// mostly key scans; now about a second each.
+#[test]
+fn many_config_keys_stay_linear() {
+    let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+    let dir = std::env::temp_dir().join(format!("rbcop-hostile-keys-{}", std::process::id()));
+    let _ = fs::remove_dir_all(&dir);
+    fs::create_dir_all(&dir).unwrap();
+    fs::write(dir.join("Gemfile"), "").unwrap();
+    fs::write(dir.join("t.rb"), "x = 1\n").unwrap();
+    let nested: String = (0..80_000).map(|k| format!("    K{k}: {k}\n")).collect();
+    let params: String = (0..40_000).map(|k| format!("  K{k}: {k}\n")).collect();
+    for (name, keys) in [("nested", format!("  X:\n{nested}")), ("params", params)] {
+        let config = format!("AllCops:\n  SuggestExtensions: false\nLayout/LineLength:\n{keys}");
+        fs::write(dir.join(".rubocop.yml"), config).unwrap();
+        let cpu0 = children_cpu();
+        let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
+            .args(["--only", "Layout/LineLength", "--format", "emacs", "t.rb"])
+            .current_dir(&dir)
+            .output()
+            .unwrap();
+        let cpu = children_cpu() - cpu0;
+        assert_eq!(out.status.code(), Some(0), "{name}");
+        assert!(cpu < Duration::from_secs(10), "{name}: took {cpu:?} CPU");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// Below 3.3 (the parser gem's lexer is modelled on Prism's tokens), per-line token work stays
 /// linear: each `(file, --only, text)` takes well under a second; the budget catches a scan or
 /// reparse per line.

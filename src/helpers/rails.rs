@@ -597,15 +597,15 @@ pub fn send_chain_names(ancestors: &[Node], i: usize, first: &CallNode) -> Vec<S
 }
 
 /// DatabaseTypeResolvable#database: the cop's `Database`, else the adapter of `development` in
-/// ./config/database.yml (mysql2/trilogy: mysql, postgresql/postgis: postgresql), else
-/// DATABASE_URL's scheme.
+/// ./config/database.yml (mysql2/trilogy: mysql, postgresql/postgis: postgresql; read with
+/// `YAML.unsafe_load_file`), else DATABASE_URL's scheme.
 pub fn database(cx: &Cx) -> Option<String> {
     if let Some(d) = cx.cfg.str("Database") {
         return Some(d.to_string());
     }
     let from_yaml = || -> Option<Option<&'static str>> {
         let text = std::fs::read_to_string(crate::config::cwd().join("config/database.yml")).ok()?;
-        let Ok(Value::Map(yaml)) = crate::config::value::parse_yaml(&text) else { return None };
+        let Ok(Value::Map(yaml)) = crate::config::value::unsafe_load(&text) else { return None };
         let dev = yaml.map("development")?;
         let adapter = match dev.get("adapter") {
             Some(a) if !matches!(a, Value::Null | Value::Bool(false)) => a.as_string(),
