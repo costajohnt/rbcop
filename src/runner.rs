@@ -335,12 +335,13 @@ pub fn parse_for_target<'t>(
             result.drop_errors("parameter_numbered_reserved", a);
         }
         if accept.as_ref().is_none_or(|a| !a.is_empty()) {
-            let (reads, blocks) = crate::syntax::assigned_numbered_reads(&result.node(), accept);
+            let (reads, blocks, numblocks) = crate::syntax::assigned_numbered_reads(&result.node(), accept);
             if !reads.is_empty() {
                 result.variable_calls_as_locals(&reads);
             }
             if target_ruby >= 2.7 && !blocks.is_empty() {
                 result.drop_numbered_parameters(Some(&blocks));
+                result.add_numbered_parameters(&numblocks);
             }
         }
     }
@@ -1288,7 +1289,13 @@ struct Walker<'s, 'pr, 'c> {
 
 impl<'pr> Walker<'_, 'pr, '_> {
     fn dispatch(&mut self, node: &Node<'pr>) {
-        for &i in &self.dispatch[node_kind::of(node)] {
+        let kind = node_kind::of(node);
+        // A hash pattern key without a value (`in {a:}`, `in {"a":}`) is the parser gem's
+        // match_var, no `sym`: no cop sees a symbol there (#548).
+        if kind == node_kind::SYMBOL_NODE && self.pattern_key() {
+            return;
+        }
+        for &i in &self.dispatch[kind] {
             let a = &self.active[i];
             let mut cx = Cx {
                 src: self.src,
@@ -1304,6 +1311,14 @@ impl<'pr> Walker<'_, 'pr, '_> {
             };
             guarded(a.name, self.src, Some(node.location().start_offset()), || a.cop.on_node(&mut cx, node));
         }
+    }
+
+    /// The node being dispatched is the key of a valueless hash pattern pair.
+    fn pattern_key(&self) -> bool {
+        let n = self.stack.len();
+        n >= 2
+            && self.stack[n - 1].as_assoc_node().is_some_and(|a| a.value().as_implicit_node().is_some())
+            && self.stack[n - 2].as_hash_pattern_node().is_some()
     }
 
     /// For node types Prism's default visitor reaches without the enter/leave hooks.

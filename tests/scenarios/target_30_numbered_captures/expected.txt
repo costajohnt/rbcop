@@ -25,3 +25,22 @@ captures.rb:2:1: W: [Correctable] Lint/Void: Variable `_1` used in void context.
 captures.rb:5:3: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
 captures.rb:9:22: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
 captures.rb:9:7: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+numblock.rb:1:1: C: Style/NumberedParametersLimit: Avoid using more than 1 numbered parameter; 2 detected.
+numblock.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+numblock.rb:1:22: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+numblock.rb:1:34: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+numblock.rb:1:7: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+numblock.rb:2:10: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+numblock.rb:2:25: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+numblock.rb:2:45: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+numblock.rb:2:5: C: Style/NumberedParametersLimit: Avoid using more than 1 numbered parameter; 2 detected.
+numblock.rb:4:13: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+numblock.rb:4:18: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+numblock.rb:4:19: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+numblock.rb:4:1: C: Style/NumberedParametersLimit: Avoid using more than 1 numbered parameter; 2 detected.
+numblock.rb:4:22: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+numblock.rb:4:39: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+numblock.rb:4:44: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+numblock.rb:5:22: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+numblock.rb:5:34: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+numblock.rb:5:7: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
