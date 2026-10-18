@@ -318,6 +318,28 @@ pub fn numbered_parameter_errors(program: &ruby_prism::Node, target: f64) -> Vec
         fn visit_block_local_variable_node(&mut self, n: &ruby_prism::BlockLocalVariableNode<'pr>) {
             self.declare(n.name().as_slice());
         }
+        fn visit_rest_parameter_node(&mut self, n: &ruby_prism::RestParameterNode<'pr>) {
+            if let Some(name) = n.name() {
+                self.declare(name.as_slice());
+            }
+        }
+        fn visit_keyword_rest_parameter_node(&mut self, n: &ruby_prism::KeywordRestParameterNode<'pr>) {
+            if let Some(name) = n.name() {
+                self.declare(name.as_slice());
+            }
+        }
+        fn visit_block_parameter_node(&mut self, n: &ruby_prism::BlockParameterNode<'pr>) {
+            if let Some(name) = n.name() {
+                self.declare(name.as_slice());
+            }
+        }
+        fn visit_required_keyword_parameter_node(&mut self, n: &ruby_prism::RequiredKeywordParameterNode<'pr>) {
+            self.declare(n.name().as_slice());
+        }
+        fn visit_optional_keyword_parameter_node(&mut self, n: &ruby_prism::OptionalKeywordParameterNode<'pr>) {
+            self.declare(n.name().as_slice());
+            ruby_prism::visit_optional_keyword_parameter_node(self, n);
+        }
     }
     let mut w = Walk {
         target,
@@ -450,6 +472,28 @@ fn numbered_walk(program: &ruby_prism::Node, sends: bool) -> Vec<usize> {
         }
         fn visit_block_local_variable_node(&mut self, n: &ruby_prism::BlockLocalVariableNode<'pr>) {
             self.declare(n.name().as_slice());
+        }
+        fn visit_rest_parameter_node(&mut self, n: &ruby_prism::RestParameterNode<'pr>) {
+            if let Some(name) = n.name() {
+                self.declare(name.as_slice());
+            }
+        }
+        fn visit_keyword_rest_parameter_node(&mut self, n: &ruby_prism::KeywordRestParameterNode<'pr>) {
+            if let Some(name) = n.name() {
+                self.declare(name.as_slice());
+            }
+        }
+        fn visit_block_parameter_node(&mut self, n: &ruby_prism::BlockParameterNode<'pr>) {
+            if let Some(name) = n.name() {
+                self.declare(name.as_slice());
+            }
+        }
+        fn visit_required_keyword_parameter_node(&mut self, n: &ruby_prism::RequiredKeywordParameterNode<'pr>) {
+            self.declare(n.name().as_slice());
+        }
+        fn visit_optional_keyword_parameter_node(&mut self, n: &ruby_prism::OptionalKeywordParameterNode<'pr>) {
+            self.declare(n.name().as_slice());
+            ruby_prism::visit_optional_keyword_parameter_node(self, n);
         }
     }
     let mut w = Walk { scopes: vec![Vec::new()], out: Vec::new(), sends };
