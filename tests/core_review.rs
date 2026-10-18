@@ -1097,6 +1097,42 @@ fn internal_affairs_hash_entry_is_no_builtin() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// Lint/RedundantCopDisableDirective's did-you-mean list is the registry of the first file that
+/// described an unknown cop name (SIMILAR_COP_NAMES_CACHE, #599): a plugin a later subdirectory
+/// config loads is not in it.
+#[test]
+fn similar_cop_names_frozen_at_first_unknown_name() {
+    let dir = scratch("similar-cop-names");
+    fs::create_dir_all(dir.join("sub")).unwrap();
+    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  SuggestExtensions: false\n").unwrap();
+    fs::write(dir.join("sub/.rubocop.yml"), "plugins: [rubocop-rspec]\n").unwrap();
+    fs::write(
+        dir.join("sub/a.rb"),
+        "# frozen_string_literal: true\n\nx = 1 # rubocop:disable RSpec/Capybara/FeatureMethods\np x\n",
+    )
+    .unwrap();
+    let redundant = |out: &Output| -> Vec<String> {
+        text(&out.stdout)
+            .lines()
+            .filter(|l| l.contains("Redundant"))
+            .map(|l| l.split(": W: ").nth(1).unwrap().to_string())
+            .collect()
+    };
+    for (b, last) in [
+        ("x = 1 # rubocop:disable Style/Foo\np x\n", "(unknown cop)"),
+        ("x = 1\np x\n", "(did you mean `RSpec/DescribeMethod`?)"),
+    ] {
+        fs::write(dir.join("b.rb"), b).unwrap();
+        let out = rbcop(&dir, &["-f", "e"]);
+        let lines = redundant(&out);
+        assert!(
+            lines.last().is_some_and(|l| l.ends_with(&format!("`RSpec/Capybara/FeatureMethods` {last}."))),
+            "{lines:?}"
+        );
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// RSpec/DiscardedMatcher with a String CustomMatcherMethods (#502): every receiverless send
 /// raises, and a plain block's on_block raises again; a numblock call raises once.
 #[test]

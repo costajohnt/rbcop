@@ -1442,6 +1442,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         let mut cop_notes = Some((cop_warnings, cop_error));
         let mut stopped = false;
         let mut warned_configs = std::collections::HashSet::new();
+        let mut similar_view: Option<Option<usize>> = None;
         for (idx, ((path, cfg), linted)) in jobs.iter().zip(reports.iter_mut()).enumerate() {
             set.file_started(&cx, path);
             // Runner#mobilized_cop_classes runs once the first file has been read.
@@ -1515,6 +1516,26 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                     break;
                 }
             };
+            // Lint/RedundantCopDisableDirective's did-you-mean list is the registry of the first
+            // file that described an unknown cop name (#599).
+            let view = registry_at.get(path).copied();
+            for o in
+                report.offenses.iter_mut().filter(|o| o.cop == rbcop::cops::lint_redundant_cop_disable_directive::NAME)
+            {
+                match similar_view {
+                    Some(v) if v != view => {
+                        if let Some(m) = rbcop::cops::lint_redundant_cop_disable_directive::redescribe(&o.message, v) {
+                            o.message = m;
+                        }
+                    }
+                    Some(_) => {}
+                    None => {
+                        if rbcop::cops::lint_redundant_cop_disable_directive::redescribe(&o.message, view).is_some() {
+                            similar_view = Some(view);
+                        }
+                    }
+                }
+            }
             // The cop errors, printed as RuboCop's Team prints them while it inspects the file, with
             // the directive warnings where CommentConfig's analysis printed them (runner::investigate).
             for e in &errors {
