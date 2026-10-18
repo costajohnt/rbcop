@@ -144,6 +144,60 @@ pub fn add_found<T>(cx: &mut Cx, find: impl FnOnce(&Cx, &mut Vec<T>), mut add: i
     }
 }
 
+/// The Prism nodes parser's on_send is called for: a CallNode, and the attribute or index `send` of
+/// an op-assign (`a.b += 1`, `a[k] ||= 1`) or a multiple-assignment target (`a.b, c[k] = ...`),
+/// which have no CallNode of their own. [`on_send`] tells which of them really are a `send`.
+pub const SEND_KINDS: &[usize] = &[
+    kind::CALL_NODE,
+    kind::CALL_OPERATOR_WRITE_NODE,
+    kind::CALL_OR_WRITE_NODE,
+    kind::CALL_AND_WRITE_NODE,
+    kind::CALL_TARGET_NODE,
+    kind::INDEX_OPERATOR_WRITE_NODE,
+    kind::INDEX_OR_WRITE_NODE,
+    kind::INDEX_AND_WRITE_NODE,
+    kind::INDEX_TARGET_NODE,
+];
+
+/// Whether parser's on_send (not on_csend) is called for `node`, one of [`SEND_KINDS`]: not for a
+/// `&.` call, nor for the `=~` call of a `match_with_lvasgn` (`/(?<a>.)/ =~ s`).
+pub fn on_send(ancestors: &[Node], node: &Node) -> bool {
+    let csend = match node {
+        Node::CallNode { .. } => {
+            if ancestors.last().is_some_and(|p| p.as_match_write_node().is_some()) {
+                return false;
+            }
+            is_csend(&node.as_call_node().unwrap())
+        }
+        Node::CallOperatorWriteNode { .. } => node.as_call_operator_write_node().unwrap().is_safe_navigation(),
+        Node::CallOrWriteNode { .. } => node.as_call_or_write_node().unwrap().is_safe_navigation(),
+        Node::CallAndWriteNode { .. } => node.as_call_and_write_node().unwrap().is_safe_navigation(),
+        Node::CallTargetNode { .. } => node.as_call_target_node().unwrap().is_safe_navigation(),
+        Node::IndexOperatorWriteNode { .. } => node.as_index_operator_write_node().unwrap().is_safe_navigation(),
+        Node::IndexOrWriteNode { .. } => node.as_index_or_write_node().unwrap().is_safe_navigation(),
+        Node::IndexAndWriteNode { .. } => node.as_index_and_write_node().unwrap().is_safe_navigation(),
+        Node::IndexTargetNode { .. } => node.as_index_target_node().unwrap().is_safe_navigation(),
+        _ => return false,
+    };
+    !csend
+}
+
+/// The receiver of a node in [`SEND_KINDS`] (parser's `send.receiver`).
+pub fn send_receiver<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
+    match node {
+        Node::CallNode { .. } => node.as_call_node().unwrap().receiver(),
+        Node::CallOperatorWriteNode { .. } => node.as_call_operator_write_node().unwrap().receiver(),
+        Node::CallOrWriteNode { .. } => node.as_call_or_write_node().unwrap().receiver(),
+        Node::CallAndWriteNode { .. } => node.as_call_and_write_node().unwrap().receiver(),
+        Node::CallTargetNode { .. } => Some(node.as_call_target_node().unwrap().receiver()),
+        Node::IndexOperatorWriteNode { .. } => node.as_index_operator_write_node().unwrap().receiver(),
+        Node::IndexOrWriteNode { .. } => node.as_index_or_write_node().unwrap().receiver(),
+        Node::IndexAndWriteNode { .. } => node.as_index_and_write_node().unwrap().receiver(),
+        Node::IndexTargetNode { .. } => Some(node.as_index_target_node().unwrap().receiver()),
+        _ => None,
+    }
+}
+
 /// `Runners.all`: `to`, `to_not`, `not_to`.
 pub fn is_runner(n: &str) -> bool {
     matches!(n, "to" | "to_not" | "not_to")

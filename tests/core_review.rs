@@ -887,7 +887,7 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
     fs::create_dir_all(dir.join("spec")).unwrap();
     let file = dir.join("spec/foo_spec.rb").display().to_string();
     type Case<'a> = (&'a str, &'a str, &'a str, &'a [&'a str], &'a [&'a str]);
-    let cases: [Case; 9] = [
+    let cases: [Case; 11] = [
         (
             "Examples:\n      Focused: ~",
             "RSpec/VoidExpect",
@@ -956,6 +956,21 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
             "describe Foo do\n  it do\n    group = RSpec.describe do\n      ex = example(\"x\") { }\n    end\n  end\nend\n",
             &[],
             &["F:5:12."],
+        ),
+        // an index op-assign's send gets on_send (#603); an attribute op-assign's receiver is chained (#607)
+        (
+            "ExampleGroups: ~",
+            "RSpec/VariableDefinition",
+            "describe Foo do\n  it do\n    @h[k] += 1\n  end\nend\n",
+            &[],
+            &["F:3:0.", "F:4:2.", "F:5:4.", "F:5:7."],
+        ),
+        (
+            "Examples: ~",
+            "RSpec/Focus",
+            "describe Foo do\n  it do\n    a.b ||= 1\n  end\nend\n",
+            &[],
+            &["F:3:0.", "F:4:2."],
         ),
     ];
     for (list, cop, source, offenses, errors) in cases {
