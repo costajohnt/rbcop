@@ -130,6 +130,20 @@ impl Language {
     }
 }
 
+/// Offenses a cop collects in `find` and adds afterwards with `add`. RuboCop's add_offense is
+/// immediate, so when `find` raises (a nil `Language` list) the ones found before it are still
+/// added, and then the raise goes on to the cop error.
+pub fn add_found<T>(cx: &mut Cx, find: impl FnOnce(&Cx, &mut Vec<T>), mut add: impl FnMut(&mut Cx, T)) {
+    let mut found = Vec::new();
+    let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| find(cx, &mut found)));
+    for t in found {
+        add(cx, t);
+    }
+    if let Err(payload) = result {
+        std::panic::resume_unwind(payload);
+    }
+}
+
 /// `Runners.all`: `to`, `to_not`, `not_to`.
 pub fn is_runner(n: &str) -> bool {
     matches!(n, "to" | "to_not" | "not_to")
@@ -827,23 +841,29 @@ pub fn hook(l: &Language, node: &Node) -> bool {
 /// `let?`: `{(block (send nil? #Helpers.all ...) ...) (send nil? #Helpers.all _ block_pass)}`
 pub fn let_(l: &Language, node: &Node) -> bool {
     let Some(call) = node.as_call_node() else { return false };
-    if call.receiver().is_some() || !l.helper(method_name(&call)) {
+    if call.receiver().is_some() {
         return false;
     }
+    // Helpers is asked once the node's type and arity fit: a plain block, or a send of two
+    // arguments (the block_pass is checked after it)
+    let args = call.arguments().map_or(0, |a| a.arguments().iter().count());
     match call.block() {
-        Some(b) if b.as_block_node().is_some() => is_plain(&b.as_block_node().unwrap()),
-        Some(_) => call.arguments().is_some_and(|a| a.arguments().iter().count() == 1),
-        None => false,
+        Some(b) if b.as_block_node().is_some() => is_plain(&b.as_block_node().unwrap()) && l.helper(method_name(&call)),
+        Some(_) => args == 1 && l.helper(method_name(&call)),
+        None => {
+            if args == 2 {
+                l.helper(method_name(&call));
+            }
+            false
+        }
     }
 }
 
 /// `include?`: `{(block (send nil? #Includes.all ...) ...) (send nil? #Includes.all ...)}`
 pub fn include_(l: &Language, node: &Node) -> bool {
     let Some(call) = node.as_call_node() else { return false };
-    if call.receiver().is_some() || !l.include(method_name(&call)) {
-        return false;
-    }
-    block_of(&call).is_none_or(|b| is_plain(&b))
+    // a numblock / itblock is neither a `block` nor a `send`: nothing is asked
+    call.receiver().is_none() && block_of(&call).is_none_or(|b| is_plain(&b)) && l.include(method_name(&call))
 }
 
 /// `subject?`: `(block (send nil? #Subjects.all ...) ...)`
@@ -903,6 +923,28 @@ pub fn body_children<'pr>(body: Option<Node<'pr>>) -> Vec<Node<'pr>> {
             Some(s) => s.body().iter().collect(),
             None => vec![b],
         },
+    }
+}
+
+/// `body.child_nodes` of a group body that is a single statement (no `begin`) are that
+/// statement's parts, which RuboCop still asks `let?` of: the send of a block statement and the
+/// block's body, or a send's receiver and arguments. None of them is a `let` of the group, but a
+/// nil Helpers list raises there.
+// ponytail: a `let` passed as an argument (`foo(let(:a) { 1 })`) is not reported as one.
+pub fn ask_let_of_parts(l: &Language, body: Option<Node>) {
+    let Some(stmt) = parser_body(body) else { return };
+    let Some(c) = stmt.as_call_node() else {
+        child_nodes(&stmt).iter().for_each(|n| _ = let_(l, n));
+        return;
+    };
+    if block_of(&c).is_some() {
+        // `(send nil? #Helpers.all _ block_pass)` asks of a send with two arguments
+        if c.receiver().is_none() && send_args(&c).len() == 2 {
+            l.helper(method_name(&c));
+        }
+        parser_body(block_body(&c)).iter().for_each(|n| _ = let_(l, n));
+    } else {
+        c.receiver().into_iter().chain(send_args(&c)).for_each(|n| _ = let_(l, &n));
     }
 }
 
@@ -1131,6 +1173,18 @@ pub fn top_level_nodes<'pr>(program: &Node<'pr>) -> Vec<Node<'pr>> {
 /// TopLevelGroup#top_level_groups: the top-level nodes that are spec groups.
 pub fn top_level_groups<'pr>(l: &Language, program: &Node<'pr>) -> Vec<Node<'pr>> {
     top_level_nodes(program).into_iter().filter(|n| spec_group(l, n)).collect()
+}
+
+/// TopLevelGroup#on_new_investigation: each top-level group in order, with `example_group?` asked
+/// of it before the cop's hooks run for it (on_top_level_example_group when true, then
+/// on_top_level_group), whatever hooks the cop has. A nil `ExampleGroups` list so raises at the
+/// first group that is no regular example group, after the offenses of the groups before it.
+pub fn each_top_level_group<'pr>(l: &Language, program: &Node<'pr>, mut f: impl FnMut(&[Node<'pr>], &Node<'pr>, bool)) {
+    let groups = top_level_groups(l, program);
+    for group in &groups {
+        let example_group = example_group(l, group);
+        f(&groups, group, example_group);
+    }
 }
 
 /// Metadata#on_block for a visited node: the metadata argument lists of `RSpec.configure` hooks

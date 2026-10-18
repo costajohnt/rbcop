@@ -299,11 +299,8 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   `undefined method 'each' for an instance of String`, without the backtrace. Order of cop errors: rbcop's `N errors occurred:` summary is sorted, RuboCop's is in
   raise order; and errors printed as they happen come from on_file cops (RuboCop's
   on_new_investigation) after the node walk's, where RuboCop prints them first. A directive naming
-  a bare cop name two departments share (AmbiguousCopName) ends the run at its file as in RuboCop;
-  the cop errors there come from the cops that add an offense, Lint/MissingCopEnableDirective and
-  Lint/CopDirectiveSyntax, not from cops that read the comment config otherwise (Style/DirectiveScope,
-  the modifier cops asking whether Layout/LineLength is enabled; so one `no department given`
-  warning fewer for each). The VariableForce cops (Lint/UselessAssignment, the unused-argument cops,
+  a bare cop name two departments share (AmbiguousCopName) ends the run at its file as in RuboCop,
+  with the same cop errors and `no department given` warnings. The VariableForce cops (Lint/UselessAssignment, the unused-argument cops,
   ...) run as one force in RuboCop, so only the first hook to add an offense errors, without a
   location: rbcop picks that cop by the earliest force event (a declaration for
   Lint/ShadowingOuterLocalVariable, leaving the innermost scope around the offense for the others,
@@ -374,10 +371,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     is a rewrite of two large ports rather than a dedupe; the ancestor helpers work on
     `cx.ancestors` directly, so moving them onto a tree would add a tree build per file for cops
     that only need a parent.
-- Style/DirectiveScope runs on the program node, so its cop errors (a clobbering correction under -A,
-  two `enable`/`disable` pairs back to back) are located at the first statement (`a.rb:4:0`) where
-  RuboCop's on_new_investigation gives the bare path, and its later -A iterations print fewer
-  `no department given` warnings than RuboCop's.
+- Style/DirectiveScope runs on the program node, so its later -A iterations print fewer
+  `no department given` warnings than RuboCop's. (Its cop errors carry no location, as RuboCop's
+  on_new_investigation ones, #578.)
 - Style/DirectiveScope treats only ported cops as disabled by default config; an `enable X` ...
   `disable X` pair for an unported, default-disabled cop can differ (not hit by the gates).
 - Lint/RedundantCopDisableDirective judges directives against rbcop's own offenses, so a directive
@@ -455,6 +451,10 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   - rubocop-rspec_rails loaded without rubocop-rspec: RuboCop fails to load the plugin
     (`uninitialized constant RuboCop::Cop::RSpec::InsideExampleGroup`); rbcop runs the RSpecRails
     cops with rubocop-rspec's default `RSpec/Language`.
+  - A rubocop-rspec `Language` list set to `~`: a stabby lambda (`-> { }`) is a parser `block`
+    whose send part the cops' `(block (send nil? #List ...) ...)` patterns ask the nil list of, so
+    RuboCop reports a cop error at each lambda for every block cop that asks it; rbcop's block
+    cops see calls only and report none there (checked with rubocop-rspec 3.10.2, #575).
   - Capybara/RSpec/CurrentPathExpectation on `match "<invalid regexp>"` (`match "("`): RuboCop's
     `Regexp.new` raises and the offense is lost to a cop error; rbcop reports the offense with the
     correction withheld.

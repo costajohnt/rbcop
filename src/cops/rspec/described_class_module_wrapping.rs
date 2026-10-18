@@ -18,6 +18,10 @@ impl Cop for DescribedClassModuleWrapping {
         }
         impl<'pr> Visit<'pr> for V<'_> {
             fn visit_call_node(&mut self, n: &ruby_prism::CallNode<'pr>) {
+                // the search stops at the first match
+                if self.found {
+                    return;
+                }
                 if helpers::rspec::block_of(n).is_some()
                     && n.receiver().is_some_and(|r| helpers::rspec::is_explicit_rspec(&r))
                     && self.l.example_group(method_name(n))

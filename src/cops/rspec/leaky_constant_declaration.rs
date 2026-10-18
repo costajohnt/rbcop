@@ -20,7 +20,7 @@ impl Cop for LeakyConstantDeclaration {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // inside_describe_block?: a plain-block ancestor that is a spec group
         let l = helpers::rspec::lang(cx);
-        if !cx.ancestors.iter().any(|a| helpers::rspec::plain_block_call(a).is_some() && helpers::rspec::spec_group(&l, a)) {
+        if !cx.ancestors.iter().rev().any(|a| helpers::rspec::plain_block_call(a).is_some() && helpers::rspec::spec_group(&l, a)) {
             return;
         }
         // Only an unqualified name (no namespace, not even `::`) is reported.

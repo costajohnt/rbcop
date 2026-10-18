@@ -944,8 +944,9 @@ pub fn cop_error(cop: &str, src: &Source, at: usize) {
 pub fn cop_error_at(cop: &str, src: &Source, at: Option<usize>) {
     // rubocop-rspec's TopLevelGroup cops run from on_new_investigation, whose errors Team reports
     // without a location; rbcop runs them as node cops. So does RSpec/LeakyLocalVariable, a
-    // VariableForce cop (its hooks run from the force's on_new_investigation).
-    const TOP_LEVEL_GROUP: &[&str] = &[
+    // VariableForce cop (its hooks run from the force's on_new_investigation), and
+    // Style/DirectiveScope (an on_new_investigation cop that rbcop runs on the program node).
+    const ON_NEW_INVESTIGATION: &[&str] = &[
         "RSpec/DescribeClass",
         "RSpec/DescribeMethod",
         "RSpec/InstanceVariable",
@@ -956,8 +957,9 @@ pub fn cop_error_at(cop: &str, src: &Source, at: Option<usize>) {
         "RSpec/SpecFilePathFormat",
         "RSpec/SpecFilePathSuffix",
         "RSpec/SubjectStub",
+        "Style/DirectiveScope",
     ];
-    let at = at.filter(|_| !TOP_LEVEL_GROUP.contains(&cop));
+    let at = at.filter(|_| !ON_NEW_INVESTIGATION.contains(&cop));
     let location = match at {
         // Range#line and the 0-based Range#column.
         Some(at) => {

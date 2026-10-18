@@ -35,7 +35,7 @@ struct Walk<'a> {
     by_group: Vec<((usize, usize), String)>,
     /// plain blocks around the current node: (range, is an `expect` block)
     blocks: Vec<(usize, usize, bool)>,
-    found: Vec<(usize, usize)>,
+    found: &'a mut Vec<(usize, usize)>,
 }
 
 impl Walk<'_> {
@@ -187,38 +187,43 @@ impl Cop for RepeatedSubjectCall {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let l = helpers::rspec::lang(cx);
         let target = cx.src.target_ruby;
-        let mut found = Vec::new();
-        for group in helpers::rspec::top_level_groups(&l, node) {
+        helpers::rspec::each_top_level_group(&l, node, |_, group, _| {
             // detect_subjects_in_scope: each subject block below the group, by its nearest example
-            // group block
-            struct S<'a> {
+            // group block (each_ancestor(:block).find, nearest first: only a subject's block
+            // ancestors are asked, up to the first example group)
+            struct S<'a, 'pr> {
                 target: f64,
                 l: &'a Language,
-                groups: Vec<(usize, usize)>,
+                blocks: Vec<Node<'pr>>,
                 out: Vec<((usize, usize), String)>,
             }
-            impl<'pr> Visit<'pr> for S<'_> {
+            impl<'pr> Visit<'pr> for S<'_, 'pr> {
                 fn visit_call_node(&mut self, n: &CallNode<'pr>) {
                     let node = n.as_node();
                     if let Some(name) = subject_name(self.target, self.l, &node) {
-                        let outer = self.groups.last().copied().unwrap_or((usize::MAX, usize::MAX));
+                        let outer = self
+                            .blocks
+                            .iter()
+                            .rev()
+                            .find(|a| helpers::rspec::example_group(self.l, a))
+                            .map_or((usize::MAX, usize::MAX), helpers::rspec::node_range);
                         self.out.push((outer, name));
                     }
-                    let group = helpers::rspec::plain_block_call(&node).is_some() && helpers::rspec::example_group(self.l, &node);
-                    if group {
-                        self.groups.push(helpers::rspec::node_range(&node));
+                    let block = helpers::rspec::plain_block_call(&node).is_some();
+                    if block {
+                        self.blocks.push(node);
                     }
                     ruby_prism::visit_call_node(self, n);
-                    if group {
-                        self.groups.pop();
+                    if block {
+                        self.blocks.pop();
                     }
                 }
             }
-            let mut s = S { target, l: &l, groups: Vec::new(), out: Vec::new() };
+            let mut s = S { target, l: &l, blocks: Vec::new(), out: Vec::new() };
             // each_descendant: the group itself is no subject of its own
             let c = group.as_call_node().unwrap();
-            if helpers::rspec::plain_block_call(&group).is_some() && helpers::rspec::example_group(&l, &group) {
-                s.groups.push(helpers::rspec::node_range(&group));
+            if helpers::rspec::plain_block_call(group).is_some() {
+                s.blocks.push(c.as_node());
             }
             if let Some(r) = c.receiver() {
                 s.visit(&r);
@@ -229,12 +234,13 @@ impl Cop for RepeatedSubjectCall {
             if let Some(b) = c.block() {
                 s.visit(&b);
             }
-            let mut w = Walk { l: &l, by_group: s.out, blocks: Vec::new(), found: Vec::new() };
-            w.node(&group, &[]);
-            found.extend(w.found);
-        }
-        for (s, e) in found {
-            cx.add(s, e, "Calls to subject are memoized, this block is misleading");
-        }
+            let by_group = s.out;
+            // add_offense is immediate: the offenses found before a raise are kept
+            helpers::rspec::add_found(
+                cx,
+                |_, found| Walk { l: &l, by_group, blocks: Vec::new(), found }.node(group, &[]),
+                |cx, (s, e)| cx.add(s, e, "Calls to subject are memoized, this block is misleading"),
+            );
+        });
     }
 }

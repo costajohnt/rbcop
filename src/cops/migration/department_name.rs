@@ -51,7 +51,8 @@ fn check_cop_name(cx: &mut Cx, name: &str, start: usize) {
     let end = start + name.len();
     let qualified = match cop_registry::qualified_cop_name(name) {
         Some(q) if q.contains('/') => Some(q),
-        Some(_) => cop_registry::LEGACY_COP_NAMES.iter().find(|l| l.split('/').nth(1) == Some(name)).map(|l| l.to_string()),
+        // qualified_legacy_cop_name: ConfigObsoletion.legacy_cop_names, the loaded plugins' too
+        Some(_) => crate::config::validator::legacy_cop_names().into_iter().find(|l| l.split('/').nth(1) == Some(name)),
         None => None,
     };
     // A nil replacement raises inside the corrector: the offense stays, without a correction.
