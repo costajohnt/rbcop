@@ -404,9 +404,7 @@ impl Resolved {
 
     fn merged_for_cop(&self, name: &str) -> Map {
         let mut params = name.rsplit_once('/').and_then(|(d, _)| self.hash.map(d)).cloned().unwrap_or_default();
-        for (k, v) in self.hash.map(name).cloned().unwrap_or_default().0 {
-            params.insert(k, v);
-        }
+        params.insert_all(self.hash.map(name).cloned().unwrap_or_default().0);
         params
     }
 
@@ -558,9 +556,7 @@ impl Resolved {
             _ => None,
         };
         let mut params = dept_map;
-        for (k, v) in cop.0 {
-            params.insert(k, v);
-        }
+        params.insert_all(cop.0);
         if let Some(u) = union {
             params.insert("Exclude", u);
         }
@@ -2060,16 +2056,20 @@ fn should_union(derived: &Map, base: &Map, root_mode: &Map, key: &str) -> bool {
 
 /// ConfigLoaderResolver#merge (§3).
 fn merge(base: &Map, derived: &Map, root_mode: &Map, unset_nil: bool) -> Map {
-    let mut result = base.clone();
+    // `base.merge(derived)` entry by entry; a removed key is None until the end. Keys are looked
+    // up through an index, so a mapping with many keys merges in linear time.
+    let mut result: Vec<(String, Option<Value>)> = base.0.iter().map(|(k, v)| (k.clone(), Some(v.clone()))).collect();
+    let index: HashMap<&str, usize> = base.0.iter().enumerate().map(|(i, (k, _))| (k.as_str(), i)).collect();
     for (key, dv) in &derived.0 {
-        let Some(bv) = base.get(key) else {
-            result.insert(key.clone(), dv.clone());
+        let Some(&i) = index.get(key.as_str()) else {
+            result.push((key.clone(), Some(dv.clone())));
             continue;
         };
-        if unset_nil && *dv == Value::Null {
-            result.remove(key);
+        let bv = &base.0[i].1;
+        result[i].1 = if unset_nil && *dv == Value::Null {
+            None
         } else if let (Value::Map(b), Value::Map(d)) = (bv, dv) {
-            result.insert(key.clone(), Value::Map(merge(b, d, root_mode, unset_nil).into()));
+            Some(Value::Map(merge(b, d, root_mode, unset_nil).into()))
         } else if should_union(derived, base, root_mode, key) {
             let mut union = seq(Some(bv.clone()));
             for v in seq(Some(dv.clone())) {
@@ -2077,12 +2077,12 @@ fn merge(base: &Map, derived: &Map, root_mode: &Map, unset_nil: bool) -> Map {
                     union.push(v);
                 }
             }
-            result.insert(key.clone(), Value::Seq(union.into()));
+            Some(Value::Seq(union.into()))
         } else {
-            result.insert(key.clone(), dv.clone());
-        }
+            Some(dv.clone())
+        };
     }
-    result
+    Map(result.into_iter().filter_map(|(k, v)| v.map(|v| (k, v))).collect())
 }
 
 /// Config#make_excludes_absolute: every `Exclude` string becomes absolute against `base`. `map!`

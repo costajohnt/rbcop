@@ -48,6 +48,21 @@ impl Map {
         }
     }
 
+    /// `insert` for each pair, with the keys indexed once (linear, where one `insert` scans).
+    pub fn insert_all(&mut self, pairs: impl IntoIterator<Item = (String, Value)>) {
+        let mut index: std::collections::HashMap<String, usize> =
+            self.0.iter().enumerate().map(|(i, (k, _))| (k.clone(), i)).collect();
+        for (k, v) in pairs {
+            match index.get(&k) {
+                Some(&i) => self.0[i].1 = v,
+                None => {
+                    index.insert(k.clone(), self.0.len());
+                    self.0.push((k, v));
+                }
+            }
+        }
+    }
+
     pub fn remove(&mut self, key: &str) -> Option<Value> {
         let i = self.0.iter().position(|(k, _)| k == key)?;
         Some(self.0.remove(i).1)
@@ -495,7 +510,8 @@ impl ToRuby {
     /// list of them, earlier ones winning) unless its key is tagged `!!str`; a `<<` whose value
     /// will not merge (TypeError) stays a key.
     fn revive_hash(&mut self, children: &[Node]) -> Result<Map, String> {
-        let mut hash = Map::default();
+        // Pairs in Hash#[]= order, inserted at the end (insert_all: linear in the keys).
+        let mut hash = Vec::new();
         for pair in children.chunks(2) {
             let (k, v) = (&pair[0], &pair[1]);
             let key = self.accept(k)?;
@@ -506,26 +522,24 @@ impl ToRuby {
                     (Node::Alias(_) | Node::Map { .. }, Value::Map(m)) => Some(m.as_ref().clone()),
                     (Node::Seq { .. }, Value::Seq(items)) if items.iter().all(|i| matches!(i, Value::Map(_))) => {
                         let mut h = Map::default();
-                        for item in items.iter().rev() {
-                            if let Value::Map(m) = item {
-                                merge_into(&mut h, m);
-                            }
-                        }
+                        h.insert_all(items.iter().rev().filter_map(Value::as_map).flat_map(|m| m.0.iter().cloned()));
                         Some(h)
                     }
                     _ => None,
                 };
                 match merged {
-                    Some(m) => merge_into(&mut hash, &m),
-                    None => hash.insert("<<", val),
+                    Some(m) => hash.extend(m.0),
+                    None => hash.push(("<<".into(), val)),
                 }
                 continue;
             }
             if let Some(key) = hash_key(&key) {
-                hash.insert(key, val);
+                hash.push((key, val));
             }
         }
-        Ok(hash)
+        let mut map = Map::default();
+        map.insert_all(hash);
+        Ok(map)
     }
 }
 
