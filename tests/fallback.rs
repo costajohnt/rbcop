@@ -510,7 +510,8 @@ fn plugin_cops_come_from_lib_classes() {
     .unwrap();
     fs::write(
         gem.join("lib/rubocop/cop/fake/extra.rb"),
-        "module RuboCop::Cop::Fake\n  class Extra < RuboCop::Cop::Base\n  end\nend\n",
+        // a qualified AutoCorrector counts too (#611)
+        "module RuboCop::Cop::Fake\n  class Extra < RuboCop::Cop::Base\n    extend ::RuboCop::Cop::AutoCorrector\n  end\nend\n",
     )
     .unwrap();
     fs::write(dir.join(".rubocop.yml"), "plugins:\n  - rubocop-fake\nAllCops:\n  NewCops: enable\n").unwrap();
@@ -531,7 +532,7 @@ fn plugin_cops_come_from_lib_classes() {
         let out = run(&["--show-cops", "Fake/*"]);
         assert_eq!(
             text(&out.stdout),
-            "Fake/Extra:\n  Enabled: true\n\n# Supports --autocorrect\nFake/One:\n  Enabled: true\n\n"
+            "# Supports --autocorrect\nFake/Extra:\n  Enabled: true\n\n# Supports --autocorrect\nFake/One:\n  Enabled: true\n\n"
         );
     }
     let _ = fs::remove_dir_all(&dir);

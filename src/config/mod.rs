@@ -1997,7 +1997,12 @@ fn ruby_cops_in(files: Vec<PathBuf>) -> Vec<(String, bool)> {
                 }
             } else if let Some(&(_, _, Some(i))) = stack.last() {
                 let body = line.trim();
-                classes[i].autocorrect |= body.starts_with("extend AutoCorrector");
+                // `extend AutoCorrector`, also qualified (`extend ::RuboCop::Cop::AutoCorrector`)
+                // or parenthesized (`extend(AutoCorrector)`)
+                static EXTEND: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| {
+                    Regex::new(r"^extend(?:\s+|\s*\(\s*)(?:::)?(?:RuboCop::Cop::)?AutoCorrector\b").unwrap()
+                });
+                classes[i].autocorrect |= EXTEND.is_match(body);
                 classes[i].excluded |= body.starts_with("exclude_from_registry");
             }
         }
