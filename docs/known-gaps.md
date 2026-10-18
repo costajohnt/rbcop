@@ -415,8 +415,8 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   so `--show-cops` dumps them apart; mapping keys do not keep the distinction (a quoted `':q':` key
   is dumped as the symbol `:q:`).
 - YAML aliases share their anchored node (`Arc`), so nested aliases load in linear time as in Psych,
-  but `--show-cops` prints an aliased value expanded where Psych's dump writes `&1` / `*1`; on an alias
-  bomb that dump is exponential (RuboCop's is not).
+  and `--show-cops` writes a shared Array or Hash once, with Psych's `&1` / `*1` (#592). RuboCop's
+  in-place change of a shared value is followed for `Exclude` (`map!`) only.
 - YAML: `.rubocop.yml` is read by a Rust port of libyaml 0.2.5's reader, scanner and parser
   (src/yaml), Psych's TreeBuilder (with RuboCop's duplicate-key handler) and ToRuby with RuboCop's
   restricted class loader, so tokens, errors (problem, context and context mark) and loaded values

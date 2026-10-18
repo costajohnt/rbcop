@@ -2085,19 +2085,61 @@ fn merge(base: &Map, derived: &Map, root_mode: &Map, unset_nil: bool) -> Map {
     result
 }
 
-/// Config#make_excludes_absolute: every `Exclude` string becomes absolute against `base`.
+/// Config#make_excludes_absolute: every `Exclude` string becomes absolute against `base`. `map!`
+/// changes the Array itself, so a value aliased to it (`Foo: *excludes`) changes too.
 fn make_excludes_absolute(hash: &mut Map, base: &Path) {
+    let mut memo = HashMap::new();
+    for (_, v) in &hash.0 {
+        let Some(Value::Seq(items)) = v.as_map().and_then(|m| m.get("Exclude")) else { continue };
+        let absolute = items.iter().map(|item| match item {
+            Value::Str(s) if !s.starts_with('/') => Value::Str(normalize(&base.join(s)).display().to_string()),
+            item => item.clone(),
+        });
+        memo.insert(Arc::as_ptr(items) as usize, Some(Value::Seq(Arc::new(absolute.collect()))));
+    }
+    if memo.is_empty() {
+        return;
+    }
     for (_, v) in hash.0.iter_mut() {
-        let Value::Map(m) = v else { continue };
-        let Some(Value::Seq(items)) = Arc::make_mut(m).get_mut("Exclude") else { continue };
-        for item in Arc::make_mut(items).iter_mut() {
-            if let Value::Str(s) = item
-                && !s.starts_with('/')
-            {
-                *s = normalize(&base.join(&*s)).display().to_string();
-            }
+        if let Some(new) = replace_shared(v, &mut memo) {
+            *v = new;
         }
     }
+}
+
+/// `v` with the collections in `memo` (by address) replaced, or None if it holds none of them.
+/// Each collection is rebuilt once, so values shared before stay shared (and an alias bomb is
+/// walked once per collection).
+fn replace_shared(v: &Value, memo: &mut HashMap<usize, Option<Value>>) -> Option<Value> {
+    let addr = match v {
+        Value::Seq(a) => Arc::as_ptr(a) as usize,
+        Value::Map(m) => Arc::as_ptr(m) as usize,
+        _ => return None,
+    };
+    if let Some(done) = memo.get(&addr) {
+        return done.clone();
+    }
+    memo.insert(addr, None);
+    let new = match v {
+        Value::Seq(items) => {
+            let changed: Vec<_> = items.iter().map(|i| replace_shared(i, memo)).collect();
+            changed.iter().any(Option::is_some).then(|| {
+                let items = items.iter().zip(changed).map(|(old, new)| new.unwrap_or_else(|| old.clone()));
+                Value::Seq(Arc::new(items.collect()))
+            })
+        }
+        Value::Map(m) => {
+            let changed: Vec<_> = m.0.iter().map(|(_, v)| replace_shared(v, memo)).collect();
+            changed.iter().any(Option::is_some).then(|| {
+                let pairs =
+                    m.0.iter().zip(changed).map(|((k, old), new)| (k.clone(), new.unwrap_or_else(|| old.clone())));
+                Value::Map(Arc::new(Map(pairs.collect())))
+            })
+        }
+        _ => None,
+    };
+    memo.insert(addr, new.clone());
+    new
 }
 
 /// Config#base_dir_for_path_parameters (§5).
