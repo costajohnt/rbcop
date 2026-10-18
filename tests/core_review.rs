@@ -415,6 +415,51 @@ fn config_load_errors_worded_like_rubocop() {
             "a: &\n",
             "({D}/.rubocop.yml): did not find expected alphabetic or numeric character while scanning an anchor at line 1 column 4",
         ),
+        // libyaml: every `:` in a flow collection is a value indicator (#527), and a simple key
+        // is limited to one line there too (#528).
+        (
+            "Layout/LineLength:\n  AllowedPatterns: [:foo, :bar]\n",
+            "({D}/.rubocop.yml): did not find expected node content while parsing a flow node at line 2 column 21",
+        ),
+        (
+            "Layout/LineLength:\n  X: {foo\n    : bar}\n",
+            "({D}/.rubocop.yml): did not find expected ',' or '}' while parsing a flow mapping at line 2 column 6",
+        ),
+        (
+            "a:\n  - b\n\t\n",
+            "({D}/.rubocop.yml): found a tab character that violates indentation while scanning a plain scalar at line 2 column 5",
+        ),
+        // `|`/`>` start no token in a flow collection (#539); `x:` before a flow indicator (#540).
+        (
+            "Metrics/BlockLength:\n  AllowedMethods: [>a, b]\n",
+            "({D}/.rubocop.yml): found character that cannot start any token while scanning for the next token at line 2 column 20",
+        ),
+        (
+            "Metrics/BlockLength: {AllowedMethods:[a]}\n",
+            "({D}/.rubocop.yml): found unexpected ':' while scanning a plain scalar at line 1 column 23",
+        ),
+        // libyaml's problem and mark (#541): no context mark is line 1 column 1; the parser, not
+        // the scanner, rejects content after a quoted scalar; anchor names; directives.
+        ("  a: 1\nb: 2\n", "({D}/.rubocop.yml): did not find expected <document start> at line 1 column 1"),
+        (
+            "a: ['b' 'c']\n",
+            "({D}/.rubocop.yml): did not find expected ',' or ']' while parsing a flow sequence at line 1 column 4",
+        ),
+        (
+            "a: &b'x'\n",
+            "({D}/.rubocop.yml): did not find expected alphabetic or numeric character while scanning an anchor at line 1 column 4",
+        ),
+        (
+            "%Foo\n---\na: 1\n",
+            "({D}/.rubocop.yml): found unknown directive name while scanning a directive at line 1 column 1",
+        ),
+        // YAMLDuplicationChecker reads `value` of each mapping key node during the parse; the
+        // unknown alias is ToRuby's, after a syntax error.
+        ("a:\n  ? [x]\n  : 1\n", "undefined method 'value' for an instance of Psych::Nodes::Sequence"),
+        (
+            "a: *zz\nb: [\n",
+            "({D}/.rubocop.yml): did not find expected node content while parsing a flow node at line 3 column 1",
+        ),
         ("a: *x\n", "An alias referenced an unknown anchor: x"),
         ("b: 2020-01-01\n", "Tried to load unspecified class: Date"),
         ("b: 2020-01-01 10:00:00\n", "Tried to load unspecified class: Time"),
@@ -456,6 +501,11 @@ fn flow_collections_ignore_indentation_like_libyaml() {
         ("Metrics/BlockLength:\n  AllowedMethods: [\n\"foo\",\nbar]\n", "\n  - foo\n  - bar\n"),
         ("Metrics/BlockLength:\n  AllowedMethods: [\"foo\n  bar\"]\n", "\n  - foo bar\n"),
         ("Metrics/BlockLength:\n  AllowedMethods: \"foo\nbar\"\n", " foo bar\n"),
+        // A tab is whitespace in a flow collection and on a quoted scalar's lines (#526).
+        ("Metrics/BlockLength:\n  AllowedMethods: [foo,\n\tbar]\n", "\n  - foo\n  - bar\n"),
+        ("Metrics/BlockLength:\n  AllowedMethods:\n  - \"foo\n\tbar\"\n", "\n  - foo bar\n"),
+        ("Metrics/BlockLength:\n  AllowedMethods: ['foo\n  \tbar', \"a\\\n\tb\"]\n", "\n  - foo bar\n  - ab\n"),
+        ("Metrics/BlockLength:\n  AllowedMethods:\t[foo]\n", "\n  - foo\n"),
     ];
     let dir = scratch("flow-indent");
     fs::write(dir.join("a.rb"), "x = 1\n").unwrap();
