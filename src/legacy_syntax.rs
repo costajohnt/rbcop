@@ -225,9 +225,10 @@ pub fn indented_data_marker(text: &str, tokens: &[Token]) -> Option<(usize, usiz
             if !(line == 0 || text.as_bytes()[line - 1] == b'\n') {
                 return None;
             }
-            // The parser gem's buffer has CRLF made LF; its input ends with a NUL.
+            // `text` has CRLF made LF, as the parser gem's buffer (a `\r\n` left was `\r\r\n`, no
+            // newline right after the marker, #542); its input ends with a NUL.
             let after = &text.as_bytes()[t.end..];
-            let eol = matches!(after, [] | [b'\n' | b'\0' | b'\x04' | b'\x1a', ..] | [b'\r', b'\n', ..]);
+            let eol = matches!(after, [] | [b'\n' | b'\0' | b'\x04' | b'\x1a', ..]);
             let prism = indent.is_empty() && matches!(after, [] | [b'\n', ..] | [b'\r', b'\n', ..]);
             (eol && !prism && line_begin(text, tokens, i)).then_some((line, indent.len()))
         },
@@ -276,10 +277,14 @@ pub fn embdoc_fixups(text: &str, tokens: &[Token]) -> Vec<(usize, u8)> {
 }
 
 /// Prism's column-0 data marker (its `__END__` token, where it stops lexing) when the parser gem's
-/// lexer is not in its line_begin state there and reads an identifier instead (#337): its offset.
+/// lexer is not in its line_begin state there and reads an identifier instead (#337), or where a
+/// `\r` follows (`text` has CRLF made LF, as the parser gem's buffer: `__END__\r\r\n` is
+/// `__END__\r\n` there, and lexer.rl wants the newline right after the marker, #542): its offset.
 pub fn identifier_data_marker(text: &str, tokens: &[Token]) -> Option<usize> {
     let i = tokens.iter().position(|t| t.kind == "__END__")?;
-    (!line_begin(text, tokens, i)).then_some(tokens[i].start)
+    let start = tokens[i].start;
+    let cr = text.as_bytes().get(start + 7) == Some(&b'\r');
+    (cr || !line_begin(text, tokens, i)).then_some(start)
 }
 
 /// The `&` of each `&.` after a singleton method's receiver (`def self&.foo`, `def (x)&.foo`): the
