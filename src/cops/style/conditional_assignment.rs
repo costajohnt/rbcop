@@ -565,6 +565,11 @@ fn check_assignment(cx: &mut Cx, node: &Node) {
             return;
         }
     }
+    // assignment_rhs_exist?: no `resbody` parent, also when the assignment is a rescue body's only
+    // statement (#584). (An `mlhs` parent is a Prism target node, which has no value.)
+    if helpers::parser_parent::parser_parent(cx.ancestors).is_some_and(|p| kind::of(p) == kind::RESCUE_NODE) {
+        return;
+    }
     let r = range(node);
     cx.state::<State>().ignored.push(r);
     let Some(rhs) = last_child(node) else { return };

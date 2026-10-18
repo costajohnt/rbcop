@@ -1,0 +1,5 @@
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+Style/ConditionalAssignment:
+  EnforcedStyle: assign_inside_condition
