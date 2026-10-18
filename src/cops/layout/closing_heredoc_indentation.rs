@@ -69,11 +69,16 @@ impl Cop for ClosingHeredocIndentation {
         }
         let src = cx.src;
         let opening = line_at(src, open.start_offset());
-        // heredoc_end: the terminator's line, which the parser gem's lexer also starts after a NUL
-        // (#247; Prism never closes a heredoc there).
+        // heredoc_end starts after a NUL, ^D or ^Z where the parser gem's lexer ends the line there
+        // (#247, #543; Prism never closes a heredoc there), but its source_line is the whole line
+        // (#544).
         let line_start = src.line_start(src.line_of(close.start_offset()));
-        let start = src.text[line_start..close.start_offset()].rfind('\0').map_or(line_start, |i| line_start + i + 1);
-        let closing = &line_at(src, close.start_offset())[start - line_start..];
+        let start = src.text[line_start..close.start_offset()]
+            .rfind(['\0', '\x04', '\x1a'])
+            .map_or(line_start, |i| line_start + i + 1);
+        let closing = line_at(src, close.start_offset());
+        let line_end = line_start + closing.len();
+        let end = src.text[start..line_end].find(['\0', '\x04', '\x1a']).map_or(line_end, |i| start + i);
         let (oi, ci) = (indent(opening), indent(closing));
         if oi == ci {
             return;
@@ -123,7 +128,6 @@ impl Cop for ClosingHeredocIndentation {
         );
         // indented_end: `closing_text.gsub(/^\s{closing_indent}/, ' ' * opening_indent)`
         let fixed = format!("{}{}", " ".repeat(oi), &closing[ci..]);
-        let end = start + closing.len();
         cx.add_fix(start, end, msg, |c| c.replace(start, end, &fixed));
     }
 }

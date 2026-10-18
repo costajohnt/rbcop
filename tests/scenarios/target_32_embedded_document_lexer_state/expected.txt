@@ -1,0 +1,20 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+after_colon2.rb:2:1: F: Lint/Syntax: unexpected token tEQL (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+after_dot.rb:2:1: F: Lint/Syntax: unexpected token tEQL (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+continuation.rb:2:1: F: Lint/Syntax: unexpected token tEQL (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+continuation_assignable.rb:3:1: F: Lint/Syntax: unexpected token tEQL (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+continuation_one_line.rb:2:7: F: Lint/Syntax: unexpected token tEQL (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+one_line_code_after.rb:1:1: C: [Correctable] Style/BlockComments: Do not use block comments.
+one_line_code_after.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+one_line_space.rb:2:1: F: Lint/Syntax: unexpected token tEQL (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+one_line_then_end.rb:2:1: F: Lint/Syntax: unexpected token tEQL (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+paren_arg.rb:2:1: F: Lint/Syntax: unexpected token tEQL (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+paren_arg_indented.rb:2:3: F: Lint/Syntax: unexpected token tEQL (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+paren_arg_inner_if.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+paren_arg_inner_if.rb:1:4: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `(if a =begin =end   b end)` interpreted as grouped expression.
+paren_arg_inner_if.rb:2:1: C: [Correctable] Style/BlockComments: Do not use block comments.
+paren_arg_inner_if.rb:4:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not -3) spaces for indentation.
+paren_arg_inner_if.rb:5:1: W: [Correctable] Layout/EndAlignment: `end` at 5, 0 is not aligned with `if` at 1, 5.
+paren_arg_one_line.rb:2:1: F: Lint/Syntax: unexpected token tEQL (Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+two_lines_beginx.rb:1:1: C: [Correctable] Style/BlockComments: Do not use block comments.
+two_lines_beginx.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.

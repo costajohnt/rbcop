@@ -234,7 +234,7 @@ pub fn parse_for_target<'t>(
         // Embedded documents the parser gem's lexer starts or ends where Prism does not (after a
         // BOM, #512; indented; `=beginx`, `=endx`).
         if cur.contains("=begin") {
-            round.extend(crate::legacy_syntax::embdoc_fixups(cur, &tokens));
+            round.extend(crate::legacy_syntax::embdoc_fixups(cur, text, &tokens));
         }
         // A column-0 `__END__` the parser gem reads as an identifier (after `=`, `(`, `,`, `.`, a
         // `\` continuation, ...) is an identifier the file does not use, so Prism lexes on (#337).
@@ -248,10 +248,12 @@ pub fn parse_for_target<'t>(
         if errors {
             round.extend(crate::legacy_syntax::defs_and_dots(cur, &tokens, target_ruby).into_iter().map(|o| (o, b' ')));
         }
-        // A NUL ends a heredoc line for the parser gem's lexer: the NULs that make a terminator line
-        // become newlines (#247).
-        if errors && cur.contains('\0') {
-            round.extend(crate::legacy_syntax::heredoc_nul_breaks(cur, &tokens).into_iter().map(|o| (o, b'\n')));
+        // A NUL, ^D or ^Z ends a heredoc line for the parser gem's lexer: those that make a
+        // terminator line become newlines (#247, #543), also where a later terminator closes the
+        // heredoc for Prism (#544).
+        if cur.contains(['\0', '\x04', '\x1a']) {
+            let breaks = crate::legacy_syntax::heredoc_nul_breaks(cur, &tokens, !errors);
+            round.extend(breaks.into_iter().map(|o| (o, b'\n')));
         }
         // The parser gem ends a plain heredoc at its delimiter after spaces and tabs (a `<<''` at a
         // blank line), Prism only at the delimiter alone (#318, #355): see plain_heredoc_terminator.
@@ -322,13 +324,24 @@ pub fn parse_for_target<'t>(
     }
     // Numbered parameters are 2.7+: below that `foo { _1 }` is a block without arguments.
     if target_ruby < 2.7 {
-        result.drop_numbered_parameters();
+        result.drop_numbered_parameters(None);
     }
-    // Below 3.0 `_1 = 1` declares a local whose reads Prism gives as calls (#364).
-    if target_ruby < 3.0 && text.as_bytes().windows(2).any(|w| w[0] == b'_' && matches!(w[1], b'1'..=b'9')) {
-        let reads = crate::syntax::assigned_numbered_reads(&result.node());
-        if !reads.is_empty() {
-            result.variable_calls_as_locals(&reads);
+    // Below 3.0 `_1 = 1` declares a local whose reads Prism gives as calls (#364), or (2.7+, in a
+    // block) as numbered parameters. From 3.0 only a named capture or some pattern variables do
+    // (#533), and Prism's reserved-name errors there go.
+    if text.as_bytes().windows(2).any(|w| w[0] == b'_' && matches!(w[1], b'1'..=b'9')) {
+        let accept = (target_ruby >= 3.0).then(|| crate::syntax::accepted_numbered_targets(&result.node()));
+        if let Some(a) = accept.as_ref().filter(|a| !a.is_empty()) {
+            result.drop_errors("parameter_numbered_reserved", a);
+        }
+        if accept.as_ref().is_none_or(|a| !a.is_empty()) {
+            let (reads, blocks) = crate::syntax::assigned_numbered_reads(&result.node(), accept);
+            if !reads.is_empty() {
+                result.variable_calls_as_locals(&reads);
+            }
+            if target_ruby >= 2.7 && !blocks.is_empty() {
+                result.drop_numbered_parameters(Some(&blocks));
+            }
         }
     }
     (result, tokens, fake, edits)
@@ -593,10 +606,16 @@ fn investigate(
     let comments: Vec<Comment> = result
         .comments()
         .filter(|c| !fake.contains(&c.location().start_offset()))
-        .map(|c| Comment {
-            start: c.location().start_offset(),
-            end: c.location().end_offset(),
-            embdoc: c.type_() == ruby_prism::CommentType::EmbDocComment,
+        .map(|c| {
+            let (start, mut end) = (c.location().start_offset(), c.location().end_offset());
+            let mut embdoc = c.type_() == ruby_prism::CommentType::EmbDocComment;
+            // A one-line embedded document the copy has as a `#` comment (`=begin=end`, #534),
+            // its newline included as in any embedded document.
+            if !embdoc && parser_gem && text[start..].starts_with("=begin") {
+                embdoc = true;
+                end += usize::from(text.as_bytes().get(end) == Some(&b'\n'));
+            }
+            Comment { start, end, embdoc }
         })
         .collect();
     let data = result.data_loc().map(|d| d.start_offset());
@@ -607,6 +626,9 @@ fn investigate(
     src.lex_edits = edits;
     if cfg.target_ruby < 2.7 {
         src.numbered_sends = crate::syntax::legacy_numbered_sends(&result.node());
+    }
+    if parser_gem && text.contains("\\\n") {
+        src.gem_newlines = crate::legacy_syntax::newline_offsets(&tokens, text, cfg.target_ruby);
     }
     // From 3.3 the runner's parse is parse_warnings::parse (unedited text, same version and
     // encoding): its warnings save that second parse.
