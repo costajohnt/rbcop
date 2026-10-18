@@ -145,6 +145,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 
 ## Open gaps
 
+- A `require:`d gem's Ruby code that changes RuboCop's directive syntax is not run: standard's
+  `standard/rubocop/ext.rb` widens `DirectiveComment::DIRECTIVE_COMMENT_REGEXP`, so its
+  `# standard:disable Cop` comments are directives in RuboCop and plain comments in rbcop.
 - Static regexp literals Onigmo rejects (RuboCop compiles each with `Regexp.new` and reports
   Lint/Syntax): `helpers::onigmo_compile` covers group names and references, repeat ranges,
   character class ranges, POSIX bracket names, `\k<+n>`, and look-behind bodies with quantifiers,
