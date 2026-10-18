@@ -37,8 +37,8 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - Lint/LiteralInInterpolation reports no offense for an integer literal over 1,000 32-bit words
   (about 9,600 decimal digits): converting it to decimal is quadratic (`"#{0xfff...}"` with 200k
   hex digits took 2.6 s).
-- A config integer beyond 64 bits (`Max: 99999999999999999999`) loads as `i64::MAX` (or
-  `i64::MIN`); Psych makes a Bignum. Cops behave the same (nothing reaches that size), but
+- A config integer beyond 64 bits (`Max: 99999999999999999999`, or a base-60 sum) loads as
+  `i64::MAX` (or `i64::MIN`); Psych makes a Bignum. Cops behave the same (nothing reaches that size), but
   `--show-cops` and messages that quote the limit (`[14/-99999999999999999999]`) print the
   saturated value where RuboCop prints the digits as written.
 - Config regexps the regex crate rejects (lookaround, backreferences, atomic groups) run on
@@ -423,8 +423,8 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   so `--show-cops` dumps them apart; mapping keys do not keep the distinction (a quoted `':q':` key
   is dumped as the symbol `:q:`).
 - YAML aliases share their anchored node (`Arc`), so nested aliases load in linear time as in Psych,
-  but `--show-cops` prints an aliased value expanded where Psych's dump writes `&1` / `*1`; on an alias
-  bomb that dump is exponential (RuboCop's is not).
+  and `--show-cops` writes a shared Array or Hash once, with Psych's `&1` / `*1` (#592). RuboCop's
+  in-place change of a shared value is followed for `Exclude` (`map!`) only.
 - YAML: `.rubocop.yml` is read by a Rust port of libyaml 0.2.5's reader, scanner and parser
   (src/yaml), Psych's TreeBuilder (with RuboCop's duplicate-key handler) and ToRuby with RuboCop's
   restricted class loader, so tokens, errors (problem, context and context mark) and loaded values
@@ -440,8 +440,11 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     `--show-cops` writes as text where Psych writes `!binary` and base64; `!ruby/encoding`,
     `!ruby/class Regexp` / `Symbol`, ivars of `!ruby/hash-with-ivars` / `!str` mappings and
     `!ruby/regexp` sources Onigmo rejects are not reproduced.
+  - rubocop-rails' `config/database.yml` read (`YAML.unsafe_load_file`, #598) loads a date, a
+    timestamp or a `!ruby/...` object as nil; a class Ruby cannot resolve raises there (a cop error).
   - Nesting deeper than 1000 levels fails with `stack level too deep` (Ruby's limit depends on
-    its stack: about 1000 mappings, 1400 sequences).
+    its stack: about 1000 mappings, 1400 sequences). Deliberate (#591): RuboCop dies there with an
+    uncaught SystemStackError (exit 1); rbcop prints the message and exits 2.
   - The Ruby backtrace RuboCop prints after the message is not reproduced.
 - `DisplayStyleGuide`: the style guide URL is resolved once per run for each `StyleGuide` value,
   as RuboCop's per-process MessageAnnotator cache does, so the first offense with an anchor fixes

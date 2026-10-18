@@ -1,0 +1,1 @@
+db/migrate/20200101000000_add_users.rb:3:5: C: Rails/BulkChangeTable: You can use `change_table :users, bulk: true` to combine alter queries.

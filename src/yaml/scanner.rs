@@ -2,9 +2,9 @@
 //!
 //! Psych hands libyaml the config as a UTF-8 String with the encoding set, so the reader neither
 //! detects nor drops a BOM; the scanner skips one at the start of any line (it still counts a
-//! column). The reader decodes its input 16384 bytes at a time and rejects a character outside
-//! YAML's printable set as it decodes, so such a character fails the whole parse at the first read
-//! of its chunk.
+//! column). The reader decodes its input 16384 bytes at a time and rejects a byte sequence that
+//! is no UTF-8 character, or a character outside YAML's printable set, as it decodes, so such a
+//! sequence fails the whole parse at the first read of its chunk.
 
 use super::{Error, Mark, ScalarStyle};
 use std::collections::VecDeque;
@@ -62,6 +62,10 @@ pub struct Scanner {
     /// Characters the reader has decoded and checked, and their bytes.
     decoded: usize,
     decoded_bytes: usize,
+    /// The sequence `chars` stops at, if the input is no UTF-8 to its end.
+    bad: Option<BadSequence>,
+    /// The reader reached `bad` but fails only at its next read.
+    bad_pending: bool,
     eof: bool,
     mark: Mark,
     tokens: VecDeque<Token>,
@@ -90,17 +94,66 @@ fn is_printable_input(c: char) -> bool {
     matches!(c as u32, 0x09 | 0x0A | 0x0D | 0x20..=0x7E | 0x85 | 0xA0..=0xD7FF | 0xE000..=0xFFFD | 0x10000..=0x10FFFF)
 }
 
+/// A byte sequence yaml_parser_update_buffer's UTF-8 decoder rejects.
+struct BadSequence {
+    problem: &'static str,
+    /// The bytes the decoder needs in its raw buffer to see the problem.
+    width: usize,
+    /// Running out of input: an error only when the reader is asked for more.
+    incomplete: bool,
+}
+
+/// The characters libyaml's UTF-8 decoder takes from `bytes`, up to the first sequence it rejects.
+fn decode_utf8(bytes: &[u8]) -> (Vec<char>, Option<BadSequence>) {
+    let mut chars = Vec::with_capacity(bytes.len());
+    let mut i = 0;
+    while let Some(&octet) = bytes.get(i) {
+        let width = match octet {
+            0x00..=0x7F => 1,
+            _ if octet & 0xE0 == 0xC0 => 2,
+            _ if octet & 0xF0 == 0xE0 => 3,
+            _ if octet & 0xF8 == 0xF0 => 4,
+            _ => 0,
+        };
+        let bad = |problem, width| Some(BadSequence { problem, width, incomplete: false });
+        if width == 0 {
+            return (chars, bad("invalid leading UTF-8 octet", 1));
+        }
+        if i + width > bytes.len() {
+            let problem = "incomplete UTF-8 octet sequence";
+            return (chars, Some(BadSequence { problem, width, incomplete: true }));
+        }
+        let mut value = u32::from(octet) & [0x7F, 0x1F, 0x0F, 0x07][width - 1];
+        for &trailing in &bytes[i + 1..i + width] {
+            if trailing & 0xC0 != 0x80 {
+                return (chars, bad("invalid trailing UTF-8 octet", width));
+            }
+            value = (value << 6) + (u32::from(trailing) & 0x3F);
+        }
+        if value < [0, 0x80, 0x800, 0x10000][width - 1] {
+            return (chars, bad("invalid length of a UTF-8 sequence", width));
+        }
+        let Some(c) = char::from_u32(value) else { return (chars, bad("invalid Unicode character", width)) };
+        chars.push(c);
+        i += width;
+    }
+    (chars, None)
+}
+
 fn hex(c: char) -> u32 {
     c.to_digit(16).unwrap_or(0)
 }
 
 impl Scanner {
-    pub fn new(text: &str) -> Scanner {
+    pub fn new(text: &[u8]) -> Scanner {
+        let (chars, bad) = decode_utf8(text);
         Scanner {
-            chars: text.chars().collect(),
+            chars,
             pos: 0,
             decoded: 0,
             decoded_bytes: 0,
+            bad,
+            bad_pending: false,
             eof: false,
             mark: Mark::default(),
             tokens: VecDeque::new(),
@@ -120,23 +173,31 @@ impl Scanner {
 
     /// CACHE: make sure `n` characters are decoded (the end of input reads as NUL).
     fn cache(&mut self, n: usize) -> R {
+        let reader_error = |problem| Error { problem, context: None, context_mark: Mark::default() };
         while self.pos + n > self.decoded && !self.eof {
+            if let Some(bad) = self.bad.as_ref().filter(|_| self.bad_pending) {
+                return Err(reader_error(bad.problem));
+            }
             let limit = self.decoded_bytes + RAW_CHUNK;
             while let Some(&c) = self.chars.get(self.decoded) {
                 if self.decoded_bytes + c.len_utf8() > limit {
                     break;
                 }
                 if !is_printable_input(c) {
-                    return Err(Error {
-                        problem: "control characters are not allowed",
-                        context: None,
-                        context_mark: Mark::default(),
-                    });
+                    return Err(reader_error("control characters are not allowed"));
                 }
                 self.decoded_bytes += c.len_utf8();
                 self.decoded += 1;
             }
-            self.eof = self.decoded == self.chars.len();
+            if self.decoded < self.chars.len() {
+                continue;
+            }
+            match &self.bad {
+                None => self.eof = true,
+                // A sequence that does not fit this read is decoded with the next one.
+                Some(bad) if bad.incomplete || self.decoded_bytes + bad.width > limit => self.bad_pending = true,
+                Some(bad) => return Err(reader_error(bad.problem)),
+            }
         }
         Ok(())
     }

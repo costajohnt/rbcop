@@ -86,7 +86,7 @@ fn empty_scalar() -> Event {
 }
 
 impl Parser {
-    pub fn new(text: &str) -> Parser {
+    pub fn new(text: &[u8]) -> Parser {
         Parser {
             scanner: Scanner::new(text),
             state: State::StreamStart,

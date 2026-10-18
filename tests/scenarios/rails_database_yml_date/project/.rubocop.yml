@@ -1,0 +1,11 @@
+# rubocop-rails reads config/database.yml with YAML.unsafe_load_file (#598): its dates and
+# timestamps load, so the adapter is still found and Rails/BulkChangeTable reports.
+plugins:
+  - rubocop-rails
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  DisabledByDefault: true
+  TargetRailsVersion: 7.0
+Rails/BulkChangeTable:
+  Enabled: true

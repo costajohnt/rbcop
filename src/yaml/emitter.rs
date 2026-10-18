@@ -1,5 +1,6 @@
 //! libyaml's emitter (emitter.c) as Psych sets it up (unicode, 2-space indent, 80 columns, LF),
-//! for the events Psych's YAMLTree produces: no anchors and no %YAML/%TAG directives.
+//! for the events Psych's YAMLTree produces: anchors on collections and aliases, no %YAML/%TAG
+//! directives.
 
 use super::ScalarStyle;
 
@@ -10,10 +11,11 @@ pub enum Event {
     DocumentStart { implicit: bool },
     DocumentEnd { implicit: bool },
     Scalar { tag: Option<String>, value: String, plain_implicit: bool, quoted_implicit: bool, style: ScalarStyle },
-    SequenceStart { tag: Option<String>, implicit: bool, flow: bool },
+    SequenceStart { anchor: Option<String>, tag: Option<String>, implicit: bool, flow: bool },
     SequenceEnd,
-    MappingStart { tag: Option<String>, implicit: bool, flow: bool },
+    MappingStart { anchor: Option<String>, tag: Option<String>, implicit: bool, flow: bool },
     MappingEnd,
+    Alias { anchor: String },
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -70,6 +72,8 @@ struct Emitter<'a> {
     open_ended: u8,
     tag_handle: Option<String>,
     tag_suffix: Option<String>,
+    /// The event's anchor, and whether it is an alias (`*`) rather than an anchor (`&`).
+    anchor: Option<(String, bool)>,
     scalar: Analysis,
 }
 
@@ -92,6 +96,7 @@ pub fn emit(events: &[Event]) -> String {
         open_ended: 0,
         tag_handle: None,
         tag_suffix: None,
+        anchor: None,
         scalar: Analysis::default(),
     };
     while e.head < events.len() {
@@ -322,6 +327,13 @@ impl Emitter<'_> {
         self.mapping_context = mapping;
         self.simple_key_context = simple_key;
         match self.event() {
+            Event::Alias { .. } => {
+                self.process_anchor();
+                if self.simple_key_context {
+                    self.put(' ');
+                }
+                self.pop_state();
+            }
             Event::Scalar { .. } => {
                 self.select_scalar_style();
                 self.process_tag();
@@ -332,6 +344,7 @@ impl Emitter<'_> {
             }
             Event::SequenceStart { flow, .. } => {
                 let flow = *flow;
+                self.process_anchor();
                 self.process_tag();
                 self.state = if self.flow_level > 0 || flow || self.check_empty(&Event::SequenceEnd) {
                     State::FlowSequenceFirstItem
@@ -341,6 +354,7 @@ impl Emitter<'_> {
             }
             Event::MappingStart { flow, .. } => {
                 let flow = *flow;
+                self.process_anchor();
                 self.process_tag();
                 self.state = if self.flow_level > 0 || flow || self.check_empty(&Event::MappingEnd) {
                     State::FlowMappingFirstKey
@@ -358,8 +372,11 @@ impl Emitter<'_> {
 
     /// Simple keys are single-line and at most 128 bytes with their tag.
     fn check_simple_key(&self) -> bool {
-        let tag_len = self.tag_handle.as_ref().map_or(0, String::len) + self.tag_suffix.as_ref().map_or(0, String::len);
+        let tag_len = self.tag_handle.as_ref().map_or(0, String::len)
+            + self.tag_suffix.as_ref().map_or(0, String::len)
+            + self.anchor.as_ref().map_or(0, |(a, _)| a.len());
         let length = match self.event() {
+            Event::Alias { .. } => tag_len,
             Event::Scalar { value, .. } => {
                 if self.scalar.multiline {
                     return false;
@@ -409,7 +426,15 @@ impl Emitter<'_> {
     fn analyze_event(&mut self) {
         self.tag_handle = None;
         self.tag_suffix = None;
+        self.anchor = None;
         self.scalar = Analysis::default();
+        match self.event() {
+            Event::Alias { anchor } => self.anchor = Some((anchor.clone(), true)),
+            Event::SequenceStart { anchor: Some(a), .. } | Event::MappingStart { anchor: Some(a), .. } => {
+                self.anchor = Some((a.clone(), false));
+            }
+            _ => {}
+        }
         match self.event().clone() {
             Event::Scalar { tag, value, plain_implicit, quoted_implicit, .. } => {
                 if let Some(t) = tag
@@ -552,6 +577,16 @@ impl Emitter<'_> {
             a.block_plain_allowed = false;
         }
         a.chars = cs;
+    }
+
+    fn process_anchor(&mut self) {
+        let Some((anchor, alias)) = self.anchor.clone() else { return };
+        self.write_indicator(if alias { "*" } else { "&" }, true, false, false);
+        for c in anchor.chars() {
+            self.put(c);
+        }
+        self.whitespace = false;
+        self.indention = false;
     }
 
     fn process_tag(&mut self) {
