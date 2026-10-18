@@ -69,13 +69,14 @@ impl Cop for StubbedMock {
         if is_csend(&call) || method_name(&call) != "to" {
             return;
         }
+        // NodePattern checks the arity (one argument) before it calls the predicates.
+        let [matcher] = &send_args(&call)[..] else { return };
         let Some(expectation) = call.receiver().and_then(|r| helpers::rspec::send_call(&r)) else { return };
         let l = helpers::rspec::lang(cx);
         let name = method_name(&expectation);
         if expectation.receiver().is_some() || !l.expectation(name) {
             return;
         }
-        let [matcher] = &send_args(&call)[..] else { return };
         if !flagged(matcher) {
             return;
         }

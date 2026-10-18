@@ -165,40 +165,51 @@ impl Cop for SubjectStub {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let l = helpers::rspec::lang(cx);
         let target = cx.src.target_ruby;
-        let mut found = Vec::new();
-        for group in helpers::rspec::top_level_groups(&l, node) {
+        helpers::rspec::each_top_level_group(&l, node, |_, group, _| {
             // find_all_explicit: definitions below the group, by their nearest example group block
-            struct S<'a> {
+            // (each_ancestor(:block).find, nearest first: only a definition's block ancestors are
+            // asked, up to the first example group)
+            struct S<'a, 'pr> {
                 target: f64,
                 l: &'a Language,
-                groups: Vec<(usize, usize)>,
+                blocks: Vec<Node<'pr>>,
                 subjects: Vec<((usize, usize), String)>,
                 overrides: Vec<((usize, usize), String)>,
             }
-            impl<'pr> Visit<'pr> for S<'_> {
+            impl S<'_, '_> {
+                fn outer(&self) -> (usize, usize) {
+                    self.blocks
+                        .iter()
+                        .rev()
+                        .find(|a| helpers::rspec::example_group(self.l, a))
+                        .map_or((usize::MAX, usize::MAX), helpers::rspec::node_range)
+                }
+            }
+            impl<'pr> Visit<'pr> for S<'_, 'pr> {
                 fn visit_call_node(&mut self, n: &CallNode<'pr>) {
                     let node = n.as_node();
-                    let outer = self.groups.last().copied().unwrap_or((usize::MAX, usize::MAX));
                     if let Some(name) = definition(self.target, self.l, &node, false) {
+                        let outer = self.outer();
                         self.subjects.push((outer, name));
                     }
                     if let Some(name) = definition(self.target, self.l, &node, true) {
+                        let outer = self.outer();
                         self.overrides.push((outer, name));
                     }
-                    let group = helpers::rspec::plain_block_call(&node).is_some() && helpers::rspec::example_group(self.l, &node);
-                    if group {
-                        self.groups.push(helpers::rspec::node_range(&node));
+                    let block = helpers::rspec::plain_block_call(&node).is_some();
+                    if block {
+                        self.blocks.push(node);
                     }
                     ruby_prism::visit_call_node(self, n);
-                    if group {
-                        self.groups.pop();
+                    if block {
+                        self.blocks.pop();
                     }
                 }
             }
-            let mut s = S { target, l: &l, groups: Vec::new(), subjects: Vec::new(), overrides: Vec::new() };
+            let mut s = S { target, l: &l, blocks: Vec::new(), subjects: Vec::new(), overrides: Vec::new() };
             let c = group.as_call_node().unwrap();
-            if helpers::rspec::plain_block_call(&group).is_some() && helpers::rspec::example_group(&l, &group) {
-                s.groups.push(helpers::rspec::node_range(&group));
+            if helpers::rspec::plain_block_call(group).is_some() {
+                s.blocks.push(c.as_node());
             }
             if let Some(r) = c.receiver() {
                 s.visit(&r);
@@ -210,11 +221,10 @@ impl Cop for SubjectStub {
                 s.visit(&b);
             }
             let mut w = Walk { l: &l, subjects: s.subjects, overrides: s.overrides, found: Vec::new() };
-            w.node(&group, &[]);
-            found.extend(w.found);
-        }
-        for (s, e) in found {
-            cx.add(s, e, "Do not stub methods of the object under test.");
-        }
+            w.node(group, &[]);
+            for (s, e) in w.found {
+                cx.add(s, e, "Do not stub methods of the object under test.");
+            }
+        });
     }
 }

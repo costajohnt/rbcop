@@ -14,10 +14,10 @@ impl Cop for DescribeClass {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let l = helpers::rspec::lang(cx);
         let ignored = cx.cfg.get("IgnoredMetadata").and_then(Value::as_map).cloned().unwrap_or_default();
-        for group in helpers::rspec::top_level_groups(&l, node) {
+        helpers::rspec::each_top_level_group(&l, node, |_, group, _| {
             let call = group.as_call_node().unwrap();
             if is_csend(&call) || method_name(&call) != "describe" || !helpers::rspec::rspec_recv(&call) {
-                continue;
+                return;
             }
             let args = send_args(&call);
             // example_group_with_ignored_metadata?: (send #rspec? :describe ... (hash <#ignored_metadata? ...>))
@@ -31,9 +31,9 @@ impl Cop for DescribeClass {
                     })
                 })
             {
-                continue;
+                return;
             }
-            let Some(first) = args.first() else { continue };
+            let Some(first) = args.first() else { return };
             let is_const = matches!(kind::of(first), kind::CONSTANT_READ_NODE | kind::CONSTANT_PATH_NODE);
             let string_constant = helpers::rspec::is_str(first)
                 && STRING_CONSTANT.is_match(&String::from_utf8_lossy(first.as_string_node().unwrap().unescaped()));
@@ -41,7 +41,7 @@ impl Cop for DescribeClass {
                 let (s, e) = helpers::rspec::node_range(first);
                 cx.add(s, e, "The first argument to describe should be the class or module being tested.");
             }
-        }
+        });
     }
 }
 

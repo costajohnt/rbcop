@@ -36,7 +36,7 @@ impl Cop for InstanceVariable {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let l = helpers::rspec::lang(cx);
         let assignment_only = cx.cfg.bool("AssignmentOnly") == Some(true);
-        for group in helpers::rspec::top_level_groups(&l, node) {
+        helpers::rspec::each_top_level_group(&l, node, |_, group, _| {
             struct V {
                 target: f64,
                 /// nesting of plain blocks that allow instance variables
@@ -77,7 +77,7 @@ impl Cop for InstanceVariable {
                 }
             }
             let mut v = V { target: cx.src.target_ruby, allowed: 0, reads: Vec::new(), assigned: Vec::new() };
-            v.visit(&group);
+            v.visit(group);
             let (reads, assigned) = (v.reads, v.assigned);
             for ((s, e), name) in reads {
                 if assignment_only && !assigned.contains(&name) {
@@ -89,6 +89,6 @@ impl Cop for InstanceVariable {
                     "Avoid instance variables - use let, a method call, or a local variable (if possible).",
                 );
             }
-        }
+        });
     }
 }

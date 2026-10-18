@@ -42,11 +42,9 @@ impl Cop for SharedContext {
         }
         let l = helpers::rspec::lang(cx);
         let name = method_name(&call);
+        // shared_context asks SharedGroups.context, and shared_example (SharedGroups.examples)
+        // only after the first offense is added
         let shared_context = l.sg_context.has(name);
-        let shared_examples = l.sg_examples.has(name);
-        if !shared_context && !shared_examples {
-            return;
-        }
         // examples?: (send nil? {#Includes.examples #Examples.all} ...); context?: (send nil?
         // {#Subjects.all #Helpers.all #Includes.context #Hooks.all} ...). Each is searched only when
         // on_block's conditions reach it (a Language list set to `~` raises when asked).
@@ -69,7 +67,7 @@ impl Cop for SharedContext {
                 }
             });
         }
-        if shared_examples && context() && !examples() {
+        if l.sg_examples.has(name) && context() && !examples() {
             cx.add_fix(s, e, "Use `shared_context` when you don't define examples.", |c| {
                 c.replace(ss, se, "shared_context")
             });

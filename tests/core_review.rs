@@ -611,6 +611,78 @@ fn rspec_language_list_set_to_nil_raises() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// The nil list is asked where RuboCop asks it (#575, #576, #577): ancestors nearest first, the
+/// arity before the list, each on_block and on_send raising on its own, and the offenses found
+/// before a raise kept.
+#[test]
+fn rspec_language_nil_list_asked_in_rubocop_order() {
+    let dir = scratch("rspec-language-nil-order");
+    fs::create_dir_all(dir.join("spec")).unwrap();
+    let file = dir.join("spec/foo_spec.rb").display().to_string();
+    type Case<'a> = (&'a str, &'a str, &'a str, &'a [&'a str], &'a [&'a str]);
+    let cases: [Case; 5] = [
+        (
+            "Examples:\n      Focused: ~",
+            "RSpec/VoidExpect",
+            "describe Foo do\n  it { expect(1) }\nend\n",
+            &[
+                "F:4:8: C: RSpec/VoidExpect: Do not use `expect()` without `.to` or `.not_to`. Chain the methods or remove it.",
+            ],
+            &[],
+        ),
+        (
+            "Hooks: ~",
+            "RSpec/HookArgument",
+            "RSpec.describe Foo do\n  it \"a\", :focus do\n    expect(1).to eq 1\n  end\nend\n",
+            &[],
+            &["F:3:0."],
+        ),
+        (
+            "Examples:\n      Regular: ~",
+            "RSpec/VoidExpect",
+            "RSpec.describe Foo do\n  it \"a\" do\n    expect { a }\n  end\nend\n",
+            &[],
+            &["F:5:4.", "F:5:4."],
+        ),
+        (
+            "Examples:\n      Regular: ~",
+            "RSpec/LeakyLocalVariable",
+            "x = 1\nRSpec.describe Foo do\n  before { x }\n  it { expect(x) }\nend\n",
+            &[
+                "F:3:1: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.",
+            ],
+            &["F."],
+        ),
+        (
+            "ExampleGroups:\n      Skipped: ~",
+            "RSpec/RepeatedSubjectCall",
+            "RSpec.describe Foo do\n  it \"a\" do\n    expect(1).to eq 1\n  end\nend\n",
+            &[],
+            &[],
+        ),
+    ];
+    for (list, cop, source, offenses, errors) in cases {
+        let config = format!(
+            "plugins:\n  - rubocop-rspec\nAllCops:\n  NewCops: enable\n  SuggestExtensions: false\nRSpec:\n  Language:\n    {list}\n"
+        );
+        fs::write(dir.join(".rubocop.yml"), config).unwrap();
+        fs::write(dir.join("spec/foo_spec.rb"), format!("# frozen_string_literal: true\n\n{source}")).unwrap();
+        let out = rbcop(&dir, &["-f", "e", "--only", cop, "spec/foo_spec.rb"]);
+        let stdout = text(&out.stdout).replace(&file, "F");
+        assert_eq!(stdout.lines().collect::<Vec<_>>(), offenses, "{cop} {list}");
+        let printed: Vec<String> = text(&out.stderr)
+            .lines()
+            .take_while(|l| !l.is_empty())
+            .filter_map(|l| {
+                l.strip_prefix(&format!("An error occurred while {cop} cop was inspecting "))
+                    .map(|l| l.replace(&file, "F"))
+            })
+            .collect();
+        assert_eq!(printed, errors, "{cop} {list}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// RSpec/DiscardedMatcher with a String CustomMatcherMethods (#502): every receiverless send
 /// raises, and a plain block's on_block raises again; a numblock call raises once.
 #[test]

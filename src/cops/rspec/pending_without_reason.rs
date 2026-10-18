@@ -61,10 +61,25 @@ impl Cop for PendingWithoutReason {
         };
         let parent_is_block = parent.as_block_node().is_some();
         if (parent_is_block && helpers::rspec::spec_group(&l, parent_owner)) || block_group() {
-            // skipped_by_example_method?: (send nil? ${#Examples.skipped #Examples.pending}), and
-            // skipped_by_example_method_with_block?(node.parent) for one with a block
-            if call.receiver().is_none() && (args.is_empty() || block.is_some()) && (has(&l.ex_skipped) || has(&l.ex_pending)) {
+            // skipped_by_example_method?: (send nil? ${#Examples.skipped #Examples.pending})
+            if call.receiver().is_none() && args.is_empty() && (has(&l.ex_skipped) || has(&l.ex_pending)) {
                 cx.add(s, e, format!("Give the reason for {n}."));
+            }
+            // skipped_by_example_method_with_block?(node.parent): `(any_block (send nil?
+            // ${#Examples.skipped #Examples.pending} ...) ...)`, the node's own block, or the block
+            // whose body the node is
+            let parent_block = if block.is_some() {
+                node.as_call_node()
+            } else {
+                helpers::parser_parent::parser_parent_index(anc, anc.len())
+                    .filter(|&i| i > 0 && anc[i].as_block_node().is_some())
+                    .and_then(|i| anc[i - 1].as_call_node())
+            };
+            if let Some(pc) = parent_block.filter(|pc| pc.receiver().is_none()) {
+                let pn = method_name(&pc);
+                if l.ex_skipped.has(pn) || l.ex_pending.has(pn) {
+                    cx.add(s, e, format!("Give the reason for {pn}."));
+                }
             }
             // skipped_by_example_group_method?: (send #rspec? ${#ExampleGroups.skipped} ...)
             if helpers::rspec::rspec_recv(&call) && has(&l.eg_skipped) {
@@ -72,7 +87,7 @@ impl Cop for PendingWithoutReason {
             }
         } else if parent_is_block && helpers::rspec::example(&l, parent_owner) {
             // skipped_in_example?: (send nil? ${#Examples.skipped #Examples.pending})
-            if call.receiver().is_none() && args.is_empty() && block.is_none() && (has(&l.ex_skipped) || has(&l.ex_pending)) {
+            if call.receiver().is_none() && args.is_empty() && (has(&l.ex_skipped) || has(&l.ex_pending)) {
                 cx.add(s, e, format!("Give the reason for {n}."));
             }
         }

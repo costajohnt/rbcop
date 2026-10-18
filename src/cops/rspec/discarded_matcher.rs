@@ -75,53 +75,75 @@ impl Cop for DiscardedMatcher {
             }
             panic!("undefined method 'map' for CustomMatcherMethods");
         }
-        // on_send, or on_block for a plain block (numblocks have only their send checked, whose
-        // parent is no `block`)
-        if block.is_some_and(|b| !helpers::rspec::is_plain(&b)) {
-            return;
-        }
         if !matcher_call(&call, custom.as_deref()) {
             return;
         }
         let l = helpers::rspec::lang(cx);
-        let anc = cx.ancestors;
-        // inside_example?: the nearest example block around
-        let Some(example) = anc.iter().rev().find(|a| helpers::rspec::example(&l, a)) else { return };
-        if !has_expectation(example, custom.as_deref().unwrap_or_default()) {
-            return;
-        }
-        // find_outermost_chain: up while the node is its parent's receiver
-        let mut cur = anc.len();
-        let mut range = helpers::rspec::node_range(node);
-        while cur > 0 {
-            let Some(p) = anc[cur - 1].as_call_node() else { break };
-            if p.receiver().is_none_or(|r| helpers::rspec::node_range(&r) != range) {
-                break;
-            }
-            cur -= 1;
-            range = helpers::rspec::node_range(&anc[cur]);
-            // a send with a block: its parent is that block (no example), so no offense
-            if helpers::rspec::block_of(&p).is_some() {
-                return;
+        let custom = custom.unwrap_or_default();
+        let Some(b) = block else { return check(cx, &l, &custom, node, &call) };
+        // on_block, for a plain block only (numblocks have only their send checked), visited
+        // before its send: a raise there is a cop error of its own, and on_send still runs
+        let plain = helpers::rspec::is_plain(&b);
+        if plain {
+            let checked = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| check(cx, &l, &custom, node, &call)));
+            if let Err(payload) = checked {
+                if !(payload.is::<String>() || payload.is::<&str>()) {
+                    std::panic::resume_unwind(payload);
+                }
+                crate::runner::cop_error_at(cx.cop, cx.src, crate::runner::visiting());
             }
         }
-        // void_value?: the target's parent is an example block, or a begin/case/when in void context
-        let mut i = cur;
-        let void = loop {
-            let Some(pi) = helpers::parser_parent::parser_parent_index(anc, i) else { break false };
-            let p = &anc[pi];
-            match kind::of(p) {
-                kind::BLOCK_NODE => break pi > 0 && helpers::rspec::example(&l, &anc[pi - 1]),
-                kind::STATEMENTS_NODE | kind::PARENTHESES_NODE | kind::CASE_NODE | kind::WHEN_NODE => i = pi,
-                _ => break false,
-            }
-        };
-        if !void {
-            return;
+        // on_send: the send's nearest `block` ancestor is its own plain block, which is also its
+        // parent (find_outermost_chain stops there; void_value? asks example? of it)
+        let own = plain && helpers::rspec::example(&l, node);
+        let example = if own { Some(node) } else { cx.ancestors.iter().rev().find(|a| helpers::rspec::example(&l, a)) };
+        let Some(example) = example else { return };
+        if has_expectation(example, &custom) && plain && helpers::rspec::example(&l, node) {
+            let (s, e) = send_range(&call);
+            cx.add(s, e, format!("The result of `{}` is not used. Did you mean to chain it with `.and`?", method_name(&call)));
         }
-        let (s, e) = if cur == anc.len() { send_range(&call) } else { range };
-        // a matcher with a block is reported with its block
-        let (s, e) = if cur == anc.len() && helpers::rspec::block_of(&call).is_some() { helpers::rspec::node_range(node) } else { (s, e) };
-        cx.add(s, e, format!("The result of `{}` is not used. Did you mean to chain it with `.and`?", method_name(&call)));
     }
+}
+
+/// check_discarded_matcher for a send without a block (on_send) or a plain block (on_block).
+fn check(cx: &mut Cx, l: &helpers::rspec::Language, custom: &[String], node: &Node, call: &CallNode) {
+    let anc = cx.ancestors;
+    // inside_example?: the nearest example block around
+    let Some(example) = anc.iter().rev().find(|a| helpers::rspec::example(l, a)) else { return };
+    if !has_expectation(example, custom) {
+        return;
+    }
+    // find_outermost_chain: up while the node is its parent's receiver
+    let mut cur = anc.len();
+    let mut range = helpers::rspec::node_range(node);
+    while cur > 0 {
+        let Some(p) = anc[cur - 1].as_call_node() else { break };
+        if p.receiver().is_none_or(|r| helpers::rspec::node_range(&r) != range) {
+            break;
+        }
+        cur -= 1;
+        range = helpers::rspec::node_range(&anc[cur]);
+        // a send with a block: its parent is that block (no example), so no offense
+        if helpers::rspec::block_of(&p).is_some() {
+            return;
+        }
+    }
+    // void_value?: the target's parent is an example block, or a begin/case/when in void context
+    let mut i = cur;
+    let void = loop {
+        let Some(pi) = helpers::parser_parent::parser_parent_index(anc, i) else { break false };
+        let p = &anc[pi];
+        match kind::of(p) {
+            kind::BLOCK_NODE => break pi > 0 && helpers::rspec::example(l, &anc[pi - 1]),
+            kind::STATEMENTS_NODE | kind::PARENTHESES_NODE | kind::CASE_NODE | kind::WHEN_NODE => i = pi,
+            _ => break false,
+        }
+    };
+    if !void {
+        return;
+    }
+    let (s, e) = if cur == anc.len() { send_range(call) } else { range };
+    // a matcher with a block is reported with its block
+    let (s, e) = if cur == anc.len() && helpers::rspec::block_of(call).is_some() { helpers::rspec::node_range(node) } else { (s, e) };
+    cx.add(s, e, format!("The result of `{}` is not used. Did you mean to chain it with `.and`?", method_name(call)));
 }

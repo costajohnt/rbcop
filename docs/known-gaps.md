@@ -448,6 +448,10 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   - rubocop-rspec_rails loaded without rubocop-rspec: RuboCop fails to load the plugin
     (`uninitialized constant RuboCop::Cop::RSpec::InsideExampleGroup`); rbcop runs the RSpecRails
     cops with rubocop-rspec's default `RSpec/Language`.
+  - A rubocop-rspec `Language` list set to `~`: a stabby lambda (`-> { }`) is a parser `block`
+    whose send part the cops' `(block (send nil? #List ...) ...)` patterns ask the nil list of, so
+    RuboCop reports a cop error at each lambda for every block cop that asks it; rbcop's block
+    cops see calls only and report none there (checked with rubocop-rspec 3.10.2, #575).
   - Capybara/RSpec/CurrentPathExpectation on `match "<invalid regexp>"` (`match "("`): RuboCop's
     `Regexp.new` raises and the offense is lost to a cop error; rbcop reports the offense with the
     correction withheld.

@@ -14,8 +14,13 @@ impl Cop for AvoidSetupHook {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        // (block $(send nil? :setup) (args) _)
         let Some(call) = helpers::rspec::plain_block_call(node) else { return };
+        // inside_example_group? is asked of every block, before setup_call
+        let l = helpers::rspec::lang(cx);
+        if !helpers::rspec::inside_example_group(&l, cx.ancestors, node) {
+            return;
+        }
+        // (block $(send nil? :setup) (args) _)
         if call.receiver().is_some() || method_name(&call) != "setup" || !send_args(&call).is_empty() {
             return;
         }
@@ -23,10 +28,6 @@ impl Cop for AvoidSetupHook {
         if block.parameters().is_some_and(|p| {
             p.as_block_parameters_node().is_none_or(|b| b.parameters().is_some() || b.locals().iter().next().is_some())
         }) {
-            return;
-        }
-        let l = helpers::rspec::lang(cx);
-        if !helpers::rspec::inside_example_group(&l, cx.ancestors, node) {
             return;
         }
         let (ss, se) = send_range(&call);

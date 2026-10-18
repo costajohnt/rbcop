@@ -15,7 +15,7 @@ impl Cop for SkipBlockInsideExample {
             return;
         }
         let l = helpers::rspec::lang(cx);
-        if cx.ancestors.iter().any(|a| helpers::rspec::example(&l, a)) {
+        if cx.ancestors.iter().rev().any(|a| helpers::rspec::example(&l, a)) {
             let (s, e) = helpers::rspec::node_range(node);
             cx.add(s, e, "Don't pass a block to `skip` inside examples.");
         }

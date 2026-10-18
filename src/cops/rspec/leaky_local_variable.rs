@@ -45,8 +45,8 @@ impl Cop for LeakyLocalVariable {
         let src = cx.src;
         let tree = Tree::shared(&node.as_program_node().unwrap(), src);
         let mut calls: Option<Calls> = None;
-        let mut found: Vec<Span> = Vec::new();
-        vf::investigate(tree, |tree, scope, vars| {
+        // add_offense is immediate: the offenses found before a raise are kept
+        helpers::rspec::add_found(cx, |_, found: &mut Vec<Span>| vf::investigate(tree, |tree, scope, vars| {
             let calls = calls.get_or_insert_with(|| {
                 let mut c = Calls::default();
                 c.visit(node);
@@ -136,9 +136,6 @@ impl Cop for LeakyLocalVariable {
                     }
                 }
             }
-        });
-        for (s, e) in found {
-            cx.add(s, e, "Do not use local variables defined outside of examples inside of them.");
-        }
+        }), |cx, (s, e)| cx.add(s, e, "Do not use local variables defined outside of examples inside of them."));
     }
 }
