@@ -1,0 +1,12 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+dash.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+dash.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
+dash.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc by using `<<~` instead of `<<-`.
+dash.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `b`.
+indented_before_nul.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+indented_before_nul.rb:2:3: C: [Correctable] Style/RedundantAssignment: Redundant assignment before returning detected.
+indented_before_nul.rb:3:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+squiggly.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+squiggly.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
+squiggly.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+squiggly.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `b`.

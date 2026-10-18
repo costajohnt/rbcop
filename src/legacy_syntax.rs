@@ -44,6 +44,10 @@ pub fn diagnostics(
             w.violations.entry(p[1].start).or_insert(p[1].start);
         }
     }
+    // An embedded document the parser gem lexes as code: its `=` is a tEQL nothing takes (#534).
+    for (_, o) in embdoc_eqls(prism_tokens, text) {
+        w.violations.entry(o).or_insert(o);
+    }
     // A word split at a raw NUL, ^D or ^Z (`convert`): the grammar has no rule for two contents in
     // a row.
     for p in sorted.windows(2) {
@@ -225,9 +229,10 @@ pub fn indented_data_marker(text: &str, tokens: &[Token]) -> Option<(usize, usiz
             if !(line == 0 || text.as_bytes()[line - 1] == b'\n') {
                 return None;
             }
-            // The parser gem's buffer has CRLF made LF; its input ends with a NUL.
+            // `text` has CRLF made LF, as the parser gem's buffer (a `\r\n` left was `\r\r\n`, no
+            // newline right after the marker, #542); its input ends with a NUL.
             let after = &text.as_bytes()[t.end..];
-            let eol = matches!(after, [] | [b'\n' | b'\0' | b'\x04' | b'\x1a', ..] | [b'\r', b'\n', ..]);
+            let eol = matches!(after, [] | [b'\n' | b'\0' | b'\x04' | b'\x1a', ..]);
             let prism = indent.is_empty() && matches!(after, [] | [b'\n', ..] | [b'\r', b'\n', ..]);
             (eol && !prism && line_begin(text, tokens, i)).then_some((line, indent.len()))
         },
@@ -240,7 +245,11 @@ pub fn indented_data_marker(text: &str, tokens: &[Token]) -> Option<(usize, usiz
 /// column 0 and before a space or a newline. Byte rewrites for a copy Prism reads the same way:
 /// the indentation's last byte (a lone BOM: its three) ends a line, so `=begin` keeps its offset at
 /// a line start, and a character after `=begin`/`=end` other than a space becomes spaces.
-pub fn embdoc_fixups(text: &str, tokens: &[Token]) -> Vec<(usize, u8)> {
+/// The `=begin` token takes one space after it, and an `=end` right after that ends the document on
+/// its line (`=begin=end`, `=begin =end`, #534): the copy has a `#` comment there (an embedded
+/// document for `runner::analyze`'s comments). `orig`: the text before any rewrite (`text` is the
+/// copy so far, whose spaces after `=begin` may be this function's own).
+pub fn embdoc_fixups(text: &str, orig: &str, tokens: &[Token]) -> Vec<(usize, u8)> {
     let mut out = Vec::new();
     let spaced = |at: usize, out: &mut Vec<(usize, u8)>| {
         if let Some(c) = text.get(at..).and_then(|r| r.chars().next())
@@ -249,8 +258,13 @@ pub fn embdoc_fixups(text: &str, tokens: &[Token]) -> Vec<(usize, u8)> {
             out.extend((at..at + c.len_utf8()).map(|o| (o, b' ')));
         }
     };
+    let one_line = |begin: usize| {
+        let r = &orig[begin + 6..];
+        r.starts_with("=end") || (r.starts_with([' ', '\t', '\r', '\x0b', '\x0c']) && r[1..].starts_with("=end"))
+    };
     for (i, t) in tokens.iter().enumerate() {
         match t.kind {
+            "EMBDOC_BEGIN" if one_line(t.start) => out.push((t.start, b'#')),
             "EQUAL" if text[t.end..].starts_with("begin") && tokens.get(i + 1).is_some_and(|n| n.start == t.end) => {
                 let mut line = text[..t.start].trim_end_matches([' ', '\t', '\r', '\x0b', '\x0c']).len();
                 if text[..line] == *"\u{feff}" {
@@ -259,6 +273,10 @@ pub fn embdoc_fixups(text: &str, tokens: &[Token]) -> Vec<(usize, u8)> {
                 // At column 0 in any lexer state (lexer.rl's `e_nl '=begin'`), indented in line_begin.
                 if !(line == 0 || text.as_bytes()[line - 1] == b'\n') || t.start > line && !line_begin(text, tokens, i)
                 {
+                    continue;
+                }
+                if one_line(t.start) {
+                    out.push((t.start, b'#'));
                     continue;
                 }
                 if text[line..t.start] == *"\u{feff}" {
@@ -276,10 +294,14 @@ pub fn embdoc_fixups(text: &str, tokens: &[Token]) -> Vec<(usize, u8)> {
 }
 
 /// Prism's column-0 data marker (its `__END__` token, where it stops lexing) when the parser gem's
-/// lexer is not in its line_begin state there and reads an identifier instead (#337): its offset.
+/// lexer is not in its line_begin state there and reads an identifier instead (#337), or where a
+/// `\r` follows (`text` has CRLF made LF, as the parser gem's buffer: `__END__\r\r\n` is
+/// `__END__\r\n` there, and lexer.rl wants the newline right after the marker, #542): its offset.
 pub fn identifier_data_marker(text: &str, tokens: &[Token]) -> Option<usize> {
     let i = tokens.iter().position(|t| t.kind == "__END__")?;
-    (!line_begin(text, tokens, i)).then_some(tokens[i].start)
+    let start = tokens[i].start;
+    let cr = text.as_bytes().get(start + 7) == Some(&b'\r');
+    (cr || !line_begin(text, tokens, i)).then_some(start)
 }
 
 /// The `&` of each `&.` after a singleton method's receiver (`def self&.foo`, `def (x)&.foo`): the
@@ -454,34 +476,41 @@ fn line_begin(text: &str, tokens: &[Token], i: usize) -> bool {
     })
 }
 
-/// NULs the parser gem's lexer ends a heredoc line at, where that makes a terminator line (Prism
-/// reads them as text and leaves the heredoc open): in ` \0 SQL` or `  SQL\0` the segment between
-/// NULs and newlines is the `SQL` terminator, its leading spaces and tabs allowed after `<<~`/`<<-`
-/// (#247). Parse a copy with these NULs made newlines, written back once parsed.
-pub fn heredoc_nul_breaks(text: &str, tokens: &[Token]) -> Vec<usize> {
-    // Sets, so each segment costs two lookups however many heredocs the file opens (a file with many
-    // heredocs and many NUL segments must stay linear).
-    let (mut exact, mut indented): (HashSet<&str>, HashSet<&str>) = (HashSet::new(), HashSet::new());
+/// NULs (and ^D, ^Z: lexer.rl's `c_eof` too, #543) the parser gem's lexer ends a heredoc line at,
+/// where that makes a terminator line (Prism reads them as text): in ` \0 SQL` or `  SQL\0` the
+/// segment between NULs and newlines is the `SQL` terminator, its leading spaces and tabs allowed
+/// (a plain heredoc's too, which `plain_heredoc_terminator` then ends there for Prism) (#247).
+/// Parse a copy with these NULs made newlines, written back once parsed. `in_bodies`: only on
+/// lines inside a string Prism lexed (a heredoc a later terminator closes for Prism, #544;
+/// elsewhere a NUL ends the input for both).
+// ponytail: any string's content counts as a heredoc body; a NUL + terminator line inside a
+// multi-line plain string is not modelled.
+pub fn heredoc_nul_breaks(text: &str, tokens: &[Token], in_bodies: bool) -> Vec<usize> {
+    // A set, so each segment costs one lookup however many heredocs the file opens (a file with
+    // many heredocs and many NUL segments must stay linear).
+    let mut ids: HashSet<&str> = HashSet::new();
     for t in tokens.iter().filter(|t| t.kind == "HEREDOC_START") {
         let Some(s) = text.get(t.start..t.end).and_then(|s| s.strip_prefix("<<")) else { continue };
-        let (indent, s) = s.strip_prefix(['~', '-']).map_or((false, s), |r| (true, r));
-        let id = s.trim_matches(['\'', '"', '`']);
-        if indent {
-            indented.insert(id)
-        } else {
-            exact.insert(id)
-        };
+        let s = s.strip_prefix(['~', '-']).unwrap_or(s);
+        ids.insert(s.trim_matches(['\'', '"', '`']));
     }
-    let has_ids = !exact.is_empty() || !indented.is_empty();
+    let has_ids = !ids.is_empty();
+    let mut contents: Vec<(usize, usize)> =
+        tokens.iter().filter(|t| in_bodies && t.kind == "STRING_CONTENT").map(|t| (t.start, t.end)).collect();
+    contents.sort_unstable();
+    let in_string = |o: usize| {
+        let i = contents.partition_point(|c| c.1 <= o);
+        contents.get(i).is_some_and(|c| c.0 <= o)
+    };
     let mut out = Vec::new();
     let mut start = 0;
     for line in text.split_inclusive('\n') {
         let body = line.trim_end_matches('\n');
-        if has_ids && body.contains('\0') {
+        if has_ids && body.contains(['\0', '\x04', '\x1a']) && (!in_bodies || in_string(start)) {
             let mut seg_start = start;
-            for seg in body.split('\0') {
+            for seg in body.split(['\0', '\x04', '\x1a']) {
                 let seg_end = seg_start + seg.len();
-                let closes = exact.contains(seg) || indented.contains(seg.trim_start_matches([' ', '\t']));
+                let closes = ids.contains(seg.trim_start_matches([' ', '\t']));
                 if closes {
                     if seg_start > start {
                         out.push(seg_start - 1);
@@ -918,18 +947,151 @@ const NEWLINE_IGNORED: u32 = 0x1 | 0x80 | 0x100 | 0x200;
 
 /// Prism's tokens converted the way Prism::Translation::Parser::Lexer#to_a does for the parts the
 /// grammar's error positions depend on (string/symbol merging, `(` and `{` kinds), followed by `$end`.
+/// The offsets of the parser gem's tNL tokens (`convert`). After a `\` continuation and a comment
+/// line, its tNL is on that comment line (#537).
+pub fn newline_offsets(tokens: &[Token], text: &str, target: f64) -> Vec<usize> {
+    convert(tokens, text, target).into_iter().filter(|t| t.name == "tNL").map(|t| t.start).collect()
+}
+
+/// The embedded documents Prism reads where the parser gem's lexer is not at a point that starts one
+/// and lexes `=begin` as tEQL (#534): after `.`, `&.` or `::` (expr_dot), on the line after a `\`
+/// continuation, and after the newline ending the statement of `foo (stmt` (the parser sets
+/// expr_endarg there). Their `=` offsets, and where the grammar fails: at that `=`, or (an
+/// assignable before the `\`: `a \` + `=begin` is `a = begin`) at the `=` of the `=end`.
+// ponytail: openers are tracked by brackets and `end` keywords; an endless def inside the
+// parenthesis is not.
+fn embdoc_eqls(tokens: &[Token], text: &str) -> Vec<(usize, usize)> {
+    let mut out = Vec::new();
+    if !text.contains("=begin") {
+        return out;
+    }
+    let trivia = |k: &str| {
+        matches!(k, "COMMENT" | "NEWLINE" | "IGNORED_NEWLINE" | "EMBDOC_BEGIN" | "EMBDOC_LINE" | "EMBDOC_END")
+    };
+    // Unclosed openers: is each a `foo (` (tLPAREN_ARG)?
+    let mut open: Vec<bool> = Vec::new();
+    let mut prev: Option<&Token> = None;
+    // An `a \` + `=begin` document, failing at its `=end`.
+    let mut at_end: Option<usize> = None;
+    for t in tokens {
+        if t.kind == "EMBDOC_END"
+            && let Some(begin) = at_end.take()
+        {
+            out.push((begin, t.start));
+        }
+        // A one-line document is a `#` comment in the copy (`embdoc_fixups`).
+        let one_line = t.kind == "COMMENT" && text[t.start..].starts_with("=begin");
+        if (t.kind == "EMBDOC_BEGIN" || one_line)
+            && let Some(p) = prev
+        {
+            let gap = &text[p.end.min(t.start)..t.start];
+            let dot = matches!(p.kind, "DOT" | "AMPERSAND_DOT" | "COLON_COLON");
+            let continued = gap.trim_start_matches([' ', '\t']) == "\\\n";
+            let paren_arg = open.last() == Some(&true)
+                && p.kind != "PARENTHESIS_LEFT_PARENTHESES"
+                && p.state & NEWLINE_IGNORED == 0
+                && (gap.contains('\n') || p.kind == "HEREDOC_END");
+            let assignable = matches!(
+                p.kind,
+                "IDENTIFIER"
+                    | "INSTANCE_VARIABLE"
+                    | "GLOBAL_VARIABLE"
+                    | "CLASS_VARIABLE"
+                    | "CONSTANT"
+                    | "BRACKET_RIGHT"
+                    | "METHOD_NAME"
+            );
+            // After a `\` newline there is no tNL: the `=` continues the expression.
+            if continued && assignable && one_line {
+                let end = text[t.start + 6..].find("=end").map_or(t.start, |n| t.start + 6 + n);
+                out.push((t.start, end));
+            } else if continued && assignable {
+                at_end = Some(t.start);
+            } else if dot || continued || paren_arg {
+                out.push((t.start, t.start));
+            }
+        }
+        if trivia(t.kind) {
+            continue;
+        }
+        match t.kind {
+            "PARENTHESIS_LEFT_PARENTHESES" => open.push(true),
+            k if k.starts_with("PARENTHESIS_LEFT")
+                || k.starts_with("BRACKET_LEFT")
+                || matches!(
+                    k,
+                    "BRACE_LEFT"
+                        | "LAMBDA_BEGIN"
+                        | "EMBEXPR_BEGIN"
+                        | "KEYWORD_IF"
+                        | "KEYWORD_UNLESS"
+                        | "KEYWORD_WHILE"
+                        | "KEYWORD_UNTIL"
+                        | "KEYWORD_CASE"
+                        | "KEYWORD_DEF"
+                        | "KEYWORD_CLASS"
+                        | "KEYWORD_MODULE"
+                        | "KEYWORD_BEGIN"
+                        | "KEYWORD_FOR"
+                        | "KEYWORD_DO"
+                        | "KEYWORD_DO_BLOCK"
+                ) =>
+            {
+                open.push(false);
+            }
+            "PARENTHESIS_RIGHT" | "BRACKET_RIGHT" | "BRACE_RIGHT" | "EMBEXPR_END" | "KEYWORD_END" => {
+                open.pop();
+            }
+            _ => {}
+        }
+        prev = Some(t);
+    }
+    out
+}
+
 fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
     let mut out: Vec<Tok> = Vec::with_capacity(tokens.len() + 1);
     // Lexer state after the previous token (the start of a file is EXPR_BEG).
     let mut state = EXPR_BEG;
     // Inside a `%w`/`%i` literal.
     let mut qwords = false;
+    // Embedded documents the parser gem lexes as code (`embdoc_eqls`), and whether one is open.
+    let eqls = embdoc_eqls(tokens, text);
+    let mut in_eql_doc = false;
     let mut i = 0;
     while i < tokens.len() {
         let t = tokens[i];
         i += 1;
         if t.kind == "__END__" || t.kind == "EOF" {
             break;
+        }
+        // `=begin` ... `=end` as tEQL kBEGIN ... tEQL kEND tNL.
+        // ponytail: text after `=begin`/`=end` and the lines between are not lexed.
+        if matches!(t.kind, "EMBDOC_BEGIN" | "COMMENT") && eqls.iter().any(|e| e.0 == t.start) {
+            out.push(Tok { name: "tEQL", start: t.start, end: t.start + 1, cmd_do: false });
+            out.push(Tok { name: "kBEGIN", start: t.start + 1, end: t.start + 6, cmd_do: false });
+            if t.kind == "COMMENT" {
+                // `=begin=end` on one line.
+                let e = text[t.start + 6..].find("=end").map_or(t.start + 6, |n| t.start + 6 + n);
+                out.push(Tok { name: "tEQL", start: e, end: e + 1, cmd_do: false });
+                out.push(Tok { name: "kEND", start: e + 1, end: e + 4, cmd_do: false });
+                let nl = text[t.start..].find('\n').map_or(text.len(), |n| t.start + n);
+                out.push(Tok { name: "tNL", start: nl, end: nl + 1, cmd_do: false });
+                state = EXPR_BEG;
+            } else {
+                in_eql_doc = true;
+            }
+            continue;
+        }
+        if in_eql_doc && matches!(t.kind, "EMBDOC_LINE" | "EMBDOC_END") {
+            if t.kind == "EMBDOC_END" {
+                out.push(Tok { name: "tEQL", start: t.start, end: t.start + 1, cmd_do: false });
+                out.push(Tok { name: "kEND", start: t.start + 1, end: t.start + 4, cmd_do: false });
+                let nl = text[t.start..t.end].find('\n').map_or(t.end, |n| t.start + n);
+                out.push(Tok { name: "tNL", start: nl, end: nl + 1, cmd_do: false });
+                (in_eql_doc, state) = (false, EXPR_BEG);
+            }
+            continue;
         }
         let state_before = state;
         if !matches!(t.kind, "COMMENT" | "EMBDOC_BEGIN" | "EMBDOC_LINE" | "EMBDOC_END") {
@@ -977,6 +1139,8 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
                 if (quote == "'" || quote == "\"") && next(i) == "STRING_END" {
                     name = "tSTRING";
                     end = tokens[i].end;
+                    // The state after the string (its end), not after its opening quote (#537).
+                    state = tokens[i].state;
                     i += 1;
                 } else if (quote == "'" || quote == "\"") && next(i) == "STRING_CONTENT" && next(i + 1) == "STRING_END"
                 {
@@ -993,6 +1157,7 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
                     if simple {
                         name = "tSTRING";
                         end = tokens[i + 1].end;
+                        state = tokens[i + 1].state;
                         i += 2;
                     }
                 }

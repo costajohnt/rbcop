@@ -54,6 +54,9 @@ pub struct Source<'a> {
     pub lex_edits: Vec<(usize, u8)>,
     /// Below 2.7, `syntax::legacy_numbered_sends`.
     pub numbered_sends: Vec<usize>,
+    /// Below 3.3, in a file with a `\` line continuation: the offsets of the parser gem's tNL
+    /// tokens (`legacy_syntax::newline_offsets`), whose lines count as code for CommentConfig.
+    pub gem_newlines: Vec<usize>,
 }
 
 impl<'a> Source<'a> {
@@ -98,6 +101,7 @@ impl<'a> Source<'a> {
             parse_warnings: OnceCell::new(),
             lex_edits: Vec::new(),
             numbered_sends: Vec::new(),
+            gem_newlines: Vec::new(),
             lex_end: data_start.filter(|&d| !text[d..].starts_with("__END__")).unwrap_or(text.len()),
         };
         // ProcessedSource#lines stops at `__END__` only after the last token; with no tokens at

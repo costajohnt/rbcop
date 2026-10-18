@@ -192,6 +192,8 @@ pub fn numbered_parameter_errors(program: &ruby_prism::Node, target: f64) -> Vec
     }
     struct Walk {
         target: f64,
+        /// `accepted_numbered_targets` (3.0+): declared without the reserved-name error.
+        accepted: Vec<usize>,
         scopes: Vec<Scope>,
         out: Vec<(usize, usize, String)>,
     }
@@ -238,7 +240,11 @@ pub fn numbered_parameter_errors(program: &ruby_prism::Node, target: f64) -> Vec
             let Some(n) = numparam(name) else { return };
             let top = self.scopes.last_mut().unwrap();
             let (s, e) = (loc.start_offset(), loc.end_offset());
-            if top.dynamic && top.max > 0 {
+            if self.accepted.binary_search(&s).is_ok() {
+                if !top.declared.contains(&n) {
+                    top.declared.push(n);
+                }
+            } else if top.dynamic && top.max > 0 {
                 self.out.push((s, e, format!("cannot assign to numbered parameter _{n}")));
             } else if self.target >= 3.0 {
                 self.out.push((s, e, format!("_{n} is reserved for numbered parameter")));
@@ -318,9 +324,32 @@ pub fn numbered_parameter_errors(program: &ruby_prism::Node, target: f64) -> Vec
         fn visit_block_local_variable_node(&mut self, n: &ruby_prism::BlockLocalVariableNode<'pr>) {
             self.declare(n.name().as_slice());
         }
+        fn visit_rest_parameter_node(&mut self, n: &ruby_prism::RestParameterNode<'pr>) {
+            if let Some(name) = n.name() {
+                self.declare(name.as_slice());
+            }
+        }
+        fn visit_keyword_rest_parameter_node(&mut self, n: &ruby_prism::KeywordRestParameterNode<'pr>) {
+            if let Some(name) = n.name() {
+                self.declare(name.as_slice());
+            }
+        }
+        fn visit_block_parameter_node(&mut self, n: &ruby_prism::BlockParameterNode<'pr>) {
+            if let Some(name) = n.name() {
+                self.declare(name.as_slice());
+            }
+        }
+        fn visit_required_keyword_parameter_node(&mut self, n: &ruby_prism::RequiredKeywordParameterNode<'pr>) {
+            self.declare(n.name().as_slice());
+        }
+        fn visit_optional_keyword_parameter_node(&mut self, n: &ruby_prism::OptionalKeywordParameterNode<'pr>) {
+            self.declare(n.name().as_slice());
+            ruby_prism::visit_optional_keyword_parameter_node(self, n);
+        }
     }
     let mut w = Walk {
         target,
+        accepted: if target >= 3.0 { accepted_numbered_targets(program) } else { Vec::new() },
         scopes: vec![Scope { dynamic: false, in_block: false, ordinary: false, max: 0, declared: Vec::new() }],
         out: Vec::new(),
     };
@@ -333,18 +362,67 @@ pub fn numbered_parameter_errors(program: &ruby_prism::Node, target: f64) -> Vec
 /// (#364); Prism refuses to declare a `_1`..`_9` local and gives those reads as variable calls.
 /// The start offsets (sorted) of the `_N` variable calls the parser gem reads as locals: declared
 /// by an assignment or parameter in the same scope, or around a block.
-pub fn assigned_numbered_reads(program: &ruby_prism::Node) -> Vec<usize> {
-    numbered_walk(program, false)
+/// From 3.0 only the declarations `accepted_numbered_targets` gives count (`accept`); the others
+/// are syntax errors. Also the starts (sorted) of the blocks and lambdas whose numbered parameters
+/// (2.7+) are such declared reads: blocks without parameters for the parser gem.
+pub fn assigned_numbered_reads(program: &ruby_prism::Node, accept: Option<Vec<usize>>) -> (Vec<usize>, Vec<usize>) {
+    numbered_walk(program, false, accept)
 }
 
 /// Below Ruby 2.7 the start offsets (sorted) of the `_N` local reads (Prism's numbered parameter
 /// reads) no parameter or assignment declares: the parser gem's `(send nil :_1)` (#111, #362).
 /// A declared one (`|_1|`, `_1 = x`, #520) is an `lvar` like any local.
 pub fn legacy_numbered_sends(program: &ruby_prism::Node) -> Vec<usize> {
-    numbered_walk(program, true)
+    numbered_walk(program, true, None).0
 }
 
-fn numbered_walk(program: &ruby_prism::Node, sends: bool) -> Vec<usize> {
+/// From Ruby 3.0 the parser gem reports a `_1`..`_9` name as reserved where its builder calls
+/// `assignable` or declares a parameter, but not for a named capture (`/(?<_1>a)/ =~ s`, match_op)
+/// or a pattern variable it declares without `assignable`: a hash pattern key (`in {_1:}`,
+/// `in {"_1":}`), `in [*_1]`, `in {**_1}` (#533). The start offsets (sorted) of those targets.
+pub fn accepted_numbered_targets(program: &ruby_prism::Node) -> Vec<usize> {
+    use ruby_prism::Visit;
+    struct Walk(Vec<usize>);
+    impl Walk {
+        fn target(&mut self, n: Option<ruby_prism::Node>) {
+            if let Some(t) = n.and_then(|n| n.as_local_variable_target_node())
+                && matches!(t.name().as_slice(), [b'_', b'1'..=b'9'])
+            {
+                self.0.push(t.location().start_offset());
+            }
+        }
+    }
+    impl<'pr> Visit<'pr> for Walk {
+        fn visit_match_write_node(&mut self, n: &ruby_prism::MatchWriteNode<'pr>) {
+            for t in n.targets().iter() {
+                self.target(Some(t));
+            }
+            ruby_prism::visit_match_write_node(self, n);
+        }
+        fn visit_hash_pattern_node(&mut self, n: &ruby_prism::HashPatternNode<'pr>) {
+            for e in n.elements().iter() {
+                self.target(e.as_assoc_node().and_then(|a| a.value().as_implicit_node()).map(|i| i.value()));
+            }
+            self.target(n.rest().and_then(|r| r.as_assoc_splat_node()).and_then(|s| s.value()));
+            ruby_prism::visit_hash_pattern_node(self, n);
+        }
+        fn visit_array_pattern_node(&mut self, n: &ruby_prism::ArrayPatternNode<'pr>) {
+            self.target(n.rest().and_then(|r| r.as_splat_node()).and_then(|s| s.expression()));
+            ruby_prism::visit_array_pattern_node(self, n);
+        }
+        fn visit_find_pattern_node(&mut self, n: &ruby_prism::FindPatternNode<'pr>) {
+            self.target(n.left().expression());
+            self.target(n.right().as_splat_node().and_then(|s| s.expression()));
+            ruby_prism::visit_find_pattern_node(self, n);
+        }
+    }
+    let mut w = Walk(Vec::new());
+    w.visit(program);
+    w.0.sort_unstable();
+    w.0
+}
+
+fn numbered_walk(program: &ruby_prism::Node, sends: bool, accept: Option<Vec<usize>>) -> (Vec<usize>, Vec<usize>) {
     use ruby_prism::Visit;
     fn numbered(name: &[u8]) -> bool {
         matches!(name, [b'_', b'1'..=b'9'])
@@ -355,6 +433,14 @@ fn numbered_walk(program: &ruby_prism::Node, sends: bool) -> Vec<usize> {
         out: Vec<usize>,
         /// Collect undeclared local reads instead of declared variable calls.
         sends: bool,
+        /// Only these targets declare (`assigned_numbered_reads`).
+        accept: Option<Vec<usize>>,
+        /// The starts of the enclosing blocks and lambdas.
+        blocks: Vec<usize>,
+        /// Blocks with a declared `_N` read Prism took for a numbered parameter.
+        numbered_blocks: Vec<usize>,
+        /// Blocks with an undeclared `_N` read: numbered parameters for the parser gem too.
+        mixed_blocks: Vec<usize>,
     }
     impl Walk {
         fn scoped(&mut self, inherit: bool, f: impl FnOnce(&mut Self)) {
@@ -364,18 +450,31 @@ fn numbered_walk(program: &ruby_prism::Node, sends: bool) -> Vec<usize> {
             self.scopes.pop();
         }
         fn declare(&mut self, name: &[u8]) {
+            if self.accept.is_none() {
+                self.declare_name(name);
+            }
+        }
+        fn declare_name(&mut self, name: &[u8]) {
             let top = self.scopes.last_mut().unwrap();
             if numbered(name) && !top.iter().any(|d| d == name) {
                 top.push(name.to_vec());
             }
         }
+        fn declared(&self, name: &[u8]) -> bool {
+            numbered(name) && self.scopes.last().unwrap().iter().any(|d| d == name)
+        }
+        fn block(&mut self, start: usize, f: impl FnOnce(&mut Self)) {
+            self.blocks.push(start);
+            self.scoped(true, f);
+            self.blocks.pop();
+        }
     }
     impl<'pr> Visit<'pr> for Walk {
         fn visit_block_node(&mut self, n: &ruby_prism::BlockNode<'pr>) {
-            self.scoped(true, |w| ruby_prism::visit_block_node(w, n));
+            self.block(n.location().start_offset(), |w| ruby_prism::visit_block_node(w, n));
         }
         fn visit_lambda_node(&mut self, n: &ruby_prism::LambdaNode<'pr>) {
-            self.scoped(true, |w| ruby_prism::visit_lambda_node(w, n));
+            self.block(n.location().start_offset(), |w| ruby_prism::visit_lambda_node(w, n));
         }
         fn visit_def_node(&mut self, n: &ruby_prism::DefNode<'pr>) {
             if let Some(r) = n.receiver() {
@@ -406,19 +505,19 @@ fn numbered_walk(program: &ruby_prism::Node, sends: bool) -> Vec<usize> {
         }
         fn visit_call_node(&mut self, n: &ruby_prism::CallNode<'pr>) {
             let name = n.name().as_slice();
-            if !self.sends
-                && n.is_variable_call()
-                && numbered(name)
-                && self.scopes.last().unwrap().iter().any(|d| d == name)
-            {
+            if !self.sends && n.is_variable_call() && self.declared(name) {
                 self.out.push(n.location().start_offset());
             }
             ruby_prism::visit_call_node(self, n);
         }
         fn visit_local_variable_read_node(&mut self, n: &ruby_prism::LocalVariableReadNode<'pr>) {
             let name = n.name().as_slice();
-            if self.sends && numbered(name) && !self.scopes.last().unwrap().iter().any(|d| d == name) {
+            if self.sends && numbered(name) && !self.declared(name) {
                 self.out.push(n.location().start_offset());
+            } else if !self.sends && n.depth() == 0 && numbered(name) {
+                // A block that also reads an undeclared `_N` keeps its numbered parameters.
+                let list = if self.declared(name) { &mut self.numbered_blocks } else { &mut self.mixed_blocks };
+                list.extend(self.blocks.last());
             }
         }
         // The target is declared before the value is parsed (`_1 = _1` reads the local).
@@ -439,7 +538,10 @@ fn numbered_walk(program: &ruby_prism::Node, sends: bool) -> Vec<usize> {
             self.visit(&n.value());
         }
         fn visit_local_variable_target_node(&mut self, n: &ruby_prism::LocalVariableTargetNode<'pr>) {
-            self.declare(n.name().as_slice());
+            let at = n.location().start_offset();
+            if self.accept.as_ref().is_none_or(|a| a.binary_search(&at).is_ok()) {
+                self.declare_name(n.name().as_slice());
+            }
         }
         fn visit_required_parameter_node(&mut self, n: &ruby_prism::RequiredParameterNode<'pr>) {
             self.declare(n.name().as_slice());
@@ -451,11 +553,45 @@ fn numbered_walk(program: &ruby_prism::Node, sends: bool) -> Vec<usize> {
         fn visit_block_local_variable_node(&mut self, n: &ruby_prism::BlockLocalVariableNode<'pr>) {
             self.declare(n.name().as_slice());
         }
+        fn visit_rest_parameter_node(&mut self, n: &ruby_prism::RestParameterNode<'pr>) {
+            if let Some(name) = n.name() {
+                self.declare(name.as_slice());
+            }
+        }
+        fn visit_keyword_rest_parameter_node(&mut self, n: &ruby_prism::KeywordRestParameterNode<'pr>) {
+            if let Some(name) = n.name() {
+                self.declare(name.as_slice());
+            }
+        }
+        fn visit_block_parameter_node(&mut self, n: &ruby_prism::BlockParameterNode<'pr>) {
+            if let Some(name) = n.name() {
+                self.declare(name.as_slice());
+            }
+        }
+        fn visit_required_keyword_parameter_node(&mut self, n: &ruby_prism::RequiredKeywordParameterNode<'pr>) {
+            self.declare(n.name().as_slice());
+        }
+        fn visit_optional_keyword_parameter_node(&mut self, n: &ruby_prism::OptionalKeywordParameterNode<'pr>) {
+            self.declare(n.name().as_slice());
+            ruby_prism::visit_optional_keyword_parameter_node(self, n);
+        }
     }
-    let mut w = Walk { scopes: vec![Vec::new()], out: Vec::new(), sends };
+    let mut w = Walk {
+        scopes: vec![Vec::new()],
+        out: Vec::new(),
+        sends,
+        accept,
+        blocks: Vec::new(),
+        numbered_blocks: Vec::new(),
+        mixed_blocks: Vec::new(),
+    };
     w.visit(program);
     w.out.sort_unstable();
-    w.out
+    let mixed = std::mem::take(&mut w.mixed_blocks);
+    w.numbered_blocks.retain(|b| !mixed.contains(b));
+    w.numbered_blocks.sort_unstable();
+    w.numbered_blocks.dedup();
+    (w.out, w.numbered_blocks)
 }
 
 /// Builders::Default#static_regexp: every regexp literal without interpolation is compiled with

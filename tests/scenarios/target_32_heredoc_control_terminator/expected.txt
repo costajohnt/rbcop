@@ -1,0 +1,25 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+ctrl_d.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+ctrl_d.rb:3:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+ctrl_d.rb:4:2: C: [Correctable] Layout/ClosingHeredocIndentation: `    LOG` is not aligned with `warn <<~LOG` or beginning of method definition.
+ctrl_d.rb:5:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+ctrl_z.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+ctrl_z.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+ctrl_z.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+ctrl_z.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+nul_col0_then_same_name.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+nul_col0_then_same_name.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
+nul_col0_then_same_name.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+nul_col0_then_same_name.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `b`.
+nul_col0_then_same_name.rb:6:1: C: [Correctable] Layout/ClosingHeredocIndentation: `LOG` is not aligned with `b = <<~LOG`.
+nul_then_same_name.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+nul_then_same_name.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
+nul_then_same_name.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+nul_then_same_name.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `b`.
+nul_then_same_name.rb:6:1: C: [Correctable] Layout/ClosingHeredocIndentation: `LOG` is not aligned with `b = <<~LOG`.
+plain_mid_line.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+plain_mid_line.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
+plain_mid_line.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `b`.
+plain_trailing_nul.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+plain_trailing_nul.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
+plain_trailing_nul.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `b`.
