@@ -545,6 +545,44 @@ fn top_level_group_cop_errors_have_no_location() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// `require:` registers a local cop file at its place, between gems too (#579): a gem with a
+/// config before it memoizes the unqualified cop names first (no `no department given` warning
+/// for a name only the later cops share), and the AmbiguousCopName candidates come in
+/// registration order. Style/DirectiveScope's cop error there has no location (#578).
+#[test]
+fn local_require_between_gems_registers_in_place() {
+    let dir = scratch("local-require-between-gems");
+    fs::create_dir_all(dir.join("lib")).unwrap();
+    fs::write(
+        dir.join("lib/my_cop.rb"),
+        "module RuboCop\n  module Cop\n    module Custom\n      class Casecmp < Base\n      end\n    end\n  end\nend\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "require: [rubocop-rspec, ./lib/my_cop.rb, rubocop-performance]\nAllCops:\n  NewCops: enable\n  SuggestExtensions: false\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.join("a.rb"),
+        "# frozen_string_literal: true\n\n# rubocop:disable Casecmp\na = \"a\".downcase == \"b\"\n# rubocop:enable Casecmp\n",
+    )
+    .unwrap();
+    let out = rbcop(&dir, &["-f", "e", "a.rb"]);
+    let stderr = text(&out.stderr).replace(&format!("{}/", dir.display()), "");
+    assert_eq!(out.status.code(), Some(2));
+    assert!(!stderr.contains("no department given"), "{stderr}");
+    assert!(stderr.contains("An error occurred while Style/DirectiveScope cop was inspecting a.rb.\n"), "{stderr}");
+    assert!(
+        stderr.ends_with(
+            "Error: Ambiguous cop name `Casecmp` used in a.rb needs department qualifier. Did you mean Custom/Casecmp \
+             or Performance/Casecmp?\n"
+        ),
+        "{stderr}"
+    );
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// An enable directive opts a cop in past its target Ruby range too (Team#roundup_relevant_cops,
 /// #538): Security/YAMLLoad (maximum 3.0) runs at 3.3 in a file that enables it, and a
 /// disable/enable pair around its offense is not redundant.

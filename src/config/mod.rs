@@ -896,7 +896,11 @@ impl Store {
         // Plugins (and plugin-capable `require:` gems) only matter here for their default configs.
         let mut plugins: Vec<(String, Load)> = Vec::new();
         let mut migrate = Vec::new();
+        let mut require_from = 0;
         for key in ["plugins", "require"] {
+            if key == "require" {
+                require_from = plugins.len();
+            }
             for entry in seq(hash.remove(key)) {
                 match entry {
                     Value::Str(mut s) => {
@@ -969,7 +973,7 @@ impl Store {
         // The first entry that fails to load ends the run, after the warnings of the entries
         // before it.
         let names: Vec<String> = plugins.iter().map(|(n, _)| n.clone()).collect();
-        let failed = match self.integrate_plugins(plugins, &mut local) {
+        let failed = match self.integrate_plugins(plugins, require_from, &mut local) {
             Err(e) => {
                 let at = self.failed_entry.take().and_then(|f| names.iter().position(|n| *n == f));
                 match (at, missing) {
@@ -990,10 +994,7 @@ impl Store {
             None => migrate.into_iter().map(|(_, b, s)| (b, s)).collect(),
         };
         // ConfigLoader#load_file resolves `plugins:` and then `require:`: the cop classes a local
-        // file defines register once it loads.
-        // ponytail: the local files after the first gem with a config register after every gem of
-        // this config file (integrate_plugins registers the ones before it), not at their place in
-        // `require:`; that order only matters for a cop name two departments share.
+        // file defines register once it loads (integrate_plugins registers the ones before a gem).
         for (_, file) in local {
             self.register_local(&file);
         }
@@ -1187,11 +1188,12 @@ impl Store {
     /// Plugin::ConfigurationIntegrator: fold each plugin gem's config/default.yml into the defaults.
     // ponytail: assumes the LintRoller rules path is <gem>/config/default.yml, which every
     // rubocop-* plugin checked so far uses. Local `require: ./file` entries (custom cops, `local`
-    // with their places in `names`) register here only when they come before the first gem with a
-    // config (#536); the caller registers the rest.
+    // with their places in `names`) register here when they come before a gem (#536, #579); the
+    // caller registers the ones after the last. `names` from `require_from` on are `require:` entries.
     fn integrate_plugins(
         &mut self,
         names: Vec<(String, Load)>,
+        require_from: usize,
         local: &mut Vec<(usize, PathBuf)>,
     ) -> Result<(), String> {
         let names: Vec<(usize, String, Load)> = names
@@ -1206,13 +1208,17 @@ impl Store {
         // Plugin::Loader.load requires every plugin (registering its cops) before
         // ConfigurationIntegrator loads ConfigLoader.default_configuration, whose qualified keys
         // fill Registry#unqualified_cop_names, and then each plugin's config.
-        // ponytail: a config's `plugins:` and plugin-capable `require:` gems load as one batch;
-        // RuboCop integrates each such `require:` on its own, after `plugins:`.
+        // ponytail: a config's `plugins:` and plugin-capable `require:` gems merge their configs as
+        // one batch; RuboCop integrates each such `require:` on its own, after `plugins:`.
         let mut configs: Vec<Result<&'static crate::helpers::cop_registry::NativePlugin, PathBuf>> = Vec::new();
         for (at, name, load) in names {
-            // `require:` loads in order: a local file before the first gem with a config registers
-            // its cops before that gem memoizes Registry#unqualified_cop_names.
-            if configs.is_empty() {
+            // `require:` loads in order, each entry on its own: the `plugins:` batch and every gem
+            // with a config before this entry have memoized Registry#unqualified_cop_names, and a
+            // local file before it registers its cops now.
+            if at >= require_from && !configs.is_empty() {
+                crate::helpers::cop_registry::fill_unqualified_cop_names();
+            }
+            if at >= require_from || configs.is_empty() {
                 for (_, file) in local.extract_if(.., |(i, _)| *i < at) {
                     self.register_local(&file);
                 }
