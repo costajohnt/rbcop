@@ -583,6 +583,34 @@ fn local_require_between_gems_registers_in_place() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// Migration/DepartmentName qualifies a bare name by the legacy cop names of RuboCop and of the
+/// loaded plugins (rubocop-rspec's obsoletion rules, #583).
+#[test]
+fn department_name_uses_plugin_legacy_names() {
+    let dir = scratch("department-name-legacy");
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "plugins: [rubocop-rspec]\nAllCops:\n  NewCops: disable\n  SuggestExtensions: false\n",
+    )
+    .unwrap();
+    for (name, fixed) in [("FactoryBot", "RSpec/FactoryBot/*"), ("Capybara", "RSpec/Capybara/FeatureMethods")] {
+        let file = dir.join("a.rb");
+        fs::write(&file, format!("x = 1 # rubocop:disable Layout/ClassStructure, {name}\np x\n")).unwrap();
+        let out = rbcop(&dir, &["-f", "e", "--only", "Migration/DepartmentName", "a.rb"]);
+        assert!(
+            text(&out.stdout).contains(":1:48: C: [Correctable] Migration/DepartmentName: Department name is missing."),
+            "{}",
+            text(&out.stdout)
+        );
+        rbcop(&dir, &["-A", "--only", "Migration/DepartmentName", "a.rb"]);
+        assert_eq!(
+            fs::read_to_string(&file).unwrap(),
+            format!("x = 1 # rubocop:disable Layout/ClassStructure, {fixed}\np x\n")
+        );
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// An enable directive opts a cop in past its target Ruby range too (Team#roundup_relevant_cops,
 /// #538): Security/YAMLLoad (maximum 3.0) runs at 3.3 in a file that enables it, and a
 /// disable/enable pair around its offense is not redundant.
