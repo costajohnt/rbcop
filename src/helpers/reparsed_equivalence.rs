@@ -54,7 +54,7 @@ pub fn parse_clean<'t>(
         let k = e.type_name();
         walk && (k.starts_with("numbered_parameter_") || k == "expression_not_writable_numbered")
     };
-    if result.errors().any(|e| !crate::runner::tolerated(&e, legacy.is_some(), target, text) && !numbered(&e)) {
+    if result.errors().any(|e| !crate::runner::tolerated(&e, &result.node(), legacy.is_some(), target, text) && !numbered(&e)) {
         return None;
     }
     if legacy.is_none() {
