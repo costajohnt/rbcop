@@ -425,7 +425,8 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     Integer`).
   - An alias inside its own anchored collection (`&a [*a]`) is an unknown anchor (Psych makes a
     recursive Array); `!!omap [...]` loads as a plain Hash (Psych's dump keeps the `!!omap` tag);
-    a non-UTF-8 `!!binary` value is kept lossily (Psych dumps it as `!binary`); `!ruby/encoding`,
+    a `!!binary` value with non-ASCII bytes loads as a UTF-8 String (invalid bytes replaced), which
+    `--show-cops` writes as text where Psych writes `!binary` and base64; `!ruby/encoding`,
     `!ruby/class Regexp` / `Symbol`, ivars of `!ruby/hash-with-ivars` / `!str` mappings and
     `!ruby/regexp` sources Onigmo rejects are not reproduced.
   - Nesting deeper than 1000 levels fails with `stack level too deep` (Ruby's limit depends on

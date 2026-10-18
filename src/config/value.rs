@@ -435,21 +435,37 @@ impl ToRuby {
         if let Some(class) = class.filter(|c| !c.is_empty()) {
             return refused(&class);
         }
-        let (mut string, mut ivars) = (Value::Null, false);
+        static IVAR: LazyLock<Regex> =
+            LazyLock::new(|| Regex::new(r"^@[\p{Alphabetic}_][\p{Alphabetic}\p{Nd}_]*$").unwrap());
+        let (mut string, mut ivars) = (Value::Null, Vec::new());
         for pair in children.chunks(2) {
             let key = self.accept(&pair[0])?;
             let value = self.accept(&pair[1])?;
             match key {
                 Value::Str(k) if k == "str" => string = value,
-                _ => ivars = true,
+                // `:"@#{k.to_s.sub(/^@/, '')}"`
+                k => {
+                    let s = match &k {
+                        Value::Sym(s) => s[1..].to_string(),
+                        k => hash_key(k).unwrap_or_default(),
+                    };
+                    ivars.push(format!("@{}", s.strip_prefix('@').unwrap_or(&s)));
+                }
             }
         }
-        match (&string, ivars) {
-            (Value::Null, true) => Err("can't modify frozen NilClass: nil".into()),
-            (Value::Int(_) | Value::Float(_) | Value::Bool(_) | Value::Sym(_), true) => {
+        // init_with sets them in order: a bad name fails before a frozen receiver does.
+        let bad =
+            |n: &String| (!IVAR.is_match(n)).then(|| format!("'{n}' is not allowed as an instance variable name"));
+        let Some(first) = ivars.first() else { return Ok(string) };
+        if let Some(e) = bad(first) {
+            return Err(e);
+        }
+        match &string {
+            Value::Null => Err("can't modify frozen NilClass: nil".into()),
+            Value::Int(_) | Value::Float(_) | Value::Bool(_) | Value::Sym(_) => {
                 Err(format!("can't modify frozen {}", ruby_class(&string)))
             }
-            _ => Ok(string),
+            _ => ivars.iter().find_map(bad).map_or(Ok(string), Err),
         }
     }
 
@@ -520,7 +536,7 @@ fn ruby_class(v: &Value) -> String {
 }
 
 /// `String#unpack('m')`: base64, skipping other characters, up to the first `=`.
-// ponytail: a non-UTF-8 result is kept lossily (Psych keeps the binary String and dumps it `!binary`).
+// ponytail: kept as UTF-8 (lossily); Psych keeps a binary String and dumps a non-ASCII one `!binary`.
 fn unpack_base64(s: &str) -> String {
     let mut bytes = Vec::new();
     let (mut acc, mut bits) = (0u32, 0);
