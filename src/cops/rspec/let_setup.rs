@@ -53,13 +53,13 @@ impl Cop for LetSetup {
         if !group_or_including(&l, node) {
             return;
         }
-        let lets = helpers::rspec::find_all_in_scope(&l, node, helpers::rspec::let_);
+        let lets = helpers::rspec::lets_in_scope(&l, node);
         for let_node in &lets {
             let Some((range, name)) = let_bang(cx, let_node) else { continue };
             // overrides_outer_let_bang?
             let overrides = cx.ancestors.iter().rev().any(|a| {
                 group_or_including(&l, a)
-                    && helpers::rspec::find_all_in_scope(&l, a, helpers::rspec::let_)
+                    && helpers::rspec::lets_in_scope(&l, a)
                         .iter()
                         .any(|o| let_bang(cx, o).is_some_and(|(_, n)| n == name))
             });

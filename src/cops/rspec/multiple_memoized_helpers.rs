@@ -20,7 +20,7 @@ impl Cop for MultipleMemoizedHelpers {
         let mut names: Vec<Option<String>> = Vec::new();
         let groups = std::iter::once(node).chain(cx.ancestors.iter().rev().filter(|a| helpers::rspec::plain_block_call(a).is_some()));
         for group in groups {
-            let mut vars = helpers::rspec::find_all_in_scope(&l, group, helpers::rspec::let_);
+            let mut vars = helpers::rspec::lets_in_scope(&l, group);
             if !allow_subject {
                 vars.extend(helpers::rspec::find_all_in_scope(&l, group, helpers::rspec::subject));
             }

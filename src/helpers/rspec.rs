@@ -1063,6 +1063,19 @@ pub fn find_all_in_scope<'pr>(
     v.out
 }
 
+/// `find_all_in_scope(group, :let?)`. The group block's first child is its send, which `let?`'s
+/// `(send nil? #Helpers.all _ block_pass)` asks Helpers of when it has two arguments
+/// (`context "x", :meta do`).
+pub fn lets_in_scope<'pr>(l: &Language, group: &Node<'pr>) -> Vec<Node<'pr>> {
+    if let Some(c) = any_block_call(group)
+        && c.receiver().is_none()
+        && send_args(&c).len() == 2
+    {
+        l.helper(method_name(&c));
+    }
+    find_all_in_scope(l, group, let_)
+}
+
 /// The statements of a parser body: a `begin`'s children, else the body itself (nothing if empty).
 pub fn body_children<'pr>(body: Option<Node<'pr>>) -> Vec<Node<'pr>> {
     match body {

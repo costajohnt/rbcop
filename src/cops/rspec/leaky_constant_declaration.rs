@@ -12,6 +12,11 @@ impl Cop for LeakyConstantDeclaration {
             kind::CONSTANT_OR_WRITE_NODE,
             kind::CONSTANT_AND_WRITE_NODE,
             kind::CONSTANT_TARGET_NODE,
+            kind::CONSTANT_PATH_WRITE_NODE,
+            kind::CONSTANT_PATH_OPERATOR_WRITE_NODE,
+            kind::CONSTANT_PATH_OR_WRITE_NODE,
+            kind::CONSTANT_PATH_AND_WRITE_NODE,
+            kind::CONSTANT_PATH_TARGET_NODE,
             kind::CLASS_NODE,
             kind::MODULE_NODE,
         ]
@@ -23,7 +28,18 @@ impl Cop for LeakyConstantDeclaration {
         if !cx.ancestors.iter().rev().any(|a| helpers::rspec::plain_block_call(a).is_some() && helpers::rspec::spec_group(&l, a)) {
             return;
         }
-        // Only an unqualified name (no namespace, not even `::`) is reported.
+        // Only an unqualified name (no namespace, not even `::`) is reported: a `casgn` with a
+        // namespace (`::A = 1`, `B::A ||= 1`) is asked inside_describe_block? and no more.
+        if matches!(
+            kind::of(node),
+            kind::CONSTANT_PATH_WRITE_NODE
+                | kind::CONSTANT_PATH_OPERATOR_WRITE_NODE
+                | kind::CONSTANT_PATH_OR_WRITE_NODE
+                | kind::CONSTANT_PATH_AND_WRITE_NODE
+                | kind::CONSTANT_PATH_TARGET_NODE
+        ) {
+            return;
+        }
         let path = |p: Node| p.as_constant_read_node().is_some();
         let ((s, e), msg) = match node {
             Node::ClassNode { .. } => {
