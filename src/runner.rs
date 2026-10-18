@@ -378,8 +378,26 @@ fn analyze(
 ) -> (Vec<Offense>, Option<Corrector>, Vec<Span>) {
     let rails = crate::helpers::cop_registry::plugin_loaded("rubocop-rails");
     if rails && already_migrated_file(path, cfg) {
+        // MigrationFileSkippable skips only add_offense: the cops still run, so their errors and
+        // the directive warnings stay, and nothing is offended or corrected (no mode).
+        investigate(path, display, shared, raw_text, cfg, selected, None, redundant, rails);
         return (Vec::new(), None, Vec::new());
     }
+    investigate(path, display, shared, raw_text, cfg, selected, mode, redundant, rails)
+}
+
+#[allow(clippy::too_many_arguments)]
+fn investigate(
+    path: &Path,
+    display: &str,
+    shared: &Arc<str>,
+    raw_text: Option<&str>,
+    cfg: &Resolved,
+    selected: &dyn Fn(&str) -> bool,
+    mode: Option<Mode>,
+    redundant: Redundant,
+    rails: bool,
+) -> (Vec<Offense>, Option<Corrector>, Vec<Span>) {
     let text: &str = shared;
     let raw_text = raw_text.unwrap_or(text);
     let errors_before = file_errors_len();
