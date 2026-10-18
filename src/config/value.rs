@@ -1,11 +1,9 @@
 //! Config values as RuboCop sees them after Psych: insertion-ordered maps, plus Regexp.
 
+use crate::yaml::parser::{Event, Parser};
 use regex::Regex;
 use std::borrow::Cow;
 use std::sync::{Arc, LazyLock};
-use yaml_rust2::Yaml;
-use yaml_rust2::parser::{Event, MarkedEventReceiver, Parser};
-use yaml_rust2::scanner::{Marker, TScalarStyle};
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum Value {
@@ -130,10 +128,6 @@ impl Value {
     }
 }
 
-const REGEX_MARK: &str = "\u{1}rbcop-regexp:";
-
-const SYM_MARK: &str = "\u{1}rbcop-symbol:";
-
 /// Parse a YAML document the way Psych + RuboCop's restricted loader would.
 pub fn parse_yaml(text: &str) -> Result<Value, String> {
     parse_yaml_file(text, "<unknown>")
@@ -142,303 +136,472 @@ pub fn parse_yaml(text: &str) -> Result<Value, String> {
 /// `parse_yaml`, with errors worded as RuboCop prints them for the config file `path`: Psych's
 /// `(path): <problem> <context> at line L column C`, `An alias referenced an unknown anchor: x`,
 /// `Tried to load unspecified class: Date`.
+///
+/// RuboCop's ConfigLoader parses the whole stream into Psych nodes (YAMLDuplicationChecker, which
+/// fails on a mapping key that is no scalar as the mapping ends), then loads the first document
+/// with ToRuby, a restricted class loader (Regexp and Symbol) and a ScalarScanner.
 pub fn parse_yaml_file(text: &str, path: &str) -> Result<Value, String> {
-    let text = mark_regexps(text);
-    let mut checks = Checks { chars: text.chars().collect(), ..Checks::default() };
-    let parsed = Parser::new(text.chars()).load(&mut checks, true);
-    // RuboCop's YAMLDuplicationChecker fails as the parse reaches the end of such a mapping.
-    if let Some(e) = checks.loader.crash.take() {
-        return Err(e);
+    match parse_stream(text, path)? {
+        Some(root) => ToRuby::default().accept(&root),
+        None => Ok(Value::Map(Default::default())),
     }
-    if let Err(e) = parsed {
-        return Err(checks.syntax_error(&e, path));
-    }
-    if let Some(e) = checks.error {
-        return Err(e);
-    }
-    Ok(checks.loader.docs.into_iter().next().unwrap_or_else(|| Value::Map(Default::default())))
 }
 
-/// Feeds the loader, keeping what Psych's error messages need: the open collections (where
-/// libyaml's context mark is, flow or block) and the first class the restricted loader refuses.
-#[derive(Default)]
-struct Checks {
-    loader: Loader,
-    chars: Vec<char>,
-    /// Start mark of each open collection, and whether it is a flow collection.
-    opens: Vec<(Marker, bool)>,
-    /// A block mapping just opened: yaml-rust2 marks it at the first `:`, libyaml at its first key,
-    /// the next event.
-    key_mark_pending: bool,
-    error: Option<String>,
+/// A Psych::Nodes node.
+enum Node {
+    Scalar { value: String, anchor: Option<String>, tag: Option<String>, quoted: bool },
+    Seq { anchor: Option<String>, tag: Option<String>, children: Vec<Node> },
+    Map { anchor: Option<String>, tag: Option<String>, children: Vec<Node> },
+    Alias(String),
 }
 
-impl MarkedEventReceiver for Checks {
-    fn on_event(&mut self, ev: Event, mark: Marker) {
-        if std::mem::take(&mut self.key_mark_pending)
-            && let Some(open) = self.opens.last_mut()
-        {
-            open.0 = mark;
+impl Node {
+    fn class(&self) -> &'static str {
+        match self {
+            Node::Scalar { .. } => "Scalar",
+            Node::Seq { .. } => "Sequence",
+            Node::Map { .. } => "Mapping",
+            Node::Alias(_) => "Alias",
         }
-        let refused = match &ev {
-            Event::SequenceStart(_, tag) | Event::MappingStart(_, tag) => {
-                let flow = matches!(self.chars.get(mark.index()), Some('[' | '{'));
-                self.opens.push((mark, flow));
-                self.key_mark_pending = !flow && matches!(ev, Event::MappingStart(..));
-                tag.as_ref().and_then(refused_tag)
+    }
+}
+
+/// Psych's TreeBuilder over libyaml's events (the RuboCop handler's end_mapping check included):
+/// the first document's root node.
+fn parse_stream(text: &str, path: &str) -> Result<Option<Node>, String> {
+    let mut parser = Parser::new(text);
+    let mut open: Vec<Node> = Vec::new();
+    let mut first: Option<Node> = None;
+    let mut documents = 0;
+    let mut too_deep = false;
+    loop {
+        let node = match parser.next_event().map_err(|e| e.message(path))? {
+            Event::StreamEnd => break,
+            Event::StreamStart | Event::DocumentStart => continue,
+            Event::DocumentEnd => {
+                documents += 1;
+                continue;
+            }
+            Event::SequenceStart { anchor, tag } => {
+                open.push(Node::Seq { anchor, tag, children: Vec::new() });
+                continue;
+            }
+            Event::MappingStart { anchor, tag } => {
+                open.push(Node::Map { anchor, tag, children: Vec::new() });
+                continue;
             }
             Event::SequenceEnd | Event::MappingEnd => {
-                self.opens.pop();
-                None
+                let node = open.pop().expect("an open collection");
+                if let Node::Map { children, .. } = &node
+                    && let Some(key) = children.iter().step_by(2).find(|k| !matches!(k, Node::Scalar { .. }))
+                {
+                    return Err(format!("undefined method 'value' for an instance of Psych::Nodes::{}", key.class()));
+                }
+                node
             }
-            Event::Scalar(v, style, _, tag) => match tag {
-                Some(t) => refused_tag(t),
-                None if *style == TScalarStyle::Plain => refused_scalar(v),
-                None => None,
+            Event::Scalar { anchor, tag, value, quoted_implicit, .. } => {
+                Node::Scalar { value, anchor, tag, quoted: quoted_implicit }
+            }
+            Event::Alias(a) => Node::Alias(a),
+        };
+        let depth = open.len();
+        match open.last_mut() {
+            Some(_) if depth > MAX_DEPTH => too_deep |= documents == 0,
+            Some(Node::Seq { children, .. } | Node::Map { children, .. }) => children.push(node),
+            Some(_) => unreachable!(),
+            None if documents == 0 && first.is_none() => first = Some(node),
+            // ponytail: later documents are parsed (for their errors) and dropped.
+            None => {}
+        }
+    }
+    if too_deep {
+        return Err("stack level too deep".into());
+    }
+    Ok(first)
+}
+
+/// About where Psych's recursive ToRuby runs out of stack (SystemStackError) in a RuboCop run:
+/// nodes nested deeper are not kept, and loading the first document fails.
+// ponytail: Ruby's real limit depends on the call stack (about 1000 mappings, 1400 sequences).
+const MAX_DEPTH: usize = 1000;
+
+/// Psych::Visitors::ToRuby with RuboCop's ClassLoader::Restricted (Regexp, Symbol) and no
+/// load_tags. Errors are the Ruby exception messages RuboCop prints.
+#[derive(Default)]
+struct ToRuby {
+    anchors: std::collections::HashMap<String, Value>,
+}
+
+fn refused(class: &str) -> Result<Value, String> {
+    Err(format!("Tried to load unspecified class: {class}"))
+}
+
+/// A Hash key: rbcop's maps have String keys (a Symbol key keeps its colon); nil keys are left out.
+fn hash_key(key: &Value) -> Option<String> {
+    match key {
+        Value::Str(s) | Value::Sym(s) | Value::Regex(s) => Some(s.clone()),
+        Value::Int(i) => Some(i.to_string()),
+        Value::Float(f) => Some(crate::helpers::ruby_string::float_to_s(*f)),
+        Value::Bool(b) => Some(b.to_string()),
+        Value::Null | Value::Seq(_) | Value::Map(_) => None,
+    }
+}
+
+fn merge_into(hash: &mut Map, other: &Map) {
+    for (k, v) in &other.0 {
+        hash.insert(k.clone(), v.clone());
+    }
+}
+
+impl ToRuby {
+    fn accept(&mut self, node: &Node) -> Result<Value, String> {
+        let (anchor, value) = match node {
+            Node::Alias(a) => {
+                return self
+                    .anchors
+                    .get(a)
+                    .cloned()
+                    .ok_or_else(|| format!("An alias referenced an unknown anchor: {a}"));
+            }
+            Node::Scalar { value, anchor, tag, quoted } => (anchor, self.deserialize(value, tag.as_deref(), *quoted)?),
+            Node::Seq { anchor, tag, children } => (anchor, self.visit_sequence(tag.as_deref(), children)?),
+            Node::Map { anchor, tag, children } => (anchor, self.visit_mapping(tag.as_deref(), children)?),
+        };
+        // ponytail: registered once built, so an alias inside its own anchored collection is
+        // unknown (Psych registers a collection before its children and makes it recursive).
+        if let Some(a) = anchor {
+            self.anchors.insert(a.clone(), value.clone());
+        }
+        Ok(value)
+    }
+
+    fn deserialize(&mut self, value: &str, tag: Option<&str>, quoted: bool) -> Result<Value, String> {
+        static STR: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^!(?:str|ruby/string)(?::(.*))?$").unwrap());
+        if quoted {
+            return Ok(Value::Str(value.into()));
+        }
+        let Some(tag) = tag else { return tokenize(value) };
+        match tag {
+            "!binary" | "tag:yaml.org,2002:binary" => Ok(Value::Str(unpack_base64(value))),
+            "tag:yaml.org,2002:str" => Ok(Value::Str(value.into())),
+            t if STR.is_match(t) => match STR.captures(t).and_then(|c| c.get(1)).map(|m| m.as_str()) {
+                Some(class) if !class.is_empty() => refused(class),
+                _ => Ok(Value::Str(value.into())),
             },
-            // An alias to no anchor (the patched parser's usize::MAX): Psych's ToRuby fails on it
-            // after the parse, in document order with the refused classes.
-            Event::Alias(usize::MAX) if self.error.is_none() => {
-                let name: String = self.chars[(mark.index() + 1).min(self.chars.len())..]
-                    .iter()
-                    .take_while(|c| is_anchor_char(**c))
-                    .collect();
-                self.error = Some(format!("An alias referenced an unknown anchor: {name}"));
-                None
+            "!ruby/object:BigDecimal" => refused("BigDecimal"),
+            "!ruby/object:DateTime" => refused("DateTime"),
+            "!ruby/object:Complex" => refused("Complex"),
+            "!ruby/object:Rational" => refused("Rational"),
+            // `resolve_class`: no class for an empty name.
+            "!ruby/class" | "!ruby/module" if value.is_empty() => Ok(Value::Null),
+            "!ruby/class" | "!ruby/module" => refused(value),
+            "tag:yaml.org,2002:float" | "!float" => ruby_float(tokenize(value)?),
+            "!ruby/regexp" => {
+                // `/^\/(?<string>.*)\/(?<options>[mixn]*)$/m`; Regexp#inspect keeps the source, `/`
+                // escaped, and the options in `mix` order.
+                static RE: LazyLock<Regex> =
+                    LazyLock::new(|| Regex::new(r"(?ms)^/(?<string>.*)/(?<options>[mixn]*)$").unwrap());
+                let Some(c) = RE.captures(value) else { return Err("undefined method '[]' for nil".into()) };
+                let source = regexp_inspect_source(&c["string"].replace("\\/", "/"));
+                let flags: String = "mixn".chars().filter(|f| c["options"].contains(*f)).collect();
+                Ok(Value::Regex(format!("/{source}/{flags}")))
             }
-            _ => None,
-        };
-        if self.error.is_none()
-            && let Some(class) = refused
-        {
-            self.error = Some(format!("Tried to load unspecified class: {class}"));
+            "!ruby/range" => refused("Range"),
+            t if t.starts_with("!ruby/sym") => Ok(Value::Sym(format!(":{value}"))),
+            _ => tokenize(value),
         }
-        self.loader.on_event(ev, mark);
+    }
+
+    fn visit_sequence(&mut self, tag: Option<&str>, children: &[Node]) -> Result<Value, String> {
+        static CLASS: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^!(?:seq|ruby/array):(.*)$").unwrap());
+        match tag {
+            // Psych::Omap, a Hash: each item's first and last child.
+            // ponytail: loaded as a plain Map, so `--show-cops` leaves out Psych's `!!omap` tag.
+            Some("!omap" | "tag:yaml.org,2002:omap") => {
+                let mut map = Map::default();
+                for item in children {
+                    let (Node::Seq { children: pair, .. } | Node::Map { children: pair, .. }) = item else {
+                        return Err(format!(
+                            "undefined method 'children' for an instance of Psych::Nodes::{}",
+                            item.class()
+                        ));
+                    };
+                    let (Some(k), Some(v)) = (pair.first(), pair.last()) else {
+                        return Err(
+                            "undefined method 'visit_NilClass' for an instance of Psych::Visitors::ToRuby".into()
+                        );
+                    };
+                    let key = self.accept(k)?;
+                    let value = self.accept(v)?;
+                    if let Some(key) = hash_key(&key) {
+                        map.insert(key, value);
+                    }
+                }
+                Ok(Value::Map(Arc::new(map)))
+            }
+            Some(t) if CLASS.is_match(t) => match &CLASS.captures(t).expect("matched")[1] {
+                "" => Err("undefined method 'allocate' for nil".into()),
+                class => refused(class),
+            },
+            _ => {
+                let items = children.iter().map(|c| self.accept(c)).collect::<Result<Vec<_>, _>>()?;
+                Ok(Value::Seq(Arc::new(items)))
+            }
+        }
+    }
+
+    /// ToRuby#visit_Psych_Nodes_Mapping's tag cases, in its order.
+    fn visit_mapping(&mut self, tag: Option<&str>, children: &[Node]) -> Result<Value, String> {
+        static CASES: LazyLock<Vec<Regex>> = LazyLock::new(|| {
+            [
+                r"^!ruby/struct:?(.*)$",
+                r"^!ruby/data(-with-ivars)?(?::(.*))?$",
+                r"^!ruby/object:?(.*)$",
+                r"^!(?:str|ruby/string)(?::(.*))?$",
+                r"^!ruby/array:(.*)$",
+                r"^!ruby/exception:?(.*)$",
+                r"^!ruby/hash-with-ivars(?::(.*))?$",
+                r"^(?:!map|!ruby/hash):(.*)$",
+                r"^!ruby/marshalable:(.*)$",
+            ]
+            .iter()
+            .map(|r| Regex::new(r).unwrap())
+            .collect()
+        });
+        let hash = |s: &mut Self| s.revive_hash(children).map(|m| Value::Map(Arc::new(m)));
+        let Some(t) = tag else { return hash(self) };
+        let Some((case, c)) = CASES.iter().enumerate().find_map(|(i, re)| re.captures(t).map(|c| (i, c))) else {
+            return match t {
+                "tag:yaml.org,2002:str" => self.revive_string(None, children),
+                "!ruby/range" => refused("Range"),
+                "!set" | "tag:yaml.org,2002:set" => refused("Psych::Set"),
+                "!omap" | "tag:yaml.org,2002:omap" => refused("Psych::Omap"),
+                _ => hash(self),
+            };
+        };
+        let group = |i: usize| c.get(i).map(|m| m.as_str().to_string());
+        let name = group(1).unwrap_or_default();
+        match case {
+            // `resolve_class("")` is nil: Struct (a new Struct class) and Object are refused.
+            0 if name.is_empty() => refused("Struct"),
+            2 if name.is_empty() => refused("Object"),
+            2 if name == "Hash" => hash(self),
+            0 | 2 => refused(&name),
+            1 => match group(2) {
+                Some(class) if !class.is_empty() => refused(&class),
+                Some(_) => Err("undefined method 'allocate' for nil".into()),
+                // The members are loaded before the anonymous Data class is.
+                None => {
+                    for c in children {
+                        self.accept(c)?;
+                    }
+                    refused("Data")
+                }
+            },
+            3 => self.revive_string(group(1), children),
+            5 => {
+                // `Hash[*children]` comes before the class.
+                for c in children {
+                    self.accept(c)?;
+                }
+                refused(if name.is_empty() { "Exception" } else { &name })
+            }
+            6 => {
+                if let Some(class) = group(1) {
+                    return if class.is_empty() {
+                        Err("undefined method 'allocate' for nil".into())
+                    } else {
+                        refused(&class)
+                    };
+                }
+                // ponytail: only the `elements` entry is loaded; instance variables are dropped.
+                let mut map = Map::default();
+                for pair in children.chunks(2) {
+                    if let (Node::Scalar { value, .. }, Some(Node::Map { children, .. })) = (&pair[0], pair.get(1))
+                        && value == "elements"
+                    {
+                        merge_into(&mut map, &self.revive_hash(children)?);
+                    }
+                }
+                Ok(Value::Map(Arc::new(map)))
+            }
+            _ if name.is_empty() => Err("undefined method 'allocate' for nil".into()),
+            _ => refused(&name),
+        }
+    }
+
+    /// A `!str` mapping: its `str` entry, if any; other entries become instance variables.
+    fn revive_string(&mut self, class: Option<String>, children: &[Node]) -> Result<Value, String> {
+        if let Some(class) = class.filter(|c| !c.is_empty()) {
+            return refused(&class);
+        }
+        let (mut string, mut ivars) = (Value::Null, false);
+        for pair in children.chunks(2) {
+            let key = self.accept(&pair[0])?;
+            let value = self.accept(&pair[1])?;
+            match key {
+                Value::Str(k) if k == "str" => string = value,
+                _ => ivars = true,
+            }
+        }
+        match (&string, ivars) {
+            (Value::Null, true) => Err("can't modify frozen NilClass: nil".into()),
+            (Value::Int(_) | Value::Float(_) | Value::Bool(_) | Value::Sym(_), true) => {
+                Err(format!("can't modify frozen {}", ruby_class(&string)))
+            }
+            _ => Ok(string),
+        }
+    }
+
+    /// ToRuby#revive_hash: later keys replace earlier ones in place, `<<` merges a mapping (or a
+    /// list of them, earlier ones winning) unless its key is tagged `!!str`; a `<<` whose value
+    /// will not merge (TypeError) stays a key.
+    fn revive_hash(&mut self, children: &[Node]) -> Result<Map, String> {
+        let mut hash = Map::default();
+        for pair in children.chunks(2) {
+            let (k, v) = (&pair[0], &pair[1]);
+            let key = self.accept(k)?;
+            let val = self.accept(v)?;
+            let str_tagged = matches!(k, Node::Scalar { tag: Some(t), .. } if t == "tag:yaml.org,2002:str");
+            if matches!(&key, Value::Str(s) if s == "<<") && !str_tagged {
+                let merged = match (v, &val) {
+                    (Node::Alias(_) | Node::Map { .. }, Value::Map(m)) => Some(m.as_ref().clone()),
+                    (Node::Seq { .. }, Value::Seq(items)) if items.iter().all(|i| matches!(i, Value::Map(_))) => {
+                        let mut h = Map::default();
+                        for item in items.iter().rev() {
+                            if let Value::Map(m) = item {
+                                merge_into(&mut h, m);
+                            }
+                        }
+                        Some(h)
+                    }
+                    _ => None,
+                };
+                match merged {
+                    Some(m) => merge_into(&mut hash, &m),
+                    None => hash.insert("<<", val),
+                }
+                continue;
+            }
+            if let Some(key) = hash_key(&key) {
+                hash.insert(key, val);
+            }
+        }
+        Ok(hash)
     }
 }
 
-impl Checks {
-    /// Psych::SyntaxError#message (libyaml's problem, then its context, at the context mark).
-    fn syntax_error(&self, e: &yaml_rust2::ScanError, path: &str) -> String {
-        let info = e.info();
-        let (problem, context) = match info.split_once(", ") {
-            Some((c, p)) if c.starts_with("while ") => (p, Some(c)),
-            _ => (info, None),
-        };
-        let at = self.chars.get(e.marker().index()).copied();
-        let (problem, context) = match (problem, context) {
-            ("expected ',' or ']'", c) => ("did not find expected ',' or ']'", c),
-            (p, Some("while scanning an anchor or alias")) => {
-                (p, Some(if at == Some('*') { "while scanning an alias" } else { "while scanning an anchor" }))
+/// Regexp#inspect's source: an unescaped `/` gets a backslash.
+fn regexp_inspect_source(source: &str) -> String {
+    let mut out = String::new();
+    let mut chars = source.chars();
+    while let Some(c) = chars.next() {
+        match c {
+            '\\' => {
+                out.push(c);
+                out.extend(chars.next());
             }
-            (p, None) if p.starts_with("unexpected character: ") => {
-                ("found character that cannot start any token", Some("while scanning for the next token"))
-            }
-            pc => pc,
-        };
-        // Any open flow collection: yaml-rust2 opens an implicit mapping inside one (`[a: b]`, `[: b]`).
-        let in_flow = self.opens.iter().any(|o| o.1);
-        let context = match context {
-            Some("while parsing a node") if in_flow => Some("while parsing a flow node"),
-            Some("while parsing a node") => Some("while parsing a block node"),
-            c => c,
-        };
-        // libyaml marks a collection error at the collection's start.
-        // Psych prints libyaml's context mark, which an error without a context (yaml_parser_set_parser_error)
-        // leaves at the start.
-        if matches!(
-            problem,
-            "did not find expected <document start>"
-                | "found duplicate %YAML directive"
-                | "found incompatible YAML document"
-                | "found duplicate %TAG directive"
-        ) {
-            return format!("({path}): {problem} at line 1 column 1");
+            '/' => out.push_str("\\/"),
+            c => out.push(c),
         }
-        let mark = match context {
-            Some(
-                "while parsing a block mapping"
-                | "while parsing a flow mapping"
-                | "while parsing a flow sequence"
-                | "while parsing a block collection",
-            ) => self.opens.last().map_or(*e.marker(), |o| o.0),
-            _ => *e.marker(),
-        };
-        let what = context.map_or(problem.to_string(), |c| format!("{problem} {c}"));
-        format!("({path}): {what} at line {} column {}", mark.line(), mark.col() + 1)
+    }
+    out
+}
+
+/// `Class: inspect` for a FrozenError message.
+fn ruby_class(v: &Value) -> String {
+    match v {
+        Value::Int(i) => format!("Integer: {i}"),
+        Value::Float(f) => format!("Float: {}", crate::helpers::ruby_string::float_to_s(*f)),
+        Value::Bool(b) => format!("{}Class: {b}", if *b { "True" } else { "False" }),
+        Value::Sym(s) => format!("Symbol: {s}"),
+        _ => "Object".into(),
     }
 }
 
-/// The class Psych's restricted loader (RuboCop permits Regexp and Symbol) refuses for a tag.
-fn refused_tag(tag: &yaml_rust2::parser::Tag) -> Option<String> {
-    let suffix = tag.suffix.strip_prefix("ruby/")?;
-    ["object:", "struct:", "hash:", "array:", "exception:"]
-        .iter()
-        .find_map(|p| suffix.strip_prefix(p))
-        .map(String::from)
+/// `String#unpack('m')`: base64, skipping other characters, up to the first `=`.
+// ponytail: a non-UTF-8 result is kept lossily (Psych keeps the binary String and dumps it `!binary`).
+fn unpack_base64(s: &str) -> String {
+    let mut bytes = Vec::new();
+    let (mut acc, mut bits) = (0u32, 0);
+    for c in s.chars() {
+        let v = match c {
+            'A'..='Z' => c as u32 - 'A' as u32,
+            'a'..='z' => c as u32 - 'a' as u32 + 26,
+            '0'..='9' => c as u32 - '0' as u32 + 52,
+            '+' => 62,
+            '/' => 63,
+            '=' => break,
+            _ => continue,
+        };
+        acc = (acc << 6) | v;
+        bits += 6;
+        if bits >= 8 {
+            bits -= 8;
+            bytes.push((acc >> bits) as u8);
+            acc &= (1 << bits) - 1;
+        }
+    }
+    String::from_utf8_lossy(&bytes).into_owned()
 }
 
-/// ScalarScanner turns a plain timestamp into a Time and a date into a Date, which RuboCop's
-/// restricted loader refuses.
-fn refused_scalar(s: &str) -> Option<String> {
+/// Kernel#Float on a tokenized scalar.
+fn ruby_float(v: Value) -> Result<Value, String> {
+    match v {
+        Value::Float(_) => Ok(v),
+        Value::Int(i) => Ok(Value::Float(i as f64)),
+        Value::Str(s) => parse_ruby_float(&s).map(Value::Float).ok_or_else(|| {
+            format!("invalid value for Float(): {}", crate::helpers::ruby_string::inspect(s.as_bytes()))
+        }),
+        Value::Null => Err("can't convert nil into Float".into()),
+        Value::Bool(b) => Err(format!("can't convert {b} into Float")),
+        Value::Sym(_) => Err("can't convert Symbol into Float".into()),
+        _ => Err("can't convert Object into Float".into()),
+    }
+}
+
+/// Kernel#Float's String rules (Ruby 4): blanks around, `_` between digits, a decimal number (`.5`,
+/// `5.` and `1.e5` too) or a `0x` hex one.
+fn parse_ruby_float(s: &str) -> Option<f64> {
+    static DEC: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(concat!(
+            r"^[+-]?(?:[0-9]+(?:_[0-9]+)*(?:\.(?:[0-9]+(?:_[0-9]+)*)?)?|\.[0-9]+(?:_[0-9]+)*)",
+            r"(?:[eE][+-]?[0-9]+(?:_[0-9]+)*)?$"
+        ))
+        .unwrap()
+    });
+    static HEX: LazyLock<Regex> =
+        LazyLock::new(|| Regex::new(r"^([+-]?)0[xX]([0-9a-fA-F]+(?:_[0-9a-fA-F]+)*)$").unwrap());
+    let t = s.trim_matches([' ', '\t', '\n', '\x0B', '\x0C', '\r']);
+    if let Some(c) = HEX.captures(t) {
+        let v = u64::from_str_radix(&c[2].replace('_', ""), 16).ok()? as f64;
+        return Some(if &c[1] == "-" { -v } else { v });
+    }
+    if !DEC.is_match(t) {
+        return None;
+    }
+    t.replace('_', "").replace(".e", ".0e").replace(".E", ".0E").parse().ok()
+}
+
+/// Psych's `ScalarScanner#tokenize` (YAML 1.1, `strict_integer: false`) with RuboCop's restricted
+/// class loader: `yes`/`on`/`off`, `1_000`, `0100` (octal), `1:30` (base 60), `1.`, `:sym`; a
+/// timestamp or date fails as its class (Time, Date) is not permitted.
+fn tokenize(s: &str) -> Result<Value, String> {
+    static WORDISH: LazyLock<Regex> =
+        LazyLock::new(|| Regex::new(r"(?m)^[^0-9.:-]?[\p{Alphabetic}_ \t\r\n\x0B\x0C!@#$%^&*(){}<>|/\\~;=]+").unwrap());
+    static NOT_YTONF: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?mi)^[^ytonf~]").unwrap());
+    static NULL: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?mi)^null$").unwrap());
+    static TRUE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?mi)^(yes|true|on)$").unwrap());
+    static FALSE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?mi)^(no|false|off)$").unwrap());
     static TIME: LazyLock<Regex> = LazyLock::new(|| {
-        Regex::new(
-            r"^-?\d{4}-\d{1,2}-\d{1,2}(?:[Tt]|[ \t\r\n\x0B\x0C]+)\d{1,2}:\d\d:\d\d(?:\.\d*)?(?:[ \t\r\n\x0B\x0C]*(?:Z|[-+]\d{1,2}:?(?:\d\d)?))?$",
-        )
+        Regex::new(concat!(
+            r"^-?[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}(?:[Tt]|[ \t\r\n\x0B\x0C]+)[0-9]{1,2}:[0-9][0-9]:[0-9][0-9]",
+            r"(?:\.[0-9]*)?(?:[ \t\r\n\x0B\x0C]*(?:Z|[-+][0-9]{1,2}:?(?:[0-9][0-9])?))?$"
+        ))
         .unwrap()
     });
     static DATE: LazyLock<Regex> =
-        LazyLock::new(|| Regex::new(r"^\d{4}-(?:1[012]|0\d|\d)-(?:[12]\d|3[01]|0\d|\d)$").unwrap());
-    if TIME.is_match(s) {
-        Some("Time".into())
-    } else if DATE.is_match(s) {
-        Some("Date".into())
-    } else {
-        None
-    }
-}
-
-/// A mapping key: the scalar as yaml-rust2 resolved it (keys compare as YAML nodes), or `None` for a
-/// collection key, which the converted Hash leaves out.
-type Key = Option<Yaml>;
-
-/// An open collection.
-enum Open {
-    Seq(Vec<Value>),
-    /// Entries so far (a duplicated key replaces the earlier value in place, as Psych does), and the
-    /// key waiting for its value (`None`: the next node is a key).
-    Map(Vec<(Key, Value)>, Option<Key>),
-}
-
-/// yaml-rust2's YamlLoader, except that it builds `Value`s directly, a duplicated key replaces the
-/// earlier value in place, as Psych does (YamlLoader rejects the document), a plain `:name` scalar
-/// (a Symbol to Psych's ScalarScanner) is marked, so it can be told apart from a quoted ':name'
-/// String, and an alias shares its anchor's collection (`Arc`) instead of copying it, as Psych's
-/// aliases are the same object: copying makes a few lines of nested aliases exponential.
-#[derive(Default)]
-struct Loader {
-    docs: Vec<Value>,
-    /// Open collections with their anchor ids.
-    stack: Vec<(Open, usize)>,
-    anchors: std::collections::HashMap<usize, (Key, Value)>,
-    docs_ended: usize,
-    /// YAMLDuplicationChecker's NoMethodError for a mapping with a key that is no scalar node.
-    crash: Option<String>,
-}
-
-/// A key that is no scalar node: a collection or an alias (`? [a]`, `*x : 1`), by Psych node class.
-const BAD_KEY: &str = "\u{1}rbcop-bad-key:";
-
-/// libyaml's anchor name characters.
-fn is_anchor_char(c: char) -> bool {
-    c.is_ascii_alphanumeric() || c == '_' || c == '-'
-}
-
-impl MarkedEventReceiver for Loader {
-    fn on_event(&mut self, ev: Event, _: Marker) {
-        match ev {
-            Event::DocumentEnd => {
-                // `insert` pushes a finished root node; an empty document is nil.
-                self.docs_ended += 1;
-                if self.docs.len() < self.docs_ended {
-                    self.docs.push(Value::Null);
-                }
-            }
-            Event::SequenceStart(aid, _) => self.stack.push((Open::Seq(Vec::new()), aid)),
-            Event::MappingStart(aid, _) => self.stack.push((Open::Map(Vec::new(), None), aid)),
-            Event::SequenceEnd | Event::MappingEnd => {
-                if let Some((open, aid)) = self.stack.pop() {
-                    let value = match open {
-                        Open::Seq(items) => Value::Seq(Arc::new(items)),
-                        Open::Map(entries, _) => {
-                            let bad = entries.iter().find_map(|(k, _)| k.as_ref()?.as_str()?.strip_prefix(BAD_KEY));
-                            if let Some(class) = bad
-                                && self.crash.is_none()
-                            {
-                                self.crash =
-                                    Some(format!("undefined method 'value' for an instance of Psych::Nodes::{class}"));
-                            }
-                            Value::Map(Arc::new(to_map(entries)))
-                        }
-                    };
-                    self.insert(None, value, aid);
-                }
-            }
-            Event::Scalar(v, style, aid, tag) => {
-                // Quoted scalars are strings; `!!str` and other tags as YamlLoader treats them.
-                let node = match (style, tag) {
-                    (TScalarStyle::Plain, None) if v.chars().count() > 1 && v.starts_with(':') => {
-                        Yaml::String(format!("{SYM_MARK}:{}", symbol_name(&v)))
-                    }
-                    (TScalarStyle::Plain, Some(t)) if t.handle == "tag:yaml.org,2002:" => match t.suffix.as_str() {
-                        "str" => Yaml::String(v),
-                        _ => psych_scalar(&v),
-                    },
-                    (TScalarStyle::Plain, Some(_)) => Yaml::String(v),
-                    (TScalarStyle::Plain, None) => psych_scalar(&v),
-                    _ => Yaml::String(v),
-                };
-                let value = scalar(node.clone());
-                self.insert(Some(node), value, aid);
-            }
-            Event::Alias(id) => {
-                let (mut key, value) = self.anchors.get(&id).cloned().unwrap_or((Some(Yaml::BadValue), Value::Null));
-                if matches!(self.stack.last(), Some((Open::Map(_, None), _))) {
-                    key = Some(Yaml::String(format!("{BAD_KEY}Alias")));
-                }
-                self.insert(key, value, 0);
-            }
-            _ => {}
-        }
-    }
-}
-
-impl Loader {
-    fn insert(&mut self, key: Key, value: Value, aid: usize) {
-        if aid > 0 {
-            self.anchors.insert(aid, (key.clone(), value.clone()));
-        }
-        match self.stack.last_mut() {
-            None => self.docs.push(value),
-            Some((Open::Seq(items), _)) => items.push(value),
-            Some((Open::Map(entries, pending), _)) => match pending.take() {
-                None => {
-                    *pending = Some(key.or_else(|| match &value {
-                        Value::Seq(_) => Some(Yaml::String(format!("{BAD_KEY}Sequence"))),
-                        Value::Map(_) => Some(Yaml::String(format!("{BAD_KEY}Mapping"))),
-                        _ => None,
-                    }))
-                }
-                Some(k) => match entries.iter_mut().find(|(e, _)| k.is_some() && *e == k) {
-                    Some((_, v)) => *v = value,
-                    None => entries.push((k, value)),
-                },
-            },
-        }
-    }
-}
-
-/// The Symbol name Psych's ScalarScanner gives a plain `:name` (`/^:(["'])(.*)\1/` takes the text
-/// between the quotes of `:'name'` / `:"name"`, a leading `:` of it dropped).
-fn symbol_name(v: &str) -> &str {
-    let rest = &v[1..];
-    let quoted = rest.chars().next().filter(|q| matches!(q, '\'' | '"')).and_then(|q| {
-        let line = rest.split('\n').next().unwrap_or("");
-        line[1..].rfind(q).map(|end| &line[1..1 + end])
-    });
-    match quoted {
-        Some(name) => name.strip_prefix(':').unwrap_or(name),
-        None => rest,
-    }
-}
-
-/// Psych's `ScalarScanner#tokenize` (YAML 1.1, `strict_integer: false`) for a plain scalar:
-/// `yes`/`on`/`off`, `1_000`, `0100` (octal), `1:30` (base 60), `1.` and so on.
-// ponytail: timestamps and dates stay strings (RuboCop's safe_load refuses Time/Date anyway); an
-// integer beyond i64 saturates to i64::MAX/MIN.
-fn psych_scalar(s: &str) -> Yaml {
-    static WORDISH: LazyLock<Regex> =
-        LazyLock::new(|| Regex::new(r"^[^\d.:-]?[\p{Alphabetic}_ \t\r\n\x0B\x0C!@#$%^&*(){}<>|/\\~;=]+").unwrap());
+        LazyLock::new(|| Regex::new(r"^[0-9]{4}-(?:1[012]|0[0-9]|[0-9])-(?:[12][0-9]|3[01]|0[0-9]|[0-9])$").unwrap());
     static SEXA_INT: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^[-+]?[0-9][0-9_]*(:[0-5]?[0-9]){1,2}$").unwrap());
     static SEXA_FLOAT: LazyLock<Regex> =
         LazyLock::new(|| Regex::new(r"^[-+]?[0-9][0-9_]*(:[0-5]?[0-9]){1,2}\.[0-9_]*$").unwrap());
@@ -451,24 +614,37 @@ fn psych_scalar(s: &str) -> Yaml {
         ))
         .unwrap()
     });
-    let lower = s.to_ascii_lowercase();
     if s.is_empty() {
-        return Yaml::Null;
+        return Ok(Value::Null);
     }
     if WORDISH.is_match(s) || s.contains('\n') {
-        return match lower.as_str() {
-            _ if s.chars().count() > 5 => Yaml::String(s.into()),
-            "~" | "null" => Yaml::Null,
-            "yes" | "true" | "on" => Yaml::Boolean(true),
-            "no" | "false" | "off" => Yaml::Boolean(false),
-            _ => Yaml::String(s.into()),
-        };
+        return Ok(if s.chars().count() > 5 || NOT_YTONF.is_match(s) {
+            Value::Str(s.into())
+        } else if s == "~" || NULL.is_match(s) {
+            Value::Null
+        } else if TRUE.is_match(s) {
+            Value::Bool(true)
+        } else if FALSE.is_match(s) {
+            Value::Bool(false)
+        } else {
+            Value::Str(s.into())
+        });
     }
+    if TIME.is_match(s) {
+        return refused("Time");
+    }
+    if DATE.is_match(s) {
+        return refused("Date");
+    }
+    let lower = s.to_ascii_lowercase();
     match lower.as_str() {
-        ".inf" | "+.inf" => return Yaml::Real(".inf".into()),
-        "-.inf" => return Yaml::Real("-.inf".into()),
-        ".nan" => return Yaml::Real(".nan".into()),
+        ".inf" | "+.inf" => return Ok(Value::Float(f64::INFINITY)),
+        "-.inf" => return Ok(Value::Float(f64::NEG_INFINITY)),
+        ".nan" => return Ok(Value::Float(f64::NAN)),
         _ => {}
+    }
+    if s.len() > 1 && s.starts_with(':') {
+        return Ok(Value::Sym(format!(":{}", symbol_name(s))));
     }
     // `n.to_i * 60 ** (e - 2).abs` per part, as Psych writes it (so `1:30` is 5400).
     let base60 = |to_num: &dyn Fn(&str) -> f64| -> f64 {
@@ -476,19 +652,19 @@ fn psych_scalar(s: &str) -> Yaml {
     };
     let digits = |n: &str| n.replace('_', "");
     if SEXA_INT.is_match(s) {
-        return Yaml::Integer(base60(&|n| digits(n).parse::<i64>().unwrap_or(0) as f64) as i64);
+        return Ok(Value::Int(base60(&|n| digits(n).parse::<i64>().unwrap_or(0) as f64) as i64));
     }
     if SEXA_FLOAT.is_match(s) {
-        return Yaml::Real(base60(&|n| digits(n).parse::<f64>().unwrap_or(0.0)).to_string());
+        return Ok(Value::Float(base60(&|n| digits(n).parse::<f64>().unwrap_or(0.0))));
     }
     if FLOAT.is_match(s) {
+        if matches!(s, "." | "+." | "-.") {
+            return Ok(Value::Str(s.into()));
+        }
         let t = s.replace([',', '_'], "");
         let t = t.replacen(".e", "e", 1).replacen(".E", "E", 1);
         let t = t.strip_suffix('.').unwrap_or(&t);
-        return match t.parse::<f64>() {
-            Ok(f) if !matches!(t, "" | "+" | "-") => Yaml::Real(f.to_string()),
-            _ => Yaml::String(s.into()),
-        };
+        return ruby_float(Value::Str(t.to_string()));
     }
     if INT.is_match(s) {
         let t = s.replace([',', '_'], "");
@@ -507,97 +683,34 @@ fn psych_scalar(s: &str) -> Yaml {
             t.parse()
         };
         match parsed {
-            Ok(i) => return Yaml::Integer(if neg { -i } else { i }),
+            Ok(i) => return Ok(Value::Int(if neg { -i } else { i })),
             // Psych makes a Bignum; it saturates here (docs/known-gaps.md).
             Err(e) if *e.kind() == std::num::IntErrorKind::PosOverflow => {
-                return Yaml::Integer(if neg { i64::MIN } else { i64::MAX });
+                return Ok(Value::Int(if neg { i64::MIN } else { i64::MAX }));
             }
             Err(_) => {}
         }
     }
-    Yaml::String(s.into())
+    Ok(Value::Str(s.into()))
 }
 
-/// yaml-rust2 drops tags, so turn `!ruby/regexp /x/i` into a marked string first.
-fn mark_regexps(text: &str) -> String {
-    if !text.contains("!ruby/regexp") {
-        return text.to_string();
-    }
-    // The literal may be plain, 'single-quoted' ('' escapes ') or "double-quoted" (\ escapes).
-    let re = Regex::new(r#"!ruby/regexp\s+(?:'((?:[^']|'')*)'|"((?:[^"\\]|\\.)*)"|(/.*/[a-z]*))"#).unwrap();
-    re.replace_all(text, |c: &regex::Captures| {
-        let literal = match (c.get(1), c.get(2), c.get(3)) {
-            (Some(s), _, _) => s.as_str().replace("''", "'"),
-            // ponytail: only \\ and \" are unescaped; other YAML escapes are rare in a regexp.
-            (_, Some(d), _) => d.as_str().replace(r#"\""#, "\"").replace(r"\\", r"\"),
-            (_, _, Some(p)) => p.as_str().to_string(),
-            _ => unreachable!(),
-        };
-        format!("'{REGEX_MARK}{}'", literal.replace('\'', "''"))
-    })
-    .into_owned()
+/// Whether `--show-cops` (Psych's YAMLTree) sees `s` load back as a String.
+pub fn tokenizes_to_string(s: &str) -> bool {
+    matches!(tokenize(s), Ok(Value::Str(_)))
 }
 
-/// A scalar node as Psych loads it.
-fn scalar(y: Yaml) -> Value {
-    match y {
-        Yaml::Boolean(b) => Value::Bool(b),
-        Yaml::Integer(i) => Value::Int(i),
-        Yaml::Real(r) => match r.as_str() {
-            ".inf" | ".Inf" | ".INF" | "+.inf" | "+.Inf" | "+.INF" => Value::Float(f64::INFINITY),
-            "-.inf" | "-.Inf" | "-.INF" => Value::Float(f64::NEG_INFINITY),
-            ".nan" | ".NaN" | ".NAN" => Value::Float(f64::NAN),
-            _ => r.parse().map_or(Value::Str(r), Value::Float),
-        },
-        Yaml::String(s) => match (s.strip_prefix(REGEX_MARK), s.strip_prefix(SYM_MARK)) {
-            (Some(re), _) => Value::Regex(re.to_string()),
-            (_, Some(sym)) => Value::Sym(sym.to_string()),
-            _ => Value::Str(s),
-        },
-        _ => Value::Null,
+/// The Symbol name Psych's ScalarScanner gives a plain `:name` (`/^:(["'])(.*)\1/` takes the text
+/// between the quotes of `:'name'` / `:"name"`, a leading `:` of it dropped).
+fn symbol_name(v: &str) -> &str {
+    let rest = &v[1..];
+    let quoted = rest.chars().next().filter(|q| matches!(q, '\'' | '"')).and_then(|q| {
+        let line = rest.split('\n').next().unwrap_or("");
+        line[1..].rfind(q).map(|end| &line[1..1 + end])
+    });
+    match quoted {
+        Some(name) => name.strip_prefix(':').unwrap_or(name),
+        None => rest,
     }
-}
-
-/// A finished mapping as a Hash: string keys, merge keys applied.
-fn to_map(entries: Vec<(Key, Value)>) -> Map {
-    let mut map = Map::default();
-    for (k, v) in entries {
-        let Some(k) = k else { continue };
-        if k.as_str().is_some_and(|k| k.starts_with(BAD_KEY)) {
-            continue;
-        }
-        // Psych's merge key: `<<: *anchor` (or a list of them, earlier ones winning) merges
-        // the mapping in, overriding keys before it; keys after it override the merged ones.
-        if k.as_str() == Some("<<") && matches!(v, Value::Map(_) | Value::Seq(_)) {
-            let sources = match &v {
-                Value::Seq(list) => list.iter().collect(),
-                _ => vec![&v],
-            };
-            let mut merged = Map::default();
-            for source in sources.into_iter().rev() {
-                if let Value::Map(m) = source {
-                    for (k, v) in &m.0 {
-                        merged.insert(k.clone(), v.clone());
-                    }
-                }
-            }
-            for (k, v) in merged.0 {
-                map.insert(k, v);
-            }
-            continue;
-        }
-        let key = match k {
-            // ponytail: a Symbol key and a quoted ':name' key both become the String key.
-            Yaml::String(s) => s.strip_prefix(SYM_MARK).map_or(s.clone(), String::from),
-            Yaml::Integer(i) => i.to_string(),
-            Yaml::Boolean(b) => b.to_string(),
-            Yaml::Real(r) => r,
-            _ => continue,
-        };
-        // Psych keeps the last of duplicate keys.
-        map.insert(key, v);
-    }
-    map
 }
 
 /// Regexp#to_s of a `/src/flags` literal: `(?mi-x:src)`.
