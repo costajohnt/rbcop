@@ -168,6 +168,13 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - `a&. &.b` (`&.` right after `&.`/`.`) below 3.3: the parser gem reads `(a&.&).b`, a call to `&`,
   and lints the file; Prism lexes `&.` as one token and rejects it (as MRI does), so rbcop
   reports Lint/Syntax (#232).
+- A `\` line continuation at the end of a heredoc's opening line below 3.3 (`x = <<~E.strip \`):
+  the parser gem's lexer starts the heredoc body on the next line and also resumes the code there,
+  so the body's first line is lexed twice, as body and as code (`x = <<~E.strip \` + `  a` + `E`
+  is `x = "a\n".strip(a)` followed by a statement `E`; other shapes fail with `unexpected token`).
+  rbcop parses the file as Prism (and Ruby) do, body as written and the code joined after the
+  terminator, so the AST and offenses are RuboCop's at 3.3. No offset-keeping rewrite of the
+  source can give Prism a tree where one line is both a string's content and code (#581).
 
 - Target Ruby below 3.3 (RuboCop parses with the parser gem's grammar for the target):
   `src/legacy_syntax.rs` reports the parser gem's Lint/Syntax for syntax newer than the target and
