@@ -248,10 +248,12 @@ pub fn parse_for_target<'t>(
         if errors {
             round.extend(crate::legacy_syntax::defs_and_dots(cur, &tokens, target_ruby).into_iter().map(|o| (o, b' ')));
         }
-        // A NUL ends a heredoc line for the parser gem's lexer: the NULs that make a terminator line
-        // become newlines (#247).
-        if errors && cur.contains('\0') {
-            round.extend(crate::legacy_syntax::heredoc_nul_breaks(cur, &tokens).into_iter().map(|o| (o, b'\n')));
+        // A NUL, ^D or ^Z ends a heredoc line for the parser gem's lexer: those that make a
+        // terminator line become newlines (#247, #543), also where a later terminator closes the
+        // heredoc for Prism (#544).
+        if cur.contains(['\0', '\x04', '\x1a']) {
+            let breaks = crate::legacy_syntax::heredoc_nul_breaks(cur, &tokens, !errors);
+            round.extend(breaks.into_iter().map(|o| (o, b'\n')));
         }
         // The parser gem ends a plain heredoc at its delimiter after spaces and tabs (a `<<''` at a
         // blank line), Prism only at the delimiter alone (#318, #355): see plain_heredoc_terminator.

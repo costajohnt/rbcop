@@ -454,34 +454,41 @@ fn line_begin(text: &str, tokens: &[Token], i: usize) -> bool {
     })
 }
 
-/// NULs the parser gem's lexer ends a heredoc line at, where that makes a terminator line (Prism
-/// reads them as text and leaves the heredoc open): in ` \0 SQL` or `  SQL\0` the segment between
-/// NULs and newlines is the `SQL` terminator, its leading spaces and tabs allowed after `<<~`/`<<-`
-/// (#247). Parse a copy with these NULs made newlines, written back once parsed.
-pub fn heredoc_nul_breaks(text: &str, tokens: &[Token]) -> Vec<usize> {
-    // Sets, so each segment costs two lookups however many heredocs the file opens (a file with many
-    // heredocs and many NUL segments must stay linear).
-    let (mut exact, mut indented): (HashSet<&str>, HashSet<&str>) = (HashSet::new(), HashSet::new());
+/// NULs (and ^D, ^Z: lexer.rl's `c_eof` too, #543) the parser gem's lexer ends a heredoc line at,
+/// where that makes a terminator line (Prism reads them as text): in ` \0 SQL` or `  SQL\0` the
+/// segment between NULs and newlines is the `SQL` terminator, its leading spaces and tabs allowed
+/// (a plain heredoc's too, which `plain_heredoc_terminator` then ends there for Prism) (#247).
+/// Parse a copy with these NULs made newlines, written back once parsed. `in_bodies`: only on
+/// lines inside a string Prism lexed (a heredoc a later terminator closes for Prism, #544;
+/// elsewhere a NUL ends the input for both).
+// ponytail: any string's content counts as a heredoc body; a NUL + terminator line inside a
+// multi-line plain string is not modelled.
+pub fn heredoc_nul_breaks(text: &str, tokens: &[Token], in_bodies: bool) -> Vec<usize> {
+    // A set, so each segment costs one lookup however many heredocs the file opens (a file with
+    // many heredocs and many NUL segments must stay linear).
+    let mut ids: HashSet<&str> = HashSet::new();
     for t in tokens.iter().filter(|t| t.kind == "HEREDOC_START") {
         let Some(s) = text.get(t.start..t.end).and_then(|s| s.strip_prefix("<<")) else { continue };
-        let (indent, s) = s.strip_prefix(['~', '-']).map_or((false, s), |r| (true, r));
-        let id = s.trim_matches(['\'', '"', '`']);
-        if indent {
-            indented.insert(id)
-        } else {
-            exact.insert(id)
-        };
+        let s = s.strip_prefix(['~', '-']).unwrap_or(s);
+        ids.insert(s.trim_matches(['\'', '"', '`']));
     }
-    let has_ids = !exact.is_empty() || !indented.is_empty();
+    let has_ids = !ids.is_empty();
+    let mut contents: Vec<(usize, usize)> =
+        tokens.iter().filter(|t| in_bodies && t.kind == "STRING_CONTENT").map(|t| (t.start, t.end)).collect();
+    contents.sort_unstable();
+    let in_string = |o: usize| {
+        let i = contents.partition_point(|c| c.1 <= o);
+        contents.get(i).is_some_and(|c| c.0 <= o)
+    };
     let mut out = Vec::new();
     let mut start = 0;
     for line in text.split_inclusive('\n') {
         let body = line.trim_end_matches('\n');
-        if has_ids && body.contains('\0') {
+        if has_ids && body.contains(['\0', '\x04', '\x1a']) && (!in_bodies || in_string(start)) {
             let mut seg_start = start;
-            for seg in body.split('\0') {
+            for seg in body.split(['\0', '\x04', '\x1a']) {
                 let seg_end = seg_start + seg.len();
-                let closes = exact.contains(seg) || indented.contains(seg.trim_start_matches([' ', '\t']));
+                let closes = ids.contains(seg.trim_start_matches([' ', '\t']));
                 if closes {
                     if seg_start > start {
                         out.push(seg_start - 1);
