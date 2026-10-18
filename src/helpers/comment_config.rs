@@ -30,6 +30,11 @@ pub fn code_lines(src: &Source, facts: &Facts) -> Vec<bool> {
             code[src.line_of(t.start)] = true;
         }
     }
+    // Below 3.3 the parser gem's tNL tokens count too: after a `\` continuation one sits on the
+    // comment line that follows (#537).
+    for &o in &src.gem_newlines {
+        code[src.line_of(o)] = true;
+    }
     code
 }
 

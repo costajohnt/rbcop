@@ -20,6 +20,11 @@ impl Cop for BlockComments {
             // after `=end` (`=end 日本`) moves them by characters, not bytes.
             let back = |n: usize| text.char_indices().rev().nth(n - 1).map_or(start, |(i, _)| start + i);
             let eq_end = if text.ends_with('\n') { (back(5), end) } else { (back(6), back(2)) };
+            // A one-line document (`=begin=end`, #534) is shorter than both parts: range_between
+            // raises, a cop error that ends the investigation.
+            if begin_end > eq_end.0 {
+                return crate::runner::cop_error_at(NAME, src, None);
+            }
             cx.add_fix(start, end, "Do not use block comments.", |k| {
                 k.remove(start, begin_end);
                 if begin_end < eq_end.0 {

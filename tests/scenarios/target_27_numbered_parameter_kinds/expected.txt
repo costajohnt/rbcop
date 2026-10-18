@@ -1,0 +1,33 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+kinds.rb:13:8: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+kinds.rb:13:8: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+kinds.rb:17:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+kinds.rb:17:11: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+kinds.rb:1:10: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+kinds.rb:1:11: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+kinds.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+kinds.rb:21:16: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+kinds.rb:21:17: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+kinds.rb:25:9: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+kinds.rb:26:10: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+kinds.rb:27:9: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+kinds.rb:28:8: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+kinds.rb:29:8: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+kinds.rb:30:1: W: [Correctable] Lint/Void: `->(*_1) { _1 }` used in void context.
+kinds.rb:30:5: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+kinds.rb:31:3: C: [Correctable] Layout/SpaceInLambdaLiteral: Do not use spaces between `->` and `(` in lambda literals.
+kinds.rb:31:4: C: [Correctable] Style/StabbyLambdaParentheses: Wrap stabby lambda arguments with parentheses.
+kinds.rb:31:6: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+kinds.rb:5:12: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+kinds.rb:5:14: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+kinds.rb:9:10: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+kinds.rb:9:9: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+pattern_block.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+pattern_block.rb:1:5: C: [Correctable] Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
+pattern_block.rb:1:7: C: [Correctable] Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
+pattern_block.rb:2:1: C: [Correctable] Layout/CaseIndentation: Indent `in` as deep as `case`.
+pattern_block.rb:2:5: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.
+pattern_block.rb:3:1: W: [Correctable] Layout/EndAlignment: `end` at 3, 0 is not aligned with `case` at 1, 6.
+pattern_block.rb:3:5: C: [Correctable] Layout/BlockEndNewline: Expression at 3, 5 should be on its own line.
+pattern_block.rb:4:22: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+pattern_block.rb:4:7: W: Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.

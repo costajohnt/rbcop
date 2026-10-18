@@ -1,0 +1,22 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+e1.rb:1:1: C: Layout/EndOfLine: Carriage return character detected.
+e1.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e1.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+e10.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e10.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+e10.rb:2:10: C: [Correctable] Layout/SpaceBeforeFirstArg: Put one space between the method name and the first argument.
+e10.rb:2:10: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+e10.rb:2:8: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+e2.rb:1:1: C: Layout/EndOfLine: Carriage return character detected.
+e4.rb:1:1: C: Layout/EndOfLine: Carriage return character detected.
+e4.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e4.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+e5.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e5.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+e5.rb:2:1: C: Layout/EndOfLine: Carriage return character detected.
+e5.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+e9.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+e9.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+e9.rb:2:1: C: Layout/EndOfLine: Carriage return character detected.
+e9.rb:2:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+e9.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
