@@ -1,281 +1,92 @@
-//! `Hash#to_yaml` (Psych + libyaml) for config values, as `--show-cops` prints them.
+//! `Hash#to_yaml` (Psych + libyaml) for config values, as `--show-cops` prints them: Psych's
+//! YAMLTree turns the values into events with its style hints, and libyaml's emitter (crate::yaml)
+//! picks the final style and writes them.
 
-use crate::config::value::{Map, Value};
+use crate::config::value::{Map, Value, tokenizes_to_string};
+use crate::yaml::ScalarStyle;
+use crate::yaml::emitter::{Event, emit};
 use regex::Regex;
 use std::sync::LazyLock;
 
 /// The mapping as Psych dumps it, without the leading `---` line.
+// ponytail: a value shared through a YAML alias is written out again where Psych writes `&1`/`*1`.
 pub fn dump(map: &Map) -> String {
-    let mut out = String::new();
-    map_body(&mut out, map, 0);
-    out
+    let mut events = vec![Event::StreamStart, Event::DocumentStart { implicit: false }];
+    visit_map(&mut events, map);
+    events.extend([Event::DocumentEnd { implicit: true }, Event::StreamEnd]);
+    let text = emit(&events);
+    text.split_once('\n').map_or(String::new(), |(_, rest)| rest.to_string())
 }
 
-fn map_body(out: &mut String, map: &Map, indent: usize) {
+fn visit_map(events: &mut Vec<Event>, map: &Map) {
+    events.push(Event::MappingStart { tag: None, implicit: true, flow: false });
     for (k, v) in &map.0 {
         // Keys do not keep the Symbol/String distinction; a `:name` key is taken as a Symbol.
-        let k = if k.chars().count() > 1 && k.starts_with(':') { Value::Sym(k.clone()) } else { Value::Str(k.clone()) };
-        let key = scalar(&k, indent, indent + 2);
-        out.push_str(&" ".repeat(indent));
-        out.push_str(&key);
-        out.push(':');
-        value(out, v, indent, indent + key.chars().count() + 2);
+        let key =
+            if k.chars().count() > 1 && k.starts_with(':') { Value::Sym(k.clone()) } else { Value::Str(k.clone()) };
+        visit(events, &key);
+        visit(events, v);
     }
+    events.push(Event::MappingEnd);
 }
 
-/// A value after `key:` (or `-`); `col` is where an inline scalar would start.
-fn value(out: &mut String, v: &Value, indent: usize, col: usize) {
-    match v {
-        Value::Null => out.push('\n'),
-        Value::Seq(s) if s.is_empty() => out.push_str(" []\n"),
-        Value::Map(m) if m.0.is_empty() => out.push_str(" {}\n"),
+fn scalar(tag: Option<&str>, value: String, plain: bool, quoted: bool, style: ScalarStyle) -> Event {
+    Event::Scalar { tag: tag.map(String::from), value, plain_implicit: plain, quoted_implicit: quoted, style }
+}
+
+fn visit(events: &mut Vec<Event>, v: &Value) {
+    let event = match v {
+        Value::Map(m) => return visit_map(events, m),
         Value::Seq(items) => {
-            out.push('\n');
-            seq_body(out, items, indent);
-        }
-        Value::Map(m) => {
-            out.push('\n');
-            map_body(out, m, indent + 2);
-        }
-        v => {
-            out.push(' ');
-            out.push_str(&scalar(v, col, indent + 2));
-            out.push('\n');
-        }
-    }
-}
-
-/// Block sequence; in a mapping it is not indented past its key.
-fn seq_body(out: &mut String, items: &[Value], indent: usize) {
-    for item in items {
-        out.push_str(&" ".repeat(indent));
-        out.push('-');
-        match item {
-            Value::Seq(s) if !s.is_empty() => {
-                let mut inner = String::new();
-                seq_body(&mut inner, s, indent + 2);
-                out.push(' ');
-                out.push_str(&inner[indent + 2..]);
+            events.push(Event::SequenceStart { tag: None, implicit: true, flow: false });
+            for item in items.iter() {
+                visit(events, item);
             }
-            Value::Map(m) if !m.0.is_empty() => {
-                let mut inner = String::new();
-                map_body(&mut inner, m, indent + 2);
-                out.push(' ');
-                out.push_str(&inner[indent + 2..]);
-            }
-            v => value(out, v, indent, indent + 2),
+            events.push(Event::SequenceEnd);
+            return;
         }
-    }
-}
-
-#[derive(PartialEq)]
-enum Style {
-    Plain,
-    Single,
-    Double,
-}
-
-fn scalar(v: &Value, col: usize, cont: usize) -> String {
-    match v {
-        Value::Null => String::new(),
-        Value::Bool(b) => b.to_string(),
-        Value::Int(i) => i.to_string(),
-        Value::Float(f) if f.is_nan() => ".nan".into(),
-        Value::Float(f) if f.is_infinite() => (if *f > 0.0 { ".inf" } else { "-.inf" }).into(),
-        // Psych emits Float#to_s for finite floats.
-        Value::Float(f) => crate::helpers::ruby_string::float_to_s(*f),
-        Value::Regex(r) => format!("!ruby/regexp {r}"),
-        // Psych#visit_Symbol: plain when libyaml allows it, else libyaml's single-quoted fallback.
-        Value::Sym(s) if plain_allowed(s) => fold(s, col, cont),
-        Value::Sym(s) => format!("'{}'", fold(&s.replace('\'', "''"), col + 1, cont)),
-        Value::Str(s) => string(s, col, cont),
-        Value::Seq(_) | Value::Map(_) => String::new(),
-    }
-}
-
-/// Psych::Visitors::YAMLTree#visit_String, then libyaml's choice when Psych leaves it open.
-fn string(s: &str, col: usize, cont: usize) -> String {
-    static NON_WORD_START: LazyLock<Regex> = LazyLock::new(|| Regex::new(r#"^[^\w][^"]*$"#).unwrap());
-    static OCTALISH: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\A0[0-7]*[89]").unwrap());
-    // Psych asks for a literal block for a line break not ending the string (`/\n(?!\Z)/`);
-    // libyaml writes one unless a line or the string ends in a space or a character is not
-    // printable, and then double-quotes it.
-    let special = s.chars().any(|c| c.is_control() && c != '\n');
-    let literal = s.char_indices().any(|(i, c)| c == '\n' && !matches!(&s[i + 1..], "" | "\n"));
-    if literal && !special && !s.ends_with(' ') && !s.contains(" \n") {
-        return block(s, cont);
-    }
-    let style = if literal || special {
-        Style::Double
-    } else if s == "<<" {
-        Style::Single
-    } else if matches!(s, "y" | "Y" | "n" | "N") || NON_WORD_START.is_match(s) {
-        Style::Double
-    } else if !tokenizes_to_string(s) || OCTALISH.is_match(s) || !plain_allowed(s) {
-        Style::Single
-    } else {
-        Style::Plain
+        Value::Null => scalar(Some("tag:yaml.org,2002:null"), String::new(), true, false, ScalarStyle::Any),
+        Value::Bool(b) => scalar(None, b.to_string(), true, false, ScalarStyle::Any),
+        Value::Int(i) => scalar(None, i.to_string(), true, false, ScalarStyle::Any),
+        Value::Float(f) => {
+            let text = if f.is_nan() {
+                ".nan".into()
+            } else if f.is_infinite() {
+                (if *f > 0.0 { ".inf" } else { "-.inf" }).into()
+            } else {
+                crate::helpers::ruby_string::float_to_s(*f)
+            };
+            scalar(None, text, true, false, ScalarStyle::Any)
+        }
+        Value::Regex(r) => scalar(Some("!ruby/regexp"), r.clone(), false, false, ScalarStyle::Any),
+        // An empty Symbol (`!ruby/sym ''`) is the only `Sym(":")`.
+        Value::Sym(s) if s == ":" => scalar(Some("!ruby/symbol"), String::new(), false, false, ScalarStyle::Any),
+        Value::Sym(s) => scalar(None, s.clone(), true, false, ScalarStyle::Any),
+        Value::Str(s) => visit_string(s),
     };
-    match style {
-        Style::Plain => fold(s, col, cont),
-        Style::Single => format!("'{}'", fold(&s.replace('\'', "''"), col + 1, cont)),
-        Style::Double => double(s, col, cont),
-    }
+    events.push(event);
 }
 
-/// libyaml's yaml_emitter_write_literal_scalar: `|`, an indentation indicator when the text
-/// starts with a space or break, `-` (no final break) or `+` (more than one), then each line at
-/// `cont` (empty lines bare). The final break is left to the caller.
-// ponytail: the `...` document end libyaml adds after a `|+` block ending a document is not written.
-fn block(s: &str, cont: usize) -> String {
-    let mut out = String::from("|");
-    if s.starts_with([' ', '\n']) {
-        out.push('2');
-    }
-    if !s.ends_with('\n') {
-        out.push('-');
-    } else if s[..s.len() - 1].ends_with('\n') {
-        out.push('+');
-    }
-    for line in s.strip_suffix('\n').unwrap_or(s).split('\n') {
-        out.push('\n');
-        if !line.is_empty() {
-            out.push_str(&" ".repeat(cont));
-            out.push_str(line);
-        }
-    }
-    out
+/// Psych::Visitors::YAMLTree#visit_String: a literal block for a line break not ending the
+/// string, `!!str '<<'`, a quoted `y`/`n`, double quotes for a line starting with a non-word
+/// character, single quotes for what would not load back as this String.
+fn visit_string(s: &str) -> Event {
+    static NON_WORD_LINE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r#"(?m)^[^\w][^"]*$"#).unwrap());
+    static OCTALISH: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\A0[0-7]*[89]").unwrap());
+    let inner_break = s.char_indices().any(|(i, c)| c == '\n' && !matches!(&s[i + 1..], "" | "\n"));
+    let (style, tag, plain) = if inner_break {
+        (ScalarStyle::Literal, None, true)
+    } else if s == "<<" {
+        (ScalarStyle::SingleQuoted, Some("tag:yaml.org,2002:str"), false)
+    } else if matches!(s, "y" | "Y" | "n" | "N") || NON_WORD_LINE.is_match(s) {
+        (ScalarStyle::DoubleQuoted, None, true)
+    } else if !tokenizes_to_string(s) || OCTALISH.is_match(s) {
+        (ScalarStyle::SingleQuoted, None, true)
+    } else {
+        (ScalarStyle::Plain, None, true)
+    };
+    scalar(tag, s.to_string(), plain, plain, style)
 }
-
-/// libyaml's yaml_emitter_write_double_quoted: escapes, and a break at a space past column 80
-/// (a following space is kept by an escaping backslash).
-fn double(s: &str, col: usize, cont: usize) -> String {
-    let chars: Vec<char> = s.chars().collect();
-    let mut out = String::from("\"");
-    let mut column = col + 1;
-    let mut spaces = false;
-    for (i, &c) in chars.iter().enumerate() {
-        let escaped = match c {
-            '"' => Some("\\\"".to_string()),
-            '\\' => Some("\\\\".to_string()),
-            '\n' => Some("\\n".to_string()),
-            '\t' => Some("\\t".to_string()),
-            '\r' => Some("\\r".to_string()),
-            c if c.is_control() => Some(format!("\\x{:02X}", c as u32)),
-            _ => None,
-        };
-        if let Some(e) = escaped {
-            column += e.len();
-            out.push_str(&e);
-            spaces = false;
-        } else if c == ' ' {
-            if !spaces && column > 80 && i != 0 && i + 1 != chars.len() {
-                out.push('\n');
-                out.push_str(&" ".repeat(cont));
-                column = cont;
-                if chars.get(i + 1) == Some(&' ') {
-                    out.push('\\');
-                    column += 1;
-                }
-            } else {
-                out.push(c);
-                column += 1;
-            }
-            spaces = true;
-        } else {
-            out.push(c);
-            column += 1;
-            spaces = false;
-        }
-    }
-    out.push('"');
-    out
-}
-
-/// libyaml breaks a plain or single-quoted scalar at a space once the line is past 80 columns.
-fn fold(s: &str, col: usize, cont: usize) -> String {
-    let chars: Vec<char> = s.chars().collect();
-    let mut out = String::new();
-    let mut column = col;
-    let mut prev_space = false;
-    for (i, &c) in chars.iter().enumerate() {
-        if c == ' ' {
-            let next_space = chars.get(i + 1) == Some(&' ');
-            if !prev_space && column > 80 && !next_space && i != 0 && i + 1 != chars.len() {
-                out.push('\n');
-                out.push_str(&" ".repeat(cont));
-                column = cont;
-            } else {
-                out.push(c);
-                column += 1;
-            }
-            prev_space = true;
-        } else {
-            out.push(c);
-            column += 1;
-            prev_space = false;
-        }
-    }
-    out
-}
-
-/// libyaml's analysis: may this be a plain scalar in block context?
-fn plain_allowed(s: &str) -> bool {
-    !(s.is_empty()
-        || s.starts_with(' ')
-        || s.ends_with(' ')
-        || s.starts_with("---")
-        || s.starts_with("...")
-        || s.starts_with(['#', ',', '[', ']', '{', '}', '&', '*', '!', '|', '>', '\'', '"', '%', '@', '`'])
-        || s.starts_with("- ")
-        || s.starts_with("? ")
-        || s.starts_with(": ")
-        || s == "-"
-        || s == "?"
-        || s == ":"
-        || s.contains(": ")
-        || s.ends_with(':')
-        || s.contains(" #"))
-}
-
-/// Psych::ScalarScanner#tokenize returns a String (rather than nil, a bool, a number, a date...).
-fn tokenizes_to_string(s: &str) -> bool {
-    static STRINGY: LazyLock<Regex> =
-        LazyLock::new(|| Regex::new(r"^[^\d.:-]?[\p{Alphabetic}_\s!@#$%\^&*(){}<>|/\\~;=]+").unwrap());
-    static RULES: LazyLock<Vec<Regex>> = LazyLock::new(|| {
-        [
-            r"^-?\d{4}-\d{1,2}-\d{1,2}(?:[Tt]|\s+)\d{1,2}:\d\d:\d\d(?:\.\d*)?(?:\s*(?:Z|[-+]\d{1,2}:?(?:\d\d)?))?$",
-            r"^\d{4}-(?:1[012]|0\d|\d)-(?:[12]\d|3[01]|0\d|\d)$",
-            r"(?i)^\+?\.inf$",
-            r"(?i)^-\.inf$",
-            r"(?i)^\.nan$",
-            r"^:.",
-            r"^[-+]?[0-9][0-9_]*(:[0-5]?[0-9]){1,2}$",
-            r"^[-+]?[0-9][0-9_]*(:[0-5]?[0-9]){1,2}\.[0-9_]*$",
-            r"^(?:[-+]?0b[_,]*[0-1][0-1_,]*|[-+]?0[_,]*[0-7][0-7_,]*|[-+]?(?:0|[1-9](?:[0-9]|,[0-9]|_[0-9])*)|[-+]?0x[_,]*[0-9a-fA-F][0-9a-fA-F_,]*)$",
-        ]
-        .iter()
-        .map(|r| Regex::new(r).unwrap())
-        .collect()
-    });
-    static FLOAT: LazyLock<Regex> =
-        LazyLock::new(|| Regex::new(r"^(?:[-+]?([0-9][0-9_,]*)?\.[0-9]*([eE][-+][0-9]+)?)$").unwrap());
-    if s.is_empty() {
-        return false;
-    }
-    if STRINGY.is_match(s) || s.contains('\n') {
-        if s.chars().count() > 5 {
-            return true;
-        }
-        let l = s.to_lowercase();
-        return !(s == "~" || matches!(l.as_str(), "null" | "yes" | "true" | "on" | "no" | "false" | "off"));
-    }
-    if FLOAT.is_match(s) {
-        return matches!(s, "." | "+." | "-.");
-    }
-    !RULES.iter().any(|r| r.is_match(s))
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -284,12 +95,12 @@ mod tests {
     // `12345678901234567.0`, `5.0`, `0.5`.
     #[test]
     fn floats_dump_as_float_to_s() {
-        let f = |x: f64| scalar(&Value::Float(x), 0, 0);
-        assert_eq!(f(0.00001), "1.0e-05");
-        assert_eq!(f(1.0e20), "1.0e+20");
-        assert_eq!(f(12345678901234567.0), "1.2345678901234568e+16");
-        assert_eq!(f(5.0), "5.0");
-        assert_eq!(f(0.5), "0.5");
+        let f = |x: f64| dump(&Map(vec![("k".into(), Value::Float(x))]));
+        assert_eq!(f(0.00001), "k: 1.0e-05\n");
+        assert_eq!(f(1.0e20), "k: 1.0e+20\n");
+        assert_eq!(f(12345678901234567.0), "k: 1.2345678901234568e+16\n");
+        assert_eq!(f(5.0), "k: 5.0\n");
+        assert_eq!(f(0.5), "k: 0.5\n");
     }
 
     #[test]

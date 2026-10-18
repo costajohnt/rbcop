@@ -18,7 +18,6 @@ regex = "1.13.1"
 ruby-prism = "1.9.0"
 ruby-prism-sys = "1.9.0"
 unicode-width = "0.2"
-yaml-rust2 = "0.13.0"
 
 # musl's allocator serializes rbcop's worker threads (several times slower than glibc's).
 [target.'cfg(target_env = "musl")'.dependencies]
@@ -27,11 +26,6 @@ mimalloc = { version = "0.1", default-features = false }
 # Vendored with an added parse_with_version (see vendor/ruby-prism/src/lib.rs, "rbcop patch").
 [patch.crates-io]
 ruby-prism = { path = "vendor/ruby-prism" }
-# Vendored 0.13.0 (the latest; saphyr-parser 0.2.2 has the same checks), its scanner and parser
-# patched to libyaml 0.2.5's rules where they differ: indentation in flow collections and quoted
-# scalars, tabs, flow-context indicators, simple keys, anchors, directives (#516, #526-#528,
-# #539-#541; see vendor/yaml-rust2/src, "rbcop patch").
-yaml-rust2 = { path = "vendor/yaml-rust2" }
 
 # Thin LTO: ~9% fewer cycles linting discourse (#388), for ~5 s more per release rebuild.
 [profile.release]

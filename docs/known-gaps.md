@@ -410,18 +410,24 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - YAML aliases share their anchored node (`Arc`), so nested aliases load in linear time as in Psych,
   but `--show-cops` prints an aliased value expanded where Psych's dump writes `&1` / `*1`; on an alias
   bomb that dump is exponential (RuboCop's is not).
-- YAML: the vendored yaml-rust2 scanner follows libyaml 0.2.5's rules for tabs, flow-context `?`,
-  `:`, `|`, `>`, simple keys (one line, 1024 characters), anchor names, block scalar indentation and
-  directives (#526-#528, #539-#541), checked on a matrix of 2500 shapes against Psych (accept/reject
-  and loaded values) and the round-10 fuzzer. A null or anchored empty mapping key (`{?}`,
-  `{&a : b}`) is dropped where Psych keeps a nil/"" key, and a non-String key (`15:`) is turned
-  into a String; RuboCop crashes later on some of these (`undefined method 'start_with?' for an
-  instance of Integer`).
-- YAML syntax errors are worded as Psych's (`(<file>): <problem> <context> at line L column C`,
-  libyaml's context mark) from yaml-rust2's errors; a few still differ from libyaml's: content
-  after a `...` document end, and a second implicit key in a flow sequence pair (`[a: b: c]`,
-  reported as a flow mapping error) report a different problem or mark. The Ruby backtrace
-  RuboCop prints after the message is not reproduced.
+- YAML: `.rubocop.yml` is read by a Rust port of libyaml 0.2.5's reader, scanner and parser
+  (src/yaml), Psych's TreeBuilder (with RuboCop's duplicate-key handler) and ToRuby with RuboCop's
+  restricted class loader, so tokens, errors (problem, context and context mark) and loaded values
+  are Psych's; `--show-cops` writes values through Psych's YAMLTree rules and a port of libyaml's
+  emitter (#560-#567, #569-#574, #580). Differences left:
+  - A null or anchored empty mapping key (`{?}`, `{&a : b}`) is dropped where Psych keeps a nil/""
+    key, and a non-String key (`15:`) is turned into a String (so `1:` and `'1':` are one key);
+    RuboCop crashes later on some of these (`undefined method 'start_with?' for an instance of
+    Integer`).
+  - An alias inside its own anchored collection (`&a [*a]`) is an unknown anchor (Psych makes a
+    recursive Array); `!!omap [...]` loads as a plain Hash (Psych's dump keeps the `!!omap` tag);
+    a `!!binary` value with non-ASCII bytes loads as a UTF-8 String (invalid bytes replaced), which
+    `--show-cops` writes as text where Psych writes `!binary` and base64; `!ruby/encoding`,
+    `!ruby/class Regexp` / `Symbol`, ivars of `!ruby/hash-with-ivars` / `!str` mappings and
+    `!ruby/regexp` sources Onigmo rejects are not reproduced.
+  - Nesting deeper than 1000 levels fails with `stack level too deep` (Ruby's limit depends on
+    its stack: about 1000 mappings, 1400 sequences).
+  - The Ruby backtrace RuboCop prints after the message is not reproduced.
 - `DisplayStyleGuide`: the style guide URL is resolved once per run for each `StyleGuide` value,
   as RuboCop's per-process MessageAnnotator cache does, so the first offense with an anchor fixes
   its base URL for cops of other departments (#508). rbcop fills the cache in report order (files,

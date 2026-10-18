@@ -889,7 +889,8 @@ impl Store {
         }
         let mut hash = match parse_yaml_file(&text, &path.display().to_string())? {
             Value::Map(m) => Arc::unwrap_or_clone(m),
-            Value::Null => Map::default(),
+            // `yaml_tree_to_hash(yaml_tree) || {}`
+            Value::Null | Value::Bool(false) => Map::default(),
             // A ValidationError, which the CLI prints as `Error: ...`.
             _ => return Err(format!("Error: Malformed configuration in {}", path.display())),
         };
