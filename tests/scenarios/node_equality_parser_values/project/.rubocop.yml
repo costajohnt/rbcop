@@ -1,0 +1,12 @@
+AllCops:
+  TargetRubyVersion: 3.4
+  SuggestExtensions: false
+  DisabledByDefault: true
+Lint/BinaryOperatorWithIdenticalOperands:
+  Enabled: true
+Style/IdenticalConditionalBranches:
+  Enabled: true
+Lint/DuplicateBranch:
+  Enabled: true
+Lint/DuplicateCaseCondition:
+  Enabled: true

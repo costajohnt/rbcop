@@ -202,7 +202,7 @@ impl Cop for DuplicateBranch {
             if ignore_else && branches.len() > 2 && i == branches.len() - 1 && b.parent_else {
                 continue;
             }
-            let shape = helpers::node_equality::shape(cx.src, b.range.0, b.range.1);
+            let shape = helpers::node_equality::hash_shape(cx.src, b.range.0, b.range.1);
             if previous.contains(&shape) {
                 cx.add(b.offense.0, b.offense.1, MSG);
             } else {

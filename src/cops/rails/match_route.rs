@@ -90,7 +90,7 @@ impl Cop for MatchRoute {
             let range = |p: &ruby_prism::AssocNode| (p.location().start_offset(), p.location().end_offset());
             let rest = helpers::rails::hash_pairs(h)
                 .iter()
-                .filter(|p| via.as_ref().is_none_or(|v| !helpers::node_equality::same(src, range(p), range(v))))
+                .filter(|p| via.as_ref().is_none_or(|v| !helpers::node_equality::same_hash(src, range(p), range(v))))
                 .map(|p| node_text(&p.as_node()).to_string())
                 .collect();
             Some((m, rest))

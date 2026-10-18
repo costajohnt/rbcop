@@ -17,7 +17,7 @@ impl Cop for DuplicateRescueException {
             for e in r.exceptions().iter() {
                 let l = e.location();
                 let range = (l.start_offset(), l.end_offset());
-                if previous.iter().any(|&p| node_equality::same(cx.src, p, range)) {
+                if previous.iter().any(|&p| node_equality::same_hash(cx.src, p, range)) {
                     cx.add(range.0, range.1, "Duplicate `rescue` exception detected.");
                 } else {
                     previous.push(range);

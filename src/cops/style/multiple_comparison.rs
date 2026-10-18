@@ -86,7 +86,7 @@ impl<'pr> Search<'_, 'pr> {
             self.skipped.push(range(&n));
             return;
         }
-        if !self.variables.iter().any(|v| helpers::node_equality::same(self.src, range(v), range(&var))) {
+        if !self.variables.iter().any(|v| helpers::node_equality::same_hash(self.src, range(v), range(&var))) {
             self.variables.push(var);
         }
         if self.variables.len() > 1 {

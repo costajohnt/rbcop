@@ -50,7 +50,7 @@ impl Cop for RenderPlainText {
         let excluded: Vec<(usize, usize)> = [Some(text_pair), content_type].into_iter().flatten().map(range).collect();
         let rest: Vec<&str> = pairs
             .iter()
-            .filter(|p| !excluded.iter().any(|&x| helpers::node_equality::same(src, x, range(p))))
+            .filter(|p| !excluded.iter().any(|&x| helpers::node_equality::same_hash(src, x, range(p))))
             .map(|p| node_text(&p.as_node()))
             .collect();
         let value = node_text(&text_pair.value());

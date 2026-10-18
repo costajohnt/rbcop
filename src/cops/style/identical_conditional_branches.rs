@@ -280,7 +280,7 @@ impl Cop for IdenticalConditionalBranches {
             let Some(first) = exprs[0] else { return Some(exprs.iter().all(|e| e.is_none())) };
             let fr = range(first);
             if !exprs.iter().all(|e| {
-                e.is_some_and(|e| helpers::node_equality::same(src, fr, range(e)))
+                e.is_some_and(|e| helpers::node_equality::same_hash(src, fr, range(e)))
             }) {
                 return Some(false);
             }

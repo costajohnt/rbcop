@@ -53,7 +53,7 @@ impl Cop for ComparableBetween {
         for (min_and_value, max_and_value) in found {
             let mv = [min_and_value.0, min_and_value.1];
             let xv = [max_and_value.0, max_and_value.1];
-            let Some(&value) = mv.iter().find(|m| xv.iter().any(|x| same(**m, *x))) else { continue };
+            let Some(&value) = mv.iter().find(|m| xv.iter().any(|x| helpers::node_equality::same_hash(src, **m, *x))) else { continue };
             let min = mv.iter().copied().find(|m| !same(*m, value)).unwrap_or(value);
             let max = xv.iter().copied().find(|m| !same(*m, value)).unwrap_or(value);
             let t = |r: R| src.slice(r.0, r.1);

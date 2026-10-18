@@ -717,6 +717,7 @@ fn investigate(
         file_error(format!("rbcop: {}: nested more than {MAX_AST_DEPTH} levels deep, not inspected.", src.path));
         return (Vec::new(), None, Vec::new());
     }
+    src.root = Some(result.node());
     let mut facts = Facts::default();
     let mut collector = FactCollector { src: &src, facts: &mut facts };
     collector.facts.string_lines = vec![false; src.line_count() + 2];

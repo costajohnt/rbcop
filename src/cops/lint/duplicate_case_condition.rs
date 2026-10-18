@@ -16,7 +16,7 @@ impl Cop for DuplicateCaseCondition {
             let Some(when) = when.as_when_node() else { continue };
             for cond in when.conditions().iter() {
                 let loc = cond.location();
-                let shape = helpers::node_equality::shape(cx.src, loc.start_offset(), loc.end_offset());
+                let shape = helpers::node_equality::hash_shape(cx.src, loc.start_offset(), loc.end_offset());
                 if previous.contains(&shape) {
                     cx.add(loc.start_offset(), loc.end_offset(), "Duplicate `when` condition detected.");
                 } else {

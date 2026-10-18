@@ -213,6 +213,7 @@ fn float_key(src: &str) -> String {
 /// literal/const trees `recursive_basic_literal?` accepts; other nodes fall back to type + source.
 /// ponytail: `__FILE__` keys use the source text, not the buffer name parser substitutes.
 pub fn key(node: &Node) -> String {
+    use crate::helpers::parser_sexp::stale_heredoc;
     // A folded `- 1` is the parser's `(int -1)`: the key of the negated literal (`+ 1`'s is 1's).
     if let Some(l) = folded_numeric(node) {
         let neg = format!("{}{}", if folded_negative(node) { "-" } else { "" }, node_text(&l));
@@ -225,12 +226,15 @@ pub fn key(node: &Node) -> String {
     match node {
         Node::StringNode { .. } => {
             let s = node.as_string_node().unwrap();
+            let content = s.content_loc().as_slice();
+            let opening = s.opening_loc().map(|o| o.as_slice()).unwrap_or_default();
+            // Both callers group by `hash`: the undedented body's below 3.3 (parser_sexp::hash_sexp).
+            let v = if parser_gem_file() && stale_heredoc(opening, content) { content } else { s.unescaped() };
             if is_parser_dstr(node) {
-                let v = s.unescaped();
                 let lines: Vec<String> = v.split_inclusive(|&b| b == b'\n').map(|l| format!("str:{:?}", bytes(l))).collect();
                 format!("dstr({})", lines.join(","))
             } else {
-                format!("str:{:?}", bytes(s.unescaped()))
+                format!("str:{:?}", bytes(v))
             }
         }
         Node::XStringNode { .. } => format!("xstr(str:{:?})", bytes(node.as_x_string_node().unwrap().unescaped())),
