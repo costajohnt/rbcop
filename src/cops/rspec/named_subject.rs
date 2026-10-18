@@ -21,7 +21,7 @@ impl Cop for NamedSubject {
         if cx.cfg.bool("IgnoreSharedExamples") == Some(true)
             && cx.ancestors.iter().any(|a| {
                 helpers::rspec::plain_block_call(a).is_some_and(|c| {
-                    helpers::rspec::rspec_recv(&c) && l.sg_examples.iter().any(|s| s == method_name(&c))
+                    helpers::rspec::rspec_recv(&c) && l.sg_examples.has(method_name(&c))
                 })
             })
         {

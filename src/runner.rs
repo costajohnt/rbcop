@@ -874,11 +874,13 @@ pub fn cop_error(cop: &str, src: &Source, at: usize) {
 /// path for a callback without a node, such as on_new_investigation).
 pub fn cop_error_at(cop: &str, src: &Source, at: Option<usize>) {
     // rubocop-rspec's TopLevelGroup cops run from on_new_investigation, whose errors Team reports
-    // without a location; rbcop runs them as node cops.
+    // without a location; rbcop runs them as node cops. So does RSpec/LeakyLocalVariable, a
+    // VariableForce cop (its hooks run from the force's on_new_investigation).
     const TOP_LEVEL_GROUP: &[&str] = &[
         "RSpec/DescribeClass",
         "RSpec/DescribeMethod",
         "RSpec/InstanceVariable",
+        "RSpec/LeakyLocalVariable",
         "RSpec/MultipleDescribes",
         "RSpec/NestedGroups",
         "RSpec/RepeatedSubjectCall",

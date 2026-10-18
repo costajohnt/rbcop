@@ -545,6 +545,40 @@ fn top_level_group_cop_errors_have_no_location() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// A `RSpec: Language` list set to `~` is nil to rubocop-rspec's Language helpers, which read it
+/// bare: each cop that asks it raises (#529).
+#[test]
+fn rspec_language_list_set_to_nil_raises() {
+    let dir = scratch("rspec-language-nil");
+    let config = "plugins:\n  - rubocop-rspec\nAllCops:\n  NewCops: enable\n  SuggestExtensions: false\n\
+                  RSpec:\n  Language:\n    Includes:\n      Examples: ~\n";
+    fs::write(dir.join(".rubocop.yml"), config).unwrap();
+    fs::create_dir_all(dir.join("spec")).unwrap();
+    fs::write(
+        dir.join("spec/foo_spec.rb"),
+        "# frozen_string_literal: true\n\ndescribe Foo do\n  it_behaves_like \"x\"\nend\n",
+    )
+    .unwrap();
+    let out = rbcop(&dir, &["--only", "RSpec", "spec/foo_spec.rb"]);
+    let file = dir.join("spec/foo_spec.rb").display().to_string();
+    let printed: Vec<String> = text(&out.stderr)
+        .lines()
+        .take_while(|l| !l.is_empty())
+        .filter_map(|l| l.strip_prefix("An error occurred while "))
+        .map(|l| l.replace(&file, "F"))
+        .collect();
+    assert_eq!(
+        printed,
+        [
+            "RSpec/EmptyExampleGroup cop was inspecting F:3:0.",
+            "RSpec/SharedExamples cop was inspecting F:3:0.",
+            "RSpec/SharedExamples cop was inspecting F:4:2."
+        ]
+    );
+    assert!(text(&out.stdout).contains("no offenses detected"), "{}", text(&out.stdout));
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// RSpec/DiscardedMatcher with a String CustomMatcherMethods (#502): every receiverless send
 /// raises, and a plain block's on_block raises again; a numblock call raises once.
 #[test]

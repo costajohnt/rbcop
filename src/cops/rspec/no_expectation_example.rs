@@ -15,7 +15,7 @@ impl Cop for NoExpectationExample {
         let Some(call) = helpers::rspec::any_block_call(node) else { return };
         let l = helpers::rspec::lang(cx);
         let n = method_name(&call);
-        if call.receiver().is_some() || !(l.ex_regular.iter().any(|x| x == n) || l.ex_focused.iter().any(|x| x == n)) {
+        if call.receiver().is_some() || !(l.ex_regular.has(n) || l.ex_focused.has(n)) {
             return;
         }
         // includes_expectation? / includes_skip_example?: receiver-less sends in the block

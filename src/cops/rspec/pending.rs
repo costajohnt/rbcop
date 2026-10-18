@@ -16,7 +16,7 @@ impl Cop for Pending {
         }
         let l = helpers::rspec::lang(cx);
         let n = method_name(&call);
-        let has = |list: &[String]| list.iter().any(|x| x == n);
+        let has = |list: &helpers::rspec::List| list.has(n);
         let nil_recv = call.receiver().is_none();
         let rspec = helpers::rspec::rspec_recv(&call);
         // pending_block?

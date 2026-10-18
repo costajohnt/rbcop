@@ -11,7 +11,7 @@ fn example_or_group(l: &helpers::rspec::Language, node: &Node) -> bool {
         return c.receiver().is_none() && (l.example_group(n) || l.example(n));
     }
     helpers::rspec::send_call(node).is_some_and(|c| {
-        c.receiver().is_none() && l.inc_examples.iter().any(|i| i == method_name(&c))
+        c.receiver().is_none() && l.inc_examples.has(method_name(&c))
     })
 }
 
