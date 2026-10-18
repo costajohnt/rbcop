@@ -943,6 +943,13 @@ impl Store {
                                 continue;
                             }
                             let named = config.and_then(|c| c.get("plugin_class_name")).and_then(Value::as_string);
+                            // BUILTIN_INTERNAL_PLUGINS is looked up for a String entry only: a Hash
+                            // one requires its `require_path` (default: the name)
+                            if name == INTERNAL_AFFAIRS {
+                                let require_path = config.is_some_and(|c| c.truthy("require_path"));
+                                plugins.push((name.clone(), Load::BuiltinHash { require_path, class: named }));
+                                continue;
+                            }
                             plugins.push((name.clone(), named.map_or(Load::Plugin, Load::NamedPlugin)));
                         }
                     }
@@ -1226,6 +1233,18 @@ impl Store {
                 }
             }
             self.loaded_plugins.push(name.clone());
+            let load = match load {
+                Load::BuiltinHash { require_path: false, .. } => {
+                    self.failed_entry = Some(name.clone());
+                    return Err(format!("cannot load such file -- {name}"));
+                }
+                Load::BuiltinHash { class: None, .. } => {
+                    self.failed_entry = Some(name.clone());
+                    return Err(plugin_class_unknown(&name));
+                }
+                Load::BuiltinHash { class: Some(c), .. } => Load::NamedPlugin(c),
+                l => l,
+            };
             if let Some(native) = crate::helpers::cop_registry::native_plugin(&name) {
                 // A plugin rbcop implements: its cops register and its vendored default.yml merges,
                 // so the gem need not be installed. A `plugin_class_name` is looked up as for any
@@ -1270,13 +1289,7 @@ impl Store {
             // of the gem of that name; without either the run fails (Plugin::LoadError).
             if load == Load::Plugin && !feature.plugin {
                 self.failed_entry = Some(name.clone());
-                return Err(format!(
-                    "Error: Failed to load plugin `{name}` because the corresponding plugin class could not be determined \
-                     for instantiation.\nTry upgrading it first (e.g., `bundle update {name}`).\nIf `{name}` is not yet \
-                     a plugin, use `require: {name}` instead of `plugins: {name}` in your configuration.\n\nFor further \
-                     assistance, check with the developer regarding the following points:\n\
-                     https://docs.rubocop.org/rubocop/plugin_migration_guide.html"
-                ));
+                return Err(plugin_class_unknown(&name));
             }
             // A Ruby library outside any gem (`require: set`): no cops.
             let Some(dir) = feature.dir else { continue };
@@ -1529,6 +1542,17 @@ impl Store {
     }
 }
 
+/// Plugin::LoadError when no plugin class can be determined for an entry.
+fn plugin_class_unknown(name: &str) -> String {
+    format!(
+        "Error: Failed to load plugin `{name}` because the corresponding plugin class could not be determined \
+         for instantiation.\nTry upgrading it first (e.g., `bundle update {name}`).\nIf `{name}` is not yet a \
+         plugin, use `require: {name}` instead of `plugins: {name}` in your configuration.\n\nFor further \
+         assistance, check with the developer regarding the following points:\n\
+         https://docs.rubocop.org/rubocop/plugin_migration_guide.html"
+    )
+}
+
 /// How a `plugins:`/`require:` entry loads.
 #[derive(Clone, PartialEq)]
 enum Load {
@@ -1538,6 +1562,10 @@ enum Load {
     NamedPlugin(String),
     /// FeatureLoader: a plain `require`.
     Require,
+    /// A Hash entry naming RuboCop's built-in plugin: no built-in there. Without a `require_path`
+    /// the name is required (no such file); with one (`rubocop/cop/internal_affairs`) the plugin
+    /// class comes from a `plugin_class_name` only.
+    BuiltinHash { require_path: bool, class: Option<String> },
 }
 
 /// A feature found by Store::feature.

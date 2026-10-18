@@ -1064,6 +1064,39 @@ fn string_numeric_setting_raises_where_compared() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// RuboCop's built-in plugin is one for a String `plugins:` entry only: a Hash entry requires its
+/// `require_path` (default: the name, no such file) and needs a plugin class (#597).
+#[test]
+fn internal_affairs_hash_entry_is_no_builtin() {
+    let dir = scratch("internal-affairs-hash");
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nx = 1\np x\n").unwrap();
+    let cases = [
+        ("{}", 2, "cannot load such file -- rubocop-internal_affairs"),
+        (
+            "{plugin_class_name: RuboCop::InternalAffairs::Plugin}",
+            2,
+            "cannot load such file -- rubocop-internal_affairs",
+        ),
+        (
+            "{require_path: rubocop/cop/internal_affairs}",
+            2,
+            "Error: Failed to load plugin `rubocop-internal_affairs` because the corresponding plugin class could not be \
+             determined for instantiation.",
+        ),
+        ("{enabled: false}", 0, ""),
+    ];
+    for (entry, status, first) in cases {
+        let config = format!(
+            "plugins:\n  - rubocop-internal_affairs: {entry}\nAllCops:\n  NewCops: disable\n  SuggestExtensions: false\n"
+        );
+        fs::write(dir.join(".rubocop.yml"), config).unwrap();
+        let out = rbcop(&dir, &["-f", "e", "a.rb"]);
+        assert_eq!(out.status.code(), Some(status), "{entry}");
+        assert_eq!(text(&out.stderr).lines().next().unwrap_or(""), first, "{entry}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// RSpec/DiscardedMatcher with a String CustomMatcherMethods (#502): every receiverless send
 /// raises, and a plain block's on_block raises again; a numblock call raises once.
 #[test]
