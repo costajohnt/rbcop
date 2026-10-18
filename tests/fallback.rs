@@ -203,6 +203,11 @@ fn plain_require_loads_what_the_feature_requires() {
     )
     .unwrap();
     fs::write(gem.join("lib/rubocop/fake_ns.rb"), "module RuboCop\n  module FakeNs\n  end\nend\n").unwrap();
+    fs::write(
+        gem.join("lib/rubocop/fake_ns/plugin.rb"),
+        "module RuboCop\n  module FakeNs\n    class Plugin < LintRoller::Plugin\n    end\n  end\nend\n",
+    )
+    .unwrap();
     // Sets the default configuration only from a method RuboCop would call later (standard's
     // plugin, #518): requiring it merges nothing.
     fs::write(
@@ -264,8 +269,21 @@ fn plain_require_loads_what_the_feature_requires() {
         assert_eq!(text(&out.stdout), "");
         assert_eq!(out.status.code(), Some(2));
         // Named with its plugin class, it loads.
-        let out = run("plugins:\n  - rubocop-fake_ns:\n      plugin_class_name: RuboCop::FakeNs::Plugin\n");
+        let named = |class: &str| run(&format!("plugins:\n  - rubocop-fake_ns:\n      plugin_class_name: {class}\n"));
+        let out = named("RuboCop::FakeNs::Plugin");
         assert!(text(&out.stderr).contains("not running 1 cop it does not implement"), "{}", text(&out.stderr));
+        // A name that is no constant, or a module, ends the run (#530).
+        for (class, want) in [
+            (
+                "Nope::Plugin",
+                "Failed while configuring plugin `rubocop-fake_ns': no constant with name `Nope::Plugin' was found.\n",
+            ),
+            ("RuboCop::FakeNs", "undefined method 'new' for module RuboCop::FakeNs\n"),
+        ] {
+            let out = named(class);
+            assert_eq!(text(&out.stderr), want);
+            assert_eq!(out.status.code(), Some(2));
+        }
     }
     let _ = fs::remove_dir_all(&dir);
     let _ = fs::remove_dir_all(&gems);
