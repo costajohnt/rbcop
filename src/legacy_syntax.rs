@@ -930,6 +930,12 @@ const NEWLINE_IGNORED: u32 = 0x1 | 0x80 | 0x100 | 0x200;
 
 /// Prism's tokens converted the way Prism::Translation::Parser::Lexer#to_a does for the parts the
 /// grammar's error positions depend on (string/symbol merging, `(` and `{` kinds), followed by `$end`.
+/// The offsets of the parser gem's tNL tokens (`convert`). After a `\` continuation and a comment
+/// line, its tNL is on that comment line (#537).
+pub fn newline_offsets(tokens: &[Token], text: &str, target: f64) -> Vec<usize> {
+    convert(tokens, text, target).into_iter().filter(|t| t.name == "tNL").map(|t| t.start).collect()
+}
+
 fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
     let mut out: Vec<Tok> = Vec::with_capacity(tokens.len() + 1);
     // Lexer state after the previous token (the start of a file is EXPR_BEG).
@@ -989,6 +995,8 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
                 if (quote == "'" || quote == "\"") && next(i) == "STRING_END" {
                     name = "tSTRING";
                     end = tokens[i].end;
+                    // The state after the string (its end), not after its opening quote (#537).
+                    state = tokens[i].state;
                     i += 1;
                 } else if (quote == "'" || quote == "\"") && next(i) == "STRING_CONTENT" && next(i + 1) == "STRING_END"
                 {
@@ -1005,6 +1013,7 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
                     if simple {
                         name = "tSTRING";
                         end = tokens[i + 1].end;
+                        state = tokens[i + 1].state;
                         i += 2;
                     }
                 }

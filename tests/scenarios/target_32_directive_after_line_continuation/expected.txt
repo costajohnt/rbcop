@@ -1,0 +1,30 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+call.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+call.rb:1:5: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+call.rb:2:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Lint/AmbiguousOperator`.
+call.rb:4:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Lint/AmbiguousOperator.
+indented.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+indented.rb:1:5: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+indented.rb:2:3: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 0).
+indented.rb:2:3: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Lint/AmbiguousOperator`.
+indented.rb:4:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Lint/AmbiguousOperator.
+operator.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+operator.rb:1:9: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+operator.rb:2:1: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 0 instead of 2).
+operator.rb:2:1: C: [Correctable] Style/DirectiveScope: Use `disable-next` instead of a `disable`/`enable` pair around a single statement.
+operator.rb:2:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Lint/AmbiguousOperator`.
+operator.rb:3:3: C: [Correctable] Layout/MultilineOperationIndentation: Align the operands of an expression in an assignment spanning multiple lines.
+string.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+string.rb:1:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+string.rb:1:8: C: [Correctable] Layout/LineContinuationSpacing: Use one space in front of backslash.
+string.rb:1:8: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+string.rb:2:1: C: [Correctable] Layout/CommentIndentation: Incorrect indentation detected (column 0 instead of 2).
+string.rb:2:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Lint/AmbiguousOperator`.
+string.rb:3:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+string.rb:3:3: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+string.rb:3:3: W: [Correctable] Lint/Void: Literal `"b"` used in void context.
+string.rb:4:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Lint/AmbiguousOperator.
+two_comments.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+two_comments.rb:1:5: C: [Correctable] Style/RedundantLineContinuation: Redundant line continuation.
+two_comments.rb:2:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Lint/AmbiguousOperator`.
+two_comments.rb:5:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Lint/AmbiguousOperator.

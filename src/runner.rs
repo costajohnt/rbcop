@@ -599,6 +599,9 @@ fn analyze(
     if cfg.target_ruby < 2.7 {
         src.numbered_sends = crate::syntax::legacy_numbered_sends(&result.node());
     }
+    if parser_gem && text.contains("\\\n") {
+        src.gem_newlines = crate::legacy_syntax::newline_offsets(&tokens, text, cfg.target_ruby);
+    }
     // From 3.3 the runner's parse is parse_warnings::parse (unedited text, same version and
     // encoding): its warnings save that second parse.
     if !parser_gem {
