@@ -28,6 +28,12 @@ impl Cop for SpaceInsideRangeLiteral {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let range = node.as_range_node().unwrap();
+        // Below 2.7 a beginless range is Prism's reading of `0.. ..3`, the parser gem's `(0..)..3`
+        // (legacy_syntax), whose inner range is `0..`.
+        // ponytail: other cops still see Prism's shape there.
+        if range.left().is_none() && cx.src.target_ruby < 2.7 {
+            return;
+        }
         let (nl, space, op) = if range.is_exclude_end() {
             (&*ERANGE_NL, &*ERANGE_SPACE, "...")
         } else {

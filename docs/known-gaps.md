@@ -151,6 +151,8 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   (`(begin (int 1) (begin (int 2)))`), so cops judging the body's last expression can differ
   (Naming/PredicateMethod and Style/ReturnNilInPredicateMethodDefinition on a `def foo?` whose
   `else` returns `nil`); likewise Lint/Void misses `1` in `begin; 1; else; 2; end` (#608).
+- `0.. ..3` at TargetRubyVersion 2.6 (the parser gem's `(0..)..3`): rbcop accepts it, but cops see
+  Prism's `0..(..3)`; only Layout/SpaceInsideRangeLiteral skips the inner beginless range (#609).
 - A `require:`d gem's Ruby code that changes RuboCop's directive syntax is not run: standard's
   `standard/rubocop/ext.rb` widens `DirectiveComment::DIRECTIVE_COMMENT_REGEXP`, so its
   `# standard:disable Cop` comments are directives in RuboCop and plain comments in rbcop.
