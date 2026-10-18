@@ -1,0 +1,5 @@
+rubocop-performance extension supports plugin, specify `plugins: rubocop-performance` instead of `require: rubocop-performance` in .rubocop.yml.
+For more information, see https://docs.rubocop.org/rubocop/plugin_migration_guide.html.
+a.rb: Warning: no department given for NoPuts. Run `rubocop -a --only Migration/DepartmentName` to fix.
+b.rb: Warning: no department given for NoPuts. Run `rubocop -a --only Migration/DepartmentName` to fix.
+b.rb: Warning: no department given for NoPuts. Run `rubocop -a --only Migration/DepartmentName` to fix.

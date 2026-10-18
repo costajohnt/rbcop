@@ -1,0 +1,6 @@
+require:
+  - ./custom_cops/no_puts.rb
+  - rubocop-performance
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false
