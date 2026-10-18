@@ -16,11 +16,16 @@ impl Cop for HookArgument {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (any_block $(send _ #Hooks.all (sym ${:each :example})) ...) or (any_block $(send _ #Hooks.all) ...)
         let Some(call) = helpers::rspec::any_block_call(node) else { return };
-        let l = helpers::rspec::lang(cx);
-        if is_csend(&call) || !l.hook(method_name(&call)) {
+        // NodePattern checks the send's arity before its children: a send with two or more
+        // arguments matches neither pattern and never asks Hooks.
+        let args = send_args(&call);
+        if is_csend(&call) || args.len() > 1 {
             return;
         }
-        let args = send_args(&call);
+        let l = helpers::rspec::lang(cx);
+        if !l.hook(method_name(&call)) {
+            return;
+        }
         let scope = match &args[..] {
             [] => None,
             [a] if helpers::rspec::is_sym(cx, a) => match helpers::rails::sym_value(a).as_deref() {

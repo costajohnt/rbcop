@@ -897,7 +897,11 @@ impl Store {
         // Plugins (and plugin-capable `require:` gems) only matter here for their default configs.
         let mut plugins: Vec<(String, Load)> = Vec::new();
         let mut migrate = Vec::new();
+        let mut require_from = 0;
         for key in ["plugins", "require"] {
+            if key == "require" {
+                require_from = plugins.len();
+            }
             for entry in seq(hash.remove(key)) {
                 match entry {
                     Value::Str(mut s) => {
@@ -970,7 +974,7 @@ impl Store {
         // The first entry that fails to load ends the run, after the warnings of the entries
         // before it.
         let names: Vec<String> = plugins.iter().map(|(n, _)| n.clone()).collect();
-        let failed = match self.integrate_plugins(plugins, &mut local) {
+        let failed = match self.integrate_plugins(plugins, require_from, &mut local) {
             Err(e) => {
                 let at = self.failed_entry.take().and_then(|f| names.iter().position(|n| *n == f));
                 match (at, missing) {
@@ -991,10 +995,7 @@ impl Store {
             None => migrate.into_iter().map(|(_, b, s)| (b, s)).collect(),
         };
         // ConfigLoader#load_file resolves `plugins:` and then `require:`: the cop classes a local
-        // file defines register once it loads.
-        // ponytail: the local files after the first gem with a config register after every gem of
-        // this config file (integrate_plugins registers the ones before it), not at their place in
-        // `require:`; that order only matters for a cop name two departments share.
+        // file defines register once it loads (integrate_plugins registers the ones before a gem).
         for (_, file) in local {
             self.register_local(&file);
         }
@@ -1188,11 +1189,12 @@ impl Store {
     /// Plugin::ConfigurationIntegrator: fold each plugin gem's config/default.yml into the defaults.
     // ponytail: assumes the LintRoller rules path is <gem>/config/default.yml, which every
     // rubocop-* plugin checked so far uses. Local `require: ./file` entries (custom cops, `local`
-    // with their places in `names`) register here only when they come before the first gem with a
-    // config (#536); the caller registers the rest.
+    // with their places in `names`) register here when they come before a gem (#536, #579); the
+    // caller registers the ones after the last. `names` from `require_from` on are `require:` entries.
     fn integrate_plugins(
         &mut self,
         names: Vec<(String, Load)>,
+        require_from: usize,
         local: &mut Vec<(usize, PathBuf)>,
     ) -> Result<(), String> {
         let names: Vec<(usize, String, Load)> = names
@@ -1207,13 +1209,17 @@ impl Store {
         // Plugin::Loader.load requires every plugin (registering its cops) before
         // ConfigurationIntegrator loads ConfigLoader.default_configuration, whose qualified keys
         // fill Registry#unqualified_cop_names, and then each plugin's config.
-        // ponytail: a config's `plugins:` and plugin-capable `require:` gems load as one batch;
-        // RuboCop integrates each such `require:` on its own, after `plugins:`.
+        // ponytail: a config's `plugins:` and plugin-capable `require:` gems merge their configs as
+        // one batch; RuboCop integrates each such `require:` on its own, after `plugins:`.
         let mut configs: Vec<Result<&'static crate::helpers::cop_registry::NativePlugin, PathBuf>> = Vec::new();
         for (at, name, load) in names {
-            // `require:` loads in order: a local file before the first gem with a config registers
-            // its cops before that gem memoizes Registry#unqualified_cop_names.
-            if configs.is_empty() {
+            // `require:` loads in order, each entry on its own: the `plugins:` batch and every gem
+            // with a config before this entry have memoized Registry#unqualified_cop_names, and a
+            // local file before it registers its cops now.
+            if at >= require_from && !configs.is_empty() {
+                crate::helpers::cop_registry::fill_unqualified_cop_names();
+            }
+            if at >= require_from || configs.is_empty() {
                 for (_, file) in local.extract_if(.., |(i, _)| *i < at) {
                     self.register_local(&file);
                 }
@@ -1221,7 +1227,16 @@ impl Store {
             self.loaded_plugins.push(name.clone());
             if let Some(native) = crate::helpers::cop_registry::native_plugin(&name) {
                 // A plugin rbcop implements: its cops register and its vendored default.yml merges,
-                // so the gem need not be installed.
+                // so the gem need not be installed. A `plugin_class_name` is looked up as for any
+                // gem (#556, #568).
+                // ponytail: with the gem not installed the name is not checked.
+                if let Load::NamedPlugin(class) = &load
+                    && let Ok(Feature { dir: Some(dir), .. }) = self.feature(&name)
+                    && let Some(problem) = named_plugin_problem(&name, class, &dir.join("lib"))
+                {
+                    self.failed_entry = Some(name.clone());
+                    return Err(problem);
+                }
                 crate::helpers::cop_registry::register_plugin(native);
                 configs.push(Ok(native));
                 continue;
@@ -1267,34 +1282,29 @@ impl Store {
             let lib = dir.join(lib);
             // Kernel.const_get of the name, then `.new(plugin_config)` on it.
             // ponytail: the constant is looked for in the gem's lib/ only.
-            if let Load::NamedPlugin(class) = &load {
-                let problem = match ruby_constant_kinds(&ruby_files(&lib)).get(class.trim_start_matches("::")) {
-                    Some(true) => None,
-                    Some(false) => Some(format!("undefined method 'new' for module {class}")),
-                    None => Some(format!(
-                        "Failed while configuring plugin `{name}': no constant with name `{class}' was found."
-                    )),
-                };
-                if let Some(problem) = problem {
-                    self.failed_entry = Some(name.clone());
-                    return Err(problem);
-                }
+            if let Load::NamedPlugin(class) = &load
+                && let Some(problem) = named_plugin_problem(&name, class, &lib)
+            {
+                self.failed_entry = Some(name.clone());
+                return Err(problem);
             }
             let path = dir.join(config);
             // A plugin loads its gem (its cops, its config); a plain `require` loads the files
-            // it reaches, and the gem's config/default.yml only when that code injects it into
-            // the default configuration (an extension's Inject.defaults!).
-            let (files, merge) = if load == Load::Require {
+            // it reaches, and the gem's config files only when that code injects them into the
+            // default configuration (an extension's Inject.defaults!).
+            let (files, paths) = if load == Load::Require {
                 let rubocop = self.gem_dir("rubocop").ok();
                 let files = match &feature.file {
                     Some(file) => required_files(&lib, file, rubocop.as_deref()),
                     None => ruby_files(&lib),
                 };
-                let inject = path.is_file() && injects_defaults(&files);
-                (files, inject)
+                let paths: Vec<PathBuf> =
+                    injected_configs(&files).into_iter().map(|p| dir.join(p)).filter(|p| p.is_file()).collect();
+                (files, paths)
             } else {
-                (ruby_files(&lib), path.is_file())
+                (ruby_files(&lib), [path.clone()].into_iter().filter(|p| p.is_file()).collect())
             };
+            let merge = !paths.is_empty();
             for file in &files {
                 ruby_file_constants(file, &mut self.plugin_constants);
             }
@@ -1315,15 +1325,15 @@ impl Store {
             // default.yml configures them (and not the entries without a class). Classes
             // configured there come in that order, then the others. Other class and module
             // names (helpers, the plugin class, namespaces) are not cops.
-            let config = if merge {
-                let text = std::fs::read_to_string(&path).map_err(|e| format!("{}: {e}", path.display()))?;
-                match parse_yaml_file(&text, &path.display().to_string())? {
-                    Value::Map(m) => Arc::unwrap_or_clone(m),
-                    _ => Map::default(),
+            let mut config = Map::default();
+            for path in &paths {
+                let text = std::fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
+                if let Value::Map(m) = parse_yaml_file(&text, &path.display().to_string())? {
+                    for (k, v) in Arc::unwrap_or_clone(m).0 {
+                        config.insert(k, v);
+                    }
                 }
-            } else {
-                Map::default()
-            };
+            }
             let keys: Vec<String> = config.keys().map(String::from).collect();
             if cops.is_empty() {
                 for file in &files {
@@ -1349,9 +1359,7 @@ impl Store {
             crate::helpers::cop_registry::set_foreign_autocorrect(
                 cops.into_iter().filter_map(|(c, ac)| ac.then_some(c)),
             );
-            if merge {
-                configs.push(Err(path));
-            }
+            configs.extend(paths.into_iter().map(Err));
         }
         // (A gem with a config is a plugin, or an older extension whose inject_defaults! loads
         // the default configuration as well.)
@@ -1581,32 +1589,115 @@ fn required_files(lib: &Path, file: &Path, loaded: Option<&Path>) -> Vec<PathBuf
     seen
 }
 
-/// Loading these files sets ConfigLoader's default configuration: one of them calls an
-/// extension's `Inject.defaults!` at the top level, and one sets the default configuration.
+/// The config files (relative to the gem directory) that loading these files merges into
+/// ConfigLoader's default configuration, in call order: an extension's `Inject.<method>` called
+/// at the top level (rubocop-rails' old `Inject.defaults!`, rubocop-github's
+/// `Inject.default_defaults!` / `rails_defaults!`), where the files also set the default
+/// configuration. The file is the one the constant the method (or a `self.` method it calls)
+/// reads names (`CONFIG_DEFAULT = PROJECT_ROOT.join("config", "default_cops.yml")`);
+/// config/default.yml for a `defaults!` / `inject_defaults!` whose file is not found that way.
 /// (Code that sets it only from a method RuboCop calls later, as standard's plugin, does not.)
-// ponytail: the call is found outside any `def` (however it is spelled), the assignment by name;
-// neither is a trace of which method is called.
-fn injects_defaults(files: &[PathBuf]) -> bool {
+// ponytail: the call is found outside any `def`, the assignment by name, and a constant by its
+// last name; a path built other than from string literals is not followed.
+fn injected_configs(files: &[PathBuf]) -> Vec<String> {
     use ruby_prism::Visit;
-    struct Call(bool);
-    impl<'pr> Visit<'pr> for Call {
-        fn visit_def_node(&mut self, _: &ruby_prism::DefNode<'pr>) {}
+    #[derive(Default)]
+    struct Scan {
+        /// `def self.m`: the constants and the receiverless or `self.` calls in its body
+        defs: HashMap<String, (Vec<String>, Vec<String>)>,
+        /// `NAME = ...`: the path its string literals spell, when it is a .yml file
+        consts: HashMap<String, String>,
+        /// top-level `Const.m` calls
+        calls: Vec<String>,
+        in_def: Option<String>,
+    }
+    impl<'pr> Visit<'pr> for Scan {
+        fn visit_def_node(&mut self, n: &ruby_prism::DefNode<'pr>) {
+            if self.in_def.is_some() || n.receiver().is_none_or(|r| r.as_self_node().is_none()) {
+                return;
+            }
+            let name = String::from_utf8_lossy(n.name().as_slice()).into_owned();
+            self.defs.entry(name.clone()).or_default();
+            self.in_def = Some(name);
+            if let Some(b) = n.body() {
+                self.visit(&b);
+            }
+            self.in_def = None;
+        }
+        fn visit_constant_read_node(&mut self, n: &ruby_prism::ConstantReadNode<'pr>) {
+            if let Some(d) = &self.in_def {
+                let name = String::from_utf8_lossy(n.name().as_slice()).into_owned();
+                self.defs.get_mut(d).unwrap().0.push(name);
+            }
+        }
+        fn visit_constant_write_node(&mut self, n: &ruby_prism::ConstantWriteNode<'pr>) {
+            struct Strs(Vec<String>);
+            impl<'pr> Visit<'pr> for Strs {
+                fn visit_string_node(&mut self, n: &ruby_prism::StringNode<'pr>) {
+                    self.0.push(String::from_utf8_lossy(n.unescaped()).into_owned());
+                }
+            }
+            let mut strs = Strs(Vec::new());
+            strs.visit(&n.value());
+            let parts: Vec<String> = strs.0.into_iter().filter(|s| s != "." && s != "..").collect();
+            if parts.last().is_some_and(|s| s.ends_with(".yml")) {
+                self.consts.insert(String::from_utf8_lossy(n.name().as_slice()).into_owned(), parts.join("/"));
+            }
+            ruby_prism::visit_constant_write_node(self, n);
+        }
         fn visit_call_node(&mut self, n: &ruby_prism::CallNode<'pr>) {
-            self.0 |= matches!(n.name().as_slice(), b"defaults!" | b"inject_defaults!")
-                && n.receiver()
-                    .is_some_and(|r| r.as_constant_read_node().is_some() || r.as_constant_path_node().is_some());
+            let name = String::from_utf8_lossy(n.name().as_slice()).into_owned();
+            match &self.in_def {
+                Some(d) if n.receiver().is_none_or(|r| r.as_self_node().is_some()) => {
+                    self.defs.get_mut(d).unwrap().1.push(name)
+                }
+                None if n
+                    .receiver()
+                    .is_some_and(|r| r.as_constant_read_node().is_some() || r.as_constant_path_node().is_some()) =>
+                {
+                    self.calls.push(name)
+                }
+                _ => {}
+            }
             ruby_prism::visit_call_node(self, n);
         }
     }
     static SET: std::sync::LazyLock<Regex> =
         std::sync::LazyLock::new(|| Regex::new(r"@default_configuration\b|\bdefault_configuration\s*=[^=]").unwrap());
     let texts: Vec<String> = files.iter().filter_map(|f| std::fs::read_to_string(f).ok()).collect();
-    let calls = |t: &String| {
-        let mut call = Call(false);
-        call.visit(&ruby_prism::parse(t.as_bytes()).node());
-        call.0
-    };
-    texts.iter().any(|t| SET.is_match(t)) && texts.iter().any(calls)
+    if !texts.iter().any(|t| SET.is_match(t)) {
+        return Vec::new();
+    }
+    let mut scan = Scan::default();
+    for t in &texts {
+        scan.visit(&ruby_prism::parse(t.as_bytes()).node());
+    }
+    // the config files a self method reads, through the self methods it calls
+    fn reads(scan: &Scan, m: &str, seen: &mut Vec<String>) -> Vec<String> {
+        if seen.iter().any(|s| s == m) {
+            return Vec::new();
+        }
+        seen.push(m.to_string());
+        let Some((consts, calls)) = scan.defs.get(m) else { return Vec::new() };
+        let own: Vec<String> = consts.iter().filter_map(|c| scan.consts.get(c).cloned()).collect();
+        if !own.is_empty() {
+            return own;
+        }
+        calls.iter().flat_map(|c| reads(scan, c, seen)).collect()
+    }
+    let mut out: Vec<String> = Vec::new();
+    for call in &scan.calls {
+        let mut paths = reads(&scan, call, &mut Vec::new());
+        if paths.is_empty() && matches!(call.as_str(), "defaults!" | "inject_defaults!") {
+            paths.push("config/default.yml".to_string());
+        }
+        for p in paths {
+            if !out.contains(&p) {
+                out.push(p);
+            }
+        }
+    }
+    out
 }
 
 /// Plugin::INTERNAL_AFFAIRS_PLUGIN_NAME, RuboCop's built-in plugin, and the obsolete name it
@@ -1758,6 +1849,16 @@ static SCOPE_END: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex
 
 /// The fully qualified class and module names some Ruby files define, each with whether it is a
 /// class (Kernel.const_get of a `plugin_class_name`). Nesting as in `ruby_cops_in`.
+/// Plugin::Loader.constantize of a `plugin_class_name`: Kernel.const_get, then `.new` on it. The
+/// error that ends the run when the name is no class.
+fn named_plugin_problem(name: &str, class: &str, lib: &Path) -> Option<String> {
+    match ruby_constant_kinds(&ruby_files(lib)).get(class.trim_start_matches("::")) {
+        Some(true) => None,
+        Some(false) => Some(format!("undefined method 'new' for module {class}")),
+        None => Some(format!("Failed while configuring plugin `{name}': no constant with name `{class}' was found.")),
+    }
+}
+
 fn ruby_constant_kinds(files: &[PathBuf]) -> HashMap<String, bool> {
     let mut out = HashMap::new();
     for file in files {

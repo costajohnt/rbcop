@@ -9,7 +9,7 @@ struct Ctx<'a> {
     max: i64,
     /// AllowedGroups, read with a bare `include?` (a substring test on a String).
     allowed: &'a crate::config::CopConfig,
-    found: Vec<((usize, usize), i64)>,
+    found: &'a mut Vec<((usize, usize), i64)>,
 }
 
 /// find_nested_example_groups: example groups nested deeper than Max, through `block` and `begin`
@@ -49,12 +49,13 @@ impl Cop for NestedGroups {
             Some(v) => helpers::rspec::config_integer(Some(v)).unwrap_or(3),
             None => helpers::rspec::config_integer(cx.cfg.get("Max")).unwrap_or(3),
         };
-        let mut c = Ctx { l: &l, max, allowed: cx.cfg, found: Vec::new() };
-        for group in helpers::rspec::top_level_groups(&l, node) {
-            walk(&mut c, &group, 1);
-        }
-        for ((s, e), nesting) in c.found {
-            cx.add(s, e, format!("Maximum example group nesting exceeded [{nesting}/{max}]."));
-        }
+        helpers::rspec::each_top_level_group(&l, node, |_, group, _| {
+            // add_offense is immediate: the offenses found before a raise are kept
+            helpers::rspec::add_found(
+                cx,
+                |cx, found| walk(&mut Ctx { l: &l, max, allowed: cx.cfg, found }, group, 1),
+                |cx, ((s, e), nesting)| cx.add(s, e, format!("Maximum example group nesting exceeded [{nesting}/{max}].")),
+            );
+        });
     }
 }

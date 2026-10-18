@@ -15,9 +15,14 @@ impl Cop for InferredSpecType {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // describe_with_type: (block (send #rspec? #ExampleGroups.all ... (hash <$(pair (sym :type) sym) ...>)) ...)
-        let Some(call) = helpers::rspec::plain_block_call(node) else { return };
+        // on_block and on_numblock (not on_itblock): example_group? first
+        let Some(call) = helpers::rspec::any_block_call(node) else { return };
+        let block = helpers::rspec::block_of(&call).unwrap();
+        if block.parameters().is_some_and(|p| p.as_it_parameters_node().is_some()) {
+            return;
+        }
         let l = helpers::rspec::lang(cx);
-        if !helpers::rspec::rspec_recv(&call) || !l.example_group(method_name(&call)) {
+        if !helpers::rspec::rspec_recv(&call) || !l.example_group(method_name(&call)) || !helpers::rspec::is_plain(&block) {
             return;
         }
         let args = send_args(&call);
