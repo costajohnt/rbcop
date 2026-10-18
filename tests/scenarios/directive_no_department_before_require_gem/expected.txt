@@ -1,0 +1,7 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:1:26: C: [Correctable] Migration/DepartmentName: Department name is missing.
+a.rb:3:1: C: Custom/NoPuts: no puts
+b.rb:1:19: C: [Correctable] Migration/DepartmentName: Department name is missing.
+b.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+b.rb:3:18: C: [Correctable] Migration/DepartmentName: Department name is missing.
