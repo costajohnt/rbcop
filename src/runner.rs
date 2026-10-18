@@ -972,6 +972,12 @@ pub fn cop_error_at(cop: &str, src: &Source, at: Option<usize>) {
     record_error(Some(cop), format!("An error occurred while {cop} cop was inspecting {location}."));
 }
 
+/// The running cop callback stands for RuboCop's callback on another node starting at `at` (an
+/// `on_args` that rbcop runs while visiting the def or block).
+pub fn visit_at(at: usize) {
+    VISITING.with(|v| v.set(Some(at)));
+}
+
 /// The node the running cop callback was given (see VISITING).
 pub fn visiting() -> Option<usize> {
     VISITING.with(|v| v.get())
@@ -1204,7 +1210,8 @@ fn guarded(cop: &str, src: &Source, at: Option<usize>, f: impl FnOnce()) {
     VISITING.with(|v| v.set(at));
     let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f));
     IN_COP.with(|c| c.set(false));
-    VISITING.with(|v| v.set(None));
+    // The callback may stand for one on another node (`visit_at`).
+    let at = VISITING.with(|v| v.replace(None));
     if let Err(payload) = result
         && !payload.is::<ForceHook>()
     {
@@ -1300,6 +1307,11 @@ impl<'pr> Walker<'_, 'pr, '_> {
         if kind == node_kind::SYMBOL_NODE && self.pattern_key() {
             return;
         }
+        // The parser gem's block node starts at its call; Prism's BlockNode at `{` / `do`.
+        let at = match (node, self.stack.last()) {
+            (Node::BlockNode { .. }, Some(call)) => call.location().start_offset(),
+            _ => node.location().start_offset(),
+        };
         for &i in &self.dispatch[kind] {
             let a = &self.active[i];
             let mut cx = Cx {
@@ -1314,7 +1326,7 @@ impl<'pr> Walker<'_, 'pr, '_> {
                 state: &mut self.states[i],
                 fixes: &mut self.fixes[i],
             };
-            guarded(a.name, self.src, Some(node.location().start_offset()), || a.cop.on_node(&mut cx, node));
+            guarded(a.name, self.src, Some(at), || a.cop.on_node(&mut cx, node));
         }
     }
 

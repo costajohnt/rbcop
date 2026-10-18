@@ -87,6 +87,8 @@ impl Cop for ParameterLists {
                 (_, _, Some(p)) => (p.location().start_offset(), p.location().end_offset()),
                 _ => return,
             };
+            // RuboCop counts them in on_args.
+            crate::runner::visit_at(range.0);
             cx.add(range.0, range.1, format!("Avoid parameter lists longer than {max} parameters. [{count}/{max}]"));
             return;
         }
@@ -103,6 +105,7 @@ impl Cop for ParameterLists {
             return;
         }
         let l = bp.location();
+        crate::runner::visit_at(l.start_offset());
         cx.add(
             l.start_offset(),
             l.end_offset(),
