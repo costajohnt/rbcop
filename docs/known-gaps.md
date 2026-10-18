@@ -414,6 +414,10 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     Other values RuboCop crashes on (a non-String `FailLevel`, `TargetRubyVersion: true`, a
     non-Hash section under an unknown name) are not reproduced.
   - RuboCop's backtrace for a bogus `-f` formatter is not printed.
+  - A `plugin_class_name` naming another plugin's plugin class (`rubocop-performance:
+    {plugin_class_name: RuboCop::Rails::Plugin}` after rubocop-rails, #590): RuboCop integrates
+    that plugin's rules and leaves the gem's own cops unconfigured (each runs, enabled, with no
+    parameters); rbcop loads the gem as with its own plugin class.
   - `-c FILE`: the `Using ... configuration` warning for a deprecated cop name shows the expanded
     path; RuboCop shows the argument as given.
 - YAML: a plain `:name` value loads as a Symbol (`Value::Sym`) and a quoted `':name'` as a String,

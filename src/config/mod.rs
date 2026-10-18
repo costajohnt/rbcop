@@ -1252,7 +1252,8 @@ impl Store {
                 // ponytail: with the gem not installed the name is not checked.
                 if let Load::NamedPlugin(class) = &load
                     && let Ok(Feature { dir: Some(dir), .. }) = self.feature(&name)
-                    && let Some(problem) = named_plugin_problem(&name, class, &dir.join("lib"))
+                    && let Some(problem) =
+                        named_plugin_problem(&name, class, &self.constant_libs(&name, dir.join("lib")))
                 {
                     self.failed_entry = Some(name.clone());
                     return Err(problem);
@@ -1295,9 +1296,8 @@ impl Store {
             let Some(dir) = feature.dir else { continue };
             let lib = dir.join(lib);
             // Kernel.const_get of the name, then `.new(plugin_config)` on it.
-            // ponytail: the constant is looked for in the gem's lib/ only.
             if let Load::NamedPlugin(class) = &load
-                && let Some(problem) = named_plugin_problem(&name, class, &lib)
+                && let Some(problem) = named_plugin_problem(&name, class, &self.constant_libs(&name, lib.clone()))
             {
                 self.failed_entry = Some(name.clone());
                 return Err(problem);
@@ -1460,6 +1460,25 @@ impl Store {
     }
 
     /// Gem dir for inherit_gem and plugins, as `Gem::Specification.find_by_name(name).gem_dir` reports it.
+    /// The lib/ directories whose classes and modules Kernel.const_get sees once the gem `name`
+    /// (lib/ `own`) is required: its own, rubocop's, lint_roller's and those of the plugins and
+    /// features loaded before it (#590).
+    fn constant_libs(&mut self, name: &str, own: PathBuf) -> Vec<PathBuf> {
+        let mut libs = vec![own];
+        for gem in ["rubocop", "lint_roller"] {
+            if let Ok(d) = self.gem_dir(gem) {
+                libs.push(d.join("lib"));
+            }
+        }
+        let earlier: Vec<String> = self.loaded_plugins.iter().filter(|n| *n != name).cloned().collect();
+        for n in earlier {
+            if let Ok(Feature { dir: Some(d), .. }) = self.feature(&n) {
+                libs.push(d.join("lib"));
+            }
+        }
+        libs
+    }
+
     fn gem_dir(&mut self, gem: &str) -> Result<PathBuf, String> {
         if let Some(d) = self.gem_dirs.get(gem) {
             return Ok(d.clone());
@@ -1880,15 +1899,28 @@ static SCOPE_END: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex
 /// class (Kernel.const_get of a `plugin_class_name`). Nesting as in `ruby_cops_in`.
 /// Plugin::Loader.constantize of a `plugin_class_name`: Kernel.const_get, then `.new` on it. The
 /// error that ends the run when the name is no class.
-fn named_plugin_problem(name: &str, class: &str, lib: &Path) -> Option<String> {
-    match ruby_constant_kinds(&ruby_files(lib)).get(class.trim_start_matches("::")) {
-        Some(true) => None,
-        Some(false) => Some(format!("undefined method 'new' for module {class}")),
+// ponytail: an earlier plugin's plugin class is taken as this gem's; RuboCop integrates that
+// plugin's rules instead and leaves this gem's cops unconfigured (docs/known-gaps.md).
+fn named_plugin_problem(name: &str, class: &str, libs: &[PathBuf]) -> Option<String> {
+    let bare = class.trim_start_matches("::");
+    // `LintRoller::Rules.new(plugin_config)`: a keyword_init Struct (no `class` line)
+    if bare == "LintRoller::Rules" {
+        return Some("unknown keywords: enabled, require_path, plugin_class_name".into());
+    }
+    let files: Vec<PathBuf> = libs.iter().flat_map(|l| ruby_files(l)).collect();
+    match ruby_constant_kinds(&files).get(bare) {
+        // Plugin::ConfigurationIntegrator.validate_plugins! and LintRoller::Plugin#rules
+        Some((true, _)) if bare == "LintRoller::Plugin" => {
+            Some("Please implement `rules(context)` and return an instance of LintRoller::Rules".into())
+        }
+        Some((true, sup)) if sup.as_deref().is_some_and(|s| s.trim_start_matches("::") == "LintRoller::Plugin") => None,
+        Some((true, _)) => Some(format!("undefined method 'supported?' for an instance of {bare}")),
+        Some((false, _)) => Some(format!("undefined method 'new' for module {class}")),
         None => Some(format!("Failed while configuring plugin `{name}': no constant with name `{class}' was found.")),
     }
 }
 
-fn ruby_constant_kinds(files: &[PathBuf]) -> HashMap<String, bool> {
+fn ruby_constant_kinds(files: &[PathBuf]) -> HashMap<String, (bool, Option<String>)> {
     let mut out = HashMap::new();
     for file in files {
         let Ok(text) = std::fs::read_to_string(file) else { continue };
@@ -1901,8 +1933,11 @@ fn ruby_constant_kinds(files: &[PathBuf]) -> HashMap<String, bool> {
                     stack.last().map(|s| s.1.clone()).unwrap_or_default()
                 };
                 path.extend(m[3].trim_start_matches("::").split("::").map(String::from));
-                let class = out.entry(path.join("::")).or_insert(false);
-                *class |= &m[2] == "class";
+                let entry = out.entry(path.join("::")).or_insert((false, None));
+                entry.0 |= &m[2] == "class";
+                if let Some(sup) = m.get(4) {
+                    entry.1.get_or_insert_with(|| sup.as_str().to_string());
+                }
                 if !m.get(5).is_some_and(|t| t.as_str().contains("end")) {
                     stack.push((m[1].len(), path));
                 }

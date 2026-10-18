@@ -355,6 +355,26 @@ fn plain_require_loads_what_the_feature_requires() {
             assert_eq!(text(&out.stderr), want);
             assert_eq!(out.status.code(), Some(2));
         }
+        // Kernel.const_get also sees the constants of the plugins loaded before (#590): a plugin
+        // class loads, another class is no plugin.
+        let after_fake = |class: &str| {
+            run(&format!(
+                "plugins:\n  - rubocop-fake_ns:\n      plugin_class_name: RuboCop::FakeNs::Plugin\n  - rubocop-performance:\n      \
+                 plugin_class_name: {class}\n"
+            ))
+        };
+        assert_ne!(after_fake("RuboCop::FakeNs::Plugin").status.code(), Some(2));
+        for (class, want) in [
+            (
+                "RuboCop::Cop::FakeNs::One",
+                "undefined method 'supported?' for an instance of RuboCop::Cop::FakeNs::One\n",
+            ),
+            ("LintRoller::Rules", "unknown keywords: enabled, require_path, plugin_class_name\n"),
+        ] {
+            let out = after_fake(class);
+            assert_eq!(text(&out.stderr), want);
+            assert_eq!(out.status.code(), Some(2));
+        }
     }
     let _ = fs::remove_dir_all(&dir);
     let _ = fs::remove_dir_all(&gems);
