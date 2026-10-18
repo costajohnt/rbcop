@@ -108,7 +108,7 @@ pub fn inspect(v: &Value) -> String {
         Value::Int(i) => i.to_string(),
         Value::Float(f) => float_to_s(*f),
         Value::Str(s) => inspect_str(s.as_bytes()),
-        Value::Sym(s) => crate::helpers::ruby_string::symbol_inspect(s[1..].as_bytes()),
+        Value::Sym(s) => crate::helpers::ruby_string::symbol_inspect(&s.as_bytes()[1..]),
         Value::Regex(s) => s.clone(),
         Value::Seq(items) => format!("[{}]", items.iter().map(inspect).collect::<Vec<_>>().join(", ")),
         Value::Map(m) => format!(

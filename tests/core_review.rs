@@ -996,13 +996,7 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
         ),
         // an `if` body's statements are a `begin`, no child of the `if`; a hook pattern checks
         // its arity before the list
-        (
-            "Helpers: ~",
-            "RSpec/ScatteredLet",
-            "describe Foo do\n  if c\n    foo(1, 2)\n    bar\n  end\nend\n",
-            &[],
-            &[],
-        ),
+        ("Helpers: ~", "RSpec/ScatteredLet", "describe Foo do\n  if c\n    foo(1, 2)\n    bar\n  end\nend\n", &[], &[]),
         (
             "Hooks: ~",
             "RSpec/SortMetadata",

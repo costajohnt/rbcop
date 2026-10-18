@@ -1082,10 +1082,11 @@ pub fn ask_let_of_parts(l: &Language, body: Option<Node>) {
     let Some(stmt) = parser_body(body) else { return };
     // a block statement's send (not in child_nodes): `(send nil? #Helpers.all _ block_pass)`
     // asks of a send with two arguments
-    if let Some(c) = any_block_call(&stmt) {
-        if c.receiver().is_none() && send_args(&c).len() == 2 {
-            l.helper(method_name(&c));
-        }
+    if let Some(c) = any_block_call(&stmt)
+        && c.receiver().is_none()
+        && send_args(&c).len() == 2
+    {
+        l.helper(method_name(&c));
     }
     child_nodes(&stmt).iter().for_each(|n| _ = let_(l, n));
 }
