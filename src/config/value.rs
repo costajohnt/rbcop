@@ -141,6 +141,11 @@ pub fn parse_yaml(text: &str) -> Result<Value, String> {
 /// fails on a mapping key that is no scalar as the mapping ends), then loads the first document
 /// with ToRuby, a restricted class loader (Regexp and Symbol) and a ScalarScanner.
 pub fn parse_yaml_file(text: &str, path: &str) -> Result<Value, String> {
+    parse_yaml_bytes(text.as_bytes(), path)
+}
+
+/// `parse_yaml_file` on the file's bytes: what is no UTF-8 fails in the reader as in libyaml.
+pub fn parse_yaml_bytes(text: &[u8], path: &str) -> Result<Value, String> {
     match parse_stream(text, path)? {
         Some(root) => ToRuby::default().accept(&root),
         None => Ok(Value::Map(Default::default())),
@@ -168,7 +173,7 @@ impl Node {
 
 /// Psych's TreeBuilder over libyaml's events (the RuboCop handler's end_mapping check included):
 /// the first document's root node.
-fn parse_stream(text: &str, path: &str) -> Result<Option<Node>, String> {
+fn parse_stream(text: &[u8], path: &str) -> Result<Option<Node>, String> {
     let mut parser = Parser::new(text);
     let mut open: Vec<Node> = Vec::new();
     let mut first: Option<Node> = None;
@@ -1083,5 +1088,22 @@ mod tests {
             let Value::Map(m) = parse_yaml(&format!("k: {src}\n")).unwrap() else { panic!("not a map") };
             assert_eq!(m.get("k"), Some(&want), "{src}");
         }
+    }
+
+    // libyaml's reader decodes UTF-8 itself (#593): its problems, and a bad byte in a 16 KB chunk
+    // never read losing to an earlier scanner error.
+    #[test]
+    fn utf8_reader_errors() {
+        let err = |b: &[u8]| parse_yaml_bytes(b, "f").unwrap_err();
+        assert_eq!(err(b"# \xff\n"), "(f): invalid leading UTF-8 octet at line 1 column 1");
+        assert_eq!(err(b"\xff\xfea\x00"), "(f): invalid leading UTF-8 octet at line 1 column 1");
+        assert_eq!(err(b"Foo: a\xe2\x82\n"), "(f): invalid trailing UTF-8 octet at line 1 column 1");
+        assert_eq!(err(b"# a\xe2"), "(f): incomplete UTF-8 octet sequence at line 1 column 1");
+        assert_eq!(err(b"a: \xc0\xaf"), "(f): invalid length of a UTF-8 sequence at line 1 column 1");
+        assert_eq!(err(b"a: \xed\xa0\x80"), "(f): invalid Unicode character at line 1 column 1");
+        assert_eq!(err(b"a: \xf4\x90\x80\x80"), "(f): invalid Unicode character at line 1 column 1");
+        let chunked = |n: usize| [b"a: b: c\n# ".as_slice(), &vec![b'x'; n], b"\xff\n"].concat();
+        assert_eq!(err(&chunked(1000)), "(f): invalid leading UTF-8 octet at line 1 column 1");
+        assert_eq!(err(&chunked(20000)), "(f): mapping values are not allowed in this context at line 1 column 5");
     }
 }
