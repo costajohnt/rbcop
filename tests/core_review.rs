@@ -545,6 +545,38 @@ fn top_level_group_cop_errors_have_no_location() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// An enable directive opts a cop in past its target Ruby range too (Team#roundup_relevant_cops,
+/// #538): Security/YAMLLoad (maximum 3.0) runs at 3.3 in a file that enables it, and a
+/// disable/enable pair around its offense is not redundant.
+#[test]
+fn enable_directive_opts_in_outside_target_ruby() {
+    let dir = scratch("enable-target-ruby");
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "AllCops:\n  TargetRubyVersion: 3.3\n  SuggestExtensions: false\n  NewCops: enable\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.join("c.rb"),
+        "# frozen_string_literal: true\n\n# rubocop:enable Security/YAMLLoad\np YAML.load(x)\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.join("d.rb"),
+        "# frozen_string_literal: true\n\nbegin\n  # rubocop:disable Security/YAMLLoad\n  p YAML.load(x)\n  \
+         # rubocop:enable Security/YAMLLoad\nrescue StandardError\n  nil\nend\n",
+    )
+    .unwrap();
+    let out = rbcop(&dir, &["-f", "e", "c.rb", "d.rb"]);
+    let d = dir.display().to_string();
+    assert_eq!(
+        text(&out.stdout).replace(&d, "D"),
+        "D/c.rb:3:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Security/YAMLLoad.\n\
+         D/c.rb:4:8: W: [Correctable] Security/YAMLLoad: Prefer using `YAML.safe_load` over `YAML.load`.\n"
+    );
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// A `RSpec: Language` list set to `~` is nil to rubocop-rspec's Language helpers, which read it
 /// bare: each cop that asks it raises (#529).
 #[test]
