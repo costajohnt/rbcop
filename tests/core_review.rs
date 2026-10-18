@@ -887,7 +887,7 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
     fs::create_dir_all(dir.join("spec")).unwrap();
     let file = dir.join("spec/foo_spec.rb").display().to_string();
     type Case<'a> = (&'a str, &'a str, &'a str, &'a [&'a str], &'a [&'a str]);
-    let cases: [Case; 11] = [
+    let cases: [Case; 14] = [
         (
             "Examples:\n      Focused: ~",
             "RSpec/VoidExpect",
@@ -972,10 +972,32 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
             &[],
             &["F:3:0.", "F:4:2."],
         ),
+        // a block on `super` is a parser block (#606)
+        (
+            "Examples: ~",
+            "RSpec/EmptyExampleGroup",
+            "describe Foo do\n  super do\n    it { }\n  end\nend\n",
+            &[],
+            &["F:3:0.", "F:4:2.", "F:5:4."],
+        ),
+        (
+            "Expectations: ~",
+            "RSpec/EmptyExampleGroup",
+            "describe Foo do\n  super do\n    it { }\n  end\nend\n",
+            &[],
+            &[],
+        ),
+        (
+            "ExampleGroups: ~",
+            "RSpecRails/AvoidSetupHook",
+            "describe Foo do\n  it do\n    super do\n    end\n  end\nend\n",
+            &[],
+            &["F:3:0.", "F:4:2.", "F:5:4."],
+        ),
     ];
     for (list, cop, source, offenses, errors) in cases {
         let config = format!(
-            "plugins:\n  - rubocop-rspec\nAllCops:\n  NewCops: enable\n  SuggestExtensions: false\nRSpec:\n  Language:\n    {list}\n"
+            "plugins:\n  - rubocop-rspec\n  - rubocop-rspec_rails\nAllCops:\n  NewCops: enable\n  SuggestExtensions: false\nRSpec:\n  Language:\n    {list}\n"
         );
         fs::write(dir.join(".rubocop.yml"), config).unwrap();
         fs::write(dir.join("spec/foo_spec.rb"), format!("# frozen_string_literal: true\n\n{source}")).unwrap();

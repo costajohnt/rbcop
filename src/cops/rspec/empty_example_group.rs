@@ -21,6 +21,9 @@ fn example_or_group_or_include(l: &Language, node: &Node) -> bool {
 
 /// `(block !(send nil? #Hooks.all ...) _ #examples?)`
 fn examples_inside_block(l: &Language, node: &Node) -> bool {
+    if let Some(b) = helpers::rspec::super_block(node) {
+        return helpers::rspec::parser_body(b.body()).is_some_and(|b| examples(l, &b));
+    }
     let Some(c) = helpers::rspec::plain_block_call(node) else { return false };
     // `!(send nil? #Hooks.all ...)`: a csend block call is not that send, so it counts (#426).
     if c.receiver().is_none() && l.hook(method_name(&c)) {
@@ -98,14 +101,18 @@ impl Cop for EmptyExampleGroup {
     }
 
     fn kinds(&self) -> &'static [usize] {
-        &[kind::CALL_NODE]
+        &[kind::CALL_NODE, kind::SUPER_NODE, kind::FORWARDING_SUPER_NODE]
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let l = helpers::rspec::lang(cx);
         // example_group_body: (block (send #rspec? #ExampleGroups.all ...) args $_)
-        // on_block checks the def and example ancestors first, then the pattern.
-        let Some(call) = helpers::rspec::plain_block_call(node) else { return };
+        // on_block checks the def and example ancestors first, then the pattern (which a `super`
+        // block never matches).
+        let call = helpers::rspec::plain_block_call(node);
+        if call.is_none() && helpers::rspec::super_block(node).is_none() {
+            return;
+        }
         if cx.ancestors.iter().any(|a| a.as_def_node().is_some()) {
             return;
         }
@@ -113,6 +120,7 @@ impl Cop for EmptyExampleGroup {
         if cx.ancestors.iter().rev().any(|a| helpers::rspec::example(&l, a)) {
             return;
         }
+        let Some(call) = call else { return };
         if !helpers::rspec::rspec_recv(&call) || !l.example_group(method_name(&call)) {
             return;
         }

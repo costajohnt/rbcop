@@ -10,16 +10,20 @@ impl Cop for AvoidSetupHook {
     }
 
     fn kinds(&self) -> &'static [usize] {
-        &[kind::CALL_NODE]
+        &[kind::CALL_NODE, kind::SUPER_NODE, kind::FORWARDING_SUPER_NODE]
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let Some(call) = helpers::rspec::plain_block_call(node) else { return };
-        // inside_example_group? is asked of every block, before setup_call
+        let call = helpers::rspec::plain_block_call(node);
+        if call.is_none() && helpers::rspec::super_block(node).is_none() {
+            return;
+        }
+        // inside_example_group? is asked of every block (a `super` one too), before setup_call
         let l = helpers::rspec::lang(cx);
         if !helpers::rspec::inside_example_group(&l, cx.ancestors, node) {
             return;
         }
+        let Some(call) = call else { return };
         // (block $(send nil? :setup) (args) _)
         if call.receiver().is_some() || method_name(&call) != "setup" || !send_args(&call).is_empty() {
             return;

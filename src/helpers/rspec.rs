@@ -198,6 +198,17 @@ pub fn send_receiver<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
     }
 }
 
+/// A parser `block` on `super` / `zsuper` (`super(1) { }`, `super do end`): on_block runs for it,
+/// and a `(block !(send ...) ...)` pattern matches it, but no `(block (send ...) ...)` one does.
+pub fn super_block<'pr>(node: &Node<'pr>) -> Option<BlockNode<'pr>> {
+    let b = match node {
+        Node::SuperNode { .. } => node.as_super_node().unwrap().block()?,
+        Node::ForwardingSuperNode { .. } => node.as_forwarding_super_node().unwrap().block()?.as_node(),
+        _ => return None,
+    };
+    b.as_block_node().filter(is_plain)
+}
+
 /// `Runners.all`: `to`, `to_not`, `not_to`.
 pub fn is_runner(n: &str) -> bool {
     matches!(n, "to" | "to_not" | "not_to")
