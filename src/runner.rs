@@ -335,12 +335,13 @@ pub fn parse_for_target<'t>(
             result.drop_errors("parameter_numbered_reserved", a);
         }
         if accept.as_ref().is_none_or(|a| !a.is_empty()) {
-            let (reads, blocks) = crate::syntax::assigned_numbered_reads(&result.node(), accept);
+            let (reads, blocks, numblocks) = crate::syntax::assigned_numbered_reads(&result.node(), accept);
             if !reads.is_empty() {
                 result.variable_calls_as_locals(&reads);
             }
             if target_ruby >= 2.7 && !blocks.is_empty() {
                 result.drop_numbered_parameters(Some(&blocks));
+                result.add_numbered_parameters(&numblocks);
             }
         }
     }

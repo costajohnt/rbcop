@@ -364,8 +364,14 @@ pub fn numbered_parameter_errors(program: &ruby_prism::Node, target: f64) -> Vec
 /// by an assignment or parameter in the same scope, or around a block.
 /// From 3.0 only the declarations `accepted_numbered_targets` gives count (`accept`); the others
 /// are syntax errors. Also the starts (sorted) of the blocks and lambdas whose numbered parameters
-/// (2.7+) are such declared reads: blocks without parameters for the parser gem.
-pub fn assigned_numbered_reads(program: &ruby_prism::Node, accept: Option<Vec<usize>>) -> (Vec<usize>, Vec<usize>) {
+/// (2.7+) are such declared reads: blocks without parameters for the parser gem. And the blocks
+/// (sorted, with the highest N) with an undeclared `_N` read: the parser gem's numblocks, also
+/// where Prism gave none for an inner block's read of the local (#553).
+#[allow(clippy::type_complexity)]
+pub fn assigned_numbered_reads(
+    program: &ruby_prism::Node,
+    accept: Option<Vec<usize>>,
+) -> (Vec<usize>, Vec<usize>, Vec<(usize, u8)>) {
     numbered_walk(program, false, accept)
 }
 
@@ -422,7 +428,12 @@ pub fn accepted_numbered_targets(program: &ruby_prism::Node) -> Vec<usize> {
     w.0
 }
 
-fn numbered_walk(program: &ruby_prism::Node, sends: bool, accept: Option<Vec<usize>>) -> (Vec<usize>, Vec<usize>) {
+#[allow(clippy::type_complexity)]
+fn numbered_walk(
+    program: &ruby_prism::Node,
+    sends: bool,
+    accept: Option<Vec<usize>>,
+) -> (Vec<usize>, Vec<usize>, Vec<(usize, u8)>) {
     use ruby_prism::Visit;
     fn numbered(name: &[u8]) -> bool {
         matches!(name, [b'_', b'1'..=b'9'])
@@ -439,8 +450,8 @@ fn numbered_walk(program: &ruby_prism::Node, sends: bool, accept: Option<Vec<usi
         blocks: Vec<usize>,
         /// Blocks with a declared `_N` read Prism took for a numbered parameter.
         numbered_blocks: Vec<usize>,
-        /// Blocks with an undeclared `_N` read: numbered parameters for the parser gem too.
-        mixed_blocks: Vec<usize>,
+        /// Blocks with an undeclared `_N` read (and its N): numbered parameters for the parser gem too.
+        mixed_blocks: Vec<(usize, u8)>,
     }
     impl Walk {
         fn scoped(&mut self, inherit: bool, f: impl FnOnce(&mut Self)) {
@@ -516,8 +527,11 @@ fn numbered_walk(program: &ruby_prism::Node, sends: bool, accept: Option<Vec<usi
                 self.out.push(n.location().start_offset());
             } else if !self.sends && n.depth() == 0 && numbered(name) {
                 // A block that also reads an undeclared `_N` keeps its numbered parameters.
-                let list = if self.declared(name) { &mut self.numbered_blocks } else { &mut self.mixed_blocks };
-                list.extend(self.blocks.last());
+                if self.declared(name) {
+                    self.numbered_blocks.extend(self.blocks.last());
+                } else {
+                    self.mixed_blocks.extend(self.blocks.last().map(|&b| (b, name[1] - b'0')));
+                }
             }
         }
         // The target is declared before the value is parsed (`_1 = _1` reads the local).
@@ -587,11 +601,14 @@ fn numbered_walk(program: &ruby_prism::Node, sends: bool, accept: Option<Vec<usi
     };
     w.visit(program);
     w.out.sort_unstable();
-    let mixed = std::mem::take(&mut w.mixed_blocks);
-    w.numbered_blocks.retain(|b| !mixed.contains(b));
+    let mut mixed = std::mem::take(&mut w.mixed_blocks);
+    w.numbered_blocks.retain(|b| !mixed.iter().any(|m| m.0 == *b));
     w.numbered_blocks.sort_unstable();
     w.numbered_blocks.dedup();
-    (w.out, w.numbered_blocks)
+    // Each block once, with its maximum.
+    mixed.sort_unstable_by(|a, b| a.0.cmp(&b.0).then(b.1.cmp(&a.1)));
+    mixed.dedup_by_key(|m| m.0);
+    (w.out, w.numbered_blocks, mixed)
 }
 
 /// Builders::Default#static_regexp: every regexp literal without interpolation is compiled with

@@ -730,6 +730,48 @@ impl<'pr> ParseResult<'pr> {
         unsafe { pm_visit_node(self.node.as_ptr(), visit, std::ptr::from_mut(&mut data).cast()) }
     }
 
+    /// rbcop patch: give each block and lambda without parameters that starts at a `blocks` offset
+    /// (sorted, with the maximum) a NumberedParametersNode spanning it. For a block the parser gem
+    /// makes a numblock where Prism took an inner block's `_1` local read for that block's numbered
+    /// parameter and refused one ("numbered parameter is already used in inner block").
+    pub fn add_numbered_parameters(&mut self, blocks: &[(usize, u8)]) {
+        use ruby_prism_sys::{pm_block_node_t, pm_lambda_node_t, pm_node_type, pm_numbered_parameters_node_t};
+        extern "C" {
+            fn pm_visit_node(node: *const pm_node_t, visitor: unsafe extern "C" fn(*const pm_node_t, *mut std::ffi::c_void) -> bool, data: *mut std::ffi::c_void);
+            fn calloc(n: usize, size: usize) -> *mut std::ffi::c_void;
+        }
+        struct Data<'a> {
+            base: *const u8,
+            blocks: &'a [(usize, u8)],
+        }
+        unsafe extern "C" fn visit(node: *const pm_node_t, data: *mut std::ffi::c_void) -> bool {
+            unsafe {
+                let data = &*data.cast::<Data<'_>>();
+                let params = match u32::from((*node).type_) {
+                    t if t == pm_node_type::PM_BLOCK_NODE as u32 => &mut (*node.cast_mut().cast::<pm_block_node_t>()).parameters,
+                    t if t == pm_node_type::PM_LAMBDA_NODE as u32 => &mut (*node.cast_mut().cast::<pm_lambda_node_t>()).parameters,
+                    _ => return true,
+                };
+                let start = usize::try_from((*node).location.start.offset_from(data.base)).unwrap_or(usize::MAX);
+                let Ok(i) = data.blocks.binary_search_by_key(&start, |b| b.0) else { return true };
+                if params.is_null() {
+                    // pm_node_destroy frees it with the block (xfree: libc free).
+                    let n = calloc(1, size_of::<pm_numbered_parameters_node_t>()).cast::<pm_numbered_parameters_node_t>();
+                    if !n.is_null() {
+                        (*n).base.type_ = pm_node_type::PM_NUMBERED_PARAMETERS_NODE as _;
+                        (*n).base.location = (*node).location;
+                        (*n).maximum = data.blocks[i].1;
+                        *params = n.cast();
+                    }
+                }
+            }
+            true
+        }
+        let mut data = Data { base: unsafe { (*self.parser.as_ptr()).start }, blocks };
+        // SAFETY: no Node views exist while `&mut self` is held.
+        unsafe { pm_visit_node(self.node.as_ptr(), visit, std::ptr::from_mut(&mut data).cast()) }
+    }
+
     /// rbcop patch: for each `(from, to)` of `ends` (sorted by `from`, `to < from`), a heredoc
     /// terminator Prism found at `from` belongs at `to`, the start of its line: every string node
     /// whose closing starts at `from`, or whose content ends there, is moved to `to`, and the
