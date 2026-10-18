@@ -15,3 +15,4 @@ pub mod runner;
 pub mod source;
 pub mod syntax;
 pub mod targets;
+pub mod yaml;

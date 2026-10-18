@@ -477,6 +477,125 @@ fn config_load_errors_worded_like_rubocop() {
             "AllCops:\n  NewCops: disable\nNaming/PredicatePrefix:\n  NamePrefix: 1\n",
             "undefined method 'include?' for an instance of Integer",
         ),
+        // libyaml 0.2.5 and Psych's ToRuby (#560, #561, #565, #566, #571, #574, #580): a BOM counts a
+        // column, control characters, NEL/LS breaks, `:` before a flow indicator, tags, streams
+        // after `...`, directives, block scalar indentation.
+        (
+            "\u{FEFF}AllCops:\n  SuggestExtensions: false\nLayout/LineLength:\n  Max: 9\n",
+            "({D}/.rubocop.yml): did not find expected <document start> at line 1 column 1",
+        ),
+        (
+            "Layout/LineLength:\n  X: [a :]\n",
+            "({D}/.rubocop.yml): found unexpected ':' while scanning a plain scalar at line 2 column 7",
+        ),
+        (
+            "Layout/LineLength:\n  X: [a :, b]\n",
+            "({D}/.rubocop.yml): found unexpected ':' while scanning a plain scalar at line 2 column 7",
+        ),
+        (
+            "Layout/LineLength:\n  X: {a :}\n",
+            "({D}/.rubocop.yml): found unexpected ':' while scanning a plain scalar at line 2 column 7",
+        ),
+        (
+            "Layout/LineLength:\n  X: [a :{b}]\n",
+            "({D}/.rubocop.yml): found unexpected ':' while scanning a plain scalar at line 2 column 7",
+        ),
+        (
+            "Layout/LineLength:\n  X: [a b :]\n",
+            "({D}/.rubocop.yml): found unexpected ':' while scanning a plain scalar at line 2 column 7",
+        ),
+        (
+            "Layout/LineLength:\n  X: [? : b]\n",
+            "({D}/.rubocop.yml): did not find expected ',' or ']' while parsing a flow sequence at line 2 column 6",
+        ),
+        (
+            "AllCops:\n  NewCops: enable\n...\nStyle/Foo: 1\n",
+            "({D}/.rubocop.yml): did not find expected <document start> at line 1 column 1",
+        ),
+        (
+            "...\nLayout/LineLength:\n  Max: 9\n",
+            "({D}/.rubocop.yml): did not find expected node content while parsing a block node at line 1 column 1",
+        ),
+        (
+            "%TAG ! a\n%TAG ! b\n---\nLayout/LineLength:\n  Max: 9\n",
+            "({D}/.rubocop.yml): found duplicate %TAG directive at line 1 column 1",
+        ),
+        (
+            "AllCops:\n  NewCops: enable\n# \x07\n",
+            "({D}/.rubocop.yml): control characters are not allowed at line 1 column 1",
+        ),
+        (
+            "Layout/LineLength:\n  X: b\u{007F}\n",
+            "({D}/.rubocop.yml): control characters are not allowed at line 1 column 1",
+        ),
+        (
+            "Layout/LineLength:\n  X: \u{FFFE}\n",
+            "({D}/.rubocop.yml): control characters are not allowed at line 1 column 1",
+        ),
+        (
+            "Layout/LineLength:\n  X: x\u{2028}y\n",
+            "({D}/.rubocop.yml): could not find expected ':' while scanning a simple key at line 3 column 1",
+        ),
+        (
+            "Layout/LineLength:\n  X: x\u{0085}y\n",
+            "({D}/.rubocop.yml): could not find expected ':' while scanning a simple key at line 3 column 1",
+        ),
+        (
+            "Layout/LineLength:\n  X: [!b]\n",
+            "({D}/.rubocop.yml): did not find expected whitespace or line break while scanning a tag at line 2 column 7",
+        ),
+        (
+            "Layout/LineLength:\n  X: {!b}\n",
+            "({D}/.rubocop.yml): did not find expected whitespace or line break while scanning a tag at line 2 column 7",
+        ),
+        (
+            "Layout/LineLength:\n  X: !!str#c\n",
+            "({D}/.rubocop.yml): did not find expected whitespace or line break while scanning a tag at line 2 column 6",
+        ),
+        ("Layout/LineLength:\n  X: !!timestamp 2001-01-01\n", "Tried to load unspecified class: Date"),
+        ("Layout/LineLength:\n  X: !!set {a: ~}\n", "Tried to load unspecified class: Psych::Set"),
+        ("Layout/LineLength:\n  X: !ruby/range 1..2\n", "Tried to load unspecified class: Range"),
+        ("Layout/LineLength:\n  X: !ruby/class String\n", "Tried to load unspecified class: String"),
+        ("Layout/LineLength:\n  X: !!float x\n", "invalid value for Float(): \"x\""),
+        (
+            "%YAML 1\n---\nLayout/LineLength:\n  Max: 9\n",
+            "({D}/.rubocop.yml): did not find expected digit or '.' character while scanning a %YAML directive at line 1 column 1",
+        ),
+        (
+            "%YAML\n---\nLayout/LineLength:\n  Max: 9\n",
+            "({D}/.rubocop.yml): did not find expected version number while scanning a %YAML directive at line 1 column 1",
+        ),
+        (
+            "%YAML 1.123456789012\n---\nLayout/LineLength:\n  Max: 9\n",
+            "({D}/.rubocop.yml): found extremely long version number while scanning a %YAML directive at line 1 column 1",
+        ),
+        (
+            "%TAG ! \n---\nLayout/LineLength:\n  Max: 9\n",
+            "({D}/.rubocop.yml): did not find expected tag URI while parsing a %TAG directive at line 1 column 1",
+        ),
+        (
+            "%TAG !\n---\nLayout/LineLength:\n  Max: 9\n",
+            "({D}/.rubocop.yml): did not find expected whitespace while scanning a %TAG directive at line 1 column 1",
+        ),
+        (
+            "%TAG x y\n---\nLayout/LineLength:\n  Max: 9\n",
+            "({D}/.rubocop.yml): did not find expected '!' while scanning a tag directive at line 1 column 1",
+        ),
+        (
+            "Layout/LineLength:\n  X: |\n      \n    a\n",
+            "({D}/.rubocop.yml): did not find expected key while parsing a block mapping at line 2 column 3",
+        ),
+        // #569, #570: a directive after an unmarked document needs a `---`; content left of a
+        // block scalar's indentation indicator ends the (empty) scalar.
+        ("a:\n  b: 1\n%YAML 1.1\n", "({D}/.rubocop.yml): did not find expected <document start> at line 1 column 1"),
+        (
+            "a: >2-\n false\nb: 1\n",
+            "({D}/.rubocop.yml): did not find expected key while parsing a block mapping at line 1 column 1",
+        ),
+        (
+            "AllCops:\n  SuggestExtensions: >2-\n   false\n",
+            "({D}/.rubocop.yml): did not find expected key while parsing a block mapping at line 2 column 3",
+        ),
     ];
     let dir = scratch("config-errors");
     fs::write(dir.join("a.rb"), "x = 1\n").unwrap();
@@ -514,6 +633,88 @@ fn flow_collections_ignore_indentation_like_libyaml() {
         let out = rbcop(&dir, &["--show-cops", "Metrics/BlockLength"]);
         assert_eq!(out.status.code(), Some(0), "{config:?}: {}", text(&out.stderr));
         assert!(text(&out.stdout).contains(&format!("  AllowedMethods:{want}")), "{config:?}: {}", text(&out.stdout));
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// `--show-cops` values as RuboCop 1.91 loads and dumps them (Psych 5.3.1, libyaml 0.2.5): flow
+/// pairs, block scalar headers, tags, merge keys, and the emitter's styles (#561-#564, #566, #567,
+/// #571, #572). Each case's text is what follows Layout/LineLength's last default.
+#[test]
+fn yaml_values_load_and_dump_like_psych() {
+    let cases: &[(&str, &str)] = &[
+        ("Layout/LineLength:\n  X: [\"a\" :]\n", "  X:\n  - a:\n"),
+        ("Layout/LineLength:\n  X: [a :b]\n", "  X:\n  - a :b\n"),
+        ("Layout/LineLength:\n  X: [a : b]\n", "  X:\n  - a: b\n"),
+        ("Layout/LineLength:\n  X: [a: [b]]\n", "  X:\n  - a:\n    - b\n"),
+        ("Layout/LineLength:\n  X: [a: {b: c}]\n", "  X:\n  - a:\n      b: c\n"),
+        ("Layout/LineLength:\n  X: [a: []]\n", "  X:\n  - a: []\n"),
+        ("Layout/LineLength:\n  X: [a: b, c: [d]]\n", "  X:\n  - a: b\n  - c:\n    - d\n"),
+        ("Layout/LineLength:\n  X: [a: !!seq [b]]\n", "  X:\n  - a:\n    - b\n"),
+        ("Layout/LineLength:\n  X: [a:\n    [b]]\n", "  X:\n  - a:\n    - b\n"),
+        ("Layout/LineLength:\n  X: [? a : [b]]\n", "  X:\n  - a:\n    - b\n"),
+        ("Layout/LineLength:\n  X: |#c\n    a\n", "  X: 'a\n  \n    '\n"),
+        ("Layout/LineLength:\n  X: >-#c\n    a\n", "  X: a\n"),
+        ("Layout/LineLength:\n  X: |\n", "  X: ''\n"),
+        ("Layout/LineLength:\n  X: >\n", "  X: ''\n"),
+        ("Layout/LineLength:\n  X: |+\n", "  X: ''\n"),
+        ("Layout/LineLength:\n  X: |\n\n", "  X: ''\n"),
+        ("Layout/LineLength:\n  X: |-\n", "  X: ''\n"),
+        ("Layout/LineLength:\n  X: |", "  X: ''\n"),
+        ("Layout/LineLength:\n  X: \"a\\n\"\n", "  X: 'a\n  \n    '\n"),
+        ("Layout/LineLength:\n  X: \"a\\nb\\n\\n\"\n", "  X: |+\n    a\n    b\n  \n  ...\n"),
+        ("Layout/LineLength:\n  X: \"\\U0001F600 \\L\"\n", "  X: \"\\U0001F600 \\L\"\n"),
+        ("Layout/LineLength:\n  X: \"\\N\"\n", "  X: \"\\N\"\n"),
+        ("Layout/LineLength:\n  X: \"\\ufeff\"\n", "  X: \"\\uFEFF\"\n"),
+        ("Layout/LineLength:\n  X: a\u{FEFF}b\n", "  X: \"a\\uFEFFb\"\n"),
+        ("Layout/LineLength:\n  X: \"a\\n\\n\"\n", "  X: \"a\\n\\n\"\n"),
+        (
+            "Layout/LineLength:\n  X: {kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk: 1}\n",
+            "  X:\n    ? kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk\n    : 1\n",
+        ),
+        ("Layout/LineLength:\n  X: [!b,c]\n", "  X:\n  -\n  - c\n"),
+        ("Layout/LineLength:\n  <<: [1]\n", "  !!str '<<':\n  - 1\n"),
+        ("Layout/LineLength:\n  <<: [{Max: 7}, 1]\n", "  !!str '<<':\n  - Max: 7\n  - 1\n"),
+        ("Layout/LineLength:\n  !!str <<: {Max: 7}\n", "  !!str '<<':\n    Max: 7\n"),
+        ("Layout/LineLength:\n  <<: 1\n", "  !!str '<<': 1\n"),
+        ("Layout/LineLength:\n  X: !ruby/sym a\n", "  X: :a\n"),
+        ("Layout/LineLength:\n  X: !!binary aGVsbG8=\n", "  X: hello\n"),
+        ("Layout/LineLength:\n  X: !!float \"1\"\n", "  X: 1.0\n"),
+        ("Layout/LineLength:\n  X: !!int \"0x10\"\n", "  X: 16\n"),
+        ("Layout/LineLength:\n  X: !!bool \"yes\"\n", "  X: true\n"),
+        ("Layout/LineLength:\n  X: !!null \"\"\n", "  X:\n"),
+        ("Layout/LineLength:\n  X: [a]#c\n", "  X:\n  - a\n"),
+        ("Layout/LineLength:\n  X: {a: b}#c\n", "  X:\n    a: b\n"),
+        ("Layout/LineLength:\n  X: [a,#c\n    b]\n", "  X:\n  - a\n  - b\n"),
+        ("Layout/LineLength:\n  X: !ruby/regexp /a\\/b/i\n", "  X: !ruby/regexp /a\\/b/i\n"),
+        ("Layout/LineLength:\n  X: :\"a b\"\n", "  X: :a b\n"),
+        ("Layout/LineLength:\n  X: !ruby/sym ''\n", "  X: !ruby/symbol\n"),
+    ];
+    let dir = scratch("yaml-values");
+    fs::write(dir.join("a.rb"), "x = 1\n").unwrap();
+    for (config, want) in cases {
+        fs::write(dir.join(".rubocop.yml"), config).unwrap();
+        let out = rbcop(&dir, &["--show-cops", "Layout/LineLength"]);
+        assert_eq!(out.status.code(), Some(0), "{config:?}: {}", text(&out.stderr));
+        let stdout = text(&out.stdout);
+        let tail = stdout.split_once("  SplitStrings: false\n").map(|(_, t)| t.trim_end_matches('\n'));
+        assert_eq!(tail, Some(want.trim_end_matches('\n')), "{config:?}");
+    }
+    // A BOM at the start of the stream (or of a line) is skipped (#560); `...` ends the document.
+    for config in [
+        "\u{FEFF}# c\nAllCops:\n  SuggestExtensions: false\nLayout/LineLength:\n  Max: 9\n",
+        "\u{FEFF}\nLayout/LineLength:\n  Max: 9\n",
+        "\u{FEFF}Layout/LineLength:\n  Max: 9\n",
+        "Layout/LineLength:\n  Max: 9\n... # c\n",
+        "%YAML 1.1#c\n---\nLayout/LineLength:\n  Max: 9\n",
+        "Layout/LineLength:\n  Max: 9\n%YAML 1.1\n---\nb: 1\n",
+        "Layout/LineLength:\n  Max: 9\n%TAG ! x\n---\nb: 1\n",
+    ] {
+        fs::write(dir.join(".rubocop.yml"), config).unwrap();
+        let out = rbcop(&dir, &["--show-cops", "Layout/LineLength"]);
+        assert_eq!(out.status.code(), Some(0), "{config:?}: {}", text(&out.stderr));
+        assert!(text(&out.stdout).contains("\n  Max: 9\n"), "{config:?}");
+        assert!(!text(&out.stderr).contains("namespace"), "{config:?}: {}", text(&out.stderr));
     }
     let _ = fs::remove_dir_all(&dir);
 }
