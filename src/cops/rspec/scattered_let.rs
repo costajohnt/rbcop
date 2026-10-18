@@ -21,7 +21,7 @@ impl Cop for ScatteredLet {
         let body = helpers::rspec::block_body(&node.as_call_node().unwrap());
         // A non-`begin` body's child nodes are the parts of its single statement: never a `let`.
         if !helpers::rspec::is_begin_body(&body) {
-            return;
+            return helpers::rspec::ask_let_of_parts(&l, body);
         }
         let stmts = helpers::rspec::body_children(body);
         let lets: Vec<usize> = (0..stmts.len()).filter(|&i| helpers::rspec::let_(&l, &stmts[i])).collect();

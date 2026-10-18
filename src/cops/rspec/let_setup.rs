@@ -57,7 +57,7 @@ impl Cop for LetSetup {
         for let_node in &lets {
             let Some((range, name)) = let_bang(cx, let_node) else { continue };
             // overrides_outer_let_bang?
-            let overrides = cx.ancestors.iter().any(|a| {
+            let overrides = cx.ancestors.iter().rev().any(|a| {
                 group_or_including(&l, a)
                     && helpers::rspec::find_all_in_scope(&l, a, helpers::rspec::let_)
                         .iter()

@@ -545,6 +545,72 @@ fn top_level_group_cop_errors_have_no_location() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// `require:` registers a local cop file at its place, between gems too (#579): a gem with a
+/// config before it memoizes the unqualified cop names first (no `no department given` warning
+/// for a name only the later cops share), and the AmbiguousCopName candidates come in
+/// registration order. Style/DirectiveScope's cop error there has no location (#578).
+#[test]
+fn local_require_between_gems_registers_in_place() {
+    let dir = scratch("local-require-between-gems");
+    fs::create_dir_all(dir.join("lib")).unwrap();
+    fs::write(
+        dir.join("lib/my_cop.rb"),
+        "module RuboCop\n  module Cop\n    module Custom\n      class Casecmp < Base\n      end\n    end\n  end\nend\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "require: [rubocop-rspec, ./lib/my_cop.rb, rubocop-performance]\nAllCops:\n  NewCops: enable\n  SuggestExtensions: false\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.join("a.rb"),
+        "# frozen_string_literal: true\n\n# rubocop:disable Casecmp\na = \"a\".downcase == \"b\"\n# rubocop:enable Casecmp\n",
+    )
+    .unwrap();
+    let out = rbcop(&dir, &["-f", "e", "a.rb"]);
+    let stderr = text(&out.stderr).replace(&format!("{}/", dir.display()), "");
+    assert_eq!(out.status.code(), Some(2));
+    assert!(!stderr.contains("no department given"), "{stderr}");
+    assert!(stderr.contains("An error occurred while Style/DirectiveScope cop was inspecting a.rb.\n"), "{stderr}");
+    assert!(
+        stderr.ends_with(
+            "Error: Ambiguous cop name `Casecmp` used in a.rb needs department qualifier. Did you mean Custom/Casecmp \
+             or Performance/Casecmp?\n"
+        ),
+        "{stderr}"
+    );
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// Migration/DepartmentName qualifies a bare name by the legacy cop names of RuboCop and of the
+/// loaded plugins (rubocop-rspec's obsoletion rules, #583).
+#[test]
+fn department_name_uses_plugin_legacy_names() {
+    let dir = scratch("department-name-legacy");
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "plugins: [rubocop-rspec]\nAllCops:\n  NewCops: disable\n  SuggestExtensions: false\n",
+    )
+    .unwrap();
+    for (name, fixed) in [("FactoryBot", "RSpec/FactoryBot/*"), ("Capybara", "RSpec/Capybara/FeatureMethods")] {
+        let file = dir.join("a.rb");
+        fs::write(&file, format!("x = 1 # rubocop:disable Layout/ClassStructure, {name}\np x\n")).unwrap();
+        let out = rbcop(&dir, &["-f", "e", "--only", "Migration/DepartmentName", "a.rb"]);
+        assert!(
+            text(&out.stdout).contains(":1:48: C: [Correctable] Migration/DepartmentName: Department name is missing."),
+            "{}",
+            text(&out.stdout)
+        );
+        rbcop(&dir, &["-A", "--only", "Migration/DepartmentName", "a.rb"]);
+        assert_eq!(
+            fs::read_to_string(&file).unwrap(),
+            format!("x = 1 # rubocop:disable Layout/ClassStructure, {fixed}\np x\n")
+        );
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// An enable directive opts a cop in past its target Ruby range too (Team#roundup_relevant_cops,
 /// #538): Security/YAMLLoad (maximum 3.0) runs at 3.3 in a file that enables it, and a
 /// disable/enable pair around its offense is not redundant.
@@ -608,6 +674,78 @@ fn rspec_language_list_set_to_nil_raises() {
         ]
     );
     assert!(text(&out.stdout).contains("no offenses detected"), "{}", text(&out.stdout));
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// The nil list is asked where RuboCop asks it (#575, #576, #577): ancestors nearest first, the
+/// arity before the list, each on_block and on_send raising on its own, and the offenses found
+/// before a raise kept.
+#[test]
+fn rspec_language_nil_list_asked_in_rubocop_order() {
+    let dir = scratch("rspec-language-nil-order");
+    fs::create_dir_all(dir.join("spec")).unwrap();
+    let file = dir.join("spec/foo_spec.rb").display().to_string();
+    type Case<'a> = (&'a str, &'a str, &'a str, &'a [&'a str], &'a [&'a str]);
+    let cases: [Case; 5] = [
+        (
+            "Examples:\n      Focused: ~",
+            "RSpec/VoidExpect",
+            "describe Foo do\n  it { expect(1) }\nend\n",
+            &[
+                "F:4:8: C: RSpec/VoidExpect: Do not use `expect()` without `.to` or `.not_to`. Chain the methods or remove it.",
+            ],
+            &[],
+        ),
+        (
+            "Hooks: ~",
+            "RSpec/HookArgument",
+            "RSpec.describe Foo do\n  it \"a\", :focus do\n    expect(1).to eq 1\n  end\nend\n",
+            &[],
+            &["F:3:0."],
+        ),
+        (
+            "Examples:\n      Regular: ~",
+            "RSpec/VoidExpect",
+            "RSpec.describe Foo do\n  it \"a\" do\n    expect { a }\n  end\nend\n",
+            &[],
+            &["F:5:4.", "F:5:4."],
+        ),
+        (
+            "Examples:\n      Regular: ~",
+            "RSpec/LeakyLocalVariable",
+            "x = 1\nRSpec.describe Foo do\n  before { x }\n  it { expect(x) }\nend\n",
+            &[
+                "F:3:1: C: RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.",
+            ],
+            &["F."],
+        ),
+        (
+            "ExampleGroups:\n      Skipped: ~",
+            "RSpec/RepeatedSubjectCall",
+            "RSpec.describe Foo do\n  it \"a\" do\n    expect(1).to eq 1\n  end\nend\n",
+            &[],
+            &[],
+        ),
+    ];
+    for (list, cop, source, offenses, errors) in cases {
+        let config = format!(
+            "plugins:\n  - rubocop-rspec\nAllCops:\n  NewCops: enable\n  SuggestExtensions: false\nRSpec:\n  Language:\n    {list}\n"
+        );
+        fs::write(dir.join(".rubocop.yml"), config).unwrap();
+        fs::write(dir.join("spec/foo_spec.rb"), format!("# frozen_string_literal: true\n\n{source}")).unwrap();
+        let out = rbcop(&dir, &["-f", "e", "--only", cop, "spec/foo_spec.rb"]);
+        let stdout = text(&out.stdout).replace(&file, "F");
+        assert_eq!(stdout.lines().collect::<Vec<_>>(), offenses, "{cop} {list}");
+        let printed: Vec<String> = text(&out.stderr)
+            .lines()
+            .take_while(|l| !l.is_empty())
+            .filter_map(|l| {
+                l.strip_prefix(&format!("An error occurred while {cop} cop was inspecting "))
+                    .map(|l| l.replace(&file, "F"))
+            })
+            .collect();
+        assert_eq!(printed, errors, "{cop} {list}");
+    }
     let _ = fs::remove_dir_all(&dir);
 }
 

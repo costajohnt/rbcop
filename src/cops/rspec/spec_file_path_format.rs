@@ -49,69 +49,76 @@ impl Cop for SpecFilePathFormat {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let l = helpers::rspec::lang(cx);
-        let groups = helpers::rspec::top_level_groups(&l, node);
-        let [group] = &groups[..] else { return };
-        // example_group_arguments: (block $(send #rspec? #ExampleGroups.all $_ $...) ...)
-        let Some(call) = helpers::rspec::plain_block_call(group) else { return };
-        if !helpers::rspec::rspec_recv(&call) || !l.example_group(method_name(&call)) {
-            return;
-        }
-        let args = send_args(&call);
-        let Some(class_name) = args.first() else { return };
-        if !matches!(kind::of(class_name), kind::CONSTANT_READ_NODE | kind::CONSTANT_PATH_NODE) {
-            return;
-        }
-        let rest = &args[1..];
-        // ignore_metadata?: a `key: :value` pair the IgnoreMetadata setting lists
-        let ignore = cx.cfg.get("IgnoreMetadata").and_then(Value::as_map).cloned().unwrap_or_default();
-        let ignored = rest.iter().any(|a| {
-            let mut found = false;
-            helpers::rspec::each_sym_pair(cx, a, &mut |k, v| {
-                found |= match ignore.get(k) {
-                    Some(Value::Str(s)) => s == v,
-                    Some(other) => other.as_string().as_deref() == Some(v),
-                    None => false,
-                }
-            });
-            found
+        // on_top_level_example_group: `return unless top_level_groups.one?`
+        helpers::rspec::each_top_level_group(&l, node, |groups, group, example_group| {
+            if example_group && groups.len() == 1 {
+                check(cx, &l, node, group);
+            }
         });
-        if ignored {
-            return;
-        }
-        let active_support = cx.cfg.str("EnforcedInflector") == Some("active_support");
-        // ActiveSupportInflector.prepare_availability raises when InflectorPath does not exist.
-        // ponytail: an existing inflections file is not evaluated; ActiveSupport's default
-        // inflections apply (docs/known-gaps.md).
-        if active_support && !cx.cfg.str("InflectorPath").is_some_and(|p| std::path::Path::new(p).exists()) {
-            crate::runner::cop_error_at(cx.cop, cx.src, None);
-            return;
-        }
-        let custom = cx.cfg.get("CustomTransform").and_then(Value::as_map).cloned().unwrap_or_default();
-        let Some(mut names) = namespace(node, helpers::rspec::node_range(group)) else { return };
-        names.extend(helpers::const_name::const_name(class_name).unwrap_or_default().split("::").map(String::from));
-        let parts: Vec<String> = names
-            .iter()
-            .filter_map(|n| {
-                let p = match custom.get(n) {
-                    Some(v) => v.as_string().unwrap_or_default(),
-                    None => snake(n, active_support),
-                };
-                (!p.is_empty()).then_some(p)
-            })
-            .collect();
-        // method_name_pattern
-        let method = rest.first().filter(|m| helpers::rspec::is_str(m) && cx.cfg.bool("IgnoreMethods") != Some(true)).map(|m| {
-            let v = String::from_utf8_lossy(m.as_string_node().unwrap().unescaped()).into_owned();
-            format!(".*{}", NON_WORD.replace_all(&SPACE.replace_all(&v, "_"), ""))
-        });
-        let pattern = format!("{}(?![[:alnum:]]){}[^/]*_spec\\.rb", parts.join("/"), method.unwrap_or_default());
-        let path = cx.src.absolute_path();
-        let Some(re) = crate::config::value::ruby_regex(&format!("(?:\\A|/){pattern}$")) else { return };
-        if re.is_match(&path) {
-            return;
-        }
-        let suffix = pattern.replacen("(?![[:alnum:]])", "", 1).replacen(".*", "*", 1).replacen("[^/]*", "*", 1).replacen("\\.", ".", 1);
-        let (s, e) = send_range(&call);
-        cx.add(s, e, format!("Spec path should end with `{suffix}`."));
     }
+}
+
+fn check(cx: &mut Cx, l: &helpers::rspec::Language, node: &Node, group: &Node) {
+    // example_group_arguments: (block $(send #rspec? #ExampleGroups.all $_ $...) ...)
+    let Some(call) = helpers::rspec::plain_block_call(group) else { return };
+    if !helpers::rspec::rspec_recv(&call) || !l.example_group(method_name(&call)) {
+        return;
+    }
+    let args = send_args(&call);
+    let Some(class_name) = args.first() else { return };
+    if !matches!(kind::of(class_name), kind::CONSTANT_READ_NODE | kind::CONSTANT_PATH_NODE) {
+        return;
+    }
+    let rest = &args[1..];
+    // ignore_metadata?: a `key: :value` pair the IgnoreMetadata setting lists
+    let ignore = cx.cfg.get("IgnoreMetadata").and_then(Value::as_map).cloned().unwrap_or_default();
+    let ignored = rest.iter().any(|a| {
+        let mut found = false;
+        helpers::rspec::each_sym_pair(cx, a, &mut |k, v| {
+            found |= match ignore.get(k) {
+                Some(Value::Str(s)) => s == v,
+                Some(other) => other.as_string().as_deref() == Some(v),
+                None => false,
+            }
+        });
+        found
+    });
+    if ignored {
+        return;
+    }
+    let active_support = cx.cfg.str("EnforcedInflector") == Some("active_support");
+    // ActiveSupportInflector.prepare_availability raises when InflectorPath does not exist.
+    // ponytail: an existing inflections file is not evaluated; ActiveSupport's default
+    // inflections apply (docs/known-gaps.md).
+    if active_support && !cx.cfg.str("InflectorPath").is_some_and(|p| std::path::Path::new(p).exists()) {
+        crate::runner::cop_error_at(cx.cop, cx.src, None);
+        return;
+    }
+    let custom = cx.cfg.get("CustomTransform").and_then(Value::as_map).cloned().unwrap_or_default();
+    let Some(mut names) = namespace(node, helpers::rspec::node_range(group)) else { return };
+    names.extend(helpers::const_name::const_name(class_name).unwrap_or_default().split("::").map(String::from));
+    let parts: Vec<String> = names
+        .iter()
+        .filter_map(|n| {
+            let p = match custom.get(n) {
+                Some(v) => v.as_string().unwrap_or_default(),
+                None => snake(n, active_support),
+            };
+            (!p.is_empty()).then_some(p)
+        })
+        .collect();
+    // method_name_pattern
+    let method = rest.first().filter(|m| helpers::rspec::is_str(m) && cx.cfg.bool("IgnoreMethods") != Some(true)).map(|m| {
+        let v = String::from_utf8_lossy(m.as_string_node().unwrap().unescaped()).into_owned();
+        format!(".*{}", NON_WORD.replace_all(&SPACE.replace_all(&v, "_"), ""))
+    });
+    let pattern = format!("{}(?![[:alnum:]]){}[^/]*_spec\\.rb", parts.join("/"), method.unwrap_or_default());
+    let path = cx.src.absolute_path();
+    let Some(re) = crate::config::value::ruby_regex(&format!("(?:\\A|/){pattern}$")) else { return };
+    if re.is_match(&path) {
+        return;
+    }
+    let suffix = pattern.replacen("(?![[:alnum:]])", "", 1).replacen(".*", "*", 1).replacen("[^/]*", "*", 1).replacen("\\.", ".", 1);
+    let (s, e) = send_range(&call);
+    cx.add(s, e, format!("Spec path should end with `{suffix}`."));
 }

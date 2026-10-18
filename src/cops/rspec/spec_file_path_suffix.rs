@@ -11,9 +11,10 @@ impl Cop for SpecFilePathSuffix {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let l = helpers::rspec::lang(cx);
-        let groups = helpers::rspec::top_level_groups(&l, node);
-        if groups.iter().any(|g| helpers::rspec::example_group(&l, g)) && !cx.src.absolute_path().ends_with("_spec.rb") {
-            cx.add_global("Spec path should end with `_spec.rb`.");
-        }
+        helpers::rspec::each_top_level_group(&l, node, |_, _, example_group| {
+            if example_group && !cx.src.absolute_path().ends_with("_spec.rb") {
+                cx.add_global("Spec path should end with `_spec.rb`.");
+            }
+        });
     }
 }

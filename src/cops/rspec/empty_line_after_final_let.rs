@@ -24,7 +24,7 @@ impl Cop for EmptyLineAfterFinalLet {
         // Only a `begin` body has the lets as its children with itself as their parent.
         let body = helpers::rspec::block_body(&call);
         if !helpers::rspec::is_begin_body(&body) {
-            return;
+            return helpers::rspec::ask_let_of_parts(&l, body);
         }
         let stmts = helpers::rspec::body_children(body);
         let Some(i) = stmts.iter().rposition(|s| helpers::rspec::let_(&l, s)) else { return };

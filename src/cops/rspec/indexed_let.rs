@@ -52,7 +52,7 @@ impl Cop for IndexedLet {
         let body = helpers::rspec::block_body(&node.as_call_node().unwrap());
         // `node.body.child_nodes` of a single statement are its parts: never a `let`
         if !helpers::rspec::is_begin_body(&body) {
-            return;
+            return helpers::rspec::ask_let_of_parts(&l, body);
         }
         let variable_number = cx.config.for_cop("Naming/VariableNumber");
         let identifiers: Vec<String> = list(variable_number.get("AllowedIdentifiers"))
