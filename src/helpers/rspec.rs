@@ -681,6 +681,17 @@ pub fn child_nodes<'pr>(node: &Node<'pr>) -> Vec<Node<'pr>> {
     struct V<'pr> {
         depth: usize,
         out: Vec<Node<'pr>>,
+        root: (usize, (usize, usize)),
+    }
+    macro_rules! typed_children {
+        ($($f:ident: $t:ident,)*) => {$(
+            fn $f(&mut self, node: &ruby_prism::$t<'pr>) {
+                let n = node.as_node();
+                if self.depth == 1 && (kind::of(&n), node_range(&n)) != self.root {
+                    self.out.push(n);
+                }
+            }
+        )*};
     }
     impl<'pr> Visit<'pr> for V<'pr> {
         fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
@@ -695,6 +706,23 @@ pub fn child_nodes<'pr>(node: &Node<'pr>) -> Vec<Node<'pr>> {
         fn visit_leaf_node_leave(&mut self) {
             self.depth -= 1;
         }
+        // children Prism visits by their type skip the enter hooks: one of the root is a child
+        // too, and nothing below it is
+        typed_children! {
+            visit_arguments_node: ArgumentsNode,
+            visit_block_argument_node: BlockArgumentNode,
+            visit_block_node: BlockNode,
+            visit_block_parameter_node: BlockParameterNode,
+            visit_call_node: CallNode,
+            visit_constant_path_node: ConstantPathNode,
+            visit_else_node: ElseNode,
+            visit_ensure_node: EnsureNode,
+            visit_local_variable_target_node: LocalVariableTargetNode,
+            visit_parameters_node: ParametersNode,
+            visit_rescue_node: RescueNode,
+            visit_splat_node: SplatNode,
+            visit_statements_node: StatementsNode,
+        }
     }
     impl<'pr> V<'pr> {
         fn enter(&mut self, node: Node<'pr>) {
@@ -704,7 +732,7 @@ pub fn child_nodes<'pr>(node: &Node<'pr>) -> Vec<Node<'pr>> {
             }
         }
     }
-    let mut v = V { depth: 0, out: Vec::new() };
+    let mut v = V { depth: 0, out: Vec::new(), root: (kind::of(node), node_range(node)) };
     v.visit(node);
     let mut out = Vec::new();
     for c in v.out {
@@ -1333,17 +1361,17 @@ pub fn metadata_lists<'pr>(l: &Language, node: &Node<'pr>) -> Vec<(CallNode<'pr>
             }
             impl<'pr> Visit<'pr> for V<'_, 'pr> {
                 fn visit_call_node(&mut self, n: &CallNode<'pr>) {
-                    // (send (lvar %) #Hooks.all _ $...)
+                    // (send (lvar %) #Hooks.all _ $...): the arity (an argument for `_`) is
+                    // checked before Hooks is asked
+                    let args = send_args(n);
                     if !is_csend(n)
+                        && !args.is_empty()
                         && n.receiver()
                             .and_then(|r| r.as_local_variable_read_node())
                             .is_some_and(|r| r.name().as_slice() == self.var)
                         && self.l.hook(method_name(n))
                     {
-                        let args = send_args(n);
-                        if !args.is_empty() {
-                            self.out.push((n.as_node().as_call_node().unwrap(), args.into_iter().skip(1).collect()));
-                        }
+                        self.out.push((n.as_node().as_call_node().unwrap(), args.into_iter().skip(1).collect()));
                     }
                     ruby_prism::visit_call_node(self, n);
                 }

@@ -1312,11 +1312,17 @@ impl<'pr> Walker<'_, 'pr, '_> {
         if kind == node_kind::SYMBOL_NODE && self.pattern_key() {
             return;
         }
-        // A cop error is located at the parser node: a `block` starts at its send (or `super`).
+        // A cop error is located at the parser node: a `block` starts at its send (or `super`),
+        // the `begin` of parenthesized statements at the parenthesis.
         let mut at = node.location().start_offset();
-        if kind == node_kind::BLOCK_NODE
-            && let Some(p) = self.stack.last()
-            && matches!(p, Node::CallNode { .. } | Node::SuperNode { .. } | Node::ForwardingSuperNode { .. })
+        if let Some(p) = self.stack.last()
+            && match kind {
+                node_kind::BLOCK_NODE => {
+                    matches!(p, Node::CallNode { .. } | Node::SuperNode { .. } | Node::ForwardingSuperNode { .. })
+                }
+                node_kind::STATEMENTS_NODE => matches!(p, Node::ParenthesesNode { .. }),
+                _ => false,
+            }
         {
             at = p.location().start_offset();
         }

@@ -887,7 +887,7 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
     fs::create_dir_all(dir.join("spec")).unwrap();
     let file = dir.join("spec/foo_spec.rb").display().to_string();
     type Case<'a> = (&'a str, &'a str, &'a str, &'a [&'a str], &'a [&'a str]);
-    let cases: [Case; 14] = [
+    let cases: [Case; 16] = [
         (
             "Examples:\n      Focused: ~",
             "RSpec/VoidExpect",
@@ -993,6 +993,22 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
             "describe Foo do\n  it do\n    super do\n    end\n  end\nend\n",
             &[],
             &["F:3:0.", "F:4:2.", "F:5:4."],
+        ),
+        // an `if` body's statements are a `begin`, no child of the `if`; a hook pattern checks
+        // its arity before the list
+        (
+            "Helpers: ~",
+            "RSpec/ScatteredLet",
+            "describe Foo do\n  if c\n    foo(1, 2)\n    bar\n  end\nend\n",
+            &[],
+            &[],
+        ),
+        (
+            "Hooks: ~",
+            "RSpec/SortMetadata",
+            "RSpec.configure do |c|\n  c.on_example_group_definition do |g|\n    g\n  end\nend\n",
+            &[],
+            &[],
         ),
     ];
     for (list, cop, source, offenses, errors) in cases {
