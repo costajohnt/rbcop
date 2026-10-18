@@ -302,6 +302,30 @@ fn plain_require_loads_what_the_feature_requires() {
             let out = run("require:\n  - rubocop-fake_ns\n");
             assert_eq!(text(&out.stdout).contains("Style/StringLiterals"), !merged, "{call:?}: {}", text(&out.stdout));
         }
+        // Any Inject method, merging the file its constant names (rubocop-github's
+        // default_defaults! and config/default_cops.yml, #558).
+        fs::write(
+            gem.join("config/default_cops.yml"),
+            "FakeNs/One:\n  Enabled: true\nStyle/StringLiterals:\n  Enabled: false\n",
+        )
+        .unwrap();
+        fs::write(gem.join("config/default.yml"), "FakeNs/One:\n  Enabled: true\n").unwrap();
+        fs::write(
+            gem.join("lib/rubocop/fake_ns/inject.rb"),
+            "module RuboCop\n  module FakeNs\n    CONFIG_DEFAULT = PROJECT_ROOT.join(\"config\", \"default_cops.yml\").freeze\n    \
+             module Inject\n      def self.default_defaults!\n        _load_config(CONFIG_DEFAULT)\n      end\n\n      \
+             def self._load_config(path)\n        ConfigLoader.instance_variable_set(:@default_configuration, path)\n      \
+             end\n    end\n  end\nend\n",
+        )
+        .unwrap();
+        fs::write(
+            gem.join("lib/rubocop-fake_ns.rb"),
+            "require 'rubocop'\nrequire_relative 'rubocop/fake_ns'\nrequire_relative 'rubocop/fake_ns/inject'\n\
+             RuboCop::FakeNs::Inject.default_defaults!\nrequire 'rubocop/cop/fake_ns/one'\n",
+        )
+        .unwrap();
+        let out = run("require:\n  - rubocop-fake_ns\n");
+        assert!(!text(&out.stdout).contains("Style/StringLiterals"), "{}", text(&out.stdout));
         // A native plugin's plugin_class_name is looked up too (#556, #568).
         let perf = gems.join("gems/rubocop-performance-99.0.0");
         fs::create_dir_all(perf.join("lib/rubocop/performance")).unwrap();
