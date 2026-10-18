@@ -691,30 +691,43 @@ impl<'pr> ParseResult<'pr> {
         Node::new(self.parser, self.node.as_ptr())
     }
 
-    /// rbcop patch: drop the NumberedParametersNode of every block and lambda, so they read as
-    /// blocks without parameters (the parser gem below Ruby 2.7, where `_1` is an identifier).
-    /// The `_1` reads in their bodies stay LocalVariableReadNodes.
-    pub fn drop_numbered_parameters(&mut self) {
+    /// rbcop patch: drop the NumberedParametersNode of every block and lambda (with `only`: of
+    /// those starting at one of its sorted offsets), so they read as blocks without parameters
+    /// (the parser gem below Ruby 2.7, where `_1` is an identifier, or where it declared `_1` as a
+    /// local). The `_1` reads in their bodies stay LocalVariableReadNodes.
+    pub fn drop_numbered_parameters(&mut self, only: Option<&[usize]>) {
         use ruby_prism_sys::{pm_block_node_t, pm_lambda_node_t, pm_node_type};
         extern "C" {
             fn pm_visit_node(node: *const pm_node_t, visitor: unsafe extern "C" fn(*const pm_node_t, *mut std::ffi::c_void) -> bool, data: *mut std::ffi::c_void);
         }
+        struct Data<'a> {
+            parser: *mut pm_parser_t,
+            only: Option<&'a [usize]>,
+        }
         unsafe extern "C" fn visit(node: *const pm_node_t, data: *mut std::ffi::c_void) -> bool {
             unsafe {
+                let data = &*data.cast::<Data<'_>>();
                 let params = match u32::from((*node).type_) {
                     t if t == pm_node_type::PM_BLOCK_NODE as u32 => &mut (*node.cast_mut().cast::<pm_block_node_t>()).parameters,
                     t if t == pm_node_type::PM_LAMBDA_NODE as u32 => &mut (*node.cast_mut().cast::<pm_lambda_node_t>()).parameters,
                     _ => return true,
                 };
+                if let Some(only) = data.only {
+                    let start = usize::try_from((*node).location.start.offset_from((*data.parser).start)).unwrap_or(usize::MAX);
+                    if only.binary_search(&start).is_err() {
+                        return true;
+                    }
+                }
                 if !params.is_null() && u32::from((**params).type_) == pm_node_type::PM_NUMBERED_PARAMETERS_NODE as u32 {
-                    pm_node_destroy(data.cast::<pm_parser_t>(), *params);
+                    pm_node_destroy(data.parser, *params);
                     *params = std::ptr::null_mut();
                 }
             }
             true
         }
+        let mut data = Data { parser: self.parser.as_ptr(), only };
         // SAFETY: no Node views exist while `&mut self` is held; the detached node is freed once.
-        unsafe { pm_visit_node(self.node.as_ptr(), visit, self.parser.as_ptr().cast()) }
+        unsafe { pm_visit_node(self.node.as_ptr(), visit, std::ptr::from_mut(&mut data).cast()) }
     }
 
     /// rbcop patch: for each `(from, to)` of `ends` (sorted by `from`, `to < from`), a heredoc
@@ -850,6 +863,47 @@ impl<'pr> ParseResult<'pr> {
         let mut data = Data { base: unsafe { (*self.parser.as_ptr()).start }, offsets };
         // SAFETY: no Node views exist while `&mut self` is held.
         unsafe { pm_visit_node(self.node.as_ptr(), visit, std::ptr::from_mut(&mut data).cast()) }
+    }
+
+    /// rbcop patch: remove (and free) the errors of type `kind` (`Diagnostic::type_name`) that start
+    /// at one of `offsets` (sorted). For the parser gem's accepted `_1` names Prism reserves.
+    pub fn drop_errors(&mut self, kind: &str, offsets: &[usize]) {
+        extern "C" {
+            fn pm_diagnostic_id_human(diag_id: ruby_prism_sys::pm_diagnostic_id_t) -> *const c_char;
+            fn free(p: *mut std::ffi::c_void);
+        }
+        unsafe {
+            let parser = self.parser.as_ptr();
+            let base = (*parser).start;
+            let list = &mut (*parser).error_list;
+            let mut prev: *mut ruby_prism_sys::pm_list_node_t = std::ptr::null_mut();
+            let mut cur = list.head;
+            while !cur.is_null() {
+                let next = (*cur).next;
+                let d = cur.cast::<pm_diagnostic_t>();
+                let start = usize::try_from((*d).location.start.offset_from(base)).unwrap_or(usize::MAX);
+                if offsets.binary_search(&start).is_ok()
+                    && CStr::from_ptr(pm_diagnostic_id_human((*d).diag_id)).to_str() == Ok(kind)
+                {
+                    if prev.is_null() {
+                        list.head = next;
+                    } else {
+                        (*prev).next = next;
+                    }
+                    if list.tail == cur {
+                        list.tail = prev;
+                    }
+                    list.size -= 1;
+                    if (*d).owned {
+                        free((*d).message.cast_mut().cast());
+                    }
+                    free(cur.cast());
+                } else {
+                    prev = cur;
+                }
+                cur = next;
+            }
+        }
     }
 }
 

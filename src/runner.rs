@@ -322,13 +322,24 @@ pub fn parse_for_target<'t>(
     }
     // Numbered parameters are 2.7+: below that `foo { _1 }` is a block without arguments.
     if target_ruby < 2.7 {
-        result.drop_numbered_parameters();
+        result.drop_numbered_parameters(None);
     }
-    // Below 3.0 `_1 = 1` declares a local whose reads Prism gives as calls (#364).
-    if target_ruby < 3.0 && text.as_bytes().windows(2).any(|w| w[0] == b'_' && matches!(w[1], b'1'..=b'9')) {
-        let reads = crate::syntax::assigned_numbered_reads(&result.node());
-        if !reads.is_empty() {
-            result.variable_calls_as_locals(&reads);
+    // Below 3.0 `_1 = 1` declares a local whose reads Prism gives as calls (#364), or (2.7+, in a
+    // block) as numbered parameters. From 3.0 only a named capture or some pattern variables do
+    // (#533), and Prism's reserved-name errors there go.
+    if text.as_bytes().windows(2).any(|w| w[0] == b'_' && matches!(w[1], b'1'..=b'9')) {
+        let accept = (target_ruby >= 3.0).then(|| crate::syntax::accepted_numbered_targets(&result.node()));
+        if let Some(a) = accept.as_ref().filter(|a| !a.is_empty()) {
+            result.drop_errors("parameter_numbered_reserved", a);
+        }
+        if accept.as_ref().is_none_or(|a| !a.is_empty()) {
+            let (reads, blocks) = crate::syntax::assigned_numbered_reads(&result.node(), accept);
+            if !reads.is_empty() {
+                result.variable_calls_as_locals(&reads);
+            }
+            if target_ruby >= 2.7 && !blocks.is_empty() {
+                result.drop_numbered_parameters(Some(&blocks));
+            }
         }
     }
     (result, tokens, fake, edits)
