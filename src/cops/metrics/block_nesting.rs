@@ -12,17 +12,18 @@ impl Cop for BlockNesting {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let max = cx.cfg.int("Max").unwrap_or(0);
         let blocks = cx.cfg.bool("CountBlocks").unwrap_or(false);
         let modifiers = cx.cfg.bool("CountModifierForms").unwrap_or(false);
-        let mut v = Nesting { cx, max, blocks, modifiers, level: 0, ignored: Vec::new(), guard: None };
+        let mut v = Nesting { cx, max: None, blocks, modifiers, level: 0, ignored: Vec::new(), guard: None };
         v.visit(node);
     }
 }
 
 struct Nesting<'a, 'b, 'c> {
     cx: &'a mut Cx<'b, 'c>,
-    max: i64,
+    /// `cop_config['Max']`, read at the first considered node (`current_level > max` raises for a
+    /// String one there).
+    max: Option<i64>,
     blocks: bool,
     modifiers: bool,
     level: i64,
@@ -54,9 +55,10 @@ impl<'pr> Nesting<'_, '_, '_> {
     fn nest(&mut self, range: (usize, usize), counts: bool, walk: impl FnOnce(&mut Self)) {
         let saved = self.level;
         self.level += counts as i64;
-        if self.level > self.max && !self.ignored.iter().any(|&(s, e)| s <= range.0 && e >= range.1) {
+        let max = *self.max.get_or_insert_with(|| self.cx.cfg.int("Max").unwrap_or(0));
+        if self.level > max && !self.ignored.iter().any(|&(s, e)| s <= range.0 && e >= range.1) {
             let ran = Cell::new(false);
-            let msg = format!("Avoid more than {} levels of block nesting.", self.max);
+            let msg = format!("Avoid more than {max} levels of block nesting.");
             self.cx.add_fix(range.0, range.1, msg, |_| ran.set(true));
             if ran.get() {
                 self.ignored.push(range);

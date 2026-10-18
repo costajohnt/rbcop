@@ -141,8 +141,9 @@ impl CopConfig {
             _ => panic!("{key} needs to be a positive integer!"),
         }
     }
+    /// `cop_config[key]` as a number (see Map::int_strict: a String one raises).
     pub fn int(&self, key: &str) -> Option<i64> {
-        self.params.int(key)
+        self.params.int_strict(key)
     }
     pub fn strings(&self, key: &str) -> Vec<String> {
         self.params.strings(key)

@@ -123,12 +123,13 @@ pub fn method_node<'pr>(node: &Node<'pr>) -> Option<(String, Option<Node<'pr>>, 
     Some((String::from_utf8_lossy(&name).into_owned(), block.body(), range))
 }
 
-/// `cop_config['Max']` (an Integer or a Float).
+/// `cop_config['Max']` (an Integer or a Float). Anything else (`Max: "10"`, `Max: ~`) makes
+/// `complexity > max` raise: a cop error at the method.
 pub fn max(cx: &Cx) -> f64 {
     match cx.cfg.get("Max") {
         Some(crate::config::value::Value::Int(i)) => *i as f64,
         Some(crate::config::value::Value::Float(f)) => *f,
-        _ => 0.0,
+        _ => panic!("comparison of Integer with String failed"),
     }
 }
 

@@ -289,7 +289,12 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   on `def foo(bar` / `    )end`, Style/NegativeArrayIndex, Style/HashConversion, Style/RequireOrder).
   Cop errors from config values (MinBodyLength / MinBranchesCount not a positive Integer,
   SafeNavigationChainLength `Max` 0 or less, a zero indentation width with tabs, #114) are
-  reproduced, and so are list settings given as a YAML String (#440, #474): each cop reads one as
+  reproduced, and so are a cop's numeric settings given as a String or Symbol (`Max: "80"`,
+  #610: a cop error where the cop compares or adds them, also `Layout/LineLength` `Max` read by
+  other cops), except that a String `Metrics/ParameterLists` `Max` makes RuboCop crash
+  (`undefined method 'line' for nil`, exit 2) at the first args node without a location, a cop
+  error at the def or block in rbcop, and that other cops reading a String
+  `Layout/IndentationWidth` `Width` get the default width (RuboCop raises where they use it); and so are list settings given as a YAML String (#440, #474): each cop reads one as
   its RuboCop counterpart does, a substring test where the cop calls `include?` on the bare
   setting, a cop error where it calls an Array-only method (`map`, `any?`, `each`, `join`, `+`,
   `-`), a one-element list where it wraps the setting in `Array()`. A list set to `~` (#500) is

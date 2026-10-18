@@ -403,9 +403,13 @@ impl Cop for LineLength {
                     return;
                 }
                 let range = (elements[0].start, elements.last().unwrap().end);
-                if let Some(pos) = breakable_element(cx, range, &elements, None, None, true) {
-                    record_node_break(cx, pos);
-                }
+                // a raise (a String `Max`) is a cop error at that array
+                let (cop, src) = (cx.cop, cx.src);
+                crate::runner::own_callback(cop, src, Some(range.0), || {
+                    if let Some(pos) = breakable_element(cx, range, &elements, None, None, true) {
+                        record_node_break(cx, pos);
+                    }
+                });
             }
             kind::LAMBDA_NODE => {
                 let loc = node.location();

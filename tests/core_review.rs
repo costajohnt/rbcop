@@ -1017,6 +1017,37 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// A numeric setting given as a String or Symbol raises where the cop compares it (#610): the
+/// error at the node (a block's at its send), or at the file for an investigation hook.
+#[test]
+fn string_numeric_setting_raises_where_compared() {
+    let dir = scratch("string-numeric");
+    let file = dir.join("a.rb").display().to_string();
+    let cases: [(&str, &str, &[&str]); 3] = [
+        ("Layout/LineLength:\n  Max: \"80\"", "x = 1\nfoo(1, 2)\n", &["F:2:0.", "F."]),
+        ("Naming/BlockParameterName:\n  MinNameLength: \"2\"", "foo do |a|\nend\n", &["F:1:0."]),
+        ("Metrics/MethodLength:\n  Max: :\"2\"", "def a\n  1\nend\n", &["F:1:0."]),
+    ];
+    for (cfg, source, errors) in cases {
+        let config = format!("AllCops:\n  NewCops: enable\n  SuggestExtensions: false\n{cfg}\n");
+        fs::write(dir.join(".rubocop.yml"), config).unwrap();
+        fs::write(dir.join("a.rb"), source).unwrap();
+        let cop = cfg.split(':').next().unwrap();
+        let out = rbcop(&dir, &["-f", "e", "--only", cop, "a.rb"]);
+        assert_eq!(text(&out.stdout), "", "{cfg}");
+        let printed: Vec<String> = text(&out.stderr)
+            .lines()
+            .take_while(|l| !l.is_empty())
+            .filter_map(|l| {
+                l.strip_prefix(&format!("An error occurred while {cop} cop was inspecting "))
+                    .map(|l| l.replace(&file, "F"))
+            })
+            .collect();
+        assert_eq!(printed, errors, "{cfg}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// RSpec/DiscardedMatcher with a String CustomMatcherMethods (#502): every receiverless send
 /// raises, and a plain block's on_block raises again; a numblock call raises once.
 #[test]

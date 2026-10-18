@@ -52,7 +52,7 @@ impl Cop for EmptyMethod {
         let joint = if compact { "; ".to_string() } else { format!("\n{}", " ".repeat(cx.src.column(s))) };
         let correction = format!("def {scope}{name}{arguments}{joint}end");
         let max = cop_enabled(cx, "Layout/LineLength")
-            .then(|| cx.config.for_cop("Layout/LineLength").int("Max").unwrap_or(120));
+            .then(|| cx.config.for_cop("Layout/LineLength").int_strict("Max").unwrap_or(120));
         let exceeds = compact && max.is_some_and(|m| correction.chars().count() as i64 > m);
         let msg = if compact {
             "Put empty method definitions on a single line."
