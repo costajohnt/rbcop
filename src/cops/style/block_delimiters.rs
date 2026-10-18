@@ -68,7 +68,7 @@ impl Cop for BlockDelimiters {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // Parser visits the block before its send.
         if let Some(block) = block_of(node) {
-            on_block(cx, &block);
+            on_block(cx, &block, node);
         }
         if let Some(call) = node.as_call_node() {
             on_send(cx, &call);
@@ -119,7 +119,7 @@ fn get_blocks(node: &Node, out: &mut Vec<(usize, usize)>) {
     }
 }
 
-fn on_block(cx: &mut Cx, b: &Block) {
+fn on_block(cx: &mut Cx, b: &Block, node: &Node) {
     let ignored = &cx.state::<Ignored>().0;
     if ignored.iter().any(|&(s, e)| s <= b.range.0 && e >= b.range.1) {
         return;
@@ -149,7 +149,7 @@ fn on_block(cx: &mut Cx, b: &Block) {
                     // `cop_config['FunctionalMethods'].to_set`: a String raises (a cop error).
                     cx.cfg.array_bare("FunctionalMethods").contains(&b.method)
                         || return_value_used(ancestors)
-                        || return_value_of_scope(src, ancestors, b.range)
+                        || return_value_of_scope(src, ancestors, b.range, node)
                         || (cx.cfg.bool("AllowBracesOnProceduralOneLiners") == Some(true) && !multiline)
                 } else {
                     cx.cfg.array_bare("ProceduralMethods").contains(&b.method) || !return_value_used(ancestors)
@@ -329,7 +329,7 @@ fn return_value_used(ancestors: &[Node]) -> bool {
 }
 
 /// return_value_of_scope?
-fn return_value_of_scope(src: &crate::source::Source, ancestors: &[Node], range: (usize, usize)) -> bool {
+fn return_value_of_scope(src: &crate::source::Source, ancestors: &[Node], range: (usize, usize), node: &Node) -> bool {
     let Some(i) = parent_idx(ancestors) else { return false };
     let p = &ancestors[i];
     match kind::of(p) {
@@ -353,7 +353,9 @@ fn return_value_of_scope(src: &crate::source::Source, ancestors: &[Node], range:
                     return true;
                 }
             }
-            let rest = src.slice(range.1.min(p.location().end_offset()), p.location().end_offset());
+            // The bodies of heredocs opened in the node come after it in the source (#582).
+            let after = helpers::heredoc::last_heredoc_end(node).map_or(range.1, |h| h.1.max(range.1));
+            let rest = src.slice(after.min(p.location().end_offset()), p.location().end_offset());
             rest.split(|c: char| c.is_whitespace() || matches!(c, ')' | ']' | '}' | ';'))
                 .all(|w| w.is_empty() || w == "end")
         }
