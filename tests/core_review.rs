@@ -887,7 +887,7 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
     fs::create_dir_all(dir.join("spec")).unwrap();
     let file = dir.join("spec/foo_spec.rb").display().to_string();
     type Case<'a> = (&'a str, &'a str, &'a str, &'a [&'a str], &'a [&'a str]);
-    let cases: [Case; 5] = [
+    let cases: [Case; 6] = [
         (
             "Examples:\n      Focused: ~",
             "RSpec/VoidExpect",
@@ -926,6 +926,14 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
             "RSpec.describe Foo do\n  it \"a\" do\n    expect(1).to eq 1\n  end\nend\n",
             &[],
             &[],
+        ),
+        // the example scope is looked up before the variable name (#601)
+        (
+            "ExampleGroups: ~",
+            "RSpec/ExpectOutput",
+            "describe Foo do\n  before do\n    $a = 1\n  end\nend\n",
+            &[],
+            &["F:5:4."],
         ),
     ];
     for (list, cop, source, offenses, errors) in cases {
