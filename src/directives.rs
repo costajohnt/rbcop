@@ -111,6 +111,20 @@ thread_local! {
     static WARNINGS: std::cell::RefCell<Vec<String>> = const { std::cell::RefCell::new(Vec::new()) };
 }
 
+/// How many warnings this thread holds (a mark for `take_warnings_since`).
+pub fn warnings_len() -> usize {
+    WARNINGS.with(|w| w.borrow().len())
+}
+
+/// The warnings collected on this thread after the first `mark`.
+pub fn take_warnings_since(mark: usize) -> Vec<String> {
+    WARNINGS.with(|w| {
+        let mut w = w.borrow_mut();
+        let mark = mark.min(w.len());
+        w.split_off(mark)
+    })
+}
+
 /// The warnings `warn_unqualified` collected on this thread since the last call.
 pub fn take_warnings() -> Vec<String> {
     WARNINGS.with(|w| std::mem::take(&mut *w.borrow_mut()))

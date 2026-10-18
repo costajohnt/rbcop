@@ -10,6 +10,7 @@ pub fn contains_comments(cx: &Cx, start_line: usize, end_line: usize) -> bool {
 /// `comments_contain_disables?`: a disabled range for this cop covers `start_line...end_line`
 /// or lies inside it (Range#cover? semantics).
 pub fn comments_contain_disables(cx: &Cx, start_line: usize, end_line: usize) -> bool {
+    crate::runner::comment_config_read();
     let Some(ranges) = cx.facts.disabled.get(cx.cop) else { return false };
     let (s, e) = (start_line as i64, end_line as i64);
     ranges.iter().any(|&(a, b)| (e > s && a <= s && e - 1 <= b) || (s <= a && b < e))

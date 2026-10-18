@@ -1515,11 +1515,12 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                     break;
                 }
             };
-            // The cop errors, printed as RuboCop's Team prints them while it inspects the file.
+            // The cop errors, printed as RuboCop's Team prints them while it inspects the file, with
+            // the directive warnings where CommentConfig's analysis printed them (runner::investigate).
             for e in &errors {
                 eprintln!("{e}");
             }
-            // Registry#print_department_missing_warning, written while the file was inspected.
+            // Registry#print_department_missing_warning outside that stream (a poisoned or unparsable file).
             for w in &report.warnings {
                 eprintln!("{w}");
             }
