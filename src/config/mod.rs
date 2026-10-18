@@ -1226,7 +1226,16 @@ impl Store {
             self.loaded_plugins.push(name.clone());
             if let Some(native) = crate::helpers::cop_registry::native_plugin(&name) {
                 // A plugin rbcop implements: its cops register and its vendored default.yml merges,
-                // so the gem need not be installed.
+                // so the gem need not be installed. A `plugin_class_name` is looked up as for any
+                // gem (#556, #568).
+                // ponytail: with the gem not installed the name is not checked.
+                if let Load::NamedPlugin(class) = &load
+                    && let Ok(Feature { dir: Some(dir), .. }) = self.feature(&name)
+                    && let Some(problem) = named_plugin_problem(&name, class, &dir.join("lib"))
+                {
+                    self.failed_entry = Some(name.clone());
+                    return Err(problem);
+                }
                 crate::helpers::cop_registry::register_plugin(native);
                 configs.push(Ok(native));
                 continue;
@@ -1272,18 +1281,11 @@ impl Store {
             let lib = dir.join(lib);
             // Kernel.const_get of the name, then `.new(plugin_config)` on it.
             // ponytail: the constant is looked for in the gem's lib/ only.
-            if let Load::NamedPlugin(class) = &load {
-                let problem = match ruby_constant_kinds(&ruby_files(&lib)).get(class.trim_start_matches("::")) {
-                    Some(true) => None,
-                    Some(false) => Some(format!("undefined method 'new' for module {class}")),
-                    None => Some(format!(
-                        "Failed while configuring plugin `{name}': no constant with name `{class}' was found."
-                    )),
-                };
-                if let Some(problem) = problem {
-                    self.failed_entry = Some(name.clone());
-                    return Err(problem);
-                }
+            if let Load::NamedPlugin(class) = &load
+                && let Some(problem) = named_plugin_problem(&name, class, &lib)
+            {
+                self.failed_entry = Some(name.clone());
+                return Err(problem);
             }
             let path = dir.join(config);
             // A plugin loads its gem (its cops, its config); a plain `require` loads the files
@@ -1763,6 +1765,16 @@ static SCOPE_END: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex
 
 /// The fully qualified class and module names some Ruby files define, each with whether it is a
 /// class (Kernel.const_get of a `plugin_class_name`). Nesting as in `ruby_cops_in`.
+/// Plugin::Loader.constantize of a `plugin_class_name`: Kernel.const_get, then `.new` on it. The
+/// error that ends the run when the name is no class.
+fn named_plugin_problem(name: &str, class: &str, lib: &Path) -> Option<String> {
+    match ruby_constant_kinds(&ruby_files(lib)).get(class.trim_start_matches("::")) {
+        Some(true) => None,
+        Some(false) => Some(format!("undefined method 'new' for module {class}")),
+        None => Some(format!("Failed while configuring plugin `{name}': no constant with name `{class}' was found.")),
+    }
+}
+
 fn ruby_constant_kinds(files: &[PathBuf]) -> HashMap<String, bool> {
     let mut out = HashMap::new();
     for file in files {

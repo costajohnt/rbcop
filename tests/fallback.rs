@@ -302,6 +302,35 @@ fn plain_require_loads_what_the_feature_requires() {
             let out = run("require:\n  - rubocop-fake_ns\n");
             assert_eq!(text(&out.stdout).contains("Style/StringLiterals"), !merged, "{call:?}: {}", text(&out.stdout));
         }
+        // A native plugin's plugin_class_name is looked up too (#556, #568).
+        let perf = gems.join("gems/rubocop-performance-99.0.0");
+        fs::create_dir_all(perf.join("lib/rubocop/performance")).unwrap();
+        fs::write(
+            gems.join("specifications/rubocop-performance-99.0.0.gemspec"),
+            "Gem::Specification.new { |s| s.name = 'rubocop-performance'; s.version = '99.0.0'; \
+             s.metadata = { 'default_lint_roller_plugin' => 'RuboCop::Performance::Plugin' } }\n",
+        )
+        .unwrap();
+        fs::write(perf.join("lib/rubocop-performance.rb"), "require_relative 'rubocop/performance/plugin'\n").unwrap();
+        fs::write(
+            perf.join("lib/rubocop/performance/plugin.rb"),
+            "module RuboCop\n  module Performance\n    class Plugin < LintRoller::Plugin\n    end\n  end\nend\n",
+        )
+        .unwrap();
+        let native =
+            |class: &str| run(&format!("plugins:\n  - rubocop-performance:\n      plugin_class_name: {class}\n"));
+        assert_ne!(native("RuboCop::Performance::Plugin").status.code(), Some(2));
+        for (class, want) in [
+            (
+                "Nope",
+                "Failed while configuring plugin `rubocop-performance': no constant with name `Nope' was found.\n",
+            ),
+            ("RuboCop::Performance", "undefined method 'new' for module RuboCop::Performance\n"),
+        ] {
+            let out = native(class);
+            assert_eq!(text(&out.stderr), want);
+            assert_eq!(out.status.code(), Some(2));
+        }
     }
     let _ = fs::remove_dir_all(&dir);
     let _ = fs::remove_dir_all(&gems);
