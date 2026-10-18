@@ -1,0 +1,5 @@
+l1.rb:3:121: C: Layout/LineLength: Line is too long. [131/120]
+l1.rb:3:131: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+l2.rb:3:121: C: Layout/LineLength: Line is too long. [130/120]
+l3.rb:3:121: C: Layout/LineLength: Line is too long. [130/120]
+m1.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
