@@ -887,7 +887,7 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
     fs::create_dir_all(dir.join("spec")).unwrap();
     let file = dir.join("spec/foo_spec.rb").display().to_string();
     type Case<'a> = (&'a str, &'a str, &'a str, &'a [&'a str], &'a [&'a str]);
-    let cases: [Case; 6] = [
+    let cases: [Case; 9] = [
         (
             "Examples:\n      Focused: ~",
             "RSpec/VoidExpect",
@@ -934,6 +934,28 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
             "describe Foo do\n  before do\n    $a = 1\n  end\nend\n",
             &[],
             &["F:5:4."],
+        ),
+        // a single-statement group body's child nodes: an assignment's value, a def's body (#602)
+        (
+            "Helpers: ~",
+            "RSpec/ScatteredLet",
+            "describe Foo do\n  context \"x\" do\n    x = foo(1, 2)\n  end\nend\n",
+            &[],
+            &["F:4:2."],
+        ),
+        (
+            "Helpers: ~",
+            "RSpec/IndexedLet",
+            "describe Foo do\n  context \"x\" do\n    def matcher(min, max)\n      be_between(min, max)\n    end\n  end\nend\n",
+            &[],
+            &["F:4:2."],
+        ),
+        (
+            "Helpers: ~",
+            "RSpec/OverwritingSetup",
+            "describe Foo do\n  it do\n    group = RSpec.describe do\n      ex = example(\"x\") { }\n    end\n  end\nend\n",
+            &[],
+            &["F:5:12."],
         ),
     ];
     for (list, cop, source, offenses, errors) in cases {

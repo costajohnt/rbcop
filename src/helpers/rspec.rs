@@ -575,30 +575,85 @@ pub fn variable_definition<'pr>(_cx: &Cx, l: &Language, node: &Node<'pr>) -> Opt
         .then_some(first)
 }
 
-/// `node.child_nodes` for the parser node a body is, as far as cops look for blocks in it: a
-/// `begin`'s statements, a block's (send, then) body, an `if`'s condition and branches.
+/// rubocop-ast `node.child_nodes` (the node children, in parser order) of the parser node `node`
+/// stands for, as far as cops look for sends and blocks in it. A block's send is a parser child
+/// with no Prism node of its own (the block call is the block): it is left out, and so is the send
+/// of an index or attribute op-assign (`a[k] += 1`); callers that ask a list of those do so on
+/// their own.
 pub fn child_nodes<'pr>(node: &Node<'pr>) -> Vec<Node<'pr>> {
     if let Some(cs) = begin_children(node) {
         return cs;
     }
-    if let Some(c) = any_block_call(node) {
-        let mut out: Vec<Node> = c.receiver().into_iter().chain(send_args(&c)).collect();
-        out.extend(parser_body(block_body(&c)));
-        return out;
-    }
-    if let Some(i) = node.as_if_node() {
-        let mut out = vec![i.predicate()];
-        out.extend(parser_body(i.statements().map(|s| s.as_node())));
-        match i.subsequent() {
-            Some(s) if s.as_else_node().is_some() => {
-                out.extend(parser_body(s.as_else_node().unwrap().statements().map(|s| s.as_node())))
-            }
-            Some(s) => out.push(s),
-            None => {}
+    if let Some(c) = node.as_call_node() {
+        if let Some(b) = block_of(&c) {
+            // (block send args body): the args, then the body
+            let mut out: Vec<Node> = b.parameters().into_iter().collect();
+            out.extend(parser_body(b.body()));
+            return out;
         }
+        return c.receiver().into_iter().chain(send_args(&c)).collect();
+    }
+    if let Some(b) = node.as_begin_node().filter(|b| b.begin_keyword_loc().is_some()) {
+        // kwbegin: its statements, or the rescue/ensure it wraps
+        if b.rescue_clause().is_none() && b.ensure_clause().is_none() {
+            return b.statements().map(|s| s.body().iter().collect()).unwrap_or_default();
+        }
+        return Vec::new();
+    }
+    if let Some(r) = node.as_rescue_modifier_node() {
+        // (rescue expr (resbody nil nil rescue_expr) nil)
+        return vec![r.expression()];
+    }
+    if let Some(u) = node.as_unless_node() {
+        // (if cond else_body then_body)
+        let mut out = vec![u.predicate()];
+        out.extend(parser_body(u.else_clause().and_then(|e| e.statements()).map(|s| s.as_node())));
+        out.extend(parser_body(u.statements().map(|s| s.as_node())));
         return out;
     }
-    Vec::new()
+    // Prism's direct children, a statement list standing for its single statement (or a `begin`),
+    // the arguments of a keyword (`return a, b`) and an `else` standing for their contents
+    struct V<'pr> {
+        depth: usize,
+        out: Vec<Node<'pr>>,
+    }
+    impl<'pr> Visit<'pr> for V<'pr> {
+        fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
+            self.enter(node);
+        }
+        fn visit_branch_node_leave(&mut self) {
+            self.depth -= 1;
+        }
+        fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
+            self.enter(node);
+        }
+        fn visit_leaf_node_leave(&mut self) {
+            self.depth -= 1;
+        }
+    }
+    impl<'pr> V<'pr> {
+        fn enter(&mut self, node: Node<'pr>) {
+            self.depth += 1;
+            if self.depth == 2 {
+                self.out.push(node);
+            }
+        }
+    }
+    let mut v = V { depth: 0, out: Vec::new() };
+    v.visit(node);
+    let mut out = Vec::new();
+    for c in v.out {
+        if let Some(a) = c.as_arguments_node() {
+            out.extend(a.arguments().iter());
+        } else if let Some(e) = c.as_else_node() {
+            out.extend(parser_body(e.statements().map(|s| s.as_node())));
+        } else if c.as_statements_node().is_some() {
+            out.extend(parser_body(Some(c)));
+        } else {
+            out.push(c);
+        }
+    }
+    out
 }
 
 /// SkipOrPending#skipped_in_metadata?: `{(send _ _ <(sym {:skip :pending}) ...>)
@@ -927,25 +982,19 @@ pub fn body_children<'pr>(body: Option<Node<'pr>>) -> Vec<Node<'pr>> {
 }
 
 /// `body.child_nodes` of a group body that is a single statement (no `begin`) are that
-/// statement's parts, which RuboCop still asks `let?` of: the send of a block statement and the
-/// block's body, or a send's receiver and arguments. None of them is a `let` of the group, but a
-/// nil Helpers list raises there.
+/// statement's parts, which RuboCop still asks `let?` of. None of them is a `let` of the group,
+/// but a nil Helpers list raises there.
 // ponytail: a `let` passed as an argument (`foo(let(:a) { 1 })`) is not reported as one.
 pub fn ask_let_of_parts(l: &Language, body: Option<Node>) {
     let Some(stmt) = parser_body(body) else { return };
-    let Some(c) = stmt.as_call_node() else {
-        child_nodes(&stmt).iter().for_each(|n| _ = let_(l, n));
-        return;
-    };
-    if block_of(&c).is_some() {
-        // `(send nil? #Helpers.all _ block_pass)` asks of a send with two arguments
+    // a block statement's send (not in child_nodes): `(send nil? #Helpers.all _ block_pass)`
+    // asks of a send with two arguments
+    if let Some(c) = any_block_call(&stmt) {
         if c.receiver().is_none() && send_args(&c).len() == 2 {
             l.helper(method_name(&c));
         }
-        parser_body(block_body(&c)).iter().for_each(|n| _ = let_(l, n));
-    } else {
-        c.receiver().into_iter().chain(send_args(&c)).for_each(|n| _ = let_(l, &n));
     }
+    child_nodes(&stmt).iter().for_each(|n| _ = let_(l, n));
 }
 
 /// Whether a block body is parser's `begin` (two or more statements).
