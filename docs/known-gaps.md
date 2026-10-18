@@ -435,7 +435,8 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   - rubocop-rails' `config/database.yml` read (`YAML.unsafe_load_file`, #598) loads a date, a
     timestamp or a `!ruby/...` object as nil; a class Ruby cannot resolve raises there (a cop error).
   - Nesting deeper than 1000 levels fails with `stack level too deep` (Ruby's limit depends on
-    its stack: about 1000 mappings, 1400 sequences).
+    its stack: about 1000 mappings, 1400 sequences). Deliberate (#591): RuboCop dies there with an
+    uncaught SystemStackError (exit 1); rbcop prints the message and exits 2.
   - The Ruby backtrace RuboCop prints after the message is not reproduced.
 - `DisplayStyleGuide`: the style guide URL is resolved once per run for each `StyleGuide` value,
   as RuboCop's per-process MessageAnnotator cache does, so the first offense with an anchor fixes
