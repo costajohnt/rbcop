@@ -1,0 +1,1 @@
+control.rb:2:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.

@@ -1,0 +1,10 @@
+AllCops:
+  TargetRubyVersion: 2.7
+  SuggestExtensions: false
+  DisabledByDefault: true
+Layout/LineLength:
+  Enabled: true
+Layout/EmptyLineAfterMagicComment:
+  Enabled: true
+Layout/TrailingWhitespace:
+  Enabled: true

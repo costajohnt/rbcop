@@ -106,6 +106,16 @@ pub fn parses_equivalently_folding(
     legacy: Option<f64>,
     fold: bool,
 ) -> bool {
+    // RuboCop reparses text cut from the corrected buffer source (`\r\n` already `\n`, as in
+    // `Source::text`), which Parser::Source::Buffer normalizes a second time: a `\r\r\n` in the file
+    // is a plain newline there (`__END__\r\r\n` becomes the data marker, #585).
+    let normalized;
+    let fragment = if legacy.is_some() && fragment.contains("\r\n") {
+        normalized = fragment.replace("\r\n", "\n");
+        normalized.as_str()
+    } else {
+        fragment
+    };
     let mut buf = Vec::new();
     let Some(result) = parse_clean(fragment, &mut buf, version, legacy) else { return false };
     let root = result.node();

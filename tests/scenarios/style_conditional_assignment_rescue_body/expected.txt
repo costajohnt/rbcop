@@ -1,0 +1,30 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+rescue.rb:10:3: W: [Correctable] Layout/EndAlignment: `end` at 10, 2 is not aligned with `if` at 6, 12.
+rescue.rb:16:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `message`.
+rescue.rb:27:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+rescue.rb:29:3: C: [Correctable] Style/ConditionalAssignment: Assign variables inside of conditionals.
+rescue.rb:29:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `message`.
+rescue.rb:30:5: C: [Correctable] Layout/IndentationWidth: Use 2 (not -8) spaces for indentation.
+rescue.rb:31:3: C: [Correctable] Layout/ElseAlignment: Align `else` with `if`.
+rescue.rb:33:3: W: [Correctable] Layout/EndAlignment: `end` at 33, 2 is not aligned with `if` at 29, 12.
+rescue.rb:38:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+rescue.rb:41:3: C: [Correctable] Style/ConditionalAssignment: Assign variables inside of conditionals.
+rescue.rb:41:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `message`.
+rescue.rb:42:5: C: [Correctable] Layout/IndentationWidth: Use 2 (not -8) spaces for indentation.
+rescue.rb:43:3: C: [Correctable] Layout/ElseAlignment: Align `else` with `if`.
+rescue.rb:45:3: W: [Correctable] Layout/EndAlignment: `end` at 45, 2 is not aligned with `if` at 41, 12.
+rescue.rb:47:3: C: [Correctable] Style/ConditionalAssignment: Assign variables inside of conditionals.
+rescue.rb:47:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `message`.
+rescue.rb:48:5: C: [Correctable] Layout/IndentationWidth: Use 2 (not -8) spaces for indentation.
+rescue.rb:49:3: C: [Correctable] Layout/ElseAlignment: Align `else` with `if`.
+rescue.rb:51:3: W: [Correctable] Layout/EndAlignment: `end` at 51, 2 is not aligned with `if` at 47, 12.
+rescue.rb:56:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+rescue.rb:58:5: C: [Correctable] Layout/IndentationWidth: Use 2 (not -13) spaces for indentation.
+rescue.rb:59:3: C: [Correctable] Layout/ElseAlignment: Align `else` with `if`.
+rescue.rb:5:1: C: [Correctable] Style/RescueStandardError: Avoid rescuing without specifying an error class.
+rescue.rb:61:3: W: [Correctable] Layout/EndAlignment: `end` at 61, 2 is not aligned with `if` at 57, 17.
+rescue.rb:64:11: C: [Correctable] Style/RescueModifier: Avoid using `rescue` in its modifier form.
+rescue.rb:64:12: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+rescue.rb:6:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `message`.
+rescue.rb:7:5: C: [Correctable] Layout/IndentationWidth: Use 2 (not -8) spaces for indentation.
+rescue.rb:8:3: C: [Correctable] Layout/ElseAlignment: Align `else` with `if`.

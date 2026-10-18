@@ -1,0 +1,10 @@
+AllCops:
+  TargetRubyVersion: 2.7
+  SuggestExtensions: false
+  DisabledByDefault: true
+Style/RedundantParentheses:
+  Enabled: true
+Style/RedundantLineContinuation:
+  Enabled: true
+Layout/RedundantLineBreak:
+  Enabled: true
