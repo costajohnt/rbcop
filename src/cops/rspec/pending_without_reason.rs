@@ -16,11 +16,12 @@ impl Cop for PendingWithoutReason {
         }
         let l = helpers::rspec::lang(cx);
         let n = method_name(&call);
-        let has = |list: &[String]| list.iter().any(|x| x == n);
+        let has = |list: &helpers::rspec::List| list.has(n);
         let args = send_args(&call);
         let (s, e) = send_range(&call);
         // metadata_without_reason?: the last argument is :pending/:skip or a hash with `pending: true`/`skip: true`
-        if helpers::rspec::rspec_recv(&call) && (l.example_group(n) || l.example(n)) {
+        // (NodePattern checks the arity, an argument, before it calls the predicates.)
+        if !args.is_empty() && helpers::rspec::rspec_recv(&call) && (l.example_group(n) || l.example(n)) {
             let key = |a: &Node| {
                 helpers::rspec::is_sym(cx, a)
                     .then(|| helpers::rails::sym_value(a))
@@ -52,11 +53,14 @@ impl Cop for PendingWithoutReason {
         // A BlockNode parent stands for its call's block.
         let parent_owner = if parent.as_block_node().is_some() && pi > 0 { &anc[pi - 1] } else { parent };
         let block = helpers::rspec::block_of(&call);
-        let block_group = block.is_some()
-            && helpers::rspec::example_group(&l, node)
-            && call.receiver().is_some_and(|r| helpers::rspec::is_explicit_rspec(&r));
+        // block_node_example_group?, asked only when the parent is no spec group
+        let block_group = || {
+            block.is_some()
+                && helpers::rspec::example_group(&l, node)
+                && call.receiver().is_some_and(|r| helpers::rspec::is_explicit_rspec(&r))
+        };
         let parent_is_block = parent.as_block_node().is_some();
-        if (parent_is_block && helpers::rspec::spec_group(&l, parent_owner)) || block_group {
+        if (parent_is_block && helpers::rspec::spec_group(&l, parent_owner)) || block_group() {
             // skipped_by_example_method?: (send nil? ${#Examples.skipped #Examples.pending}), and
             // skipped_by_example_method_with_block?(node.parent) for one with a block
             if call.receiver().is_none() && (args.is_empty() || block.is_some()) && (has(&l.ex_skipped) || has(&l.ex_pending)) {

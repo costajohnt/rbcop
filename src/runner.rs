@@ -694,7 +694,6 @@ fn investigate(
         .filter(|r| selected(r.name) && !only_redundant && cfg.team_has(r.name))
         .filter_map(|r| {
             let c = cfg.cop(r.name);
-            let on = c.enabled || opted_in.contains(&r.name);
             let (mut min, max) = r.cop.ruby_range();
             // rubocop-rails: `Style::HashExcept.minimum_target_ruby_version(2.0)` once it is loaded.
             if r.name == "Style/HashExcept" && rails {
@@ -703,7 +702,11 @@ fn investigate(
             let ruby_ok = min <= cfg.target_ruby && cfg.target_ruby <= max;
             // Base#relevant_file?: target_satisfies_all_gem_version_requirements? (railties).
             let rails_ok = r.cop.min_rails() == 0.0 || cfg.target_rails_version() >= r.cop.min_rails();
-            (on && ruby_ok && rails_ok && cfg.relevant(c, path)).then_some(Active { name: r.name, cop: r.cop, cfg: c })
+            // Team#roundup_relevant_cops: excluded_file? (Include/Exclude, the gem requirements)
+            // first, then an enable directive opts the cop in past both `Enabled` and the target
+            // Ruby range.
+            let on = opted_in.contains(&r.name) || (c.enabled && ruby_ok);
+            (on && rails_ok && cfg.relevant(c, path)).then_some(Active { name: r.name, cop: r.cop, cfg: c })
         })
         .collect();
 
@@ -940,11 +943,13 @@ pub fn cop_error(cop: &str, src: &Source, at: usize) {
 /// path for a callback without a node, such as on_new_investigation).
 pub fn cop_error_at(cop: &str, src: &Source, at: Option<usize>) {
     // rubocop-rspec's TopLevelGroup cops run from on_new_investigation, whose errors Team reports
-    // without a location; rbcop runs them as node cops.
+    // without a location; rbcop runs them as node cops. So does RSpec/LeakyLocalVariable, a
+    // VariableForce cop (its hooks run from the force's on_new_investigation).
     const TOP_LEVEL_GROUP: &[&str] = &[
         "RSpec/DescribeClass",
         "RSpec/DescribeMethod",
         "RSpec/InstanceVariable",
+        "RSpec/LeakyLocalVariable",
         "RSpec/MultipleDescribes",
         "RSpec/NestedGroups",
         "RSpec/RepeatedSubjectCall",

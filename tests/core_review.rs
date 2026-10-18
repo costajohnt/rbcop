@@ -415,6 +415,51 @@ fn config_load_errors_worded_like_rubocop() {
             "a: &\n",
             "({D}/.rubocop.yml): did not find expected alphabetic or numeric character while scanning an anchor at line 1 column 4",
         ),
+        // libyaml: every `:` in a flow collection is a value indicator (#527), and a simple key
+        // is limited to one line there too (#528).
+        (
+            "Layout/LineLength:\n  AllowedPatterns: [:foo, :bar]\n",
+            "({D}/.rubocop.yml): did not find expected node content while parsing a flow node at line 2 column 21",
+        ),
+        (
+            "Layout/LineLength:\n  X: {foo\n    : bar}\n",
+            "({D}/.rubocop.yml): did not find expected ',' or '}' while parsing a flow mapping at line 2 column 6",
+        ),
+        (
+            "a:\n  - b\n\t\n",
+            "({D}/.rubocop.yml): found a tab character that violates indentation while scanning a plain scalar at line 2 column 5",
+        ),
+        // `|`/`>` start no token in a flow collection (#539); `x:` before a flow indicator (#540).
+        (
+            "Metrics/BlockLength:\n  AllowedMethods: [>a, b]\n",
+            "({D}/.rubocop.yml): found character that cannot start any token while scanning for the next token at line 2 column 20",
+        ),
+        (
+            "Metrics/BlockLength: {AllowedMethods:[a]}\n",
+            "({D}/.rubocop.yml): found unexpected ':' while scanning a plain scalar at line 1 column 23",
+        ),
+        // libyaml's problem and mark (#541): no context mark is line 1 column 1; the parser, not
+        // the scanner, rejects content after a quoted scalar; anchor names; directives.
+        ("  a: 1\nb: 2\n", "({D}/.rubocop.yml): did not find expected <document start> at line 1 column 1"),
+        (
+            "a: ['b' 'c']\n",
+            "({D}/.rubocop.yml): did not find expected ',' or ']' while parsing a flow sequence at line 1 column 4",
+        ),
+        (
+            "a: &b'x'\n",
+            "({D}/.rubocop.yml): did not find expected alphabetic or numeric character while scanning an anchor at line 1 column 4",
+        ),
+        (
+            "%Foo\n---\na: 1\n",
+            "({D}/.rubocop.yml): found unknown directive name while scanning a directive at line 1 column 1",
+        ),
+        // YAMLDuplicationChecker reads `value` of each mapping key node during the parse; the
+        // unknown alias is ToRuby's, after a syntax error.
+        ("a:\n  ? [x]\n  : 1\n", "undefined method 'value' for an instance of Psych::Nodes::Sequence"),
+        (
+            "a: *zz\nb: [\n",
+            "({D}/.rubocop.yml): did not find expected node content while parsing a flow node at line 3 column 1",
+        ),
         ("a: *x\n", "An alias referenced an unknown anchor: x"),
         ("b: 2020-01-01\n", "Tried to load unspecified class: Date"),
         ("b: 2020-01-01 10:00:00\n", "Tried to load unspecified class: Time"),
@@ -456,6 +501,11 @@ fn flow_collections_ignore_indentation_like_libyaml() {
         ("Metrics/BlockLength:\n  AllowedMethods: [\n\"foo\",\nbar]\n", "\n  - foo\n  - bar\n"),
         ("Metrics/BlockLength:\n  AllowedMethods: [\"foo\n  bar\"]\n", "\n  - foo bar\n"),
         ("Metrics/BlockLength:\n  AllowedMethods: \"foo\nbar\"\n", " foo bar\n"),
+        // A tab is whitespace in a flow collection and on a quoted scalar's lines (#526).
+        ("Metrics/BlockLength:\n  AllowedMethods: [foo,\n\tbar]\n", "\n  - foo\n  - bar\n"),
+        ("Metrics/BlockLength:\n  AllowedMethods:\n  - \"foo\n\tbar\"\n", "\n  - foo bar\n"),
+        ("Metrics/BlockLength:\n  AllowedMethods: ['foo\n  \tbar', \"a\\\n\tb\"]\n", "\n  - foo bar\n  - ab\n"),
+        ("Metrics/BlockLength:\n  AllowedMethods:\t[foo]\n", "\n  - foo\n"),
     ];
     let dir = scratch("flow-indent");
     fs::write(dir.join("a.rb"), "x = 1\n").unwrap();
@@ -492,6 +542,72 @@ fn top_level_group_cop_errors_have_no_location() {
         assert!(errors.iter().any(|e| e == want), "{errors:?}");
     }
     assert!(errors.iter().any(|e| e == "RSpec/EmptyExampleGroup cop was inspecting F:5:0."), "{errors:?}");
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// An enable directive opts a cop in past its target Ruby range too (Team#roundup_relevant_cops,
+/// #538): Security/YAMLLoad (maximum 3.0) runs at 3.3 in a file that enables it, and a
+/// disable/enable pair around its offense is not redundant.
+#[test]
+fn enable_directive_opts_in_outside_target_ruby() {
+    let dir = scratch("enable-target-ruby");
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "AllCops:\n  TargetRubyVersion: 3.3\n  SuggestExtensions: false\n  NewCops: enable\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.join("c.rb"),
+        "# frozen_string_literal: true\n\n# rubocop:enable Security/YAMLLoad\np YAML.load(x)\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.join("d.rb"),
+        "# frozen_string_literal: true\n\nbegin\n  # rubocop:disable Security/YAMLLoad\n  p YAML.load(x)\n  \
+         # rubocop:enable Security/YAMLLoad\nrescue StandardError\n  nil\nend\n",
+    )
+    .unwrap();
+    let out = rbcop(&dir, &["-f", "e", "c.rb", "d.rb"]);
+    let d = dir.display().to_string();
+    assert_eq!(
+        text(&out.stdout).replace(&d, "D"),
+        "D/c.rb:3:18: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Security/YAMLLoad.\n\
+         D/c.rb:4:8: W: [Correctable] Security/YAMLLoad: Prefer using `YAML.safe_load` over `YAML.load`.\n"
+    );
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// A `RSpec: Language` list set to `~` is nil to rubocop-rspec's Language helpers, which read it
+/// bare: each cop that asks it raises (#529).
+#[test]
+fn rspec_language_list_set_to_nil_raises() {
+    let dir = scratch("rspec-language-nil");
+    let config = "plugins:\n  - rubocop-rspec\nAllCops:\n  NewCops: enable\n  SuggestExtensions: false\n\
+                  RSpec:\n  Language:\n    Includes:\n      Examples: ~\n";
+    fs::write(dir.join(".rubocop.yml"), config).unwrap();
+    fs::create_dir_all(dir.join("spec")).unwrap();
+    fs::write(
+        dir.join("spec/foo_spec.rb"),
+        "# frozen_string_literal: true\n\ndescribe Foo do\n  it_behaves_like \"x\"\nend\n",
+    )
+    .unwrap();
+    let out = rbcop(&dir, &["--only", "RSpec", "spec/foo_spec.rb"]);
+    let file = dir.join("spec/foo_spec.rb").display().to_string();
+    let printed: Vec<String> = text(&out.stderr)
+        .lines()
+        .take_while(|l| !l.is_empty())
+        .filter_map(|l| l.strip_prefix("An error occurred while "))
+        .map(|l| l.replace(&file, "F"))
+        .collect();
+    assert_eq!(
+        printed,
+        [
+            "RSpec/EmptyExampleGroup cop was inspecting F:3:0.",
+            "RSpec/SharedExamples cop was inspecting F:3:0.",
+            "RSpec/SharedExamples cop was inspecting F:4:2."
+        ]
+    );
+    assert!(text(&out.stdout).contains("no offenses detected"), "{}", text(&out.stdout));
     let _ = fs::remove_dir_all(&dir);
 }
 

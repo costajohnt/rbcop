@@ -936,9 +936,8 @@ impl Store {
                             if config.and_then(|c| c.get("enabled")) == Some(&Value::Bool(false)) {
                                 continue;
                             }
-                            let named =
-                                config.and_then(|c| c.get("plugin_class_name")).is_some_and(|v| *v != Value::Null);
-                            plugins.push((name.clone(), if named { Load::NamedPlugin } else { Load::Plugin }));
+                            let named = config.and_then(|c| c.get("plugin_class_name")).and_then(Value::as_string);
+                            plugins.push((name.clone(), named.map_or(Load::Plugin, Load::NamedPlugin)));
                         }
                     }
                     _ => {}
@@ -1265,6 +1264,21 @@ impl Store {
             // A Ruby library outside any gem (`require: set`): no cops.
             let Some(dir) = feature.dir else { continue };
             let lib = dir.join(lib);
+            // Kernel.const_get of the name, then `.new(plugin_config)` on it.
+            // ponytail: the constant is looked for in the gem's lib/ only.
+            if let Load::NamedPlugin(class) = &load {
+                let problem = match ruby_constant_kinds(&ruby_files(&lib)).get(class.trim_start_matches("::")) {
+                    Some(true) => None,
+                    Some(false) => Some(format!("undefined method 'new' for module {class}")),
+                    None => Some(format!(
+                        "Failed while configuring plugin `{name}': no constant with name `{class}' was found."
+                    )),
+                };
+                if let Some(problem) = problem {
+                    self.failed_entry = Some(name.clone());
+                    return Err(problem);
+                }
+            }
             let path = dir.join(config);
             // A plugin loads its gem (its cops, its config); a plain `require` loads the files
             // it reaches, and the gem's config/default.yml only when that code injects it into
@@ -1506,12 +1520,12 @@ impl Store {
 }
 
 /// How a `plugins:`/`require:` entry loads.
-#[derive(Clone, Copy, PartialEq)]
+#[derive(Clone, PartialEq)]
 enum Load {
     /// Plugin::Loader, with the plugin class from the gemspec metadata.
     Plugin,
-    /// Plugin::Loader, with a `plugin_class_name` given.
-    NamedPlugin,
+    /// Plugin::Loader, with this `plugin_class_name`.
+    NamedPlugin(String),
     /// FeatureLoader: a plain `require`.
     Require,
 }
@@ -1569,14 +1583,29 @@ fn required_files(lib: &Path, file: &Path, loaded: Option<&Path>) -> Vec<PathBuf
 /// Loading these files sets ConfigLoader's default configuration: one of them calls an
 /// extension's `Inject.defaults!` at the top level, and one sets the default configuration.
 /// (Code that sets it only from a method RuboCop calls later, as standard's plugin, does not.)
-// ponytail: a name match for the call and the assignment, not a trace of which method is called.
+// ponytail: the call is found outside any `def` (however it is spelled), the assignment by name;
+// neither is a trace of which method is called.
 fn injects_defaults(files: &[PathBuf]) -> bool {
-    static CALL: std::sync::LazyLock<Regex> =
-        std::sync::LazyLock::new(|| Regex::new(r"(?m)^[A-Z][\w:]*\.(?:inject_)?defaults!").unwrap());
+    use ruby_prism::Visit;
+    struct Call(bool);
+    impl<'pr> Visit<'pr> for Call {
+        fn visit_def_node(&mut self, _: &ruby_prism::DefNode<'pr>) {}
+        fn visit_call_node(&mut self, n: &ruby_prism::CallNode<'pr>) {
+            self.0 |= matches!(n.name().as_slice(), b"defaults!" | b"inject_defaults!")
+                && n.receiver()
+                    .is_some_and(|r| r.as_constant_read_node().is_some() || r.as_constant_path_node().is_some());
+            ruby_prism::visit_call_node(self, n);
+        }
+    }
     static SET: std::sync::LazyLock<Regex> =
         std::sync::LazyLock::new(|| Regex::new(r"@default_configuration\b|\bdefault_configuration\s*=[^=]").unwrap());
     let texts: Vec<String> = files.iter().filter_map(|f| std::fs::read_to_string(f).ok()).collect();
-    texts.iter().any(|t| CALL.is_match(t)) && texts.iter().any(|t| SET.is_match(t))
+    let calls = |t: &String| {
+        let mut call = Call(false);
+        call.visit(&ruby_prism::parse(t.as_bytes()).node());
+        call.0
+    };
+    texts.iter().any(|t| SET.is_match(t)) && texts.iter().any(calls)
 }
 
 /// Plugin::INTERNAL_AFFAIRS_PLUGIN_NAME, RuboCop's built-in plugin, and the obsolete name it
@@ -1717,6 +1746,45 @@ fn ruby_file_constants(path: &Path, out: &mut std::collections::HashSet<String>)
     }
 }
 
+/// A `module`/`class` line: indentation, keyword, name, superclass, `; ...` rest.
+static SCOPE_OPEN: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| {
+    Regex::new(
+        r"^(\s*)(module|class)\s+((?:::)?[A-Z]\w*(?:::[A-Z]\w*)*)\s*(?:<\s*((?:::)?[A-Z][\w:]*))?\s*(;.*)?(?:#.*)?$",
+    )
+    .unwrap()
+});
+static SCOPE_END: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex::new(r"^(\s*)end\b").unwrap());
+
+/// The fully qualified class and module names some Ruby files define, each with whether it is a
+/// class (Kernel.const_get of a `plugin_class_name`). Nesting as in `ruby_cops_in`.
+fn ruby_constant_kinds(files: &[PathBuf]) -> HashMap<String, bool> {
+    let mut out = HashMap::new();
+    for file in files {
+        let Ok(text) = std::fs::read_to_string(file) else { continue };
+        let mut stack: Vec<(usize, Vec<String>)> = Vec::new();
+        for line in text.lines() {
+            if let Some(m) = SCOPE_OPEN.captures(line) {
+                let mut path = if m[3].starts_with("::") {
+                    Vec::new()
+                } else {
+                    stack.last().map(|s| s.1.clone()).unwrap_or_default()
+                };
+                path.extend(m[3].trim_start_matches("::").split("::").map(String::from));
+                let class = out.entry(path.join("::")).or_insert(false);
+                *class |= &m[2] == "class";
+                if !m.get(5).is_some_and(|t| t.as_str().contains("end")) {
+                    stack.push((m[1].len(), path));
+                }
+            } else if let Some(m) = SCOPE_END.captures(line)
+                && stack.last().is_some_and(|s| s.0 == m[1].len())
+            {
+                stack.pop();
+            }
+        }
+    }
+    out
+}
+
 /// The cops some Ruby files define (Badge.for of each class under RuboCop::Cop that descends
 /// from a cop base class and does not call `exclude_from_registry`), sorted, each with whether it
 /// supports autocorrect (`extend AutoCorrector`, its own or a superclass's).
@@ -1729,18 +1797,13 @@ fn ruby_cops_in(files: Vec<PathBuf>) -> Vec<(String, bool)> {
         autocorrect: bool,
         excluded: bool,
     }
-    static OPEN: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| {
-        Regex::new(r"^(\s*)(module|class)\s+((?:::)?[A-Z]\w*(?:::[A-Z]\w*)*)\s*(?:<\s*((?:::)?[A-Z][\w:]*))?\s*(;.*)?(?:#.*)?$")
-            .unwrap()
-    });
-    static END: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex::new(r"^(\s*)end\b").unwrap());
     let mut classes: Vec<Class> = Vec::new();
     for file in files {
         let Ok(text) = std::fs::read_to_string(&file) else { continue };
         // (indent, path of this scope, index in `classes` for a class)
         let mut stack: Vec<(usize, Vec<String>, Option<usize>)> = Vec::new();
         for line in text.lines() {
-            if let Some(m) = OPEN.captures(line) {
+            if let Some(m) = SCOPE_OPEN.captures(line) {
                 // A one-line `class Foo < Bar; end` opens nothing.
                 if m.get(5).is_some_and(|t| t.as_str().contains("end")) {
                     continue;
@@ -1762,7 +1825,7 @@ fn ruby_cops_in(files: Vec<PathBuf>) -> Vec<(String, bool)> {
                     classes.len() - 1
                 });
                 stack.push((indent, path, class));
-            } else if let Some(m) = END.captures(line) {
+            } else if let Some(m) = SCOPE_END.captures(line) {
                 if stack.last().is_some_and(|s| s.0 == m[1].len()) {
                     stack.pop();
                 }

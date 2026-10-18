@@ -564,20 +564,19 @@ impl<T: Iterator<Item = char>> Parser<T> {
         loop {
             let mut tags = HashMap::new();
             match self.peek_token()? {
-                Token(mark, TokenType::VersionDirective(_, _)) => {
-                    // XXX parsing with warning according to spec
-                    //if major != 1 || minor > 2 {
-                    //    return Err(ScanError::new(tok.0,
-                    //        "found incompatible YAML document"));
-                    //}
+                // rbcop patch: libyaml 0.2.5's checks and wording.
+                Token(mark, TokenType::VersionDirective(major, minor)) => {
                     if version_directive_received {
-                        return Err(ScanError::new(*mark, "duplicate version directive"));
+                        return Err(ScanError::new(*mark, "found duplicate %YAML directive"));
+                    }
+                    if *major != 1 || (*minor != 1 && *minor != 2) {
+                        return Err(ScanError::new(*mark, "found incompatible YAML document"));
                     }
                     version_directive_received = true;
                 }
                 Token(mark, TokenType::TagDirective(handle, prefix)) => {
                     if tags.contains_key(handle) {
-                        return Err(ScanError::new(*mark, "the TAG directive must only be given at most once per handle in the same document"));
+                        return Err(ScanError::new(*mark, "found duplicate %TAG directive"));
                     }
                     tags.insert(handle.clone(), prefix.clone());
                 }
@@ -674,12 +673,9 @@ impl<T: Iterator<Item = char>> Parser<T> {
                 self.pop_state();
                 if let Token(mark, TokenType::Alias(name)) = self.fetch_token() {
                     match self.anchors.get(&name) {
-                        None => {
-                            return Err(ScanError::new(
-                                mark,
-                                "while parsing node, found unknown anchor",
-                            ))
-                        }
+                        // rbcop patch: an unknown anchor is Psych's ToRuby error, after the
+                        // parse; the receiver reports it (id usize::MAX).
+                        None => return Ok((Event::Alias(usize::MAX), mark)),
                         Some(id) => return Ok((Event::Alias(*id), mark)),
                     }
                 }
@@ -777,11 +773,7 @@ impl<T: Iterator<Item = char>> Parser<T> {
                     self.parse_node(true, true)
                 }
             }
-            // XXX(chenyh): libyaml failed to parse spec 1.2, ex8.18
-            Token(mark, TokenType::Value) => {
-                self.state = State::BlockMappingValue;
-                Ok((Event::empty_scalar(), mark))
-            }
+            // rbcop patch: no empty implicit key (spec 1.2 ex 8.18), as libyaml.
             Token(mark, TokenType::BlockEnd) => {
                 self.pop_state();
                 self.skip();
@@ -850,10 +842,8 @@ impl<T: Iterator<Item = char>> Parser<T> {
                             self.push_state(State::FlowMappingValue);
                             return self.parse_node(false, false);
                         }
-                        Token(marker, TokenType::Value) => {
-                            self.state = State::FlowMappingValue;
-                            return Ok((Event::empty_scalar(), marker));
-                        }
+                        // rbcop patch (#527): no empty implicit key (`{: a}`); libyaml's
+                        // parse_node fails on the VALUE token.
                         Token(_, TokenType::FlowMappingEnd) => (),
                         _ => {
                             self.push_state(State::FlowMappingEmptyValue);

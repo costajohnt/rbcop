@@ -31,7 +31,7 @@ impl Cop for Focus {
         }
         let l = helpers::rspec::lang(cx);
         let name = method_name(&call);
-        let has = |list: &[String], n: &str| list.iter().any(|x| x == n);
+        let has = |list: &helpers::rspec::List, n: &str| list.has(n);
         // focused_block?: (send #rspec? {#ExampleGroups.focused #Examples.focused} ...)
         if has(&l.eg_focused, name) || has(&l.ex_focused, name) {
             let sel = call.message_loc().unwrap();
@@ -47,7 +47,11 @@ impl Cop for Focus {
             });
             return;
         }
-        // metadata: focusable selector with a `:focus` argument or a `focus: true` pair
+        // metadata: focusable selector with a `:focus` argument or a `focus: true` pair (NodePattern
+        // checks the arity, an argument, before it calls the predicates)
+        if send_args(&call).is_empty() {
+            return;
+        }
         let focusable = has(&l.eg_regular, name)
             || has(&l.eg_skipped, name)
             || has(&l.ex_regular, name)

@@ -12,12 +12,14 @@ impl Cop for UndescriptiveLiteralsDescription {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (block (send #rspec? {#ExampleGroups.all #Examples.all} $_) ...)
         let Some(call) = helpers::rspec::plain_block_call(node) else { return };
+        // NodePattern checks the arity (one argument) before it calls the predicates.
+        let args = send_args(&call);
+        let [arg] = &args[..] else { return };
         let l = helpers::rspec::lang(cx);
         let n = method_name(&call);
         if !helpers::rspec::rspec_recv(&call) || !(l.example_group(n) || l.example(n)) {
             return;
         }
-        let [arg] = &send_args(&call)[..] else { return };
         if matches!(
             kind::of(arg),
             kind::X_STRING_NODE

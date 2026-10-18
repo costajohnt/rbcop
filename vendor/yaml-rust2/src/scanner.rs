@@ -14,7 +14,7 @@ use std::{char, collections::VecDeque, error::Error, fmt};
 use arraydeque::ArrayDeque;
 
 use crate::char_traits::{
-    as_hex, is_alpha, is_anchor_char, is_blank, is_blank_or_breakz, is_break, is_breakz, is_digit,
+    as_hex, is_alpha, is_blank, is_blank_or_breakz, is_break, is_breakz, is_digit,
     is_flow, is_hex, is_tag_char, is_uri_char, is_z,
 };
 
@@ -356,9 +356,6 @@ pub struct Scanner<T> {
     stream_start_produced: bool,
     /// Whether we have already emitted the `StreamEnd` token.
     stream_end_produced: bool,
-    /// In some flow contexts, the value of a mapping is allowed to be adjacent to the `:`. When it
-    /// is, the index at which the `:` may be must be stored in `adjacent_value_allowed_at`.
-    adjacent_value_allowed_at: usize,
     /// Whether a simple key could potentially start at the current position.
     ///
     /// Simple keys are the opposite of complex keys which are keys starting with `?`.
@@ -420,6 +417,9 @@ impl<T: Iterator<Item = char>> Iterator for Scanner<T> {
 /// A convenience alias for scanner functions that may fail without returning a value.
 pub type ScanResult = Result<(), ScanError>;
 
+/// rbcop patch: libyaml's wording, at the key.
+const SIMPLE_KEY_EXPECTED: &str = "while scanning a simple key, could not find expected ':'";
+
 impl<T: Iterator<Item = char>> Scanner<T> {
     /// Creates the YAML tokenizer.
     pub fn new(rdr: T) -> Scanner<T> {
@@ -432,7 +432,6 @@ impl<T: Iterator<Item = char>> Scanner<T> {
 
             stream_start_produced: false,
             stream_end_produced: false,
-            adjacent_value_allowed_at: 0,
             simple_key_allowed: true,
             simple_keys: Vec::new(),
             indent: -1,
@@ -709,13 +708,10 @@ impl<T: Iterator<Item = char>> Scanner<T> {
             '}' => self.fetch_flow_collection_end(TokenType::FlowMappingEnd),
             ',' => self.fetch_flow_entry(),
             '-' if is_blank_or_breakz(nc) => self.fetch_block_entry(),
-            '?' if is_blank_or_breakz(nc) => self.fetch_key(),
-            ':' if is_blank_or_breakz(nc)
-                || (self.flow_level > 0
-                    && (is_flow(nc) || self.mark.index == self.adjacent_value_allowed_at)) =>
-            {
-                self.fetch_value()
-            }
+            // rbcop patch (#527): as libyaml, every `?` and `:` in a flow collection is an
+            // indicator, so no plain scalar starts with one there.
+            '?' if is_blank_or_breakz(nc) || self.flow_level > 0 => self.fetch_key(),
+            ':' if is_blank_or_breakz(nc) || self.flow_level > 0 => self.fetch_value(),
             // Is it an alias?
             '*' => self.fetch_anchor(true),
             // Is it an anchor?
@@ -732,6 +728,12 @@ impl<T: Iterator<Item = char>> Scanner<T> {
             ':' | '?' if !is_blank_or_breakz(nc) && self.flow_level == 0 => {
                 self.fetch_plain_scalar()
             }
+            // rbcop patch (#526, #539): as libyaml, a tab, or `|`/`>` in a flow collection,
+            // starts no token.
+            '\t' | '|' | '>' => Err(ScanError::new(
+                self.mark,
+                "while scanning for the next token, found character that cannot start any token",
+            )),
             '%' | '@' | '`' => Err(ScanError::new(
                 self.mark,
                 &format!("unexpected character: `{c}'"),
@@ -806,13 +808,13 @@ impl<T: Iterator<Item = char>> Scanner<T> {
     /// This function returns an error if one of the key we would stale was required to be a key.
     fn stale_simple_keys(&mut self) -> ScanResult {
         for sk in &mut self.simple_keys {
+            // rbcop patch (#528): as libyaml, a simple key is limited to one line and 1024
+            // characters in a flow collection too.
             if sk.possible
-                // If not in a flow construct, simple keys cannot span multiple lines.
-                && self.flow_level == 0
-                    && (sk.mark.line < self.mark.line || sk.mark.index + 1024 < self.mark.index)
+                && (sk.mark.line < self.mark.line || sk.mark.index + 1024 < self.mark.index)
             {
                 if sk.required {
-                    return Err(ScanError::new(self.mark, "simple key expect ':'"));
+                    return Err(ScanError::new(sk.mark, SIMPLE_KEY_EXPECTED));
                 }
                 sk.possible = false;
             }
@@ -829,26 +831,12 @@ impl<T: Iterator<Item = char>> Scanner<T> {
         loop {
             // TODO(chenyh) BOM
             match self.look_ch() {
-                // Tabs may not be used as indentation.
-                // "Indentation" only exists as long as a block is started, but does not exist
-                // inside of flow-style constructs. Tabs are allowed as part of leading
-                // whitespaces outside of indentation.
-                // If a flow-style construct is in an indented block, its contents must still be
-                // indented. Also, tabs are allowed anywhere in it if it has no content.
-                '\t' if self.is_within_block()
-                    && self.leading_whitespace
-                    && (self.mark.col as isize) < self.indent =>
-                {
-                    self.skip_ws_to_eol(SkipTabs::Yes)?;
-                    // If we have content on that line with a tab, return an error.
-                    if !is_breakz(self.ch()) {
-                        return Err(ScanError::new(
-                            self.mark,
-                            "tabs disallowed within this context (block indentation)",
-                        ));
-                    }
-                }
-                '\t' | ' ' => self.skip_blank(),
+                // rbcop patch (#526): libyaml's rule. A tab is whitespace in a flow collection
+                // and where no simple key may start (after a key's `:`, a scalar, `]`); in the
+                // block context where one may (a line's start, after `-`, `?`, a complex `:`)
+                // it is left to fail as a token.
+                '\t' if self.flow_level > 0 || !self.simple_key_allowed => self.skip_blank(),
+                ' ' => self.skip_blank(),
                 '\n' | '\r' => {
                     self.lookahead(2);
                     self.skip_linebreak();
@@ -865,43 +853,6 @@ impl<T: Iterator<Item = char>> Scanner<T> {
             }
         }
         Ok(())
-    }
-
-    /// Skip over YAML whitespace (` `, `\n`, `\r`).
-    ///
-    /// # Errors
-    /// This function returns an error if no whitespace was found.
-    fn skip_yaml_whitespace(&mut self) -> ScanResult {
-        let mut need_whitespace = true;
-        loop {
-            match self.look_ch() {
-                ' ' => {
-                    self.skip_blank();
-
-                    need_whitespace = false;
-                }
-                '\n' | '\r' => {
-                    self.lookahead(2);
-                    self.skip_linebreak();
-                    if self.flow_level == 0 {
-                        self.allow_simple_key();
-                    }
-                    need_whitespace = false;
-                }
-                '#' => {
-                    while !is_breakz(self.look_ch()) {
-                        self.skip_non_blank();
-                    }
-                }
-                _ => break,
-            }
-        }
-
-        if need_whitespace {
-            Err(ScanError::new(self.mark(), "expected whitespace"))
-        } else {
-            Ok(())
-        }
     }
 
     /// Skip yaml whitespace at most up to eol. Also skips comments.
@@ -958,7 +909,7 @@ impl<T: Iterator<Item = char>> Scanner<T> {
         // had. If one was required, however, that was an error and we must propagate it.
         for sk in &mut self.simple_keys {
             if sk.required && sk.possible {
-                return Err(ScanError::new(self.mark, "simple key expected"));
+                return Err(ScanError::new(sk.mark, SIMPLE_KEY_EXPECTED));
             }
             sk.possible = false;
         }
@@ -988,23 +939,16 @@ impl<T: Iterator<Item = char>> Scanner<T> {
         let start_mark = self.mark;
         self.skip_non_blank();
 
-        let name = self.scan_directive_name()?;
+        let name = self.scan_directive_name(start_mark)?;
         let tok = match name.as_ref() {
             "YAML" => self.scan_version_directive_value(&start_mark)?,
             "TAG" => self.scan_tag_directive_value(&start_mark)?,
-            // XXX This should be a warning instead of an error
+            // rbcop patch: an error in libyaml 0.2.5.
             _ => {
-                // skip current line
-                while !is_breakz(self.look_ch()) {
-                    self.skip_non_blank();
-                }
-                // XXX return an empty TagDirective token
-                Token(
+                return Err(ScanError::new(
                     start_mark,
-                    TokenType::TagDirective(String::new(), String::new()),
-                )
-                // return Err(ScanError::new(start_mark,
-                //     "while scanning a directive, found unknown directive name"))
+                    "while scanning a directive, found unknown directive name",
+                ))
             }
         };
 
@@ -1042,8 +986,8 @@ impl<T: Iterator<Item = char>> Scanner<T> {
         Ok(Token(*mark, TokenType::VersionDirective(major, minor)))
     }
 
-    fn scan_directive_name(&mut self) -> Result<String, ScanError> {
-        let start_mark = self.mark;
+    fn scan_directive_name(&mut self, start_mark: Marker) -> Result<String, ScanError> {
+        // rbcop patch: libyaml marks a bad name at the `%`.
         let mut string = String::new();
         while is_alpha(self.look_ch()) {
             string.push(self.ch());
@@ -1376,12 +1320,16 @@ impl<T: Iterator<Item = char>> Scanner<T> {
         let start_mark = self.mark;
 
         self.skip_non_blank();
-        while is_anchor_char(self.look_ch()) {
+        // rbcop patch: libyaml's anchor names ([0-9A-Za-z_-]), which must end at a blank or one
+        // of `?:,]}%@` and backquote.
+        while is_alpha(self.look_ch()) {
             string.push(self.ch());
             self.skip_non_blank();
         }
 
-        if string.is_empty() {
+        if string.is_empty()
+            || !(is_blank_or_breakz(self.ch()) || matches!(self.ch(), '?' | ':' | ',' | ']' | '}' | '%' | '@' | '`'))
+        {
             return Err(ScanError::new(start_mark, "while scanning an anchor or alias, did not find expected alphabetic or numeric character"));
         }
 
@@ -1425,15 +1373,6 @@ impl<T: Iterator<Item = char>> Scanner<T> {
         let start_mark = self.mark;
         self.skip_non_blank();
         self.skip_ws_to_eol(SkipTabs::Yes)?;
-
-        // A flow collection within a flow mapping can be a key. In that case, the value may be
-        // adjacent to the `:`.
-        // ```yaml
-        // - [ {a: b}:value ]
-        // ```
-        if self.flow_level > 0 {
-            self.adjacent_value_allowed_at = self.mark.index;
-        }
 
         self.tokens.push_back(Token(start_mark, tok));
         Ok(())
@@ -1481,7 +1420,7 @@ impl<T: Iterator<Item = char>> Scanner<T> {
             // - * only allowed in block
             return Err(ScanError::new(
                 self.mark,
-                r#""-" is only valid inside a block"#,
+                "while parsing a node, did not find expected node content",
             ));
         }
         // Check if we are allowed to start a new entry.
@@ -1505,15 +1444,7 @@ impl<T: Iterator<Item = char>> Scanner<T> {
 
         // generate BLOCK-SEQUENCE-START if indented
         self.roll_indent(mark.col, None, TokenType::BlockSequenceStart, mark);
-        let found_tabs = self.skip_ws_to_eol(SkipTabs::Yes)?.found_tabs();
-        self.lookahead(2);
-        if found_tabs && self.buffer[0] == '-' && is_blank_or_breakz(self.buffer[1]) {
-            return Err(ScanError::new(
-                self.mark,
-                "'-' must be followed by a valid YAML whitespace",
-            ));
-        }
-
+        // rbcop patch (#526): a tab after `-` is skip_to_next_token's (an error there).
         self.skip_ws_to_eol(SkipTabs::No)?;
         if is_break(self.look_ch()) || is_flow(self.ch()) {
             self.roll_one_col_indent();
@@ -1626,12 +1557,6 @@ impl<T: Iterator<Item = char>> Scanner<T> {
             self.read_break(&mut chomping_break);
         }
 
-        if self.look_ch() == '\t' {
-            return Err(ScanError::new(
-                start_mark,
-                "a block scalar content cannot start with a tab",
-            ));
-        }
 
         if increment > 0 {
             indent = if self.indent >= 0 {
@@ -1643,9 +1568,9 @@ impl<T: Iterator<Item = char>> Scanner<T> {
 
         // Scan the leading line breaks and determine the indentation level if needed.
         if indent == 0 {
-            self.skip_block_scalar_first_line_indent(&mut indent, &mut trailing_breaks);
+            self.skip_block_scalar_first_line_indent(&mut indent, &mut trailing_breaks, start_mark)?;
         } else {
-            self.skip_block_scalar_indent(indent, &mut trailing_breaks);
+            self.skip_block_scalar_indent(indent, &mut trailing_breaks, start_mark)?;
         }
 
         // We have an end-of-stream with no content, e.g.:
@@ -1678,6 +1603,7 @@ impl<T: Iterator<Item = char>> Scanner<T> {
         }
 
         let mut line_buffer = String::with_capacity(100);
+        let block_mark = start_mark;
         let start_mark = self.mark;
         while self.mark.col == indent && !is_z(self.ch()) {
             if indent == 0 {
@@ -1715,7 +1641,7 @@ impl<T: Iterator<Item = char>> Scanner<T> {
             self.read_break(&mut leading_break);
 
             // Eat the following indentation spaces and line breaks.
-            self.skip_block_scalar_indent(indent, &mut trailing_breaks);
+            self.skip_block_scalar_indent(indent, &mut trailing_breaks, block_mark)?;
         }
 
         // Chomp the tail.
@@ -1789,7 +1715,7 @@ impl<T: Iterator<Item = char>> Scanner<T> {
     }
 
     /// Skip the block scalar indentation and empty lines.
-    fn skip_block_scalar_indent(&mut self, indent: usize, breaks: &mut String) {
+    fn skip_block_scalar_indent(&mut self, indent: usize, breaks: &mut String, mark: Marker) -> ScanResult {
         loop {
             // Consume all spaces. Tabs cannot be used as indentation.
             if indent < BUFFER_LEN - 2 {
@@ -1813,6 +1739,11 @@ impl<T: Iterator<Item = char>> Scanner<T> {
                 self.lookahead(2);
             }
 
+            // rbcop patch (#526): libyaml's check of a tab in the indentation.
+            if self.mark.col < indent && self.ch() == '\t' {
+                return Err(ScanError::new(mark, "while scanning a block scalar, found a tab character where an indentation space is expected"));
+            }
+
             // If our current line is empty, skip over the break and continue looping.
             if is_break(self.ch()) {
                 self.read_break(breaks);
@@ -1821,13 +1752,19 @@ impl<T: Iterator<Item = char>> Scanner<T> {
                 break;
             }
         }
+        Ok(())
     }
 
     /// Determine the indentation level for a block scalar from the first line of its contents.
     ///
     /// The function skips over whitespace-only lines and sets `indent` to the the longest
     /// whitespace line that was encountered.
-    fn skip_block_scalar_first_line_indent(&mut self, indent: &mut usize, breaks: &mut String) {
+    fn skip_block_scalar_first_line_indent(
+        &mut self,
+        indent: &mut usize,
+        breaks: &mut String,
+        mark: Marker,
+    ) -> ScanResult {
         let mut max_indent = 0;
         loop {
             // Consume all spaces. Tabs cannot be used as indentation.
@@ -1837,6 +1774,11 @@ impl<T: Iterator<Item = char>> Scanner<T> {
 
             if self.mark.col > max_indent {
                 max_indent = self.mark.col;
+            }
+
+            // rbcop patch (#526): libyaml's check of a tab in the indentation.
+            if self.ch() == '\t' {
+                return Err(ScanError::new(mark, "while scanning a block scalar, found a tab character where an indentation space is expected"));
             }
 
             if is_break(self.ch()) {
@@ -1861,6 +1803,7 @@ impl<T: Iterator<Item = char>> Scanner<T> {
         if self.indent > 0 {
             *indent = (*indent).max(1);
         }
+        Ok(())
     }
 
     fn fetch_flow_scalar(&mut self, single: bool) -> ScanResult {
@@ -1868,12 +1811,6 @@ impl<T: Iterator<Item = char>> Scanner<T> {
         self.disallow_simple_key();
 
         let tok = self.scan_flow_scalar(single)?;
-
-        // From spec: To ensure JSON compatibility, if a key inside a flow mapping is JSON-like,
-        // YAML allows the following value to be specified adjacent to the “:”.
-        self.skip_to_next_token()?;
-        self.adjacent_value_allowed_at = self.mark.index;
-
         self.tokens.push_back(tok);
         Ok(())
     }
@@ -1935,13 +1872,8 @@ impl<T: Iterator<Item = char>> Scanner<T> {
             while is_blank(self.ch()) || is_break(self.ch()) {
                 if is_blank(self.ch()) {
                     // Consume a space or a tab character.
+                    // rbcop patch (#526): libyaml takes any tab here as whitespace.
                     if leading_blanks {
-                        if self.ch() == '\t' && (self.mark.col as isize) < self.indent {
-                            return Err(ScanError::new(
-                                self.mark,
-                                "tab cannot be used as indentation",
-                            ));
-                        }
                         self.skip_blank();
                     } else {
                         whitespaces.push(self.ch());
@@ -1985,25 +1917,8 @@ impl<T: Iterator<Item = char>> Scanner<T> {
 
         // Eat the right quote.
         self.skip_non_blank();
-        // Ensure there is no invalid trailing content.
-        self.skip_ws_to_eol(SkipTabs::Yes)?;
-        match self.ch() {
-            // These can be encountered in flow sequences or mappings.
-            ',' | '}' | ']' if self.flow_level > 0 => {}
-            // An end-of-line / end-of-stream is fine. No trailing content.
-            c if is_breakz(c) => {}
-            // ':' can be encountered if our scalar is a key.
-            // Outside of flow contexts, keys cannot span multiple lines
-            ':' if self.flow_level == 0 && start_mark.line == self.mark.line => {}
-            // Inside a flow context, this is allowed.
-            ':' if self.flow_level > 0 => {}
-            _ => {
-                return Err(ScanError::new(
-                    self.mark,
-                    "invalid trailing content after double-quoted scalar",
-                ));
-            }
-        }
+        // rbcop patch: libyaml checks nothing after the quote; the next token (or the parser)
+        // fails on trailing content.
 
         let style = if single {
             TScalarStyle::SingleQuoted
@@ -2168,13 +2083,6 @@ impl<T: Iterator<Item = char>> Scanner<T> {
                 break;
             }
 
-            if self.flow_level > 0 && self.ch() == '-' && is_flow(self.buffer[1]) {
-                return Err(ScanError::new(
-                    self.mark,
-                    "plain scalar cannot start with '-' followed by ,[]{}",
-                ));
-            }
-
             if !is_blank_or_breakz(self.ch()) && self.next_can_be_plain_scalar() {
                 if self.leading_whitespace {
                     if leading_break.is_empty() {
@@ -2204,6 +2112,17 @@ impl<T: Iterator<Item = char>> Scanner<T> {
 
                 // Add content non-blank characters to the scalar.
                 while !is_blank_or_breakz(self.ch()) {
+                    // rbcop patch (#527): libyaml's check for `x:` + one of `,?[]{}` in a flow
+                    // collection.
+                    if self.flow_level > 0
+                        && self.ch() == ':'
+                        && matches!(self.buffer[1], ',' | '?' | '[' | ']' | '{' | '}')
+                    {
+                        return Err(ScanError::new(
+                            start_mark,
+                            "while scanning a plain scalar, found unexpected ':'",
+                        ));
+                    }
                     if !self.next_can_be_plain_scalar() {
                         break;
                     }
@@ -2229,15 +2148,11 @@ impl<T: Iterator<Item = char>> Scanner<T> {
                         whitespaces.push(self.ch());
                         self.skip_blank();
                     } else if (self.mark.col as isize) < indent && self.ch() == '\t' {
-                        // Tabs in an indentation columns are allowed if and only if the line is
-                        // empty. Skip to the end of the line.
-                        self.skip_ws_to_eol(SkipTabs::Yes)?;
-                        if !is_breakz(self.ch()) {
-                            return Err(ScanError::new(
-                                start_mark,
-                                "while scanning a plain scalar, found a tab",
-                            ));
-                        }
+                        // rbcop patch (#526): libyaml fails on such a tab, on an empty line too.
+                        return Err(ScanError::new(
+                            start_mark,
+                            "while scanning a plain scalar, found a tab character that violates indentation",
+                        ));
                     } else {
                         self.skip_blank();
                     }
@@ -2299,14 +2214,9 @@ impl<T: Iterator<Item = char>> Scanner<T> {
             self.disallow_simple_key();
         }
 
+        // rbcop patch (#526, #527): `?` needs no whitespace after it in a flow collection, and
+        // the tabs after it are skip_to_next_token's.
         self.skip_non_blank();
-        self.skip_yaml_whitespace()?;
-        if self.ch() == '\t' {
-            return Err(ScanError::new(
-                self.mark(),
-                "tabs disallowed in this context",
-            ));
-        }
         self.tokens.push_back(Token(start_mark, TokenType::Key));
         Ok(())
     }
@@ -2317,17 +2227,8 @@ impl<T: Iterator<Item = char>> Scanner<T> {
         let start_mark = self.mark;
         self.implicit_flow_mapping = self.flow_level > 0 && !self.flow_mapping_started;
 
-        // Skip over ':'.
+        // Skip over ':' (rbcop patch (#526): the tabs after it are skip_to_next_token's).
         self.skip_non_blank();
-        if self.look_ch() == '\t'
-            && !self.skip_ws_to_eol(SkipTabs::Yes)?.has_valid_yaml_ws()
-            && (self.ch() == '-' || is_alpha(self.ch()))
-        {
-            return Err(ScanError::new(
-                self.mark,
-                "':' must be followed by a valid YAML whitespace",
-            ));
-        }
 
         if sk.possible {
             // insert simple key
@@ -2495,7 +2396,7 @@ impl<T: Iterator<Item = char>> Scanner<T> {
     fn remove_simple_key(&mut self) -> ScanResult {
         let last = self.simple_keys.last_mut().unwrap();
         if last.possible && last.required {
-            return Err(ScanError::new(self.mark, "simple key expected"));
+            return Err(ScanError::new(last.mark, SIMPLE_KEY_EXPECTED));
         }
 
         last.possible = false;
@@ -2519,11 +2420,6 @@ impl<T: Iterator<Item = char>> Scanner<T> {
             c if self.flow_level > 0 && is_flow(c) => false,
             _ => true,
         }
-    }
-
-    /// Return whether the scanner is inside a block but outside of a flow sequence.
-    fn is_within_block(&self) -> bool {
-        !self.indents.is_empty()
     }
 
     /// If an implicit mapping had started, end it.
@@ -2555,22 +2451,6 @@ enum SkipTabs {
     ),
 }
 
-impl SkipTabs {
-    /// Whether tabs were found while skipping whitespace.
-    ///
-    /// This function must be called after a call to `skip_ws_to_eol`.
-    fn found_tabs(self) -> bool {
-        matches!(self, SkipTabs::Result(true, _))
-    }
-
-    /// Whether a valid YAML whitespace has been found in skipped-over content.
-    ///
-    /// This function must be called after a call to `skip_ws_to_eol`.
-    fn has_valid_yaml_ws(self) -> bool {
-        matches!(self, SkipTabs::Result(_, true))
-    }
-}
-
 /// Chomping, how final line breaks and trailing empty lines are interpreted.
 ///
 /// See YAML spec 8.1.1.2.
@@ -2582,13 +2462,4 @@ pub enum Chomping {
     Clip,
     /// The final line break and trailing empty lines are included.
     Keep,
-}
-
-#[cfg(test)]
-mod test {
-    #[test]
-    fn test_is_anchor_char() {
-        use super::is_anchor_char;
-        assert!(is_anchor_char('x'));
-    }
 }

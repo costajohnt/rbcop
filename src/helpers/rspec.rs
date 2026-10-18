@@ -14,43 +14,60 @@ use std::sync::Arc;
 /// `RSpec: Language` of one config (RuboCop::RSpec::Language.config).
 #[derive(Default, Debug)]
 pub struct Language {
-    pub eg_regular: Vec<String>,
-    pub eg_skipped: Vec<String>,
-    pub eg_focused: Vec<String>,
-    pub ex_regular: Vec<String>,
-    pub ex_focused: Vec<String>,
-    pub ex_skipped: Vec<String>,
-    pub ex_pending: Vec<String>,
-    pub expectations: Vec<String>,
-    pub helpers: Vec<String>,
-    pub hooks: Vec<String>,
-    pub error_matchers: Vec<String>,
-    pub inc_examples: Vec<String>,
-    pub inc_context: Vec<String>,
-    pub sg_examples: Vec<String>,
-    pub sg_context: Vec<String>,
-    pub subjects: Vec<String>,
+    pub eg_regular: List,
+    pub eg_skipped: List,
+    pub eg_focused: List,
+    pub ex_regular: List,
+    pub ex_focused: List,
+    pub ex_skipped: List,
+    pub ex_pending: List,
+    pub expectations: List,
+    pub helpers: List,
+    pub hooks: List,
+    pub error_matchers: List,
+    pub inc_examples: List,
+    pub inc_context: List,
+    pub sg_examples: List,
+    pub sg_context: List,
+    pub subjects: List,
 }
 
-fn has(list: &[String], name: &str) -> bool {
-    list.iter().any(|s| s == name)
+/// One `Language` list. A list set to `~` (or under a group set to `~`) is gone after the merge, and
+/// rubocop-rspec reads it bare (`Language.config['Includes']['Examples'].include?(...)`), so asking
+/// it raises NoMethodError: a cop error at the node being inspected.
+#[derive(Default, Debug)]
+pub struct List(Option<Vec<String>>);
+
+impl List {
+    pub fn has(&self, name: &str) -> bool {
+        match &self.0 {
+            Some(list) => list.iter().any(|s| s == name),
+            None => panic!("undefined method 'include?' for nil"),
+        }
+    }
+}
+
+fn has(list: &List, name: &str) -> bool {
+    list.has(name)
 }
 
 impl Language {
-    fn from_map(m: &Map) -> Self {
+    /// `m` is None when `Language` itself is gone (`Language: ~`): every list is then nil.
+    fn from_map(m: Option<&Map>) -> Self {
         // `include?(element.to_s)`: only string entries can match a method name.
-        let list = |m: Option<&Map>, k: &str| -> Vec<String> {
-            match m.and_then(|m| m.get(k)) {
+        let list = |m: Option<&Map>, k: &str| -> List {
+            List(match m.and_then(|m| m.get(k)) {
                 Some(Value::Seq(items)) => {
-                    items.iter().filter_map(|v| if let Value::Str(s) = v { Some(s.clone()) } else { None }).collect()
+                    Some(items.iter().filter_map(|v| if let Value::Str(s) = v { Some(s.clone()) } else { None }).collect())
                 }
-                _ => Vec::new(),
-            }
+                None | Some(Value::Null) => None,
+                _ => Some(Vec::new()),
+            })
         };
-        let eg = m.map("ExampleGroups");
-        let ex = m.map("Examples");
-        let inc = m.map("Includes");
-        let sg = m.map("SharedGroups");
+        let eg = m.and_then(|m| m.map("ExampleGroups"));
+        let ex = m.and_then(|m| m.map("Examples"));
+        let inc = m.and_then(|m| m.map("Includes"));
+        let sg = m.and_then(|m| m.map("SharedGroups"));
         Language {
             eg_regular: list(eg, "Regular"),
             eg_skipped: list(eg, "Skipped"),
@@ -59,15 +76,15 @@ impl Language {
             ex_focused: list(ex, "Focused"),
             ex_skipped: list(ex, "Skipped"),
             ex_pending: list(ex, "Pending"),
-            expectations: list(Some(m), "Expectations"),
-            helpers: list(Some(m), "Helpers"),
-            hooks: list(Some(m), "Hooks"),
-            error_matchers: list(Some(m), "ErrorMatchers"),
+            expectations: list(m, "Expectations"),
+            helpers: list(m, "Helpers"),
+            hooks: list(m, "Hooks"),
+            error_matchers: list(m, "ErrorMatchers"),
             inc_examples: list(inc, "Examples"),
             inc_context: list(inc, "Context"),
             sg_examples: list(sg, "Examples"),
             sg_context: list(sg, "Context"),
-            subjects: list(Some(m), "Subjects"),
+            subjects: list(m, "Subjects"),
         }
     }
 
@@ -137,7 +154,10 @@ pub fn lang(cx: &Cx) -> Arc<Language> {
                     _ => Map::default(),
                 }
             });
-            let m = cx.config.hash.map("RSpec").and_then(|r| r.map("Language")).unwrap_or(&DEFAULT);
+            let m = match cx.config.hash.map("RSpec") {
+                Some(r) => r.map("Language"),
+                None => Some(&*DEFAULT),
+            };
             Arc::new(Language::from_map(m))
         })
         .clone()
@@ -531,11 +551,12 @@ pub fn hook_scope(call: &CallNode) -> Option<&'static str> {
 /// `(send nil? {#Subjects.all #Helpers.all} $({any_sym str dstr} ...) ...)`.
 pub fn variable_definition<'pr>(_cx: &Cx, l: &Language, node: &Node<'pr>) -> Option<Node<'pr>> {
     let call = node.as_call_node()?;
+    // NodePattern checks the arity before it calls the predicates.
+    let first = send_args(&call).into_iter().next()?;
     let n = method_name(&call);
     if call.receiver().is_some() || !(l.subject(n) || l.helper(n)) {
         return None;
     }
-    let first = send_args(&call).into_iter().next()?;
     matches!(kind::of(&first), kind::SYMBOL_NODE | kind::INTERPOLATED_SYMBOL_NODE | kind::STRING_NODE | kind::INTERPOLATED_STRING_NODE)
         .then_some(first)
 }
@@ -1164,12 +1185,11 @@ pub fn metadata_lists<'pr>(l: &Language, node: &Node<'pr>) -> Vec<(CallNode<'pr>
     }
     // rspec_metadata: (block (send #rspec? {#Examples.all #ExampleGroups.all #SharedGroups.all
     // #Hooks.all} _ $...) ...)
+    // NodePattern checks the arity (an argument for `_`) before it calls the predicates.
     let n = method_name(&call);
-    if rspec_recv(&call) && (l.example(n) || l.example_group(n) || l.shared_group(n) || l.hook(n)) {
-        let args = send_args(&call);
-        if !args.is_empty() {
-            out.push((call, args.into_iter().skip(1).collect()));
-        }
+    let args = send_args(&call);
+    if !args.is_empty() && rspec_recv(&call) && (l.example(n) || l.example_group(n) || l.shared_group(n) || l.hook(n)) {
+        out.push((call, args.into_iter().skip(1).collect()));
     }
     out
 }
