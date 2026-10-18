@@ -662,16 +662,15 @@ fn tokenize(s: &str) -> Result<Value, String> {
     if s.len() > 1 && s.starts_with(':') {
         return Ok(Value::Sym(format!(":{}", symbol_name(s))));
     }
-    // `n.to_i * 60 ** (e - 2).abs` per part, as Psych writes it (so `1:30` is 5400).
-    let base60 = |to_num: &dyn Fn(&str) -> f64| -> f64 {
-        s.split(':').enumerate().map(|(e, n)| to_num(n) * 60f64.powi((e as i32 - 2).abs())).sum()
-    };
-    let digits = |n: &str| n.replace('_', "");
+    // `n.to_i * 60 ** (e - 2).abs` (or `n.to_f`) per part, as Psych writes it (so `1:30` is 5400).
+    let scale = |e: usize| 60i128.pow((e as i32 - 2).unsigned_abs());
     if SEXA_INT.is_match(s) {
-        return Ok(Value::Int(base60(&|n| digits(n).parse::<i64>().unwrap_or(0) as f64) as i64));
+        let i = s.split(':').enumerate().fold(0i128, |i, (e, n)| i.saturating_add(to_i(n).saturating_mul(scale(e))));
+        // Psych makes a Bignum; it saturates here (docs/known-gaps.md).
+        return Ok(Value::Int(i.clamp(i64::MIN as i128, i64::MAX as i128) as i64));
     }
     if SEXA_FLOAT.is_match(s) {
-        return Ok(Value::Float(base60(&|n| digits(n).parse::<f64>().unwrap_or(0.0))));
+        return Ok(Value::Float(s.split(':').enumerate().fold(0.0, |i, (e, n)| i + to_f(n) * scale(e) as f64)));
     }
     if FLOAT.is_match(s) {
         if matches!(s, "." | "+." | "-.") {
@@ -713,6 +712,21 @@ fn tokenize(s: &str) -> Result<Value, String> {
 /// Whether `--show-cops` (Psych's YAMLTree) sees `s` load back as a String.
 pub fn tokenizes_to_string(s: &str) -> bool {
     matches!(tokenize(s), Ok(Value::Str(_)))
+}
+
+/// String#to_i: a sign and digits, a `_` only between digits, up to the first other character.
+fn to_i(n: &str) -> i128 {
+    static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^[-+]?[0-9]+(?:_[0-9]+)*").unwrap());
+    let t = RE.find(n).map_or("0", |m| m.as_str()).replace('_', "");
+    // Too long for i128: saturated, like the sum.
+    t.parse().unwrap_or(if t.starts_with('-') { i128::MIN } else { i128::MAX })
+}
+
+/// String#to_f on a base-60 part: `to_i`'s digits, then `.` and digits (with `_` between them).
+fn to_f(n: &str) -> f64 {
+    static RE: LazyLock<Regex> =
+        LazyLock::new(|| Regex::new(r"^[-+]?[0-9]+(?:_[0-9]+)*(?:\.[0-9]+(?:_[0-9]+)*)?").unwrap());
+    RE.find(n).map_or(0.0, |m| m.as_str().replace('_', "").parse().unwrap_or(0.0))
 }
 
 /// The Symbol name Psych's ScalarScanner gives a plain `:name` (`/^:(["'])(.*)\1/` takes the text
@@ -1052,6 +1066,22 @@ mod tests {
         for (src, want) in cases {
             let Value::Map(m) = parse_yaml(&format!("k: {src}\n")).unwrap() else { panic!("not a map") };
             assert_eq!(m.get("k"), Some(want), "{src}");
+        }
+    }
+
+    // ScalarScanner's base 60 (#595): String#to_i / #to_f per part, Integer arithmetic.
+    #[test]
+    fn base_60_parts_as_ruby_reads_them() {
+        for (src, want) in [
+            ("1__0:00", Value::Int(3600)),
+            ("1_0:00", Value::Int(36000)),
+            ("1:30._5", Value::Float(5400.0)),
+            ("1:30.5_5", Value::Float(3600.0 + 30.55 * 60.0)),
+            ("2000000000000001:00", Value::Int(7200000000000003600)),
+            ("-1:30", Value::Int(-1800)),
+        ] {
+            let Value::Map(m) = parse_yaml(&format!("k: {src}\n")).unwrap() else { panic!("not a map") };
+            assert_eq!(m.get("k"), Some(&want), "{src}");
         }
     }
 }
