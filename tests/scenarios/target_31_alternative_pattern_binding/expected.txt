@@ -1,0 +1,5 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+alternative.rb:10:3: W: Lint/Void: Literal `2` used in void context.
+alternative.rb:5:3: W: Lint/Void: Literal `1` used in void context.
+alternative.rb:9:4: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside { missing.
+alternative.rb:9:7: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.

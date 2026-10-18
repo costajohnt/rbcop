@@ -1223,9 +1223,11 @@ fn autocorrect_allowed(cfg: &CopConfig) -> bool {
 
 /// Prism reports some semantic errors the parser gem accepts (e.g. top-level `yield` in .builder
 /// templates, `retry` outside `rescue`, void value expressions such as `x = return 1`: the parser
-/// gem has no void-value check).
+/// gem has no void-value check; a variable bound in an alternative pattern, `in a | 1`: its
+/// grammars through Ruby32 accept it, #559).
 // ponytail: only verified ones are tolerated; add more as real code turns them up.
-const TOLERATED_ERRORS: &[&str] = &["invalid_yield", "invalid_retry_without_rescue", "void_expression"];
+const TOLERATED_ERRORS: &[&str] =
+    &["invalid_yield", "invalid_retry_without_rescue", "void_expression", "pattern_capture_in_alternative"];
 
 /// Prism errors the parser gem accepts for the target. Up to Ruby 2.5, `begin..else..end` without
 /// `rescue` is only a `useless_else` warning (reported by Lint/UselessElseWithoutRescue); before
