@@ -964,12 +964,12 @@ impl Store {
                 continue;
             };
             ruby_file_constants(&file, &mut self.plugin_constants);
-            local.push(file);
+            local.push((i, file));
         }
         // The first entry that fails to load ends the run, after the warnings of the entries
         // before it.
         let names: Vec<String> = plugins.iter().map(|(n, _)| n.clone()).collect();
-        let failed = match self.integrate_plugins(plugins) {
+        let failed = match self.integrate_plugins(plugins, &mut local) {
             Err(e) => {
                 let at = self.failed_entry.take().and_then(|f| names.iter().position(|n| *n == f));
                 match (at, missing) {
@@ -991,18 +991,11 @@ impl Store {
         };
         // ConfigLoader#load_file resolves `plugins:` and then `require:`: the cop classes a local
         // file defines register once it loads.
-        // ponytail: every local file registers after every gem of this config file, not at its place
-        // in `require:`; that order only matters for a cop name two departments share.
-        // Registry: a cop is a class descending from a cop base, not excluded from the registry
-        // (ruby_cops). Only a file in which none is found leaves the registry open.
-        // ponytail: files the local file itself requires are not read.
-        for file in local {
-            let cops = ruby_cops_in(vec![file.clone()]);
-            if cops.is_empty() {
-                self.open_custom = true;
-                ruby_file_constants(&file, &mut self.open_constants);
-            }
-            crate::helpers::cop_registry::register_custom(cops);
+        // ponytail: the local files after the first gem with a config register after every gem of
+        // this config file (integrate_plugins registers the ones before it), not at their place in
+        // `require:`; that order only matters for a cop name two departments share.
+        for (_, file) in local {
+            self.register_local(&file);
         }
         crate::helpers::cop_registry::set_open(self.open_custom, &self.open_constants);
         self.emit(&migrate);
@@ -1193,11 +1186,19 @@ impl Store {
 
     /// Plugin::ConfigurationIntegrator: fold each plugin gem's config/default.yml into the defaults.
     // ponytail: assumes the LintRoller rules path is <gem>/config/default.yml, which every
-    // rubocop-* plugin checked so far uses; local `require: ./file` entries (custom cops) are skipped.
-    fn integrate_plugins(&mut self, names: Vec<(String, Load)>) -> Result<(), String> {
-        let names: Vec<(String, Load)> = names
+    // rubocop-* plugin checked so far uses. Local `require: ./file` entries (custom cops, `local`
+    // with their places in `names`) register here only when they come before the first gem with a
+    // config (#536); the caller registers the rest.
+    fn integrate_plugins(
+        &mut self,
+        names: Vec<(String, Load)>,
+        local: &mut Vec<(usize, PathBuf)>,
+    ) -> Result<(), String> {
+        let names: Vec<(usize, String, Load)> = names
             .into_iter()
-            .filter(|(n, _)| !n.starts_with('.') && !n.starts_with('/') && !self.loaded_plugins.contains(n))
+            .enumerate()
+            .filter(|(_, (n, _))| !n.starts_with('.') && !n.starts_with('/') && !self.loaded_plugins.contains(n))
+            .map(|(i, (n, l))| (i, n, l))
             .collect();
         if names.is_empty() {
             return Ok(());
@@ -1208,7 +1209,14 @@ impl Store {
         // ponytail: a config's `plugins:` and plugin-capable `require:` gems load as one batch;
         // RuboCop integrates each such `require:` on its own, after `plugins:`.
         let mut configs: Vec<Result<&'static crate::helpers::cop_registry::NativePlugin, PathBuf>> = Vec::new();
-        for (name, load) in names {
+        for (at, name, load) in names {
+            // `require:` loads in order: a local file before the first gem with a config registers
+            // its cops before that gem memoizes Registry#unqualified_cop_names.
+            if configs.is_empty() {
+                for (_, file) in local.extract_if(.., |(i, _)| *i < at) {
+                    self.register_local(&file);
+                }
+            }
             self.loaded_plugins.push(name.clone());
             if let Some(native) = crate::helpers::cop_registry::native_plugin(&name) {
                 // A plugin rbcop implements: its cops register and its vendored default.yml merges,
@@ -1405,6 +1413,19 @@ impl Store {
             self.default.insert(k, merged);
         }
         Ok(())
+    }
+
+    /// A `require:`d local file's cop classes join the registry. A cop is a class descending from
+    /// a cop base, not excluded from the registry (ruby_cops); only a file in which none is found
+    /// leaves the registry open.
+    // ponytail: files the local file itself requires are not read.
+    fn register_local(&mut self, file: &Path) {
+        let cops = ruby_cops_in(vec![file.to_path_buf()]);
+        if cops.is_empty() {
+            self.open_custom = true;
+            ruby_file_constants(file, &mut self.open_constants);
+        }
+        crate::helpers::cop_registry::register_custom(cops);
     }
 
     /// ConfigLoaderResolver#merge_with_default (§4) against the current defaults.

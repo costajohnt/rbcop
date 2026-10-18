@@ -1273,3 +1273,39 @@ fn legacy_lexer_newlines_reject_as_the_parser_gem() {
     }
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// rubocop-rails' MigrationFileSkippable skips add_offense only (#535): an already-migrated file
+/// still runs every cop, so its cop errors and directive warnings come out, but it gets no
+/// offense and no correction.
+#[test]
+fn migrated_file_still_runs_cops() {
+    let dir = scratch("migrated");
+    let config = "plugins: [rubocop-rails]\nAllCops:\n  NewCops: disable\n  SuggestExtensions: false\n  \
+                  MigratedSchemaVersion: \"20240101000000\"\nStyle/Documentation:\n  AllowedConstants: Foo, Bar\n";
+    fs::write(dir.join(".rubocop.yml"), config).unwrap();
+    fs::create_dir_all(dir.join("db/migrate")).unwrap();
+    let source = "# frozen_string_literal: true\n\nclass CreateX < ActiveRecord::Migration[7.0]\n  def change; end\nend\n\
+                  puts 1 # rubocop:disable Debugger\nfoo \"a\"\n";
+    let (old, new) = ("db/migrate/20200101000000_create_x.rb", "db/migrate/20250101000000_create_y.rb");
+    for args in [&["-f", "e"][..], &["-f", "e", "-a"]] {
+        fs::write(dir.join(old), source).unwrap();
+        fs::write(dir.join(new), source).unwrap();
+        let out = rbcop(&dir, args);
+        let stderr = text(&out.stderr).replace(&format!("{}/", dir.display()), "");
+        let printed: Vec<&str> = stderr.lines().take_while(|l| !l.is_empty()).collect();
+        let warning = |f: &str| {
+            format!(
+                "{f}: Warning: no department given for Debugger. Run `rubocop -a --only Migration/DepartmentName` to fix."
+            )
+        };
+        let error = |f: &str| format!("An error occurred while Style/Documentation cop was inspecting {f}:3:0.");
+        for want in [warning(old), error(old), warning(new), error(new)] {
+            assert!(printed.contains(&want.as_str()), "{args:?}: {stderr}");
+        }
+        let stdout = text(&out.stdout);
+        assert!(!stdout.contains("20200101000000"), "{args:?}: {stdout}");
+        assert!(stdout.contains("20250101000000"), "{args:?}: {stdout}");
+        assert_eq!(fs::read_to_string(dir.join(old)).unwrap(), source);
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
