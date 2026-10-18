@@ -1,0 +1,4 @@
+development:
+  adapter: postgresql
+  since: 2001-01-01
+  at: 2001-01-01 10:00:00

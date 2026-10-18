@@ -432,6 +432,8 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     `--show-cops` writes as text where Psych writes `!binary` and base64; `!ruby/encoding`,
     `!ruby/class Regexp` / `Symbol`, ivars of `!ruby/hash-with-ivars` / `!str` mappings and
     `!ruby/regexp` sources Onigmo rejects are not reproduced.
+  - rubocop-rails' `config/database.yml` read (`YAML.unsafe_load_file`, #598) loads a date, a
+    timestamp or a `!ruby/...` object as nil; a class Ruby cannot resolve raises there (a cop error).
   - Nesting deeper than 1000 levels fails with `stack level too deep` (Ruby's limit depends on
     its stack: about 1000 mappings, 1400 sequences).
   - The Ruby backtrace RuboCop prints after the message is not reproduced.

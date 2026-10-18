@@ -146,9 +146,19 @@ pub fn parse_yaml_file(text: &str, path: &str) -> Result<Value, String> {
 
 /// `parse_yaml_file` on the file's bytes: what is no UTF-8 fails in the reader as in libyaml.
 pub fn parse_yaml_bytes(text: &[u8], path: &str) -> Result<Value, String> {
-    match parse_stream(text, path)? {
+    match parse_stream(text, path, true)? {
         Some(root) => ToRuby::default().accept(&root),
         None => Ok(Value::Map(Default::default())),
+    }
+}
+
+/// `YAML.unsafe_load`: the unrestricted class loader, so a date, a timestamp or a `!ruby/...`
+/// object loads (as an opaque nil here) where `parse_yaml` refuses it; no RuboCop key check.
+// ponytail: a class Ruby cannot resolve (ArgumentError there) loads as nil too.
+pub fn unsafe_load(text: &str) -> Result<Value, String> {
+    match parse_stream(text.as_bytes(), "<unknown>", false)? {
+        Some(root) => ToRuby { unsafe_load: true, ..Default::default() }.accept(&root),
+        None => Ok(Value::Null),
     }
 }
 
@@ -172,8 +182,8 @@ impl Node {
 }
 
 /// Psych's TreeBuilder over libyaml's events (the RuboCop handler's end_mapping check included):
-/// the first document's root node.
-fn parse_stream(text: &[u8], path: &str) -> Result<Option<Node>, String> {
+/// the first document's root node. `check_keys`: RuboCop's handler, failing on a non-scalar key.
+fn parse_stream(text: &[u8], path: &str, check_keys: bool) -> Result<Option<Node>, String> {
     let mut parser = Parser::new(text);
     let mut open: Vec<Node> = Vec::new();
     let mut first: Option<Node> = None;
@@ -198,6 +208,7 @@ fn parse_stream(text: &[u8], path: &str) -> Result<Option<Node>, String> {
             Event::SequenceEnd | Event::MappingEnd => {
                 let node = open.pop().expect("an open collection");
                 if let Node::Map { children, .. } = &node
+                    && check_keys
                     && let Some(key) = children.iter().step_by(2).find(|k| !matches!(k, Node::Scalar { .. }))
                 {
                     return Err(format!("undefined method 'value' for an instance of Psych::Nodes::{}", key.class()));
@@ -235,6 +246,8 @@ const MAX_DEPTH: usize = 1000;
 #[derive(Default)]
 struct ToRuby {
     anchors: std::collections::HashMap<String, Value>,
+    /// Psych.unsafe_load's ClassLoader: a refused class loads.
+    unsafe_load: bool,
 }
 
 fn refused(class: &str) -> Result<Value, String> {
@@ -268,9 +281,13 @@ impl ToRuby {
                     .cloned()
                     .ok_or_else(|| format!("An alias referenced an unknown anchor: {a}"));
             }
-            Node::Scalar { value, anchor, tag, quoted } => (anchor, self.deserialize(value, tag.as_deref(), *quoted)?),
-            Node::Seq { anchor, tag, children } => (anchor, self.visit_sequence(tag.as_deref(), children)?),
-            Node::Map { anchor, tag, children } => (anchor, self.visit_mapping(tag.as_deref(), children)?),
+            Node::Scalar { value, anchor, tag, quoted } => (anchor, self.deserialize(value, tag.as_deref(), *quoted)),
+            Node::Seq { anchor, tag, children } => (anchor, self.visit_sequence(tag.as_deref(), children)),
+            Node::Map { anchor, tag, children } => (anchor, self.visit_mapping(tag.as_deref(), children)),
+        };
+        let value = match value {
+            Err(e) if self.unsafe_load && e.starts_with("Tried to load unspecified class: ") => Value::Null,
+            v => v?,
         };
         // ponytail: registered once built, so an alias inside its own anchored collection is
         // unknown (Psych registers a collection before its children and makes it recursive).
@@ -285,7 +302,7 @@ impl ToRuby {
         if quoted {
             return Ok(Value::Str(value.into()));
         }
-        let Some(tag) = tag else { return tokenize(value) };
+        let Some(tag) = tag else { return tokenize(value, self.unsafe_load) };
         match tag {
             "!binary" | "tag:yaml.org,2002:binary" => Ok(Value::Str(unpack_base64(value))),
             "tag:yaml.org,2002:str" => Ok(Value::Str(value.into())),
@@ -300,7 +317,7 @@ impl ToRuby {
             // `resolve_class`: no class for an empty name.
             "!ruby/class" | "!ruby/module" if value.is_empty() => Ok(Value::Null),
             "!ruby/class" | "!ruby/module" => refused(value),
-            "tag:yaml.org,2002:float" | "!float" => ruby_float(tokenize(value)?),
+            "tag:yaml.org,2002:float" | "!float" => ruby_float(tokenize(value, self.unsafe_load)?),
             "!ruby/regexp" => {
                 // `/^\/(?<string>.*)\/(?<options>[mixn]*)$/m`; Regexp#inspect keeps the source, `/`
                 // escaped, and the options in `mix` order.
@@ -313,7 +330,7 @@ impl ToRuby {
             }
             "!ruby/range" => refused("Range"),
             t if t.starts_with("!ruby/sym") => Ok(Value::Sym(format!(":{value}"))),
-            _ => tokenize(value),
+            _ => tokenize(value, self.unsafe_load),
         }
     }
 
@@ -606,8 +623,10 @@ fn parse_ruby_float(s: &str) -> Option<f64> {
 
 /// Psych's `ScalarScanner#tokenize` (YAML 1.1, `strict_integer: false`) with RuboCop's restricted
 /// class loader: `yes`/`on`/`off`, `1_000`, `0100` (octal), `1:30` (base 60), `1.`, `:sym`; a
-/// timestamp or date fails as its class (Time, Date) is not permitted.
-fn tokenize(s: &str) -> Result<Value, String> {
+/// timestamp or date fails as its class (Time, Date) is not permitted. With `unsafe_load` (the
+/// unrestricted ClassLoader, as YAMLTree's scanner has too) a valid one loads as an opaque nil and
+/// an invalid one (ArgumentError, rescued) stays a String.
+fn tokenize(s: &str, unsafe_load: bool) -> Result<Value, String> {
     static WORDISH: LazyLock<Regex> =
         LazyLock::new(|| Regex::new(r"(?m)^[^0-9.:-]?[\p{Alphabetic}_ \t\r\n\x0B\x0C!@#$%^&*(){}<>|/\\~;=]+").unwrap());
     static NOT_YTONF: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?mi)^[^ytonf~]").unwrap());
@@ -651,11 +670,14 @@ fn tokenize(s: &str) -> Result<Value, String> {
             Value::Str(s.into())
         });
     }
-    if TIME.is_match(s) {
-        return refused("Time");
-    }
-    if DATE.is_match(s) {
-        return refused("Date");
+    for (re, class, valid) in [(&TIME, "Time", valid_time as fn(&str) -> bool), (&DATE, "Date", valid_date)] {
+        if re.is_match(s) {
+            return match unsafe_load {
+                false => refused(class),
+                true if valid(s) => Ok(Value::Null),
+                true => Ok(Value::Str(s.into())),
+            };
+        }
     }
     let lower = s.to_ascii_lowercase();
     match lower.as_str() {
@@ -716,7 +738,7 @@ fn tokenize(s: &str) -> Result<Value, String> {
 
 /// Whether `--show-cops` (Psych's YAMLTree) sees `s` load back as a String.
 pub fn tokenizes_to_string(s: &str) -> bool {
-    matches!(tokenize(s), Ok(Value::Str(_)))
+    matches!(tokenize(s, true), Ok(Value::Str(_)))
 }
 
 /// String#to_i: a sign and digits, a `_` only between digits, up to the first other character.
@@ -732,6 +754,53 @@ fn to_f(n: &str) -> f64 {
     static RE: LazyLock<Regex> =
         LazyLock::new(|| Regex::new(r"^[-+]?[0-9]+(?:_[0-9]+)*(?:\.[0-9]+(?:_[0-9]+)*)?").unwrap());
     RE.find(n).map_or(0.0, |m| m.as_str().replace('_', "").parse().unwrap_or(0.0))
+}
+
+/// ScalarScanner#parse_time succeeds (`Time.utc` / `Time.new` take the parts): month 1-12, day
+/// 1-31 (past the month's end rolls over), hour 0-24 (24 only at 24:00:00.x), minute 0-59, second
+/// 0-60, offset under 24 hours.
+fn valid_time(s: &str) -> bool {
+    static PARTS: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^-?[0-9]{4}-([0-9]{1,2})-([0-9]{1,2})").unwrap());
+    static TIME: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(r"([0-9]+):([0-9]+):([0-9]+)(?:\.([0-9]*))?[ \t\r\n\x0B\x0C]*(Z|[-+][0-9]+(?::[0-9][0-9])?)?")
+            .unwrap()
+    });
+    static TZ: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^[-+]?([0-9]{1,2}):?([0-9]{1,2})?$").unwrap());
+    // `string.split(/[ tT]/, 2)`.
+    // ponytail: no ` `/`t`/`T` after the date (a tab) is a NoMethodError in Psych; a String here.
+    let Some((date, time)) = s.split_once([' ', 't', 'T']) else { return false };
+    let (Some(d), Some(t)) = (PARTS.captures(date), TIME.captures(time)) else { return false };
+    let num = |m: Option<regex::Match>| m.map_or(0, |m| m.as_str().parse::<u64>().unwrap_or(u64::MAX));
+    let (mon, day) = (num(d.get(1)), num(d.get(2)));
+    let (hour, min, sec) = (num(t.get(1)), num(t.get(2)), num(t.get(3)));
+    if !(1..=12).contains(&mon) || !(1..=31).contains(&day) || min > 59 || sec > 60 {
+        return false;
+    }
+    if hour > 24 || (hour == 24 && (min > 0 || sec > 0)) {
+        return false;
+    }
+    match t.get(5).map(|m| m.as_str()) {
+        None | Some("Z") => true,
+        Some(tz) => TZ.captures(tz).is_some_and(|c| {
+            let (h, m) = (num(c.get(1)), num(c.get(2)));
+            h * 3600 + m * 60 < 86400
+        }),
+    }
+}
+
+/// `Date.strptime(s, '%F', Date::GREGORIAN)` succeeds.
+fn valid_date(s: &str) -> bool {
+    let mut parts = s.split('-').map(|p| p.parse::<u32>().unwrap_or(0));
+    let (y, m, d) = (parts.next().unwrap_or(0), parts.next().unwrap_or(0), parts.next().unwrap_or(0));
+    let leap = y % 4 == 0 && (y % 100 != 0 || y % 400 == 0);
+    let days = match m {
+        1 | 3 | 5 | 7 | 8 | 10 | 12 => 31,
+        4 | 6 | 9 | 11 => 30,
+        2 if leap => 29,
+        2 => 28,
+        _ => 0,
+    };
+    (1..=days).contains(&d)
 }
 
 /// The Symbol name Psych's ScalarScanner gives a plain `:name` (`/^:(["'])(.*)\1/` takes the text
@@ -1072,6 +1141,22 @@ mod tests {
             let Value::Map(m) = parse_yaml(&format!("k: {src}\n")).unwrap() else { panic!("not a map") };
             assert_eq!(m.get("k"), Some(want), "{src}");
         }
+    }
+    // Psych's dump-side ScalarScanner (#594): a date or time Ruby rejects stays a String, so
+    // YAMLTree writes it plain.
+    #[test]
+    fn invalid_dates_and_times_tokenize_to_strings() {
+        for s in ["2001-02-30", "2001-00-00", "1900-02-29", "2001-13-45 10:00:00", "2001-01-01 25:00:00"] {
+            assert!(tokenizes_to_string(s), "{s}");
+        }
+        for s in ["2000-02-29", "2001-1-1", "2001-02-31 10:00:00", "2001-01-01 24:00:00.5", "2001-01-01 1:00:00 +23:59"]
+        {
+            assert!(!tokenizes_to_string(s), "{s}");
+        }
+        assert!(tokenizes_to_string("2001-01-01 10:00:00 +24"));
+        assert_eq!(parse_yaml("k: 2001-02-30\n"), Err("Tried to load unspecified class: Date".into()));
+        let Ok(Value::Map(m)) = unsafe_load("k: 2001-01-01\nj: 2001-02-30\n") else { panic!() };
+        assert_eq!((m.get("k"), m.str("j")), (Some(&Value::Null), Some("2001-02-30")));
     }
 
     // ScalarScanner's base 60 (#595): String#to_i / #to_f per part, Integer arithmetic.
