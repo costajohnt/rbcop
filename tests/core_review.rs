@@ -1087,6 +1087,76 @@ fn string_numeric_setting_raises_where_compared() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// Numeric settings are read where and as each cop's Ruby source reads them (#620, #621): a bare
+/// compare keeps a Float (compared, printed as Ruby prints it), `Integer()` takes a numeric
+/// String and raises on a Symbol, IndexedLet only reads `Max` for a group of indexed lets.
+#[test]
+fn numeric_settings_read_per_cop() {
+    let dir = scratch("numeric-per-cop");
+    fs::create_dir_all(dir.join("spec")).unwrap();
+    fs::create_dir_all(dir.join("test")).unwrap();
+    let test = dir.join("test/a_test.rb").display().to_string();
+    let file = dir.join("a.rb").display().to_string();
+    let spec = dir.join("spec/a_spec.rb").display().to_string();
+    let nesting = "def a\n  if x\n    if y\n      1\n    end\n  end\nend\ndef b; end\n";
+    let minitest =
+        "class FooTest < Minitest::Test\n  def test_a\n    assert a\n    assert b\n    assert c\n  end\nend\n";
+    let example =
+        "describe Foo do\n  let(:a) { 1 }\n  it do\n    expect(a).to eq(1)\n    expect(a).to eq(2)\n  end\nend\n";
+    // (config, path, source, offenses, error locations)
+    type NumCase<'a> = (&'a str, &'a str, &'a str, &'a [&'a str], &'a [&'a str]);
+    let cases: &[NumCase] = &[
+        (
+            "Metrics/BlockNesting:\n  Max: 1.5",
+            "a.rb",
+            nesting,
+            &["F:3:5: R: Metrics/BlockNesting: Avoid more than 1.5 levels of block nesting."],
+            &[],
+        ),
+        (
+            "Layout/EmptyLineBetweenDefs:\n  NumberOfEmptyLines: 1.5",
+            "a.rb",
+            nesting,
+            &[
+                "F:8:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1.5 empty lines between method definitions; found 0.",
+            ],
+            &[],
+        ),
+        ("Layout/LineLength:\n  Max: 5.5", "a.rb", nesting, &[], &["F."]),
+        (
+            "Minitest/MultipleAssertions:\n  Max: \"2\"",
+            "test/a_test.rb",
+            minitest,
+            &["T:2:3: C: Minitest/MultipleAssertions: Test case has too many assertions [3/2]."],
+            &[],
+        ),
+        ("RSpec/IndexedLet:\n  Max: \"3\"", "spec/a_spec.rb", example, &[], &[]),
+        ("RSpec/MultipleExpectations:\n  Max: :a", "spec/a_spec.rb", example, &[], &["S:3:2."]),
+        ("RSpec/NestedGroups:\n  Max: :a", "spec/a_spec.rb", example, &[], &["S."]),
+    ];
+    for (cfg, path, source, offenses, errors) in cases {
+        let config = format!(
+            "plugins:\n  - rubocop-minitest\n  - rubocop-rspec\nAllCops:\n  NewCops: enable\n  SuggestExtensions: false\n{cfg}\n"
+        );
+        fs::write(dir.join(".rubocop.yml"), config).unwrap();
+        fs::write(dir.join(path), source).unwrap();
+        let cop = cfg.split(':').next().unwrap();
+        let out = rbcop(&dir, &["-f", "e", "--only", cop, path]);
+        let stdout = text(&out.stdout).replace(&spec, "S").replace(&test, "T").replace(&file, "F");
+        assert_eq!(stdout.lines().collect::<Vec<_>>(), *offenses, "{cfg}");
+        let printed: Vec<String> = text(&out.stderr)
+            .lines()
+            .take_while(|l| !l.is_empty())
+            .filter_map(|l| {
+                l.strip_prefix(&format!("An error occurred while {cop} cop was inspecting "))
+                    .map(|l| l.replace(&spec, "S").replace(&file, "F"))
+            })
+            .collect();
+        assert_eq!(printed, *errors, "{cfg}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// RuboCop's built-in plugin is one for a String `plugins:` entry only: a Hash entry requires its
 /// `require_path` (default: the name, no such file) and needs a plugin class (#597).
 #[test]

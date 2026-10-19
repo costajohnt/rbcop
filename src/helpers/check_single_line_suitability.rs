@@ -121,7 +121,7 @@ pub fn suitable_as_single_line_skipping(
     let (first, last) = (src.line_of(start), src.line_of(end));
     if let Some(max) = max_line_length(cx) {
         let joined = src.lines[first - 1..last.min(src.lines.len())].join("\n");
-        if to_single_line(&joined).chars().count() > max {
+        if to_single_line(&joined).chars().count() as f64 > max {
             return false;
         }
     }

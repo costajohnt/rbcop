@@ -11,7 +11,8 @@ static QUALIFIED_NAME: LazyLock<Regex> =
 static RBS_ANNOTATION: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^(?:#:|#\[.+\]|#\|)").unwrap());
 
 struct Settings {
-    max: usize,
+    /// `cop_config['Max']`, an Integer or a Float: compared with lengths and columns as it is.
+    max: Num,
     tab_width: usize,
 }
 
@@ -30,7 +31,24 @@ impl Settings {
 
     /// LineLengthHelp#find_excessive_range, in character columns.
     fn excessive_range(&self, line: &str, last: Option<(usize, usize)>) -> Option<(usize, usize)> {
-        find_excessive_range(line, last, self.max, self.indentation_difference(line))
+        find_excessive_range(line, last, self.max.f64(), self.indentation_difference(line))
+    }
+
+    /// `highlight_start`: `[max - indentation_difference(line), 0].max`. With a Float `Max` that
+    /// is a Float, and `source_range` over a Float range raises (`Range#size`: can't iterate from
+    /// Float), a cop error for the file.
+    fn highlight_start(&self, line: &str) -> usize {
+        let diff = self.indentation_difference(line);
+        match self.max {
+            Num::Int(m) => (m - diff as i64).max(0) as usize,
+            Num::Float(m) if m - diff as f64 >= 0.0 => panic!("can't iterate from Float"),
+            Num::Float(_) => 0,
+        }
+    }
+
+    /// `format(MSG, length:, max:)`: `%d` truncates a Float `Max`.
+    fn message(&self, len: usize) -> String {
+        format!("Line is too long. [{len}/{}]", self.max.to_i())
     }
 }
 
@@ -44,8 +62,8 @@ struct Breakable {
     endless: std::collections::HashMap<usize, Option<(usize, usize, String)>>,
 }
 
-fn max_of(cx: &Cx) -> usize {
-    cx.cfg.int("Max").unwrap_or(120).max(0) as usize
+fn max_of(cx: &Cx) -> Num {
+    cx.cfg.num("Max").unwrap_or(Num::Int(120))
 }
 
 /// LineLength#on_new_investigation: break points after semicolons, earliest per line wins.
@@ -136,10 +154,10 @@ fn breakable_element(
     def_last_line: Option<usize>,
     is_array: bool,
 ) -> Option<(usize, usize)> {
-    let max = max_of(cx);
+    let max = max_of(cx).f64();
     let src = cx.src;
     let first_line = src.line_of(range.0);
-    if src.lines.get(first_line - 1).is_none_or(|l| l.chars().count() <= max) {
+    if src.lines.get(first_line - 1).is_none_or(|l| l.chars().count() as f64 <= max) {
         return None;
     }
     if src.comments.iter().any(|c| src.line_of(c.start) == first_line) {
@@ -182,7 +200,7 @@ fn breakable_element(
     {
         elements.remove(0);
     }
-    let within = |e: &&Element| src.column(e.start) <= max && src.line_of(e.start) == first_line;
+    let within = |e: &&Element| src.column(e.start) as f64 <= max && src.line_of(e.start) == first_line;
     let mut i = 0;
     while elements.get(i).is_some_and(within) {
         i += 1;
@@ -452,6 +470,10 @@ impl Cop for LineLength {
         let breaks = std::mem::take(&mut cx.state::<Breakable>().by_line);
         let endless = std::mem::take(&mut cx.state::<Breakable>().endless);
         let cfg = cx.cfg;
+        // check_line compares `Max` for each line: an empty file (no lines) never reads it (#634)
+        if cx.src.text.is_empty() {
+            return;
+        }
         let max = max_of(cx);
         let indentation_width = cx.config.for_cop("Layout/IndentationStyle").int("IndentationWidth");
         let width = indentation_width.or_else(|| cx.config.for_cop("Layout/IndentationWidth").int("Width")).unwrap_or(2);
@@ -475,7 +497,7 @@ impl Cop for LineLength {
         for (i, line) in src.lines.iter().enumerate() {
             let lineno = i + 1;
             let len = s.line_length(line);
-            if len <= max {
+            if len as f64 <= max.f64() {
                 continue;
             }
             if allowed.iter().any(|r| r.is_match(line))
@@ -495,8 +517,8 @@ impl Cop for LineLength {
                 }
             };
             if let Some(rewrite) = endless.get(&i) {
-                let from = max.saturating_sub(s.indentation_difference(line));
-                cx.add_fix(at(from), at(len), format!("Line is too long. [{len}/{max}]"), |c| {
+                let from = s.highlight_start(line);
+                cx.add_fix(at(from), at(len), s.message(len), |c| {
                     if let Some((b, e, r)) = rewrite {
                         c.replace(*b, *e, r);
                     }
@@ -512,8 +534,10 @@ impl Cop for LineLength {
             if allow_directives && comment.is_some_and(|c| crate::directives::parse(c).is_some()) {
                 // `before_comment(line).rstrip.length`
                 let before = helpers::ruby_string::rstrip(DIRECTIVE.split(line).next().unwrap_or("")).chars().count();
-                if before > max {
-                    cx.add_fix(at(max), at(before), format!("Line is too long. [{before}/{max}]"), break_line);
+                if before as f64 > max.f64() {
+                    // `max..(length - 1)`
+                    let Num::Int(from) = max else { panic!("can't iterate from Float") };
+                    cx.add_fix(at(from as usize), at(before), s.message(before), break_line);
                 }
                 continue;
             }
@@ -521,7 +545,7 @@ impl Cop for LineLength {
             if allow_uri || allow_qn {
                 let u = uri.as_ref().and_then(|r| s.excessive_range(line, last_uri(r, line)));
                 let q = if allow_qn { s.excessive_range(line, last_match(&QUALIFIED_NAME, line)) } else { None };
-                let ok = |r: (usize, usize)| r.0 < max && r.1 == len;
+                let ok = |r: (usize, usize)| (r.0 as f64) < max.f64() && r.1 == len;
                 let allowed_combination = match (u, q) {
                     (Some(u), Some(q)) => ok(u) && ok(q),
                     (Some(r), None) | (None, Some(r)) => ok(r),
@@ -533,11 +557,11 @@ impl Cop for LineLength {
                 range = u.or(q);
             }
             let from = match range {
-                Some((b, e)) if b < max => e,
-                _ => max.saturating_sub(s.indentation_difference(line)),
+                Some((b, e)) if (b as f64) < max.f64() => e,
+                _ => s.highlight_start(line),
             };
             // ponytail: SplitStrings break points (strings split with a backslash) are not modelled yet.
-            cx.add_fix(at(from), at(len), format!("Line is too long. [{len}/{max}]"), break_line);
+            cx.add_fix(at(from), at(len), s.message(len), break_line);
         }
     }
 }

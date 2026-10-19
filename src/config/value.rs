@@ -113,14 +113,33 @@ impl Map {
         }
     }
 
-    /// A numeric setting a cop compares or adds to an Integer: a String or Symbol one
-    /// (`Max: "80"`) raises there, a cop error at the node it was visiting.
-    pub fn int_strict(&self, key: &str) -> Option<i64> {
+    /// A numeric setting a cop reads bare (`cop_config['Max']`) and compares, adds or formats: an
+    /// Integer or a Float as written; a String or Symbol one (`Max: "80"`) raises there, a cop
+    /// error at the node it was visiting.
+    // ponytail: true / false / a list read as missing (the cop's default), as before.
+    pub fn num(&self, key: &str) -> Option<Num> {
         match self.get(key) {
-            Some(Value::Str(_) | Value::Sym(_)) if crate::runner::in_cop() => {
-                panic!("comparison of Integer with String failed")
-            }
-            _ => self.int(key),
+            Some(Value::Int(i)) => Some(Num::Int(*i)),
+            Some(Value::Float(f)) => Some(Num::Float(*f)),
+            Some(Value::Str(_) | Value::Sym(_)) => raise_in_cop("comparison of Integer with String failed"),
+            _ => None,
+        }
+    }
+
+    /// `Integer(self.fetch(key, default))`: a Float truncates, a String parses as Ruby's
+    /// `Integer()` does; a Symbol, another String, nil or a boolean raises (a cop error).
+    pub fn integer_fetch(&self, key: &str, default: i64) -> i64 {
+        match self.get(key) {
+            None => default,
+            Some(v) => kernel_integer(v).unwrap_or(default),
+        }
+    }
+
+    /// `Integer(self[key] || default)`: as `integer_fetch`, with nil and false reading the default.
+    pub fn integer_or(&self, key: &str, default: i64) -> i64 {
+        match self.get(key) {
+            None | Some(Value::Null | Value::Bool(false)) => default,
+            Some(v) => kernel_integer(v).unwrap_or(default),
         }
     }
 
@@ -132,6 +151,94 @@ impl Map {
             None => Vec::new(),
         }
     }
+}
+
+/// A numeric setting as Ruby holds it.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum Num {
+    Int(i64),
+    Float(f64),
+}
+
+impl Num {
+    pub fn f64(self) -> f64 {
+        match self {
+            Num::Int(i) => i as f64,
+            Num::Float(f) => f,
+        }
+    }
+
+    /// `Integer(num)`, `%d`, `String#*`: a Float truncates toward zero (NaN and the infinities
+    /// raise in a cop).
+    pub fn to_i(self) -> i64 {
+        match self {
+            Num::Int(i) => i,
+            Num::Float(f) if f.is_finite() => f as i64,
+            Num::Float(_) => raise_in_cop("FloatDomainError").unwrap_or(i64::MAX),
+        }
+    }
+}
+
+/// `to_s` / `#{}`: `3`, `1.5`, `2.0`.
+impl std::fmt::Display for Num {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Num::Int(i) => write!(f, "{i}"),
+            Num::Float(x) => f.write_str(&crate::helpers::ruby_string::float_to_s(*x)),
+        }
+    }
+}
+
+/// A raise in a cop is a cop error at the node it was visiting (runner::guarded); elsewhere the
+/// read is taken as missing.
+fn raise_in_cop<T>(msg: &str) -> Option<T> {
+    if crate::runner::in_cop() {
+        panic!("{msg}");
+    }
+    None
+}
+
+/// `Integer(value)` (raising in a cop when Ruby's does).
+fn kernel_integer(v: &Value) -> Option<i64> {
+    match v {
+        Value::Int(i) => Some(*i),
+        Value::Float(f) => Some(Num::Float(*f).to_i()),
+        Value::Str(s) => ruby_integer(s).or_else(|| raise_in_cop("invalid value for Integer()")),
+        _ => raise_in_cop("can't convert into Integer"),
+    }
+}
+
+/// `Integer(string)`: surrounding whitespace, a sign, a `0x` / `0b` / `0o` / `0d` / `0` radix
+/// prefix and single underscores between digits.
+// ponytail: a Bignum saturates at i64::MAX.
+pub fn ruby_integer(s: &str) -> Option<i64> {
+    let ws = |c: char| matches!(c, ' ' | '\t' | '\n' | '\x0b' | '\x0c' | '\r');
+    let t = s.trim_matches(ws);
+    let (neg, t) = match t.as_bytes().first() {
+        Some(b'-') => (true, &t[1..]),
+        Some(b'+') => (false, &t[1..]),
+        _ => (false, t),
+    };
+    let prefix = t.get(..2).map(|p| p.to_ascii_lowercase());
+    let (radix, digits) = match prefix.as_deref() {
+        Some("0x") => (16, &t[2..]),
+        Some("0b") => (2, &t[2..]),
+        Some("0o") => (8, &t[2..]),
+        Some("0d") => (10, &t[2..]),
+        _ if t.len() > 1 && t.starts_with('0') => (8, t),
+        _ => (10, t),
+    };
+    if digits.is_empty() || digits.starts_with('_') || digits.ends_with('_') || digits.contains("__") {
+        return None;
+    }
+    let clean: String = digits.chars().filter(|&c| c != '_').collect();
+    if !clean.chars().all(|c| c.is_digit(radix)) {
+        return None;
+    }
+    let n = clean
+        .chars()
+        .fold(0i128, |n, c| (n * radix as i128 + c.to_digit(radix).unwrap() as i128).min(i64::MAX as i128));
+    Some(if neg { -(n as i64) } else { n as i64 })
 }
 
 impl Value {
@@ -1031,6 +1138,47 @@ fn compile_ruby_regex(literal: &str) -> Option<RubyRegex> {
             re: fancy(&pattern, SEARCH_LIMIT)?,
             anchored: fancy(&format!(r"\G(?:{pattern})"), ANCHORED_LIMIT)?,
         }),
+    }
+}
+
+#[cfg(test)]
+mod integer_tests {
+    // Ruby 4.0.6 `Integer(s)` (nil: ArgumentError)
+    #[test]
+    fn ruby_integer_strings() {
+        let cases: &[(&str, Option<i64>)] = &[
+            ("3", Some(3)),
+            (" 3 ", Some(3)),
+            ("\t3\n", Some(3)),
+            ("0x1A", Some(26)),
+            ("0X1a", Some(26)),
+            ("0b11", Some(3)),
+            ("0o7", Some(7)),
+            ("07", Some(7)),
+            ("08", None),
+            ("1_000", Some(1000)),
+            ("1__0", None),
+            ("_1", None),
+            ("+3", Some(3)),
+            ("-3", Some(-3)),
+            ("+-3", None),
+            ("- 3", None),
+            ("3.0", None),
+            (" ", None),
+            ("", None),
+            ("3e2", None),
+            ("0_7", Some(7)),
+            ("0x", None),
+            ("1_", None),
+            ("0d9", Some(9)),
+            ("0_x1", None),
+            ("0x_1", None),
+            ("3\0", None),
+            ("\u{ff13}", None),
+        ];
+        for (s, want) in cases {
+            assert_eq!(super::ruby_integer(s), *want, "{s:?}");
+        }
     }
 }
 

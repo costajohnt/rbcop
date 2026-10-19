@@ -141,9 +141,21 @@ impl CopConfig {
             _ => panic!("{key} needs to be a positive integer!"),
         }
     }
-    /// `cop_config[key]` as a number (see Map::int_strict: a String one raises).
+    /// `cop_config[key]` as a number, a Float truncated (see Map::num: a String one raises).
     pub fn int(&self, key: &str) -> Option<i64> {
-        self.params.int_strict(key)
+        self.params.num(key).map(|n| n.f64() as i64)
+    }
+    /// `cop_config[key]` as an Integer or a Float (Map::num).
+    pub fn num(&self, key: &str) -> Option<value::Num> {
+        self.params.num(key)
+    }
+    /// `Integer(cop_config.fetch(key, default))` (Map::integer_fetch).
+    pub fn integer_fetch(&self, key: &str, default: i64) -> i64 {
+        self.params.integer_fetch(key, default)
+    }
+    /// `Integer(cop_config[key] || default)` (Map::integer_or).
+    pub fn integer_or(&self, key: &str, default: i64) -> i64 {
+        self.params.integer_or(key, default)
     }
     pub fn strings(&self, key: &str) -> Vec<String> {
         self.params.strings(key)

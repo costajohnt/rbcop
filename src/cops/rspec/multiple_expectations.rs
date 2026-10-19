@@ -57,7 +57,8 @@ impl Cop for MultipleExpectations {
         }
         let mut v = V { l: &l, count: 0 };
         v.visit(node);
-        let max = helpers::rspec::config_integer(cx.cfg.get("Max")).unwrap_or(1);
+        // max_expectations: `Integer(cop_config.fetch('Max', 1))`, after the count
+        let max = cx.cfg.integer_fetch("Max", 1);
         if v.count <= max {
             return;
         }

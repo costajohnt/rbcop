@@ -23,9 +23,10 @@ impl Cop for ExcessiveCreateList {
         if !(helpers::rspec::is_sym(cx, name) || helpers::rspec::is_str(name)) || number.as_integer_node().is_none() {
             return;
         }
-        let Some(max) = cx.cfg.int("MaxAmount") else { return };
+        // `number_node.value <= max_amount`, `%<max_amount>s` in the message
+        let Some(max) = cx.cfg.num("MaxAmount") else { return };
         let Some(value) = int_literal_value(number) else { return };
-        if value <= max as i128 {
+        if value as f64 <= max.f64() {
             return;
         }
         let (s, e) = helpers::rspec::node_range(number);

@@ -8,11 +8,21 @@ use ruby_prism::Node;
 
 /// `cop_config['IndentationWidth'] || config.for_cop('Layout/IndentationWidth')['Width'] || 2`.
 pub fn configured_indentation_width(cx: &Cx) -> i64 {
-    // ponytail: another cop's read of a String `Width` gets the default here; RuboCop raises
-    // wherever that cop uses the width (docs/known-gaps.md).
+    configured_indentation_width_num(cx).f64() as i64
+}
+
+/// `configured_indentation_width` as Ruby holds it, an Integer or a Float.
+// ponytail: another cop's read of a String `Width` gets the default here, and of a Float one
+// the truncated width; RuboCop raises or computes with the Float wherever that cop uses the width
+// (docs/known-gaps.md).
+pub fn configured_indentation_width_num(cx: &Cx) -> crate::config::value::Num {
+    use crate::config::value::Num;
     let own = cx.cop == "Layout/IndentationWidth";
     let w = cx.config.for_cop("Layout/IndentationWidth");
-    cx.cfg.int("IndentationWidth").or_else(|| if own { w.int_strict("Width") } else { w.int("Width") }).unwrap_or(2)
+    cx.cfg
+        .num("IndentationWidth")
+        .or_else(|| if own { w.num("Width") } else { w.int("Width").map(Num::Int) })
+        .unwrap_or(Num::Int(2))
 }
 
 /// `Config#cop_enabled?`: the cop's `Enabled` value is truthy (`pending` counts).

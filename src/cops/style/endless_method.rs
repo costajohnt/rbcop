@@ -117,8 +117,8 @@ impl Cop for EndlessMethod {
         let replacement = replacement.trim_matches(|c: char| c.is_ascii_whitespace() || c == '\0');
         let too_long = || {
             helpers::alignment::cop_enabled(cx, "Layout/LineLength") && {
-                let max = cx.config.for_cop("Layout/LineLength").int_strict("Max").unwrap_or(120);
-                (replacement.chars().count() + column) as i64 > max
+                let max = helpers::statement_modifier::line_length_max(&cx.config.for_cop("Layout/LineLength"));
+                (replacement.chars().count() + column) as f64 > max
             }
         };
         let to_endless = |cx: &mut Cx, msg: &str| {

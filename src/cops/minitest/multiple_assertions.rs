@@ -15,7 +15,6 @@ impl Cop for MultipleAssertions {
         if !test_class(&class) {
             return;
         }
-        let max = cx.cfg.int("Max").unwrap_or(3);
         for case in test_cases(&class, true) {
             let n = case.node();
             let body = match &case {
@@ -23,6 +22,8 @@ impl Cop for MultipleAssertions {
                 TestCase::Block(c) => c.block().unwrap().as_block_node().unwrap().body(),
             };
             let count = parser_body(body).map_or(0, |b| multiple_assertions_count(&b)) as i64;
+            // max_assertions: `Integer(cop_config.fetch('Max', 3))`, for each test case
+            let max = cx.cfg.integer_fetch("Max", 3);
             if count > max {
                 let (s, e) = range(&n);
                 cx.add(s, e, format!("Test case has too many assertions [{count}/{max}]."));

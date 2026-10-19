@@ -47,7 +47,7 @@ impl Cop for MultilineMethodSignature {
                 }
                 in_space = is_space(c);
             }
-            if indentation + width > max {
+            if (indentation + width) as f64 > max {
                 return;
             }
         }

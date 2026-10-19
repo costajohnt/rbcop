@@ -64,7 +64,8 @@ impl Cop for NumericLiterals {
         }) {
             return;
         }
-        if (int.chars().count() as i64) < cx.cfg.int("MinDigits").unwrap_or(5) || line {
+        // `int.size >= min_digits`
+        if (int.chars().count() as f64) < cx.cfg.num("MinDigits").map_or(5.0, Num::f64) || line {
             return;
         }
         let Some((start, end)) = literal_range(node, cx.ancestors) else { return };

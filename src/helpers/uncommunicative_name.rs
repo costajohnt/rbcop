@@ -1,5 +1,6 @@
 //! RuboCop's UncommunicativeName mixin (Naming/BlockParameterName, Naming/MethodParameterName).
 
+use crate::config::value::Num;
 use crate::cop::Cx;
 use crate::node_kind as kind;
 use ruby_prism::Node;
@@ -103,11 +104,12 @@ pub fn check(cx: &mut Cx, args: &[Node], name_type: &str) {
         }
         // long_enough? reads MinNameLength for each name, after those offenses (a String one
         // raises there)
-        let min = cx.cfg.int("MinNameLength").unwrap_or(1).max(0) as usize;
+        // `name.size >= min_length`, `%<min>s` in the message: a Float one as it is
+        let min = cx.cfg.num("MinNameLength").unwrap_or(Num::Int(1));
         if found {
             continue;
         }
-        let msg = if nchars < min {
+        let msg = if (nchars as f64) < min.f64() {
             let mut cap = name_type.to_string();
             cap[..1].make_ascii_uppercase();
             format!("{cap} must be at least {min} characters long.")

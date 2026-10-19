@@ -785,15 +785,6 @@ pub fn skip_or_pending_inside_block(node: &Node) -> bool {
     })
 }
 
-/// `Integer(value)` of a config value: an integer, or a string of decimal digits.
-pub fn config_integer(v: Option<&Value>) -> Option<i64> {
-    match v? {
-        Value::Int(i) => Some(*i),
-        Value::Str(s) => s.trim().replace('_', "").parse().ok(),
-        _ => None,
-    }
-}
-
 /// A structural key of an optional node (rubocop-ast nodes compare by type and children): its parser
 /// s-expression, `nil` for none.
 pub fn skey(src: &crate::source::Source, node: Option<&Node>) -> String {
