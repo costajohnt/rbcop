@@ -1872,6 +1872,20 @@ fn directive_warnings_print_when_comment_config_is_read() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// An empty `elsif b;end` (#636): Prism gives the elsif the `if`'s `then`; parser's range is
+/// `elsif b;` for both offenses.
+#[test]
+fn empty_elsif_closed_by_semicolon_end_range() {
+    let dir = scratch("elsif-semicolon");
+    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  NewCops: disable\nStyle/MissingElse:\n  Enabled: true\n").unwrap();
+    fs::write(dir.join("a.rb"), "if a then # c\nelsif b;end\n").unwrap();
+    let out = rbcop(&dir, &["-f", "j", "--only", "Lint/EmptyConditionalBody,Style/MissingElse", "a.rb"]);
+    let stdout = text(&out.stdout);
+    let range = r#""start_line":2,"start_column":1,"last_line":2,"last_column":8,"length":8"#;
+    assert_eq!(stdout.matches(range).count(), 2, "{stdout}");
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// AmbiguousCopName (#633): Metrics/ParameterLists raises in on_def and again in on_args, so a
 /// def over both limits has two cop errors (the def, the args).
 #[test]

@@ -22,7 +22,7 @@ impl Cop for EmptyConditionalBody {
             Node::IfNode { .. } => {
                 let n = node.as_if_node().unwrap();
                 let Some(k) = n.if_keyword_loc() else { return }; // ternary
-                (k, n.then_keyword_loc(), n.end_keyword_loc(), n.statements().is_some(), n.predicate(), n.subsequent())
+                (k, helpers::if_node::then_keyword(&n), n.end_keyword_loc(), n.statements().is_some(), n.predicate(), n.subsequent())
             }
             _ => {
                 let n = node.as_unless_node().unwrap();
