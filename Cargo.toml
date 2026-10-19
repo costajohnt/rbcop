@@ -17,7 +17,6 @@ fancy-regex = "0.14.0"
 regex = "1.13.1"
 ruby-prism = "1.9.0"
 ruby-prism-sys = "1.9.0"
-unicode-width = "0.2"
 
 # musl's allocator serializes rbcop's worker threads (several times slower than glibc's).
 [target.'cfg(target_env = "musl")'.dependencies]

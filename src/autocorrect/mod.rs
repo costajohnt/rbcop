@@ -39,6 +39,11 @@ static REGISTRY: LazyLock<Registry> = LazyLock::new(|| {
     r
 });
 
+/// A cop's line in registry.tsv (RuboCop's registration order, plugins after RuboCop's own cops).
+pub fn registry_position(name: &str) -> Option<usize> {
+    REGISTRY.order.get(name).copied()
+}
+
 /// A cop's position in RuboCop's registry (load) order: RuboCop's own cops, then each native
 /// plugin's in the order the plugins were loaded (registry.tsv keeps the order within one plugin);
 /// unknown names sort last.

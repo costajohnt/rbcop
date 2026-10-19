@@ -1,6 +1,7 @@
 //! RuboCop's PercentArray mixin, PercentLiteralCorrector and the Util string helpers they use
 //! (shared by Style/SymbolArray and Style/WordArray).
 
+use crate::config::value::Num;
 use crate::cop::Cx;
 use crate::helpers::ruby_string::inspect;
 use crate::source::Source;
@@ -111,9 +112,10 @@ pub fn comments_in_array(src: &Source, node: &Node) -> bool {
 
 /// PercentArray#allowed_bracket_array?
 pub fn allowed_bracket_array(cx: &Cx, node: &Node) -> bool {
-    let size = node.as_array_node().unwrap().elements().iter().count() as i64;
+    let size = node.as_array_node().unwrap().elements().iter().count() as f64;
+    // ArrayMinSize: `node.values.length < cop_config['MinSize']`
     comments_in_array(cx.src, node)
-        || size < cx.cfg.int("MinSize").unwrap_or(0)
+        || size < cx.cfg.num("MinSize").map_or(0.0, Num::f64)
         || invalid_percent_array_context(cx.ancestors)
 }
 

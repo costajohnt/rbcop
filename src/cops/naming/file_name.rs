@@ -102,7 +102,7 @@ fn allowed_camel_case_file(config: &Resolved, file: &Path) -> bool {
     let include: Vec<(Pattern, String)> = items
         .iter()
         .filter_map(|v| match v {
-            Value::Regex(r) => ruby_regex(r).map(|re| (Pattern::Regex(re), r.clone())),
+            Value::Regex(r) => ruby_regex(r).map(|re| (Pattern::Regex(re), r.to_string())),
             v => {
                 let s = v.as_string()?;
                 let p = if glob::is_glob(&s) { Pattern::Glob(s.clone()) } else { Pattern::Exact(s.clone()) };

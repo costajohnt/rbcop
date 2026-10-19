@@ -133,7 +133,7 @@ pub fn last_match(pattern: &Regex, line: &str) -> Option<(usize, usize)> {
 /// `find_excessive_range`, in character columns: the last match (`last_uri` / `last_match`),
 /// extended to the next whitespace (or past the line's closing `}`), when it starts or ends at or
 /// beyond `max`. `diff` is the line's tab indentation difference.
-pub fn find_excessive_range(line: &str, last: Option<(usize, usize)>, max: usize, diff: usize) -> Option<(usize, usize)> {
+pub fn find_excessive_range(line: &str, last: Option<(usize, usize)>, max: f64, diff: usize) -> Option<(usize, usize)> {
     let (start, mut end) = last?;
     if BRACED_LINE.is_match(line)
         && let Some(close) = line[end..].rfind('}')
@@ -143,7 +143,7 @@ pub fn find_excessive_range(line: &str, last: Option<(usize, usize)>, max: usize
     end += line[end..].bytes().position(crate::helpers::parser_tokens::is_ruby_space).unwrap_or(line.len() - end);
     let col = |b: usize| line[..b].chars().count() + diff;
     let (b, e) = (col(start), col(end));
-    (b >= max || e >= max).then_some((b, e))
+    (b as f64 >= max || e as f64 >= max).then_some((b, e))
 }
 
 #[cfg(test)]

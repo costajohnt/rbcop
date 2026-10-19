@@ -55,20 +55,37 @@ fn candidate(cx: &Cx, node: &Node, parents: &[&Node]) -> Option<Candidate> {
 }
 
 /// `Array(cop_config['NumberOfEmptyLines'])`: (first, last).
-fn empty_lines_range(cx: &Cx) -> (i64, i64) {
-    match cx.cfg.get("NumberOfEmptyLines") {
-        Some(Value::Seq(v)) => {
-            let int = |x: Option<&Value>| match x {
-                Some(Value::Int(i)) => *i,
-                Some(Value::Str(_) | Value::Sym(_)) => panic!("comparison of Integer with String failed"),
-                _ => 1,
-            };
-            (int(v.first()), int(v.last()))
-        }
-        _ => {
-            let n = cx.cfg.int("NumberOfEmptyLines").unwrap_or(1);
-            (n, n)
-        }
+enum Bounds {
+    /// Integers or Floats, compared as written.
+    Num(Num, Num),
+    /// Strings or Symbols: `("3".."3").cover?(count)` is false without raising, the
+    /// autocorrection's `count > maximum` raises.
+    Text,
+}
+
+/// `minimum_empty_lines..maximum_empty_lines`, as `line_count_allowed?` builds it: a String and
+/// a number (or a Symbol) make no Range (ArgumentError, a cop error there).
+fn empty_lines_range(cx: &Cx) -> Bounds {
+    enum B {
+        N(Num),
+        S,
+        Y,
+    }
+    let one = |x: Option<&Value>| match x {
+        Some(Value::Int(i)) => B::N(Num::Int(*i)),
+        Some(Value::Float(f)) => B::N(Num::Float(*f)),
+        Some(Value::Str(_)) => B::S,
+        Some(Value::Sym(_)) => B::Y,
+        _ => B::N(Num::Int(1)),
+    };
+    let (first, last) = match cx.cfg.get("NumberOfEmptyLines") {
+        Some(Value::Seq(v)) => (one(v.first()), one(v.last())),
+        v => (one(v), one(v)),
+    };
+    match (first, last) {
+        (B::N(a), B::N(b)) => Bounds::Num(a, b),
+        (B::S, B::S) | (B::Y, B::Y) => Bounds::Text,
+        _ => panic!("bad value for range"),
     }
 }
 
@@ -121,24 +138,35 @@ impl Cop for EmptyLineBetweenDefs {
                 let groups = matches!((blank_max, non_blank_min), (Some(b), Some(n)) if b > n);
                 let one_line = |r: (usize, usize)| src.line_of(r.0) == src.line_of(r.1);
                 let adjacent_ok = one_line(p.range) && one_line(c.range) && cx.cfg.params.truthy("AllowAdjacentOneLineDefs");
-                // line_count_allowed? reads the setting for each pair (a String one raises there)
-                let (min, max) = empty_lines_range(cx);
-                if !(min..=max).contains(&count) && !groups && !adjacent_ok {
-                    let expected = if min != max {
+                // line_count_allowed? reads the setting for each pair
+                let bounds = empty_lines_range(cx);
+                let allowed = match &bounds {
+                    Bounds::Num(min, max) => (min.f64()..=max.f64()).contains(&(count as f64)),
+                    Bounds::Text => false,
+                };
+                if !allowed && !groups && !adjacent_ok {
+                    let (min, max) = match bounds {
+                        Bounds::Num(min, max) => (min, max),
+                        // the offense's autocorrect block compares `count > maximum_empty_lines`
+                        Bounds::Text => panic!("comparison of Integer with String failed"),
+                    };
+                    // `min != max` and `max == 1` compare the values (1.0 == 1)
+                    let expected = if min.f64() != max.f64() {
                         format!("{min}..{max} empty lines")
                     } else {
-                        format!("{max} empty line{}", if max == 1 { "" } else { "s" })
+                        format!("{max} empty line{}", if max.f64() == 1.0 { "" } else { "s" })
                     };
                     let msg = format!("Expected {expected} between {} definitions; found {count}.", c.kind);
                     // RuboCop crashes (nil > Integer) without a newline after the previous def.
                     if let Some(nl) = src.text[end_pos..].find('\n').map(|i| end_pos + i) {
                         let begin = c.range.0;
                         let nl = if nl > begin { begin - 1 } else { nl };
+                        // a Float difference truncates (`"\n" * 0.5` is empty)
                         cx.add_fix(c.loc.0, c.loc.1, msg, |cr| {
-                            if count > max {
-                                cr.remove(nl, nl + (count - max) as usize);
+                            if count as f64 > max.f64() {
+                                cr.remove(nl, nl + (count as f64 - max.f64()) as usize);
                             } else {
-                                cr.insert_after(nl, nl + 1, &"\n".repeat((min - count) as usize));
+                                cr.insert_after(nl, nl + 1, &"\n".repeat((min.f64() - count as f64) as usize));
                             }
                         });
                     }

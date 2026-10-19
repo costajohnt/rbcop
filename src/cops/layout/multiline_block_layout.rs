@@ -100,14 +100,14 @@ impl Cop for MultilineBlockLayout {
             let loc = params.location();
             if begin_line != src.line_of(loc.end_offset()) {
                 let necessary = cx.config.cop("Layout/LineLength").enabled && {
-                    let max = cx.config.for_cop("Layout/LineLength").int_strict("Max").unwrap_or(120) as usize;
+                    let max = helpers::statement_modifier::line_length_max(&cx.config.for_cop("Layout/LineLength"));
                     let first_line = src.slice(start, end).split_inclusive('\n').next().unwrap_or("");
                     let pipes = if first_line.ends_with("|\n") { 1 } else { 3 };
                     let needed = src.column(start)
                         + pipes
                         + first_line.trim_end_matches(['\n', '\r']).chars().count()
                         + block_arg_string(params).chars().count();
-                    needed > max
+                    needed as f64 > max
                 };
                 if !necessary {
                     let msg = "Block argument expression is not on the same line as the block start.";

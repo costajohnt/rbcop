@@ -185,11 +185,14 @@ fn check_indentation(cx: &mut Cx, base: usize, body: Option<&Body>, style: &str,
         return;
     }
     let indentation = column_offset(cx, start, base);
-    let width = width(cx);
-    let delta = width - indentation;
-    if delta == 0 {
+    // `configured_indentation_width - indentation` and its `zero?`: a Float `Width` is compared
+    // as it is, printed with `%d` (truncated) and truncated where the correction uses it.
+    let width_num = helpers::alignment::configured_indentation_width_num(cx);
+    if width_num.f64() - indentation as f64 == 0.0 {
         return;
     }
+    let width = width_num.to_i();
+    let delta = (width_num.f64() - indentation as f64) as i64;
     // The offense node: a begin's first child.
     let wrapped;
     let (node, range): (&Node, (usize, usize)) = match body {
@@ -219,7 +222,10 @@ fn check_indentation(cx: &mut Cx, base: usize, body: Option<&Body>, style: &str,
     let name = if style == "normal" { String::new() } else { format!(" {style}") };
     let msg = if tabs {
         // Integer#/ by a zero Width raises ZeroDivisionError (a cop error), as div_euclid panics.
-        let actual = indentation.div_euclid(width);
+        let actual = match width_num {
+            Num::Int(w) => indentation.div_euclid(w),
+            Num::Float(w) => (indentation as f64 / w) as i64,
+        };
         format!("Use 1 (not {actual}) tabs for{name} indentation.")
     } else {
         format!("Use {width} (not {indentation}) spaces for{name} indentation.")

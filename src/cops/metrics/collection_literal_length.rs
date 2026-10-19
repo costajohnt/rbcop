@@ -43,8 +43,8 @@ impl Cop for CollectionLiteralLength {
         let (cop, src) = (cx.cop, cx.src);
         let at = if node.as_rescue_node().is_some() { Some(s) } else { crate::runner::visiting() };
         crate::runner::own_callback(cop, src, at, || {
-            let Some(max) = cx.cfg.int("Max") else { return };
-            if len as i64 >= max {
+            let Some(max) = cx.cfg.num("Max") else { return };
+            if len as f64 >= max.f64() {
                 cx.add(s, e, MSG);
             }
         });

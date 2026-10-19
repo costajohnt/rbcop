@@ -815,6 +815,16 @@ fn investigate(
         };
         guarded(a.name, &src, None, || a.cop.on_file(&mut cx));
     }
+    // RSpec/LeakyLocalVariable raised leaving a VariableForce scope: the force's walk ended there
+    // for every joining cop, so their offenses from scopes left later are not added (#631).
+    if let Some(cut) = FORCE_CUT.with(|c| c.take()) {
+        let scopes = force_scopes(&program, src.text.len());
+        // (its own offenses are those it added before the raise)
+        out.retain(|o| match force_offense_key(&scopes, o.cop, o.start, &o.message) {
+            Some((key, _)) => key <= cut || o.cop == "RSpec/LeakyLocalVariable",
+            None => true,
+        });
+    }
     if let Some(p) = poison {
         // The VariableForce investigation ended at its first raising hook: one cop error, for that
         // joining cop, without a location (Force::HookError), after one comment config analysis.
@@ -1147,6 +1157,37 @@ const FORCE_COPS: &[&str] = &[
 struct ForceHook;
 
 thread_local! {
+    /// The end of the VariableForce scope RSpec/LeakyLocalVariable is leaving; left set when its
+    /// hook raises there.
+    static FORCE_CUT: std::cell::Cell<Option<usize>> = const { std::cell::Cell::new(None) };
+}
+
+/// RSpec/LeakyLocalVariable entering its after_leaving_scope hook for the scope ending at `end`
+/// (None once its investigation finished).
+pub fn force_leaving(end: Option<usize>) {
+    FORCE_CUT.with(|c| c.set(end));
+}
+
+/// The force event an offense of a VariableForce joining cop comes from, as (offset, team order):
+/// a declaration for Lint/ShadowingOuterLocalVariable, leaving the innermost scope of the offense
+/// for the others. None for another cop's offense (or a Rails/SaveBang one from an ordinary
+/// callback).
+// ponytail: an offense of a variable declared in an outer scope but flagged inside an inner one
+// is keyed by the inner scope; only the ordering between force cops depends on it.
+fn force_offense_key(scopes: &[(usize, usize)], cop: &str, at: usize, message: &str) -> Option<(usize, usize)> {
+    let order = FORCE_COPS
+        .iter()
+        .position(|c| *c == cop)
+        .filter(|_| cop != "Rails/SaveBang" || message.contains("persisted?"))?;
+    let offset = if cop == "Lint/ShadowingOuterLocalVariable" {
+        at
+    } else {
+        scopes.iter().filter(|(s, e)| *s <= at && at < *e).map(|(_, e)| *e).min().unwrap_or(usize::MAX)
+    };
+    Some((offset, order))
+}
+
+thread_local! {
     /// In a poisoned file: the VariableForce scopes (start, end), and the first hook to raise as
     /// (event offset, team order, cop).
     #[allow(clippy::type_complexity)]
@@ -1182,26 +1223,16 @@ fn force_scopes(program: &Node, len: usize) -> Vec<(usize, usize)> {
 /// force for the file, so only that cop errors. rbcop runs them as separate cops, so each raise
 /// is a candidate: the earliest force event (a declaration for Lint/ShadowingOuterLocalVariable,
 /// leaving the innermost scope of the offense for the others; ties in team order) wins.
-// ponytail: an offense of a variable declared in an outer scope but flagged inside an inner one
-// is keyed by the inner scope; only the ordering between force cops depends on it.
 pub fn poison_raise_offense(cop: &'static str, at: usize, message: &str) {
-    let force =
-        FORCE_COPS.iter().position(|c| *c == cop).filter(|_| cop != "Rails/SaveBang" || message.contains("persisted?"));
-    let raised = force.is_some_and(|order| {
-        POISON.with(|p| p.borrow().is_some())
-            && FORCE.with(|f| {
-                let mut f = f.borrow_mut();
-                let offset = if cop == "Lint/ShadowingOuterLocalVariable" {
-                    at
-                } else {
-                    f.0.iter().filter(|(s, e)| *s <= at && at < *e).map(|(_, e)| *e).min().unwrap_or(usize::MAX)
-                };
-                if f.1.is_none_or(|(key, _)| (offset, order) < key) {
-                    f.1 = Some(((offset, order), cop));
-                }
-                true
-            })
-    });
+    let raised = POISON.with(|p| p.borrow().is_some())
+        && FORCE.with(|f| {
+            let mut f = f.borrow_mut();
+            let Some(key) = force_offense_key(&f.0, cop, at, message) else { return false };
+            if f.1.is_none_or(|(k, _)| key < k) {
+                f.1 = Some((key, cop));
+            }
+            true
+        });
     if raised {
         std::panic::resume_unwind(Box::new(ForceHook));
     }

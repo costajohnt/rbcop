@@ -119,8 +119,8 @@ impl Cop for MultipleComparison {
         s.find(or.left());
         s.find(or.right());
         let Some(var) = s.variables.first() else { return };
-        let threshold = cx.cfg.int("ComparisonsThreshold").unwrap_or(2);
-        if (s.values.len() as i64) < threshold {
+        // `values.size < cop_config.fetch('ComparisonsThreshold', 2)`
+        if (s.values.len() as f64) < cx.cfg.num("ComparisonsThreshold").map_or(2.0, Num::f64) {
             return;
         }
         let (start, end) = (s.values[0].1 .0, s.values.last().unwrap().1 .1);

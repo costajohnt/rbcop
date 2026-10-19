@@ -249,7 +249,7 @@ fn defined_argument_is_undefined(cx: &Cx, if_range: (usize, usize), defined: &No
 }
 
 /// The modifier-form autocorrection (MSG_USE_NORMAL): (removals, replacement).
-fn replacement_for_modifier_form(cx: &Cx, s: &Stmt, max: usize) -> (Vec<(usize, usize)>, String) {
+fn replacement_for_modifier_form(cx: &Cx, s: &Stmt, max: f64) -> (Vec<(usize, usize)>, String) {
     let src = cx.src;
     let indent = " ".repeat(src.column(s.range.0));
     let body = s.body.as_ref().unwrap();
@@ -260,7 +260,7 @@ fn replacement_for_modifier_form(cx: &Cx, s: &Stmt, max: usize) -> (Vec<(usize, 
         let ctext = src.slice(c.start, c.end);
         let len = src.lines[first - 1].chars().count();
         let clen = ctext.chars().count();
-        if len.saturating_sub(clen) <= max && max <= len && clen <= len {
+        if len.saturating_sub(clen) as f64 <= max && max <= len as f64 && clen <= len {
             let opts = Surrounding { side: Side::Left, ..Default::default() };
             let removal = range_with_surrounding_space(src.text, c.start, c.end, opts);
             return (vec![removal], format!("{ctext}\n{indent}{} {kw} {cond}", node_text(body)));
@@ -354,7 +354,7 @@ impl Cop for IfUnlessModifier {
         let skip = cx.state::<Ignored>().0.iter().any(|&(a, b)| a <= start && end <= b)
             || another_modifier_if_on_same_line(cx, &s);
         let (removals, replacement) = if s.modifier_form() {
-            replacement_for_modifier_form(cx, &s, sm::max_line_length(cx).unwrap_or(usize::MAX))
+            replacement_for_modifier_form(cx, &s, sm::max_line_length(cx).unwrap_or(f64::INFINITY))
         } else {
             (Vec::new(), sm::to_modifier_form(cx, &s, parenthesize))
         };

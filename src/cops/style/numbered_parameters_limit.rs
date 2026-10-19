@@ -48,12 +48,16 @@ impl Cop for NumberedParametersLimit {
         let mut reads = Reads::default();
         reads.visit(node);
         let count = reads.0.len() as i64;
-        let max = cx.cfg.int("Max").unwrap_or(1).min(9);
-        if count <= max {
+        // `[cop_config.fetch('Max', 1), 9].min`, compared as it is and printed with `%i`
+        let max = match cx.cfg.num("Max").unwrap_or(Num::Int(1)) {
+            n if n.f64() > 9.0 => Num::Int(9),
+            n => n,
+        };
+        if count as f64 <= max.f64() {
             return;
         }
-        let parameter = if max > 1 { "parameters" } else { "parameter" };
-        let msg = format!("Avoid using more than {max} numbered {parameter}; {count} detected.");
+        let parameter = if max.f64() > 1.0 { "parameters" } else { "parameter" };
+        let msg = format!("Avoid using more than {} numbered {parameter}; {count} detected.", max.to_i());
         let loc = node.location();
         cx.add(loc.start_offset(), loc.end_offset(), msg);
     }
