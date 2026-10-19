@@ -4,7 +4,7 @@ How fast rbcop is against RuboCop 1.91 in the setting most users care about: a C
 GitHub-hosted runner, which starts with no RuboCop result cache unless the workflow restores one.
 Tracking issue: #388.
 
-## CI-shaped runs (CT 440)
+## CI-shaped runs (Linux container)
 
 rbcop at 4b08150 against RuboCop 1.91.0, each corpus linted with its own `.rubocop.yml` (brew: default config), pinned to
 2 and 4 vCPUs, RuboCop with an empty result cache. Median of 3 runs, wall seconds. Raw rows:
@@ -41,8 +41,8 @@ Start-up and one file (2 vCPUs, median of 3):
 
 ### Method
 
-- Machine: CT 440 rbcop-ci, an LXC container on the Proxmox host claude-mbp (Intel Core
-  i9-8950HK, 6 cores / 12 threads), Debian 13.6, kernel 7.0.14-22-pve, x86_64. Ruby 4.0.6 with
+- Machine: a Linux container on an Intel Core i9-8950HK host (6 cores / 12 threads), Debian 13.6,
+  kernel 7.0.14-22, x86_64. Ruby 4.0.6 with
   RuboCop 1.91.0, rubocop-performance 1.27.0, rubocop-rails 2.38.0, rubocop-rspec 3.10.2,
   rubocop-rspec_rails 2.33.0, rubocop-capybara 3.0.0, rubocop-factory_bot 2.28.0,
   rubocop-minitest 0.41.0, rubocop-i18n 3.3.0, rubocop-packaging 0.6.0, rubocop-discourse 3.20.0.
@@ -84,8 +84,8 @@ Start-up and one file (2 vCPUs, median of 3):
 The box was reserved for this benchmark. No gate (`ci-run.sh`) ran during any run: the
 contaminated column is 0 in all 105 rows. The load average recorded before each run (0.41 to 5.61)
 is mostly the previous run decaying, since runs follow each other; the container sees the host's
-load average. To check the rest of the host, CPU counters of the other containers on claude-mbp
-(CTs 313, 410, 420, 430) were sampled every 5 s through the runs: together they used at most 0.14
+load average. To check the rest of the host, CPU counters of the four other containers on the host
+were sampled every 5 s through the runs: together they used at most 0.14
 CPU-seconds per second during any run, and a `top` on the host during a run showed only the benchmark busy.
 
 ### Caveats
