@@ -13,3 +13,25 @@ b.rb:12:6: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
 b.rb:2:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `foo(<<~B)` out of the conditional.
 b.rb:5:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
 b.rb:6:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `foo("y\n")` out of the conditional.
+c.rb:16:19: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+c.rb:16:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+c.rb:16:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+c.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+c.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a keyword.
+d.rb:12:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+d.rb:12:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+d.rb:13:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+d.rb:16:7: W: Lint/DuplicateElsifCondition: Duplicate `elsif` condition detected.
+d.rb:19:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+d.rb:20:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+d.rb:21:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+d.rb:22:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+d.rb:24:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+d.rb:26:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+d.rb:2:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `v = 0.0` out of the conditional.
+d.rb:32:6: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
+d.rb:3:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+d.rb:4:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `v = -0.0` out of the conditional.
+d.rb:9:6: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
+e.rb:1:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+e.rb:2:3: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a unary operation.

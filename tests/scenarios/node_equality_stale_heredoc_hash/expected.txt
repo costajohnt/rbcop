@@ -4,3 +4,12 @@ d.rb:20:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `foo(<<~B)`
 d.rb:23:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
 d.rb:24:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `foo(<<~C)` out of the conditional.
 d.rb:31:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+e.rb:2:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `v = <<~'A'` out of the conditional.
+e.rb:37:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `v = <<~A` out of the conditional.
+e.rb:41:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+e.rb:42:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `v = <<~B` out of the conditional.
+e.rb:48:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `v = <<~A` out of the conditional.
+e.rb:53:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+e.rb:54:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `v = <<~B` out of the conditional.
+e.rb:6:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+e.rb:7:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `v = <<~B` out of the conditional.

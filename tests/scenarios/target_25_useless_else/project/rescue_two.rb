@@ -1,0 +1,9 @@
+begin
+  a
+rescue
+  b
+else
+  c
+else
+  d
+end

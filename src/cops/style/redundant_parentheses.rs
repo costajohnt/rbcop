@@ -345,12 +345,10 @@ impl<'pr> Check<'_, 'pr> {
         self.pi.is_some_and(|i| is_begin(self.anc, i))
     }
 
-    /// `begin_node.chained?`
+    /// `begin_node.chained?`: the parent's receiver is this very node (`equal?`, not `==`: in
+    /// `(!foo()) == (!foo)` the argument is not chained).
     fn chained(&self) -> bool {
-        self.parent()
-            .and_then(|p| p.as_call_node())
-            .and_then(|c| c.receiver())
-            .is_some_and(|r| same(self.src, range(&r), self.me()))
+        self.parent().and_then(|p| p.as_call_node()).and_then(|c| c.receiver()).is_some_and(|r| range(&r) == self.me())
     }
 
     /// `rescue?`: `{^resbody ^^resbody}`, the parser parent or grandparent is a resbody (#327).

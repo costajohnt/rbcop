@@ -14,7 +14,7 @@ pub fn parser_end(node: &Node) -> usize {
             Some(e) => e.statements().map_or(e.else_keyword_loc().end_offset(), |s| s.location().end_offset()),
             None => parser_end(&s),
         },
-        None => match (n.statements(), n.then_keyword_loc()) {
+        None => match (n.statements(), then_keyword(&n)) {
             (Some(s), _) => s.location().end_offset(),
             (None, Some(t)) => t.end_offset(),
             (None, None) => {
@@ -26,6 +26,14 @@ pub fn parser_end(node: &Node) -> usize {
             }
         },
     }
+}
+
+/// An if node's `then` (or `;`): Prism gives an empty `elsif b;end` the `then` of the `if` it
+/// follows (#636), before the condition.
+// ponytail: only parser_end and Lint/EmptyConditionalBody use it; other then_keyword_loc readers
+// see Prism's value.
+pub fn then_keyword<'pr>(n: &ruby_prism::IfNode<'pr>) -> Option<ruby_prism::Location<'pr>> {
+    n.then_keyword_loc().filter(|t| t.start_offset() >= n.predicate().location().end_offset())
 }
 
 /// OnNormalIfUnless: the keyword (`if`, `elsif`, `unless`) of an if/unless node that is neither a

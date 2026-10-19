@@ -136,6 +136,20 @@ impl<'a> Source<'a> {
         self.numbered_sends.binary_search(&start).is_ok()
     }
 
+    /// Up to 2.5, whether a lonely `else` the parse blanked out (`runner::useless_elses`) lies
+    /// between `from` and `last`, outside each of `stmts` (a body's statements, `last` among them):
+    /// the parser gem's tree has the statements after it in a `begin` of their own, the body's last
+    /// value (#630).
+    pub fn after_lonely_else(&self, from: usize, stmts: &[ruby_prism::Node], last: &ruby_prism::Node) -> bool {
+        let to = last.location().start_offset();
+        self.lex_edits.iter().any(|&(o, b)| {
+            (from..to).contains(&o)
+                && matches!(b, b' ' | b';')
+                && self.text.as_bytes()[o..].starts_with(b"else")
+                && !stmts.iter().any(|s| (s.location().start_offset()..s.location().end_offset()).contains(&o))
+        })
+    }
+
     /// 1-based line containing byte offset.
     pub fn line_of(&self, off: usize) -> usize {
         self.line_starts.partition_point(|&s| s <= off)

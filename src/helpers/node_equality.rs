@@ -2,7 +2,7 @@
 //! parser-gem trees of the two nodes (type and children, so literals compare by value), from the
 //! node of `Source::root` at each range.
 
-use crate::helpers::parser_sexp::{hash_sexp, sexp};
+use crate::helpers::parser_sexp::{hash_sexp, key_sexp, Numbers};
 use crate::source::Source;
 use ruby_prism::Node;
 use ruby_prism_sys as sys;
@@ -40,9 +40,8 @@ pub(crate) fn index(root: &Node) -> HashMap<(usize, usize), Node<'static>> {
 /// describes, which below 3.3 can differ), or None when there is no such node or it does not print.
 fn tree(src: &Source, range: (usize, usize), hash: bool) -> Option<Vec<String>> {
     let node = src.node_at(range)?;
-    let tree = sexp(node, src)?;
-    // `0.0 == -0.0`, though they are not `eql?`.
-    let mut key = vec![if hash { tree } else { tree.replace("(float -0.0)", "(float 0.0)") }];
+    // Numeric children compare as Ruby values: `==` (`1i == 1.0i`) or `eql?` (`0.0.eql?(-0.0)`).
+    let mut key = vec![key_sexp(node, src, if hash { Numbers::Eql } else { Numbers::Eq })?];
     if hash && src.parser_gem {
         key.push(hash_sexp(node, src)?);
     }
@@ -142,13 +141,9 @@ pub fn same_hash(src: &Source, a: (usize, usize), b: (usize, usize)) -> bool {
     equal(src, a, b, true)
 }
 
+// No equal-text shortcut: the same text can be different nodes (`__LINE__` on two lines, `x` read
+// as a local and sent as a method, a heredoc opener with different bodies).
 fn equal(src: &Source, a: (usize, usize), b: (usize, usize), hash: bool) -> bool {
-    let (ta, tb) = (&src.text[a.0..a.1], &src.text[b.0..b.1]);
-    // Equal text proves equality unless a heredoc opener hides different bodies.
-    // ponytail: `foo` read as a local and `foo` sent as a method count as equal here.
-    if ta == tb && !ta.contains("<<") {
-        return true;
-    }
     match (tree(src, a, hash), tree(src, b, hash)) {
         (Some(x), Some(y)) => x == y,
         _ => tokens(src, a.0, a.1) == tokens(src, b.0, b.1),

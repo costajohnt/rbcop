@@ -652,7 +652,9 @@ pub fn failure_offset(kind: &str, start: usize, end: usize, tokens: &[Token]) ->
     let at_failing_token = kind.contains("unexpected")
         || kind.contains("_term")
         || kind.starts_with("expect_eol")
-        || kind == "expect_expression_after_operator";
+        || kind == "expect_expression_after_operator"
+        // a second `else` up to 2.5 (`runner::useless_elses` blanks the first)
+        || kind == "begin_lonely_else";
     let truncated =
         if at_failing_token { only_trivia_from(start) } else { !kind.starts_with("invalid_") && only_trivia_from(end) };
     if truncated {
@@ -1102,11 +1104,18 @@ fn convert(tokens: &[Token], text: &str, target: f64) -> Vec<Tok> {
         if t.kind == "COMMENT" && text[t.start..t.end].ends_with('\n') && state & NEWLINE_IGNORED == 0 {
             // Before 2.7 a comment line between the receiver and a leading `.`/`&.` ends the
             // statement (only the very next line can continue it).
+            // A blank line after the comment (IGNORED_NEWLINE) leaves the comment's newline the
+            // significant one (#635).
             let next = if target < 2.7 {
-                tokens.get(i).map_or("", |n| n.kind)
+                tokens.get(i).map_or("", |n| n.kind).replace("IGNORED_NEWLINE", "")
             } else {
-                tokens[i..].iter().find(|n| n.kind != "COMMENT").map_or("", |n| n.kind)
+                tokens[i..]
+                    .iter()
+                    .find(|n| !matches!(n.kind, "COMMENT" | "IGNORED_NEWLINE"))
+                    .map_or("", |n| n.kind)
+                    .to_string()
             };
+            let next = next.as_str();
             // Blank lines up to the end of the file come out as IGNORED_NEWLINE tokens; the
             // comment's newline is still significant (`(a, # a\nb) # b\n\n`).
             let blank_to_eof = tokens[i..].iter().all(|n| matches!(n.kind, "COMMENT" | "IGNORED_NEWLINE" | "EOF"));

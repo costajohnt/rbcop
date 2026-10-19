@@ -1,0 +1,10 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `d`.
+a.rb:2:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Layout/LineLength`.
+a.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+b.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+b.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `d`.
+b.rb:2:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Layout/LineLength`.
+b.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+c.rb:4:1: F: Lint/Syntax: unexpected token tDOT (Using Ruby 2.5 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

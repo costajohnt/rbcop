@@ -5,3 +5,15 @@ b.rb:6:5: W: [Correctable] Lint/Void: Literal `1` used in void context.
 b.rb:7:3: W: Lint/UselessElseWithoutRescue: `else` without `rescue` is useless.
 c.rb:10:1: F: Lint/Syntax: unexpected token kELSE (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 c.rb:5:1: F: Lint/Syntax: unexpected token kELSE (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+class_empty.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class B`.
+class_empty.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+class_empty.rb:2:1: W: Lint/UselessElseWithoutRescue: `else` without `rescue` is useless.
+if_def.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+if_def.rb:3:5: W: [Correctable] Lint/Void: Literal `1` used in void context.
+if_def.rb:4:3: W: Lint/UselessElseWithoutRescue: `else` without `rescue` is useless.
+nested_do.rb:4:3: F: Lint/Syntax: unexpected token kELSE (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+two.rb:5:1: F: Lint/Syntax: unexpected token kELSE (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+void.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+void.rb:1:1: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+void.rb:2:3: W: [Correctable] Lint/Void: Literal `1` used in void context.
+void.rb:3:1: W: Lint/UselessElseWithoutRescue: `else` without `rescue` is useless.
