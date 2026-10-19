@@ -108,7 +108,11 @@ fn too_deep_below_3_3_is_skipped() {
     fs::write(dir.join("chain.rb"), format!("x = a{}\n", ".b".repeat(400_000))).unwrap();
     // A syntax error too: the simulation that reports it is the recursive part.
     fs::write(dir.join("chain_error.rb"), format!("x = a{} +\n", ".b".repeat(400_000))).unwrap();
-    for name in ["chain.rb", "chain_error.rb"] {
+    // A `return` in a class and a singleton class body: the sclass check (#640) walks the tree
+    // before the depth guard, so it must stop at the depth limit too.
+    let returns = "class Foo\n  class << self\n    return\n  end\n  return\nend\n";
+    fs::write(dir.join("chain_return.rb"), format!("{returns}x = a{}\n", ".b".repeat(400_000))).unwrap();
+    for name in ["chain.rb", "chain_error.rb", "chain_return.rb"] {
         let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
             .args(["--only", "Style/StringLiterals", "--format", "emacs", name])
             .current_dir(&dir)

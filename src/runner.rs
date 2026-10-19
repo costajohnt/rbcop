@@ -429,9 +429,10 @@ fn investigate(
     crate::helpers::literal_node::set_fold_plus(parser_gem);
     let mut buf = Vec::new();
     let (result, tokens, fake, edits) = parse_for_target(text, &mut buf, version, cfg.target_ruby);
+    let sclass_returns = if parser_gem { crate::syntax::sclass_returns(&result) } else { Vec::new() };
     let mut errors: Vec<(usize, usize, String)> = result
         .errors()
-        .filter(|e| !tolerated(e, parser_gem, cfg.target_ruby, text, &result.node()))
+        .filter(|e| !tolerated(e, parser_gem, cfg.target_ruby, text, &sclass_returns))
         .map(|e| {
             let loc = e.location();
             crate::syntax::translate(e.type_name(), e.message(), loc.start_offset(), loc.end_offset(), text)
@@ -446,7 +447,7 @@ fn investigate(
             file_error(format!("rbcop: {display}: nested more than {MAX_AST_DEPTH} levels deep, not inspected."));
             return (Vec::new(), None, Vec::new());
         }
-        let kept = |e: &ruby_prism::Diagnostic| !tolerated(e, parser_gem, cfg.target_ruby, text, &result.node());
+        let kept = |e: &ruby_prism::Diagnostic| !tolerated(e, parser_gem, cfg.target_ruby, text, &sclass_returns);
         // A stray backslash is the parser gem's lexer error: reported, then skipped (no recovery).
         let bare_backslash = |e: &ruby_prism::Diagnostic| {
             let loc = e.location();
@@ -1318,13 +1319,12 @@ pub fn tolerated(
     parser_gem: bool,
     target_ruby: f64,
     text: &str,
-    program: &ruby_prism::Node,
+    sclass_returns: &[usize],
 ) -> bool {
     let kind = e.type_name();
     (parser_gem && TOLERATED_ERRORS.contains(&kind))
         || (kind == "return_invalid"
-            && (target_ruby < 2.5
-                || (parser_gem && crate::syntax::return_in_sclass(program, e.location().start_offset()))))
+            && (target_ruby < 2.5 || (parser_gem && sclass_returns.contains(&e.location().start_offset()))))
         || (kind == "argument_no_forwarding_ampersand" && target_ruby < 3.1)
         || (matches!(kind, "argument_no_forwarding_star" | "argument_no_forwarding_star_star") && target_ruby < 3.2)
         || (kind == "parameter_circular" && target_ruby < 2.7)

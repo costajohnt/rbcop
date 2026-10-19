@@ -721,11 +721,12 @@ fn first_error_after(
     w.visit(&result.node());
     let p = prefix.len();
     // `return` directly in the class body recovery left open: the builder's error (and yyerror).
+    let sclass = crate::syntax::sclass_returns(&result);
     let returns = result
         .errors()
         .filter(|e| {
             let s = e.location().start_offset();
-            e.type_name() == "return_invalid" && s >= p && !crate::syntax::return_in_sclass(&result.node(), s)
+            e.type_name() == "return_invalid" && s >= p && !sclass.contains(&s)
         })
         .map(|e| e.location().start_offset() - p + from)
         .collect();
