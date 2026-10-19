@@ -136,6 +136,16 @@ pub fn strip_parens<'pr>(node: Node<'pr>) -> Option<Node<'pr>> {
     Some(node)
 }
 
+/// Prism's EnsureNode starts at `ensure`; the parser gem's `ensure` node starts at the protected
+/// body (its rescue, or the keyword when both are empty), so `ensure; foo do` is not a line start
+/// (#641). `ancestors[i]` is the EnsureNode, `ancestors[i - 1]` its BeginNode.
+pub fn ensure_start(ancestors: &[Node], i: usize) -> Option<usize> {
+    ancestors[i].as_ensure_node()?;
+    let b = ancestors.get(i.checked_sub(1)?)?.as_begin_node()?;
+    let body = b.statements().map(|s| s.as_node()).or_else(|| b.rescue_clause().map(|r| r.as_node()))?;
+    Some(body.location().start_offset())
+}
+
 /// Parser-gem-shaped ancestors with their parser source ranges, nearest first: indexes into
 /// `ancestors` plus (start, end). Prism-only wrappers are skipped, a call that owns the block we
 /// are inside is skipped, and a BlockNode gets the range parser gives the block (call start to block end).
@@ -153,7 +163,7 @@ pub fn parser_ancestor_ranges(ancestors: &[Node]) -> Vec<(usize, usize, usize)> 
         let start = if kind::of(n) == kind::BLOCK_NODE && i > 0 && kind::of(&ancestors[i - 1]) == kind::CALL_NODE {
             ancestors[i - 1].location().start_offset()
         } else {
-            loc.start_offset()
+            ensure_start(ancestors, i).unwrap_or(loc.start_offset())
         };
         out.push((i, start, loc.end_offset()));
     }
