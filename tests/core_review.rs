@@ -887,7 +887,7 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
     fs::create_dir_all(dir.join("spec")).unwrap();
     let file = dir.join("spec/foo_spec.rb").display().to_string();
     type Case<'a> = (&'a str, &'a str, &'a str, &'a [&'a str], &'a [&'a str]);
-    let cases: [Case; 18] = [
+    let cases: [Case; 19] = [
         (
             "Examples:\n      Focused: ~",
             "RSpec/VoidExpect",
@@ -1008,6 +1008,15 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
         // namespaced casgn is asked inside_describe_block?
         ("Helpers: ~", "RSpec/LetSetup", "describe Foo, :meta do\nend\n", &[], &["F:3:0."]),
         ("ExampleGroups: ~", "RSpec/LeakyConstantDeclaration", "describe Foo do\n  ::A = 1\nend\n", &[], &["F:4:2."]),
+        // a subject that is no sibling (`subject { } if c`) never stops LeadingSubject's walk: the
+        // later example is asked hook? (#622)
+        (
+            "Hooks: ~",
+            "RSpec/LeadingSubject",
+            "describe Foo do\n  subject(:x) { 2 } if c\n  it { }\nend\n",
+            &[],
+            &["F:4:2."],
+        ),
     ];
     for (list, cop, source, offenses, errors) in cases {
         let config = format!(
