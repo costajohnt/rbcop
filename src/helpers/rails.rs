@@ -605,7 +605,12 @@ pub fn database(cx: &Cx) -> Option<String> {
     }
     let from_yaml = || -> Option<Option<&'static str>> {
         let text = std::fs::read_to_string(crate::config::cwd().join("config/database.yml")).ok()?;
-        let Ok(Value::Map(yaml)) = crate::config::value::unsafe_load(&text) else { return None };
+        // a Psych::SyntaxError is rescued; a class Ruby cannot resolve raises in the cop
+        let yaml = match crate::config::value::unsafe_load(&text) {
+            Ok(Value::Map(yaml)) => yaml,
+            Err(e) if e.starts_with("undefined class/module ") => panic!("{e}"),
+            _ => return None,
+        };
         let dev = yaml.map("development")?;
         let adapter = match dev.get("adapter") {
             Some(a) if !matches!(a, Value::Null | Value::Bool(false)) => a.as_string(),

@@ -2035,3 +2035,31 @@ fn plugin_class_name_of_another_plugin_brings_its_rules() {
     assert!(text(&out.stdout).contains("Performance/Casecmp"), "{}", text(&out.stdout));
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// rubocop-rails reads config/database.yml with YAML.unsafe_load_file: a class Ruby cannot resolve
+/// raises in the cop, at every node that asks for the database (#629).
+#[test]
+fn database_yml_unresolvable_class_raises_in_cop() {
+    let dir = scratch("database-yml-class");
+    fs::create_dir_all(dir.join("config")).unwrap();
+    fs::create_dir_all(dir.join("db/migrate")).unwrap();
+    fs::write(dir.join(".rubocop.yml"), "plugins:\n  - rubocop-rails\nAllCops:\n  NewCops: enable\n  SuggestExtensions: false\n  TargetRailsVersion: 7.0\n").unwrap();
+    let file = "db/migrate/20200101000000_add_users.rb";
+    fs::write(
+        dir.join(file),
+        "class AddUsers < ActiveRecord::Migration[7.0]\n  def change\n    add_column :users, :name, :string\n    add_column :users, :age, :integer\n  end\nend\n",
+    )
+    .unwrap();
+    for (x, errors) in [("!ruby/object:Foo {}", 4), ("!ruby/object:Date {}", 0), ("!ruby/class Foo", 4)] {
+        fs::write(dir.join("config/database.yml"), format!("development:\n  adapter: postgresql\n  x: {x}\n")).unwrap();
+        let out = rbcop(&dir, &["-f", "e", "--only", "Rails/BulkChangeTable", file]);
+        let printed = text(&out.stderr)
+            .lines()
+            .take_while(|l| !l.is_empty())
+            .filter(|l| l.starts_with("An error occurred"))
+            .count();
+        assert_eq!(printed, errors, "{x}");
+        assert_eq!(text(&out.stdout).contains("BulkChangeTable"), errors == 0, "{x}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}

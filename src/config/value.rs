@@ -405,6 +405,43 @@ fn merge_into(hash: &mut Map, other: &Map) {
     }
 }
 
+/// Psych.unsafe_load of a tagged node naming `class`: whether the class resolves in RuboCop's
+/// process and revives from that node. One it cannot resolve (`Foo`, or OpenStruct, Logger and
+/// BigDecimal, which nothing requires), or whose revive rejects the node (`Rational`, `Set` without
+/// its `hash:`, `BasicObject` from a mapping), raises (#629).
+// ponytail: a short list of the classes that resolve and revive from a plain mapping.
+fn unsafe_class_loads(class: &str, node: &Node) -> bool {
+    match class {
+        "Set" => matches!(node, Node::Map { children, .. }
+            if children.chunks(2).any(|kv| matches!(&kv[0], Node::Scalar { value, .. } if value == "hash"))),
+        _ => matches!(
+            class,
+            "Object"
+                | "String"
+                | "Array"
+                | "Hash"
+                | "Data"
+                | "Range"
+                | "Regexp"
+                | "Symbol"
+                | "Integer"
+                | "Float"
+                | "Date"
+                | "DateTime"
+                | "Time"
+                | "Exception"
+                | "StandardError"
+                | "RuntimeError"
+                | "ArgumentError"
+                | "TypeError"
+                | "NameError"
+                | "NoMethodError"
+                | "Psych::Set"
+                | "Psych::Omap"
+        ),
+    }
+}
+
 impl ToRuby {
     fn accept(&mut self, node: &Node) -> Result<Value, String> {
         let (anchor, value) = match node {
@@ -420,7 +457,13 @@ impl ToRuby {
             Node::Map { anchor, tag, children } => (anchor, self.visit_mapping(tag.as_deref(), children)),
         };
         let value = match value {
-            Err(e) if self.unsafe_load && e.starts_with("Tried to load unspecified class: ") => Value::Null,
+            Err(e) if self.unsafe_load && e.starts_with("Tried to load unspecified class: ") => {
+                let class = &e["Tried to load unspecified class: ".len()..];
+                if !unsafe_class_loads(class, node) {
+                    return Err(format!("undefined class/module {class}"));
+                }
+                Value::Null
+            }
             v => v?,
         };
         // ponytail: registered once built, so an alias inside its own anchored collection is
