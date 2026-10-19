@@ -1871,3 +1871,21 @@ fn directive_warnings_print_when_comment_config_is_read() {
     }
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// AmbiguousCopName (#633): Metrics/ParameterLists raises in on_def and again in on_args, so a
+/// def over both limits has two cop errors (the def, the args).
+#[test]
+fn parameter_lists_raises_per_callback_under_ambiguous_cop_name() {
+    let dir = scratch("ambiguous-parameter-lists");
+    let config = "plugins: [rubocop-rails, rubocop-rspec]\nAllCops:\n  NewCops: enable\n  SuggestExtensions: false\n";
+    fs::write(dir.join(".rubocop.yml"), config).unwrap();
+    let src = "# frozen_string_literal: true\n\n# rubocop:disable Output\ndef m(a, b, c, d, e, f, g = 1, h = 2, i = 3, j = 4); end\n";
+    fs::write(dir.join("a.rb"), src).unwrap();
+    let stderr = text(&rbcop(&dir, &["-f", "e", "a.rb"]).stderr);
+    let mut errors: Vec<&str> =
+        stderr.lines().filter(|l| l.starts_with("An error occurred while Metrics/ParameterLists")).collect();
+    errors.sort_unstable();
+    errors.dedup();
+    assert!(errors.len() == 2 && errors[0].ends_with("a.rb:4:0.") && errors[1].ends_with("a.rb:4:5."), "{stderr}");
+    let _ = fs::remove_dir_all(&dir);
+}

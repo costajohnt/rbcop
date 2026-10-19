@@ -1003,7 +1003,8 @@ pub fn visit_at(at: usize) {
 /// still run.
 pub fn own_callback(cop: &str, src: &Source, at: Option<usize>, f: impl FnOnce()) {
     if let Err(payload) = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f)) {
-        if !(payload.is::<String>() || payload.is::<&str>()) {
+        // A panic message, or poison_raise's AmbiguousCopName (#633).
+        if !(payload.is::<String>() || payload.is::<&str>() || payload.is::<()>()) {
             std::panic::resume_unwind(payload);
         }
         cop_error_at(cop, src, at);
