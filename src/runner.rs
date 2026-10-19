@@ -431,7 +431,7 @@ fn investigate(
     let (result, tokens, fake, edits) = parse_for_target(text, &mut buf, version, cfg.target_ruby);
     let mut errors: Vec<(usize, usize, String)> = result
         .errors()
-        .filter(|e| !tolerated(e, parser_gem, cfg.target_ruby, text))
+        .filter(|e| !tolerated(e, parser_gem, cfg.target_ruby, text, &result.node()))
         .map(|e| {
             let loc = e.location();
             crate::syntax::translate(e.type_name(), e.message(), loc.start_offset(), loc.end_offset(), text)
@@ -446,7 +446,7 @@ fn investigate(
             file_error(format!("rbcop: {display}: nested more than {MAX_AST_DEPTH} levels deep, not inspected."));
             return (Vec::new(), None, Vec::new());
         }
-        let kept = |e: &ruby_prism::Diagnostic| !tolerated(e, parser_gem, cfg.target_ruby, text);
+        let kept = |e: &ruby_prism::Diagnostic| !tolerated(e, parser_gem, cfg.target_ruby, text, &result.node());
         // A stray backslash is the parser gem's lexer error: reported, then skipped (no recovery).
         let bare_backslash = |e: &ruby_prism::Diagnostic| {
             let loc = e.location();
@@ -1311,12 +1311,20 @@ const TOLERATED_ERRORS: &[&str] =
 /// `_1` in nested blocks, `_1 = x` in a block that reads `_1`) do not apply.
 /// The parser gem also ends a `<<''` heredoc (empty delimiter) at the end of the file, where Prism
 /// finds it unterminated. Before 2.5 `return` in a class/module body is accepted (the builder's
-/// `invalid_return` check is 2.5+). Before the target that has anonymous forwarding (`&` 3.1, `*`
+/// `invalid_return` check is 2.5+), and below 3.3 in a singleton class body (#640). Before the target that has anonymous forwarding (`&` 3.1, `*`
 /// and `**` 3.2) the grammar fails on the argument, with no "no anonymous ... parameter" error.
-pub fn tolerated(e: &ruby_prism::Diagnostic, parser_gem: bool, target_ruby: f64, text: &str) -> bool {
+pub fn tolerated(
+    e: &ruby_prism::Diagnostic,
+    parser_gem: bool,
+    target_ruby: f64,
+    text: &str,
+    program: &ruby_prism::Node,
+) -> bool {
     let kind = e.type_name();
     (parser_gem && TOLERATED_ERRORS.contains(&kind))
-        || (kind == "return_invalid" && target_ruby < 2.5)
+        || (kind == "return_invalid"
+            && (target_ruby < 2.5
+                || (parser_gem && crate::syntax::return_in_sclass(program, e.location().start_offset()))))
         || (kind == "argument_no_forwarding_ampersand" && target_ruby < 3.1)
         || (matches!(kind, "argument_no_forwarding_star" | "argument_no_forwarding_star_star") && target_ruby < 3.2)
         || (kind == "parameter_circular" && target_ruby < 2.7)

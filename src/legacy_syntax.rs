@@ -723,7 +723,10 @@ fn first_error_after(
     // `return` directly in the class body recovery left open: the builder's error (and yyerror).
     let returns = result
         .errors()
-        .filter(|e| e.type_name() == "return_invalid" && e.location().start_offset() >= p)
+        .filter(|e| {
+            let s = e.location().start_offset();
+            e.type_name() == "return_invalid" && s >= p && !crate::syntax::return_in_sclass(&result.node(), s)
+        })
         .map(|e| e.location().start_offset() - p + from)
         .collect();
     // Unclosed constructs (errors at the end of the file) are the simulation's `$end` check;

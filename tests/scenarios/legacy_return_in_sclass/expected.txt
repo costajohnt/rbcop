@@ -1,0 +1,7 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+b.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for `class Foo`.
+b.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+c.rb:4:3: F: Lint/Syntax: Invalid return in class/module body (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+d.rb:3:5: F: Lint/Syntax: Invalid return in class/module body (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+e.rb:6:1: F: Lint/Syntax: unexpected token kEND (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

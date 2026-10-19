@@ -647,3 +647,46 @@ pub fn regexp_compile_errors(program: &ruby_prism::Node, text: &str) -> Vec<(usi
     w.visit(program);
     w.out
 }
+
+/// Whether the `return` at `at` is directly in a singleton class body (`class << self; return;
+/// end`). Prism reports it as `return_invalid`; the parser gem's check (targets below 3.3) only
+/// covers class and module bodies (#640).
+pub fn return_in_sclass(program: &ruby_prism::Node, at: usize) -> bool {
+    use ruby_prism::Visit;
+    struct Walk {
+        at: usize,
+        /// Innermost class-like/def scopes: true for a singleton class.
+        scopes: Vec<bool>,
+        found: bool,
+    }
+    impl Walk {
+        fn scoped(&mut self, sclass: bool, f: impl FnOnce(&mut Self)) {
+            self.scopes.push(sclass);
+            f(self);
+            self.scopes.pop();
+        }
+    }
+    impl<'pr> Visit<'pr> for Walk {
+        fn visit_def_node(&mut self, n: &ruby_prism::DefNode<'pr>) {
+            self.scoped(false, |w| ruby_prism::visit_def_node(w, n));
+        }
+        fn visit_class_node(&mut self, n: &ruby_prism::ClassNode<'pr>) {
+            self.scoped(false, |w| ruby_prism::visit_class_node(w, n));
+        }
+        fn visit_module_node(&mut self, n: &ruby_prism::ModuleNode<'pr>) {
+            self.scoped(false, |w| ruby_prism::visit_module_node(w, n));
+        }
+        fn visit_singleton_class_node(&mut self, n: &ruby_prism::SingletonClassNode<'pr>) {
+            self.scoped(true, |w| ruby_prism::visit_singleton_class_node(w, n));
+        }
+        fn visit_return_node(&mut self, n: &ruby_prism::ReturnNode<'pr>) {
+            if n.location().start_offset() == self.at {
+                self.found |= self.scopes.last() == Some(&true);
+            }
+            ruby_prism::visit_return_node(self, n);
+        }
+    }
+    let mut w = Walk { at, scopes: Vec::new(), found: false };
+    w.visit(program);
+    w.found
+}
