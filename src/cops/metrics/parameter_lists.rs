@@ -56,60 +56,82 @@ fn struct_initialize(cx: &Cx, def: &ruby_prism::DefNode) -> bool {
     single && no_args && ctor
 }
 
+/// `max_params` for `count > max_params`, at the `args` node (`range`). A non-Integer `Max` raises
+/// there: a cop error at the args, and None.
+// ponytail: RuboCop then crashes (`undefined method 'line' for nil`) at an args node without a
+// location (a def without parentheses or parameters, a block without `|...|`); that is a cop
+// error at the def or block here.
+fn args_max(cx: &Cx, range: Option<(usize, usize)>) -> Option<i64> {
+    let mut max = None;
+    crate::runner::own_callback(cx.cop, cx.src, range.map(|r| r.0).or_else(crate::runner::visiting), || {
+        max = Some(cx.cfg.int("Max").unwrap_or(0));
+    });
+    max
+}
+
 impl Cop for ParameterLists {
     fn kinds(&self) -> &'static [usize] {
         &[kind::DEF_NODE, kind::BLOCK_NODE, kind::LAMBDA_NODE]
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let max = cx.cfg.int("Max").unwrap_or(0);
+        let (cop, src) = (cx.cop, cx.src);
         if let Some(def) = node.as_def_node() {
             let params = def.parameters();
-            let optargs = params.as_ref().map_or(0, |p| p.optionals().iter().count()) as i64;
-            let max_opt = cx.cfg.int("MaxOptionalParameters").unwrap_or(0);
-            if optargs > max_opt {
-                let l = node.location();
-                cx.add(
-                    l.start_offset(),
-                    l.end_offset(),
-                    format!("Method has too many optional parameters. [{optargs}/{max_opt}]"),
-                );
-            }
+            // on_def
+            crate::runner::own_callback(cop, src, crate::runner::visiting(), || {
+                let optargs = params.as_ref().map_or(0, |p| p.optionals().iter().count()) as i64;
+                let max_opt = cx.cfg.int("MaxOptionalParameters").unwrap_or(0);
+                if optargs > max_opt {
+                    let l = node.location();
+                    cx.add(
+                        l.start_offset(),
+                        l.end_offset(),
+                        format!("Method has too many optional parameters. [{optargs}/{max_opt}]"),
+                    );
+                }
+            });
+            // on_args, at the parser `args` node (the parentheses, else the parameters)
             if struct_initialize(cx, &def) {
                 return;
             }
-            let count = args_count(cx, params.as_ref(), 0);
-            if count <= max {
-                return;
-            }
             let range = match (def.lparen_loc(), def.rparen_loc(), &params) {
-                (Some(l), Some(r), _) => (l.start_offset(), r.end_offset()),
-                (_, _, Some(p)) => (p.location().start_offset(), p.location().end_offset()),
-                _ => return,
+                (Some(l), Some(r), _) => Some((l.start_offset(), r.end_offset())),
+                (_, _, Some(p)) => Some((p.location().start_offset(), p.location().end_offset())),
+                _ => None,
             };
-            // RuboCop counts them in on_args.
+            let count = args_count(cx, params.as_ref(), 0);
+            let Some(max) = args_max(cx, range) else { return };
+            let Some(range) = range.filter(|_| count > max) else { return };
+            // The offense is on_args': so is its cop error.
             crate::runner::visit_at(range.0);
             cx.add(range.0, range.1, format!("Avoid parameter lists longer than {max} parameters. [{count}/{max}]"));
             return;
         }
-        if node.as_lambda_node().is_some() {
-            return; // arguments of a lambda literal are exempt
-        }
-        let block = node.as_block_node().unwrap();
-        let Some(bp) = block.parameters().and_then(|p| p.as_block_parameters_node()) else { return };
-        let count = args_count(cx, bp.parameters().as_ref(), bp.locals().iter().count());
+        // a block's or lambda's `args` (none for numbered or `it` parameters)
+        let (bp, lambda) = match node.as_lambda_node() {
+            Some(l) => (l.parameters(), true),
+            None => (node.as_block_node().unwrap().parameters(), false),
+        };
+        let bp = match bp {
+            None => None,
+            Some(p) => match p.as_block_parameters_node() {
+                Some(bp) => Some(bp),
+                None => return,
+            },
+        };
+        let range = bp.as_ref().map(|b| (b.location().start_offset(), b.location().end_offset()));
+        let count = bp.as_ref().map_or(0, |b| args_count(cx, b.parameters().as_ref(), b.locals().iter().count()));
+        let Some(max) = args_max(cx, range) else { return };
         if count <= max {
             return;
         }
-        if cx.parent().and_then(|p| p.as_call_node()).is_some_and(|c| lambda_or_proc(&c)) {
+        // arguments of a lambda literal or a lambda / proc block are exempt
+        if lambda || cx.parent().and_then(|p| p.as_call_node()).is_some_and(|c| lambda_or_proc(&c)) {
             return;
         }
-        let l = bp.location();
-        crate::runner::visit_at(l.start_offset());
-        cx.add(
-            l.start_offset(),
-            l.end_offset(),
-            format!("Avoid parameter lists longer than {max} parameters. [{count}/{max}]"),
-        );
+        let (s, e) = range.unwrap();
+        crate::runner::visit_at(s);
+        cx.add(s, e, format!("Avoid parameter lists longer than {max} parameters. [{count}/{max}]"));
     }
 }

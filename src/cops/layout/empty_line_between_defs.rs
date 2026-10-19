@@ -54,6 +54,24 @@ fn candidate(cx: &Cx, node: &Node, parents: &[&Node]) -> Option<Candidate> {
     }
 }
 
+/// `Array(cop_config['NumberOfEmptyLines'])`: (first, last).
+fn empty_lines_range(cx: &Cx) -> (i64, i64) {
+    match cx.cfg.get("NumberOfEmptyLines") {
+        Some(Value::Seq(v)) => {
+            let int = |x: Option<&Value>| match x {
+                Some(Value::Int(i)) => *i,
+                Some(Value::Str(_) | Value::Sym(_)) => panic!("comparison of Integer with String failed"),
+                _ => 1,
+            };
+            (int(v.first()), int(v.last()))
+        }
+        _ => {
+            let n = cx.cfg.int("NumberOfEmptyLines").unwrap_or(1);
+            (n, n)
+        }
+    }
+}
+
 impl Cop for EmptyLineBetweenDefs {
     fn correctable(&self) -> bool {
         true
@@ -77,19 +95,6 @@ impl Cop for EmptyLineBetweenDefs {
             return;
         }
         let parents: Vec<&Node> = cx.ancestors.iter().chain([node]).collect();
-        let (min, max) = match cx.cfg.get("NumberOfEmptyLines") {
-            Some(Value::Seq(v)) => {
-                let int = |x: Option<&Value>| match x {
-                    Some(Value::Int(i)) => *i,
-                    _ => 1,
-                };
-                (int(v.first()), int(v.last()))
-            }
-            _ => {
-                let n = cx.cfg.int("NumberOfEmptyLines").unwrap_or(1);
-                (n, n)
-            }
-        };
         let src = cx.src;
         let mut prev: Option<(Candidate, &Node)> = None;
         for stmt in &body {
@@ -116,6 +121,8 @@ impl Cop for EmptyLineBetweenDefs {
                 let groups = matches!((blank_max, non_blank_min), (Some(b), Some(n)) if b > n);
                 let one_line = |r: (usize, usize)| src.line_of(r.0) == src.line_of(r.1);
                 let adjacent_ok = one_line(p.range) && one_line(c.range) && cx.cfg.params.truthy("AllowAdjacentOneLineDefs");
+                // line_count_allowed? reads the setting for each pair (a String one raises there)
+                let (min, max) = empty_lines_range(cx);
                 if !(min..=max).contains(&count) && !groups && !adjacent_ok {
                     let expected = if min != max {
                         format!("{min}..{max} empty lines")

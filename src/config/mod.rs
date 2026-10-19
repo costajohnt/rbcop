@@ -141,8 +141,9 @@ impl CopConfig {
             _ => panic!("{key} needs to be a positive integer!"),
         }
     }
+    /// `cop_config[key]` as a number (see Map::int_strict: a String one raises).
     pub fn int(&self, key: &str) -> Option<i64> {
-        self.params.int(key)
+        self.params.int_strict(key)
     }
     pub fn strings(&self, key: &str) -> Vec<String> {
         self.params.strings(key)
@@ -938,6 +939,13 @@ impl Store {
                                 continue;
                             }
                             let named = config.and_then(|c| c.get("plugin_class_name")).and_then(Value::as_string);
+                            // BUILTIN_INTERNAL_PLUGINS is looked up for a String entry only: a Hash
+                            // one requires its `require_path` (default: the name)
+                            if name == INTERNAL_AFFAIRS {
+                                let require_path = config.is_some_and(|c| c.truthy("require_path"));
+                                plugins.push((name.clone(), Load::BuiltinHash { require_path, class: named }));
+                                continue;
+                            }
                             plugins.push((name.clone(), named.map_or(Load::Plugin, Load::NamedPlugin)));
                         }
                     }
@@ -1221,6 +1229,18 @@ impl Store {
                 }
             }
             self.loaded_plugins.push(name.clone());
+            let load = match load {
+                Load::BuiltinHash { require_path: false, .. } => {
+                    self.failed_entry = Some(name.clone());
+                    return Err(format!("cannot load such file -- {name}"));
+                }
+                Load::BuiltinHash { class: None, .. } => {
+                    self.failed_entry = Some(name.clone());
+                    return Err(plugin_class_unknown(&name));
+                }
+                Load::BuiltinHash { class: Some(c), .. } => Load::NamedPlugin(c),
+                l => l,
+            };
             if let Some(native) = crate::helpers::cop_registry::native_plugin(&name) {
                 // A plugin rbcop implements: its cops register and its vendored default.yml merges,
                 // so the gem need not be installed. A `plugin_class_name` is looked up as for any
@@ -1228,7 +1248,8 @@ impl Store {
                 // ponytail: with the gem not installed the name is not checked.
                 if let Load::NamedPlugin(class) = &load
                     && let Ok(Feature { dir: Some(dir), .. }) = self.feature(&name)
-                    && let Some(problem) = named_plugin_problem(&name, class, &dir.join("lib"))
+                    && let Some(problem) =
+                        named_plugin_problem(&name, class, &self.constant_libs(&name, dir.join("lib")))
                 {
                     self.failed_entry = Some(name.clone());
                     return Err(problem);
@@ -1265,21 +1286,14 @@ impl Store {
             // of the gem of that name; without either the run fails (Plugin::LoadError).
             if load == Load::Plugin && !feature.plugin {
                 self.failed_entry = Some(name.clone());
-                return Err(format!(
-                    "Error: Failed to load plugin `{name}` because the corresponding plugin class could not be determined \
-                     for instantiation.\nTry upgrading it first (e.g., `bundle update {name}`).\nIf `{name}` is not yet \
-                     a plugin, use `require: {name}` instead of `plugins: {name}` in your configuration.\n\nFor further \
-                     assistance, check with the developer regarding the following points:\n\
-                     https://docs.rubocop.org/rubocop/plugin_migration_guide.html"
-                ));
+                return Err(plugin_class_unknown(&name));
             }
             // A Ruby library outside any gem (`require: set`): no cops.
             let Some(dir) = feature.dir else { continue };
             let lib = dir.join(lib);
             // Kernel.const_get of the name, then `.new(plugin_config)` on it.
-            // ponytail: the constant is looked for in the gem's lib/ only.
             if let Load::NamedPlugin(class) = &load
-                && let Some(problem) = named_plugin_problem(&name, class, &lib)
+                && let Some(problem) = named_plugin_problem(&name, class, &self.constant_libs(&name, lib.clone()))
             {
                 self.failed_entry = Some(name.clone());
                 return Err(problem);
@@ -1442,6 +1456,25 @@ impl Store {
     }
 
     /// Gem dir for inherit_gem and plugins, as `Gem::Specification.find_by_name(name).gem_dir` reports it.
+    /// The lib/ directories whose classes and modules Kernel.const_get sees once the gem `name`
+    /// (lib/ `own`) is required: its own, rubocop's, lint_roller's and those of the plugins and
+    /// features loaded before it (#590).
+    fn constant_libs(&mut self, name: &str, own: PathBuf) -> Vec<PathBuf> {
+        let mut libs = vec![own];
+        for gem in ["rubocop", "lint_roller"] {
+            if let Ok(d) = self.gem_dir(gem) {
+                libs.push(d.join("lib"));
+            }
+        }
+        let earlier: Vec<String> = self.loaded_plugins.iter().filter(|n| *n != name).cloned().collect();
+        for n in earlier {
+            if let Ok(Feature { dir: Some(d), .. }) = self.feature(&n) {
+                libs.push(d.join("lib"));
+            }
+        }
+        libs
+    }
+
     fn gem_dir(&mut self, gem: &str) -> Result<PathBuf, String> {
         if let Some(d) = self.gem_dirs.get(gem) {
             return Ok(d.clone());
@@ -1524,6 +1557,17 @@ impl Store {
     }
 }
 
+/// Plugin::LoadError when no plugin class can be determined for an entry.
+fn plugin_class_unknown(name: &str) -> String {
+    format!(
+        "Error: Failed to load plugin `{name}` because the corresponding plugin class could not be determined \
+         for instantiation.\nTry upgrading it first (e.g., `bundle update {name}`).\nIf `{name}` is not yet a \
+         plugin, use `require: {name}` instead of `plugins: {name}` in your configuration.\n\nFor further \
+         assistance, check with the developer regarding the following points:\n\
+         https://docs.rubocop.org/rubocop/plugin_migration_guide.html"
+    )
+}
+
 /// How a `plugins:`/`require:` entry loads.
 #[derive(Clone, PartialEq)]
 enum Load {
@@ -1533,6 +1577,10 @@ enum Load {
     NamedPlugin(String),
     /// FeatureLoader: a plain `require`.
     Require,
+    /// A Hash entry naming RuboCop's built-in plugin: no built-in there. Without a `require_path`
+    /// the name is required (no such file); with one (`rubocop/cop/internal_affairs`) the plugin
+    /// class comes from a `plugin_class_name` only.
+    BuiltinHash { require_path: bool, class: Option<String> },
 }
 
 /// A feature found by Store::feature.
@@ -1847,15 +1895,28 @@ static SCOPE_END: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex
 /// class (Kernel.const_get of a `plugin_class_name`). Nesting as in `ruby_cops_in`.
 /// Plugin::Loader.constantize of a `plugin_class_name`: Kernel.const_get, then `.new` on it. The
 /// error that ends the run when the name is no class.
-fn named_plugin_problem(name: &str, class: &str, lib: &Path) -> Option<String> {
-    match ruby_constant_kinds(&ruby_files(lib)).get(class.trim_start_matches("::")) {
-        Some(true) => None,
-        Some(false) => Some(format!("undefined method 'new' for module {class}")),
+// ponytail: an earlier plugin's plugin class is taken as this gem's; RuboCop integrates that
+// plugin's rules instead and leaves this gem's cops unconfigured (docs/known-gaps.md).
+fn named_plugin_problem(name: &str, class: &str, libs: &[PathBuf]) -> Option<String> {
+    let bare = class.trim_start_matches("::");
+    // `LintRoller::Rules.new(plugin_config)`: a keyword_init Struct (no `class` line)
+    if bare == "LintRoller::Rules" {
+        return Some("unknown keywords: enabled, require_path, plugin_class_name".into());
+    }
+    let files: Vec<PathBuf> = libs.iter().flat_map(|l| ruby_files(l)).collect();
+    match ruby_constant_kinds(&files).get(bare) {
+        // Plugin::ConfigurationIntegrator.validate_plugins! and LintRoller::Plugin#rules
+        Some((true, _)) if bare == "LintRoller::Plugin" => {
+            Some("Please implement `rules(context)` and return an instance of LintRoller::Rules".into())
+        }
+        Some((true, sup)) if sup.as_deref().is_some_and(|s| s.trim_start_matches("::") == "LintRoller::Plugin") => None,
+        Some((true, _)) => Some(format!("undefined method 'supported?' for an instance of {bare}")),
+        Some((false, _)) => Some(format!("undefined method 'new' for module {class}")),
         None => Some(format!("Failed while configuring plugin `{name}': no constant with name `{class}' was found.")),
     }
 }
 
-fn ruby_constant_kinds(files: &[PathBuf]) -> HashMap<String, bool> {
+fn ruby_constant_kinds(files: &[PathBuf]) -> HashMap<String, (bool, Option<String>)> {
     let mut out = HashMap::new();
     for file in files {
         let Ok(text) = std::fs::read_to_string(file) else { continue };
@@ -1868,8 +1929,11 @@ fn ruby_constant_kinds(files: &[PathBuf]) -> HashMap<String, bool> {
                     stack.last().map(|s| s.1.clone()).unwrap_or_default()
                 };
                 path.extend(m[3].trim_start_matches("::").split("::").map(String::from));
-                let class = out.entry(path.join("::")).or_insert(false);
-                *class |= &m[2] == "class";
+                let entry = out.entry(path.join("::")).or_insert((false, None));
+                entry.0 |= &m[2] == "class";
+                if let Some(sup) = m.get(4) {
+                    entry.1.get_or_insert_with(|| sup.as_str().to_string());
+                }
                 if !m.get(5).is_some_and(|t| t.as_str().contains("end")) {
                     stack.push((m[1].len(), path));
                 }
@@ -1929,7 +1993,12 @@ fn ruby_cops_in(files: Vec<PathBuf>) -> Vec<(String, bool)> {
                 }
             } else if let Some(&(_, _, Some(i))) = stack.last() {
                 let body = line.trim();
-                classes[i].autocorrect |= body.starts_with("extend AutoCorrector");
+                // `extend AutoCorrector`, also qualified (`extend ::RuboCop::Cop::AutoCorrector`)
+                // or parenthesized (`extend(AutoCorrector)`)
+                static EXTEND: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| {
+                    Regex::new(r"^extend(?:\s+|\s*\(\s*)(?:::)?(?:RuboCop::Cop::)?AutoCorrector\b").unwrap()
+                });
+                classes[i].autocorrect |= EXTEND.is_match(body);
                 classes[i].excluded |= body.starts_with("exclude_from_registry");
             }
         }

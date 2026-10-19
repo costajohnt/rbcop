@@ -36,11 +36,7 @@ impl Cop for ExpectOutput {
             }
             _ => (node.as_global_variable_target_node().unwrap().name(), helpers::rspec::node_range(node)),
         };
-        let name = String::from_utf8_lossy(&name.as_slice()[1..]).into_owned();
-        if name != "stdout" && name != "stderr" {
-            return;
-        }
-        // inside_example_scope?: the nearest example group, example or hook decides
+        // inside_example_scope? first: the nearest example group, example or hook decides
         let l = helpers::rspec::lang(cx);
         let mut inside = false;
         for a in cx.ancestors.iter().rev() {
@@ -56,7 +52,9 @@ impl Cop for ExpectOutput {
                 break;
             }
         }
-        if inside {
+        // the name is looked at only after the walk, which asks the Language lists (a nil one raises)
+        let name = String::from_utf8_lossy(&name.as_slice()[1..]).into_owned();
+        if inside && (name == "stdout" || name == "stderr") {
             cx.add(s, e, format!("Use `expect {{ ... }}.to output(...).to_{name}` instead of mutating ${name}."));
         }
     }

@@ -18,10 +18,11 @@ impl Cop for Focus {
         if !helpers::rspec::rspec_recv(&call) {
             return;
         }
-        // node.chained?: the receiver of its parser parent call (a send in a block is not)
+        // node.chained?: the receiver of its parser parent send (a send in a block is not), also
+        // of an op-assign's or a target's send (`a.b ||= 1`)
         if helpers::rspec::block_of(&call).is_none()
-            && cx.ancestors.last().and_then(|p| p.as_call_node()).is_some_and(|p| {
-                p.receiver().is_some_and(|r| helpers::rspec::node_range(&r) == helpers::rspec::node_range(node))
+            && cx.ancestors.last().and_then(helpers::rspec::send_receiver).is_some_and(|r| {
+                helpers::rspec::node_range(&r) == helpers::rspec::node_range(node)
             })
         {
             return;

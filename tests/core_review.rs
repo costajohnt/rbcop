@@ -887,7 +887,7 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
     fs::create_dir_all(dir.join("spec")).unwrap();
     let file = dir.join("spec/foo_spec.rb").display().to_string();
     type Case<'a> = (&'a str, &'a str, &'a str, &'a [&'a str], &'a [&'a str]);
-    let cases: [Case; 5] = [
+    let cases: [Case; 18] = [
         (
             "Examples:\n      Focused: ~",
             "RSpec/VoidExpect",
@@ -927,10 +927,91 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
             &[],
             &[],
         ),
+        // the example scope is looked up before the variable name (#601)
+        (
+            "ExampleGroups: ~",
+            "RSpec/ExpectOutput",
+            "describe Foo do\n  before do\n    $a = 1\n  end\nend\n",
+            &[],
+            &["F:5:4."],
+        ),
+        // a single-statement group body's child nodes: an assignment's value, a def's body (#602)
+        (
+            "Helpers: ~",
+            "RSpec/ScatteredLet",
+            "describe Foo do\n  context \"x\" do\n    x = foo(1, 2)\n  end\nend\n",
+            &[],
+            &["F:4:2."],
+        ),
+        (
+            "Helpers: ~",
+            "RSpec/IndexedLet",
+            "describe Foo do\n  context \"x\" do\n    def matcher(min, max)\n      be_between(min, max)\n    end\n  end\nend\n",
+            &[],
+            &["F:4:2."],
+        ),
+        (
+            "Helpers: ~",
+            "RSpec/OverwritingSetup",
+            "describe Foo do\n  it do\n    group = RSpec.describe do\n      ex = example(\"x\") { }\n    end\n  end\nend\n",
+            &[],
+            &["F:5:12."],
+        ),
+        // an index op-assign's send gets on_send (#603); an attribute op-assign's receiver is chained (#607)
+        (
+            "ExampleGroups: ~",
+            "RSpec/VariableDefinition",
+            "describe Foo do\n  it do\n    @h[k] += 1\n  end\nend\n",
+            &[],
+            &["F:3:0.", "F:4:2.", "F:5:4.", "F:5:7."],
+        ),
+        (
+            "Examples: ~",
+            "RSpec/Focus",
+            "describe Foo do\n  it do\n    a.b ||= 1\n  end\nend\n",
+            &[],
+            &["F:3:0.", "F:4:2."],
+        ),
+        // a block on `super` is a parser block (#606)
+        (
+            "Examples: ~",
+            "RSpec/EmptyExampleGroup",
+            "describe Foo do\n  super do\n    it { }\n  end\nend\n",
+            &[],
+            &["F:3:0.", "F:4:2.", "F:5:4."],
+        ),
+        (
+            "Expectations: ~",
+            "RSpec/EmptyExampleGroup",
+            "describe Foo do\n  super do\n    it { }\n  end\nend\n",
+            &[],
+            &[],
+        ),
+        (
+            "ExampleGroups: ~",
+            "RSpecRails/AvoidSetupHook",
+            "describe Foo do\n  it do\n    super do\n    end\n  end\nend\n",
+            &[],
+            &["F:3:0.", "F:4:2.", "F:5:4."],
+        ),
+        // an `if` body's statements are a `begin`, no child of the `if`; a hook pattern checks
+        // its arity before the list
+        ("Helpers: ~", "RSpec/ScatteredLet", "describe Foo do\n  if c\n    foo(1, 2)\n    bar\n  end\nend\n", &[], &[]),
+        (
+            "Hooks: ~",
+            "RSpec/SortMetadata",
+            "RSpec.configure do |c|\n  c.on_example_group_definition do |g|\n    g\n  end\nend\n",
+            &[],
+            &[],
+        ),
+        // a group's own send is its first child: let? asks Helpers of a two-argument one; a
+        // namespaced casgn is asked inside_describe_block?
+        ("Helpers: ~", "RSpec/LetSetup", "describe Foo, :meta do\nend\n", &[], &["F:3:0."]),
+        ("ExampleGroups: ~", "RSpec/LeakyConstantDeclaration", "describe Foo do\n  ::A = 1\nend\n", &[], &["F:4:2."]),
     ];
     for (list, cop, source, offenses, errors) in cases {
         let config = format!(
-            "plugins:\n  - rubocop-rspec\nAllCops:\n  NewCops: enable\n  SuggestExtensions: false\nRSpec:\n  Language:\n    {list}\n"
+            "plugins:\n  - rubocop-rspec\n  - rubocop-rspec_rails\nAllCops:\n  NewCops: enable\n  SuggestExtensions: false\nRSpec:\n  Language:\n    {list}\n"
         );
         fs::write(dir.join(".rubocop.yml"), config).unwrap();
         fs::write(dir.join("spec/foo_spec.rb"), format!("# frozen_string_literal: true\n\n{source}")).unwrap();
@@ -946,6 +1027,106 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
             })
             .collect();
         assert_eq!(printed, errors, "{cop} {list}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// A numeric setting given as a String or Symbol raises where the cop compares it (#610): the
+/// error at the node (a block's at its send), or at the file for an investigation hook.
+#[test]
+fn string_numeric_setting_raises_where_compared() {
+    let dir = scratch("string-numeric");
+    let file = dir.join("a.rb").display().to_string();
+    let cases: [(&str, &str, &[&str]); 3] = [
+        ("Layout/LineLength:\n  Max: \"80\"", "x = 1\nfoo(1, 2)\n", &["F:2:0.", "F."]),
+        ("Naming/BlockParameterName:\n  MinNameLength: \"2\"", "foo do |a|\nend\n", &["F:1:0."]),
+        ("Metrics/MethodLength:\n  Max: :\"2\"", "def a\n  1\nend\n", &["F:1:0."]),
+    ];
+    for (cfg, source, errors) in cases {
+        let config = format!("AllCops:\n  NewCops: enable\n  SuggestExtensions: false\n{cfg}\n");
+        fs::write(dir.join(".rubocop.yml"), config).unwrap();
+        fs::write(dir.join("a.rb"), source).unwrap();
+        let cop = cfg.split(':').next().unwrap();
+        let out = rbcop(&dir, &["-f", "e", "--only", cop, "a.rb"]);
+        assert_eq!(text(&out.stdout), "", "{cfg}");
+        let printed: Vec<String> = text(&out.stderr)
+            .lines()
+            .take_while(|l| !l.is_empty())
+            .filter_map(|l| {
+                l.strip_prefix(&format!("An error occurred while {cop} cop was inspecting "))
+                    .map(|l| l.replace(&file, "F"))
+            })
+            .collect();
+        assert_eq!(printed, errors, "{cfg}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// RuboCop's built-in plugin is one for a String `plugins:` entry only: a Hash entry requires its
+/// `require_path` (default: the name, no such file) and needs a plugin class (#597).
+#[test]
+fn internal_affairs_hash_entry_is_no_builtin() {
+    let dir = scratch("internal-affairs-hash");
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nx = 1\np x\n").unwrap();
+    let cases = [
+        ("{}", 2, "cannot load such file -- rubocop-internal_affairs"),
+        (
+            "{plugin_class_name: RuboCop::InternalAffairs::Plugin}",
+            2,
+            "cannot load such file -- rubocop-internal_affairs",
+        ),
+        (
+            "{require_path: rubocop/cop/internal_affairs}",
+            2,
+            "Error: Failed to load plugin `rubocop-internal_affairs` because the corresponding plugin class could not be \
+             determined for instantiation.",
+        ),
+        ("{enabled: false}", 0, ""),
+    ];
+    for (entry, status, first) in cases {
+        let config = format!(
+            "plugins:\n  - rubocop-internal_affairs: {entry}\nAllCops:\n  NewCops: disable\n  SuggestExtensions: false\n"
+        );
+        fs::write(dir.join(".rubocop.yml"), config).unwrap();
+        let out = rbcop(&dir, &["-f", "e", "a.rb"]);
+        assert_eq!(out.status.code(), Some(status), "{entry}");
+        assert_eq!(text(&out.stderr).lines().next().unwrap_or(""), first, "{entry}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// Lint/RedundantCopDisableDirective's did-you-mean list is the registry of the first file that
+/// described an unknown cop name (SIMILAR_COP_NAMES_CACHE, #599): a plugin a later subdirectory
+/// config loads is not in it.
+#[test]
+fn similar_cop_names_frozen_at_first_unknown_name() {
+    let dir = scratch("similar-cop-names");
+    fs::create_dir_all(dir.join("sub")).unwrap();
+    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  SuggestExtensions: false\n").unwrap();
+    fs::write(dir.join("sub/.rubocop.yml"), "plugins: [rubocop-rspec]\n").unwrap();
+    fs::write(
+        dir.join("sub/a.rb"),
+        "# frozen_string_literal: true\n\nx = 1 # rubocop:disable RSpec/Capybara/FeatureMethods\np x\n",
+    )
+    .unwrap();
+    let redundant = |out: &Output| -> Vec<String> {
+        text(&out.stdout)
+            .lines()
+            .filter(|l| l.contains("Redundant"))
+            .map(|l| l.split(": W: ").nth(1).unwrap().to_string())
+            .collect()
+    };
+    for (b, last) in [
+        ("x = 1 # rubocop:disable Style/Foo\np x\n", "(unknown cop)"),
+        ("x = 1\np x\n", "(did you mean `RSpec/DescribeMethod`?)"),
+    ] {
+        fs::write(dir.join("b.rb"), b).unwrap();
+        let out = rbcop(&dir, &["-f", "e"]);
+        let lines = redundant(&out);
+        assert!(
+            lines.last().is_some_and(|l| l.ends_with(&format!("`RSpec/Capybara/FeatureMethods` {last}."))),
+            "{lines:?}"
+        );
     }
     let _ = fs::remove_dir_all(&dir);
 }

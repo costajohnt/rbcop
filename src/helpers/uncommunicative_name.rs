@@ -69,7 +69,6 @@ pub fn check(cx: &mut Cx, args: &[Node], name_type: &str) {
     let allowed = list("AllowedNames");
     let forbidden = list("ForbiddenNames");
     let allow_nums = cx.cfg.bool("AllowNamesEndingInNumbers").unwrap_or(true);
-    let min = cx.cfg.int("MinNameLength").unwrap_or(1).max(0) as usize;
     for arg in args {
         let Some((full, extra)) = name_of(arg) else { continue };
         if full == "_" {
@@ -91,11 +90,24 @@ pub fn check(cx: &mut Cx, args: &[Node], name_type: &str) {
         };
         let nchars = name.chars().count();
         // only the first offense on a range survives
-        let msg = if forbidden(name) {
-            format!("Do not use {name} as a name for a {name_type}.")
+        let first = if forbidden(name) {
+            Some(format!("Do not use {name} as a name for a {name_type}."))
         } else if name.chars().any(char::is_uppercase) {
-            format!("Only use lowercase characters for {name_type}.")
-        } else if nchars < min {
+            Some(format!("Only use lowercase characters for {name_type}."))
+        } else {
+            None
+        };
+        let found = first.is_some();
+        if let Some(msg) = first {
+            cx.add(start, end, msg);
+        }
+        // long_enough? reads MinNameLength for each name, after those offenses (a String one
+        // raises there)
+        let min = cx.cfg.int("MinNameLength").unwrap_or(1).max(0) as usize;
+        if found {
+            continue;
+        }
+        let msg = if nchars < min {
             let mut cap = name_type.to_string();
             cap[..1].make_ascii_uppercase();
             format!("{cap} must be at least {min} characters long.")

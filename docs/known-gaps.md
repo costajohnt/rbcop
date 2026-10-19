@@ -297,7 +297,12 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   on `def foo(bar` / `    )end`, Style/NegativeArrayIndex, Style/HashConversion, Style/RequireOrder).
   Cop errors from config values (MinBodyLength / MinBranchesCount not a positive Integer,
   SafeNavigationChainLength `Max` 0 or less, a zero indentation width with tabs, #114) are
-  reproduced, and so are list settings given as a YAML String (#440, #474): each cop reads one as
+  reproduced, and so are a cop's numeric settings given as a String or Symbol (`Max: "80"`,
+  #610: a cop error where the cop compares or adds them, also `Layout/LineLength` `Max` read by
+  other cops), except that a String `Metrics/ParameterLists` `Max` makes RuboCop crash
+  (`undefined method 'line' for nil`, exit 2) at the first args node without a location, a cop
+  error at the def or block in rbcop, and that other cops reading a String
+  `Layout/IndentationWidth` `Width` get the default width (RuboCop raises where they use it); and so are list settings given as a YAML String (#440, #474): each cop reads one as
   its RuboCop counterpart does, a substring test where the cop calls `include?` on the bare
   setting, a cop error where it calls an Array-only method (`map`, `any?`, `each`, `join`, `+`,
   `-`), a one-element list where it wraps the setting in `Array()`. A list set to `~` (#500) is
@@ -417,6 +422,10 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     Other values RuboCop crashes on (a non-String `FailLevel`, `TargetRubyVersion: true`, a
     non-Hash section under an unknown name) are not reproduced.
   - RuboCop's backtrace for a bogus `-f` formatter is not printed.
+  - A `plugin_class_name` naming another plugin's plugin class (`rubocop-performance:
+    {plugin_class_name: RuboCop::Rails::Plugin}` after rubocop-rails, #590): RuboCop integrates
+    that plugin's rules and leaves the gem's own cops unconfigured (each runs, enabled, with no
+    parameters); rbcop loads the gem as with its own plugin class.
   - `-c FILE`: the `Using ... configuration` warning for a deprecated cop name shows the expanded
     path; RuboCop shows the argument as given.
 - YAML: a plain `:name` value loads as a Symbol (`Value::Sym`) and a quoted `':name'` as a String,

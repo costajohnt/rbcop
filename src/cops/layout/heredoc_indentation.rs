@@ -158,7 +158,7 @@ impl HeredocIndentation {
         if line_length.truthy("AllowHeredoc") {
             return false;
         }
-        let max = line_length.int("Max").unwrap_or(120);
+        let max = line_length.int_strict("Max").unwrap_or(120);
         let longest = body.split_inclusive('\n').map(|l| l.trim_end_matches('\n').chars().count()).max().unwrap_or(0);
         longest as i64 + increase >= max
     }

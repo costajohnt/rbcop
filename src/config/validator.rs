@@ -108,7 +108,8 @@ pub fn inspect(v: &Value) -> String {
         Value::Int(i) => i.to_string(),
         Value::Float(f) => float_to_s(*f),
         Value::Str(s) => inspect_str(s.as_bytes()),
-        Value::Sym(s) | Value::Regex(s) => s.clone(),
+        Value::Sym(s) => crate::helpers::ruby_string::symbol_inspect(&s.as_bytes()[1..]),
+        Value::Regex(s) => s.clone(),
         Value::Seq(items) => format!("[{}]", items.iter().map(inspect).collect::<Vec<_>>().join(", ")),
         Value::Map(m) => format!(
             "{{{}}}",
@@ -703,6 +704,8 @@ mod tests {
         let v = Value::Seq(vec![Value::Str("a".into()), Value::Int(1), Value::Null, Value::Sym(":s".into())].into());
         assert_eq!(inspect(&v), r#"["a", 1, nil, :s]"#);
         assert_eq!(to_s(&Value::Sym(":s".into())), "s");
+        // Symbol#inspect quotes a name that is no identifier (`:"2"`)
+        assert_eq!(inspect(&Value::Sym(":2".into())), r#":"2""#);
         let mut m = Map::default();
         m.insert("k", Value::Bool(true));
         assert_eq!(inspect(&Value::Map(m.into())), r#"{"k" => true}"#);
