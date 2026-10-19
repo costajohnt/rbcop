@@ -2003,3 +2003,19 @@ fn plugin_hash_entry_value_must_be_a_hash() {
     }
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// rubocop-internal_affairs' cops are enlisted, not registered: InternalAffairs comes after the
+/// departments of the plugins the same config loads, so `Minitest/RedundantMessageArgument` stays
+/// qualified and in the pending-cops notice (#626).
+#[test]
+fn internal_affairs_department_after_other_plugins() {
+    let dir = scratch("internal-affairs-order");
+    fs::write(dir.join("a.rb"), "x = 1\n").unwrap();
+    for plugins in ["[rubocop-internal_affairs, rubocop-minitest]", "[rubocop-minitest, rubocop-internal_affairs]"] {
+        fs::write(dir.join(".rubocop.yml"), format!("plugins: {plugins}\nAllCops:\n  SuggestExtensions: false\n"))
+            .unwrap();
+        let out = rbcop(&dir, &["-f", "e", "a.rb"]);
+        assert!(text(&out.stderr).contains("\nMinitest/RedundantMessageArgument: # new in"), "{plugins}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}

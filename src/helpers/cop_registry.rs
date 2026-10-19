@@ -146,8 +146,17 @@ pub fn register_plugin(plugin: &'static NativePlugin) {
     // A plugin's default.yml also configures some of RuboCop's cops: those are registered already.
     let new: Vec<&'static str> = cop_names(plugin.default_yml).into_iter().filter(|n| !names.contains(n)).collect();
     names.extend(in_registry_order(new));
+    internal_affairs_last(&mut names);
     // ponytail: leaks one name list per plugin load (a handful per process at most).
     reg.0 = Some(Vec::leak(names));
+}
+
+/// rubocop-internal_affairs' cops are enlisted (Registry#enlist), not registered: they join the
+/// registry, and their department the departments, when the enrollment queue is next cleared, after
+/// the cops of the plugins the same config loads (#626).
+// ponytail: always last, also after a plugin that only a later subdirectory config loads.
+fn internal_affairs_last(names: &mut [&'static str]) {
+    names.sort_by_key(|n| department_of(n) == "InternalAffairs");
 }
 
 /// Registers the cops a plugin rbcop does not implement declares in its default.yml: RuboCop
@@ -160,6 +169,7 @@ pub fn register_foreign(names: Vec<String>) {
         return;
     }
     all.extend(new.into_iter().map(|n| &*String::leak(n)));
+    internal_affairs_last(&mut all);
     reg.0 = Some(Vec::leak(all));
     drop(reg);
     OPEN.write().unwrap().foreign = true;
