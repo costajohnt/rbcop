@@ -8,6 +8,8 @@ use std::sync::{LazyLock, RwLock};
 /// not be installed: `plugins:` / `require:` of it registers its cops and merges that file.
 pub struct NativePlugin {
     pub gem: &'static str,
+    /// Its `default_lint_roller_plugin` class.
+    pub plugin_class: &'static str,
     /// The departments its cops live in.
     pub departments: &'static [&'static str],
     /// The gem's config/default.yml at the version in docs/plugins.md.
@@ -19,42 +21,49 @@ pub struct NativePlugin {
 pub const NATIVE_PLUGINS: &[NativePlugin] = &[
     NativePlugin {
         gem: "rubocop-performance",
+        plugin_class: "RuboCop::Performance::Plugin",
         departments: &["Performance"],
         default_yml: include_str!("../../config/plugins/rubocop-performance.yml"),
         obsoletion: None,
     },
     NativePlugin {
         gem: "rubocop-rails",
+        plugin_class: "RuboCop::Rails::Plugin",
         departments: &["Rails"],
         default_yml: include_str!("../../config/plugins/rubocop-rails.yml"),
         obsoletion: Some(include_str!("../../config/plugins/rubocop-rails-obsoletion.yml")),
     },
     NativePlugin {
         gem: "rubocop-minitest",
+        plugin_class: "RuboCop::Minitest::Plugin",
         departments: &["Minitest"],
         default_yml: include_str!("../../config/plugins/rubocop-minitest.yml"),
         obsoletion: None,
     },
     NativePlugin {
         gem: "rubocop-rspec",
+        plugin_class: "RuboCop::RSpec::Plugin",
         departments: &["RSpec"],
         default_yml: include_str!("../../config/plugins/rubocop-rspec.yml"),
         obsoletion: Some(include_str!("../../config/plugins/rubocop-rspec-obsoletion.yml")),
     },
     NativePlugin {
         gem: "rubocop-rspec_rails",
+        plugin_class: "RuboCop::RSpecRails::Plugin",
         departments: &["RSpecRails"],
         default_yml: include_str!("../../config/plugins/rubocop-rspec_rails.yml"),
         obsoletion: None,
     },
     NativePlugin {
         gem: "rubocop-factory_bot",
+        plugin_class: "RuboCop::FactoryBot::Plugin",
         departments: &["FactoryBot"],
         default_yml: include_str!("../../config/plugins/rubocop-factory_bot.yml"),
         obsoletion: None,
     },
     NativePlugin {
         gem: "rubocop-capybara",
+        plugin_class: "RuboCop::Capybara::Plugin",
         departments: &["Capybara", "Capybara/RSpec"],
         default_yml: include_str!("../../config/plugins/rubocop-capybara.yml"),
         obsoletion: None,

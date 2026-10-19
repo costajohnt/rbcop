@@ -1285,7 +1285,17 @@ impl Store {
                     return Err(problem);
                 }
                 crate::helpers::cop_registry::register_plugin(native);
-                configs.push(Ok(native));
+                // The rules are the plugin class's: one naming another native plugin's class
+                // integrates that plugin's default.yml (again), and this gem's cops run
+                // unconfigured (#627).
+                let rules = match &load {
+                    Load::NamedPlugin(class) => crate::helpers::cop_registry::NATIVE_PLUGINS
+                        .iter()
+                        .find(|p| p.plugin_class == class.trim_start_matches("::"))
+                        .unwrap_or(native),
+                    _ => native,
+                };
+                configs.push(Ok(rules));
                 continue;
             }
             // RuboCop's built-in plugin (Plugin::BUILTIN_INTERNAL_PLUGINS) lives in the rubocop

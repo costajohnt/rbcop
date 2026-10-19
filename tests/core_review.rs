@@ -2019,3 +2019,19 @@ fn internal_affairs_department_after_other_plugins() {
     }
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// A `plugin_class_name` naming another plugin's class integrates that plugin's rules: the entry
+/// gem's cops are registered but unconfigured, so they all run (#627).
+#[test]
+fn plugin_class_name_of_another_plugin_brings_its_rules() {
+    let dir = scratch("plugin-class-other");
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\ny = 'a'.downcase == 'b'\np y\n").unwrap();
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "plugins:\n  - rubocop-rails\n  - rubocop-performance:\n      plugin_class_name: RuboCop::Rails::Plugin\nAllCops:\n  SuggestExtensions: false\n  NewCops: enable\n",
+    )
+    .unwrap();
+    let out = rbcop(&dir, &["-f", "e", "a.rb"]);
+    assert!(text(&out.stdout).contains("Performance/Casecmp"), "{}", text(&out.stdout));
+    let _ = fs::remove_dir_all(&dir);
+}
