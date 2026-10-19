@@ -946,6 +946,24 @@ impl Store {
                     // Plugin::Loader.normalize: `{name => {enabled:, plugin_class_name:}}`.
                     Value::Map(m) => {
                         for (name, config) in &m.0 {
+                            // `DEFAULT_PLUGIN_CONFIG.merge(plugin_config)`: a value that is no Hash
+                            // raises TypeError, before any plugin loads (#619)
+                            if key == "plugins" && config.as_map().is_none() {
+                                let class = match config {
+                                    Value::Null => "nil",
+                                    Value::Bool(true) => "true",
+                                    Value::Bool(false) => "false",
+                                    Value::Int(_) => "Integer",
+                                    Value::Float(_) => "Float",
+                                    Value::Seq(_) => "Array",
+                                    Value::Sym(_) => "Symbol",
+                                    Value::Regex(_) => "Regexp",
+                                    _ => "String",
+                                };
+                                let out: validator::Output = migrate.into_iter().map(|(_, b, s)| (b, s)).collect();
+                                self.emit(&out);
+                                return Err(format!("no implicit conversion of {class} into Hash"));
+                            }
                             let config = config.as_map();
                             if config.and_then(|c| c.get("enabled")) == Some(&Value::Bool(false)) {
                                 continue;

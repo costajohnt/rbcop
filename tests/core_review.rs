@@ -1981,3 +1981,25 @@ fn did_you_mean_tie_in_ruby_order() {
     }
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// Plugin::Loader#normalize merges a Hash entry's value into the default plugin config: a value
+/// that is no Hash raises TypeError before any plugin loads, so it wins over a later broken entry
+/// (#619).
+#[test]
+fn plugin_hash_entry_value_must_be_a_hash() {
+    let dir = scratch("plugin-entry-value");
+    fs::write(dir.join("a.rb"), "x = 1\n").unwrap();
+    for (entries, first) in [
+        ("  - rubocop-performance:\n", "no implicit conversion of nil into Hash"),
+        ("  - rubocop-performance: 1\n", "no implicit conversion of Integer into Hash"),
+        ("  - rubocop-performance: []\n", "no implicit conversion of Array into Hash"),
+        ("  - rubocop-rails:\n  - nonexistent-gem-xyz\n", "no implicit conversion of nil into Hash"),
+    ] {
+        fs::write(dir.join(".rubocop.yml"), format!("plugins:\n{entries}AllCops:\n  SuggestExtensions: false\n"))
+            .unwrap();
+        let out = rbcop(&dir, &["-f", "e", "a.rb"]);
+        assert_eq!(out.status.code(), Some(2), "{entries}");
+        assert_eq!(text(&out.stderr).lines().next().unwrap_or(""), first, "{entries}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
