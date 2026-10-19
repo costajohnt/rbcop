@@ -1871,3 +1871,18 @@ fn directive_warnings_print_when_comment_config_is_read() {
     }
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// A did-you-mean tie (Style/For and Style/Not are as similar to Style/Fooo) comes out as Ruby's
+/// unstable `sort_by` orders the registry's names, in RuboCop's registration order (#612, #632).
+#[test]
+fn did_you_mean_tie_in_ruby_order() {
+    let dir = scratch("did-you-mean-tie");
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nx = 1 # rubocop:disable Style/Fooo\np x\n").unwrap();
+    for plugins in ["", "plugins: [rubocop-rspec]\n"] {
+        fs::write(dir.join(".rubocop.yml"), format!("{plugins}AllCops:\n  SuggestExtensions: false\n")).unwrap();
+        let out = rbcop(&dir, &["-f", "e", "a.rb"]);
+        let stdout = text(&out.stdout);
+        assert_eq!(stdout.matches("(did you mean `Style/For`?)").count(), 2, "{plugins}{stdout}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}

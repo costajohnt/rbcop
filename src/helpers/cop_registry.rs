@@ -85,6 +85,14 @@ fn without_departments<S: AsRef<str>>(names: Vec<S>) -> Vec<S> {
     names.into_iter().zip(keep).filter_map(|(n, k)| k.then_some(n)).collect()
 }
 
+/// Cop names in the order RuboCop registers them (its `require`s, not default.yml's order:
+/// `Registry.global.names` is the did-you-mean dictionary, whose order decides ties), from
+/// src/autocorrect/registry.tsv; a name it lacks keeps its default.yml place after them.
+fn in_registry_order(mut names: Vec<&'static str>) -> Vec<&'static str> {
+    names.sort_by_key(|n| crate::autocorrect::registry_position(n).unwrap_or(usize::MAX));
+    names
+}
+
 /// The registry: RuboCop's own cops, then those of each native plugin in load order. Plugins load
 /// while configs load, before any file is inspected, as RuboCop's global registry fills up then.
 pub struct Registry {
@@ -94,7 +102,7 @@ pub struct Registry {
 }
 
 pub static REGISTRY: Registry = Registry {
-    core: LazyLock::new(|| cop_names(crate::config::DEFAULT_YML)),
+    core: LazyLock::new(|| in_registry_order(cop_names(crate::config::DEFAULT_YML))),
     plugins: RwLock::new((None, Vec::new())),
 };
 
@@ -137,7 +145,7 @@ pub fn register_plugin(plugin: &'static NativePlugin) {
     let mut names = reg.0.unwrap_or_else(|| REGISTRY.core.as_slice()).to_vec();
     // A plugin's default.yml also configures some of RuboCop's cops: those are registered already.
     let new: Vec<&'static str> = cop_names(plugin.default_yml).into_iter().filter(|n| !names.contains(n)).collect();
-    names.extend(new);
+    names.extend(in_registry_order(new));
     // ponytail: leaks one name list per plugin load (a handful per process at most).
     reg.0 = Some(Vec::leak(names));
 }
