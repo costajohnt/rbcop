@@ -68,7 +68,6 @@ impl Cop for IndexedLet {
                 v => v.as_string().and_then(|s| crate::config::value::ruby_regex(&s)),
             })
             .collect();
-        let max = cx.cfg.int("Max").unwrap_or(1);
         // filter_indexed_lets: group by name without digits, groups over Max
         let mut groups: Vec<Group> = Vec::new();
         for stmt in helpers::rspec::body_children(body) {
@@ -87,7 +86,8 @@ impl Cop for IndexedLet {
             }
         }
         for (_, lets) in groups {
-            if lets.len() as i64 <= max {
+            // `lets.length > cop_config['Max']`, read for each group of indexed lets
+            if lets.len() as f64 <= cx.cfg.num("Max").map_or(1.0, Num::f64) {
                 continue;
             }
             for (s, e, name) in lets {

@@ -56,16 +56,8 @@ impl Cop for CollectionLiteralInLoop {
             }
             _ => return,
         };
-        let min_size = match cx.cfg.get("MinSize") {
-            None | Some(Value::Null | Value::Bool(false)) => 1,
-            Some(Value::Int(i)) => *i as usize,
-            Some(v) => match v.as_string().and_then(|s| s.trim().parse::<i64>().ok()) {
-                Some(i) => i as usize,
-                // Integer() raises: the cop errors, no offense.
-                None => return,
-            },
-        };
-        if size < min_size || !helpers::literal_node::recursive_basic_literal(&recv) {
+        // min_size: `Integer(cop_config['MinSize'] || 1)`
+        if (size as i64) < cx.cfg.integer_or("MinSize", 1) || !helpers::literal_node::recursive_basic_literal(&recv) {
             return;
         }
         if class == "Array" && method == "include?" && cx.config.target_ruby >= 3.4 && optimized_include(&call) {

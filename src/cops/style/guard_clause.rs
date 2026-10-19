@@ -244,9 +244,9 @@ impl GuardClause {
         let mut example = format!("{scope} {kw} {cond}");
         let start = p.node.location().start_offset();
         let max = helpers::alignment::cop_enabled(cx, "Layout/LineLength")
-            .then(|| cx.config.for_cop("Layout/LineLength").int_strict("Max").unwrap_or(120));
+            .then(|| helpers::statement_modifier::line_length_max(&cx.config.for_cop("Layout/LineLength")));
         let mut replacement = None;
-        if max.is_some_and(|m| (cx.src.column(start) + example.chars().count()) as i64 > m) {
+        if max.is_some_and(|m| (cx.src.column(start) + example.chars().count()) as f64 > m) {
             let trivial = single(&p.if_branch).is_some_and(|b| {
                 p.else_branch.is_none() && if_parts(&b).is_none() && b.as_parentheses_node().is_none()
             });

@@ -143,13 +143,18 @@ pub fn non_eligible_condition(condition: &Node) -> bool {
     v.found
 }
 
-/// AutocorrectLogic#max_line_length.
-pub fn max_line_length(cx: &Cx) -> Option<usize> {
+/// AutocorrectLogic#max_line_length: `Max || 120`, an Integer or a Float the callers compare
+/// lengths with (a String one raises in the cop asking).
+pub fn max_line_length(cx: &Cx) -> Option<f64> {
     if !cop_enabled(cx, "Layout/LineLength") {
         return None;
     }
-    // `length > max_line_length`: a String `Max` raises in the cop asking
-    Some(cx.config.for_cop("Layout/LineLength").int_strict("Max").unwrap_or(120).max(0) as usize)
+    Some(line_length_max(&cx.config.for_cop("Layout/LineLength")))
+}
+
+/// `config.for_cop('Layout/LineLength')['Max'] || 120` as compared (see Map::num).
+pub fn line_length_max(ll: &crate::config::value::Map) -> f64 {
+    ll.num("Max").map_or(120.0, crate::config::value::Num::f64)
 }
 
 fn tab_indentation_width(cx: &Cx) -> usize {
@@ -178,7 +183,7 @@ pub fn line_length(cx: &Cx, line: &str) -> usize {
 /// StatementModifier#modifier_fits_on_single_line?
 pub fn modifier_fits_on_single_line(cx: &Cx, s: &Stmt, parenthesize: bool) -> bool {
     let Some(max) = max_line_length(cx) else { return true };
-    line_length(cx, &line_in_modifier_form(cx, s, parenthesize)) <= max
+    line_length(cx, &line_in_modifier_form(cx, s, parenthesize)) as f64 <= max
 }
 
 fn line_in_modifier_form(cx: &Cx, s: &Stmt, parenthesize: bool) -> String {
@@ -273,7 +278,7 @@ pub fn parenthesize(ancestors: &[Node]) -> bool {
 }
 
 /// LineLengthHelp#find_excessive_range for URIs, in character columns.
-fn uri_range(cx: &Cx, line: &str, max: usize) -> Option<(usize, usize)> {
+fn uri_range(cx: &Cx, line: &str, max: f64) -> Option<(usize, usize)> {
     let re = uri_regex(&cx.config.for_cop("Layout/LineLength").strings("URISchemes"))?;
     find_excessive_range(line, last_uri(&re, line), max, indentation_difference(cx, line))
 }
@@ -282,7 +287,7 @@ fn uri_range(cx: &Cx, line: &str, max: usize) -> Option<(usize, usize)> {
 pub fn acceptable_line_length(cx: &Cx, line: &str, line_number: usize) -> bool {
     let Some(max) = max_line_length(cx) else { return true };
     let len = line_length(cx, line);
-    if len <= max {
+    if len as f64 <= max {
         return true;
     }
     crate::runner::comment_config_read();
@@ -316,10 +321,10 @@ pub fn acceptable_line_length(cx: &Cx, line: &str, line_number: usize) -> bool {
         && crate::directives::parse(cx.src.slice(c.start, c.end)).is_some()
     {
         let before = DIRECTIVE.split(line).next().unwrap_or("");
-        return before.trim_end_matches([' ', '\t', '\n', '\r', '\x0c', '\x0b', '\0']).chars().count() <= max;
+        return before.trim_end_matches([' ', '\t', '\n', '\r', '\x0c', '\x0b', '\0']).chars().count() as f64 <= max;
     }
     if ll.bool("AllowURI") != Some(true) {
         return false;
     }
-    uri_range(cx, line, max).is_some_and(|(b, e)| b < max && e == len)
+    uri_range(cx, line, max).is_some_and(|(b, e)| (b as f64) < max && e == len)
 }

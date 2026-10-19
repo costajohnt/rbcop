@@ -19,19 +19,19 @@ pub fn dump(map: &Map) -> String {
     text.split_once('\n').map_or(String::new(), |(_, rest)| rest.to_string())
 }
 
-/// The events so far, with YAMLTree's Registrar: an Array or Hash met again (the same object, here
+/// The events so far, with YAMLTree's Registrar: an Array, Hash or Regexp met again (the same object, here
 /// the same `Arc`) is written as an alias, and its first occurrence gets the anchor, numbered in
 /// the order the aliases are met.
 #[derive(Default)]
 struct Dumper {
     events: Vec<Event>,
-    /// A visited collection's address: the index of its start event and its anchor number.
+    /// A visited collection's (or Regexp's) address: the index of its start event and its anchor number.
     seen: HashMap<usize, (usize, Option<usize>)>,
     anchors: usize,
 }
 
 impl Dumper {
-    /// Registers the collection at `addr`, or, met before, writes its alias and returns true.
+    /// Registers the collection (or Regexp) at `addr`, or, met before, writes its alias and returns true.
     fn alias(&mut self, addr: usize) -> bool {
         let Some((start, id)) = self.seen.get_mut(&addr) else {
             self.seen.insert(addr, (self.events.len(), None));
@@ -41,7 +41,9 @@ impl Dumper {
             self.anchors += 1;
             self.anchors
         });
-        if let Event::SequenceStart { anchor, .. } | Event::MappingStart { anchor, .. } = &mut self.events[*start] {
+        if let Event::SequenceStart { anchor, .. } | Event::MappingStart { anchor, .. } | Event::Scalar { anchor, .. } =
+            &mut self.events[*start]
+        {
             *anchor = Some(id.to_string());
         }
         self.events.push(Event::Alias { anchor: id.to_string() });
@@ -62,7 +64,14 @@ fn visit_map(d: &mut Dumper, map: &Map) {
 }
 
 fn scalar(tag: Option<&str>, value: String, plain: bool, quoted: bool, style: ScalarStyle) -> Event {
-    Event::Scalar { tag: tag.map(String::from), value, plain_implicit: plain, quoted_implicit: quoted, style }
+    Event::Scalar {
+        anchor: None,
+        tag: tag.map(String::from),
+        value,
+        plain_implicit: plain,
+        quoted_implicit: quoted,
+        style,
+    }
 }
 
 fn visit(d: &mut Dumper, v: &Value) {
@@ -97,7 +106,9 @@ fn visit(d: &mut Dumper, v: &Value) {
             };
             scalar(None, text, true, false, ScalarStyle::Any)
         }
-        Value::Regex(r) => scalar(Some("!ruby/regexp"), r.clone(), false, false, ScalarStyle::Any),
+        // visit_Regexp registers the Regexp: an aliased one is written once
+        Value::Regex(r) if d.alias(Arc::as_ptr(r) as usize) => return,
+        Value::Regex(r) => scalar(Some("!ruby/regexp"), r.to_string(), false, false, ScalarStyle::Any),
         // An empty Symbol (`!ruby/sym ''`) is the only `Sym(":")`.
         Value::Sym(s) if s == ":" => scalar(Some("!ruby/symbol"), String::new(), false, false, ScalarStyle::Any),
         Value::Sym(s) => scalar(None, s.clone(), true, false, ScalarStyle::Any),
@@ -220,5 +231,13 @@ mod tests {
         }
         let Value::Map(m) = crate::config::value::parse_yaml(&bomb).unwrap() else { panic!() };
         assert!(dump(&m).ends_with("m40:\n  l: *40\n  r: *40\n"));
+    }
+    // visit_Regexp registers the Regexp too (#624): an aliased one is anchored, an equal one is not
+    #[test]
+    fn shared_regexp_is_anchored() {
+        let src = "a: [&r !ruby/regexp /x/, *r]\nb: *r\ni: !ruby/regexp /x/\nk: {z: *r}\n";
+        let Value::Map(m) = crate::config::value::parse_yaml(src).unwrap() else { panic!() };
+        let expected = "a:\n- &1 !ruby/regexp /x/\n- *1\nb: *1\ni: !ruby/regexp /x/\nk:\n  z: *1\n";
+        assert_eq!(dump(&m), expected);
     }
 }

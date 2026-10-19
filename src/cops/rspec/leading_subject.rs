@@ -26,17 +26,19 @@ impl Cop for LeadingSubject {
         // node.each_ancestor(:block).first.body (`block` only: numblocks and itblocks are skipped)
         let Some(block) = cx.ancestors.iter().rev().find_map(|a| helpers::rspec::plain_block_call(a)) else { return };
         let body = helpers::rspec::block_body(&block);
-        // `each_child_node` of a non-`begin` body are the parts of one statement: never offending
-        // in practice, and never the subject itself.
-        if !helpers::rspec::is_begin_body(&body) {
-            return;
-        }
-        let start = node.location().start_offset();
-        let stmts = helpers::rspec::body_children(body);
-        let Some(offender) = stmts.iter().take_while(|s| s.location().start_offset() != start).find(|s| offending(&l, s))
-        else {
-            return;
+        // `body.each_child_node`: a `begin`'s statements, else the parts of the one statement
+        let siblings = if helpers::rspec::is_begin_body(&body) {
+            helpers::rspec::body_children(body)
+        } else {
+            helpers::rspec::parser_body(body).map(|s| helpers::rspec::child_nodes(&s)).unwrap_or_default()
         };
+        // `break if sibling.equal?(node)`: a subject that is no sibling itself (`subject { } if c`)
+        // never stops the walk, so a later example is an offender too (and a nil Language list
+        // raises there)
+        let key = helpers::rspec::node_range(node);
+        let is_node = |s: &Node| s.as_call_node().is_some() && helpers::rspec::node_range(s) == key;
+        // `find` stops at the first offender (its add_offense is truthy)
+        let Some(offender) = siblings.iter().take_while(|s| !is_node(s)).find(|s| offending(&l, s)) else { return };
         let name = method_name(&offender.as_call_node().unwrap()).to_string();
         let anc = cx.ancestors;
         let Some(mv) = helpers::rspec::MoveNode::new(cx.src, &anc[0], node, offender, false) else { return };

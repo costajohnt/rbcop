@@ -1,7 +1,7 @@
 //! Everything a cop file usually needs: `use crate::prelude::*;`.
 
 pub use crate::ast::*;
-pub use crate::config::value::{Map, Value};
+pub use crate::config::value::{Map, Num, Value};
 pub use crate::cop::{Cop, Corrector, Cx};
 pub use crate::helpers;
 pub use crate::node_kind as kind;

@@ -45,11 +45,14 @@ impl Cop for NestedGroups {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let l = helpers::rspec::lang(cx);
-        let max = match cx.cfg.get("MaxNesting") {
-            Some(v) => helpers::rspec::config_integer(Some(v)).unwrap_or(3),
-            None => helpers::rspec::config_integer(cx.cfg.get("Max")).unwrap_or(3),
-        };
+        // max_nesting: `Integer(cop_config.fetch('Max', 3))` (or the deprecated MaxNesting),
+        // memoized, first read at a top-level group (a Symbol raises there)
+        let mut max = None;
         helpers::rspec::each_top_level_group(&l, node, |_, group, _| {
+            let max = *max.get_or_insert_with(|| match cx.cfg.get("MaxNesting") {
+                Some(_) => cx.cfg.integer_fetch("MaxNesting", 3),
+                None => cx.cfg.integer_fetch("Max", 3),
+            });
             // add_offense is immediate: the offenses found before a raise are kept
             helpers::rspec::add_found(
                 cx,

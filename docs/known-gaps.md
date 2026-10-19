@@ -297,12 +297,23 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   on `def foo(bar` / `    )end`, Style/NegativeArrayIndex, Style/HashConversion, Style/RequireOrder).
   Cop errors from config values (MinBodyLength / MinBranchesCount not a positive Integer,
   SafeNavigationChainLength `Max` 0 or less, a zero indentation width with tabs, #114) are
-  reproduced, and so are a cop's numeric settings given as a String or Symbol (`Max: "80"`,
-  #610: a cop error where the cop compares or adds them, also `Layout/LineLength` `Max` read by
-  other cops), except that a String `Metrics/ParameterLists` `Max` makes RuboCop crash
+  reproduced, and so are a cop's numeric settings given as a String, Symbol or Float (`Max: "80"`,
+  `Max: :a`, `Max: 1.5`; #610, #620, #621): each cop reads one where and as its RuboCop
+  counterpart does. A bare `cop_config['Max']` that is compared or added raises on a String or
+  Symbol (a cop error), and a Float is compared as it is and printed as Ruby prints it (`1.5` in
+  `#{}` / `%s`, truncated by `%d`); `Integer(...)` (Minitest/MultipleAssertions,
+  RSpec/MultipleExpectations, RSpec/NestedGroups, Performance/CollectionLiteralInLoop,
+  Performance/RedundantMerge) takes a numeric String (`"3"`, `"0x3"`, `"1_0"`), truncates a
+  Float and raises on a Symbol or another String; a Float `Layout/LineLength` `Max` makes that cop
+  raise at its first too-long line (a Float range), as in RuboCop, and is compared as a Float by
+  the cops reading it. Exceptions: a String `Metrics/ParameterLists` `Max` makes RuboCop crash
   (`undefined method 'line' for nil`, exit 2) at the first args node without a location, a cop
-  error at the def or block in rbcop, and that other cops reading a String
-  `Layout/IndentationWidth` `Width` get the default width (RuboCop raises where they use it); and so are list settings given as a YAML String (#440, #474): each cop reads one as
+  error at the def or block in rbcop; other cops reading a String or Float
+  `Layout/IndentationWidth` `Width` get the default or the truncated width (RuboCop raises or
+  computes with the Float where they use it); a numeric setting set to `~`, `true`, `false` or a
+  list mostly reads as the default where RuboCop raises on comparing it; a Float
+  `Layout/EmptyLineBetweenDefs` `NumberOfEmptyLines` whose difference to the count truncates to 0
+  (`0.5`, one blank line) gives an offense without `[Correctable]`. And so are list settings given as a YAML String (#440, #474): each cop reads one as
   its RuboCop counterpart does, a substring test where the cop calls `include?` on the bare
   setting, a cop error where it calls an Array-only method (`map`, `any?`, `each`, `join`, `+`,
   `-`), a one-element list where it wraps the setting in `Array()`. A list set to `~` (#500) is

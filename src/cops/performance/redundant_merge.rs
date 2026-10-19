@@ -29,17 +29,11 @@ impl Cop for RedundantMerge {
             _ => return,
         };
         // non_redundant_merge?
-        let max = match cx.cfg.get("MaxKeyValuePairs") {
-            None | Some(Value::Null | Value::Bool(false)) => 2,
-            Some(Value::Int(i)) => *i as usize,
-            Some(v) => match v.as_string().and_then(|s| s.trim().parse::<i64>().ok()) {
-                Some(i) => i as usize,
-                None => return,
-            },
-        };
+        // max_key_value_pairs: `Integer(cop_config['MaxKeyValuePairs'] || 2)`, read unless an
+        // earlier condition holds
         if pairs.is_empty()
             || (pairs.len() > 1 && !helpers::pure::pure(&recv))
-            || pairs.len() > max
+            || pairs.len() as i64 > cx.cfg.integer_or("MaxKeyValuePairs", 2)
             || pairs.iter().any(|p| p.as_assoc_splat_node().is_some())
         {
             return;

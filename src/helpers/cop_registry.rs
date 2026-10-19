@@ -8,6 +8,8 @@ use std::sync::{LazyLock, RwLock};
 /// not be installed: `plugins:` / `require:` of it registers its cops and merges that file.
 pub struct NativePlugin {
     pub gem: &'static str,
+    /// Its `default_lint_roller_plugin` class.
+    pub plugin_class: &'static str,
     /// The departments its cops live in.
     pub departments: &'static [&'static str],
     /// The gem's config/default.yml at the version in docs/plugins.md.
@@ -19,42 +21,49 @@ pub struct NativePlugin {
 pub const NATIVE_PLUGINS: &[NativePlugin] = &[
     NativePlugin {
         gem: "rubocop-performance",
+        plugin_class: "RuboCop::Performance::Plugin",
         departments: &["Performance"],
         default_yml: include_str!("../../config/plugins/rubocop-performance.yml"),
         obsoletion: None,
     },
     NativePlugin {
         gem: "rubocop-rails",
+        plugin_class: "RuboCop::Rails::Plugin",
         departments: &["Rails"],
         default_yml: include_str!("../../config/plugins/rubocop-rails.yml"),
         obsoletion: Some(include_str!("../../config/plugins/rubocop-rails-obsoletion.yml")),
     },
     NativePlugin {
         gem: "rubocop-minitest",
+        plugin_class: "RuboCop::Minitest::Plugin",
         departments: &["Minitest"],
         default_yml: include_str!("../../config/plugins/rubocop-minitest.yml"),
         obsoletion: None,
     },
     NativePlugin {
         gem: "rubocop-rspec",
+        plugin_class: "RuboCop::RSpec::Plugin",
         departments: &["RSpec"],
         default_yml: include_str!("../../config/plugins/rubocop-rspec.yml"),
         obsoletion: Some(include_str!("../../config/plugins/rubocop-rspec-obsoletion.yml")),
     },
     NativePlugin {
         gem: "rubocop-rspec_rails",
+        plugin_class: "RuboCop::RSpecRails::Plugin",
         departments: &["RSpecRails"],
         default_yml: include_str!("../../config/plugins/rubocop-rspec_rails.yml"),
         obsoletion: None,
     },
     NativePlugin {
         gem: "rubocop-factory_bot",
+        plugin_class: "RuboCop::FactoryBot::Plugin",
         departments: &["FactoryBot"],
         default_yml: include_str!("../../config/plugins/rubocop-factory_bot.yml"),
         obsoletion: None,
     },
     NativePlugin {
         gem: "rubocop-capybara",
+        plugin_class: "RuboCop::Capybara::Plugin",
         departments: &["Capybara", "Capybara/RSpec"],
         default_yml: include_str!("../../config/plugins/rubocop-capybara.yml"),
         obsoletion: None,
@@ -85,6 +94,14 @@ fn without_departments<S: AsRef<str>>(names: Vec<S>) -> Vec<S> {
     names.into_iter().zip(keep).filter_map(|(n, k)| k.then_some(n)).collect()
 }
 
+/// Cop names in the order RuboCop registers them (its `require`s, not default.yml's order:
+/// `Registry.global.names` is the did-you-mean dictionary, whose order decides ties), from
+/// src/autocorrect/registry.tsv; a name it lacks keeps its default.yml place after them.
+fn in_registry_order(mut names: Vec<&'static str>) -> Vec<&'static str> {
+    names.sort_by_key(|n| crate::autocorrect::registry_position(n).unwrap_or(usize::MAX));
+    names
+}
+
 /// The registry: RuboCop's own cops, then those of each native plugin in load order. Plugins load
 /// while configs load, before any file is inspected, as RuboCop's global registry fills up then.
 pub struct Registry {
@@ -94,7 +111,7 @@ pub struct Registry {
 }
 
 pub static REGISTRY: Registry = Registry {
-    core: LazyLock::new(|| cop_names(crate::config::DEFAULT_YML)),
+    core: LazyLock::new(|| in_registry_order(cop_names(crate::config::DEFAULT_YML))),
     plugins: RwLock::new((None, Vec::new())),
 };
 
@@ -137,9 +154,18 @@ pub fn register_plugin(plugin: &'static NativePlugin) {
     let mut names = reg.0.unwrap_or_else(|| REGISTRY.core.as_slice()).to_vec();
     // A plugin's default.yml also configures some of RuboCop's cops: those are registered already.
     let new: Vec<&'static str> = cop_names(plugin.default_yml).into_iter().filter(|n| !names.contains(n)).collect();
-    names.extend(new);
+    names.extend(in_registry_order(new));
+    internal_affairs_last(&mut names);
     // ponytail: leaks one name list per plugin load (a handful per process at most).
     reg.0 = Some(Vec::leak(names));
+}
+
+/// rubocop-internal_affairs' cops are enlisted (Registry#enlist), not registered: they join the
+/// registry, and their department the departments, when the enrollment queue is next cleared, after
+/// the cops of the plugins the same config loads (#626).
+// ponytail: always last, also after a plugin that only a later subdirectory config loads.
+fn internal_affairs_last(names: &mut [&'static str]) {
+    names.sort_by_key(|n| department_of(n) == "InternalAffairs");
 }
 
 /// Registers the cops a plugin rbcop does not implement declares in its default.yml: RuboCop
@@ -152,6 +178,7 @@ pub fn register_foreign(names: Vec<String>) {
         return;
     }
     all.extend(new.into_iter().map(|n| &*String::leak(n)));
+    internal_affairs_last(&mut all);
     reg.0 = Some(Vec::leak(all));
     drop(reg);
     OPEN.write().unwrap().foreign = true;

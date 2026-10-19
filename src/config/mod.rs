@@ -141,9 +141,21 @@ impl CopConfig {
             _ => panic!("{key} needs to be a positive integer!"),
         }
     }
-    /// `cop_config[key]` as a number (see Map::int_strict: a String one raises).
+    /// `cop_config[key]` as a number, a Float truncated (see Map::num: a String one raises).
     pub fn int(&self, key: &str) -> Option<i64> {
-        self.params.int_strict(key)
+        self.params.num(key).map(|n| n.f64() as i64)
+    }
+    /// `cop_config[key]` as an Integer or a Float (Map::num).
+    pub fn num(&self, key: &str) -> Option<value::Num> {
+        self.params.num(key)
+    }
+    /// `Integer(cop_config.fetch(key, default))` (Map::integer_fetch).
+    pub fn integer_fetch(&self, key: &str, default: i64) -> i64 {
+        self.params.integer_fetch(key, default)
+    }
+    /// `Integer(cop_config[key] || default)` (Map::integer_or).
+    pub fn integer_or(&self, key: &str, default: i64) -> i64 {
+        self.params.integer_or(key, default)
     }
     pub fn strings(&self, key: &str) -> Vec<String> {
         self.params.strings(key)
@@ -934,6 +946,24 @@ impl Store {
                     // Plugin::Loader.normalize: `{name => {enabled:, plugin_class_name:}}`.
                     Value::Map(m) => {
                         for (name, config) in &m.0 {
+                            // `DEFAULT_PLUGIN_CONFIG.merge(plugin_config)`: a value that is no Hash
+                            // raises TypeError, before any plugin loads (#619)
+                            if key == "plugins" && config.as_map().is_none() {
+                                let class = match config {
+                                    Value::Null => "nil",
+                                    Value::Bool(true) => "true",
+                                    Value::Bool(false) => "false",
+                                    Value::Int(_) => "Integer",
+                                    Value::Float(_) => "Float",
+                                    Value::Seq(_) => "Array",
+                                    Value::Sym(_) => "Symbol",
+                                    Value::Regex(_) => "Regexp",
+                                    _ => "String",
+                                };
+                                let out: validator::Output = migrate.into_iter().map(|(_, b, s)| (b, s)).collect();
+                                self.emit(&out);
+                                return Err(format!("no implicit conversion of {class} into Hash"));
+                            }
                             let config = config.as_map();
                             if config.and_then(|c| c.get("enabled")) == Some(&Value::Bool(false)) {
                                 continue;
@@ -1255,7 +1285,17 @@ impl Store {
                     return Err(problem);
                 }
                 crate::helpers::cop_registry::register_plugin(native);
-                configs.push(Ok(native));
+                // The rules are the plugin class's: one naming another native plugin's class
+                // integrates that plugin's default.yml (again), and this gem's cops run
+                // unconfigured (#627).
+                let rules = match &load {
+                    Load::NamedPlugin(class) => crate::helpers::cop_registry::NATIVE_PLUGINS
+                        .iter()
+                        .find(|p| p.plugin_class == class.trim_start_matches("::"))
+                        .unwrap_or(native),
+                    _ => native,
+                };
+                configs.push(Ok(rules));
                 continue;
             }
             // RuboCop's built-in plugin (Plugin::BUILTIN_INTERNAL_PLUGINS) lives in the rubocop

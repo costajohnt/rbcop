@@ -887,7 +887,7 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
     fs::create_dir_all(dir.join("spec")).unwrap();
     let file = dir.join("spec/foo_spec.rb").display().to_string();
     type Case<'a> = (&'a str, &'a str, &'a str, &'a [&'a str], &'a [&'a str]);
-    let cases: [Case; 18] = [
+    let cases: [Case; 21] = [
         (
             "Examples:\n      Focused: ~",
             "RSpec/VoidExpect",
@@ -1008,6 +1008,31 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
         // namespaced casgn is asked inside_describe_block?
         ("Helpers: ~", "RSpec/LetSetup", "describe Foo, :meta do\nend\n", &[], &["F:3:0."]),
         ("ExampleGroups: ~", "RSpec/LeakyConstantDeclaration", "describe Foo do\n  ::A = 1\nend\n", &[], &["F:4:2."]),
+        // a subject that is no sibling (`subject { } if c`) never stops LeadingSubject's walk: the
+        // later example is asked hook? (#622)
+        (
+            "Hooks: ~",
+            "RSpec/LeadingSubject",
+            "describe Foo do\n  subject(:x) { 2 } if c\n  it { }\nend\n",
+            &[],
+            &["F:4:2."],
+        ),
+        // a group body that is one `super { }` / `super(1) { }`: its child nodes are the block's
+        // args and body (#623)
+        (
+            "Helpers: ~",
+            "RSpec/EmptyLineAfterFinalLet",
+            "describe Foo do\n  context \"a\" do\n    super { it { } }\n  end\nend\n",
+            &[],
+            &["F:4:2."],
+        ),
+        (
+            "Subjects: ~",
+            "RSpec/OverwritingSetup",
+            "describe Foo do\n  context \"b\" do\n    super(1) { it { } }\n  end\nend\n",
+            &[],
+            &["F:4:2."],
+        ),
     ];
     for (list, cop, source, offenses, errors) in cases {
         let config = format!(
@@ -1058,6 +1083,76 @@ fn string_numeric_setting_raises_where_compared() {
             })
             .collect();
         assert_eq!(printed, errors, "{cfg}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// Numeric settings are read where and as each cop's Ruby source reads them (#620, #621): a bare
+/// compare keeps a Float (compared, printed as Ruby prints it), `Integer()` takes a numeric
+/// String and raises on a Symbol, IndexedLet only reads `Max` for a group of indexed lets.
+#[test]
+fn numeric_settings_read_per_cop() {
+    let dir = scratch("numeric-per-cop");
+    fs::create_dir_all(dir.join("spec")).unwrap();
+    fs::create_dir_all(dir.join("test")).unwrap();
+    let test = dir.join("test/a_test.rb").display().to_string();
+    let file = dir.join("a.rb").display().to_string();
+    let spec = dir.join("spec/a_spec.rb").display().to_string();
+    let nesting = "def a\n  if x\n    if y\n      1\n    end\n  end\nend\ndef b; end\n";
+    let minitest =
+        "class FooTest < Minitest::Test\n  def test_a\n    assert a\n    assert b\n    assert c\n  end\nend\n";
+    let example =
+        "describe Foo do\n  let(:a) { 1 }\n  it do\n    expect(a).to eq(1)\n    expect(a).to eq(2)\n  end\nend\n";
+    // (config, path, source, offenses, error locations)
+    type NumCase<'a> = (&'a str, &'a str, &'a str, &'a [&'a str], &'a [&'a str]);
+    let cases: &[NumCase] = &[
+        (
+            "Metrics/BlockNesting:\n  Max: 1.5",
+            "a.rb",
+            nesting,
+            &["F:3:5: R: Metrics/BlockNesting: Avoid more than 1.5 levels of block nesting."],
+            &[],
+        ),
+        (
+            "Layout/EmptyLineBetweenDefs:\n  NumberOfEmptyLines: 1.5",
+            "a.rb",
+            nesting,
+            &[
+                "F:8:1: C: [Correctable] Layout/EmptyLineBetweenDefs: Expected 1.5 empty lines between method definitions; found 0.",
+            ],
+            &[],
+        ),
+        ("Layout/LineLength:\n  Max: 5.5", "a.rb", nesting, &[], &["F."]),
+        (
+            "Minitest/MultipleAssertions:\n  Max: \"2\"",
+            "test/a_test.rb",
+            minitest,
+            &["T:2:3: C: Minitest/MultipleAssertions: Test case has too many assertions [3/2]."],
+            &[],
+        ),
+        ("RSpec/IndexedLet:\n  Max: \"3\"", "spec/a_spec.rb", example, &[], &[]),
+        ("RSpec/MultipleExpectations:\n  Max: :a", "spec/a_spec.rb", example, &[], &["S:3:2."]),
+        ("RSpec/NestedGroups:\n  Max: :a", "spec/a_spec.rb", example, &[], &["S."]),
+    ];
+    for (cfg, path, source, offenses, errors) in cases {
+        let config = format!(
+            "plugins:\n  - rubocop-minitest\n  - rubocop-rspec\nAllCops:\n  NewCops: enable\n  SuggestExtensions: false\n{cfg}\n"
+        );
+        fs::write(dir.join(".rubocop.yml"), config).unwrap();
+        fs::write(dir.join(path), source).unwrap();
+        let cop = cfg.split(':').next().unwrap();
+        let out = rbcop(&dir, &["-f", "e", "--only", cop, path]);
+        let stdout = text(&out.stdout).replace(&spec, "S").replace(&test, "T").replace(&file, "F");
+        assert_eq!(stdout.lines().collect::<Vec<_>>(), *offenses, "{cfg}");
+        let printed: Vec<String> = text(&out.stderr)
+            .lines()
+            .take_while(|l| !l.is_empty())
+            .filter_map(|l| {
+                l.strip_prefix(&format!("An error occurred while {cop} cop was inspecting "))
+                    .map(|l| l.replace(&spec, "S").replace(&file, "F"))
+            })
+            .collect();
+        assert_eq!(printed, *errors, "{cfg}");
     }
     let _ = fs::remove_dir_all(&dir);
 }
@@ -1869,5 +1964,121 @@ fn directive_warnings_print_when_comment_config_is_read() {
             .collect();
         assert_eq!(got, want, "{args:?}: {stderr}");
     }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// A did-you-mean tie (Style/For and Style/Not are as similar to Style/Fooo) comes out as Ruby's
+/// unstable `sort_by` orders the registry's names, in RuboCop's registration order (#612, #632).
+#[test]
+fn did_you_mean_tie_in_ruby_order() {
+    let dir = scratch("did-you-mean-tie");
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nx = 1 # rubocop:disable Style/Fooo\np x\n").unwrap();
+    for plugins in ["", "plugins: [rubocop-rspec]\n"] {
+        fs::write(dir.join(".rubocop.yml"), format!("{plugins}AllCops:\n  SuggestExtensions: false\n")).unwrap();
+        let out = rbcop(&dir, &["-f", "e", "a.rb"]);
+        let stdout = text(&out.stdout);
+        assert_eq!(stdout.matches("(did you mean `Style/For`?)").count(), 2, "{plugins}{stdout}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// Plugin::Loader#normalize merges a Hash entry's value into the default plugin config: a value
+/// that is no Hash raises TypeError before any plugin loads, so it wins over a later broken entry
+/// (#619).
+#[test]
+fn plugin_hash_entry_value_must_be_a_hash() {
+    let dir = scratch("plugin-entry-value");
+    fs::write(dir.join("a.rb"), "x = 1\n").unwrap();
+    for (entries, first) in [
+        ("  - rubocop-performance:\n", "no implicit conversion of nil into Hash"),
+        ("  - rubocop-performance: 1\n", "no implicit conversion of Integer into Hash"),
+        ("  - rubocop-performance: []\n", "no implicit conversion of Array into Hash"),
+        ("  - rubocop-rails:\n  - nonexistent-gem-xyz\n", "no implicit conversion of nil into Hash"),
+    ] {
+        fs::write(dir.join(".rubocop.yml"), format!("plugins:\n{entries}AllCops:\n  SuggestExtensions: false\n"))
+            .unwrap();
+        let out = rbcop(&dir, &["-f", "e", "a.rb"]);
+        assert_eq!(out.status.code(), Some(2), "{entries}");
+        assert_eq!(text(&out.stderr).lines().next().unwrap_or(""), first, "{entries}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// rubocop-internal_affairs' cops are enlisted, not registered: InternalAffairs comes after the
+/// departments of the plugins the same config loads, so `Minitest/RedundantMessageArgument` stays
+/// qualified and in the pending-cops notice (#626).
+#[test]
+fn internal_affairs_department_after_other_plugins() {
+    let dir = scratch("internal-affairs-order");
+    fs::write(dir.join("a.rb"), "x = 1\n").unwrap();
+    for plugins in ["[rubocop-internal_affairs, rubocop-minitest]", "[rubocop-minitest, rubocop-internal_affairs]"] {
+        fs::write(dir.join(".rubocop.yml"), format!("plugins: {plugins}\nAllCops:\n  SuggestExtensions: false\n"))
+            .unwrap();
+        let out = rbcop(&dir, &["-f", "e", "a.rb"]);
+        assert!(text(&out.stderr).contains("\nMinitest/RedundantMessageArgument: # new in"), "{plugins}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// A `plugin_class_name` naming another plugin's class integrates that plugin's rules: the entry
+/// gem's cops are registered but unconfigured, so they all run (#627).
+#[test]
+fn plugin_class_name_of_another_plugin_brings_its_rules() {
+    let dir = scratch("plugin-class-other");
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\ny = 'a'.downcase == 'b'\np y\n").unwrap();
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "plugins:\n  - rubocop-rails\n  - rubocop-performance:\n      plugin_class_name: RuboCop::Rails::Plugin\nAllCops:\n  SuggestExtensions: false\n  NewCops: enable\n",
+    )
+    .unwrap();
+    let out = rbcop(&dir, &["-f", "e", "a.rb"]);
+    assert!(text(&out.stdout).contains("Performance/Casecmp"), "{}", text(&out.stdout));
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// rubocop-rails reads config/database.yml with YAML.unsafe_load_file: a class Ruby cannot resolve
+/// raises in the cop, at every node that asks for the database (#629).
+#[test]
+fn database_yml_unresolvable_class_raises_in_cop() {
+    let dir = scratch("database-yml-class");
+    fs::create_dir_all(dir.join("config")).unwrap();
+    fs::create_dir_all(dir.join("db/migrate")).unwrap();
+    fs::write(dir.join(".rubocop.yml"), "plugins:\n  - rubocop-rails\nAllCops:\n  NewCops: enable\n  SuggestExtensions: false\n  TargetRailsVersion: 7.0\n").unwrap();
+    let file = "db/migrate/20200101000000_add_users.rb";
+    fs::write(
+        dir.join(file),
+        "class AddUsers < ActiveRecord::Migration[7.0]\n  def change\n    add_column :users, :name, :string\n    add_column :users, :age, :integer\n  end\nend\n",
+    )
+    .unwrap();
+    for (x, errors) in [("!ruby/object:Foo {}", 4), ("!ruby/object:Date {}", 0), ("!ruby/class Foo", 4)] {
+        fs::write(dir.join("config/database.yml"), format!("development:\n  adapter: postgresql\n  x: {x}\n")).unwrap();
+        let out = rbcop(&dir, &["-f", "e", "--only", "Rails/BulkChangeTable", file]);
+        let printed = text(&out.stderr)
+            .lines()
+            .take_while(|l| !l.is_empty())
+            .filter(|l| l.starts_with("An error occurred"))
+            .count();
+        assert_eq!(printed, errors, "{x}");
+        assert_eq!(text(&out.stdout).contains("BulkChangeTable"), errors == 0, "{x}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// An RSpec/LeakyLocalVariable raise (a nil Language list) ends RuboCop's VariableForce walk for
+/// every joining cop: their offenses from scopes left later are lost (#631).
+#[test]
+fn leaky_local_variable_error_cuts_the_force_walk() {
+    let dir = scratch("force-walk-cut");
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "plugins: [rubocop-rspec]\nAllCops:\n  DisabledByDefault: true\n  SuggestExtensions: false\nRSpec:\n  Include: [\"**/*.rb\"]\n  Language:\n    Hooks:\nLint/UselessAssignment:\n  Enabled: true\nLint/UnusedBlockArgument:\n  Enabled: true\nRSpec/LeakyLocalVariable:\n  Enabled: true\n",
+    )
+    .unwrap();
+    fs::write(dir.join("c.rb"), "describe Foo do\n  before do\n    x = 1\n  end\n  [1].each { |a| 1 }\nend\n").unwrap();
+    let out = rbcop(&dir, &["-f", "e", "c.rb"]);
+    let stdout = text(&out.stdout);
+    assert!(stdout.contains("Lint/UselessAssignment"), "{stdout}");
+    assert!(!stdout.contains("Lint/UnusedBlockArgument"), "{stdout}");
+    assert!(text(&out.stderr).contains("An error occurred while RSpec/LeakyLocalVariable cop was inspecting"));
     let _ = fs::remove_dir_all(&dir);
 }

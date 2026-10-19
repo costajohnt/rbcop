@@ -496,7 +496,7 @@ fn exceeds_line_limit(cx: &Cx, node: &Node, assignment: &str) -> bool {
     if !ll.truthy("Enabled") {
         return false;
     }
-    let max = ll.int_strict("Max").unwrap_or(120) as usize;
+    let max = helpers::statement_modifier::line_length_max(&ll);
     let mut pat = String::from(r"[\t\n\v\f\r ]*");
     for ch in assignment.chars() {
         if ch == ' ' {
@@ -515,7 +515,7 @@ fn exceeds_line_limit(cx: &Cx, node: &Node, assignment: &str) -> bool {
         })
         .max()
         .unwrap_or(0);
-    assignment.chars().count() + longest > max
+    (assignment.chars().count() + longest) as f64 > max
 }
 
 /// move_assignment_outside_condition.

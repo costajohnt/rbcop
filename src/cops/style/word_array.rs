@@ -24,7 +24,7 @@ fn complex_content(values: &[Node], re: Option<&RubyRegex>) -> bool {
 
 fn word_regex(cx: &Cx) -> Option<RubyRegex> {
     let raw = match cx.cfg.get("WordRegex")? {
-        Value::Regex(r) => r.clone(),
+        Value::Regex(r) => r.to_string(),
         v => v.as_string()?,
     };
     ruby_regex(&raw)

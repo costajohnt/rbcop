@@ -53,10 +53,11 @@ impl Cop for BulkChangeTable {
             return on_def(cx, &d);
         }
         let Some(call) = helpers::rails::send(node) else { return };
+        // on_send asks support_bulk_alter? (the database) of every send first
+        let Some((transformations, _)) = lists(cx) else { return };
         if !helpers::rails::is_command(&call, "change_table") {
             return;
         }
-        let Some((transformations, _)) = lists(cx) else { return };
         // include_bulk_options?
         let args = send_args(&call);
         if args.get(1).is_some_and(|o| {

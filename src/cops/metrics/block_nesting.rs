@@ -23,7 +23,7 @@ struct Nesting<'a, 'b, 'c> {
     cx: &'a mut Cx<'b, 'c>,
     /// `cop_config['Max']`, read at the first considered node (`current_level > max` raises for a
     /// String one there).
-    max: Option<i64>,
+    max: Option<Num>,
     blocks: bool,
     modifiers: bool,
     level: i64,
@@ -55,8 +55,8 @@ impl<'pr> Nesting<'_, '_, '_> {
     fn nest(&mut self, range: (usize, usize), counts: bool, walk: impl FnOnce(&mut Self)) {
         let saved = self.level;
         self.level += counts as i64;
-        let max = *self.max.get_or_insert_with(|| self.cx.cfg.int("Max").unwrap_or(0));
-        if self.level > max && !self.ignored.iter().any(|&(s, e)| s <= range.0 && e >= range.1) {
+        let max = *self.max.get_or_insert_with(|| self.cx.cfg.num("Max").unwrap_or(Num::Int(0)));
+        if self.level as f64 > max.f64() && !self.ignored.iter().any(|&(s, e)| s <= range.0 && e >= range.1) {
             let ran = Cell::new(false);
             let msg = format!("Avoid more than {max} levels of block nesting.");
             self.cx.add_fix(range.0, range.1, msg, |_| ran.set(true));
