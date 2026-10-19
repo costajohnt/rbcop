@@ -129,6 +129,11 @@ fn describe(cop: &str) -> String {
     if known(cop) {
         return format!("`{cop}`");
     }
+    describe_unknown(cop)
+}
+
+/// SIMILAR_COP_NAMES_CACHE[cop]: a registered cop of the same base name, else a similar name.
+fn describe_unknown(cop: &str) -> String {
     let basename = format!("/{}", cop.rsplit('/').next().unwrap_or(""));
     let similar = REGISTRY.iter().copied().find(|n| n.ends_with(&basename)).or_else(|| {
         let names: Vec<&str> = REGISTRY.iter().copied().filter(|n| *n != cop).collect();
@@ -138,6 +143,22 @@ fn describe(cop: &str) -> String {
         Some(s) => format!("`{cop}` (did you mean `{s}`?)"),
         None => format!("`{cop}` (unknown cop)"),
     }
+}
+
+/// SIMILAR_COP_NAMES_CACHE is process-global: its `all_cop_names` is the registry of the first
+/// file (in inspection order) that described an unknown name. `message` (this cop's) gets each
+/// unknown name described again with the registry as it was then (`view`, see
+/// cop_registry::with_view); None when it describes none.
+pub fn redescribe(message: &str, view: Option<usize>) -> Option<String> {
+    static RE: LazyLock<regex::Regex> =
+        LazyLock::new(|| regex::Regex::new(r"`([^`]+)` \((?:did you mean `[^`]+`\?|unknown cop)\)").unwrap());
+    if !RE.is_match(message) {
+        return None;
+    }
+    let out = crate::helpers::cop_registry::with_view(view, || {
+        RE.replace_all(message, |c: &regex::Captures| describe_unknown(&c[1])).into_owned()
+    });
+    Some(out)
 }
 
 fn message(names: &str, enabling: bool) -> String {

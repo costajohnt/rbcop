@@ -487,9 +487,16 @@ impl Cop for IndentationWidth {
         match kind::of(node) {
             kind::BEGIN_NODE => {
                 let b = node.as_begin_node().unwrap();
-                // parser order: kwbegin, then its ensure, then the rescue (with the else branch)
-                if let (Some(_), Some(end)) = (b.begin_keyword_loc(), b.end_keyword_loc())
-                    && begins_its_line(cx.src, end.start_offset()) {
+                // parser order: kwbegin, then its ensure, then the rescue (with the else branch),
+                // each a callback of its own: a raise (a String `Width`) is a cop error at that
+                // node, which starts at the body (else at the `rescue` / `ensure` keyword)
+                let (cop, src) = (cx.cop, cx.src);
+                let body_start = b.statements().map(|s| s.location().start_offset());
+                let rescue_at = body_start.or_else(|| b.rescue_clause().map(|r| lstart(r.keyword_loc())));
+                crate::runner::own_callback(cop, src, crate::runner::visiting(), || {
+                    if let (Some(_), Some(end)) = (b.begin_keyword_loc(), b.end_keyword_loc())
+                        && begins_its_line(cx.src, end.start_offset())
+                    {
                         let body = if b.rescue_clause().is_some() || b.ensure_clause().is_some() {
                             Some(Body::wrapped(node.as_begin_node().unwrap()))
                         } else {
@@ -497,13 +504,19 @@ impl Cop for IndentationWidth {
                         };
                         check_indentation(cx, end.start_offset(), body.as_ref(), "normal", &no_macro);
                     }
+                });
                 if let Some(e) = b.ensure_clause() {
-                    let body = Body::of(e.statements().map(|s| s.as_node()));
-                    check_indentation(cx, lstart(e.ensure_keyword_loc()), body.as_ref(), "normal", &no_macro);
+                    let at = rescue_at.or(Some(lstart(e.ensure_keyword_loc())));
+                    crate::runner::own_callback(cop, src, at, || {
+                        let body = Body::of(e.statements().map(|s| s.as_node()));
+                        check_indentation(cx, lstart(e.ensure_keyword_loc()), body.as_ref(), "normal", &no_macro);
+                    });
                 }
                 if let (Some(_), Some(e)) = (b.rescue_clause(), b.else_clause()) {
-                    let body = Body::of(e.statements().map(|s| s.as_node()));
-                    check_indentation(cx, lstart(e.else_keyword_loc()), body.as_ref(), "normal", &no_macro);
+                    crate::runner::own_callback(cop, src, rescue_at, || {
+                        let body = Body::of(e.statements().map(|s| s.as_node()));
+                        check_indentation(cx, lstart(e.else_keyword_loc()), body.as_ref(), "normal", &no_macro);
+                    });
                 }
             }
             kind::RESCUE_NODE => {

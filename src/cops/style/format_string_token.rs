@@ -80,7 +80,6 @@ impl Cop for FormatStringToken {
             _ => Style::Annotated,
         };
         let conservative = cx.cfg.str("Mode") == Some("conservative");
-        let max_unannotated = cx.cfg.int("MaxUnannotatedPlaceholdersAllowed").unwrap_or(1);
         let correctable_seq = |ty: Option<&str>| ty == Some("s") || style != Style::Template;
 
         // Parser makes a multi-line string a `dstr` of one `str` per line; a part of an
@@ -125,7 +124,7 @@ impl Cop for FormatStringToken {
                 continue;
             }
             if detections.iter().all(|(_, d)| *d == Style::Unannotated)
-                && (detections.len() as i64 <= max_unannotated
+                && (detections.len() as i64 <= cx.cfg.int("MaxUnannotatedPlaceholdersAllowed").unwrap_or(1)
                     || detections.iter().any(|(s, _)| !correctable_seq(sequence_parts(s.source).ty)))
             {
                 continue;

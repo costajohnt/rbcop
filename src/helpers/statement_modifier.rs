@@ -148,7 +148,8 @@ pub fn max_line_length(cx: &Cx) -> Option<usize> {
     if !cop_enabled(cx, "Layout/LineLength") {
         return None;
     }
-    Some(cx.config.for_cop("Layout/LineLength").int("Max").unwrap_or(120).max(0) as usize)
+    // `length > max_line_length`: a String `Max` raises in the cop asking
+    Some(cx.config.for_cop("Layout/LineLength").int_strict("Max").unwrap_or(120).max(0) as usize)
 }
 
 fn tab_indentation_width(cx: &Cx) -> usize {

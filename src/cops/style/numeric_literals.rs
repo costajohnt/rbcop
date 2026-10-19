@@ -46,14 +46,14 @@ impl Cop for NumericLiterals {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // `__LINE__` is an int to the parser gem: on_int reads AllowedNumbers (a String raises,
-        // #514), and its integer part is never digits.
-        if node.as_source_line_node().is_some() {
-            cx.cfg.array("AllowedNumbers");
-            return;
-        }
-        let Some((start, end)) = literal_range(node, cx.ancestors) else { return };
-        let source = cx.src.slice(start, end);
-        let int = integer_part(source);
+        // #514), AllowedPatterns and MinDigits, and its integer part is never digits.
+        let line = node.as_source_line_node().is_some();
+        let int = if line {
+            "__LINE__"
+        } else {
+            let Some((start, end)) = literal_range(node, cx.ancestors) else { return };
+            integer_part(cx.src.slice(start, end))
+        };
         if int.starts_with('0') || cx.cfg.array("AllowedNumbers").iter().any(|n| n == int) {
             return;
         }
@@ -64,9 +64,11 @@ impl Cop for NumericLiterals {
         }) {
             return;
         }
-        if (int.chars().count() as i64) < cx.cfg.int("MinDigits").unwrap_or(5) {
+        if (int.chars().count() as i64) < cx.cfg.int("MinDigits").unwrap_or(5) || line {
             return;
         }
+        let Some((start, end)) = literal_range(node, cx.ancestors) else { return };
+        let source = cx.src.slice(start, end);
         let short = if cx.cfg.bool("Strict") == Some(true) { &SHORT_STRICT } else { &SHORT };
         if DIGITS.is_match(int) || FOUR.is_match(int) || short.is_match(int) {
             let formatted = format_number(source);

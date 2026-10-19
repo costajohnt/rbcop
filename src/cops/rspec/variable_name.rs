@@ -6,13 +6,16 @@ pub struct VariableName;
 
 impl Cop for VariableName {
     fn kinds(&self) -> &'static [usize] {
-        &[kind::CALL_NODE]
+        helpers::rspec::SEND_KINDS
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let l = helpers::rspec::lang(cx);
-        let call = node.as_call_node().unwrap();
-        if is_csend(&call) || !helpers::rspec::inside_example_group(&l, cx.ancestors, node) {
+        if !helpers::rspec::on_send(cx.ancestors, node) || !helpers::rspec::inside_example_group(&l, cx.ancestors, node) {
+            return;
+        }
+        // an op-assign's or a target's send has a receiver: never a let or subject
+        if node.as_call_node().is_none() {
             return;
         }
         let Some(variable) = helpers::rspec::variable_definition(cx, &l, node) else { return };

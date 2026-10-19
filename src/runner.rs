@@ -947,6 +947,7 @@ pub fn cop_error_at(cop: &str, src: &Source, at: Option<usize>) {
     // VariableForce cop (its hooks run from the force's on_new_investigation), and
     // Style/DirectiveScope (an on_new_investigation cop that rbcop runs on the program node).
     const ON_NEW_INVESTIGATION: &[&str] = &[
+        "Metrics/BlockNesting",
         "RSpec/DescribeClass",
         "RSpec/DescribeMethod",
         "RSpec/InstanceVariable",
@@ -969,6 +970,18 @@ pub fn cop_error_at(cop: &str, src: &Source, at: Option<usize>) {
         None => src.absolute_path(),
     };
     record_error(Some(cop), format!("An error occurred while {cop} cop was inspecting {location}."));
+}
+
+/// Another callback of the running cop for the node being visited (on_def and on_args, on_block
+/// and on_send): a raise in `f` is a cop error of its own at `at`, and the cop's other callbacks
+/// still run.
+pub fn own_callback(cop: &str, src: &Source, at: Option<usize>, f: impl FnOnce()) {
+    if let Err(payload) = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f)) {
+        if !(payload.is::<String>() || payload.is::<&str>()) {
+            std::panic::resume_unwind(payload);
+        }
+        cop_error_at(cop, src, at);
+    }
 }
 
 /// The node the running cop callback was given (see VISITING).
@@ -1299,6 +1312,20 @@ impl<'pr> Walker<'_, 'pr, '_> {
         if kind == node_kind::SYMBOL_NODE && self.pattern_key() {
             return;
         }
+        // A cop error is located at the parser node: a `block` starts at its send (or `super`),
+        // the `begin` of parenthesized statements at the parenthesis.
+        let mut at = node.location().start_offset();
+        if let Some(p) = self.stack.last()
+            && match kind {
+                node_kind::BLOCK_NODE => {
+                    matches!(p, Node::CallNode { .. } | Node::SuperNode { .. } | Node::ForwardingSuperNode { .. })
+                }
+                node_kind::STATEMENTS_NODE => matches!(p, Node::ParenthesesNode { .. }),
+                _ => false,
+            }
+        {
+            at = p.location().start_offset();
+        }
         for &i in &self.dispatch[kind] {
             let a = &self.active[i];
             let mut cx = Cx {
@@ -1313,7 +1340,7 @@ impl<'pr> Walker<'_, 'pr, '_> {
                 state: &mut self.states[i],
                 fixes: &mut self.fixes[i],
             };
-            guarded(a.name, self.src, Some(node.location().start_offset()), || a.cop.on_node(&mut cx, node));
+            guarded(a.name, self.src, Some(at), || a.cop.on_node(&mut cx, node));
         }
     }
 

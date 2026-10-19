@@ -496,7 +496,7 @@ fn exceeds_line_limit(cx: &Cx, node: &Node, assignment: &str) -> bool {
     if !ll.truthy("Enabled") {
         return false;
     }
-    let max = ll.int("Max").unwrap_or(120) as usize;
+    let max = ll.int_strict("Max").unwrap_or(120) as usize;
     let mut pat = String::from(r"[\t\n\v\f\r ]*");
     for ch in assignment.chars() {
         if ch == ' ' {

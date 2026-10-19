@@ -113,6 +113,17 @@ impl Map {
         }
     }
 
+    /// A numeric setting a cop compares or adds to an Integer: a String or Symbol one
+    /// (`Max: "80"`) raises there, a cop error at the node it was visiting.
+    pub fn int_strict(&self, key: &str) -> Option<i64> {
+        match self.get(key) {
+            Some(Value::Str(_) | Value::Sym(_)) if crate::runner::in_cop() => {
+                panic!("comparison of Integer with String failed")
+            }
+            _ => self.int(key),
+        }
+    }
+
     /// Strings of an Array value (or a single String), like `Array(cop_config[key])`.
     pub fn strings(&self, key: &str) -> Vec<String> {
         match self.get(key) {
