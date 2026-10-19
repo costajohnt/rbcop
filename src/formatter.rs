@@ -521,15 +521,9 @@ pub fn sub_backticks(msg: &str, multiline: bool, min: usize, f: impl Fn(&str) ->
     out
 }
 
-/// Unicode::DisplayWidth.of
+/// Unicode::DisplayWidth.of (the cops' ported table, #628)
 pub fn display_width(s: &str) -> usize {
-    s.chars()
-        .map(|c| match c as u32 {
-            0 | 5 | 7 | 8 | 10..=15 => 0,
-            0..=0xa0 => 1,
-            _ => unicode_width::UnicodeWidthChar::width(c).unwrap_or(1),
-        })
-        .sum()
+    crate::helpers::alignment::display_width(s)
 }
 
 /// Terminal columns of `fd`, if it is a terminal.
