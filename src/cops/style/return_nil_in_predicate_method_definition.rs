@@ -108,6 +108,14 @@ impl Cop for ReturnNilInPredicateMethodDefinition {
         for (s, e) in v.0 {
             cx.add_fix(s, e, MSG, |c| c.replace(s, e, "return false"));
         }
+        // Below 2.6 the statements after a lonely `else` are a `begin` of their own: the last
+        // value is that `begin`, never `nil` (#630).
+        if let Some(s) = def.body().and_then(|b| b.as_statements_node()) {
+            let stmts: Vec<Node> = s.body().iter().collect();
+            if stmts.last().is_some_and(|l| cx.src.after_lonely_else(def.location().start_offset(), &stmts, l)) {
+                return;
+            }
+        }
         implicit(cx, def.body());
     }
 }

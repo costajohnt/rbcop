@@ -652,7 +652,9 @@ pub fn failure_offset(kind: &str, start: usize, end: usize, tokens: &[Token]) ->
     let at_failing_token = kind.contains("unexpected")
         || kind.contains("_term")
         || kind.starts_with("expect_eol")
-        || kind == "expect_expression_after_operator";
+        || kind == "expect_expression_after_operator"
+        // a second `else` up to 2.5 (`runner::useless_elses` blanks the first)
+        || kind == "begin_lonely_else";
     let truncated =
         if at_failing_token { only_trivia_from(start) } else { !kind.starts_with("invalid_") && only_trivia_from(end) };
     if truncated {

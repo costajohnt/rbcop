@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::runner::useless_else;
+use crate::runner::useless_elses;
 
 pub const NAME: &str = "Lint/UselessElseWithoutRescue";
 pub static COP: UselessElseWithoutRescue = UselessElseWithoutRescue;
@@ -10,14 +10,12 @@ impl Cop for UselessElseWithoutRescue {
         (0.0, 2.5)
     }
 
-    /// The parser gem's `useless_else` warning (targets up to 2.5) is a Prism error the runner
-    /// tolerates for those targets (runner::useless_else).
+    /// The parser gem's `useless_else` warning (targets up to 2.5), an `else` the runner blanks out
+    /// before Prism parses (runner::useless_elses).
     fn on_file(&self, cx: &mut Cx) {
-        let result = ruby_prism::parse_with_version(cx.src.text.as_bytes(), cx.src.version, !cx.src.binary);
-        // Prism's error spans the whole else clause; parser's diagnostic is the `else` keyword.
-        let found: Vec<usize> =
-            result.errors().filter(|e| useless_else(e, &result.node(), cx.src.target_ruby, cx.src.text)).map(|e| e.location().start_offset()).collect();
-        for start in found {
+        let (result, tokens) =
+            ruby_prism::parse_with_version_and_tokens(cx.src.text.as_bytes(), cx.src.version, !cx.src.binary);
+        for start in useless_elses(&tokens, result.errors().next().is_some(), cx.src.target_ruby) {
             cx.add(start, start + "else".len(), "`else` without `rescue` is useless.");
         }
     }

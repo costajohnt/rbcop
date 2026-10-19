@@ -214,6 +214,13 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     arguments are accepted); no oracle below 2.5 was recorded.
   - A `{` that opens a hash whose contents are invalid (`x == { |i| i }`, `{{#if x ~}}` where `#`
     starts a comment) gets its first error at the `{` instead of the token after it.
+  - Up to 2.5, an `else` without `rescue` whose body is empty (`begin` / `else` / `end`,
+    `def m` / `else` / `end`) makes RuboCop crash (`undefined method 'type' for nil`); rbcop
+    reports Lint/UselessElseWithoutRescue. The parser gem's tree for a non-empty one (the else
+    statements in a `begin` of their own) is Prism's statements with the `else` blanked out
+    (`runner::useless_elses`); Naming/PredicateMethod and
+    Style/ReturnNilInPredicateMethodDefinition take that `begin` as the method's value
+    (`Source::after_lonely_else`), other cops see the flat statements.
   - The chef corpus (target 2.7) has five syntax-error files with such differences (a missed
     follow-up `unterminated string meets end of file`; the `{{` template above):
     `scripts/check-skip.txt` leaves them out of check-cops.sh, and they and two RuboCop -A outputs

@@ -74,16 +74,25 @@ impl<'pr> Visit<'pr> for Returns<'pr> {
     }
 }
 
-fn return_values<'pr>(def: &ruby_prism::DefNode<'pr>) -> Vec<Value<'pr>> {
+/// Below 2.6 the statements after a lonely `else` are a `begin` of their own, the body's last
+/// value (Source::after_lonely_else); the body's StatementsNode stands for it.
+fn lonely_tail<'pr>(def: &ruby_prism::DefNode<'pr>, src: &crate::source::Source) -> Option<Node<'pr>> {
+    let s = def.body()?.as_statements_node()?;
+    let stmts: Vec<Node> = s.body().iter().collect();
+    src.after_lonely_else(def.location().start_offset(), &stmts, stmts.last()?).then(|| s.as_node())
+}
+
+fn return_values<'pr>(def: &ruby_prism::DefNode<'pr>, src: &crate::source::Source) -> Vec<Value<'pr>> {
     let body = || resolve(def.body().unwrap());
     let mut values = Vec::new();
-    if begin_children(&body()).is_none() {
+    let lonely = lonely_tail(def, src);
+    if lonely.is_none() && begin_children(&body()).is_none() {
         values.push(extract(body()));
     }
     let mut returns = Returns(Vec::new());
     returns.visit(&body());
     values.extend(returns.0.into_iter().map(extract));
-    values.push(last_value(body()));
+    values.push(lonely.map_or_else(|| last_value(body()), Value::Node));
     process(values)
 }
 
@@ -285,7 +294,7 @@ impl Cop for PredicateMethod {
             conservative: cfg.str("Mode").is_none_or(|m| m == "conservative"),
             wayward: cfg.strings("WaywardPredicates"),
         };
-        let values = return_values(&def);
+        let values = return_values(&def, cx.src);
         if settings.acceptable(&values) {
             return;
         }
