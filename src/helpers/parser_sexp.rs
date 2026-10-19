@@ -292,6 +292,20 @@ pub fn stale_heredoc(opening: &[u8], content: &[u8]) -> bool {
     opening.starts_with(b"<<~") && dedents(content)
 }
 
+/// A squiggly heredoc line's value before dedenting (what the parser gem hashed): Prism's
+/// unescaped, dedented `value` behind the indentation dedenting took off `raw`. A quoted heredoc
+/// is its source text; so is a line with a backslash-newline (the parser gem keeps those joined
+/// lines' escapes until it dedents).
+fn undedented(raw: &[u8], value: &[u8], interp: bool) -> Vec<u8> {
+    if !interp || raw.windows(2).any(|w| w == b"\\\n") {
+        return raw.to_vec();
+    }
+    match unescaped_len(raw, true, &[]).and_then(|l| l.checked_sub(value.len())) {
+        Some(r) if raw[..r].iter().all(|b| b" \t".contains(b)) => [&raw[..r], value].concat(),
+        _ => raw.to_vec(),
+    }
+}
+
 /// Whether a squiggly heredoc body has indentation to remove: its least indented line that is not
 /// blank starts with a space or tab (Ruby ignores whitespace-only lines for the dedent level).
 fn dedents(body: &[u8]) -> bool {
@@ -538,22 +552,29 @@ impl Cv<'_> {
         let s = node.as_string_node()?;
         let opening = s.opening_loc().map(|o| o.as_slice()).unwrap_or_default();
         let content = s.content_loc().as_slice();
-        // ponytail: the body as written stands in for its unescaped, undedented value.
-        let value = if self.stale && stale_heredoc(opening, content) { content } else { s.unescaped() };
+        let (interp, delims) = quoting(opening);
+        let undented;
+        let value = if self.stale && stale_heredoc(opening, content) {
+            undented = undedented(content, s.unescaped(), interp);
+            &undented[..]
+        } else {
+            s.unescaped()
+        };
         if !is_parser_dstr(node) {
             return Some(str_node(value));
         }
-        let (interp, delims) = quoting(opening);
         Some(n("dstr", line_parts(content, value, interp, &delims)?))
     }
 
     /// Children of an interpolated literal: string parts split per line, `#{}` as `begin`.
     fn parts(&self, parts: NodeList, opening: &[u8], depth: usize) -> Option<Vec<S>> {
         let (interp, delims) = quoting(opening);
+        // From the first part's line start: Prism drops the indentation before a line-leading `#{`.
         let stale = self.stale && opening.starts_with(b"<<~") && {
             let (first, last) = (parts.iter().next(), parts.iter().last());
             first.zip(last).is_some_and(|(f, l)| {
-                dedents(&self.src.text.as_bytes()[f.location().start_offset()..l.location().end_offset()])
+                let start = self.src.line_start(self.src.line_of(f.location().start_offset()));
+                dedents(&self.src.text.as_bytes()[start..l.location().end_offset()])
             })
         };
         let mut out = Vec::new();
@@ -567,7 +588,13 @@ impl Cv<'_> {
                 Node::StringNode { .. } if p.as_string_node()?.opening_loc().is_none() => {
                     let s = p.as_string_node()?;
                     let src = s.content_loc().as_slice();
-                    let value = if stale { src } else { s.unescaped() };
+                    let undented;
+                    let value = if stale {
+                        undented = undedented(src, s.unescaped(), interp);
+                        &undented[..]
+                    } else {
+                        s.unescaped()
+                    };
                     let mut vals: Vec<Vec<u8>> = line_values(src, value, interp, &delims)?.into_iter().map(<[u8]>::to_vec).collect();
                     if !carry.is_empty() {
                         carry.extend(if vals.is_empty() { Vec::new() } else { vals.remove(0) });
@@ -1069,8 +1096,16 @@ impl Cv<'_> {
             }
             Node::XStringNode { .. } => {
                 let x = node.as_x_string_node()?;
-                let (interp, delims) = quoting(x.opening_loc().as_slice());
-                Some(n("xstr", line_parts(x.content_loc().as_slice(), x.unescaped(), interp, &delims)?))
+                let (opening, content) = (x.opening_loc().as_slice(), x.content_loc().as_slice());
+                let (interp, delims) = quoting(opening);
+                let undented;
+                let value = if self.stale && stale_heredoc(opening, content) {
+                    undented = undedented(content, x.unescaped(), interp);
+                    &undented[..]
+                } else {
+                    x.unescaped()
+                };
+                Some(n("xstr", line_parts(content, value, interp, &delims)?))
             }
             Node::InterpolatedXStringNode { .. } => {
                 let x = node.as_interpolated_x_string_node()?;
