@@ -142,13 +142,9 @@ pub fn same_hash(src: &Source, a: (usize, usize), b: (usize, usize)) -> bool {
     equal(src, a, b, true)
 }
 
+// No equal-text shortcut: the same text can be different nodes (`__LINE__` on two lines, `x` read
+// as a local and sent as a method, a heredoc opener with different bodies).
 fn equal(src: &Source, a: (usize, usize), b: (usize, usize), hash: bool) -> bool {
-    let (ta, tb) = (&src.text[a.0..a.1], &src.text[b.0..b.1]);
-    // Equal text proves equality unless a heredoc opener hides different bodies.
-    // ponytail: `foo` read as a local and `foo` sent as a method count as equal here.
-    if ta == tb && !ta.contains("<<") {
-        return true;
-    }
     match (tree(src, a, hash), tree(src, b, hash)) {
         (Some(x), Some(y)) => x == y,
         _ => tokens(src, a.0, a.1) == tokens(src, b.0, b.1),

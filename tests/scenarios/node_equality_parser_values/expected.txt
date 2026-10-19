@@ -13,3 +13,4 @@ b.rb:12:6: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
 b.rb:2:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `foo(<<~B)` out of the conditional.
 b.rb:5:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
 b.rb:6:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `foo("y\n")` out of the conditional.
+c.rb:16:5: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
