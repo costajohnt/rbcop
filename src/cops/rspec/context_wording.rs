@@ -63,7 +63,7 @@ impl Cop for ContextWording {
         let mut sources: Vec<(String, String)> = Vec::new(); // (regexp literal, inspected)
         for v in &configured {
             match v {
-                Value::Regex(r) => sources.push((r.clone(), r.clone())),
+                Value::Regex(r) => sources.push((r.to_string(), r.to_string())),
                 v => {
                     let s = v.as_string().unwrap_or_default();
                     let inspected = helpers::ruby_string::inspect(s.as_bytes());

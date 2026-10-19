@@ -12,7 +12,8 @@ fn any_entry(v: Option<&Value>, f: &mut dyn FnMut(&str) -> bool) -> bool {
     match v {
         Some(Value::Seq(items)) => items.iter().any(|i| any_entry(Some(i), f)),
         Some(Value::Map(m)) => m.0.iter().any(|(_, v)| any_entry(Some(v), f)),
-        Some(Value::Str(s) | Value::Sym(s) | Value::Regex(s)) => f(s),
+        Some(Value::Str(s) | Value::Sym(s)) => f(s),
+        Some(Value::Regex(s)) => f(s),
         Some(v) => v.as_string().is_some_and(|s| f(&s)),
         None => false,
     }

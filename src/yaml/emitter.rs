@@ -8,14 +8,37 @@ use super::ScalarStyle;
 pub enum Event {
     StreamStart,
     StreamEnd,
-    DocumentStart { implicit: bool },
-    DocumentEnd { implicit: bool },
-    Scalar { tag: Option<String>, value: String, plain_implicit: bool, quoted_implicit: bool, style: ScalarStyle },
-    SequenceStart { anchor: Option<String>, tag: Option<String>, implicit: bool, flow: bool },
+    DocumentStart {
+        implicit: bool,
+    },
+    DocumentEnd {
+        implicit: bool,
+    },
+    Scalar {
+        anchor: Option<String>,
+        tag: Option<String>,
+        value: String,
+        plain_implicit: bool,
+        quoted_implicit: bool,
+        style: ScalarStyle,
+    },
+    SequenceStart {
+        anchor: Option<String>,
+        tag: Option<String>,
+        implicit: bool,
+        flow: bool,
+    },
     SequenceEnd,
-    MappingStart { anchor: Option<String>, tag: Option<String>, implicit: bool, flow: bool },
+    MappingStart {
+        anchor: Option<String>,
+        tag: Option<String>,
+        implicit: bool,
+        flow: bool,
+    },
     MappingEnd,
-    Alias { anchor: String },
+    Alias {
+        anchor: String,
+    },
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -336,6 +359,7 @@ impl Emitter<'_> {
             }
             Event::Scalar { .. } => {
                 self.select_scalar_style();
+                self.process_anchor();
                 self.process_tag();
                 self.increase_indent(true, false);
                 self.process_scalar();
@@ -430,7 +454,9 @@ impl Emitter<'_> {
         self.scalar = Analysis::default();
         match self.event() {
             Event::Alias { anchor } => self.anchor = Some((anchor.clone(), true)),
-            Event::SequenceStart { anchor: Some(a), .. } | Event::MappingStart { anchor: Some(a), .. } => {
+            Event::SequenceStart { anchor: Some(a), .. }
+            | Event::MappingStart { anchor: Some(a), .. }
+            | Event::Scalar { anchor: Some(a), .. } => {
                 self.anchor = Some((a.clone(), false));
             }
             _ => {}

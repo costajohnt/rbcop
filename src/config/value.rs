@@ -16,7 +16,7 @@ pub enum Value {
     /// see it as the string it always was; only `--show-cops` dumps it differently from a quoted one.
     Sym(String),
     /// `!ruby/regexp /source/flags`, kept as written.
-    Regex(String),
+    Regex(Arc<String>),
     /// Shared, as Psych shares an aliased node (copy on write: `Arc::make_mut`).
     Seq(Arc<Vec<Value>>),
     Map(Arc<Map>),
@@ -141,7 +141,7 @@ impl Value {
             Value::Int(i) => Some(i.to_string()),
             Value::Float(f) => Some(f.to_string()),
             Value::Bool(b) => Some(b.to_string()),
-            Value::Regex(r) => Some(r.clone()),
+            Value::Regex(r) => Some(r.to_string()),
             _ => None,
         }
     }
@@ -283,7 +283,8 @@ fn refused(class: &str) -> Result<Value, String> {
 /// A Hash key: rbcop's maps have String keys (a Symbol key keeps its colon); nil keys are left out.
 fn hash_key(key: &Value) -> Option<String> {
     match key {
-        Value::Str(s) | Value::Sym(s) | Value::Regex(s) => Some(s.clone()),
+        Value::Str(s) | Value::Sym(s) => Some(s.clone()),
+        Value::Regex(s) => Some(s.to_string()),
         Value::Int(i) => Some(i.to_string()),
         Value::Float(f) => Some(crate::helpers::ruby_string::float_to_s(*f)),
         Value::Bool(b) => Some(b.to_string()),
@@ -352,7 +353,7 @@ impl ToRuby {
                 let Some(c) = RE.captures(value) else { return Err("undefined method '[]' for nil".into()) };
                 let source = regexp_inspect_source(&c["string"].replace("\\/", "/"));
                 let flags: String = "mixn".chars().filter(|f| c["options"].contains(*f)).collect();
-                Ok(Value::Regex(format!("/{source}/{flags}")))
+                Ok(Value::Regex(Arc::new(format!("/{source}/{flags}"))))
             }
             "!ruby/range" => refused("Range"),
             t if t.starts_with("!ruby/sym") => Ok(Value::Sym(format!(":{value}"))),
