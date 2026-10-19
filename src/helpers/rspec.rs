@@ -649,13 +649,19 @@ pub fn child_nodes<'pr>(node: &Node<'pr>) -> Vec<Node<'pr>> {
     if let Some(cs) = begin_children(node) {
         return cs;
     }
+    // (block send args body) / (block (super ...) args body): the args, then the body
+    let block = match node {
+        Node::CallNode { .. } => node.as_call_node().and_then(|c| block_of(&c)),
+        Node::SuperNode { .. } => node.as_super_node().unwrap().block().and_then(|b| b.as_block_node()),
+        Node::ForwardingSuperNode { .. } => node.as_forwarding_super_node().unwrap().block(),
+        _ => None,
+    };
+    if let Some(b) = block {
+        let mut out: Vec<Node> = b.parameters().into_iter().collect();
+        out.extend(parser_body(b.body()));
+        return out;
+    }
     if let Some(c) = node.as_call_node() {
-        if let Some(b) = block_of(&c) {
-            // (block send args body): the args, then the body
-            let mut out: Vec<Node> = b.parameters().into_iter().collect();
-            out.extend(parser_body(b.body()));
-            return out;
-        }
         return c.receiver().into_iter().chain(send_args(&c)).collect();
     }
     if let Some(b) = node.as_begin_node().filter(|b| b.begin_keyword_loc().is_some()) {

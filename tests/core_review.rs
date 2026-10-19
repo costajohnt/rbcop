@@ -887,7 +887,7 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
     fs::create_dir_all(dir.join("spec")).unwrap();
     let file = dir.join("spec/foo_spec.rb").display().to_string();
     type Case<'a> = (&'a str, &'a str, &'a str, &'a [&'a str], &'a [&'a str]);
-    let cases: [Case; 19] = [
+    let cases: [Case; 21] = [
         (
             "Examples:\n      Focused: ~",
             "RSpec/VoidExpect",
@@ -1014,6 +1014,22 @@ fn rspec_language_nil_list_asked_in_rubocop_order() {
             "Hooks: ~",
             "RSpec/LeadingSubject",
             "describe Foo do\n  subject(:x) { 2 } if c\n  it { }\nend\n",
+            &[],
+            &["F:4:2."],
+        ),
+        // a group body that is one `super { }` / `super(1) { }`: its child nodes are the block's
+        // args and body (#623)
+        (
+            "Helpers: ~",
+            "RSpec/EmptyLineAfterFinalLet",
+            "describe Foo do\n  context \"a\" do\n    super { it { } }\n  end\nend\n",
+            &[],
+            &["F:4:2."],
+        ),
+        (
+            "Subjects: ~",
+            "RSpec/OverwritingSetup",
+            "describe Foo do\n  context \"b\" do\n    super(1) { it { } }\n  end\nend\n",
             &[],
             &["F:4:2."],
         ),
