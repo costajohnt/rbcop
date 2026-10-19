@@ -2,7 +2,7 @@
 //! parser-gem trees of the two nodes (type and children, so literals compare by value), from the
 //! node of `Source::root` at each range.
 
-use crate::helpers::parser_sexp::{hash_sexp, sexp};
+use crate::helpers::parser_sexp::{hash_sexp, key_sexp, Numbers};
 use crate::source::Source;
 use ruby_prism::Node;
 use ruby_prism_sys as sys;
@@ -40,9 +40,8 @@ pub(crate) fn index(root: &Node) -> HashMap<(usize, usize), Node<'static>> {
 /// describes, which below 3.3 can differ), or None when there is no such node or it does not print.
 fn tree(src: &Source, range: (usize, usize), hash: bool) -> Option<Vec<String>> {
     let node = src.node_at(range)?;
-    let tree = sexp(node, src)?;
-    // `0.0 == -0.0`, though they are not `eql?`.
-    let mut key = vec![if hash { tree } else { tree.replace("(float -0.0)", "(float 0.0)") }];
+    // Numeric children compare as Ruby values: `==` (`1i == 1.0i`) or `eql?` (`0.0.eql?(-0.0)`).
+    let mut key = vec![key_sexp(node, src, if hash { Numbers::Eql } else { Numbers::Eq })?];
     if hash && src.parser_gem {
         key.push(hash_sexp(node, src)?);
     }

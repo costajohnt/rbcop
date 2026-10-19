@@ -10,3 +10,5 @@ Lint/DuplicateBranch:
   Enabled: true
 Lint/DuplicateCaseCondition:
   Enabled: true
+Lint/DuplicateElsifCondition:
+  Enabled: true

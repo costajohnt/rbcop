@@ -49,31 +49,65 @@ fn gcd(a: i128, b: i128) -> i128 {
     if b == 0 { a.abs() } else { gcd(b, a % b) }
 }
 
-/// Rational#inspect without parentheses: `3/2`, `-1/1`.
-fn rational(node: &Node, neg: bool) -> Option<String> {
+/// A Rational literal's reduced numerator and denominator.
+fn rational_parts(node: &Node, neg: bool) -> Option<(i128, i128)> {
     let r = node.as_rational_node()?;
     let (mut num, den) = (int_value(r.numerator())?, int_value(r.denominator())?);
     if neg {
         num = -num;
     }
     let g = gcd(num, den).max(1);
-    Some(format!("{}/{}", num / g, den / g))
+    Some((num / g, den / g))
 }
 
-/// Complex#inspect of `0+xi`.
-fn imaginary(node: &Node, neg: bool) -> Option<String> {
-    let num = node.as_imaginary_node()?.numeric();
-    let v = match &num {
-        Node::IntegerNode { .. } => (int_literal_value(&num)? * if neg { -1 } else { 1 }).to_string(),
-        Node::FloatNode { .. } => float_to_s(num.as_float_node()?.value() * if neg { -1.0 } else { 1.0 }),
-        Node::RationalNode { .. } => rational(&num, neg)?,
-        _ => return None,
-    };
-    let (sign, abs) = match v.strip_prefix('-') {
-        Some(a) => ('-', a),
-        None => ('+', v.as_str()),
-    };
-    Some(if num.as_rational_node().is_some() { format!("(0{sign}({abs})*i)") } else { format!("(0{sign}{abs}i)") })
+/// Rational#inspect without parentheses: `3/2`, `-1/1`.
+fn rational(node: &Node, neg: bool) -> Option<String> {
+    let (num, den) = rational_parts(node, neg)?;
+    Some(format!("{num}/{den}"))
+}
+
+/// Integer#to_s of a literal of any size.
+fn decimal(i: ruby_prism::Integer) -> String {
+    let (neg, digits) = i.to_u32_digits();
+    let mut limbs: Vec<u32> = digits.to_vec();
+    let mut chunks: Vec<u32> = Vec::new();
+    while limbs.iter().any(|&l| l != 0) {
+        let mut rem: u64 = 0;
+        for l in limbs.iter_mut().rev() {
+            let cur = (rem << 32) | *l as u64;
+            *l = (cur / 1_000_000_000) as u32;
+            rem = cur % 1_000_000_000;
+        }
+        chunks.push(rem as u32);
+    }
+    let mut out = String::from(if neg && !chunks.is_empty() { "-" } else { "" });
+    match chunks.split_last() {
+        None => out.push('0'),
+        Some((top, rest)) => {
+            out.push_str(&top.to_string());
+            rest.iter().rev().for_each(|c| out.push_str(&format!("{c:09}")));
+        }
+    }
+    out
+}
+
+/// A numeric value as a `==` key across Integer, Float and Rational: an integral value as the
+/// Integer (Integer#== Float is exact), any other as its Float (Rational#== Float compares `to_f`).
+/// ponytail: two Rationals with one `to_f` (17+ digit literals) share a key though they differ.
+fn eq_number(f: f64) -> String {
+    if f.is_finite() && f.fract() == 0.0 && f.abs() < 1e36 {
+        format!("{}", f as i128)
+    } else {
+        format!("f{}", float_to_s(f))
+    }
+}
+
+/// How numeric literals print: `inspect` (`to_s`), or as keys for Ruby's `==` or `eql?` + `hash`.
+#[derive(Clone, Copy, PartialEq)]
+pub enum Numbers {
+    Inspect,
+    Eq,
+    Eql,
 }
 
 /// Unescaped byte length of one source line of a string literal body. `interp`: double-quote
@@ -249,6 +283,7 @@ struct Cv<'s> {
     src: &'s Source<'s>,
     /// The tree whose `hash` the parser gem caches (`hash_sexp`).
     stale: bool,
+    num: Numbers,
 }
 
 /// The parser gem dedents a squiggly heredoc's String in place after the node cached its hash, so
@@ -265,6 +300,44 @@ fn dedents(body: &[u8]) -> bool {
 }
 
 impl Cv<'_> {
+    /// A Float child: `0.0` and `-0.0` are `==`, `eql?` and hash alike (rb_dbl_hash).
+    fn float(&self, f: f64) -> S {
+        atom(float_to_s(if self.num != Numbers::Inspect && f == 0.0 { 0.0 } else { f }))
+    }
+
+    /// Complex#inspect of `0+xi`; as a `==` key the imaginary part by value (`1i == 1.0i`), as an
+    /// `eql?` key by class and value (Complex#eql? checks each part's class).
+    fn imaginary(&self, node: &Node, neg: bool) -> Option<String> {
+        let num = node.as_imaginary_node()?.numeric();
+        let sign = if neg { -1.0 } else { 1.0 };
+        if self.num == Numbers::Eq {
+            let v = match &num {
+                Node::IntegerNode { .. } => (int_literal_value(&num)? * if neg { -1 } else { 1 }).to_string(),
+                Node::FloatNode { .. } => eq_number(num.as_float_node()?.value() * sign),
+                Node::RationalNode { .. } => match rational_parts(&num, neg)? {
+                    (p, 1) => p.to_string(),
+                    (p, q) => eq_number(p as f64 / q as f64),
+                },
+                _ => return None,
+            };
+            return Some(format!("(0+{v}i)"));
+        }
+        let v = match &num {
+            Node::IntegerNode { .. } => (int_literal_value(&num)? * if neg { -1 } else { 1 }).to_string(),
+            Node::FloatNode { .. } => {
+                let f = num.as_float_node()?.value() * sign;
+                float_to_s(if self.num == Numbers::Eql && f == 0.0 { 0.0 } else { f })
+            }
+            Node::RationalNode { .. } => rational(&num, neg)?,
+            _ => return None,
+        };
+        let (sign, abs) = match v.strip_prefix('-') {
+            Some(a) => ('-', a),
+            None => ('+', v.as_str()),
+        };
+        Some(if num.as_rational_node().is_some() { format!("(0{sign}({abs})*i)") } else { format!("(0{sign}{abs}i)") })
+    }
+
     fn opt(&self, node: Option<Node>, depth: usize) -> Option<S> {
         match node {
             Some(n) => self.conv(&n, depth),
@@ -639,10 +712,10 @@ impl Cv<'_> {
             let neg = folded_negative(node);
             return match &l {
                 Node::FloatNode { .. } => {
-                    Some(n("float", vec![atom(float_to_s(l.as_float_node()?.value() * if neg { -1.0 } else { 1.0 }))]))
+                    Some(n("float", vec![self.float(l.as_float_node()?.value() * if neg { -1.0 } else { 1.0 })]))
                 }
                 Node::RationalNode { .. } => Some(n("rational", vec![atom(format!("({})", rational(&l, neg)?))])),
-                Node::ImaginaryNode { .. } => Some(n("complex", vec![atom(imaginary(&l, neg)?)])),
+                Node::ImaginaryNode { .. } => Some(n("complex", vec![atom(self.imaginary(&l, neg)?)])),
                 _ => None,
             };
         }
@@ -979,9 +1052,10 @@ impl Cv<'_> {
             Node::NilNode { .. } => leaf("nil"),
             Node::TrueNode { .. } => leaf("true"),
             Node::FalseNode { .. } => leaf("false"),
-            Node::FloatNode { .. } => Some(n("float", vec![atom(float_to_s(node.as_float_node()?.value()))])),
+            Node::IntegerNode { .. } => Some(n("int", vec![atom(decimal(node.as_integer_node()?.value()))])),
+            Node::FloatNode { .. } => Some(n("float", vec![self.float(node.as_float_node()?.value())])),
             Node::RationalNode { .. } => Some(n("rational", vec![atom(format!("({})", rational(node, false)?))])),
-            Node::ImaginaryNode { .. } => Some(n("complex", vec![atom(imaginary(node, false)?)])),
+            Node::ImaginaryNode { .. } => Some(n("complex", vec![atom(self.imaginary(node, false)?)])),
             Node::SourceFileNode { .. } => Some(str_node(self.src.absolute_path().as_bytes())),
             Node::SourceLineNode { .. } => Some(n("int", vec![atom(self.src.line_of(node.location().start_offset()).to_string())])),
             Node::SourceEncodingNode { .. } => {
@@ -1088,18 +1162,23 @@ fn print(s: &S, indent: usize, out: &mut String) {
 
 /// `node.to_s`, or None when the subtree holds a node this port does not print.
 pub fn sexp(node: &Node, src: &Source) -> Option<String> {
-    print_tree(node, src, false)
+    print_tree(node, src, false, Numbers::Inspect)
+}
+
+/// `sexp` with numeric literals as `==` (`Numbers::Eq`) or `eql?` (`Numbers::Eql`) keys.
+pub fn key_sexp(node: &Node, src: &Source, num: Numbers) -> Option<String> {
+    print_tree(node, src, false, num)
 }
 
 /// The tree the parser gem's cached `node.hash` describes (what `uniq`, Set and Hash keys compare
-/// besides `eql?`): below 3.3 a squiggly heredoc with indentation to remove counts with its
-/// undedented body. From 3.3 (Prism's translation) it is `sexp`.
+/// besides `eql?`), numerics as `eql?` keys: below 3.3 a squiggly heredoc with indentation to
+/// remove counts with its undedented body. From 3.3 (Prism's translation) it is `key_sexp`.
 pub fn hash_sexp(node: &Node, src: &Source) -> Option<String> {
-    print_tree(node, src, src.parser_gem)
+    print_tree(node, src, src.parser_gem, Numbers::Eql)
 }
 
-fn print_tree(node: &Node, src: &Source, stale: bool) -> Option<String> {
-    let cv = Cv { src, stale };
+fn print_tree(node: &Node, src: &Source, stale: bool, num: Numbers) -> Option<String> {
+    let cv = Cv { src, stale, num };
     // A StatementsNode is parser's `begin` of its statements (or its one statement).
     let s = match node.as_statements_node() {
         Some(st) => cv.body(Some(st.as_node()), 200)?,
