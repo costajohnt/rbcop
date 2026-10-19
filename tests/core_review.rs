@@ -2063,3 +2063,22 @@ fn database_yml_unresolvable_class_raises_in_cop() {
     }
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// An RSpec/LeakyLocalVariable raise (a nil Language list) ends RuboCop's VariableForce walk for
+/// every joining cop: their offenses from scopes left later are lost (#631).
+#[test]
+fn leaky_local_variable_error_cuts_the_force_walk() {
+    let dir = scratch("force-walk-cut");
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "plugins: [rubocop-rspec]\nAllCops:\n  DisabledByDefault: true\n  SuggestExtensions: false\nRSpec:\n  Include: [\"**/*.rb\"]\n  Language:\n    Hooks:\nLint/UselessAssignment:\n  Enabled: true\nLint/UnusedBlockArgument:\n  Enabled: true\nRSpec/LeakyLocalVariable:\n  Enabled: true\n",
+    )
+    .unwrap();
+    fs::write(dir.join("c.rb"), "describe Foo do\n  before do\n    x = 1\n  end\n  [1].each { |a| 1 }\nend\n").unwrap();
+    let out = rbcop(&dir, &["-f", "e", "c.rb"]);
+    let stdout = text(&out.stdout);
+    assert!(stdout.contains("Lint/UselessAssignment"), "{stdout}");
+    assert!(!stdout.contains("Lint/UnusedBlockArgument"), "{stdout}");
+    assert!(text(&out.stderr).contains("An error occurred while RSpec/LeakyLocalVariable cop was inspecting"));
+    let _ = fs::remove_dir_all(&dir);
+}
