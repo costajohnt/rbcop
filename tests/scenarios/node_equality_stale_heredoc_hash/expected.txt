@@ -1,0 +1,6 @@
+a.rb:7:18: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+d.rb:1:18: W: Lint/DuplicateHashKey: Duplicated key in hash literal.
+d.rb:20:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `foo(<<~B)` out of the conditional.
+d.rb:23:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+d.rb:24:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `foo(<<~C)` out of the conditional.
+d.rb:31:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.

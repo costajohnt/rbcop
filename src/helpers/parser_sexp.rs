@@ -247,6 +247,21 @@ fn quoting(opening: &[u8]) -> (bool, Vec<u8>) {
 
 struct Cv<'s> {
     src: &'s Source<'s>,
+    /// The tree whose `hash` the parser gem caches (`hash_sexp`).
+    stale: bool,
+}
+
+/// The parser gem dedents a squiggly heredoc's String in place after the node cached its hash, so
+/// that hash is the undedented body's when it has indentation to remove.
+pub fn stale_heredoc(opening: &[u8], content: &[u8]) -> bool {
+    opening.starts_with(b"<<~") && dedents(content)
+}
+
+/// Whether a squiggly heredoc body has indentation to remove: its least indented line that is not
+/// blank starts with a space or tab (Ruby ignores whitespace-only lines for the dedent level).
+fn dedents(body: &[u8]) -> bool {
+    let mut lines = body.split(|&b| b == b'\n').filter(|l| l.iter().any(|b| !b" \t\r".contains(b))).peekable();
+    lines.peek().is_some() && lines.all(|l| matches!(l.first(), Some(b' ' | b'\t')))
 }
 
 impl Cv<'_> {
@@ -449,16 +464,25 @@ impl Cv<'_> {
     fn string(&self, node: &Node) -> Option<S> {
         let s = node.as_string_node()?;
         let opening = s.opening_loc().map(|o| o.as_slice()).unwrap_or_default();
+        let content = s.content_loc().as_slice();
+        // ponytail: the body as written stands in for its unescaped, undedented value.
+        let value = if self.stale && stale_heredoc(opening, content) { content } else { s.unescaped() };
         if !is_parser_dstr(node) {
-            return Some(str_node(s.unescaped()));
+            return Some(str_node(value));
         }
         let (interp, delims) = quoting(opening);
-        Some(n("dstr", line_parts(s.content_loc().as_slice(), s.unescaped(), interp, &delims)?))
+        Some(n("dstr", line_parts(content, value, interp, &delims)?))
     }
 
     /// Children of an interpolated literal: string parts split per line, `#{}` as `begin`.
     fn parts(&self, parts: NodeList, opening: &[u8], depth: usize) -> Option<Vec<S>> {
         let (interp, delims) = quoting(opening);
+        let stale = self.stale && opening.starts_with(b"<<~") && {
+            let (first, last) = (parts.iter().next(), parts.iter().last());
+            first.zip(last).is_some_and(|(f, l)| {
+                dedents(&self.src.text.as_bytes()[f.location().start_offset()..l.location().end_offset()])
+            })
+        };
         let mut out = Vec::new();
         // A squiggly heredoc line ending in a backslash-newline continues into Prism's next part.
         let mut carry: Vec<u8> = Vec::new();
@@ -470,7 +494,8 @@ impl Cv<'_> {
                 Node::StringNode { .. } if p.as_string_node()?.opening_loc().is_none() => {
                     let s = p.as_string_node()?;
                     let src = s.content_loc().as_slice();
-                    let mut vals: Vec<Vec<u8>> = line_values(src, s.unescaped(), interp, &delims)?.into_iter().map(<[u8]>::to_vec).collect();
+                    let value = if stale { src } else { s.unescaped() };
+                    let mut vals: Vec<Vec<u8>> = line_values(src, value, interp, &delims)?.into_iter().map(<[u8]>::to_vec).collect();
                     if !carry.is_empty() {
                         carry.extend(if vals.is_empty() { Vec::new() } else { vals.remove(0) });
                         vals.insert(0, std::mem::take(&mut carry));
@@ -1063,7 +1088,23 @@ fn print(s: &S, indent: usize, out: &mut String) {
 
 /// `node.to_s`, or None when the subtree holds a node this port does not print.
 pub fn sexp(node: &Node, src: &Source) -> Option<String> {
-    let s = Cv { src }.conv(node, 200)?;
+    print_tree(node, src, false)
+}
+
+/// The tree the parser gem's cached `node.hash` describes (what `uniq`, Set and Hash keys compare
+/// besides `eql?`): below 3.3 a squiggly heredoc with indentation to remove counts with its
+/// undedented body. From 3.3 (Prism's translation) it is `sexp`.
+pub fn hash_sexp(node: &Node, src: &Source) -> Option<String> {
+    print_tree(node, src, src.parser_gem)
+}
+
+fn print_tree(node: &Node, src: &Source, stale: bool) -> Option<String> {
+    let cv = Cv { src, stale };
+    // A StatementsNode is parser's `begin` of its statements (or its one statement).
+    let s = match node.as_statements_node() {
+        Some(st) => cv.body(Some(st.as_node()), 200)?,
+        None => cv.conv(node, 200)?,
+    };
     let mut out = String::new();
     print(&s, 0, &mut out);
     Some(out)

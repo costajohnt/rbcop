@@ -1,0 +1,15 @@
+a.rb:12:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+a.rb:13:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+a.rb:14:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+a.rb:1:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+a.rb:2:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+a.rb:3:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+a.rb:5:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+a.rb:6:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+a.rb:7:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+a.rb:8:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+a.rb:9:3: W: Lint/BinaryOperatorWithIdenticalOperands: Binary operator `==` has identical operands.
+b.rb:12:6: W: Lint/DuplicateCaseCondition: Duplicate `when` condition detected.
+b.rb:2:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `foo(<<~B)` out of the conditional.
+b.rb:5:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+b.rb:6:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `foo("y\n")` out of the conditional.

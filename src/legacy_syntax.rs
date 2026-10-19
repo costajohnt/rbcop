@@ -2379,6 +2379,14 @@ impl<'pr> Visit<'pr> for Walk<'_> {
                 s.violation(next, 2.6);
             }
             ruby_prism::visit_range_node(s, n);
+            // With endless ranges and no beginless ones (2.6), `0.. ..3` is `(0..)..3`, where
+            // Prism reads `0..(..3)`.
+            if s.target >= 2.6
+                && let Some(r) = n.right().and_then(|r| r.as_range_node())
+                && r.left().is_none()
+            {
+                s.violations.remove(&r.operator_loc().start_offset());
+            }
         });
     }
 }

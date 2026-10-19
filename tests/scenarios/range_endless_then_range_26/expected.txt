@@ -1,0 +1,4 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+r.rb:3:21: C: [Correctable] Layout/SpaceInsideRangeLiteral: Space inside range literal.
+r.rb:5:5: C: [Correctable] Layout/SpaceInsideRangeLiteral: Space inside range literal.
+r.rb:6:7: C: [Correctable] Layout/SpaceInsideRangeLiteral: Space inside range literal.

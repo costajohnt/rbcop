@@ -414,7 +414,7 @@ fn investigate(
     let (result, tokens, fake, edits) = parse_for_target(text, &mut buf, version, cfg.target_ruby);
     let mut errors: Vec<(usize, usize, String)> = result
         .errors()
-        .filter(|e| !tolerated(e, parser_gem, cfg.target_ruby, text))
+        .filter(|e| !tolerated(e, &result.node(), parser_gem, cfg.target_ruby, text))
         .map(|e| {
             let loc = e.location();
             crate::syntax::translate(e.type_name(), e.message(), loc.start_offset(), loc.end_offset(), text)
@@ -429,7 +429,7 @@ fn investigate(
             file_error(format!("rbcop: {display}: nested more than {MAX_AST_DEPTH} levels deep, not inspected."));
             return (Vec::new(), None, Vec::new());
         }
-        let kept = |e: &ruby_prism::Diagnostic| !tolerated(e, parser_gem, cfg.target_ruby, text);
+        let kept = |e: &ruby_prism::Diagnostic| !tolerated(e, &result.node(), parser_gem, cfg.target_ruby, text);
         // A stray backslash is the parser gem's lexer error: reported, then skipped (no recovery).
         let bare_backslash = |e: &ruby_prism::Diagnostic| {
             let loc = e.location();
@@ -717,6 +717,7 @@ fn investigate(
         file_error(format!("rbcop: {}: nested more than {MAX_AST_DEPTH} levels deep, not inspected.", src.path));
         return (Vec::new(), None, Vec::new());
     }
+    src.root = Some(result.node());
     let mut facts = Facts::default();
     let mut collector = FactCollector { src: &src, facts: &mut facts };
     collector.facts.string_lines = vec![false; src.line_count() + 2];
@@ -972,6 +973,12 @@ pub fn cop_error_at(cop: &str, src: &Source, at: Option<usize>) {
     record_error(Some(cop), format!("An error occurred while {cop} cop was inspecting {location}."));
 }
 
+/// The running cop callback stands for RuboCop's callback on another node starting at `at` (an
+/// `on_args` that rbcop runs while visiting the def or block).
+pub fn visit_at(at: usize) {
+    VISITING.with(|v| v.set(Some(at)));
+}
+
 /// Another callback of the running cop for the node being visited (on_def and on_args, on_block
 /// and on_send): a raise in `f` is a cop error of its own at `at`, and the cop's other callbacks
 /// still run.
@@ -1216,7 +1223,8 @@ fn guarded(cop: &str, src: &Source, at: Option<usize>, f: impl FnOnce()) {
     VISITING.with(|v| v.set(at));
     let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f));
     IN_COP.with(|c| c.set(false));
-    VISITING.with(|v| v.set(None));
+    // The callback may stand for one on another node (`visit_at`).
+    let at = VISITING.with(|v| v.replace(None));
     if let Err(payload) = result
         && !payload.is::<ForceHook>()
     {
@@ -1244,8 +1252,8 @@ fn autocorrect_allowed(cfg: &CopConfig) -> bool {
 const TOLERATED_ERRORS: &[&str] =
     &["invalid_yield", "invalid_retry_without_rescue", "void_expression", "pattern_capture_in_alternative"];
 
-/// Prism errors the parser gem accepts for the target. Up to Ruby 2.5, `begin..else..end` without
-/// `rescue` is only a `useless_else` warning (reported by Lint/UselessElseWithoutRescue); before
+/// Prism errors the parser gem accepts for the target. Up to Ruby 2.5, an `else` without `rescue`
+/// is only a `useless_else` warning (reported by Lint/UselessElseWithoutRescue, see `useless_else`); before
 /// 2.7 `def m(x = x)` is only a warning (Lint/CircularArgumentReference); before 3.0 `_1 = x` is
 /// accepted (Builders::Default#check_reserved_for_numparam; Lint/NumberedParameterAssignment).
 /// Before 2.7 `_1` is an ordinary identifier, so Prism's numbered-parameter checks (`|a| a + _1`,
@@ -1254,13 +1262,15 @@ const TOLERATED_ERRORS: &[&str] =
 /// finds it unterminated. Before 2.5 `return` in a class/module body is accepted (the builder's
 /// `invalid_return` check is 2.5+). Before the target that has anonymous forwarding (`&` 3.1, `*`
 /// and `**` 3.2) the grammar fails on the argument, with no "no anonymous ... parameter" error.
-pub fn tolerated(e: &ruby_prism::Diagnostic, parser_gem: bool, target_ruby: f64, text: &str) -> bool {
+pub fn tolerated(e: &ruby_prism::Diagnostic, root: &Node, parser_gem: bool, target_ruby: f64, text: &str) -> bool {
     let kind = e.type_name();
+    if useless_else(e, root, target_ruby, text) {
+        return true;
+    }
     (parser_gem && TOLERATED_ERRORS.contains(&kind))
         || (kind == "return_invalid" && target_ruby < 2.5)
         || (kind == "argument_no_forwarding_ampersand" && target_ruby < 3.1)
         || (matches!(kind, "argument_no_forwarding_star" | "argument_no_forwarding_star_star") && target_ruby < 3.2)
-        || (kind == "begin_lonely_else" && target_ruby <= 2.5)
         || (kind == "parameter_circular" && target_ruby < 2.7)
         || (kind == "parameter_numbered_reserved" && target_ruby < 3.0)
         || ((kind.starts_with("numbered_parameter_") || kind == "expression_not_writable_numbered")
@@ -1270,6 +1280,51 @@ pub fn tolerated(e: &ruby_prism::Diagnostic, parser_gem: bool, target_ruby: f64,
             // spaces and tabs before it is rewritten into an empty line by `parse_for_target`).
             text.ends_with('\n')
         })
+}
+
+/// Up to Ruby 2.5 the parser gem only warns (`useless_else`) about an `else` without `rescue` in a
+/// `begin`, def, class, module or singleton class body, and from 2.5 in a do/end block's; Prism
+/// rejects it (`begin_lonely_else`, or an `else` it ignores).
+pub fn useless_else(e: &ruby_prism::Diagnostic, root: &Node, target_ruby: f64, text: &str) -> bool {
+    use ruby_prism::Visit;
+    let at = e.location().start_offset();
+    let lonely = match e.type_name() {
+        "begin_lonely_else" => true,
+        "unexpected_token_ignore" => text[at..].starts_with("else"),
+        _ => false,
+    };
+    if !lonely || target_ruby > 2.5 {
+        return false;
+    }
+    // The nodes around the `else`, outermost first.
+    struct Around<'pr>(usize, Vec<Node<'pr>>);
+    impl<'pr> Visit<'pr> for Around<'pr> {
+        fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
+            let l = node.location();
+            if l.start_offset() <= self.0 && self.0 < l.end_offset() {
+                self.1.push(node);
+            }
+        }
+    }
+    let mut around = Around(at, Vec::new());
+    around.visit(root);
+    // The body owning it, past its statements and an implicit `begin` (a body with `ensure`).
+    let owner = around.1.into_iter().rev().find(|n| match n {
+        Node::StatementsNode { .. } => false,
+        Node::BeginNode { .. } => n.as_begin_node().unwrap().begin_keyword_loc().is_some(),
+        _ => true,
+    });
+    match owner {
+        Some(
+            Node::DefNode { .. } | Node::ClassNode { .. } | Node::ModuleNode { .. } | Node::SingletonClassNode { .. },
+        ) => true,
+        Some(Node::BeginNode { .. }) => true,
+        Some(Node::BlockNode { .. }) => {
+            let b = owner.unwrap();
+            target_ruby >= 2.5 && b.as_block_node().unwrap().opening_loc().as_slice() == b"do"
+        }
+        _ => false,
+    }
 }
 
 /// Cop::Base#default_severity.

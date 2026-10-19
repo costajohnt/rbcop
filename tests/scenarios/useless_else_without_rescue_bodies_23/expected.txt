@@ -1,0 +1,7 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:4:3: W: [Correctable] Lint/Void: Literal `1` used in void context.
+a.rb:5:1: W: Lint/UselessElseWithoutRescue: `else` without `rescue` is useless.
+b.rb:6:5: W: [Correctable] Lint/Void: Literal `1` used in void context.
+b.rb:7:3: W: Lint/UselessElseWithoutRescue: `else` without `rescue` is useless.
+c.rb:10:1: F: Lint/Syntax: unexpected token kELSE (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+c.rb:5:1: F: Lint/Syntax: unexpected token kELSE (Using Ruby 2.3 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)

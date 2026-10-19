@@ -1,0 +1,16 @@
+AllCops:
+  TargetRubyVersion: 3.2
+  SuggestExtensions: false
+  DisabledByDefault: true
+Lint/DuplicateHashKey:
+  Enabled: true
+Lint/DuplicateSetElement:
+  Enabled: true
+Lint/DuplicateBranch:
+  Enabled: true
+Style/IdenticalConditionalBranches:
+  Enabled: true
+Lint/DuplicateCaseCondition:
+  Enabled: true
+Lint/BinaryOperatorWithIdenticalOperands:
+  Enabled: true

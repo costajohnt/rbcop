@@ -1,4 +1,4 @@
-use crate::helpers::node_equality::same;
+use crate::helpers::node_equality::{same, same_hash};
 use crate::helpers::parser_parent::{parser_parent, parser_parent_index};
 use crate::prelude::*;
 use helpers::select_by::plain_send;
@@ -68,7 +68,7 @@ fn used_in_condition(src: &Source, node: Range, children: &[Range], condition: &
             // partial_matched?: node.child_nodes == node.child_nodes & condition.child_nodes
             let mut inter: Vec<Range> = Vec::new();
             for &x in children {
-                if cond_children.iter().any(|&y| same(src, x, y)) && !inter.iter().any(|&y| same(src, x, y)) {
+                if cond_children.iter().any(|&y| same_hash(src, x, y)) && !inter.iter().any(|&y| same_hash(src, x, y)) {
                     inter.push(x);
                 }
             }

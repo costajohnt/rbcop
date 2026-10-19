@@ -103,6 +103,8 @@ impl Cop for ParameterLists {
             let count = args_count(cx, params.as_ref(), 0);
             let Some(max) = args_max(cx, range) else { return };
             let Some(range) = range.filter(|_| count > max) else { return };
+            // The offense is on_args': so is its cop error.
+            crate::runner::visit_at(range.0);
             cx.add(range.0, range.1, format!("Avoid parameter lists longer than {max} parameters. [{count}/{max}]"));
             return;
         }
@@ -129,6 +131,7 @@ impl Cop for ParameterLists {
             return;
         }
         let (s, e) = range.unwrap();
+        crate::runner::visit_at(s);
         cx.add(s, e, format!("Avoid parameter lists longer than {max} parameters. [{count}/{max}]"));
     }
 }
