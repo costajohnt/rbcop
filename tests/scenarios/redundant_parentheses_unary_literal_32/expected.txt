@@ -1,0 +1,11 @@
+a.rb:10:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+a.rb:12:19: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+a.rb:12:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+a.rb:1:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+a.rb:2:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+a.rb:3:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+a.rb:5:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+a.rb:6:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+a.rb:7:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+a.rb:8:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.
+a.rb:9:5: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a literal.

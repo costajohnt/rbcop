@@ -81,7 +81,17 @@ pub fn serialize_folding(text: &str, node: &Node, fold: bool) -> String {
     // `__LINE__` is an `int` of its line in the parsed source: the scope fragment RuboCop reparses
     // (line 1 at the node), or the whole file.
     let line_base = if node.as_program_node().is_some() { 0 } else { node.location().start_offset() };
-    let mut s = Ser { text, out: String::new(), frames: vec![], fold, suppress: 0, budget: FOLD_BUDGET, line_base };
+    let mut s = Ser {
+        text,
+        out: String::new(),
+        frames: vec![],
+        fold,
+        suppress: 0,
+        budget: FOLD_BUDGET,
+        line_base,
+        unfold: vec![],
+        close: vec![],
+    };
     s.visit(node);
     s.out
 }
@@ -163,6 +173,43 @@ struct Ser<'t> {
     budget: usize,
     /// Where line 1 of the parsed source starts in `text`.
     line_base: usize,
+    /// (literal start, the unary call's opening) of a `- 1.foo` emitted as `(- 1).foo`.
+    unfold: Vec<(usize, String)>,
+    /// Frame depths whose leave closes an unfolded unary call too.
+    close: Vec<usize>,
+}
+
+fn numeric(n: &Node) -> bool {
+    matches!(n, Node::IntegerNode { .. } | Node::FloatNode { .. } | Node::RationalNode { .. } | Node::ImaginaryNode { .. })
+}
+
+/// Below 3.3 the parser gem lexes `- 1` as one negative literal before any method call binds:
+/// `- 1.foo` is `(send (int -1) :foo)` where Prism has `-@` on `1.foo` (#637), and only a binary
+/// `**` directly on the literal keeps the unary call outside (`- 1 ** 2`). Returns the start of the
+/// leftmost literal the unary call moves onto.
+fn unfolded_unary(node: &Node) -> Option<usize> {
+    let call = node.as_call_node()?;
+    let op = call.name().as_slice();
+    if !crate::helpers::literal_node::parser_gem_file()
+        || !(op == b"-@" || op == b"+@")
+        || call.call_operator_loc().is_some()
+        || call.arguments().is_some()
+        || call.block().is_some()
+    {
+        return None;
+    }
+    let mut n = call.receiver()?;
+    if numeric(&n) || call.message_loc().is_none_or(|m| m.end_offset() > n.location().start_offset()) {
+        return None;
+    }
+    while let Some(c) = n.as_call_node() {
+        let recv = c.receiver()?;
+        if numeric(&recv) && c.name().as_slice() == b"**" && c.call_operator_loc().is_none() {
+            return None;
+        }
+        n = recv;
+    }
+    numeric(&n).then(|| n.location().start_offset())
 }
 
 impl Ser<'_> {
@@ -193,6 +240,8 @@ impl Ser<'_> {
                                 suppress: 0,
                                 budget: self.budget,
                                 line_base: self.line_base,
+                                unfold: vec![],
+                                close: vec![],
                             };
                             sub.visit(&p);
                             self.budget = sub.budget;
@@ -242,6 +291,18 @@ impl Ser<'_> {
         self.out.push(')');
     }
 
+    /// Emits the opening of the unary call `unfolded_unary` moved onto this literal.
+    fn open_unfolded(&mut self, node: &Node) -> bool {
+        if self.unfold.is_empty() || !numeric(node) {
+            return false;
+        }
+        let at = node.location().start_offset();
+        let Some(i) = self.unfold.iter().rposition(|u| u.0 == at) else { return false };
+        let (_, open) = self.unfold.remove(i);
+        self.out.push_str(&open);
+        true
+    }
+
     fn last(&self) -> Option<Frame> {
         self.frames.iter().rev().find(|f| **f != Frame::Pass).copied()
     }
@@ -259,6 +320,15 @@ impl<'pr> Visit<'pr> for Ser<'_> {
     fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
         if self.suppress > 0 {
             return self.frames.push(Frame::Pass);
+        }
+        if let Some(at) = unfolded_unary(&node) {
+            let c = node.as_call_node().unwrap();
+            let name = std::str::from_utf8(c.name().as_slice()).unwrap_or("");
+            self.unfold.push((at, format!("({} {name}r", kind::of(&node))));
+            return self.frames.push(Frame::Pass);
+        }
+        if self.open_unfolded(&node) {
+            self.close.push(self.frames.len());
         }
         if self.fold
             && matches!(node, Node::InterpolatedStringNode { .. } | Node::CallNode { .. })
@@ -314,6 +384,10 @@ impl<'pr> Visit<'pr> for Ser<'_> {
             Some(Frame::Folded) => self.suppress -= 1,
             _ => {}
         }
+        if self.close.last() == Some(&self.frames.len()) {
+            self.close.pop();
+            self.out.push(')');
+        }
     }
 
     fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
@@ -329,6 +403,7 @@ impl<'pr> Visit<'pr> for Ser<'_> {
         if matches!(node, Node::NumberedParametersNode { .. }) {
             return;
         }
+        let unfolded = self.open_unfolded(&node);
         let loc = node.location();
         let line;
         let k = match &node {
@@ -348,6 +423,9 @@ impl<'pr> Visit<'pr> for Ser<'_> {
         self.out.push(' ');
         self.out.push_str(k);
         self.out.push(']');
+        if unfolded {
+            self.out.push(')');
+        }
     }
 
     fn visit_statements_node(&mut self, node: &ruby_prism::StatementsNode<'pr>) {
