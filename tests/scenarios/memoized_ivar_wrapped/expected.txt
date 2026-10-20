@@ -1,0 +1,7 @@
+t.rb:10:9: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@y` does not match method name `b`. Use `@b` instead.
+t.rb:14:4: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@z` does not match method name `c`. Use `@c` instead.
+t.rb:18:8: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@v` does not match method name `e`. Use `@e` instead.
+t.rb:22:9: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@w` does not match method name `f`. Use `@f` instead.
+t.rb:26:13: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@u` does not match method name `g`. Use `@g` instead.
+t.rb:2:10: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@site_drop` does not match method name `site`. Use `@site` instead.
+t.rb:6:9: C: [Correctable] Naming/MemoizedInstanceVariableName: Memoized variable `@x` does not match method name `a`. Use `@a` instead.

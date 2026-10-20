@@ -1,0 +1,6 @@
+a.rb:4:3: C: [Corrected] Layout/BlockAlignment: `end` at 4, 2 is not aligned with `foo do` at 3, 8 or `ensure; foo do` at 3, 0.
+b.rb:4:3: C: [Corrected] Layout/BlockAlignment: `end` at 4, 2 is not aligned with `foo do` at 3, 7 or `ensure foo do` at 3, 0.
+c.rb:3:3: C: [Corrected] Layout/BlockAlignment: `end` at 3, 2 is not aligned with `foo do` at 2, 8 or `ensure; foo do` at 2, 0.
+d.rb:4:3: C: [Corrected] Layout/BlockAlignment: `end` at 4, 2 is not aligned with `foo do` at 3, 8 or `rescue; foo do` at 3, 0.
+e.rb:4:1: C: [Corrected] Layout/BlockAlignment: `}` at 4, 0 is not aligned with `-> {` at 2, 15 or `to:, with: -> {` at 2, 4.
+e.rb:4:10: C: Layout/BlockAlignment: `}` at 4, 9 is not aligned with `-> {` at 2, 15 or `to:, with: -> {` at 2, 4.

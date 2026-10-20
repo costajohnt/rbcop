@@ -137,6 +137,16 @@ fn last_child<'pr>(body: &Node<'pr>) -> Option<Node<'pr>> {
                 None => crate::ast::send_args(&call).pop(),
             }
         }
+        // return/next/break/yield/super and array literals: their last argument or element (#642)
+        Node::ReturnNode { .. } => body.as_return_node().unwrap().arguments()?.arguments().iter().last(),
+        Node::NextNode { .. } => body.as_next_node().unwrap().arguments()?.arguments().iter().last(),
+        Node::BreakNode { .. } => body.as_break_node().unwrap().arguments()?.arguments().iter().last(),
+        Node::YieldNode { .. } => body.as_yield_node().unwrap().arguments()?.arguments().iter().last(),
+        Node::SuperNode { .. } => {
+            let s = body.as_super_node().unwrap();
+            if s.block().is_some_and(|b| b.as_block_node().is_some()) { None } else { s.arguments()?.arguments().iter().last() }
+        }
+        Node::ArrayNode { .. } => body.as_array_node().unwrap().elements().iter().last(),
         // an assignment's last child is its value (`x = @a ||= 1`)
         _ => crate::ast::assignment_parts(body).map(|(_, value)| value),
     }

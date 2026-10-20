@@ -141,6 +141,9 @@ fn lineage(x: &Node, ancestors: &[Node]) -> Vec<P> {
         {
             s = l.start_offset();
         }
+        if let Some(e) = crate::ast::ensure_start(ancestors, i) {
+            s = e;
+        }
         match frame(a) {
             Frame::Transparent => continue,
             _ if kind::of(a) == kind::BLOCK_NODE => {

@@ -101,7 +101,7 @@ installed; a different installed version is ignored.
 ## Porting a plugin
 
 1. Pin the version: the newest release whose gemspec accepts RuboCop 1.91.0. Install it with the
-   rbenv Ruby on the Mac and on CT 440 (same version on both) and add it to the table above.
+   rbenv Ruby on every machine that runs the oracle (same version on all) and add it to the table above.
 2. Vendor its `config/default.yml` as `config/plugins/<gem>.yml`, add an entry to `NATIVE_PLUGINS`,
    regenerate `src/autocorrect/registry.tsv`, and add `config/all-cops-<plugin>.yml` (oracle config)
    and `config/plugin-<plugin>.yml` (autocorrect gate config).

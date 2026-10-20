@@ -647,3 +647,64 @@ pub fn regexp_compile_errors(program: &ruby_prism::Node, text: &str) -> Vec<(usi
     w.visit(program);
     w.out
 }
+
+/// Offsets of the `return`s directly in a singleton class body (`class << self; return; end`),
+/// when Prism reports any `return_invalid` (else empty, no walk). Prism reports them; the parser
+/// gem's check (targets below 3.3) only covers class and module bodies (#640). A tree deeper than
+/// `runner::MAX_AST_DEPTH` gives none (the walk stops there; the runner skips such a file anyway).
+pub fn sclass_returns(result: &ruby_prism::ParseResult) -> Vec<usize> {
+    use ruby_prism::Visit;
+    struct Walk {
+        /// Innermost class-like/def scopes: true for a singleton class.
+        scopes: Vec<bool>,
+        depth: usize,
+        found: Vec<usize>,
+    }
+    struct TooDeep;
+    impl Walk {
+        fn scoped(&mut self, sclass: bool, f: impl FnOnce(&mut Self)) {
+            self.scopes.push(sclass);
+            f(self);
+            self.scopes.pop();
+        }
+    }
+    impl<'pr> Visit<'pr> for Walk {
+        fn visit_branch_node_enter(&mut self, _: ruby_prism::Node<'pr>) {
+            self.depth += 1;
+            if self.depth > crate::runner::MAX_AST_DEPTH {
+                // resume_unwind skips the panic hook: this is control flow, not an error.
+                std::panic::resume_unwind(Box::new(TooDeep));
+            }
+        }
+        fn visit_branch_node_leave(&mut self) {
+            self.depth -= 1;
+        }
+        fn visit_def_node(&mut self, n: &ruby_prism::DefNode<'pr>) {
+            self.scoped(false, |w| ruby_prism::visit_def_node(w, n));
+        }
+        fn visit_class_node(&mut self, n: &ruby_prism::ClassNode<'pr>) {
+            self.scoped(false, |w| ruby_prism::visit_class_node(w, n));
+        }
+        fn visit_module_node(&mut self, n: &ruby_prism::ModuleNode<'pr>) {
+            self.scoped(false, |w| ruby_prism::visit_module_node(w, n));
+        }
+        fn visit_singleton_class_node(&mut self, n: &ruby_prism::SingletonClassNode<'pr>) {
+            self.scoped(true, |w| ruby_prism::visit_singleton_class_node(w, n));
+        }
+        fn visit_return_node(&mut self, n: &ruby_prism::ReturnNode<'pr>) {
+            if self.scopes.last() == Some(&true) {
+                self.found.push(n.location().start_offset());
+            }
+            ruby_prism::visit_return_node(self, n);
+        }
+    }
+    if !result.errors().any(|e| e.type_name() == "return_invalid") {
+        return Vec::new();
+    }
+    let mut w = Walk { scopes: Vec::new(), depth: 0, found: Vec::new() };
+    let program = result.node();
+    match std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| w.visit(&program))) {
+        Ok(()) => w.found,
+        Err(_) => Vec::new(),
+    }
+}

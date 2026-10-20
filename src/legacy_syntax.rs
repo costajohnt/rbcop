@@ -721,9 +721,13 @@ fn first_error_after(
     w.visit(&result.node());
     let p = prefix.len();
     // `return` directly in the class body recovery left open: the builder's error (and yyerror).
+    let sclass = crate::syntax::sclass_returns(&result);
     let returns = result
         .errors()
-        .filter(|e| e.type_name() == "return_invalid" && e.location().start_offset() >= p)
+        .filter(|e| {
+            let s = e.location().start_offset();
+            e.type_name() == "return_invalid" && s >= p && !sclass.contains(&s)
+        })
         .map(|e| e.location().start_offset() - p + from)
         .collect();
     // Unclosed constructs (errors at the end of the file) are the simulation's `$end` check;
@@ -1617,6 +1621,16 @@ impl Walk<'_> {
             self.check_condition(&r);
         }
     }
+    /// An `if`/`elsif`/`unless` keyword's condition is an `expr_value`: a statement that is no
+    /// `expr` there (`if a if b`, Prism's `if (a if b)`) fails below 3.3 (#643). `kw` after the
+    /// condition is a modifier.
+    fn keyword_condition(&mut self, kw: usize, cond: &Node) {
+        if kw < cond.location().start_offset()
+            && let Some(at) = self.stmt_only(cond)
+        {
+            self.violation(at, 3.3);
+        }
+    }
     /// Where ruby23.y's `stmt` rules that are no `expr` fail when an `expr` is expected (`foo (...)`,
     /// #488): a modifier's keyword (after its own statement's), `alias`/`undef`/`END`, a command
     /// assignment's first argument, a multiple assignment's or `lhs = mrhs`'s first `,` or `*`.
@@ -1829,6 +1843,9 @@ impl<'pr> Visit<'pr> for Walk<'_> {
 
     fn visit_if_node(&mut self, n: &ruby_prism::IfNode<'pr>) {
         self.check_condition(&n.predicate());
+        if let Some(k) = n.if_keyword_loc() {
+            self.keyword_condition(k.start_offset(), &n.predicate());
+        }
         // Ternaries and modifiers have no `end`; an `elsif` belongs to the first `if`.
         let Some(kw) = n.if_keyword_loc().filter(|k| n.end_keyword_loc().is_some() && k.as_slice() == b"if") else {
             return ruby_prism::visit_if_node(self, n);
@@ -1861,6 +1878,7 @@ impl<'pr> Visit<'pr> for Walk<'_> {
 
     fn visit_unless_node(&mut self, n: &ruby_prism::UnlessNode<'pr>) {
         self.check_condition(&n.predicate());
+        self.keyword_condition(n.keyword_loc().start_offset(), &n.predicate());
         if n.end_keyword_loc().is_some() {
             let kw = n.keyword_loc().start_offset();
             let body = n
