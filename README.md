@@ -72,16 +72,15 @@ With `RBCOP_FALLBACK=1`, rbcop runs RuboCop once more for exactly those cops (`-
 
 ## Speed
 
-`scripts/bench.sh` on the rails corpus (3,573 files, 612 cops, `--force-default-config`), Apple M4 with 10 cores, wall time. The machine was running other heavy jobs at the time (load average 12 to 26), so these are rough:
+`scripts/bench.sh` on eight corpora (191 to 12,731 files, 612 cops, `--force-default-config`), Apple M4 with 10 cores, wall time. Geometric mean speedup of rbcop, with the range across corpora:
 
-| Run | Time |
+| rbcop vs | Speedup |
 |---|---:|
-| rubocop, one process, no cache | 198 s |
-| rubocop --parallel, cold cache | 62 s |
-| rubocop --parallel, warm cache | 6 s |
-| rbcop (no cache; uses every core) | 10 s |
+| rubocop, one process, no cache | 66x (29x to 128x) |
+| rubocop --parallel, cold cache | 24x (12x to 74x) |
+| rubocop --parallel, warm cache | 2.4x (1.6x to 5.6x) |
 
-rbcop has no result cache, so RuboCop with a warm cache is faster on an unchanged tree.
+On rails (3,573 files): rubocop 148 s, `--parallel` 34 s, rbcop 2.3 s. rbcop has no result cache and uses every core. The machine was under other load (load average 14 to 53), so treat these as rough.
 
 ## Gates
 
