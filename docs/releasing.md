@@ -1,8 +1,7 @@
 # Releasing
 
-The repository is private, so releases are built by hand (hosted Actions minutes are not used);
-`.github/workflows/release.yml` runs the same scripts once it is public. Nothing below publishes
-anything until step 7.
+Releases are built by `.github/workflows/release.yml` (see the end of this file). The manual steps
+below run the same scripts by hand; nothing below publishes anything until step 7.
 
 The GitHub Action and `scripts/dist/install.sh` only run an archive whose SHA-256 is listed in
 `packaging/checksums/X.Y.Z.sha256` at the tag, so that file is committed before the tag exists,
