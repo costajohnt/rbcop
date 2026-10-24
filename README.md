@@ -10,7 +10,7 @@ The target is byte-identical output: same offenses, ranges, messages, `[Correcta
 - GitHub Actions: `uses: costajohnt/rbcop@v<version>` downloads and caches the release binary.
 - Homebrew formula and release archives with each release.
 
-[docs/migration.md](docs/migration.md) covers switching a project from RuboCop: Gemfile, binstubs, CI, editors and plugins. None of these is published yet (#298); `docs/releasing.md` describes how they are built.
+[docs/migration.md](docs/migration.md) covers switching a project from RuboCop: Gemfile, binstubs, CI, editors and plugins. `docs/releasing.md` describes how releases are built.
 
 ## Build
 
