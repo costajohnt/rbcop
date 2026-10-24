@@ -19,6 +19,8 @@ end
 
 and run `bundle install`. The gem ships a prebuilt binary, so no Rust toolchain is needed. There are gems for x86_64 and arm64 macOS and for x86_64 and aarch64 Linux (glibc and musl), plus a `ruby` platform gem carrying all of those binaries for lockfiles that list only `PLATFORMS ruby`. Windows is not supported yet.
 
+If you replace the `gem "rubocop"` line in place, Bundler/OrderedGems may flag it: `rbcop` sorts before `rdoc` and `rspec`, where `rubocop` sorts after them. Move the line into alphabetical order (or run `bundle exec rbcop -a Gemfile`).
+
 Keep `gem "rubocop"` and the plugin gems if you want the fallback for plugin cops, if other tools load RuboCop as a library (haml-lint, erb_lint, ruby-lsp's RuboCop add-on, standard), or simply to compare the two. Remove it if nothing else needs it.
 
 ## bundle exec
