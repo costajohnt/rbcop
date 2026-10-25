@@ -706,6 +706,11 @@ pub struct Store {
     /// The `plugins:`/`require:` entry whose loading failed (integrate_plugins).
     failed_entry: Option<String>,
     loaded_plugins: Vec<String>,
+    /// ConfigLoader.loaded_plugins proper: the `plugins:` entries loaded, in order (a
+    /// plugin-capable `require:` loads as a plugin but is not added there).
+    plugin_entries: Vec<String>,
+    /// ConfigLoader.loaded_features: every `require:` entry.
+    required: Vec<String>,
     /// A `require:` rbcop cannot load (see validator::Validator::custom_cops).
     custom_cops: bool,
     /// Loaded plugins rbcop does not implement that define no cops (rubocop-erb, rubocop-md):
@@ -788,6 +793,8 @@ impl Store {
             features: HashMap::new(),
             failed_entry: None,
             loaded_plugins: Vec::new(),
+            plugin_entries: Vec::new(),
+            required: Vec::new(),
             custom_cops: false,
             copless_plugins: Vec::new(),
             plugin_constants: Default::default(),
@@ -881,6 +888,43 @@ impl Store {
     /// ConfigLoader.loaded_plugins and loaded_features: every `plugins:`/`require:` name loaded so far.
     pub fn loaded_plugins(&self) -> &[String] {
         &self.loaded_plugins
+    }
+
+    /// RuboCop::Version.extension_versions: `  - <gem> <version>` for each loaded plugin, in load
+    /// order, then for each other `require:`d `rubocop-*` feature, sorted. A native plugin is at its
+    /// pinned version; another gem at its installed one, and left out when it is not installed.
+    // ponytail: RuboCop reads a feature's version constant (RuboCop::<Name>::Version::STRING); the
+    // gem's version stands in for it.
+    pub fn extension_versions(&self) -> Vec<String> {
+        let mut features: Vec<String> = self.required.clone();
+        features.sort();
+        features.dedup();
+        features.retain(|f| f.contains("rubocop-") && !self.plugin_entries.contains(f));
+        let names: Vec<String> = self.plugin_entries.iter().cloned().chain(features).collect();
+        names
+            .into_iter()
+            .filter(|n| n != INTERNAL_AFFAIRS)
+            .filter_map(|n| {
+                let version = match crate::helpers::cop_registry::native_plugin(&n) {
+                    Some(native) => native.version.to_string(),
+                    None => self.gem_version(&n)?,
+                };
+                Some(format!("  - {n} {version}"))
+            })
+            .collect()
+    }
+
+    /// The installed version of a gem, if any.
+    fn gem_version(&self, gem: &str) -> Option<String> {
+        if !gem.chars().all(|c| c.is_ascii_alphanumeric() || "_-.".contains(c)) || gem.starts_with('-') {
+            return None;
+        }
+        let out = std::process::Command::new("ruby")
+            .args(["-e", "print Gem::Specification.find_by_name(ARGV[0]).version rescue exit 1", "--", gem])
+            .current_dir(&self.cwd)
+            .output()
+            .ok()?;
+        (out.status.success() && !out.stdout.is_empty()).then(|| String::from_utf8_lossy(&out.stdout).into_owned())
     }
 
     pub fn requires_ruby_code(&self) -> bool {
@@ -1168,6 +1212,7 @@ impl Store {
         // The first entry that fails to load ends the run, after the warnings of the entries
         // before it.
         let names: Vec<String> = plugins.iter().map(|(n, _)| n.clone()).collect();
+        self.required.extend(names[require_from..].iter().cloned());
         let failed = match self.integrate_plugins(plugins, require_from, &mut local) {
             Err(e) => {
                 let at = self.failed_entry.take().and_then(|f| names.iter().position(|n| *n == f));
@@ -1512,6 +1557,9 @@ impl Store {
                 }
             }
             self.loaded_plugins.push(name.clone());
+            if at < require_from {
+                self.plugin_entries.push(name.clone());
+            }
             let load = match load {
                 Load::BuiltinHash { require_path: false, .. } => {
                     self.failed_entry = Some(name.clone());
