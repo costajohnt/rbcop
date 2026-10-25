@@ -112,14 +112,14 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("show-docs-url", None, Arg::Optional, Use::Handle),
     ("init", None, Arg::None, Use::Handle),
     ("config", Some('c'), Arg::Required, Use::Handle),
-    ("debug", Some('d'), Arg::None, Use::Unsupported),
+    ("debug", Some('d'), Arg::None, Use::Handle),
     ("plugin", None, Arg::Required, Use::Unsupported),
     ("require", Some('r'), Arg::Required, Use::Unsupported),
     ("[no-]color", None, Arg::None, Use::Handle),
     ("version", Some('v'), Arg::None, Use::Handle),
     ("verbose-version", Some('V'), Arg::None, Use::Handle),
-    ("profile", None, Arg::None, Use::Unsupported),
-    ("memory", None, Arg::None, Use::Unsupported),
+    ("profile", None, Arg::None, Use::Handle),
+    ("memory", None, Arg::None, Use::Handle),
     ("help", Some('h'), Arg::None, Use::Handle),
 ];
 
@@ -192,6 +192,13 @@ struct Cli {
     verbose_version: bool,
     /// EXITING_OPTIONS seen, in order (for "Incompatible cli options").
     exiting: Vec<&'static str>,
+    /// `-d/--debug`
+    debug: bool,
+    /// `--profile`, `--memory` (which does nothing without `--profile`).
+    profile: bool,
+    memory: bool,
+    /// The keys of RuboCop's `@options` hash (CLI#parallel_by_default! looks at them).
+    keys: Vec<String>,
 }
 
 /// Shellwords.split; Err is its ArgumentError for an unterminated quote.
@@ -365,6 +372,7 @@ fn parse_args(args: Vec<String>) -> Result<Cli, Fail> {
                 let shown = if neg { format!("--no-{name}") } else { format!("--{name}") };
                 return Err(Fail::Unsupported(format!("{shown} is not supported by rbcop yet")));
             }
+            cli.keys.push(name.replace('-', "_"));
             apply(&mut cli, name, neg, value)?;
         }
     }
@@ -416,6 +424,18 @@ fn push_only(cli: &mut Cli, dept: &str) {
 }
 
 fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<(), Fail> {
+    // The other `@options` keys an option's block sets.
+    let implied: &[&str] = match name {
+        "lint" => &["only"],
+        "fix-layout" => &["only", "autocorrect"],
+        "autocorrect" => &["safe_autocorrect"],
+        "autocorrect-all" => &["autocorrect"],
+        "format" => &["formatters"],
+        "out" if cli.formatters.is_empty() => &["output_path"],
+        "profile" if cli.cache.is_none() => &["cache"],
+        _ => &[],
+    };
+    cli.keys.extend(implied.iter().map(|k| k.to_string()));
     match name {
         "lint" => push_only(cli, "Lint"),
         "fix-layout" => {
@@ -503,6 +523,10 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
             let new = if name == "auto-correct-all" { "--autocorrect-all" } else { "--autocorrect" };
             let color = global_color(None) && !env::args().any(|a| a == "--no-color");
             eprintln!("{}", formatter::Paint(color).yellow(&format!("--{name} is deprecated; use {new} instead.")));
+            // `@options[new] = @options.delete(old)`
+            let old = name.replace('-', "_");
+            cli.keys.retain(|k| *k != old);
+            cli.keys.push(new[2..].replace('-', "_"));
             return apply(cli, &new[2..], neg, value);
         }
         "autocorrect" => {
@@ -533,6 +557,16 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
             cli.verbose_version = true;
             cli.exiting.push("verbose_version");
         }
+        "debug" => {
+            cli.debug = true;
+            cli.opts.debug = true;
+        }
+        // `--profile` turns the cache off unless `--cache` came first.
+        "profile" => {
+            cli.profile = true;
+            cli.cache.get_or_insert_with(|| "false".into());
+        }
+        "memory" => cli.memory = true,
         "help" => return Err(Fail::Help),
         _ => {} // ignored options
     }
@@ -546,6 +580,7 @@ fn validate(cli: &mut Cli, global: bool) -> Result<(), Fail> {
     if cli.diff && cli.autocorrect.is_none() {
         cli.autocorrect = Some(rbcop::autocorrect::Mode::Safe);
         cli.safe_autocorrect = true;
+        cli.keys.extend(["autocorrect".into(), "safe_autocorrect".into()]);
     }
     if cli.only.as_ref().is_some_and(|o| {
         o.iter().any(|c| c == "Lint/RedundantCopDisableDirective" || c == "RedundantCopDisableDirective")
@@ -592,6 +627,7 @@ fn validate(cli: &mut Cli, global: bool) -> Result<(), Fail> {
         .collect();
         if !invalid.is_empty() {
             cli.parallel = None;
+            cli.keys.retain(|k| k != "parallel");
             println!("-P/--parallel is being ignored because it is not compatible with {}.", invalid.join(", "));
         }
     }
@@ -658,10 +694,9 @@ fn main() -> ExitCode {
         }
     }));
     let parsed = all_args().and_then(parse_args);
-    let (display_time, color_opt) = match &parsed {
-        Ok(cli) => (cli.display_time, cli.color),
-        Err(_) => (false, None),
-    };
+    let color_opt = parsed.as_ref().ok().and_then(|cli| cli.color);
+    // CLI#run's ensure: `@options` is only set once Options#parse (validation included) succeeded.
+    let mut display_time = false;
     let global = global_color(color_opt);
     // Option errors are raised inside Options#parse, before --color/--no-color reach Rainbow.
     let parse_color = global_color(None);
@@ -685,19 +720,108 @@ fn main() -> ExitCode {
             0
         }
         // CLI#run: --init runs before the configuration is loaded.
-        Ok(cli) if cli.init => init_dotfile(parse_color),
-        Ok(cli) => match run(cli, global, parse_color) {
-            Ok(code) => code,
-            Err(e) => {
-                warn_red(global, &e);
-                ERROR
+        Ok(cli) if cli.init => {
+            display_time = cli.display_time || cli.debug;
+            init_dotfile(parse_color)
+        }
+        Ok(cli) => {
+            display_time = cli.display_time || cli.debug;
+            let profile = cli.profile.then_some(cli.memory);
+            let roots = rbcop::autocorrect::write_roots(&rbcop::config::cwd(), &cli.paths);
+            if profile.is_some() {
+                runner::enable_profiling();
             }
-        },
+            let code = match run(cli, global, parse_color) {
+                Ok(code) => code,
+                Err(e) => {
+                    warn_red(global, &e);
+                    ERROR
+                }
+            };
+            if let Some(memory) = profile {
+                profile_reports(memory, t0.elapsed(), &roots);
+            }
+            code
+        }
     };
     if display_time {
         println!("Finished in {} seconds", ruby_seconds(t0.elapsed().as_secs_f64()));
     }
     ExitCode::from(status)
+}
+
+/// CLI#profile_if_needed's reports. Deliberate difference: RuboCop's are StackProf's CPU profile
+/// and MemoryProfiler's allocations of the Ruby VM; rbcop's are the wall time spent in each cop
+/// and its peak resident set size, as text files under `<project root>/tmp`.
+fn profile_reports(memory: bool, elapsed: std::time::Duration, roots: &[PathBuf]) {
+    let cwd = rbcop::config::cwd();
+    // ponytail: RuboCop fails (File.join(nil, 'tmp')) without a Gemfile; rbcop uses the working directory.
+    let root = rbcop::config::project_root(&cwd).unwrap_or(cwd);
+    let mut text = format!(
+        "rbcop --profile: wall time in each cop, summed over files and threads (run: {:.3} s)\n\n{:>12}  {:>10}  cop\n",
+        elapsed.as_secs_f64(),
+        "ms",
+        "calls"
+    );
+    for (cop, time, calls) in runner::profile() {
+        text.push_str(&format!("{:>12.3}  {calls:>10}  {cop}\n", time.as_secs_f64() * 1e3));
+    }
+    match write_report(&root, "rbcop-profile.txt", &text, roots) {
+        Ok(path) => println!("Profile report generated at {}", path.display()),
+        Err(e) => eprintln!("rbcop: not writing the --profile report: {e}"),
+    }
+    if memory {
+        println!("Building memory report...");
+        // SAFETY: getrusage fills the struct it is given.
+        let mut usage: libc::rusage = unsafe { std::mem::zeroed() };
+        unsafe { libc::getrusage(libc::RUSAGE_SELF, &mut usage) };
+        // ru_maxrss is in kilobytes on Linux, bytes on macOS.
+        let bytes = usage.ru_maxrss as u64 * if cfg!(target_os = "macos") { 1 } else { 1024 };
+        let text = format!("rbcop --memory: peak resident set size {bytes} bytes\n");
+        match write_report(&root, "rbcop-memory.txt", &text, roots) {
+            Ok(path) => println!("Memory report generated at {}", path.display()),
+            Err(e) => eprintln!("rbcop: not writing the --memory report: {e}"),
+        }
+    }
+}
+
+/// `<root>/tmp/<name>`, written as `--profile` writes its reports, but only inside the write roots
+/// (the working directory and the command-line paths, as for -a) and never through a symlink: the
+/// project root and `tmp` must be real directories there, and the report is a new temporary file
+/// (O_NOFOLLOW) renamed over `name`, which replaces a planted symlink instead of following it.
+fn write_report(root: &Path, name: &str, text: &str, roots: &[PathBuf]) -> Result<PathBuf, String> {
+    use std::io::Write;
+    use std::os::unix::fs::OpenOptionsExt;
+    let root = fs::canonicalize(root).map_err(|e| format!("{}: {e}", root.display()))?;
+    if rbcop::autocorrect::outside_roots(&root, roots) {
+        return Err(format!("{} is outside the project", root.display()));
+    }
+    let tmp = root.join("tmp");
+    match fs::symlink_metadata(&tmp) {
+        Ok(m) if m.file_type().is_symlink() => return Err(format!("{} is a symlink", tmp.display())),
+        Ok(m) if !m.is_dir() => return Err(format!("{} is not a directory", tmp.display())),
+        Ok(_) => {}
+        Err(_) => fs::create_dir(&tmp).map_err(|e| format!("{}: {e}", tmp.display()))?,
+    }
+    let path = tmp.join(name);
+    if fs::symlink_metadata(&path).is_ok_and(|m| m.file_type().is_symlink()) {
+        return Err(format!("{} is a symlink", path.display()));
+    }
+    // ponytail: path-based checks; a `tmp` swapped for a symlink between the check and the open
+    // is not caught (the -a writer walks directory descriptors for that).
+    let part = tmp.join(format!(".{name}.{}", std::process::id()));
+    let written = fs::OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .custom_flags(libc::O_NOFOLLOW)
+        .open(&part)
+        .and_then(|mut f| f.write_all(text.as_bytes()))
+        .and_then(|()| fs::rename(&part, &path));
+    if let Err(e) = written {
+        let _ = fs::remove_file(&part);
+        return Err(format!("{}: {e}", path.display()));
+    }
+    Ok(path)
 }
 
 /// `--init`: CLI::Command::InitDotfile.
@@ -879,6 +1003,7 @@ fn suggest_extensions(cli: &Cli, pwd_config: &Resolved, default_config: &Resolve
     let out = cli.output_path.is_some() || cli.formatters.iter().any(|(_, o)| o.is_some());
     if env::var_os("CI").is_some()
         || cli.only.is_some()
+        || cli.debug
         || cli.list_targets
         || out
         || cli.stdin.is_some()
@@ -1029,14 +1154,16 @@ fn qualify_cop_options(cli: &mut Cli) -> (Vec<String>, Option<String>) {
 type Linted = Result<(FileReport, Option<String>, Option<String>, Vec<String>, Vec<String>, Saving), String>;
 
 /// What `lint` returns for one file: the report, the corrected source, the correction loop's
-/// error, and the result cache key to save the report under.
-type LintResult = Result<(FileReport, Option<String>, Option<String>, Option<String>), String>;
+/// error, the result cache key to save the report under, and the cache entry it was loaded from.
+type LintResult = Result<(FileReport, Option<String>, Option<String>, Option<String>, Option<PathBuf>), String>;
 
 /// A file that was inspected with the result cache on: its cache key, and whether an error was
 /// recorded while inspecting it (Runner#errors).
 struct Saving {
     key: Option<String>,
     errored: bool,
+    /// The cache entry the report was loaded from.
+    loaded: Option<PathBuf>,
 }
 
 /// Whether two targets are the same file on disk (one of them through a symlink, say).
@@ -1048,6 +1175,10 @@ fn same_file_twice(jobs: &[(PathBuf, std::sync::Arc<Resolved>)]) -> bool {
 
 /// Returns the exit status.
 fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
+    // MessageAnnotator#display_cop_names?: always under -d.
+    if cli.debug {
+        cli.annotate.display_cop_names = Some(true);
+    }
     // Lint/Syntax lives in the runner but is a registered cop with its own config in RuboCop.
     let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).chain(["Lint/Syntax"]).collect();
     // ConfigLoader: a missing -c file is an error, even with --force-default-config.
@@ -1059,11 +1190,14 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     }
     // CLI#act_on_options loads the -c and pwd configs before --color/--no-color reach Rainbow.
     cli.opts.color = parse_color;
+    // CLI#act_on_options: ConfigLoader.cache_root(--cache-root) is set before the pwd config loads.
     let loaded = Store::new(cli.opts.clone(), names.clone()).and_then(|mut store| {
         let cwd = store.cwd().to_path_buf();
-        store.for_dir(&cwd).map(|c| (store, c))
+        let early = store.early_cache_root(cli.cache_root.clone());
+        store.for_dir(&cwd).map(|c| (store, c, early))
     });
-    let (mut store, mut pwd_config) = match loaded {
+    print!("{}", rbcop::config::take_debug());
+    let (mut store, mut pwd_config, early_root) = match loaded {
         Ok(x) => x,
         Err(e) => {
             warn_red(parse_color, &e);
@@ -1073,14 +1207,13 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     store.set_color(global);
     let cwd = store.cwd().to_path_buf();
     let pwd = cwd.display().to_string();
-    // CLI#warn_if_cache_root_changed: remote configs (which rbcop does not load) were cached under
-    // the root the top-level config names, not the one the resolved config does.
+    // CLI#warn_if_cache_root_changed: remote configs loaded so far were cached under the early root
+    // (the top-level config's, or the `-c` file's without `--cache-root`), not the one the resolved
+    // config names, which later remote configs use.
     let configured_root =
         cli.cache_root.clone().or_else(|| pwd_config.all_cops().get("CacheRootDirectory")?.as_string());
-    if let (Some(early), Some(desired)) = (
-        cache::root_dir(cli.cache_root.clone().or_else(|| store.toplevel_cache_root())),
-        cache::root_dir(configured_root.clone()),
-    ) {
+    store.set_cache_root(configured_root.clone());
+    if let (Some(early), Some(desired)) = (cache::root_dir(early_root), cache::root_dir(configured_root.clone())) {
         let (early, desired) = (early.join("rubocop_cache"), desired.join("rubocop_cache"));
         let same =
             |a: &Path, b: &Path| a.exists() && b.exists() && fs::canonicalize(a).ok() == fs::canonicalize(b).ok();
@@ -1105,6 +1238,8 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         return Ok(0);
     }
     if cli.verbose_version {
+        store.debug_pwd_yaml();
+        print!("{}", rbcop::config::take_debug());
         println!("{}", verbose_version(&pwd_config));
         return Ok(0);
     }
@@ -1128,6 +1263,44 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         return Err("-P/--parallel uses caching to speed up execution, so combining with AllCops: UseCache: false \
                     is not allowed."
             .into());
+    }
+    // CLI#parallel_by_default!: with only these options given, RuboCop inspects in parallel.
+    const DEFAULT_PARALLEL_OPTIONS: &[&str] = &[
+        "color",
+        "config",
+        "debug",
+        "display_style_guide",
+        "display_time",
+        "display_only_fail_level_offenses",
+        "display_only_failed",
+        "editor_mode",
+        "except",
+        "extra_details",
+        "fail_level",
+        "fix_layout",
+        "format",
+        "formatters",
+        "ignore_disable_comments",
+        "lint",
+        "only",
+        "only_guide_cops",
+        "out",
+        "preview",
+        "require",
+        "safe",
+        "autocorrect",
+        "safe_autocorrect",
+        "autocorrect_all",
+    ];
+    let mut parallel = cli.parallel == Some(true);
+    if !parallel
+        && cli.keys.iter().all(|k| DEFAULT_PARALLEL_OPTIONS.contains(&k.as_str()))
+        && pwd_config.all_cops().get("UseCache") != Some(&rbcop::config::value::Value::Bool(false))
+    {
+        if cli.debug {
+            println!("Use parallel by default.");
+        }
+        parallel = true;
     }
     if !cli.opts.disable_pending_cops && !cli.opts.enable_pending_cops {
         report_pending_cops(&pwd_config, global);
@@ -1192,6 +1365,10 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             None
         }
     };
+    // Config loading while finding the targets (a directory's config), then each file's, printed
+    // when that file's turn comes (`-d`).
+    print!("{}", rbcop::config::take_debug());
+    let mut loading = vec![String::new(); files.len()];
     // Runner#build_project_index: rbcop has no rubydex, so it is ProjectIndexLoader.warn_unavailable.
     if pwd_config.all_cops().truthy("UseProjectIndex") {
         let s = formatter::Paint(global).yellow(
@@ -1211,7 +1388,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         && let Some(k) = first_read
     {
         for (i, f) in files[..=k].iter().enumerate() {
-            if let Err(e) = store.for_file(f) {
+            let loaded = store.for_file(f);
+            loading[i].push_str(&rbcop::config::take_debug());
+            if let Err(e) = loaded {
                 early_config_error = Some((i, e));
                 break;
             }
@@ -1313,6 +1492,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             Some((_, e)) => Err(e),
             None => store.for_file(f),
         };
+        loading[i].push_str(&rbcop::config::take_debug());
         match loaded {
             Ok(c) => {
                 registry_at.insert(f.clone(), rbcop::helpers::cop_registry::REGISTRY.len());
@@ -1440,9 +1620,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             // --stdin with -a/-A: the corrected source is printed after the report (@options[:stdin]).
             if let Some(mode) = mode {
                 let c = rbcop::autocorrect::correct_bytes(path, &display, bytes.clone(), cfg, &selected, mode);
-                return Ok((c.report, c.source, c.error, None));
+                return Ok((c.report, c.source, c.error, None, None));
             }
-            return Ok((runner::inspect_bytes(path, &display, bytes.clone(), cfg, &selected), None, None, None));
+            return Ok((runner::inspect_bytes(path, &display, bytes.clone(), cfg, &selected), None, None, None, None));
         }
         // Runner#file_offense_cache: a cached report is used as is, except that with -a/-A one with
         // offenses is inspected (and corrected) again. The key comes back when a real run should
@@ -1453,21 +1633,22 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             let config = &signatures[&(std::ptr::from_ref(cfg) as usize)];
             let signature = format!("{config}|{:?}|{plugin_file}", registry_at.get(path));
             key = cache.key(path, &signature, &bytes);
-            if let Some(report) = key.as_ref().and_then(|k| cache.load(k, &bytes))
+            if let Some(k) = &key
+                && let Some(report) = cache.load(k, &bytes)
                 && (mode.is_none() || report.offenses.is_empty())
             {
-                return Ok((report, None, None, None));
+                return Ok((report, None, None, None, Some(cache.entry(k))));
             }
             if mode.is_none() {
-                return Ok((runner::inspect_bytes(path, &display, bytes, cfg, &selected), None, None, key));
+                return Ok((runner::inspect_bytes(path, &display, bytes, cfg, &selected), None, None, key, None));
             }
         }
         if let Some(mode) = mode {
             let c = rbcop::autocorrect::correct_file(path, &display, cfg, &selected, mode)?;
-            return Ok((c.report, c.source, c.error, key));
+            return Ok((c.report, c.source, c.error, key, None));
         }
         let bytes = fs::read(path).map_err(|e| runner::io_error(&e, path))?;
-        Ok((runner::inspect_bytes(path, &display, bytes, cfg, &selected), None, None, None))
+        Ok((runner::inspect_bytes(path, &display, bytes, cfg, &selected), None, None, None, None))
     };
     // A panic outside a cop (cop panics are reported by runner::guarded) ends the run at that file,
     // like any error, instead of taking down every worker's results with it.
@@ -1480,8 +1661,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         .unwrap_or_else(|_| Err(format!("rbcop: internal error while inspecting {}", path.display())));
         let errors = runner::take_file_errors();
         let errored = runner::take_errored();
-        linted.map(|(report, corrected, loop_error, key)| {
-            (report, corrected, loop_error, runner::take_file_warnings(), errors, Saving { key, errored })
+        runner::flush_profile();
+        linted.map(|(report, corrected, loop_error, key, loaded)| {
+            (report, corrected, loop_error, runner::take_file_warnings(), errors, Saving { key, errored, loaded })
         })
     };
     // Cops recurse over the AST; runner::MAX_AST_DEPTH (1000) needs under 2 MiB, the rest is
@@ -1534,6 +1716,34 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     // Runner#inspect_files
     let mut set = formatter::Set::new(&resolved, &cx, cli.stderr)?;
     let mut error = set.started(&cx, &files).err().map(|e| format!("{e}\n"));
+    // Runner#run_in_parallel?. Deliberate difference: RuboCop's worker processes print the configs
+    // they load and the cache entries they read in an order that depends on scheduling and output
+    // buffering; rbcop prints them here in file order, each config once.
+    let in_parallel = parallel && !cli.diff && files.len() > 1;
+    if cli.debug && error.is_none() {
+        if parallel && !cli.diff {
+            println!(
+                "{}",
+                if in_parallel {
+                    "Running parallel inspection"
+                } else {
+                    "Skipping parallel inspection: only a single file needs inspection"
+                }
+            );
+        }
+        // Then the parent's Runner#file_started for each file, before the reports.
+        if in_parallel {
+            for (i, text) in loading.iter_mut().enumerate() {
+                print!("{}", std::mem::take(text));
+                if let Some(Some(Ok((.., Saving { loaded: Some(entry), .. })))) = reports.get(i) {
+                    println!("Loading cache from {}", entry.display());
+                }
+            }
+            for (path, _) in &jobs {
+                println!("Scanning {}", path.display());
+            }
+        }
+    }
     let min_fail = formatter::minimum_to_fail(cli.fail_level, &pwd_config);
     let considered_failure = |o: &formatter::Off| {
         !o.status.disabled()
@@ -1567,7 +1777,14 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         let mut warned_configs = std::collections::HashSet::new();
         let mut similar_view: Option<Option<usize>> = None;
         for (idx, ((path, cfg), linted)) in jobs.iter().zip(reports.iter_mut()).enumerate() {
+            // Runner#file_started, then the file's config loading (Runner#process_file).
+            if cli.debug && !in_parallel {
+                println!("Scanning {}", path.display());
+            }
             set.file_started(&cx, path);
+            if cli.debug {
+                print!("{}", std::mem::take(&mut loading[idx]));
+            }
             // Runner#mobilized_cop_classes runs once the first file has been read.
             if let Some((warnings, err)) = cop_notes.take_if(|_| stdin_text.is_some() || path.is_file()) {
                 for w in warnings {
@@ -1631,6 +1848,12 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                 }
                 None => linted,
             };
+            if cli.debug
+                && !in_parallel
+                && let Ok((.., Saving { loaded: Some(entry), .. })) = &linted
+            {
+                println!("Loading cache from {}", entry.display());
+            }
             let (mut report, corrected, loop_error, warnings, errors, saving) = match linted {
                 Ok(l) => l,
                 Err(e) => {
@@ -1745,7 +1968,13 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             }
         }
         if !stopped && let Some((path, e)) = config_error {
+            if cli.debug && !in_parallel {
+                println!("Scanning {}", path.display());
+            }
             set.file_started(&cx, &path);
+            if cli.debug {
+                print!("{}", std::mem::take(&mut loading[jobs.len()]));
+            }
             config_failure = Some(e);
         }
     }
@@ -1753,7 +1982,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     if files.len() > 1
         && let Some(cache) = &result_cache
     {
-        cache.cleanup();
+        cache.cleanup(cli.debug);
     }
     set.finished(&cx, &inspected);
     if let Some(e) = set.take_error() {

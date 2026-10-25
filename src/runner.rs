@@ -1328,10 +1328,19 @@ pub fn in_cop() -> bool {
 
 /// Commissioner#with_cop_error_handling: a cop that fails on one node is reported and skipped
 /// there, and inspection goes on (other nodes, other cops, other files).
-fn guarded(cop: &str, src: &Source, at: Option<usize>, f: impl FnOnce()) {
+fn guarded(cop: &'static str, src: &Source, at: Option<usize>, f: impl FnOnce()) {
     IN_COP.with(|c| c.set(true));
     VISITING.with(|v| v.set(at));
+    let started = PROFILING.load(std::sync::atomic::Ordering::Relaxed).then(std::time::Instant::now);
     let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f));
+    if let Some(t) = started {
+        COP_TIMES.with(|m| {
+            let mut m = m.borrow_mut();
+            let e = m.entry(cop).or_default();
+            e.0 += t.elapsed();
+            e.1 += 1;
+        });
+    }
     IN_COP.with(|c| c.set(false));
     // The callback may stand for one on another node (`visit_at`).
     let at = VISITING.with(|v| v.replace(None));
@@ -1340,6 +1349,44 @@ fn guarded(cop: &str, src: &Source, at: Option<usize>, f: impl FnOnce()) {
     {
         cop_error_at(cop, src, at);
     }
+}
+
+/// `--profile`: time each cop call (guarded) into COP_TIMES.
+static PROFILING: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+type CopTimes = std::collections::HashMap<&'static str, (std::time::Duration, u64)>;
+static PROFILE: std::sync::Mutex<Option<CopTimes>> = std::sync::Mutex::new(None);
+
+thread_local! {
+    /// This thread's time in each cop (and number of calls), until flush_profile.
+    static COP_TIMES: std::cell::RefCell<CopTimes> = Default::default();
+}
+
+pub fn enable_profiling() {
+    PROFILING.store(true, std::sync::atomic::Ordering::Relaxed);
+}
+
+/// Adds this thread's cop times to the run's (call before the thread ends).
+pub fn flush_profile() {
+    let mine = COP_TIMES.with(|m| std::mem::take(&mut *m.borrow_mut()));
+    if mine.is_empty() {
+        return;
+    }
+    let mut all = PROFILE.lock().unwrap_or_else(|e| e.into_inner());
+    let all = all.get_or_insert_with(Default::default);
+    for (cop, (time, calls)) in mine {
+        let e = all.entry(cop).or_default();
+        e.0 += time;
+        e.1 += calls;
+    }
+}
+
+/// The time spent in each cop, slowest first.
+pub fn profile() -> Vec<(&'static str, std::time::Duration, u64)> {
+    flush_profile();
+    let all = PROFILE.lock().unwrap_or_else(|e| e.into_inner()).take().unwrap_or_default();
+    let mut v: Vec<_> = all.into_iter().map(|(c, (t, n))| (c, t, n)).collect();
+    v.sort_by(|a, b| b.1.cmp(&a.1).then(a.0.cmp(b.0)));
+    v
 }
 
 /// Cop::Base#use_corrector: an offense with a corrector is only `[Correctable]` when the cop's
