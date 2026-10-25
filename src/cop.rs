@@ -70,6 +70,9 @@ pub struct Offense {
     pub justification: Option<String>,
     /// `--disable-uncorrectable` gave it a `# rubocop:todo` comment (status `:corrected_with_todo`).
     pub todo: bool,
+    /// Under `--lsp`: Offense#corrector's replacements (byte ranges), for the quick fix; None when
+    /// the cop made no correction.
+    pub edits: Option<Vec<(usize, usize, String)>>,
 }
 
 /// A heredoc's body lines, `first..terminator` (1-based), and its closing delimiter.
@@ -223,6 +226,7 @@ impl Cx<'_, '_> {
             disabled: false,
             justification: None,
             todo: false,
+            edits: None,
         });
     }
 
@@ -253,7 +257,13 @@ impl Cx<'_, '_> {
             return self.push(start, end, message.into(), false, false);
         }
         if !self.fixes.autocorrect {
-            return self.push(start, end, message.into(), true, false);
+            self.push(start, end, message.into(), true, false);
+            if crate::helpers::lsp::serving()
+                && let Some(o) = self.out.last_mut()
+            {
+                o.edits = Some(corrector.as_replacements());
+            }
+            return;
         }
         // Base#apply_correction: merged into the cop's corrector; clobbering there raises too.
         let merged = self.fixes.corrector.get_or_insert_with(|| Corrector::new(self.facts.text.clone()));
@@ -300,6 +310,7 @@ impl Cx<'_, '_> {
             justification: None,
             global: false,
             todo: false,
+            edits: None,
         });
     }
 

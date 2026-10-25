@@ -11,7 +11,7 @@ pub mod yaml;
 
 pub use todo::DEFAULT_MAXIMUM_EXCLUSION_ITEMS;
 
-pub use report::ruby_platform;
+pub use report::{json, ruby_platform};
 
 use crate::config::{Resolved, relative_path};
 use crate::cop::{Offense, Severity};
@@ -68,6 +68,8 @@ pub struct Off {
     pub global: bool,
     /// Offense#justification: the suppressing directive's reason.
     pub justification: Option<String>,
+    /// `Offense::edits` (`--lsp`).
+    pub edits: Option<Vec<(usize, usize, String)>>,
 }
 
 impl Off {
@@ -224,6 +226,7 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                     source_line,
                     global: true,
                     justification: o.justification.clone(),
+                    edits: None,
                 };
             }
             Off {
@@ -239,6 +242,7 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                 source_line: p.line(ls),
                 global: false,
                 justification: o.justification.clone(),
+                edits: o.edits.clone(),
             }
         })
         .collect();
@@ -770,6 +774,7 @@ mod tests {
             disabled: false,
             justification: None,
             todo: false,
+            edits: None,
         };
         let v = &offenses("source 'x'\n", &[o], |o| o.message.clone())[0];
         assert_eq!((v.line, v.real_column(), v.last_line, v.real_last_column(), v.length), (1, 1, 1, 1, 0));

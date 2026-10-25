@@ -5,7 +5,7 @@ pub const NAME: &str = "Lint/ScriptPermission";
 pub static COP: ScriptPermission = ScriptPermission;
 pub struct ScriptPermission;
 
-/// `@options.key?(:stdin)`: the cop is skipped for `-s/--stdin`.
+/// `@options.key?(:stdin)`: the cop is skipped for `-s/--stdin` (and `--lsp`, whose runs are stdin runs).
 /// ponytail: read from argv because Cx does not carry CLI options; misses a combined `-sX` flag.
 fn stdin_mode() -> bool {
     std::env::args().any(|a| a == "-s" || a == "--stdin" || a.starts_with("--stdin="))
@@ -17,7 +17,7 @@ impl Cop for ScriptPermission {
     }
 
     fn on_file(&self, cx: &mut Cx) {
-        if !cx.src.text.starts_with("#!") || stdin_mode() {
+        if !cx.src.text.starts_with("#!") || stdin_mode() || crate::helpers::lsp::serving() {
             return;
         }
         let path = std::path::Path::new(cx.src.path);

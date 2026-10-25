@@ -13,9 +13,9 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   (`RBCOP_RUBOCOP`, else `bundle exec rubocop`, else `rubocop` on PATH), which loads the project's
   Gemfile, plugins and cop files. Each run prints `rbcop: running <command> for <what>; set
   RBCOP_FALLBACK=0 to never run Ruby` on stderr first (not under `RBCOP_FALLBACK=1`, which asked for
-  it). Under the server options, `--editor-mode` or `--stdin` (an editor opening a project), given
-  anywhere (command line, `.rubocop`, `RUBOCOP_OPTS`, abbreviated), it runs only with
-  `RBCOP_FALLBACK=1`; `--lsp` and `--mcp` are refused. Turn it off with `RBCOP_FALLBACK=0`: the fallback then starts no Ruby at all,
+  it). Under `--lsp`, `--mcp`, the server options, `--editor-mode` or `--stdin` (an editor opening
+  a project), given anywhere (command line, `.rubocop`, `RUBOCOP_OPTS`, abbreviated), it runs only
+  with `RBCOP_FALLBACK=1`; the language server lints natively and never starts RuboCop. Turn it off with `RBCOP_FALLBACK=0`: the fallback then starts no Ruby at all,
   and rbcop skips those cops (or refuses those options) with a notice.
 - **ERB in config files** (#650): a `.rubocop.yml` (or inherited file) containing `<%` is rendered
   by `ruby -rerb` in that file's directory, which runs the template's code. Only files with ERB tags
@@ -207,6 +207,12 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   that root mix their values; with two such parameters for one cop (Metrics/ParameterLists'
   `Max` and `MaxOptionalParameters`) rbcop writes them in the order they were first set, RuboCop
   in the directory listing order of those files.
+- `--lsp` (#292) answers as RuboCop's language server does, message for message (tests/lsp,
+  recorded with `scripts/lsp.sh`), except: an offense whose correction rbcop withholds (above) is
+  published with `correctable: false`, the not-autocorrectable note and no Autocorrect quick fix,
+  where RuboCop offers its edit. The server's stderr log carries the same lines, but an error while
+  handling a request is logged as `[server] Error <message>` without RuboCop's exception class for
+  rbcop's own errors and without the backtrace line; as in RuboCop such a request gets no response.
 
 ## Open gaps
 
@@ -218,6 +224,11 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   `else` returns `nil`); likewise Lint/Void misses `1` in `begin; 1; else; 2; end` (#608).
 - `0.. ..3` at TargetRubyVersion 2.6 (the parser gem's `(0..)..3`): rbcop accepts it, but cops see
   Prism's `0..(..3)`; only Layout/SpaceInsideRangeLiteral skips the inner beginless range (#609).
+- `--lsp` runs only the cops rbcop implements: plugin cops it does not implement are not run
+  (`RBCOP_FALLBACK` has no effect there) and the skipped-cops notice is not printed. A buffer with
+  an encoding magic comment is inspected as UTF-8 text, as RuboCop inspects it, but a corrected one
+  is reread through the magic comment as `-a` rereads files. A request the reader cannot parse
+  ends the server with status 2, as in RuboCop, with rbcop's wording of the error.
 - A `require:`d gem's Ruby code that changes RuboCop's directive syntax is not run: standard's
   `standard/rubocop/ext.rb` widens `DirectiveComment::DIRECTIVE_COMMENT_REGEXP`, so its
   `# standard:disable Cop` comments are directives in RuboCop and plain comments in rbcop.
@@ -323,7 +334,7 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   `rbcop: not writing the --profile report: <reason>` to stderr instead of the `generated at` line.
 - Command-line options rbcop refuses (`rbcop: --NAME is not supported by rbcop yet`, exit 2):
   - `--changed [REVISION]`: needs RuboCop's git diff of changed files.
-  - `--lsp`, `--mcp`: long-running protocol servers on stdio.
+  - `--mcp`: a long-running protocol server on stdio.
 - The server options (#293): rbcop runs in process and never starts a server, so none is ever
   running. They are taken out of the arguments and checked as RuboCop::Server::CLI does (same
   `cannot be specified together` / `cannot be combined with` errors, exit 2); then `--server-status`

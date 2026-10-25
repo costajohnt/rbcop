@@ -722,11 +722,43 @@ fn fallback_is_the_default() {
     let out = run(&[], &["--server", "-f", "e"]);
     assert_eq!(text(&out.stderr), notice);
     let refused = "rbcop: --require loads Ruby code, which rbcop cannot run\n";
-    // Options parse to the end: `--ls` (OptionParser's completion of --lsp) is refused itself.
-    let out = run(&[], &["-r", "./no_foo.rb", "--ls"]);
-    assert_eq!(text(&out.stderr), "rbcop: --lsp is not supported by rbcop yet\n");
+    // The language server lints the project natively and never starts RuboCop.
+    let mut lsp = Vec::new();
+    for m in [
+        r#"{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"processId":null,"capabilities":{}}}"#.to_string(),
+        r#"{"jsonrpc":"2.0","method":"initialized","params":{}}"#.to_string(),
+        format!(
+            r#"{{"jsonrpc":"2.0","method":"textDocument/didOpen","params":{{"textDocument":{{"uri":"file://{}/a.rb","languageId":"ruby","version":1,"text":"foo(1)\n"}}}}}}"#,
+            dir.display()
+        ),
+        r#"{"jsonrpc":"2.0","id":2,"method":"shutdown"}"#.to_string(),
+        r#"{"jsonrpc":"2.0","method":"exit"}"#.to_string(),
+    ] {
+        lsp.extend(format!("Content-Length: {}\r\n\r\n{m}", m.len()).into_bytes());
+    }
+    let mut child = common::command(env!("CARGO_BIN_EXE_rbcop"))
+        .env_remove("RBCOP_FALLBACK")
+        .env("HOME", &dir)
+        .env("PATH", &bin)
+        .arg("--lsp")
+        .current_dir(&dir)
+        .stdin(std::process::Stdio::piped())
+        .stdout(std::process::Stdio::piped())
+        .stderr(std::process::Stdio::piped())
+        .spawn()
+        .unwrap();
+    let _ = std::io::Write::write_all(&mut child.stdin.take().unwrap(), &lsp);
+    let out = child.wait_with_output().unwrap();
+    assert!(text(&out.stdout).contains("publishDiagnostics"), "{}", text(&out.stdout));
+    assert!(!text(&out.stderr).contains("rbcop: running"), "{}", text(&out.stderr));
+    // Options parse to the end, abbreviated too: `-r` with `--ls` (--lsp) is not handed to RuboCop.
+    for args in [&["-r", "./no_foo.rb", "--ls"][..], &["--lsp", "-r", "./no_foo.rb"]] {
+        let out = run(&[], args);
+        assert_eq!((text(&out.stderr), out.status.code()), (refused.to_string(), Some(2)), "{args:?}");
+    }
     for (env, args) in [
-        (&[][..], &["--server", "-r", "./no_foo.rb", "-f", "e"][..]),
+        (&[("RUBOCOP_OPTS", "--lsp")][..], &["-r", "./no_foo.rb"][..]),
+        (&[], &["--server", "-r", "./no_foo.rb", "-f", "e"]),
         // Abbreviated, and from RUBOCOP_OPTS.
         (&[], &["-r", "./no_foo.rb", "--editor-m", "-f", "e"]),
         (&[("RUBOCOP_OPTS", "--server")], &["-r", "./no_foo.rb", "-f", "e"]),

@@ -35,6 +35,11 @@ impl Corrector {
         self.rw.is_empty()
     }
 
+    /// TreeRewriter#as_replacements: `(start, end, replacement)` in application order.
+    pub fn as_replacements(&self) -> Vec<(usize, usize, String)> {
+        self.rw.as_replacements()
+    }
+
     /// Whether an edit clobbered an earlier one (the block raised in RuboCop).
     pub fn clobbered(&self) -> bool {
         self.clobbered

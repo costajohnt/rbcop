@@ -1,0 +1,24 @@
+{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"processId":null,"rootUri":"file://$ROOT","capabilities":{}}}
+{"jsonrpc":"2.0","method":"initialized","params":{}}
+{"jsonrpc":"2.0","method":"textDocument/didOpen","params":{"textDocument":{"uri":"file://$ROOT/a.rb","languageId":"ruby","version":1,"text":"# rubocop:disable Style/Documentation\nx = <<~EOS\n  #{ foo }\nEOS\ny = \"a\" \\\n  \"b\"\nz = %w[\n  a  b\n]\nw = \"foo\n  #{ bar }\n\"\nputs(x, y, z, w ) # rubocop:disable Layout/ExtraSpacing\n#\ndef m(a)\n  \"#{}\" + \"é😀\"\nend\nputs(1,\n     2\n)\ndef fooBar\n  super\nend\n"}}}
+{"jsonrpc":"2.0","id":2,"method":"textDocument/codeAction","params":{"textDocument":{"uri":"file://$ROOT/a.rb"},"range":{"start":{"line":0,"character":0},"end":{"line":0,"character":1}},"context":{"diagnostics":[{"range":{"start":{"line":0,"character":0},"end":{"line":0,"character":1}},"message":"m","data":{"correctable":true,"code_actions":[{"title":"Autocorrect X","kind":"quickfix","isPreferred":true,"edit":{"documentChanges":[]}},{"title":"Other","kind":"refactor","n":[1,-3,null,false],"s":"ü\t\"\\/"}]}},{"range":{"start":{"line":0,"character":0},"end":{"line":0,"character":1}},"message":"no data"}]}}}
+{"jsonrpc":"2.0","id":3,"method":"textDocument/codeAction","params":{"textDocument":{"uri":"file://$ROOT/a.rb"},"range":{"start":{"line":0,"character":0},"end":{"line":0,"character":1}},"context":{"only":["refactor"],"diagnostics":[{"range":{"start":{"line":0,"character":0},"end":{"line":0,"character":1}},"message":"m","data":{"code_actions":[{"title":"Autocorrect X","kind":"quickfix","isPreferred":true,"edit":{"documentChanges":[]}},{"title":"Other","kind":"refactor","n":[1,-3,null,false],"s":"ü\t\"\\/"}]}}]}}}
+{"jsonrpc":"2.0","id":4,"method":"textDocument/codeAction","params":{"textDocument":{"uri":"file://$ROOT/a.rb"},"range":{"start":{"line":0,"character":0},"end":{"line":0,"character":1}},"context":{}}}
+{"jsonrpc":"2.0","id":5,"method":"textDocument/formatting","params":{"textDocument":{"uri":"file://$ROOT/a.rb"},"options":{"tabSize":2,"insertSpaces":true}}}
+{"jsonrpc":"2.0","id":6,"method":"workspace/executeCommand","params":{"command":"rubocop.formatAutocorrects","arguments":[{"uri":"file://$ROOT/a.rb"}]}}
+{"jsonrpc":"2.0","id":7,"method":"workspace/executeCommand","params":{"command":"rubocop.formatAutocorrectsAll","arguments":[{"uri":"file://$ROOT/a.rb"}]}}
+{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file://$ROOT/a.rb","version":2},"contentChanges":[{"range":{"start":{"line":15,"character":9},"end":{"line":15,"character":11}},"text":"ü"},{"range":{"start":{"line":15,"character":2},"end":{"line":15,"character":2}},"text":"q = "},{"range":{"start":{"line":30,"character":0},"end":{"line":30,"character":0}},"text":"puts  1\n"}]}}
+{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file://$ROOT/a.rb","version":3},"contentChanges":[{"text":"a  = 1\r\nputs a\r\n"}]}}
+{"jsonrpc":"2.0","id":8,"method":"textDocument/formatting","params":{"textDocument":{"uri":"file://$ROOT/a.rb"},"options":{"tabSize":2,"insertSpaces":true}}}
+{"jsonrpc":"2.0","method":"textDocument/didSave","params":{"textDocument":{"uri":"file://$ROOT/a.rb"}}}
+{"jsonrpc":"2.0","method":"textDocument/didClose","params":{"textDocument":{"uri":"file://$ROOT/a.rb"}}}
+{"jsonrpc":"2.0","id":9,"method":"textDocument/formatting","params":{"textDocument":{"uri":"file://$ROOT/a.rb"},"options":{"tabSize":2,"insertSpaces":true}}}
+{"jsonrpc":"2.0","method":"textDocument/didOpen","params":{"textDocument":{"uri":"file://$ROOT/skip/x.rb","languageId":"ruby","version":1,"text":"x  = 1\n"}}}
+{"jsonrpc":"2.0","id":10,"method":"textDocument/formatting","params":{"textDocument":{"uri":"file://$ROOT/skip/x.rb"},"options":{"tabSize":2,"insertSpaces":true}}}
+{"jsonrpc":"2.0","method":"textDocument/didOpen","params":{"textDocument":{"uri":"file://$ROOT/Bad-Name.rb","languageId":"ruby","version":1,"text":"# frozen_string_literal: true\n\nputs 1\n"}}}
+{"jsonrpc":"2.0","method":"textDocument/didOpen","params":{"textDocument":{"uri":"file://$ROOT/syntax.rb","languageId":"ruby","version":1,"text":"def foo(\n  x  = 1\n"}}}
+{"jsonrpc":"2.0","method":"workspace/didChangeConfiguration","params":{"settings":{}}}
+{"jsonrpc":"2.0","method":"workspace/didChangeWatchedFiles","params":{"changes":[{"uri":"file://$ROOT/lib/foo.rb","type":2}]}}
+{"jsonrpc":"2.0","id":11,"method":"textDocument/formatting","params":{"textDocument":{"uri":"file://$ROOT/syntax.rb"}}}
+{"jsonrpc":"2.0","method":"workspace/didChangeWatchedFiles","params":{"changes":[{"uri":"file://$ROOT/.rubocop.yml","type":2}]}}
+{"jsonrpc":"2.0","id":12,"method":"shutdown"}
