@@ -90,7 +90,7 @@ By default it runs `rbcop --format github --format progress`: offenses become an
 |---|---|---|
 | `args` | `--format github --format progress` | rbcop's arguments; empty only installs `rbcop` on `PATH` |
 | `version` | the action's version | the rbcop release to run |
-| `fallback` | `auto` | run plugin and custom cops with RuboCop: `auto` when one is found, `true` always (`RBCOP_FALLBACK=1`), `false` never (`RBCOP_FALLBACK=0`) |
+| `fallback` | `auto` | run plugin and custom cops with RuboCop: `auto` when one is found, `true` always (`RBCOP_FALLBACK=1`), `false` never (`RBCOP_FALLBACK=0`). `auto` runs RuboCop, and so the repository's Ruby code, when the config needs it. |
 | `rubocop` | (found) | the RuboCop command the fallback runs (`RBCOP_RUBOCOP`); by default `bundle exec rubocop` when `Gemfile.lock` has rubocop, else `rubocop` on `PATH` |
 
 With plugins, install the bundle first so the fallback finds RuboCop:

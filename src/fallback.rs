@@ -9,6 +9,7 @@ use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::sync::Arc;
+use std::sync::atomic::{AtomicBool, Ordering::Relaxed};
 
 const FORMATTER: &str = include_str!("fallback_formatter.rb");
 
@@ -20,10 +21,11 @@ const PRELOAD: &str = "module RuboCop\n  class ArgumentsFile\n    singleton_clas
 /// off; otherwise `RBCOP_RUBOCOP` when set, else `bundle exec rubocop` when the bundle locks the
 /// rubocop gem, else `rubocop` when it is on PATH. RBCOP_FALLBACK=1 runs `rubocop` even when none
 /// was found (and fails if it cannot start). Called only once something needs RuboCop, so a project
-/// that needs nothing never looks.
+/// that needs nothing never looks. Under the server options, `--lsp` or `--mcp` (an editor opening
+/// a project) only RBCOP_FALLBACK=1 runs it.
 pub fn rubocop() -> Option<String> {
     let mode = std::env::var("RBCOP_FALLBACK").unwrap_or_default();
-    if mode == "0" {
+    if mode == "0" || (mode != "1" && EDITOR.load(Relaxed)) {
         return None;
     }
     if let Some(cmd) = std::env::var("RBCOP_RUBOCOP").ok().filter(|v| !v.trim().is_empty()) {
@@ -35,9 +37,25 @@ pub fn rubocop() -> Option<String> {
     (mode == "1" || on_path("rubocop")).then(|| "rubocop".into())
 }
 
-/// The notice's second line when no RuboCop was found; None under RBCOP_FALLBACK=0.
+static EDITOR: AtomicBool = AtomicBool::new(false);
+static ANNOUNCED: AtomicBool = AtomicBool::new(false);
+
+/// The run comes from an editor or a server (`editor_context` in src/main.rs): no RuboCop unless
+/// RBCOP_FALLBACK=1.
+pub fn editor_context() {
+    EDITOR.store(true, Relaxed);
+}
+
+/// Once per run, unless RBCOP_FALLBACK=1 asked for it: which RuboCop runs the project's Ruby.
+pub fn announce(program: &str, what: &str) {
+    if std::env::var_os("RBCOP_FALLBACK").is_none_or(|v| v != "1") && !ANNOUNCED.swap(true, Relaxed) {
+        eprintln!("rbcop: running {program} for {what}; set RBCOP_FALLBACK=0 to never run Ruby");
+    }
+}
+
+/// The notice's second line when no RuboCop was found; None under RBCOP_FALLBACK=0 or in an editor.
 pub fn missing() -> Option<&'static str> {
-    std::env::var_os("RBCOP_FALLBACK").is_none_or(|v| v != "0").then_some(
+    (std::env::var_os("RBCOP_FALLBACK").is_none_or(|v| v != "0") && !EDITOR.load(Relaxed)).then_some(
         "rbcop: RuboCop runs them when one is found: add the rubocop gem to the bundle, put rubocop on PATH, or \
          set RBCOP_RUBOCOP",
     )
@@ -124,6 +142,14 @@ pub fn unimplemented<'c>(
 
 /// `rbcop: not running 3 cops it does not implement (Rails: 2, RSpec: 1); set RBCOP_FALLBACK=1 ...`
 pub fn notice(skipped: &BTreeSet<String>, required_code: bool, copless_plugins: &[&str]) -> String {
+    format!(
+        "rbcop: not running {}; set RBCOP_FALLBACK=1 to run them with RuboCop",
+        what(skipped, required_code, copless_plugins)
+    )
+}
+
+/// `3 cops it does not implement (Rails: 2, RSpec: 1) or cops from Ruby code the config requires`
+pub fn what(skipped: &BTreeSet<String>, required_code: bool, copless_plugins: &[&str]) -> String {
     let mut parts = Vec::new();
     if !skipped.is_empty() {
         let mut depts: BTreeMap<&str, usize> = BTreeMap::new();
@@ -141,7 +167,7 @@ pub fn notice(skipped: &BTreeSet<String>, required_code: bool, copless_plugins: 
         let s = if copless_plugins.len() == 1 { "" } else { "s" };
         parts.push(format!("the Ruby code of plugin{s} {}", copless_plugins.join(", ")));
     }
-    format!("rbcop: not running {}; set RBCOP_FALLBACK=1 to run them with RuboCop", parts.join(" or "))
+    parts.join(" or ")
 }
 
 /// What the RuboCop subprocess needs from the command line.
@@ -149,6 +175,8 @@ pub fn notice(skipped: &BTreeSet<String>, required_code: bool, copless_plugins: 
 pub struct Child<'a> {
     /// The RuboCop command (`rubocop()`).
     pub program: &'a str,
+    /// What it runs, for `announce` (`what()`).
+    pub what: &'a str,
     pub opts: &'a Options,
     pub except: &'a [String],
     pub only_guide: bool,
@@ -171,6 +199,7 @@ pub fn run(
         return Ok(out);
     }
     let program = c.program;
+    announce(program, c.what);
     let mut words = program.split_whitespace();
     let Some(bin) = words.next() else { return Err("rbcop: RBCOP_RUBOCOP is empty".into()) };
     // A fresh directory (create_dir fails if it exists) so nothing else in the temp dir can choose

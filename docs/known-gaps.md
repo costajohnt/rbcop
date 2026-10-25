@@ -2,6 +2,30 @@
 
 Tracked so the review phase can close or document each one. "Deliberate" items are intended.
 
+## Security: when rbcop runs Ruby
+
+rbcop itself is a native binary, but in these cases it starts Ruby, and some of them run code from
+the project being linted (as RuboCop does, since RuboCop runs that same code):
+
+- **The RuboCop fallback** (#287), on by default when needed: when the config enables cops rbcop
+  cannot run (a non-native plugin's, custom cops from a `require:`d file, a cop-less plugin such as
+  rubocop-erb), and for `-r`/`--require`, `--plugin` and custom formatter classes. It runs RuboCop
+  (`RBCOP_RUBOCOP`, else `bundle exec rubocop`, else `rubocop` on PATH), which loads the project's
+  Gemfile, plugins and cop files. Each run prints `rbcop: running <command> for <what>; set
+  RBCOP_FALLBACK=0 to never run Ruby` on stderr first (not under `RBCOP_FALLBACK=1`, which asked for
+  it). Under the server options, `--lsp` or `--mcp` (an editor opening a project) it runs only with
+  `RBCOP_FALLBACK=1`. Turn it off with `RBCOP_FALLBACK=0`: the fallback then starts no Ruby at all,
+  and rbcop skips those cops (or refuses those options) with a notice.
+- **ERB in config files** (#650): a `.rubocop.yml` (or inherited file) containing `<%` is rendered
+  by `ruby -rerb` in that file's directory, which runs the template's code. Only files with ERB tags
+  are rendered; `RBCOP_FALLBACK=0` does not stop it. To avoid it, keep ERB out of the config files.
+- **Remote `inherit_from` URLs** (#656): fetched by `ruby` running RuboCop's RemoteConfig code
+  (src/config/remote_config.rb), which downloads the URL into the cache; no project code is loaded,
+  but the project's Ruby (its `.ruby-version` through rbenv and the like) runs. Only configs that
+  inherit from a URL do this; to avoid it, inherit from local files.
+- **Gem lookups**: `inherit_gem`, and `plugins:`/`require:` of gems, ask `ruby -e` with RubyGems
+  where a gem lives. That runs RubyGems, not project code, and only when the config names gems.
+
 ## Deliberate differences from RuboCop
 
 - `-o/--out` pointing at a file being inspected is refused (RuboCop truncates the file).

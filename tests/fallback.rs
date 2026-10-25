@@ -703,15 +703,35 @@ fn fallback_is_the_default() {
     )
     .unwrap();
     Command::new("chmod").arg("755").arg(bin.join("bundle")).status().unwrap();
+    // Each run names the RuboCop it starts on stderr (stdout stays RuboCop's).
+    let running =
+        |what: &str| format!("rbcop: running bundle exec rubocop for {what}; set RBCOP_FALLBACK=0 to never run Ruby\n");
     let out = run(&[], &["-f", "e"]);
-    assert_eq!(text(&out.stderr), "");
+    assert_eq!(text(&out.stderr), running("cops from Ruby code the config requires"));
     assert!(text(&out.stdout).starts_with("from-a-cop\n"), "{}", text(&out.stdout));
     let out = run(&[], &["-r", "./no_foo.rb", "-f", "e", "a.rb"]);
-    assert_eq!((text(&out.stderr), out.status.code()), (String::new(), Some(0)));
+    assert_eq!(
+        (text(&out.stderr), out.status.code()),
+        (running("the whole run (--require loads Ruby code, which rbcop cannot run)"), Some(0))
+    );
     let log = fs::read_to_string(bin.join("log")).unwrap();
     let lines: Vec<&str> = log.lines().collect();
     assert!(lines[0].starts_with("exec rubocop --cache false --require ") && lines[0].contains("--except"), "{log}");
     assert_eq!(lines[1..], ["exec rubocop -r ./no_foo.rb -f e a.rb"], "{log}");
+    // An editor or server context (the server options, --lsp, --mcp) runs no RuboCop on its own.
+    let out = run(&[], &["--server", "-f", "e"]);
+    assert_eq!(text(&out.stderr), notice);
+    let out = run(&[], &["-r", "./no_foo.rb", "--lsp"]);
+    assert_eq!(text(&out.stderr), "rbcop: --require loads Ruby code, which rbcop cannot run\n");
+    let out = run(&[], &["--plugin", "rubocop-sorbet", "--mcp"]);
+    assert_eq!(text(&out.stderr), "rbcop: --plugin loads Ruby code, which rbcop cannot run\n");
+    let out = run(&[], &["--server", "-r", "./no_foo.rb", "-f", "e"]);
+    assert_eq!(text(&out.stderr), "rbcop: --require loads Ruby code, which rbcop cannot run\n");
+    assert_eq!(fs::read_to_string(bin.join("log")).unwrap(), log);
+    // RBCOP_FALLBACK=1 runs it there too, and asked for, is not announced.
+    let out = run(&[("RBCOP_FALLBACK", "1")], &["--server", "-f", "e"]);
+    assert_eq!(text(&out.stderr), "");
+    assert_eq!(fs::read_to_string(bin.join("log")).unwrap().lines().count(), 3);
     // A RuboCop that exits 1 without running (an rbenv shim missing the project's Ruby) is an error.
     fs::write(dir.join("bin/bundle"), "#!/bin/sh\nexit 1\n").unwrap();
     let out = run(&[], &["-f", "e"]);
@@ -741,7 +761,11 @@ fn default_fallback_matches_rubocop() {
         let ours = ours.args(args).current_dir(&dir).output().unwrap();
         let theirs = rubocop(&dir, args);
         assert_eq!(text(&ours.stdout), text(&theirs.stdout), "{args:?}");
-        assert_eq!(text(&ours.stderr), text(&theirs.stderr), "{args:?}");
+        // rbcop's own first line names the RuboCop it runs.
+        let stderr = text(&ours.stderr);
+        let (first, rest) = stderr.split_once('\n').unwrap();
+        assert!(first.starts_with("rbcop: running rubocop for "), "{stderr}");
+        assert_eq!(rest, text(&theirs.stderr), "{args:?}");
         assert_eq!(ours.status.code(), theirs.status.code(), "{args:?}");
         assert!(!theirs.stdout.is_empty());
     };

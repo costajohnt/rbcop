@@ -20,7 +20,8 @@ inputs:
     description: >-
       Run cops rbcop does not implement (plugin and custom cops) with RuboCop: auto (when one is
       found, for example installed by ruby/setup-ruby with bundler-cache), true (RBCOP_FALLBACK=1)
-      or false (RBCOP_FALLBACK=0).
+      or false (RBCOP_FALLBACK=0). auto runs RuboCop, and so the repository's Ruby code, when the
+      config needs it.
     default: auto
   rubocop:
     description: >-

@@ -856,8 +856,16 @@ fn main() -> ExitCode {
     }));
     // env::args panics on an argument that is not UTF-8 (a file name on Linux, say).
     let mut argv: Vec<String> = env::args_os().skip(1).map(|a| a.to_string_lossy().into_owned()).collect();
+    // An editor or a server opening a project runs none of its Ruby unless RBCOP_FALLBACK=1: the
+    // server options (taken out of argv here), and `--lsp`/`--mcp`, which are refused unless a `-r`
+    // before them would hand the run to RuboCop (`.rubocop` and RUBOCOP_OPTS come first, so one
+    // there is refused before any `-r`).
+    let given = argv.len();
     if let Some(status) = server_cli(&mut argv, global_color(None)) {
         return ExitCode::from(status);
+    }
+    if argv.len() != given || argv.iter().any(|a| a == "--lsp" || a == "--mcp") {
+        fallback::editor_context();
     }
     let parsed = all_args(argv.clone()).and_then(parse_args).and_then(|cli| {
         match cli.formatters.iter().find(|(k, _)| formatter::is_class(k)) {
@@ -888,7 +896,10 @@ fn main() -> ExitCode {
         }
         // Output identical to RuboCop's, since it is RuboCop's.
         Err(Fail::Ruby(m)) => match fallback::rubocop() {
-            Some(program) => fallback::delegate(&program, &argv),
+            Some(program) => {
+                fallback::announce(&program, &format!("the whole run ({m})"));
+                fallback::delegate(&program, &argv)
+            }
             None => {
                 eprintln!("rbcop: {m}");
                 if let Some(hint) = fallback::missing() {
@@ -1939,6 +1950,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     let usable = stdin_text.is_none() && config_error.is_none() && team_error.is_none();
     // Looked up only when needed: a project that needs nothing never starts Ruby.
     let program = if usable && (unrunnable || !copless.is_empty()) { fallback::rubocop() } else { None };
+    let what = fallback::what(&skipped, store.requires_ruby_code(), &copless);
     if unrunnable || !copless.is_empty() {
         let forced = env::var_os("RBCOP_FALLBACK").is_some_and(|v| v == "1");
         // Deliberate difference: the RuboCop child corrects by writing the files, which `--diff`
@@ -1949,6 +1961,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             }
             let child = fallback::Child {
                 program,
+                what: &what,
                 opts: &cli.opts,
                 except,
                 only_guide: cli.only_guide,
