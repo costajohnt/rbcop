@@ -1,6 +1,6 @@
 [package]
 name = "rbcop"
-version = "0.1.0"
+version = "0.1.1"
 description = "RuboCop reimplemented in Rust, aiming for byte-identical output"
 repository = "https://github.com/costajohnt/rbcop"
 readme = "README.md"
