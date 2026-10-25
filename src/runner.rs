@@ -453,6 +453,9 @@ fn investigate(
     let mut buf = Vec::new();
     let (result, tokens, fake, edits) = parse_for_target(text, &mut buf, version, cfg.target_ruby);
     let sclass_returns = if parser_gem { crate::syntax::sclass_returns(&result) } else { Vec::new() };
+    // The depth guard is asked up to four times below; the tree is walked for it once (#388).
+    let too_deep = std::cell::OnceCell::new();
+    let too_deep = || *too_deep.get_or_init(|| crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH));
     let mut errors: Vec<(usize, usize, String)> = result
         .errors()
         .filter(|e| !tolerated(e, parser_gem, cfg.target_ruby, text, &sclass_returns))
@@ -466,7 +469,7 @@ fn investigate(
     if parser_gem {
         // The parser-gem simulation below walks the tree recursively (`legacy_syntax::diagnostics`),
         // so the depth guard (see `program` below) comes first here: a long chain overflowed (#351).
-        if crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH) {
+        if too_deep() {
             file_error(format!("rbcop: {display}: nested more than {MAX_AST_DEPTH} levels deep, not inspected."));
             return (Vec::new(), None, Vec::new());
         }
@@ -632,19 +635,12 @@ fn investigate(
     }
     // Pattern variable names the parser gem's builder rejects, only reached when Prism found no
     // error (a tree walk, so only on trees the depth check below accepts; patterns need `in`/`=>`).
-    if errors.is_empty()
-        && (text.contains("in") || text.contains("=>"))
-        && !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH)
-    {
+    if errors.is_empty() && (text.contains("in") || text.contains("=>")) && !too_deep() {
         errors.extend(crate::syntax::pattern_variable_errors(&result.node()));
     }
     // Onigmo compile errors of static regexps (below 3.3 they are semantic errors above), reported
     // by the Prism translation only when the file otherwise parses.
-    if !parser_gem
-        && errors.is_empty()
-        && text.contains(['/', '%'])
-        && !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH)
-    {
+    if !parser_gem && errors.is_empty() && text.contains(['/', '%']) && !too_deep() {
         errors.extend(crate::syntax::regexp_compile_errors(&result.node(), text));
     }
     let comments: Vec<Comment> = result
@@ -764,7 +760,7 @@ fn investigate(
     let program = result.node();
     // Deliberate difference: RuboCop dies with SystemStackError on very deep nesting; rbcop skips the
     // file with an error instead, so cops (many of them recursive) never see such a tree.
-    if crate::ast::deeper_than(&program, MAX_AST_DEPTH) {
+    if too_deep() {
         file_error(format!("rbcop: {}: nested more than {MAX_AST_DEPTH} levels deep, not inspected.", src.path));
         return (Vec::new(), None, Vec::new());
     }
