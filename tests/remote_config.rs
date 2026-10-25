@@ -130,3 +130,72 @@ fn remote_inherit_from() {
     assert!(stderr.starts_with("HTTP redirect too deep\n"), "{stderr}");
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// `--cache-root` picks where remote configs download (#659), below RUBOCOP_CACHE_ROOT, as
+/// ConfigLoader.cache_root(@options[:cache_root]) does. A remote config in the `-c` file loads
+/// earlier (ConfigStore#apply_options!), into the root found without `--cache-root`, and RuboCop
+/// then warns that the files went there.
+#[test]
+fn remote_cache_root_option() {
+    static FILES: &[(&str, &str)] = &[("/r.yml", "Layout/LineLength:\n  Max: 10\n")];
+    let (port, _) = serve(FILES);
+    let dir = std::env::temp_dir().join(format!("rbcop-remote-cache-root-{}", std::process::id()));
+    let _ = fs::remove_dir_all(&dir);
+    fs::create_dir_all(&dir).unwrap();
+    let dir = dir.canonicalize().unwrap();
+    fs::write(dir.join("Gemfile"), "").unwrap();
+    fs::write(dir.join("a.rb"), "x = 'abcdefghijklmnop'\n").unwrap();
+    let config = format!("AllCops:\n  NewCops: disable\ninherit_from: http://127.0.0.1:{port}/r.yml\n");
+    fs::write(dir.join(".rubocop.yml"), &config).unwrap();
+    fs::write(dir.join("other.yml"), &config).unwrap();
+    let (xdg, root) = (dir.join("xdg"), dir.join("root"));
+    let run = |args: &[&str]| {
+        let _ = fs::remove_dir_all(&xdg);
+        let _ = fs::remove_dir_all(&root);
+        let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
+            .args(["--only", "Layout/LineLength", "-f", "e", "--cache-root"])
+            .arg(&root)
+            .args(args)
+            .arg("a.rb")
+            .current_dir(&dir)
+            .env("XDG_CACHE_HOME", &xdg)
+            .output()
+            .unwrap();
+        assert_eq!(out.status.code(), Some(1), "{out:?}");
+        String::from_utf8_lossy(&out.stderr).into_owned()
+    };
+    // The downloaded file under `top`, if it is there.
+    let cached = |top: &std::path::Path| {
+        walk(top).into_iter().find(|p| p.file_name().unwrap().to_string_lossy().starts_with("r-"))
+    };
+    assert_eq!(run(&[]), "");
+    assert_eq!(cached(&root).unwrap().parent().unwrap(), root.join("rubocop_cache"));
+    assert_eq!(cached(&xdg), None);
+
+    let stderr = run(&["-c", "other.yml"]);
+    assert_eq!(cached(&root), None);
+    let early = cached(&xdg).unwrap().parent().unwrap().to_path_buf();
+    assert_eq!(early.file_name().unwrap(), "rubocop_cache");
+    let want = format!(
+        "Warning: Remote configuration cache files were stored in `{}` because a desired cache root (`{}`) was \
+         not set at the top level. Consider setting `AllCops: CacheRootDirectory` in your toplevel configuration \
+         file, using the `RUBOCOP_CACHE_ROOT` environment variable, or using CLI options.\n",
+        early.display(),
+        root.join("rubocop_cache").display()
+    );
+    assert_eq!(stderr, want);
+    let _ = fs::remove_dir_all(&dir);
+}
+
+fn walk(dir: &std::path::Path) -> Vec<std::path::PathBuf> {
+    let mut out = Vec::new();
+    for entry in fs::read_dir(dir).into_iter().flatten().flatten() {
+        let path = entry.path();
+        if path.is_dir() {
+            out.extend(walk(&path));
+        } else {
+            out.push(path);
+        }
+    }
+    out
+}

@@ -1,7 +1,8 @@
 # RuboCop 1.91.0's RemoteConfig (lib/rubocop/remote_config.rb) and the cache root it is given
-# (ConfigLoader.cache_root, CacheConfig.root_dir_from_toplevel_config), run by src/config/mod.rs.
+# (ConfigLoader.cache_root, CacheConfig.root_dir), run by src/config/mod.rs.
 # ARGV: the URL, a path relative to it (inherit_from inside a remote file; empty for none), and
-# the config file ConfigFinder finds from the working directory (empty for none).
+# the configured cache root (`--cache-root` or a CacheRootDirectory, as Store#early_cache_root
+# picks it; empty for none).
 # Prints the effective URL, a NUL, then the cache file path; on failure prints the exception's
 # message to stderr and exits 1.
 require 'net/http'
@@ -115,18 +116,9 @@ class RemoteConfig
   end
 end
 
-def cache_root(config_path)
+def cache_root(configured)
   root = ENV.fetch('RUBOCOP_CACHE_ROOT', nil)
-  root ||= unless config_path.empty?
-             file_contents = File.read(config_path)
-             if file_contents.include?('CacheRootDirectory')
-               require 'erb'
-               require 'yaml'
-               yaml_code = ERB.new(file_contents).result
-               config_yaml = YAML.safe_load(yaml_code, permitted_classes: [Regexp, Symbol], aliases: true)
-               config_yaml&.dig('AllCops', 'CacheRootDirectory')
-             end
-           end
+  root ||= configured unless configured.empty?
   root ||= if ENV.key?('XDG_CACHE_HOME')
              File.join(ENV.fetch('XDG_CACHE_HOME'), Process.uid.to_s)
            else
@@ -135,9 +127,9 @@ def cache_root(config_path)
   File.join(root, 'rubocop_cache')
 end
 
-url, relative, config_path = ARGV
+url, relative, configured = ARGV
 begin
-  remote = RemoteConfig.new(url, cache_root(config_path))
+  remote = RemoteConfig.new(url, cache_root(configured))
   remote = remote.inherit_from_remote(relative) unless relative.empty?
   path = remote.file
   $stdout.binmode

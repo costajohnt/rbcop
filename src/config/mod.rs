@@ -14,6 +14,9 @@ use value::{Map, Value, parse_yaml, parse_yaml_bytes, parse_yaml_file, ruby_rege
 
 /// RuboCop's own default.yml, vendored from the release rbcop targets (MIT, see config/LICENSE).
 pub const DEFAULT_YML: &str = include_str!("../../config/default.yml");
+/// Where `-d` says built-in config files come from (RuboCop names the gem's file on disk).
+const BUILT_IN: &str = "<rbcop built-in>";
+const BUILT_IN_DEFAULT: &str = "<rbcop built-in>/rubocop/config/default.yml";
 pub const RUBOCOP_VERSION: &str = "1.91.0";
 const DOTFILE: &str = ".rubocop.yml";
 
@@ -39,6 +42,8 @@ pub struct Options {
     /// `--enable-all-cops` (true) / `--disable-all-cops` (false): ConfigLoader.enabled_by_default /
     /// disabled_by_default, which win over `AllCops: EnabledByDefault / DisabledByDefault`.
     pub all_cops: Option<bool>,
+    /// `-d/--debug` (ConfigLoader.debug): config loading prints what it loads (Store::take_debug).
+    pub debug: bool,
 }
 
 /// One include/exclude entry (FilePatterns / PathUtil.match_path?).
@@ -691,9 +696,11 @@ pub struct Store {
     default: Map,
     /// Each loaded file with what loading it wrote to stderr: ConfigLoader.load_file is not
     /// cached, so every later load of the file repeats its validation warnings.
-    files: HashMap<PathBuf, (Map, validator::Output)>,
+    files: HashMap<PathBuf, (Map, validator::Output, String)>,
     /// Everything config loading has written to stderr so far.
     emitted: validator::Output,
+    /// ConfigLoader.default_configuration has been loaded (under `-d`, announced).
+    default_loaded: bool,
     gem_dirs: HashMap<String, PathBuf>,
     features: HashMap<String, Result<Feature, String>>,
     /// The `plugins:`/`require:` entry whose loading failed (integrate_plugins).
@@ -716,9 +723,47 @@ pub struct Store {
     loading: Vec<PathBuf>,
     /// Remote config files (their cache paths) with their URLs (RemoteConfig#uri).
     remote: HashMap<PathBuf, String>,
+    /// ConfigLoader.cache_root, memoized at first use: the `configured` part of the root remote
+    /// configs download into (`--cache-root` or a CacheRootDirectory; None for the default).
+    remote_root: Option<Option<String>>,
     resolved: HashMap<Option<PathBuf>, Arc<Resolved>>,
     forced: Option<Arc<Resolved>>,
     pub warnings: Vec<String>,
+}
+
+/// What `-d` has config loading print (to stdout) since the last take_debug: the CLI prints it
+/// where RuboCop's loading of that config would.
+static DEBUG_OUT: std::sync::Mutex<String> = std::sync::Mutex::new(String::new());
+
+fn debug_out() -> std::sync::MutexGuard<'static, String> {
+    DEBUG_OUT.lock().unwrap_or_else(|e| e.into_inner())
+}
+
+pub fn take_debug() -> String {
+    std::mem::take(&mut *debug_out()).replace([ONCE, END_ONCE], "")
+}
+
+/// Around what `-d` prints once per run (the defaults and each plugin's config loading), which a
+/// cached load_file does not replay.
+const ONCE: char = '\u{1}';
+const END_ONCE: char = '\u{2}';
+
+/// `printed` without its ONCE parts.
+fn replayable(printed: &str) -> String {
+    let mut out = String::new();
+    let mut rest = printed;
+    while let Some(i) = rest.find(ONCE) {
+        out.push_str(&rest[..i]);
+        rest = rest[i..].find(END_ONCE).map_or("", |j| &rest[i + j + 1..]);
+    }
+    out.push_str(rest);
+    out
+}
+
+/// ConfigFinder.project_root: the directory of the topmost Gemfile (else gems.rb) above `dir`.
+pub fn project_root(dir: &Path) -> Option<PathBuf> {
+    let file = find_last_upwards(&["Gemfile"], dir).or_else(|| find_last_upwards(&["gems.rb"], dir))?;
+    file.parent().map(Path::to_path_buf)
 }
 
 impl Store {
@@ -729,15 +774,16 @@ impl Store {
         let Value::Map(default) = parse_yaml(default_text)? else { return Err("bad default.yml".into()) };
         let mut default = Arc::unwrap_or_clone(default);
         make_excludes_absolute(&mut default, &cwd);
-        let project_root = find_last_upwards(&["Gemfile"], &cwd).or_else(|| find_last_upwards(&["gems.rb"], &cwd));
+        let project_root = project_root(&cwd);
         let mut store = Store {
             opts,
             cwd,
-            project_root: project_root.map(|p| p.parent().unwrap().to_path_buf()),
+            project_root,
             cop_names,
             default,
             files: HashMap::new(),
             emitted: Vec::new(),
+            default_loaded: false,
             gem_dirs: HashMap::new(),
             features: HashMap::new(),
             failed_entry: None,
@@ -750,11 +796,13 @@ impl Store {
             dir_to_file: HashMap::new(),
             loading: Vec::new(),
             remote: HashMap::new(),
+            remote_root: None,
             resolved: HashMap::new(),
             forced: None,
             warnings: Vec::new(),
         };
         if store.opts.force_default_config {
+            store.default_configuration();
             let r = Resolved::new(
                 apply_default_overrides(&store.default, &store.opts),
                 None,
@@ -788,9 +836,16 @@ impl Store {
         &self.cwd
     }
 
+    /// Version.parser_version's ConfigLoader.load_yaml_configuration of the config file found from
+    /// the working directory (not `-c`), which `-d` names.
+    pub fn debug_pwd_yaml(&mut self) {
+        let shown = self.find_config_path(&self.cwd).map_or(BUILT_IN_DEFAULT.into(), |p| p.display().to_string());
+        self.debug(&format!("configuration from {shown}\n"));
+    }
+
     /// CacheConfig.root_dir_from_toplevel_config: `AllCops: CacheRootDirectory` as written in the
     /// config file found from the working directory (no inheritance, no -c).
-    pub fn toplevel_cache_root(&self) -> Option<String> {
+    fn toplevel_cache_root(&self) -> Option<String> {
         let path = self.find_config_path(&self.cwd)?;
         let text = std::fs::read(&path).ok()?;
         if !text.windows(18).any(|w| w == b"CacheRootDirectory") {
@@ -804,6 +859,21 @@ impl Store {
             Value::Map(m) => m.map("AllCops")?.get("CacheRootDirectory")?.as_string(),
             _ => None,
         }
+    }
+
+    /// CLI#act_on_options' `ConfigLoader.cache_root(@options[:cache_root])`, before the pwd config
+    /// loads: memoized by its first use, so a remote config in the `-c` file (loaded earlier, by
+    /// ConfigStore#apply_options!) keeps the root without `--cache-root`.
+    pub fn early_cache_root(&mut self, cache_root_override: Option<String>) -> Option<String> {
+        if self.remote_root.is_none() {
+            self.remote_root = Some(cache_root_override.or_else(|| self.toplevel_cache_root()));
+        }
+        self.remote_root.clone().flatten()
+    }
+
+    /// `ConfigLoader.cache_root = ResultCache.cache_root(...)`: the root later remote configs use.
+    pub fn set_cache_root(&mut self, configured: Option<String>) {
+        self.remote_root = Some(configured);
     }
 
     /// A config so far loaded `require:`s Ruby code rbcop cannot load (custom cops, or a plugin
@@ -860,6 +930,22 @@ impl Store {
         self.opts.color = on;
     }
 
+    /// Under `-d`, `print` what RuboCop's config loading prints to stdout.
+    fn debug(&mut self, s: &str) {
+        if self.opts.debug {
+            debug_out().push_str(s);
+        }
+    }
+
+    /// ConfigLoader.default_configuration, which loads (and under `-d` names) default.yml the first
+    /// time it is used. rbcop's default.yml is built in.
+    fn default_configuration(&mut self) {
+        if !self.default_loaded {
+            self.default_loaded = true;
+            self.debug(&format!("{ONCE}Default configuration from {BUILT_IN_DEFAULT}\n{END_ONCE}"));
+        }
+    }
+
     /// Config-loading output goes to stderr as it happens, as RuboCop's `warn` does.
     fn emit(&mut self, out: &[(bool, String)]) {
         eprint!("{}", validator::render(out, self.opts.color));
@@ -882,13 +968,19 @@ impl Store {
         if let Some(r) = self.resolved.get(&file) {
             return Ok(r.clone());
         }
+        self.debug(&format!("For {}: ", dir.display()));
         let hash = match &file {
             // ConfigLoader.apply_default_overrides: only the command line can turn preview on here.
-            None => apply_default_overrides(&self.default, &self.opts),
+            None => {
+                self.default_configuration();
+                apply_default_overrides(&self.default, &self.opts)
+            }
             Some(path) => {
                 let mut user = self.load_file(path, true)?;
                 validator::check_target_ruby(&user, path, &self.cwd)?;
-                if !self.opts.ignore_parent_exclusion {
+                if self.opts.ignore_parent_exclusion {
+                    self.debug("Ignoring AllCops/Exclude from parent folders");
+                } else {
                     self.add_excludes_from_files(&mut user, path)?;
                 }
                 self.merge_with_default(user)
@@ -934,11 +1026,13 @@ impl Store {
     // ponytail: a cached load replays the first load's warnings; a later load in RuboCop sees the
     // plugins loaded since, which can only make fewer cop names unrecognized.
     fn load_file(&mut self, path: &Path, check: bool) -> Result<Map, String> {
-        if let Some((m, out)) = self.files.get(path).cloned() {
+        if let Some((m, out, printed)) = self.files.get(path).cloned() {
             self.emit(&out);
+            debug_out().push_str(&printed);
             return Ok(m);
         }
         let start = self.emitted.len();
+        let printed_from = debug_out().len();
         let text = std::fs::read(path).map_err(|e| match e.kind() {
             // ConfigLoader.read_file's ConfigNotFoundError.
             std::io::ErrorKind::NotFound => format!("Configuration file not found: {}", path.display()),
@@ -959,7 +1053,10 @@ impl Store {
             },
             false => text,
         };
-        let mut hash = match parse_yaml_bytes(&text, &path.display().to_string())? {
+        let parsed = parse_yaml_bytes(&text, &path.display().to_string())?;
+        // ConfigLoader.load_yaml_configuration
+        self.debug(&format!("configuration from {}\n", path.display()));
+        let mut hash = match parsed {
             Value::Map(m) => Arc::unwrap_or_clone(m),
             // `yaml_tree_to_hash(yaml_tree) || {}`
             Value::Null | Value::Bool(false) => Map::default(),
@@ -1118,6 +1215,8 @@ impl Store {
         hash.remove("inherit_from");
         self.add_missing_namespaces(path, &mut hash)?;
         if check {
+            // ConfigValidator#validate reads ConfigLoader.default_configuration.
+            self.default_configuration();
             let mut out = Vec::new();
             let checked = validator::Validator {
                 default: &self.default,
@@ -1150,7 +1249,8 @@ impl Store {
         }
         make_excludes_absolute(&mut hash, &base_dir_for(Some(path)));
         let out = self.emitted[start..].to_vec();
-        self.files.insert(path.to_path_buf(), (hash.clone(), out));
+        let printed = replayable(&debug_out()[printed_from..]);
+        self.files.insert(path.to_path_buf(), (hash.clone(), out, printed));
         Ok(hash)
     }
 
@@ -1164,7 +1264,7 @@ impl Store {
             .filter_map(Value::as_string)
             .flat_map(|e| if glob::is_glob(&e) { glob::dir_glob(&e, &self.cwd) } else { vec![e] })
             .collect();
-        for entry in entries {
+        for (index, entry) in entries.into_iter().enumerate() {
             // ConfigLoaderResolver#inherited_file: a URL, an absolute path, a path relative to the
             // URL of a remote file, or a path relative to this file.
             let remote = if entry.starts_with("http://") || entry.starts_with("https://") {
@@ -1192,7 +1292,10 @@ impl Store {
                     self.remote.insert(cache.clone(), url);
                     cache
                 }
-                None => expand_path(Path::new(&entry), dir),
+                None => {
+                    self.debug("Inheriting ");
+                    expand_path(Path::new(&entry), dir)
+                }
             };
             if base_path == path {
                 continue;
@@ -1204,9 +1307,12 @@ impl Store {
             self.loading.push(base_path.clone());
             let base = self.load_file(&base_path, true);
             self.loading.pop();
-            bases.push((base_path, base?));
+            bases.push((index, base_path, base?));
         }
-        for (base_path, base) in bases.into_iter().rev() {
+        // ConfigLoaderResolver#warn_on_duplicate_setting's `inherited_file`: the entry as written.
+        let written = seq(hash.get("inherit_from").cloned());
+        let file_is_remote = self.remote.contains_key(path);
+        for (index, base_path, base) in bases.into_iter().rev() {
             override_department_setting_for_cops(&base, hash);
             override_enabled_for_disabled_departments(&base, hash);
             for (k, v) in base.0 {
@@ -1215,6 +1321,18 @@ impl Store {
                 let merged = match hash.map(&k) {
                     Some(derived) => {
                         let mode = determine_inherit_mode(hash, &k, self.opts.preview);
+                        if self.opts.debug && !file_is_remote {
+                            let inherited = written.get(index).and_then(Value::as_string);
+                            let mut out = Vec::new();
+                            self.duplicate_settings(&v, derived, &mode, inherited.as_deref(), &mut out);
+                            for key in out {
+                                let shown = validator::smart_path(path, &self.cwd);
+                                let inherited = inherited.as_deref().unwrap_or_default();
+                                self.debug(&format!(
+                                    "{shown}: {k}:{key} overrides the same parameter in {inherited}\n"
+                                ));
+                            }
+                        }
                         merge(&v, derived, &mode, false)
                     }
                     None => Arc::unwrap_or_clone(v),
@@ -1240,6 +1358,51 @@ impl Store {
             }
         }
         Ok(())
+    }
+
+    /// The keys `merge` (ConfigLoaderResolver#merge with `debug:`) takes from `derived` over a
+    /// different `base` value that is neither merged nor unioned: warn_on_duplicate_setting.
+    fn duplicate_settings(
+        &self,
+        base: &Map,
+        derived: &Map,
+        mode: &Map,
+        inherited: Option<&str>,
+        out: &mut Vec<String>,
+    ) {
+        for (key, dv) in &derived.0 {
+            let Some(bv) = base.get(key) else { continue };
+            if let (Value::Map(b), Value::Map(d)) = (bv, dv) {
+                self.duplicate_settings(b, d, mode, inherited, out);
+                continue;
+            }
+            if should_union(derived, base, mode, key) {
+                continue;
+            }
+            // duplicate_setting?: not for a parent directory's file, a remote one or one inside an
+            // installed gem (Gem.path; here, the gem directories looked up so far).
+            let Some(file) = inherited else { continue };
+            let in_gem = self
+                .gem_dirs
+                .values()
+                .filter_map(|d| d.parent()?.parent())
+                .any(|g| file.starts_with(&*g.to_string_lossy()));
+            if file.starts_with("..")
+                || bv == dv
+                || file.starts_with("http://")
+                || file.starts_with("https://")
+                || in_gem
+            {
+                continue;
+            }
+            let listed = |m: &str| {
+                mode.get(m).map(|v| seq(Some(v.clone())).iter().any(|x| x.as_string().as_deref() == Some(key)))
+            };
+            if matches!(bv, Value::Seq(_)) && listed("merge").or_else(|| listed("override")).unwrap_or(false) {
+                continue;
+            }
+            out.push(key.clone());
+        }
     }
 
     /// ConfigLoader.add_missing_namespaces: every key but an obsolete cop name goes through
@@ -1289,6 +1452,7 @@ impl Store {
         if top == config_file {
             return Ok(());
         }
+        self.debug("AllCops/Exclude ");
         let highest = self.load_file(&top, true)?;
         let Some(high_excludes) = highest.map("AllCops").and_then(|a| a.get("Exclude")).cloned() else { return Ok(()) };
         let Some(all) = config.map_mut("AllCops") else { return Ok(()) };
@@ -1327,6 +1491,8 @@ impl Store {
         if names.is_empty() {
             return Ok(());
         }
+        // Plugin.integrate_plugins (not a plain `require:`), once the gems have loaded.
+        let integrates = names.iter().any(|(_, _, l)| *l != Load::Require);
         // Plugin::Loader.load requires every plugin (registering its cops) before
         // ConfigurationIntegrator loads ConfigLoader.default_configuration, whose qualified keys
         // fill Registry#unqualified_cop_names, and then each plugin's config.
@@ -1503,11 +1669,17 @@ impl Store {
         if !configs.is_empty() {
             crate::helpers::cop_registry::fill_unqualified_cop_names();
         }
+        if integrates {
+            self.default_configuration();
+        }
         let mut combined = self.default.clone();
         let mut configured: Vec<String> = Vec::new();
         for config in configs {
+            // ponytail: an extension's injected config (a plain `require:`) is named as a plugin's.
+            self.debug(&format!("{ONCE}Plugin "));
             let mut plugin = match config {
                 Ok(native) => {
+                    self.debug(&format!("configuration from {BUILT_IN}/{}/config/default.yml\n", native.gem));
                     // Path parameters there resolve against the working directory, as for any
                     // config file not named .rubocop*.
                     let label = format!("{}/config/default.yml", native.gem);
@@ -1518,6 +1690,7 @@ impl Store {
                 }
                 Err(path) => self.load_file(&path, false)?,
             };
+            self.debug(&END_ONCE.to_string());
             if let Some(Value::Map(new_all)) = plugin.get("AllCops").cloned() {
                 let mut all = combined.map("AllCops").cloned().unwrap_or_default();
                 for (key, value) in Arc::unwrap_or_clone(new_all).0 {
@@ -1575,7 +1748,8 @@ impl Store {
     }
 
     /// ConfigLoaderResolver#merge_with_default (§4) against the current defaults.
-    fn merge_with_default(&self, config: Map) -> Map {
+    fn merge_with_default(&mut self, config: Map) -> Map {
+        self.default_configuration();
         // It loads ConfigLoader.default_configuration, whose `AllCops` key memoizes
         // Registry#unqualified_cop_names (before any subdirectory config loads its plugins).
         crate::helpers::cop_registry::fill_unqualified_cop_names();
@@ -1606,10 +1780,10 @@ impl Store {
     /// `url` or for `relative` resolved against it: the effective URL and the cache file. Run by
     /// the project's ruby with RuboCop's own code (src/config/remote_config.rb); None when ruby
     /// cannot be run. On failure RuboCop prints the message and its backtrace; rbcop the message.
-    fn remote_file(&self, url: &str, relative: &str) -> Result<Option<(String, PathBuf)>, String> {
-        let config = self.find_config_path(&self.cwd).map(|p| p.display().to_string()).unwrap_or_default();
+    fn remote_file(&mut self, url: &str, relative: &str) -> Result<Option<(String, PathBuf)>, String> {
+        let configured = self.early_cache_root(None).unwrap_or_default();
         let Ok(out) = std::process::Command::new("ruby")
-            .args(["-e", include_str!("remote_config.rb"), url, relative, &config])
+            .args(["-e", include_str!("remote_config.rb"), url, relative, &configured])
             .current_dir(&self.cwd)
             .output()
         else {
