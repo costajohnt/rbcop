@@ -17,6 +17,8 @@ pub fn command(program: impl AsRef<OsStr>) -> Command {
         "XDG_CONFIG_HOME",
         "RBCOP_FALLBACK",
         "RBCOP_RUBOCOP",
+        "RUBOCOP_CACHE_ROOT",
+        "XDG_CACHE_HOME",
     ] {
         cmd.env_remove(var);
     }
