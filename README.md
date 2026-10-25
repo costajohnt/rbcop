@@ -33,7 +33,7 @@ rbcop -f json -o report.json
 
 All builtin formatters except `autogenconf` are supported, as are the display options, `--fail-level`, `--stdin` (with `-a`/`-A` it prints the corrected source after the report), `-L`, `--show-cops`, `-v` and `-V`.
 
-Not supported: `--auto-gen-config`, `--regenerate-todo`, `--disable-uncorrectable`, `--report-unused-todo-entries`, `--changed`, the server, LSP and MCP modes, `-r`/`--plugin`, `-d`, `--profile`, `--memory`, custom formatter classes, `require:` of local Ruby files and remote `inherit_from` URLs. ERB in config files is rendered by running `ruby`, as RuboCop renders it. `--cache` is accepted and has no effect. [docs/known-gaps.md](docs/known-gaps.md) lists these and every other known difference, including a few deliberate ones (for example, `-o` pointing at a file being inspected is refused). `-a`/`-A` do not write files that resolve (through symlinks) outside the working directory and the paths given on the command line; those are reported uncorrected with a warning.
+Not supported: `--auto-gen-config`, `--regenerate-todo`, `--disable-uncorrectable`, `--report-unused-todo-entries`, `--changed`, the server, LSP and MCP modes, `-r`/`--plugin`, `-d`, `--profile`, `--memory`, custom formatter classes, `require:` of local Ruby files and remote `inherit_from` URLs. ERB in config files is rendered by running `ruby`, as RuboCop renders it. The result cache (`--cache`, `--cache-root`, `AllCops: UseCache`) works as RuboCop's, in its own `rbcop_cache` directory. [docs/known-gaps.md](docs/known-gaps.md) lists these and every other known difference, including a few deliberate ones (for example, `-o` pointing at a file being inspected is refused). `-a`/`-A` do not write files that resolve (through symlinks) outside the working directory and the paths given on the command line; those are reported uncorrected with a warning.
 
 ## Plugins and custom cops
 
@@ -83,7 +83,7 @@ CI-shaped runs (Linux container, 4 vCPUs, each project's own config, RuboCop wit
 | solidus | 2,171 | 28.3 s | 2.12 s | 13x |
 | fastlane | 1,355 | 30.3 s | 2.02 s | 15x |
 
-rbcop has no result cache, so RuboCop with a warm cache can be faster on an unchanged tree. Method, 2 vCPU numbers and raw data: [docs/benchmarks.md](docs/benchmarks.md).
+rbcop with a warm result cache (an unchanged tree, as RuboCop's cache serves it) takes about 3% of the CPU time of an uncached run: 0.9 s of CPU instead of 27 s on rails, 3.0 s instead of 82 s on discourse. Method, 2 vCPU numbers and raw data: [docs/benchmarks.md](docs/benchmarks.md).
 
 ## Gates
 
