@@ -156,3 +156,42 @@ fn profile_and_memory() {
     assert!(!tmp.exists());
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// The reports are never written through a symlink (`tmp` or the report itself) nor outside the
+/// working directory and the command-line paths (a Gemfile above them).
+#[test]
+fn profile_refuses_symlinks() {
+    let dir = project("symlink");
+    let outside = dir.with_extension("outside");
+    let _ = fs::remove_dir_all(&outside);
+    fs::create_dir_all(&outside).unwrap();
+    let profile = |cwd: &Path| {
+        let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
+            .args(["--profile", "--memory", "a.rb"])
+            .current_dir(cwd)
+            .output()
+            .unwrap();
+        (String::from_utf8_lossy(&out.stdout).into_owned(), String::from_utf8_lossy(&out.stderr).into_owned())
+    };
+    std::os::unix::fs::symlink(&outside, dir.join("tmp")).unwrap();
+    let (stdout, stderr) = profile(&dir);
+    assert!(!stdout.contains("report generated"), "{stdout}");
+    let want = format!("rbcop: not writing the --profile report: {} is a symlink", dir.join("tmp").display());
+    assert!(stderr.contains(&want), "{stderr}");
+    assert_eq!(fs::read_dir(&outside).unwrap().count(), 0);
+
+    fs::remove_file(dir.join("tmp")).unwrap();
+    fs::create_dir(dir.join("tmp")).unwrap();
+    fs::write(outside.join("victim"), "keep").unwrap();
+    std::os::unix::fs::symlink(outside.join("victim"), dir.join("tmp/rbcop-profile.txt")).unwrap();
+    let (_, stderr) = profile(&dir);
+    assert!(stderr.contains("rbcop-profile.txt is a symlink"), "{stderr}");
+    assert_eq!(fs::read_to_string(outside.join("victim")).unwrap(), "keep");
+
+    // The project root (the Gemfile's directory) is above the working directory.
+    fs::copy(dir.join("a.rb"), dir.join("sub/a.rb")).unwrap();
+    let (_, stderr) = profile(&dir.join("sub"));
+    assert!(stderr.contains(&format!("{} is outside the project", dir.display())), "{stderr}");
+    let _ = fs::remove_dir_all(&dir);
+    let _ = fs::remove_dir_all(&outside);
+}

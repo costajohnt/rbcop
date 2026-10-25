@@ -727,6 +727,7 @@ fn main() -> ExitCode {
         Ok(cli) => {
             display_time = cli.display_time || cli.debug;
             let profile = cli.profile.then_some(cli.memory);
+            let roots = rbcop::autocorrect::write_roots(&rbcop::config::cwd(), &cli.paths);
             if profile.is_some() {
                 runner::enable_profiling();
             }
@@ -738,7 +739,7 @@ fn main() -> ExitCode {
                 }
             };
             if let Some(memory) = profile {
-                profile_reports(memory, t0.elapsed());
+                profile_reports(memory, t0.elapsed(), &roots);
             }
             code
         }
@@ -752,12 +753,10 @@ fn main() -> ExitCode {
 /// CLI#profile_if_needed's reports. Deliberate difference: RuboCop's are StackProf's CPU profile
 /// and MemoryProfiler's allocations of the Ruby VM; rbcop's are the wall time spent in each cop
 /// and its peak resident set size, as text files under `<project root>/tmp`.
-fn profile_reports(memory: bool, elapsed: std::time::Duration) {
+fn profile_reports(memory: bool, elapsed: std::time::Duration, roots: &[PathBuf]) {
     let cwd = rbcop::config::cwd();
     // ponytail: RuboCop fails (File.join(nil, 'tmp')) without a Gemfile; rbcop uses the working directory.
-    let tmp = rbcop::config::project_root(&cwd).unwrap_or(cwd).join("tmp");
-    let _ = fs::create_dir_all(&tmp);
-    let cpu = tmp.join("rbcop-profile.txt");
+    let root = rbcop::config::project_root(&cwd).unwrap_or(cwd);
     let mut text = format!(
         "rbcop --profile: wall time in each cop, summed over files and threads (run: {:.3} s)\n\n{:>12}  {:>10}  cop\n",
         elapsed.as_secs_f64(),
@@ -767,8 +766,10 @@ fn profile_reports(memory: bool, elapsed: std::time::Duration) {
     for (cop, time, calls) in runner::profile() {
         text.push_str(&format!("{:>12.3}  {calls:>10}  {cop}\n", time.as_secs_f64() * 1e3));
     }
-    let _ = fs::write(&cpu, text);
-    println!("Profile report generated at {}", cpu.display());
+    match write_report(&root, "rbcop-profile.txt", &text, roots) {
+        Ok(path) => println!("Profile report generated at {}", path.display()),
+        Err(e) => eprintln!("rbcop: not writing the --profile report: {e}"),
+    }
     if memory {
         println!("Building memory report...");
         // SAFETY: getrusage fills the struct it is given.
@@ -776,10 +777,51 @@ fn profile_reports(memory: bool, elapsed: std::time::Duration) {
         unsafe { libc::getrusage(libc::RUSAGE_SELF, &mut usage) };
         // ru_maxrss is in kilobytes on Linux, bytes on macOS.
         let bytes = usage.ru_maxrss as u64 * if cfg!(target_os = "macos") { 1 } else { 1024 };
-        let file = tmp.join("rbcop-memory.txt");
-        let _ = fs::write(&file, format!("rbcop --memory: peak resident set size {bytes} bytes\n"));
-        println!("Memory report generated at {}", file.display());
+        let text = format!("rbcop --memory: peak resident set size {bytes} bytes\n");
+        match write_report(&root, "rbcop-memory.txt", &text, roots) {
+            Ok(path) => println!("Memory report generated at {}", path.display()),
+            Err(e) => eprintln!("rbcop: not writing the --memory report: {e}"),
+        }
     }
+}
+
+/// `<root>/tmp/<name>`, written as `--profile` writes its reports, but only inside the write roots
+/// (the working directory and the command-line paths, as for -a) and never through a symlink: the
+/// project root and `tmp` must be real directories there, and the report is a new temporary file
+/// (O_NOFOLLOW) renamed over `name`, which replaces a planted symlink instead of following it.
+fn write_report(root: &Path, name: &str, text: &str, roots: &[PathBuf]) -> Result<PathBuf, String> {
+    use std::io::Write;
+    use std::os::unix::fs::OpenOptionsExt;
+    let root = fs::canonicalize(root).map_err(|e| format!("{}: {e}", root.display()))?;
+    if rbcop::autocorrect::outside_roots(&root, roots) {
+        return Err(format!("{} is outside the project", root.display()));
+    }
+    let tmp = root.join("tmp");
+    match fs::symlink_metadata(&tmp) {
+        Ok(m) if m.file_type().is_symlink() => return Err(format!("{} is a symlink", tmp.display())),
+        Ok(m) if !m.is_dir() => return Err(format!("{} is not a directory", tmp.display())),
+        Ok(_) => {}
+        Err(_) => fs::create_dir(&tmp).map_err(|e| format!("{}: {e}", tmp.display()))?,
+    }
+    let path = tmp.join(name);
+    if fs::symlink_metadata(&path).is_ok_and(|m| m.file_type().is_symlink()) {
+        return Err(format!("{} is a symlink", path.display()));
+    }
+    // ponytail: path-based checks; a `tmp` swapped for a symlink between the check and the open
+    // is not caught (the -a writer walks directory descriptors for that).
+    let part = tmp.join(format!(".{name}.{}", std::process::id()));
+    let written = fs::OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .custom_flags(libc::O_NOFOLLOW)
+        .open(&part)
+        .and_then(|mut f| f.write_all(text.as_bytes()))
+        .and_then(|()| fs::rename(&part, &path));
+    if let Err(e) = written {
+        let _ = fs::remove_file(&part);
+        return Err(format!("{}: {e}", path.display()));
+    }
+    Ok(path)
 }
 
 /// `--init`: CLI::Command::InitDotfile.

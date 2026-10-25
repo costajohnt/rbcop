@@ -274,7 +274,9 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   size to `tmp/rbcop-memory.txt` (`Memory report generated at <path>`). As in RuboCop `--profile`
   turns the result cache off unless `--cache` comes before it, and `--memory` without `--profile`
   does nothing. Without a Gemfile (no project root) RuboCop fails; rbcop writes under the working
-  directory.
+  directory. rbcop writes the reports only inside the working directory and the command-line paths
+  (as for `-a`) and never through a symlink (`tmp` or the report file); otherwise it prints
+  `rbcop: not writing the --profile report: <reason>` to stderr instead of the `generated at` line.
 - Command-line options rbcop refuses (`rbcop: --NAME is not supported by rbcop yet`, exit 2):
   - `--auto-gen-config`, `--regenerate-todo`, `-f autogenconf`: generating `.rubocop_todo.yml`
     (AutoGenerateConfig and the autogenconf formatter's Exclude/Max output) is not ported. Its
