@@ -264,7 +264,12 @@ impl Tree {
     pub fn build(program: &ruby_prism::ProgramNode, src: &crate::source::Source) -> Tree {
         let mut tree = Tree { nodes: Vec::new(), root: None, lvasgn_shapes: HashMap::new() };
         tree.root = tree.stmts(Some(program.statements()));
-        for (i, n) in tree.nodes.iter().enumerate() {
+        // Only mark_assignments_as_referenced_in_loop compares them, so only a file with a loop
+        // (a `retry` makes its rescue one) pays for building the node index and keys (#388).
+        let looping = tree.nodes.iter().any(|n| {
+            matches!(n.t, T::While | T::Until | T::WhilePost | T::UntilPost | T::For) || n.kind == kind::RETRY_NODE
+        });
+        for (i, n) in tree.nodes.iter().enumerate().filter(|_| looping) {
             if n.t == T::Lvasgn {
                 tree.lvasgn_shapes.insert(i, crate::helpers::node_equality::shape(src, n.start, n.end));
             }

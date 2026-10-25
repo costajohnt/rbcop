@@ -216,7 +216,9 @@ impl<'a> Source<'a> {
 
     /// Comment that starts on `line`, if any.
     pub fn comment_on_line(&self, line: usize) -> Option<&Comment> {
-        self.comments.iter().find(|c| self.line_of(c.start) == line)
+        // Comments are in source order: the first one at or after the line's start (#388).
+        let from = *self.line_starts.get(line.checked_sub(1)?)?;
+        self.comments.get(self.comments.partition_point(|c| c.start < from)).filter(|c| self.line_of(c.start) == line)
     }
 
     /// True if the text before `off` on its line is only (Ruby, ASCII) whitespace.
@@ -385,5 +387,15 @@ mod tests {
         ];
         assert_eq!(kinds, want);
         assert!(src.tokens().windows(2).all(|w| w[0].start <= w[1].start));
+    }
+
+    // A binary search over the comments, which are in source order (#388).
+    #[test]
+    fn comment_on_line() {
+        let text = "a # one\nb\n# two\nc # three";
+        let comments = [(2, 7), (10, 15), (18, 25)].map(|(start, end)| Comment { start, end, embdoc: false });
+        let src = Source::new("t.rb", text, Vec::from(comments), None, "3.4");
+        let starts: Vec<Option<usize>> = (0..=5).map(|l| src.comment_on_line(l).map(|c| c.start)).collect();
+        assert_eq!(starts, [None, Some(2), None, Some(10), Some(18), None]);
     }
 }
