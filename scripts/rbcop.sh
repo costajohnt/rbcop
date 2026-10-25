@@ -5,6 +5,8 @@
 # list that filters both sides of a comparison to nothing and a false "all corpora match" (#163).
 rbcop_root=$(cd "$(dirname "$0")/.." && pwd)
 bin=${CARGO_TARGET_DIR:-$rbcop_root/target}/release/rbcop
+# The parity scripts measure rbcop's own cops: no RuboCop fallback unless asked for.
+export RBCOP_FALLBACK="${RBCOP_FALLBACK:-0}"
 (cd "$rbcop_root" && cargo build --release -q) || { echo "$0: cargo build --release failed" >&2; exit 1; }
 if ! "$bin" --version > /dev/null 2>&1; then
   echo "$0: rbcop does not run as '$bin'" >&2

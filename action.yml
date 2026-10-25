@@ -18,12 +18,15 @@ inputs:
     default: --format github --format progress
   fallback:
     description: >-
-      Run cops rbcop does not implement (plugin and custom cops) with RuboCop (RBCOP_FALLBACK=1).
-      RuboCop must be installed, for example by ruby/setup-ruby with bundler-cache.
-    default: 'false'
+      Run cops rbcop does not implement (plugin and custom cops) with RuboCop: auto (when one is
+      found, for example installed by ruby/setup-ruby with bundler-cache), true (RBCOP_FALLBACK=1)
+      or false (RBCOP_FALLBACK=0).
+    default: auto
   rubocop:
-    description: The RuboCop command for the fallback (RBCOP_RUBOCOP)
-    default: bundle exec rubocop
+    description: >-
+      The RuboCop command for the fallback (RBCOP_RUBOCOP); empty finds one: bundle exec rubocop
+      when Gemfile.lock has rubocop, else rubocop on PATH
+    default: ''
 
 runs:
   using: composite
@@ -57,7 +60,7 @@ runs:
       shell: bash
       env:
         ARGS: ${{ inputs.args }}
-        RBCOP_FALLBACK: ${{ inputs.fallback == 'true' && '1' || '' }}
+        RBCOP_FALLBACK: ${{ inputs.fallback == 'true' && '1' || inputs.fallback == 'false' && '0' || '' }}
         RBCOP_RUBOCOP: ${{ inputs.rubocop }}
       run: |
         set -f

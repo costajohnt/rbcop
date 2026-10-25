@@ -1,5 +1,5 @@
 # Loaded by `rubocop --require` when rbcop runs RuboCop for the cops it does not implement
-# (RBCOP_FALLBACK=1, src/fallback.rs). One line per offense, tab-separated:
+# (src/fallback.rs). One line per offense, then `rbcop-fallback-done`. Offenses are tab-separated:
 #   path  begin_byte  end_byte  severity  correctable  corrected  global  cop  message  disabled  justification
 # (justification empty when there is none; disabled offenses come only under --display-suppressed)
 # with `\`, tab and newline escaped in path and message. rbcop annotates messages itself (cop
@@ -60,6 +60,13 @@ class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
       output.puts [esc(file), b, e, o.severity.name, o.correctable? ? 1 : 0, o.corrected? ? 1 : 0, global,
                    o.cop_name, esc(o.message), o.disabled? ? 1 : 0, esc(o.justification.to_s)].join("\t")
     end
+    # A cop that forks (rubocop-require_tools) would flush a copy of anything still buffered.
+    output.flush
+  end
+
+  # rbcop checks for this line: RuboCop ran to the end (Runner calls it from an ensure).
+  def finished(_inspected_files)
+    output.puts 'rbcop-fallback-done'
   end
 
   private

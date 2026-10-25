@@ -4,7 +4,7 @@ rbcop is RuboCop 1.91.0's command line reimplemented in Rust. It reads the same 
 
 Before switching, check two things:
 
-- **Plugins and custom cops.** rbcop runs RuboCop's 613 core cops and the plugins listed in [plugins.md](plugins.md) (rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot, rubocop-capybara). Cops from other plugins and custom cops loaded with `require:` are not run natively. rbcop names them on stderr, and `RBCOP_FALLBACK=1` runs them with RuboCop (see [Plugins and custom cops](#plugins-and-custom-cops) below). A project that uses only core cops needs nothing else.
+- **Plugins and custom cops.** rbcop runs RuboCop's 613 core cops and the plugins listed in [plugins.md](plugins.md) (rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot, rubocop-capybara). Cops from other plugins and custom cops loaded with `require:` are not run natively: rbcop runs them with RuboCop when the bundle has the rubocop gem (or `rubocop` is on `PATH`), and otherwise names them on stderr (see [Plugins and custom cops](#plugins-and-custom-cops) below). A project that uses only core cops needs nothing else and never starts RuboCop.
 - **Unsupported options.** `--lsp`, `--mcp` and a few others are not implemented (the `--server` options are accepted and run in process); [known-gaps.md](known-gaps.md) lists them and every known difference.
 
 ## Gemfile
@@ -21,7 +21,7 @@ and run `bundle install`. The gem ships a prebuilt binary, so no Rust toolchain 
 
 If you replace the `gem "rubocop"` line in place, Bundler/OrderedGems may flag it: `rbcop` sorts before `rdoc` and `rspec`, where `rubocop` sorts after them. Move the line into alphabetical order (or run `bundle exec rbcop -a Gemfile`).
 
-Keep `gem "rubocop"` and the plugin gems if you want the fallback for plugin cops, if other tools load RuboCop as a library (haml-lint, erb_lint, ruby-lsp's RuboCop add-on, standard), or simply to compare the two. Remove it if nothing else needs it.
+Keep `gem "rubocop"` and the plugin gems if the project uses plugin or custom cops rbcop does not implement (the fallback runs them with the bundle's RuboCop), if other tools load RuboCop as a library (haml-lint, erb_lint, ruby-lsp's RuboCop add-on, standard), or simply to compare the two. Remove it if nothing else needs it.
 
 ## bundle exec
 
@@ -90,10 +90,10 @@ By default it runs `rbcop --format github --format progress`: offenses become an
 |---|---|---|
 | `args` | `--format github --format progress` | rbcop's arguments; empty only installs `rbcop` on `PATH` |
 | `version` | the action's version | the rbcop release to run |
-| `fallback` | `false` | run plugin and custom cops with RuboCop (`RBCOP_FALLBACK=1`) |
-| `rubocop` | `bundle exec rubocop` | the RuboCop command the fallback runs |
+| `fallback` | `auto` | run plugin and custom cops with RuboCop: `auto` when one is found, `true` always (`RBCOP_FALLBACK=1`), `false` never (`RBCOP_FALLBACK=0`) |
+| `rubocop` | (found) | the RuboCop command the fallback runs (`RBCOP_RUBOCOP`); by default `bundle exec rubocop` when `Gemfile.lock` has rubocop, else `rubocop` on `PATH` |
 
-With plugins, install the bundle first and turn on the fallback:
+With plugins, install the bundle first so the fallback finds RuboCop:
 
 ```yaml
       - uses: actions/checkout@v4
@@ -101,8 +101,6 @@ With plugins, install the bundle first and turn on the fallback:
         with:
           bundler-cache: true
       - uses: costajohnt/rbcop@v0.1.2
-        with:
-          fallback: true
 ```
 
 If the project already runs `bundle exec rubocop` in a Ruby job, swapping that step for `bundle exec rbcop` (with the gem in the Gemfile) works as well.
@@ -113,15 +111,18 @@ Use the gem through Bundler (`bundle exec rbcop`), or `scripts/dist/install.sh` 
 
 ## Plugins and custom cops
 
-When the configuration enables cops rbcop cannot run, it prints one line on stderr, for example:
+When the configuration enables cops rbcop cannot run (a plugin it does not implement, custom cops from `require: ./lib/cops/foo.rb`), rbcop runs RuboCop once more for exactly those cops (`--except` every cop rbcop implements), on the same files with the same configuration and options, and merges its offenses into its report: one report, one exit status. That RuboCop is `RBCOP_RUBOCOP` when set, else `bundle exec rubocop` when `Gemfile.lock` has the rubocop gem, else `rubocop` on `PATH`. So keep `gem "rubocop"` and the plugin gems in the Gemfile. The run is slower than core cops alone, since RuboCop still parses every file, but the core cops no longer run in Ruby. A project that needs none of this never starts RuboCop.
+
+`-r`/`--require`, `--plugin` and custom formatter classes (`--format MyFormatter`) hand the whole run to that RuboCop, with the same arguments, so their output is RuboCop's.
+
+With no RuboCop found, or with `RBCOP_FALLBACK=0`, rbcop skips those cops and prints on stderr, for example:
 
 ```
 rbcop: not running 45 cops it does not implement (Sorbet: 41, ThreadSafety: 4) or cops from Ruby code the config requires; set RBCOP_FALLBACK=1 to run them with RuboCop
+rbcop: RuboCop runs them when one is found: add the rubocop gem to the bundle, put rubocop on PATH, or set RBCOP_RUBOCOP
 ```
 
-Cops from Ruby files the config requires (`require: ./lib/cops/foo.rb`) are named as "cops from Ruby code the config requires", since rbcop cannot know their names.
-
-`RBCOP_FALLBACK=1` runs RuboCop once more, for exactly those cops (`--except` every cop rbcop implements), on the same files with the same configuration and options, and merges its offenses into rbcop's report: one report, one exit status. RuboCop has to be installed (`rubocop` on `PATH`, or set `RBCOP_RUBOCOP`, for example `RBCOP_RUBOCOP="bundle exec rubocop"`). The run is slower than core cops alone, since RuboCop still parses every file, but the core cops no longer run in Ruby. The README lists the fallback's limits.
+(the second line only when none was found), and refuses `-r`, `--plugin` and custom formatter classes. Cops from Ruby files the config requires are named as "cops from Ruby code the config requires", since rbcop cannot know their names. The README lists the fallback's limits.
 
 ## Editors
 

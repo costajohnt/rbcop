@@ -17,7 +17,8 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   its redundant-disable team does not defer corrections, so `File.write` puts every correction in
   the file, and the inspection loop it then reruns reads that file. rbcop prints the same report
   and the same diffs (which leave out the removed directives) and leaves the file as it was. With
-  `RBCOP_FALLBACK=1`, `--diff` is refused when the RuboCop child would run (it corrects by writing).
+  `RBCOP_FALLBACK=1`, `--diff` is refused when the RuboCop child would run (it corrects by writing);
+  without it, `--diff` skips the fallback and prints the not-running notice.
 - HTML formatter escapes `& < >` in messages outside code spans and fully escapes paths; GitHub
   Actions formatter escapes CR/LF in the `file=` property. Output differs only when those appear.
 - JUnit escapes cop names in attributes (no effect for real cop names).
@@ -305,9 +306,15 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   RuboCop's `RuboCop server starting on <host>:<port>.` line, `--restart-server` only warns from its
   stop half, and `--server`, `--no-server` and `--no-detach --server` lint in this process (RuboCop
   prints the starting line first, and with `--no-detach` serves in the foreground instead).
-  - `-r/--require`, `--plugin`: load Ruby code. In a config file, `plugins:` / `require:` of a
-    plugin rbcop implements natively (docs/plugins.md) runs its cops; any other gem only merges its
-    default configuration and its cops do not run. A `require:` of a gem that is not a lint_roller
+- `-r/--require`, `--plugin` and custom formatter classes (`--format MyFormatter`, `::My::Formatter`)
+  load Ruby code (#287): rbcop hands the whole run to RuboCop (the fallback's command, README
+  "Plugins and custom cops") with the same arguments, standard streams and exit status, so the
+  output is RuboCop's. This holds for `--plugin` of a natively implemented plugin too. With no
+  RuboCop found, or `RBCOP_FALLBACK=0`, they are refused (exit 2). The server options were taken
+  out first, so RuboCop lints in process too.
+  - In a config file, `plugins:` / `require:` of a
+    plugin rbcop implements natively (docs/plugins.md) runs its cops; any other gem merges its
+    default configuration and its cops run in the fallback. A `require:` of a gem that is not a lint_roller
     plugin is a plain `require`: rbcop reads the files that feature reaches through literal
     `require`/`require_relative` lines inside its gem (every file under `lib/` when one requires a
     computed path; none of the rubocop gem's own, which RuboCop has loaded already), registers the
@@ -330,11 +337,17 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   rubocop-md adds Markdown files to the targets). rbcop merges its default.yml (rubocop-erb's
   `**/*.erb` Include and its Exclude lists, Lint/Syntax's included), names the plugin in the
   not-running notice, and runs none of its cops on the files the plugin's `AllCops: Include`
-  brings in: they count as inspected, with no offenses. With `RBCOP_FALLBACK=1` RuboCop runs every
+  brings in: they count as inspected, with no offenses. With the fallback RuboCop runs every
   cop on those files instead. Files a plugin adds from Ruby (rubocop-md's `.md` files) are not
   inspected at all.
-- Custom formatter classes and `require:` of local Ruby files (custom cops) are not supported. rbcop names
-  the cops it skips on stderr, and `RBCOP_FALLBACK=1` runs them with RuboCop (README, "Plugins and custom cops").
+- Cops rbcop does not implement (a non-native plugin's, custom cops from a `require:`d local Ruby
+  file) run in the RuboCop fallback, on by default when a RuboCop is found (#287; README, "Plugins
+  and custom cops"). With none found, or `RBCOP_FALLBACK=0`, rbcop skips them and names them on
+  stderr (plus a line saying how to get a RuboCop when none was found). A RuboCop that fails to
+  run (exit status other than 0 or 1, or no complete report) is an error, exit 2. What a fallback
+  cop prints on its own (rubocop-require_tools' `Note: Could not load` lines) reaches stdout
+  before rbcop's report rather than interleaved with the offenses, as RuboCop prints it.
+  `--stdin` and (without `RBCOP_FALLBACK=1`) `--diff` skip the fallback with the notice.
 - Cops rbcop cannot run (a non-native plugin's, custom cops): Lint/RedundantCopDisableDirective
   never reports a directive naming one, nor a `disable all` while any is loaded, since their
   offenses are unknown (RuboCop reports those that turn out redundant). With custom cops loaded, a

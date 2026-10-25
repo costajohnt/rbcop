@@ -41,6 +41,8 @@ enum Use {
     Handle,
     Ignore,
     Unsupported,
+    /// Loads Ruby code: the whole run goes to RuboCop (Fail::Ruby).
+    Ruby,
 }
 
 const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
@@ -113,8 +115,8 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("init", None, Arg::None, Use::Handle),
     ("config", Some('c'), Arg::Required, Use::Handle),
     ("debug", Some('d'), Arg::None, Use::Handle),
-    ("plugin", None, Arg::Required, Use::Unsupported),
-    ("require", Some('r'), Arg::Required, Use::Unsupported),
+    ("plugin", None, Arg::Required, Use::Ruby),
+    ("require", Some('r'), Arg::Required, Use::Ruby),
     ("[no-]color", None, Arg::None, Use::Handle),
     ("version", Some('v'), Arg::None, Use::Handle),
     ("verbose-version", Some('V'), Arg::None, Use::Handle),
@@ -131,6 +133,9 @@ enum Fail {
     Arg(String),
     /// Something rbcop does not implement yet.
     Unsupported(String),
+    /// Ruby code to load (`-r`, `--plugin`, a custom formatter class): RuboCop runs instead, when
+    /// one is found (fallback::delegate).
+    Ruby(String),
     /// `-h`: OptionParser prints the help and exits as soon as it reaches the option.
     Help,
 }
@@ -449,6 +454,9 @@ fn parse_args(args: Vec<String>) -> Result<Cli, Fail> {
             if usage == Use::Unsupported {
                 let shown = if neg { format!("--no-{name}") } else { format!("--{name}") };
                 return Err(Fail::Unsupported(format!("{shown} is not supported by rbcop yet")));
+            }
+            if usage == Use::Ruby {
+                return Err(Fail::Ruby(format!("--{name} loads Ruby code, which rbcop cannot run")));
             }
             cli.keys.push(name.replace('-', "_"));
             apply(&mut cli, name, neg, value)?;
@@ -851,7 +859,12 @@ fn main() -> ExitCode {
     if let Some(status) = server_cli(&mut argv, global_color(None)) {
         return ExitCode::from(status);
     }
-    let parsed = all_args(argv).and_then(parse_args);
+    let parsed = all_args(argv.clone()).and_then(parse_args).and_then(|cli| {
+        match cli.formatters.iter().find(|(k, _)| formatter::is_class(k)) {
+            Some((k, _)) => Err(Fail::Ruby(format!("custom formatter classes are not supported by rbcop: {k}"))),
+            None => Ok(cli),
+        }
+    });
     let color_opt = parsed.as_ref().ok().and_then(|cli| cli.color);
     // CLI#run's ensure: `@options` is only set once Options#parse (validation included) succeeded.
     let mut display_time = false;
@@ -873,6 +886,17 @@ fn main() -> ExitCode {
             eprintln!("rbcop: {m}");
             ERROR
         }
+        // Output identical to RuboCop's, since it is RuboCop's.
+        Err(Fail::Ruby(m)) => match fallback::rubocop() {
+            Some(program) => fallback::delegate(&program, &argv),
+            None => {
+                eprintln!("rbcop: {m}");
+                if let Some(hint) = fallback::missing() {
+                    eprintln!("{hint}");
+                }
+                ERROR
+            }
+        },
         Err(Fail::Help) => {
             print_help(parse_color && !env::args().any(|a| a == "--no-color"));
             0
@@ -1912,14 +1936,19 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     let plugin_files: std::collections::HashSet<PathBuf> =
         jobs.iter().filter(|(p, c)| store.copless_plugin_file(c, p)).map(|(p, _)| p.clone()).collect();
     let unrunnable = !skipped.is_empty() || store.requires_ruby_code();
+    let usable = stdin_text.is_none() && config_error.is_none() && team_error.is_none();
+    // Looked up only when needed: a project that needs nothing never starts Ruby.
+    let program = if usable && (unrunnable || !copless.is_empty()) { fallback::rubocop() } else { None };
     if unrunnable || !copless.is_empty() {
-        if fallback::enabled() && stdin_text.is_none() && config_error.is_none() && team_error.is_none() {
-            // Deliberate difference: the RuboCop child corrects by writing the files, which
-            // `--diff` promises not to do.
+        let forced = env::var_os("RBCOP_FALLBACK").is_some_and(|v| v == "1");
+        // Deliberate difference: the RuboCop child corrects by writing the files, which `--diff`
+        // promises not to do. Refused under RBCOP_FALLBACK=1; otherwise the notice is printed.
+        if let Some(program) = program.as_deref().filter(|_| !cli.diff || forced) {
             if cli.diff {
                 return Err("rbcop: --diff cannot be combined with RBCOP_FALLBACK=1".into());
             }
             let child = fallback::Child {
+                program,
                 opts: &cli.opts,
                 except,
                 only_guide: cli.only_guide,
@@ -1938,6 +1967,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             }
         } else {
             eprintln!("{}", fallback::notice(&skipped, store.requires_ruby_code(), &copless));
+            if let Some(m) = fallback::missing().filter(|_| usable && program.is_none()) {
+                eprintln!("{m}");
+            }
         }
     }
     // Runner#cached_run?: `--cache true|false`, else `AllCops: UseCache`; never for --stdin. Under

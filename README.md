@@ -2,7 +2,7 @@
 
 A reimplementation of [RuboCop](https://github.com/rubocop/rubocop) 1.91.0 in Rust, built on [Prism](https://github.com/ruby/prism) (`ruby-prism` crate).
 
-The target is byte-identical output: same offenses, ranges, messages, `[Correctable]` flags, autocorrections, formatter output and exit status as RuboCop 1.91.0 for the same files and configuration. All 613 cops in RuboCop's `config/default.yml` are implemented. rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot and rubocop-capybara run natively ([docs/plugins.md](docs/plugins.md)). Other plugins (rubocop-sorbet and so on) and custom cops do not; rbcop says which cops it skips and can hand them to RuboCop (see [Plugins and custom cops](#plugins-and-custom-cops)).
+The target is byte-identical output: same offenses, ranges, messages, `[Correctable]` flags, autocorrections, formatter output and exit status as RuboCop 1.91.0 for the same files and configuration. All 613 cops in RuboCop's `config/default.yml` are implemented. rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot and rubocop-capybara run natively ([docs/plugins.md](docs/plugins.md)). Other plugins (rubocop-sorbet and so on) and custom cops do not; rbcop hands them to RuboCop when one is installed, and otherwise says which cops it skips (see [Plugins and custom cops](#plugins-and-custom-cops)).
 
 ## Install
 
@@ -33,22 +33,30 @@ rbcop -f json -o report.json
 
 All builtin formatters are supported, as are the display options, `--fail-level`, `--stdin` (with `-a`/`-A` it prints the corrected source after the report), `-L`, `--show-cops`, `-v` and `-V`.
 
-`--auto-gen-config` (with its options), `--regenerate-todo`, `--disable-uncorrectable` and `--report-unused-todo-entries` are supported. The server options are accepted and run in process (no server is started). Not supported: `--changed`, the LSP and MCP modes, `-r`/`--plugin`, custom formatter classes and `require:` of local Ruby files. ERB in config files is rendered by running `ruby`, as RuboCop renders it, and remote `inherit_from` URLs are fetched as RuboCop fetches them. The result cache (`--cache`, `--cache-root`, `AllCops: UseCache`) works as RuboCop's, in its own `rbcop_cache` directory. [docs/known-gaps.md](docs/known-gaps.md) lists these and every other known difference, including a few deliberate ones (for example, `-o` pointing at a file being inspected is refused). `-a`/`-A` do not write files that resolve (through symlinks) outside the working directory and the paths given on the command line; those are reported uncorrected with a warning.
+`--auto-gen-config` (with its options), `--regenerate-todo`, `--disable-uncorrectable` and `--report-unused-todo-entries` are supported. The server options are accepted and run in process (no server is started). Not supported: `--changed` and the LSP and MCP modes. Plugin and custom cops rbcop does not implement, `-r`/`--plugin` and custom formatter classes run with RuboCop when one is installed (see [Plugins and custom cops](#plugins-and-custom-cops)). ERB in config files is rendered by running `ruby`, as RuboCop renders it, and remote `inherit_from` URLs are fetched as RuboCop fetches them. The result cache (`--cache`, `--cache-root`, `AllCops: UseCache`) works as RuboCop's, in its own `rbcop_cache` directory. [docs/known-gaps.md](docs/known-gaps.md) lists these and every other known difference, including a few deliberate ones (for example, `-o` pointing at a file being inspected is refused). `-a`/`-A` do not write files that resolve (through symlinks) outside the working directory and the paths given on the command line; those are reported uncorrected with a warning.
 
 ## Plugins and custom cops
 
-rbcop reads plugin configuration (`plugins:` and `require:` gems contribute their `config/default.yml`), but it only runs the cops it implements: RuboCop's own and those of the plugins in [docs/plugins.md](docs/plugins.md) (rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot, rubocop-capybara). When the configuration enables cops rbcop cannot run, it says so on stderr instead of silently skipping them:
+rbcop reads plugin configuration (`plugins:` and `require:` gems contribute their `config/default.yml`), and runs natively the cops it implements: RuboCop's own and those of the plugins in [docs/plugins.md](docs/plugins.md) (rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot, rubocop-capybara). Cops it cannot run (other plugins such as rubocop-sorbet, custom cops from `require: ./lib/cops/my_cop.rb`) go to RuboCop: the fallback.
+
+The fallback is on by default and needs a RuboCop. rbcop uses `RBCOP_RUBOCOP` when set (for example `RBCOP_RUBOCOP="bin/rubocop"`), else `bundle exec rubocop` when the project's `Gemfile.lock` has the rubocop gem, else `rubocop` on `PATH`. It runs RuboCop once more for exactly the cops rbcop cannot run (`--except` every cop rbcop implements) on the same files with the same configuration and options, and merges its offenses into its own report, so formatters, `--fail-level` and the exit status see one run. The saving is smaller, since RuboCop still parses every file, but core cops no longer run in Ruby. A project that needs no fallback never starts RuboCop. If RuboCop fails to run (say `bundle exec` outside an installed bundle), rbcop exits 2 with its error.
+
+With no RuboCop found, or with `RBCOP_FALLBACK=0`, rbcop skips those cops and says so on stderr instead of skipping them silently:
 
 ```
 rbcop: not running 45 cops it does not implement (Sorbet: 41, ThreadSafety: 4); set RBCOP_FALLBACK=1 to run them with RuboCop
+rbcop: RuboCop runs them when one is found: add the rubocop gem to the bundle, put rubocop on PATH, or set RBCOP_RUBOCOP
 ```
 
-Cops defined by Ruby code the config requires (`require: ./lib/cops/my_cop.rb`, or a plugin gem rbcop could not load) are named the same way ("cops from Ruby code the config requires"), since rbcop cannot know their names. A plugin that defines no cops but works through Ruby code (rubocop-erb's ERB extraction) is named as "the Ruby code of plugin rubocop-erb": rbcop runs no cops on the files its `AllCops: Include` brings in (the `.erb` views), and with the fallback RuboCop runs every cop on them.
+(the second line only when none was found). Cops defined by Ruby code the config requires (`require: ./lib/cops/my_cop.rb`, or a plugin gem rbcop could not load) are named as "cops from Ruby code the config requires", since rbcop cannot know their names. A plugin that defines no cops but works through Ruby code (rubocop-erb's ERB extraction) is named as "the Ruby code of plugin rubocop-erb": rbcop runs no cops on the files its `AllCops: Include` brings in (the `.erb` views), and with the fallback RuboCop runs every cop on them. `RBCOP_FALLBACK=1` runs the fallback with `rubocop` even when none was found.
 
-With `RBCOP_FALLBACK=1`, rbcop runs RuboCop once more for exactly those cops (`--except` every cop rbcop implements) on the same files with the same configuration and options, and merges its offenses into its own report, so formatters, `--fail-level` and the exit status see one run. RuboCop must be installed: `rubocop` on `PATH`, or the command in `RBCOP_RUBOCOP` (for example `RBCOP_RUBOCOP="bundle exec rubocop"`). The saving is smaller, since RuboCop still parses every file, but core cops no longer run in Ruby. Limits:
+`-r`/`--require`, `--plugin` and custom formatter classes (`-r ./my_formatter.rb --format MyFormatter`) load Ruby code that can change anything, so rbcop hands the whole run to the same RuboCop with the same arguments: the output is RuboCop's, with no speedup. With no RuboCop found, or `RBCOP_FALLBACK=0`, rbcop refuses them (exit 2).
+
+Limits of the fallback:
 
 - With `-a`/`-A`, RuboCop corrects its cops first, then rbcop corrects the result; the two never iterate together, so a correction that triggers the other side's cop is fixed on the next run.
-- `--stdin` does not use the fallback (the notice is printed instead).
+- `--stdin` does not use the fallback (the notice is printed instead), nor does `--diff` (the RuboCop child corrects by writing files; with `RBCOP_FALLBACK=1` the combination is refused).
+- What a fallback cop prints itself (rubocop-require_tools' `Note: Could not load` lines) comes before rbcop's report instead of interleaved with RuboCop's.
 - `Lint/RedundantCopDisableDirective` never reports a directive naming a plugin or custom cop rbcop does not implement (nor a `disable all` while one is loaded), with or without the fallback; RuboCop reports those that turn out redundant (docs/known-gaps.md).
 - The `offenses` formatter does not mark plugin cops `[Safe Correctable]`, and `--display-only-safe-correctable` leaves them out.
 

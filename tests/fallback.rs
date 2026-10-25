@@ -598,8 +598,9 @@ fn copless_plugin_files_go_to_rubocop() {
     let child = dir.join("child.sh");
     fs::write(
         &child,
-        "#!/bin/sh\necho \"$RBCOP_FALLBACK_SYNTAX $*\" >> \"$(dirname \"$0\")/child.log\"\nfor a; do f=$a; done\n\
-         printf '%s\\t3\\t4\\tconvention\\t0\\t0\\t0\\tFake/Cop\\tFrom RuboCop.\\t0\\t\\n' \"$f\"\n",
+        "#!/bin/sh\necho \"$RBCOP_FALLBACK_SYNTAX $*\" >> \"$(dirname \"$0\")/child.log\"\n\
+         while [ $# -gt 0 ]; do [ \"$1\" = --out ] && o=$2; f=$1; shift; done\n\
+         printf '%s\\t3\\t4\\tconvention\\t0\\t0\\t0\\tFake/Cop\\tFrom RuboCop.\\t0\\t\\nrbcop-fallback-done\\n' \"$f\" > \"$o\"\n",
     )
     .unwrap();
     Command::new("chmod").arg("755").arg(&child).status().unwrap();
@@ -653,4 +654,100 @@ fn fallback_autocorrect_matches_rubocop() {
     }
     let _ = fs::remove_dir_all(&ours);
     let _ = fs::remove_dir_all(&theirs);
+}
+
+const MISSING: &str = "rbcop: RuboCop runs them when one is found: add the rubocop gem to the bundle, put rubocop \
+                       on PATH, or set RBCOP_RUBOCOP\n";
+
+/// #287: without RBCOP_FALLBACK the fallback runs whenever a RuboCop is found (`bundle exec rubocop`
+/// when the bundle locks the gem, else `rubocop` on PATH), and `-r`, `--plugin` and custom formatter
+/// classes hand the whole run to it. With none found, or under RBCOP_FALLBACK=0, rbcop skips or
+/// refuses as before.
+#[test]
+fn fallback_is_the_default() {
+    let dir = project("default");
+    let bin = dir.join("bin");
+    fs::create_dir_all(&bin).unwrap();
+    let run = |env: &[(&str, &str)], args: &[&str]| {
+        let mut cmd = common::command(env!("CARGO_BIN_EXE_rbcop"));
+        cmd.env_remove("RBCOP_FALLBACK").env("HOME", &dir).env("PATH", &bin);
+        for (k, v) in env {
+            cmd.env(k, v);
+        }
+        cmd.args(args).current_dir(&dir).output().unwrap()
+    };
+    let notice = "rbcop: not running cops from Ruby code the config requires; set RBCOP_FALLBACK=1 to run them \
+                  with RuboCop\n";
+    // No RuboCop: nothing on PATH, no Gemfile.lock.
+    let out = run(&[], &["-f", "e"]);
+    assert_eq!(text(&out.stderr), format!("{notice}{MISSING}"));
+    assert_eq!(text(&run(&[("RBCOP_FALLBACK", "0")], &["-f", "e"]).stderr), notice);
+    for (args, refusal) in [
+        (&["-r", "./no_foo.rb", "-f", "e"][..], "--require loads Ruby code, which rbcop cannot run"),
+        (&["--plugin", "rubocop-sorbet"], "--plugin loads Ruby code, which rbcop cannot run"),
+        (&["-f", "MyFormatter"], "custom formatter classes are not supported by rbcop: MyFormatter"),
+    ] {
+        let out = run(&[], args);
+        assert_eq!(text(&out.stderr), format!("rbcop: {refusal}\n{MISSING}"), "{args:?}");
+        assert_eq!(out.status.code(), Some(2));
+        let out = run(&[("RBCOP_FALLBACK", "0")], args);
+        assert_eq!(text(&out.stderr), format!("rbcop: {refusal}\n"), "{args:?}");
+    }
+    // A bundle that locks rubocop, and a stand-in `bundle` that records how it was run.
+    fs::write(dir.join("Gemfile.lock"), "GEM\n  specs:\n    rubocop (1.91.0)\n").unwrap();
+    // What a cop prints itself passes through to stdout.
+    fs::write(
+        bin.join("bundle"),
+        "#!/bin/sh\necho \"$*\" >> \"${0%/*}/log\"\necho from-a-cop\no=/dev/null\n\
+         while [ $# -gt 0 ]; do [ \"$1\" = --out ] && o=$2; shift; done\necho rbcop-fallback-done > \"$o\"\n",
+    )
+    .unwrap();
+    Command::new("chmod").arg("755").arg(bin.join("bundle")).status().unwrap();
+    let out = run(&[], &["-f", "e"]);
+    assert_eq!(text(&out.stderr), "");
+    assert!(text(&out.stdout).starts_with("from-a-cop\n"), "{}", text(&out.stdout));
+    let out = run(&[], &["-r", "./no_foo.rb", "-f", "e", "a.rb"]);
+    assert_eq!((text(&out.stderr), out.status.code()), (String::new(), Some(0)));
+    let log = fs::read_to_string(bin.join("log")).unwrap();
+    let lines: Vec<&str> = log.lines().collect();
+    assert!(lines[0].starts_with("exec rubocop --cache false --require ") && lines[0].contains("--except"), "{log}");
+    assert_eq!(lines[1..], ["exec rubocop -r ./no_foo.rb -f e a.rb"], "{log}");
+    // A RuboCop that exits 1 without running (an rbenv shim missing the project's Ruby) is an error.
+    fs::write(dir.join("bin/bundle"), "#!/bin/sh\nexit 1\n").unwrap();
+    let out = run(&[], &["-f", "e"]);
+    assert!(text(&out.stderr).contains("set RBCOP_FALLBACK=0 to skip"), "{}", text(&out.stderr));
+    assert_eq!(out.status.code(), Some(2));
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// #287 with a live RuboCop on PATH: the default run, `-r` of a custom cop and a custom formatter
+/// class print what RuboCop prints.
+#[test]
+fn default_fallback_matches_rubocop() {
+    if !have_rubocop() {
+        eprintln!("skipped: RuboCop 1.91.0 is not on PATH");
+        return;
+    }
+    let dir = project("default-live");
+    fs::write(
+        dir.join("my_formatter.rb"),
+        "class MyFormatter < RuboCop::Formatter::BaseFormatter\n  def file_finished(file, offenses)\n    \
+         offenses.each { |o| output.puts \"#{File.basename(file)} #{o.cop_name}\" }\n  end\nend\n",
+    )
+    .unwrap();
+    let check = |args: &[&str]| {
+        let mut ours = common::command(env!("CARGO_BIN_EXE_rbcop"));
+        ours.env_remove("RBCOP_FALLBACK").env("HOME", &dir);
+        let ours = ours.args(args).current_dir(&dir).output().unwrap();
+        let theirs = rubocop(&dir, args);
+        assert_eq!(text(&ours.stdout), text(&theirs.stdout), "{args:?}");
+        assert_eq!(text(&ours.stderr), text(&theirs.stderr), "{args:?}");
+        assert_eq!(ours.status.code(), theirs.status.code(), "{args:?}");
+        assert!(!theirs.stdout.is_empty());
+    };
+    check(&["--cache", "false", "-f", "e"]);
+    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  NewCops: enable\n  SuggestExtensions: false\n").unwrap();
+    check(&["--cache", "false", "-r", "./no_foo.rb", "-f", "e"]);
+    check(&["--cache", "false", "-r", "./no_foo.rb", "-r", "./my_formatter.rb", "-f", "MyFormatter"]);
+    let _ = fs::remove_dir_all(&dir);
 }
