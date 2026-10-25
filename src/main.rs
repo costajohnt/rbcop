@@ -1059,11 +1059,13 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     }
     // CLI#act_on_options loads the -c and pwd configs before --color/--no-color reach Rainbow.
     cli.opts.color = parse_color;
+    // CLI#act_on_options: ConfigLoader.cache_root(--cache-root) is set before the pwd config loads.
     let loaded = Store::new(cli.opts.clone(), names.clone()).and_then(|mut store| {
         let cwd = store.cwd().to_path_buf();
-        store.for_dir(&cwd).map(|c| (store, c))
+        let early = store.early_cache_root(cli.cache_root.clone());
+        store.for_dir(&cwd).map(|c| (store, c, early))
     });
-    let (mut store, mut pwd_config) = match loaded {
+    let (mut store, mut pwd_config, early_root) = match loaded {
         Ok(x) => x,
         Err(e) => {
             warn_red(parse_color, &e);
@@ -1073,14 +1075,13 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     store.set_color(global);
     let cwd = store.cwd().to_path_buf();
     let pwd = cwd.display().to_string();
-    // CLI#warn_if_cache_root_changed: remote configs (which rbcop does not load) were cached under
-    // the root the top-level config names, not the one the resolved config does.
+    // CLI#warn_if_cache_root_changed: remote configs loaded so far were cached under the early root
+    // (the top-level config's, or the `-c` file's without `--cache-root`), not the one the resolved
+    // config names, which later remote configs use.
     let configured_root =
         cli.cache_root.clone().or_else(|| pwd_config.all_cops().get("CacheRootDirectory")?.as_string());
-    if let (Some(early), Some(desired)) = (
-        cache::root_dir(cli.cache_root.clone().or_else(|| store.toplevel_cache_root())),
-        cache::root_dir(configured_root.clone()),
-    ) {
+    store.set_cache_root(configured_root.clone());
+    if let (Some(early), Some(desired)) = (cache::root_dir(early_root), cache::root_dir(configured_root.clone())) {
         let (early, desired) = (early.join("rubocop_cache"), desired.join("rubocop_cache"));
         let same =
             |a: &Path, b: &Path| a.exists() && b.exists() && fs::canonicalize(a).ok() == fs::canonicalize(b).ok();

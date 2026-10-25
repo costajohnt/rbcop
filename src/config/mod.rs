@@ -703,6 +703,9 @@ pub struct Store {
     loading: Vec<PathBuf>,
     /// Remote config files (their cache paths) with their URLs (RemoteConfig#uri).
     remote: HashMap<PathBuf, String>,
+    /// ConfigLoader.cache_root, memoized at first use: the `configured` part of the root remote
+    /// configs download into (`--cache-root` or a CacheRootDirectory; None for the default).
+    remote_root: Option<Option<String>>,
     resolved: HashMap<Option<PathBuf>, Arc<Resolved>>,
     forced: Option<Arc<Resolved>>,
     pub warnings: Vec<String>,
@@ -737,6 +740,7 @@ impl Store {
             dir_to_file: HashMap::new(),
             loading: Vec::new(),
             remote: HashMap::new(),
+            remote_root: None,
             resolved: HashMap::new(),
             forced: None,
             warnings: Vec::new(),
@@ -777,7 +781,7 @@ impl Store {
 
     /// CacheConfig.root_dir_from_toplevel_config: `AllCops: CacheRootDirectory` as written in the
     /// config file found from the working directory (no inheritance, no -c).
-    pub fn toplevel_cache_root(&self) -> Option<String> {
+    fn toplevel_cache_root(&self) -> Option<String> {
         let path = self.find_config_path(&self.cwd)?;
         let text = std::fs::read(&path).ok()?;
         if !text.windows(18).any(|w| w == b"CacheRootDirectory") {
@@ -791,6 +795,21 @@ impl Store {
             Value::Map(m) => m.map("AllCops")?.get("CacheRootDirectory")?.as_string(),
             _ => None,
         }
+    }
+
+    /// CLI#act_on_options' `ConfigLoader.cache_root(@options[:cache_root])`, before the pwd config
+    /// loads: memoized by its first use, so a remote config in the `-c` file (loaded earlier, by
+    /// ConfigStore#apply_options!) keeps the root without `--cache-root`.
+    pub fn early_cache_root(&mut self, cache_root_override: Option<String>) -> Option<String> {
+        if self.remote_root.is_none() {
+            self.remote_root = Some(cache_root_override.or_else(|| self.toplevel_cache_root()));
+        }
+        self.remote_root.clone().flatten()
+    }
+
+    /// `ConfigLoader.cache_root = ResultCache.cache_root(...)`: the root later remote configs use.
+    pub fn set_cache_root(&mut self, configured: Option<String>) {
+        self.remote_root = Some(configured);
     }
 
     /// A config so far loaded `require:`s Ruby code rbcop cannot load (custom cops, or a plugin
@@ -1593,10 +1612,10 @@ impl Store {
     /// `url` or for `relative` resolved against it: the effective URL and the cache file. Run by
     /// the project's ruby with RuboCop's own code (src/config/remote_config.rb); None when ruby
     /// cannot be run. On failure RuboCop prints the message and its backtrace; rbcop the message.
-    fn remote_file(&self, url: &str, relative: &str) -> Result<Option<(String, PathBuf)>, String> {
-        let config = self.find_config_path(&self.cwd).map(|p| p.display().to_string()).unwrap_or_default();
+    fn remote_file(&mut self, url: &str, relative: &str) -> Result<Option<(String, PathBuf)>, String> {
+        let configured = self.early_cache_root(None).unwrap_or_default();
         let Ok(out) = std::process::Command::new("ruby")
-            .args(["-e", include_str!("remote_config.rb"), url, relative, &config])
+            .args(["-e", include_str!("remote_config.rb"), url, relative, &configured])
             .current_dir(&self.cwd)
             .output()
         else {
