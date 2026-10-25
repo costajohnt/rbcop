@@ -64,6 +64,10 @@ pub struct Offense {
     /// The source the offsets refer to when it is not `FileReport::text` (autocorrect reports
     /// offenses from every iteration, each against the source that iteration inspected).
     pub source: Option<Arc<str>>,
+    /// Suppressed by a directive comment (status `:disabled`); kept only under `--display-suppressed`.
+    pub disabled: bool,
+    /// DirectiveComment#reason of the directive that suppressed it (the text after `--`).
+    pub justification: Option<String>,
 }
 
 /// A heredoc's body lines, `first..terminator` (1-based), and its closing delimiter.
@@ -174,6 +178,8 @@ impl Cx<'_, '_> {
             global: true,
             corrected: false,
             source: None,
+            disabled: false,
+            justification: None,
         });
     }
 
@@ -242,6 +248,8 @@ impl Cx<'_, '_> {
             correctable,
             corrected,
             source: None,
+            disabled: false,
+            justification: None,
             global: false,
         });
     }

@@ -1,0 +1,14 @@
+<root>/tests/scenarios/directives/project/Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+<root>/tests/scenarios/directives/project/d.rb:3:6: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+<root>/tests/scenarios/directives/project/d.rb:4:50: C: [Suppressed] Layout/TrailingWhitespace: Trailing whitespace detected.
+<root>/tests/scenarios/directives/project/d.rb:6:6: C: [Suppressed] Layout/TrailingWhitespace: Trailing whitespace detected.
+<root>/tests/scenarios/directives/project/d.rb:8:6: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+<root>/tests/scenarios/directives/project/d.rb:10:1: W: [Suppressed] Lint/Debugger: Remove debugger entry point `binding.pry`.
+<root>/tests/scenarios/directives/project/d.rb:12:1: W: Lint/Debugger: Remove debugger entry point `binding.pry`.
+<root>/tests/scenarios/directives/project/d.rb:13:7: C: [Suppressed] Style/NilComparison: Prefer the use of the `nil?` predicate.
+<root>/tests/scenarios/directives/project/d.rb:14:7: C: [Suppressed] Style/NilComparison: Prefer the use of the `nil?` predicate.
+<root>/tests/scenarios/directives/project/d.rb:15:7: C: [Correctable] Style/NilComparison: Prefer the use of the `nil?` predicate.
+<root>/tests/scenarios/directives/project/d.rb:17:1: W: [Suppressed] Lint/Debugger: Remove debugger entry point `binding.pry`.
+<root>/tests/scenarios/directives/project/d.rb:18:7: C: [Suppressed] Style/NilComparison: Prefer the use of the `nil?` predicate.
+<root>/tests/scenarios/directives/project/d.rb:20:1: W: Lint/Debugger: Remove debugger entry point `binding.pry`.
+<root>/tests/scenarios/directives/project/d.rb:21:7: C: [Suppressed] Style/NilComparison: Prefer the use of the `nil?` predicate.

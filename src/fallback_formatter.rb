@@ -1,6 +1,7 @@
 # Loaded by `rubocop --require` when rbcop runs RuboCop for the cops it does not implement
 # (RBCOP_FALLBACK=1, src/fallback.rs). One line per offense, tab-separated:
-#   path  begin_byte  end_byte  severity  correctable  corrected  cop  message
+#   path  begin_byte  end_byte  severity  correctable  corrected  global  cop  message  disabled  justification
+# (justification empty when there is none; disabled offenses come only under --display-suppressed)
 # with `\`, tab and newline escaped in path and message. rbcop annotates messages itself (cop
 # name, details, style guide URL), so RuboCop's annotation is turned off here.
 
@@ -57,7 +58,7 @@ class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
         global = 1
       end
       output.puts [esc(file), b, e, o.severity.name, o.correctable? ? 1 : 0, o.corrected? ? 1 : 0, global,
-                   o.cop_name, esc(o.message)].join("\t")
+                   o.cop_name, esc(o.message), o.disabled? ? 1 : 0, esc(o.justification.to_s)].join("\t")
     end
   end
 

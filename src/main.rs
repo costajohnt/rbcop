@@ -88,7 +88,7 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("display-only-fail-level-offenses", None, Arg::None, Use::Handle),
     ("display-only-correctable", None, Arg::None, Use::Handle),
     ("display-only-safe-correctable", None, Arg::None, Use::Handle),
-    ("display-suppressed", None, Arg::None, Use::Unsupported),
+    ("display-suppressed", None, Arg::None, Use::Handle),
     ("autocorrect", Some('a'), Arg::None, Use::Handle),
     ("auto-correct", None, Arg::None, Use::Handle),
     ("safe-auto-correct", None, Arg::None, Use::Handle),
@@ -507,6 +507,7 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
             cli.autocorrect = Some(rbcop::autocorrect::Mode::All);
             cli.autocorrect_all = true;
         }
+        "display-suppressed" => rbcop::runner::set_display_suppressed(true),
         "display-only-failed" => cli.only_failed = true,
         "display-only-fail-level-offenses" => cli.only_fail_level = true,
         "display-only-correctable" => cli.only_correctable = true,

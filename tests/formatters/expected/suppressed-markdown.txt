@@ -1,0 +1,90 @@
+# RuboCop Inspection Report
+
+2 files inspected, 14 offenses detected:
+
+### Gemfile - (1 offense)
+  * **Line # 1 - convention:** Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+
+    ```rb
+    source 'https://rubygems.org'
+    ```
+
+### d.rb - (13 offenses)
+  * **Line # 3 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
+
+    ```rb
+    x = 1 
+    ```
+
+  * **Line # 4 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
+
+    ```rb
+    y = 2 # rubocop:disable Layout/TrailingWhitespace 
+    ```
+
+  * **Line # 6 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
+
+    ```rb
+    z = 3 
+    ```
+
+  * **Line # 8 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
+
+    ```rb
+    a = 4 
+    ```
+
+  * **Line # 10 - warning:** Lint/Debugger: Remove debugger entry point `binding.pry`.
+
+    ```rb
+    binding.pry
+    ```
+
+  * **Line # 12 - warning:** Lint/Debugger: Remove debugger entry point `binding.pry`.
+
+    ```rb
+    binding.pry
+    ```
+
+  * **Line # 13 - convention:** Style/NilComparison: Prefer the use of the `nil?` predicate.
+
+    ```rb
+    b = x == nil # rubocop:todo Style/NilComparison
+    ```
+
+  * **Line # 14 - convention:** Style/NilComparison: Prefer the use of the `nil?` predicate.
+
+    ```rb
+    c = y == nil # rubocop:disable NilComparison -- with a reason
+    ```
+
+  * **Line # 15 - convention:** Style/NilComparison: Prefer the use of the `nil?` predicate.
+
+    ```rb
+    d = z == nil ## rubocop:disable Style/NilComparison
+    ```
+
+  * **Line # 17 - warning:** Lint/Debugger: Remove debugger entry point `binding.pry`.
+
+    ```rb
+    binding.pry
+    ```
+
+  * **Line # 18 - convention:** Style/NilComparison: Prefer the use of the `nil?` predicate.
+
+    ```rb
+    e = a == nil
+    ```
+
+  * **Line # 20 - warning:** Lint/Debugger: Remove debugger entry point `binding.pry`.
+
+    ```rb
+    binding.pry
+    ```
+
+  * **Line # 21 - convention:** Style/NilComparison: Prefer the use of the `nil?` predicate.
+
+    ```rb
+    f = b == nil
+    ```
+

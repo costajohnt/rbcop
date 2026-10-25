@@ -233,8 +233,6 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     --auto-gen-config` error; `--no-exclude-limit` and `--[no-]auto-gen-enforced-style` are inert.
   - `--report-unused-todo-entries`, `--disable-uncorrectable`: need the todo file and
     `# rubocop:todo` comment insertion, not ported.
-  - `--display-suppressed`: the runner drops offenses disabled by comments instead of reporting
-    them with a disabled status.
   - `--diff`: the unified-diff dry run of autocorrection is not ported.
   - `--changed [REVISION]`: needs RuboCop's git diff of changed files.
   - `--server`, `--start-server`, `--stop-server`, `--restart-server`, `--server-status`,

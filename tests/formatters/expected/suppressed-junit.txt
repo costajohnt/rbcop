@@ -1,0 +1,119 @@
+<?xml version='1.0'?>
+<testsuites>
+  <testsuite name='rubocop' tests='2' failures='14'>
+    <testcase classname='Gemfile' name='Bundler/DuplicatedGem'/>
+    <testcase classname='Gemfile' name='Bundler/DuplicatedGroup'/>
+    <testcase classname='Gemfile' name='Bundler/GemFilename'/>
+    <testcase classname='Gemfile' name='Bundler/InsecureProtocolSource'/>
+    <testcase classname='Gemfile' name='Bundler/OrderedGems'/>
+    <testcase classname='Gemfile' name='Gemspec/DuplicatedAssignment'/>
+    <testcase classname='Gemfile' name='Gemspec/OrderedDependencies'/>
+    <testcase classname='Gemfile' name='Gemspec/RequiredRubyVersion'/>
+    <testcase classname='Gemfile' name='Gemspec/RubyVersionGlobalsUsage'/>
+    <testcase classname='Gemfile' name='Layout/EmptyLines'/>
+    <testcase classname='Gemfile' name='Layout/IndentationStyle'/>
+    <testcase classname='Gemfile' name='Layout/LineLength'/>
+    <testcase classname='Gemfile' name='Layout/SpaceAfterColon'/>
+    <testcase classname='Gemfile' name='Layout/SpaceAfterComma'/>
+    <testcase classname='Gemfile' name='Layout/SpaceAfterNot'/>
+    <testcase classname='Gemfile' name='Layout/SpaceAfterSemicolon'/>
+    <testcase classname='Gemfile' name='Layout/SpaceBeforeComma'/>
+    <testcase classname='Gemfile' name='Layout/SpaceBeforeComment'/>
+    <testcase classname='Gemfile' name='Layout/SpaceBeforeSemicolon'/>
+    <testcase classname='Gemfile' name='Layout/SpaceInsideRangeLiteral'/>
+    <testcase classname='Gemfile' name='Layout/TrailingEmptyLines'/>
+    <testcase classname='Gemfile' name='Layout/TrailingWhitespace'/>
+    <testcase classname='Gemfile' name='Lint/Debugger'/>
+    <testcase classname='Gemfile' name='Lint/Syntax'/>
+    <testcase classname='Gemfile' name='Style/AndOr'/>
+    <testcase classname='Gemfile' name='Style/ColonMethodCall'/>
+    <testcase classname='Gemfile' name='Style/DefWithParentheses'/>
+    <testcase classname='Gemfile' name='Style/FrozenStringLiteralComment'>
+      <failure type='Style/FrozenStringLiteralComment' message='Style/FrozenStringLiteralComment: Missing frozen string literal comment.'>
+        <root>/tests/scenarios/directives/project/Gemfile:1:1
+      </failure>
+    </testcase>
+    <testcase classname='Gemfile' name='Style/MethodDefParentheses'/>
+    <testcase classname='Gemfile' name='Style/NegatedIf'/>
+    <testcase classname='Gemfile' name='Style/NegatedWhile'/>
+    <testcase classname='Gemfile' name='Style/NilComparison'/>
+    <testcase classname='Gemfile' name='Style/Not'/>
+    <testcase classname='Gemfile' name='Style/UnlessElse'/>
+    <testcase classname='d' name='Bundler/DuplicatedGem'/>
+    <testcase classname='d' name='Bundler/DuplicatedGroup'/>
+    <testcase classname='d' name='Bundler/GemFilename'/>
+    <testcase classname='d' name='Bundler/InsecureProtocolSource'/>
+    <testcase classname='d' name='Bundler/OrderedGems'/>
+    <testcase classname='d' name='Gemspec/DuplicatedAssignment'/>
+    <testcase classname='d' name='Gemspec/OrderedDependencies'/>
+    <testcase classname='d' name='Gemspec/RequiredRubyVersion'/>
+    <testcase classname='d' name='Gemspec/RubyVersionGlobalsUsage'/>
+    <testcase classname='d' name='Layout/EmptyLines'/>
+    <testcase classname='d' name='Layout/IndentationStyle'/>
+    <testcase classname='d' name='Layout/LineLength'/>
+    <testcase classname='d' name='Layout/SpaceAfterColon'/>
+    <testcase classname='d' name='Layout/SpaceAfterComma'/>
+    <testcase classname='d' name='Layout/SpaceAfterNot'/>
+    <testcase classname='d' name='Layout/SpaceAfterSemicolon'/>
+    <testcase classname='d' name='Layout/SpaceBeforeComma'/>
+    <testcase classname='d' name='Layout/SpaceBeforeComment'/>
+    <testcase classname='d' name='Layout/SpaceBeforeSemicolon'/>
+    <testcase classname='d' name='Layout/SpaceInsideRangeLiteral'/>
+    <testcase classname='d' name='Layout/TrailingEmptyLines'/>
+    <testcase classname='d' name='Layout/TrailingWhitespace'>
+      <failure type='Layout/TrailingWhitespace' message='Layout/TrailingWhitespace: Trailing whitespace detected.'>
+        <root>/tests/scenarios/directives/project/d.rb:3:6
+      </failure>
+      <failure type='Layout/TrailingWhitespace' message='Layout/TrailingWhitespace: Trailing whitespace detected.'>
+        <root>/tests/scenarios/directives/project/d.rb:4:50
+      </failure>
+      <failure type='Layout/TrailingWhitespace' message='Layout/TrailingWhitespace: Trailing whitespace detected.'>
+        <root>/tests/scenarios/directives/project/d.rb:6:6
+      </failure>
+      <failure type='Layout/TrailingWhitespace' message='Layout/TrailingWhitespace: Trailing whitespace detected.'>
+        <root>/tests/scenarios/directives/project/d.rb:8:6
+      </failure>
+    </testcase>
+    <testcase classname='d' name='Lint/Debugger'>
+      <failure type='Lint/Debugger' message='Lint/Debugger: Remove debugger entry point `binding.pry`.'>
+        <root>/tests/scenarios/directives/project/d.rb:10:1
+      </failure>
+      <failure type='Lint/Debugger' message='Lint/Debugger: Remove debugger entry point `binding.pry`.'>
+        <root>/tests/scenarios/directives/project/d.rb:12:1
+      </failure>
+      <failure type='Lint/Debugger' message='Lint/Debugger: Remove debugger entry point `binding.pry`.'>
+        <root>/tests/scenarios/directives/project/d.rb:17:1
+      </failure>
+      <failure type='Lint/Debugger' message='Lint/Debugger: Remove debugger entry point `binding.pry`.'>
+        <root>/tests/scenarios/directives/project/d.rb:20:1
+      </failure>
+    </testcase>
+    <testcase classname='d' name='Lint/Syntax'/>
+    <testcase classname='d' name='Style/AndOr'/>
+    <testcase classname='d' name='Style/ColonMethodCall'/>
+    <testcase classname='d' name='Style/DefWithParentheses'/>
+    <testcase classname='d' name='Style/FrozenStringLiteralComment'/>
+    <testcase classname='d' name='Style/MethodDefParentheses'/>
+    <testcase classname='d' name='Style/NegatedIf'/>
+    <testcase classname='d' name='Style/NegatedWhile'/>
+    <testcase classname='d' name='Style/NilComparison'>
+      <failure type='Style/NilComparison' message='Style/NilComparison: Prefer the use of the `nil?` predicate.'>
+        <root>/tests/scenarios/directives/project/d.rb:13:7
+      </failure>
+      <failure type='Style/NilComparison' message='Style/NilComparison: Prefer the use of the `nil?` predicate.'>
+        <root>/tests/scenarios/directives/project/d.rb:14:7
+      </failure>
+      <failure type='Style/NilComparison' message='Style/NilComparison: Prefer the use of the `nil?` predicate.'>
+        <root>/tests/scenarios/directives/project/d.rb:15:7
+      </failure>
+      <failure type='Style/NilComparison' message='Style/NilComparison: Prefer the use of the `nil?` predicate.'>
+        <root>/tests/scenarios/directives/project/d.rb:18:7
+      </failure>
+      <failure type='Style/NilComparison' message='Style/NilComparison: Prefer the use of the `nil?` predicate.'>
+        <root>/tests/scenarios/directives/project/d.rb:21:7
+      </failure>
+    </testcase>
+    <testcase classname='d' name='Style/Not'/>
+    <testcase classname='d' name='Style/UnlessElse'/>
+  </testsuite>
+</testsuites>

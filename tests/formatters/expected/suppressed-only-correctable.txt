@@ -1,0 +1,8 @@
+== Gemfile ==
+C:  1:  1: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+== d.rb ==
+C:  3:  6: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+C:  8:  6: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+C: 15:  7: [Correctable] Style/NilComparison: Prefer the use of the nil? predicate.
+
+2 files inspected, 4 offenses detected, 4 offenses autocorrectable

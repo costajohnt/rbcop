@@ -117,7 +117,7 @@ pub fn correct(
     if error.is_none() && !runner::aborting() {
         let mut lines = Lines::default();
         let span = |o: &Offense| (o.cop, lines.line_col(o, o.start).0, lines.line_col(o, o.end.max(o.start)).0);
-        let checked: Vec<runner::Span> = offenses.iter().map(span).chain(disabled).collect();
+        let checked: Vec<runner::Span> = offenses.iter().chain(&disabled).map(span).collect();
         let normalised = normalise(&current);
         let (mut found, corrector) =
             runner::redundant_disables(path, display, &normalised, cfg, selected, mode, &checked);
@@ -125,9 +125,17 @@ pub fn correct(
             o.source = Some(normalised.clone());
         }
         offenses.extend(found);
+        // Runner#file_offenses rejects the disabled offenses unless --display-suppressed.
+        if runner::display_suppressed() {
+            offenses.extend(disabled);
+        }
         if let Some(c) = corrector {
-            let (again, text, _, err, _) = inspection_loop(path, display, Arc::from(c.rewrite()), cfg, selected, mode);
+            let (again, text, _, err, again_disabled) =
+                inspection_loop(path, display, Arc::from(c.rewrite()), cfg, selected, mode);
             offenses.extend(again);
+            if runner::display_suppressed() {
+                offenses.extend(again_disabled);
+            }
             current = text;
             changed = true;
             if let Some(e) = err {
@@ -161,7 +169,7 @@ fn inspection_loop(
     cfg: &Resolved,
     selected: &dyn Fn(&str) -> bool,
     mode: Mode,
-) -> (Vec<Offense>, Arc<str>, bool, Option<String>, Vec<runner::Span>) {
+) -> (Vec<Offense>, Arc<str>, bool, Option<String>, Vec<Offense>) {
     let mut seen: Vec<Arc<str>> = Vec::new();
     let mut disabled = Vec::new();
     let mut by_iteration: Vec<Vec<Offense>> = Vec::new();
@@ -186,7 +194,7 @@ fn inspection_loop(
         let (mut offenses, corrector, off) =
             runner::analyze_for_correction(path, display, &normalised, raw, cfg, selected, mode);
         disabled = off;
-        for o in &mut offenses {
+        for o in offenses.iter_mut().chain(disabled.iter_mut()) {
             o.source = Some(normalised.clone());
         }
         by_iteration.push(offenses);

@@ -205,7 +205,8 @@ impl Formatter for Json {
                     o.real_column()
                 );
                 if o.status.disabled() {
-                    s.push_str(",\"suppressed\":true,\"justification\":null");
+                    let j = o.justification.as_deref().map_or_else(|| "null".to_string(), json);
+                    s.push_str(&format!(",\"suppressed\":true,\"justification\":{j}"));
                 }
                 s.push('}');
                 s
@@ -605,7 +606,11 @@ impl Formatter for Sarif {
                 o.real_last_column() + 1
             );
             if o.status.disabled() {
-                r.push_str(",\"suppressions\":[{\"kind\":\"inSource\"}]");
+                r.push_str(",\"suppressions\":[{\"kind\":\"inSource\"");
+                if let Some(j) = &o.justification {
+                    r.push_str(&format!(",\"justification\":{}", json(j)));
+                }
+                r.push_str("}]");
             }
             r.push('}');
             self.results.push(r);

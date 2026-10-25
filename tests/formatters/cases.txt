@@ -136,3 +136,23 @@ show-docs-url|tests/formatters/project|--show-docs-url Style/StringLiterals,Nope
 show-docs-url-default|tests/formatters/project|--show-docs-url
 fix-layout|tests/formatters/fix|-f s -x
 fix-layout-safe|tests/formatters/fix|-f s -x -a
+# --display-suppressed (#289): offenses directives disabled, with the `--` reasons (json, sarif); the exit status ignores them.
+suppressed-simple|tests/scenarios/directives/project|-f s --display-suppressed
+suppressed-progress|tests/scenarios/directives/project|-f p --display-suppressed
+suppressed-clang|tests/scenarios/directives/project|-f c --display-suppressed
+suppressed-emacs|tests/scenarios/directives/project|-f e --display-suppressed
+suppressed-json|tests/scenarios/directives/project|-f j --display-suppressed
+suppressed-sarif|tests/scenarios/directives/project|-f sa --display-suppressed
+suppressed-tap|tests/scenarios/directives/project|-f t --display-suppressed
+suppressed-junit|tests/scenarios/directives/project|-f ju --display-suppressed
+suppressed-html|tests/scenarios/directives/project|-f h --display-suppressed
+suppressed-github|tests/scenarios/directives/project|-f g --display-suppressed
+suppressed-markdown|tests/scenarios/directives/project|-f m --display-suppressed
+suppressed-offenses|tests/scenarios/directives/project|-f o --display-suppressed
+suppressed-worst|tests/scenarios/directives/project|-f w --display-suppressed
+suppressed-color|tests/scenarios/directives/project|-f s --color --display-suppressed
+suppressed-only-correctable|tests/scenarios/directives/project|-f s --display-only-correctable --display-suppressed
+suppressed-fail-level|tests/scenarios/directives/project|-f s --fail-level W --display-suppressed
+suppressed-clean|tests/formatters/project|-f s --display-suppressed lib/clean.rb
+fix-suppressed|tests/scenarios/directives/project|-f s -a --display-suppressed
+fix-suppressed-json|tests/scenarios/directives/project|-f j -A --display-suppressed

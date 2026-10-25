@@ -599,7 +599,7 @@ fn copless_plugin_files_go_to_rubocop() {
     fs::write(
         &child,
         "#!/bin/sh\necho \"$RBCOP_FALLBACK_SYNTAX $*\" >> \"$(dirname \"$0\")/child.log\"\nfor a; do f=$a; done\n\
-         printf '%s\\t3\\t4\\tconvention\\t0\\t0\\t0\\tFake/Cop\\tFrom RuboCop.\\n' \"$f\"\n",
+         printf '%s\\t3\\t4\\tconvention\\t0\\t0\\t0\\tFake/Cop\\tFrom RuboCop.\\t0\\t\\n' \"$f\"\n",
     )
     .unwrap();
     Command::new("chmod").arg("755").arg(&child).status().unwrap();
