@@ -86,6 +86,11 @@ impl Cache {
         Some(digest(&[path.as_os_str().as_encoded_bytes(), &meta.mode().to_le_bytes(), signature.as_bytes(), bytes]))
     }
 
+    /// The file a report is saved in.
+    pub fn entry(&self, key: &str) -> PathBuf {
+        self.dir.join(key)
+    }
+
     /// CachedData#from_json: the report saved for `key`, against `bytes` (the file as read now).
     pub fn load(&self, key: &str, bytes: &[u8]) -> Option<FileReport> {
         // Not through a symlink planted as an entry.
@@ -185,8 +190,9 @@ impl Cache {
         path.ancestors().take_while(|p| p.parent().is_some()).find(|p| p.is_symlink())
     }
 
-    /// ResultCache.cleanup: past MaxFilesInCache entries, remove the oldest half (and one more).
-    pub fn cleanup(&self) {
+    /// ResultCache.cleanup: past MaxFilesInCache entries, remove the oldest half (and one more);
+    /// `verbose` (`-d`) says so.
+    pub fn cleanup(&self, verbose: bool) {
         let Some(max) = self.max_files else { return };
         // Never prune through a symlink: none in the root's path (skipped quietly; RuboCop warns
         // only when saving), and inside the tree only real directories are entered and only
@@ -212,6 +218,9 @@ impl Cache {
             return;
         }
         let remove = files.len() / 2 + 1;
+        if verbose {
+            println!("Removing the {remove} oldest files from {}", self.top.display());
+        }
         files.sort_by_cached_key(|f| fs::symlink_metadata(f).and_then(|m| m.modified()).ok());
         for f in &files[..remove] {
             let _ = fs::remove_file(f);
