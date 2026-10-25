@@ -1,0 +1,24 @@
+predicate.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+predicate.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [62/40]
+predicate.rb:2:11: C: [Corrected] Style/NilComparison: Prefer the use of the `nil?` predicate.
+predicate.rb:3:8: C: [Corrected] Style/NilComparison: Prefer the use of the `nil?` predicate.
+predicate.rb:3:23: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+predicate.rb:3:41: C: [Corrected] Layout/LineLength: Line is too long. [54/40]
+predicate.rb:4:12: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+predicate.rb:8:1: W: Lint/Debugger: Remove debugger entry point `binding.pry`.
+
+--- a/predicate.rb
++++ b/predicate.rb
+@@ -1,4 +1,8 @@
+-def foo = bar(aaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb)
+-a = b + c == nil
+-d = (e == nil)
+-binding.pry   
++# frozen_string_literal: true
++def foo
++  bar(aaaaaaaaaaaaaaa,
++bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb)
++end
++a = (b + c).nil?
++d = (e.nil?)
++binding.pry

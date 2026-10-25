@@ -24,6 +24,9 @@ pub struct FileReport {
     pub warnings: Vec<String>,
     /// The error that ends the run at this file, before it is reported (see `poison_raise`).
     pub abort: Option<String>,
+    /// Under autocorrect, the (before, after) sources Runner#record_diff diffs for `--diff`: one
+    /// per correcting inspection loop.
+    pub diffs: Vec<(Arc<str>, Arc<str>)>,
 }
 
 impl FileReport {
@@ -58,7 +61,7 @@ pub fn inspect(
     if display_suppressed() {
         offenses.extend(disabled);
     }
-    FileReport { offenses, text, warnings: directives::take_warnings(), abort: take_abort() }
+    FileReport { offenses, text, warnings: directives::take_warnings(), abort: take_abort(), diffs: Vec::new() }
 }
 
 /// Inspect a file's bytes as read. A source that must be UTF-8 (`source::must_be_utf8`) but is not
@@ -98,7 +101,7 @@ pub fn inspect_bytes(
 fn encoding_error_report(text: String, message: String, selected: &dyn Fn(&str) -> bool) -> FileReport {
     // Lint/Syntax is not mobilized under -x, --only-guide-cops or `StyleGuideCopsOnly`.
     if !selected("Lint/Syntax") {
-        return FileReport { offenses: Vec::new(), text, warnings: Vec::new(), abort: None };
+        return FileReport { offenses: Vec::new(), text, warnings: Vec::new(), abort: None, diffs: Vec::new() };
     }
     let offense = Offense {
         start: 0,
@@ -113,7 +116,7 @@ fn encoding_error_report(text: String, message: String, selected: &dyn Fn(&str) 
         disabled: false,
         justification: None,
     };
-    FileReport { offenses: vec![offense], text, warnings: Vec::new(), abort: None }
+    FileReport { offenses: vec![offense], text, warnings: Vec::new(), abort: None, diffs: Vec::new() }
 }
 
 /// How Ruby words a failed `File.read`/`File.open` of `path` (RuboCop raises its own error for a

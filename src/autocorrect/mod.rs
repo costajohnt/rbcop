@@ -107,8 +107,14 @@ pub fn correct(
 ) -> Corrected {
     crate::directives::take_warnings();
     runner::take_abort();
+    let original: Arc<str> = Arc::from(text);
     let (mut offenses, mut current, changed, error, disabled) =
-        inspection_loop(path, display, Arc::from(text), cfg, selected, mode);
+        inspection_loop(path, display, original.clone(), cfg, selected, mode);
+    // Runner#finalize_corrections: each loop's result against the source it started from.
+    let mut diffs = Vec::new();
+    if changed {
+        diffs.push((original, current.clone()));
+    }
     let mut changed = changed;
     // Runner#add_redundant_disables (skipped when the loop raised): Lint/RedundantCopDisableDirective
     // judges the final source against every offense found, and when it removed directives the
@@ -130,8 +136,16 @@ pub fn correct(
             offenses.extend(disabled);
         }
         if let Some(c) = corrector {
-            let (again, text, _, err, again_disabled) =
-                inspection_loop(path, display, Arc::from(c.rewrite()), cfg, selected, mode);
+            // RuboCop 1.91.0's redundant-disable team writes its correction to the file even under
+            // `--diff` (its corrections are not deferred), so the loop it reruns diffs against
+            // that source and the directives it removed are in no diff. rbcop writes nothing
+            // (docs/known-gaps.md) but prints the same diffs.
+            let rewritten: Arc<str> = Arc::from(c.rewrite());
+            let (again, text, again_changed, err, again_disabled) =
+                inspection_loop(path, display, rewritten.clone(), cfg, selected, mode);
+            if again_changed {
+                diffs.push((rewritten, text.clone()));
+            }
             offenses.extend(again);
             if runner::display_suppressed() {
                 offenses.extend(again_disabled);
@@ -148,6 +162,7 @@ pub fn correct(
         text: normalise(&current).to_string(),
         warnings: crate::directives::take_warnings(),
         abort: runner::take_abort(),
+        diffs,
     };
     Corrected { source: changed.then(|| current.to_string()), report, error }
 }

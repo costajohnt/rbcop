@@ -156,3 +156,19 @@ suppressed-fail-level|tests/scenarios/directives/project|-f s --fail-level W --d
 suppressed-clean|tests/formatters/project|-f s --display-suppressed lib/clean.rb
 fix-suppressed|tests/scenarios/directives/project|-f s -a --display-suppressed
 fix-suppressed-json|tests/scenarios/directives/project|-f j -A --display-suppressed
+# --diff (#290): the corrections as unified diffs after the report, no file written.
+fix-diff-progress|tests/formatters/fix|-f p --diff
+fix-diff-simple|tests/formatters/fix|-f s --diff
+fix-diff-all|tests/formatters/fix|-f s --diff -A
+fix-diff-safe|tests/formatters/fix|-f s -a --diff
+fix-diff-layout|tests/formatters/fix|-f s --diff -x
+fix-diff-json|tests/formatters/fix|-f j --diff
+fix-diff-stderr|tests/formatters/fix|-f s --diff --stderr
+fix-diff-one|tests/formatters/fix|-f q --diff b.rb
+fix-diff-color|tests/formatters/fix|-f s --diff --color
+fix-diff-directives|tests/scenarios/directives/project|-f s --diff --display-suppressed
+diff-clean|tests/formatters/project|-f s --diff lib/clean.rb
+diff-crlf|tests/formatters/project|-f s --diff -A crlf.rb unicode.rb
+stdin-diff|tests/formatters/project|-f s --diff --stdin lib/foo.rb|tests/formatters/stdin.rb
+stdin-diff-json|tests/formatters/project|-f j --diff -A --stdin lib/foo.rb|tests/formatters/stdin.rb
+diff-only-correctable|tests/formatters/project|-f s --diff --display-only-correctable

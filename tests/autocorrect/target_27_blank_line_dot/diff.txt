@@ -1,0 +1,24 @@
+pa.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+pb.rb:1:1: C: [Corrected] Style/ParallelAssignment: Do not use parallel assignment.
+syntax.rb:1:5: F: Lint/Syntax: unexpected token $end (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+
+--- a/pa.rb
++++ b/pa.rb
+@@ -1,4 +1,5 @@
+-a, b = foo
++a = foo
+    
+-  .bar, 2
++  .bar
++b = 2
+ puts a, b
+--- a/pb.rb
++++ b/pb.rb
+@@ -1,4 +1,5 @@
+-x, y = foo
++x = foo
+ 	
+-  &.bar, 2
++  &.bar
++y = 2
+ puts x, y

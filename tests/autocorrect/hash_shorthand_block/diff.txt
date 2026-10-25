@@ -1,0 +1,37 @@
+h.rb:2:39: C: [Corrected] Style/HashSyntax: Omit the hash value.
+hash_shorthand_block.rb:2:39: C: [Corrected] Style/HashSyntax: Omit the hash value.
+hash_shorthand_block.rb:12:15: C: [Corrected] Style/HashSyntax: Omit the hash value.
+hash_shorthand_block.rb:16:17: C: [Corrected] Style/HashSyntax: Omit the hash value.
+long.rb:3:81: C: Layout/LineLength: Line is too long. [101/80]
+
+--- a/h.rb
++++ b/h.rb
+@@ -1,5 +1,5 @@
+ def m(key, amount)
+-  instrument :increment, key, amount: amount do
++  instrument(:increment, key, amount:) do
+     1
+   end
+ end
+--- a/hash_shorthand_block.rb
++++ b/hash_shorthand_block.rb
+@@ -1,5 +1,5 @@
+ def m(key, amount)
+-  instrument :increment, key, amount: amount do
++  instrument(:increment, key, amount:) do
+     1
+   end
+ end
+@@ -9,10 +9,10 @@
+ end
+ 
+ def o(amount)
+-  foo amount: amount
++  foo amount:
+ end
+ 
+ def p(amount)
+-  super amount: amount do
++  super(amount:) do
+   end
+ end

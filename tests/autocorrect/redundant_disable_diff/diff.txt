@@ -1,0 +1,19 @@
+a.rb:5:41: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Layout/SpaceAroundOperators`.
+a.rb:6:2: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+a.rb:6:5: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
+a.rb:8:5: C: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:10:1: W: Security/Eval: The use of `eval` is a serious security risk.
+
+--- a/a.rb
++++ b/a.rb
+@@ -3,8 +3,8 @@
+ x = "a" # rubocop:disable Style/StringLiterals -- because reasons
+ y = "b" # rubocop:todo Style/StringLiterals
+ # rubocop:disable Style/StringLiterals, Layout/SpaceAroundOperators
+-z  =  "c"
++z = "c"
+ # rubocop:enable all
+-w = "d"
++w = 'd'
+ puts x, y, z, w
+ eval(w)

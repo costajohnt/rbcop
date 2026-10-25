@@ -1,0 +1,5 @@
+# Lint/RedundantCopDisableDirective corrects after the loop; under --diff RuboCop 1.91.0 writes
+# that correction to the file (docs/known-gaps.md), rbcop does not (#290).
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false

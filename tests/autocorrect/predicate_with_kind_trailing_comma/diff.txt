@@ -1,0 +1,17 @@
+a.rb:1:1: C: [Corrected] Style/PredicateWithKind: Prefer `all?(Symbol)` to `all? { ... }` with a kind check.
+a.rb:2:1: C: [Corrected] Style/PredicateWithKind: Prefer `all?(Symbol)` to `all? { ... }` with a kind check.
+a.rb:3:1: C: [Corrected] Style/PredicateWithKind: Prefer `any?(String)` to `any? { ... }` with a kind check.
+z.rb:1:121: C: Layout/LineLength: Line is too long. [132/120]
+
+--- a/a.rb
++++ b/a.rb
+@@ -1,6 +1,6 @@
+-a.all? { |k| k.is_a?(Symbol) }
+-a.all? { |k,| k.is_a?(Symbol) }
+-a.any? {|k,| k.kind_of?(String)}
++a.all?(Symbol)
++a.all?(Symbol)
++a.any?(String)
+ a.all? { |k, v| k.is_a?(Symbol) }
+ a.all? { |(k)| k.is_a?(Symbol) }
+ a.all? { |k, *| k.is_a?(Symbol) }
