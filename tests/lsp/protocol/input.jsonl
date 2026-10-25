@@ -1,0 +1,23 @@
+{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"processId":null,"rootUri":"file://$ROOT","capabilities":{}}}
+{"jsonrpc":"2.0","method":"initialized","params":{}}
+{"jsonrpc":"2.0","method":"textDocument/didOpen","params":{"textDocument":{"uri":"file://$ROOT/a.rb","languageId":"ruby","version":1,"text":"puts( 1)\n"}}}
+{"jsonrpc":"2.0","method":"textDocument/didOpen","params":{"textDocument":{"uri":"file://$ROOT/c d.rb","languageId":"ruby","version":1,"text":"x  = 1\n"}}}
+{"jsonrpc":"2.0","method":"textDocument/didOpen","params":{"textDocument":{"uri":"file://$ROOT/c%20e+f.rb","languageId":"ruby","version":1,"text":"y = 2\n"}}}
+{"jsonrpc":"2.0","method":"textDocument/didOpen","params":{"textDocument":{"uri":"untitled:Untitled-1","languageId":"ruby","version":1,"text":"z  = 2\n"}}}
+{"jsonrpc":"2.0","method":"textDocument/didOpen","params":{"textDocument":{"uri":"file://$ROOT/n.txt","languageId":"ruby","version":1,"text":"z  = 2\n"}}}
+{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"untitled:Untitled-1"},"contentChanges":[{"range":{"start":{"line":0,"character":1},"end":{"line":0,"character":2}},"text":""}]}}
+{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file://$ROOT/never.rb"},"contentChanges":[{"range":{"start":{"line":0,"character":1},"end":{"line":0,"character":2}},"text":""}]}}
+{"jsonrpc":"2.0","id":2,"method":"textDocument/formatting","params":{"textDocument":{"uri":"file:///nope.rb"},"options":{"tabSize":2,"insertSpaces":true}}}
+{"jsonrpc":"2.0","id":3,"method":"workspace/executeCommand","params":{"command":"rubocop.formatAutocorrects"}}
+{"jsonrpc":"2.0","id":4,"method":"workspace/executeCommand","params":{"command":"rubocop.formatAutocorrectsAll","arguments":["file://$ROOT/a.rb"]}}
+{"jsonrpc":"2.0","id":5,"method":"workspace/executeCommand","params":{"command":"x"}}
+{"jsonrpc":"2.0","id":6,"method":"foo/bar","params":{}}
+{"jsonrpc":"2.0","id":"seven","method":"method_missing"}
+{"jsonrpc":"2.0","id":8,"result":{}}
+{"jsonrpc":"2.0","result":{}}
+{"jsonrpc":"2.0","method":"$/cancelRequest","params":{"id":1}}
+{"jsonrpc":"2.0","method":"$/setTrace","params":{"value":"off"}}
+{"jsonrpc":"2.0","method":"textDocument/willSave","params":{}}
+{"jsonrpc":"2.0","method":"exit"}
+{"jsonrpc":"2.0","id":9,"method":"shutdown"}
+{"jsonrpc":"2.0","id":10,"method":"foo/after"}

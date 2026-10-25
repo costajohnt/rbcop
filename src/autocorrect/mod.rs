@@ -374,6 +374,20 @@ pub fn correct_file(
     Ok(correct_bytes(path, display, bytes, cfg, selected, mode))
 }
 
+/// `correct` for a source already decoded (`--lsp` buffers: Ruby strings from JSON are UTF-8, so
+/// a magic comment transcodes nothing).
+pub fn correct_text(
+    path: &Path,
+    display: &str,
+    text: String,
+    cfg: &Resolved,
+    selected: &dyn Fn(&str) -> bool,
+    mode: Mode,
+) -> Corrected {
+    let text: Arc<str> = Arc::from(text);
+    correct(path, display, text.clone(), Some(text), cfg, selected, mode)
+}
+
 /// `correct` for a source as read (a file or stdin), transcoded as `runner::inspect_bytes` does.
 /// The corrected source is UTF-8 whatever the encoding, as RuboCop writes it.
 pub fn correct_bytes(

@@ -181,6 +181,12 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   that root mix their values; with two such parameters for one cop (Metrics/ParameterLists'
   `Max` and `MaxOptionalParameters`) rbcop writes them in the order they were first set, RuboCop
   in the directory listing order of those files.
+- `--lsp` (#292) answers as RuboCop's language server does, message for message (tests/lsp,
+  recorded with `scripts/lsp.sh`), except: an offense whose correction rbcop withholds (above) is
+  published with `correctable: false`, the not-autocorrectable note and no Autocorrect quick fix,
+  where RuboCop offers its edit. The server's stderr log carries the same lines, but an error while
+  handling a request is logged as `[server] Error <message>` without RuboCop's exception class for
+  rbcop's own errors and without the backtrace line; as in RuboCop such a request gets no response.
 
 ## Open gaps
 
@@ -192,6 +198,11 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   `else` returns `nil`); likewise Lint/Void misses `1` in `begin; 1; else; 2; end` (#608).
 - `0.. ..3` at TargetRubyVersion 2.6 (the parser gem's `(0..)..3`): rbcop accepts it, but cops see
   Prism's `0..(..3)`; only Layout/SpaceInsideRangeLiteral skips the inner beginless range (#609).
+- `--lsp` runs only the cops rbcop implements: plugin cops it does not implement are not run
+  (`RBCOP_FALLBACK` has no effect there) and the skipped-cops notice is not printed. A buffer with
+  an encoding magic comment is inspected as UTF-8 text, as RuboCop inspects it, but a corrected one
+  is reread through the magic comment as `-a` rereads files. A request the reader cannot parse
+  ends the server with status 2, as in RuboCop, with rbcop's wording of the error.
 - A `require:`d gem's Ruby code that changes RuboCop's directive syntax is not run: standard's
   `standard/rubocop/ext.rb` widens `DirectiveComment::DIRECTIVE_COMMENT_REGEXP`, so its
   `# standard:disable Cop` comments are directives in RuboCop and plain comments in rbcop.
@@ -298,7 +309,7 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - Command-line options rbcop refuses (`rbcop: --NAME is not supported by rbcop yet`, exit 2):
   - `--changed [REVISION]`: needs RuboCop's git diff of changed files.
   - `--server`, `--start-server`, `--stop-server`, `--restart-server`, `--server-status`,
-    `--no-detach`, `--lsp`, `--mcp`: long-running server modes (`--no-server` is accepted).
+    `--no-detach`, `--mcp`: long-running server modes (`--no-server` is accepted).
   - `-r/--require`, `--plugin`: load Ruby code. In a config file, `plugins:` / `require:` of a
     plugin rbcop implements natively (docs/plugins.md) runs its cops; any other gem only merges its
     default configuration and its cops do not run. A `require:` of a gem that is not a lint_roller

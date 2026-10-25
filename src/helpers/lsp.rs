@@ -6,9 +6,26 @@ use crate::prelude::*;
 use std::sync::atomic::{AtomicBool, Ordering};
 
 static ENABLED: AtomicBool = AtomicBool::new(false);
+/// `--lsp` is serving: offenses keep their own corrections (the quick fixes it publishes).
+static SERVING: AtomicBool = AtomicBool::new(false);
 
 pub fn enable() {
     ENABLED.store(true, Ordering::Relaxed);
+}
+
+/// RuboCop::LSP.disable { ... }: `workspace/executeCommand` formats as a command-line run would.
+pub fn set_enabled(on: bool) {
+    ENABLED.store(on, Ordering::Relaxed);
+}
+
+/// LSP::Runtime.new: `--lsp` serves, with LSP enabled.
+pub fn start_serving() {
+    SERVING.store(true, Ordering::Relaxed);
+    enable();
+}
+
+pub fn serving() -> bool {
+    SERVING.load(Ordering::Relaxed)
 }
 
 pub fn enabled() -> bool {

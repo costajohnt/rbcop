@@ -124,6 +124,7 @@ impl Cache {
                 disabled: flag(2),
                 justification,
                 todo: false,
+                edits: None,
             });
         }
         // runner::inspect_bytes keeps the source as read for an encoding error, else with CRLF

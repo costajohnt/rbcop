@@ -189,6 +189,17 @@ fn literal_ranges(src: &Source, program: &Node) -> Vec<(usize, usize)> {
     v.out
 }
 
+thread_local! {
+    /// Under `--lsp`: the multiline literal ranges of the file last inspected with a tree.
+    static LITERALS: std::cell::RefCell<Option<Vec<(usize, usize)>>> = const { std::cell::RefCell::new(None) };
+}
+
+/// LSP::DisableCommentEdits#multiline_ranges of the file inspected since the last call (`--lsp`),
+/// None when it did not parse (no `processed_source.ast`).
+pub fn take_literal_ranges() -> Option<Vec<(usize, usize)>> {
+    LITERALS.with(|l| l.borrow_mut().take())
+}
+
 /// Lint/Syntax#add_offense_from_error for a source Parser::Source::Buffer#source= rejected: a
 /// global offense, beautified message, no version note.
 pub fn encoding_error_offense(
@@ -215,6 +226,7 @@ pub fn encoding_error_offense(
         disabled: false,
         justification: None,
         todo: false,
+        edits: None,
     })
 }
 
@@ -813,6 +825,7 @@ fn investigate(
                 disabled: false,
                 justification: None,
                 todo,
+                edits: None,
             })
             .collect();
         // The parser translation layer reports one diagnostic per range; Prism can stack two
@@ -884,6 +897,9 @@ fn investigate(
     facts.text = shared.clone();
     if mode.is_some() && autocorrect::disable_uncorrectable() {
         facts.literal_ranges = literal_ranges(&src, &program);
+    }
+    if mode.is_none() && crate::helpers::lsp::serving() {
+        LITERALS.with(|l| *l.borrow_mut() = Some(literal_ranges(&src, &program)));
     }
     // Directives naming an ambiguous cop: see poison_raise.
     let poison = facts.comment_config.poison.clone().filter(|_| !only_redundant);
