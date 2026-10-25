@@ -734,11 +734,17 @@ fn investigate(
 
     let opted_in = directives::opted_in(&src);
     let only_redundant = matches!(redundant, Redundant::Only(_));
+    // Every file asks this of every cop: each cop's plugin is looked up once per run (#388).
+    static PLUGINS: std::sync::LazyLock<Vec<Option<&'static crate::helpers::cop_registry::NativePlugin>>> =
+        std::sync::LazyLock::new(|| {
+            crate::cops::ALL.iter().map(|r| crate::helpers::cop_registry::plugin_of(r.name)).collect()
+        });
     let active: Vec<Active> = crate::cops::ALL
         .iter()
-        .filter(|r| selected(r.name) && !only_redundant && cfg.team_has(r.name))
-        .filter_map(|r| {
-            let c = cfg.cop(r.name);
+        .enumerate()
+        .filter(|&(i, r)| selected(r.name) && !only_redundant && cfg.team_has_plugin(PLUGINS[i]))
+        .filter_map(|(i, r)| {
+            let c = cfg.cop_at(i, r.name);
             let (mut min, max) = r.cop.ruby_range();
             // rubocop-rails: `Style::HashExcept.minimum_target_ruby_version(2.0)` once it is loaded.
             if r.name == "Style/HashExcept" && rails {
@@ -770,13 +776,14 @@ fn investigate(
     let pn = program.as_program_node().unwrap();
     let first_code = pn.statements().body().iter().next().map(|n| n.location().start_offset());
     facts.first_code = first_code;
-    // Registry#disabled_names of the --only/--except filtered registry.
-    let config_disabled: Vec<&'static str> = crate::helpers::cop_registry::REGISTRY
-        .iter()
-        .copied()
-        .filter(|&c| selected(c) && !cfg.cop_enabled(c))
-        .collect();
     if src.text.contains("rubocop") {
+        // Registry#disabled_names of the --only/--except filtered registry (only directives read
+        // it, so a file without one skips the scan of every cop name, #388).
+        let config_disabled: Vec<&'static str> = crate::helpers::cop_registry::REGISTRY
+            .iter()
+            .copied()
+            .filter(|&c| selected(c) && !cfg.cop_enabled(c))
+            .collect();
         // DisableNext needs statement bounds before the cops run (disabled ranges gate `add_fix`).
         let bounds = directives::needs_statement_bounds(&src).then(|| StatementBounds::build(&src, &program));
         let bounds = bounds.unwrap_or_default();
