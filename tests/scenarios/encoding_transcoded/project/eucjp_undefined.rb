@@ -1,0 +1,2 @@
+# encoding: euc-jp
+s = "©¡"

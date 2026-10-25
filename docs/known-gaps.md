@@ -290,15 +290,22 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - A duplicated YAML key: the last value wins in the first key's place, as in Psych, but the
   `... is concealed by line N` warning is not printed. Wrong value types (`Enabled: "true"`) and
   invalid `Severity` values are not reported (see ConfigValidator below).
-- Sources whose magic comment names another encoding (`# encoding: iso-8859-1`) are inspected with
-  invalid UTF-8 bytes replaced; RuboCop transcodes them to UTF-8. They are never autocorrected.
-  The same holds for binary (`# encoding: BINARY`) sources with such bytes, where each replacement
+- Sources whose magic comment names another encoding (`# encoding: iso-8859-1`) are transcoded to
+  UTF-8 as RuboCop's Ruby does it (tables from `scripts/encodings.rb`), with its Lint/Syntax
+  message for a byte sequence the encoding rejects or cannot convert (`"\xa4" followed by "\""
+  on euc-jp.`), and autocorrected as RuboCop does: the corrected source is written as UTF-8 and
+  read back through the magic comment's encoding again, so its non-ASCII text turns to mojibake
+  on each later pass (or into a transcoding error). The tables cover every single-byte encoding
+  Ruby converts and Shift_JIS, Windows-31J, EUC-JP, eucJP-ms and CP51932. Sources in the other
+  multibyte encodings (Big5, GBK, GB18030, GB2312, EUC-KR, CP949, ...) and in UTF-16/UTF-32/UTF-7
+  (where RuboCop raises `incompatible character encodings`) are inspected with invalid UTF-8 bytes
+  replaced and never autocorrected. `--diff` shows a transcoded source's `-` lines as UTF-8 text
+  where RuboCop prints the bytes as read.
+  Binary (`# encoding: BINARY`) sources with invalid UTF-8 bytes are inspected with those bytes
+  replaced and never autocorrected; each replacement
   also counts as 3 bytes in later columns of its line (RuboCop: 1 per byte), e.g. the end of
   Lint/PercentSymbolArray's range on `%i[\xC0 :foo]` (`scripts/cold-skip.txt`).
   Sources that must be UTF-8 and are not get RuboCop's `Lint/Syntax: Invalid byte sequence in utf-8.`
-  RuboCop's transcoding error is reproduced only for US-ASCII (`"\xe3" on us-ascii.`); a source
-  in another encoding with a byte sequence invalid there (`# encoding: euc-jp`) is inspected as
-  UTF-8 instead.
   In a binary source a one-character range on a multibyte character (Layout/
   EmptyLineAfterMagicComment's `source_range(buffer, line, 0)`) is one byte for RuboCop and the
   whole character for rbcop.
