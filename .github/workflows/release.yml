@@ -1,5 +1,5 @@
-# Release, in two manual runs (docs/releasing.md). Not run while the repository is private (hosted
-# minutes); the same steps run by hand with scripts/dist/*.sh.
+# Release, in two manual runs (docs/releasing.md); the same steps can also run by hand with
+# scripts/dist/*.sh.
 #
 #   stage `build`: build the archives, gems and Homebrew formula and attach them, with SHA256SUMS,
 #     to a draft release v<Cargo.toml version>. A maintainer then commits that SHA256SUMS as

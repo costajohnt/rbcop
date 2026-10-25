@@ -1,5 +1,5 @@
 #!/bin/sh
-# CI, run locally or on the self-hosted runner (private repo: no hosted Actions).
+# CI, run locally or on the self-hosted runner (there is no hosted Actions CI workflow).
 #   fast tier, always: cargo fmt --check, clippy -D warnings, release build, cargo test
 #   corpus tier, when RBCOP_CORPUS and RBCOP_ORACLE are both set: check-cops.sh all (every
 #   implemented cop against the recorded oracles on the nine corpora) and check-cold.sh (the cold-cop
