@@ -73,6 +73,14 @@ impl Cop for NumericLiterals {
         let short = if cx.cfg.bool("Strict") == Some(true) { &SHORT_STRICT } else { &SHORT };
         if DIGITS.is_match(int) || FOUR.is_match(int) || short.is_match(int) {
             let formatted = format_number(source);
+            // `{ self.min_digits = int.size + 1 }` for plain digits, else `{ Enabled: false }`.
+            if crate::autogen::on() && cx.block_runs(start, end) {
+                if DIGITS.is_match(int) {
+                    cx.exclude_limit("MinDigits", int.chars().count() as i64 + 1);
+                } else {
+                    cx.no_acceptable_style();
+                }
+            }
             cx.add_fix(start, end, MSG, |c| c.replace(start, end, &formatted));
         }
     }

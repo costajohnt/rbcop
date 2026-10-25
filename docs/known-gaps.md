@@ -147,6 +147,14 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   without backslashes, `#` or `()[]{}*+?|` (so the regexp is always valid and its `inspect` is the
   text with `/` escaped); a backtick string has no backslash, backtick or `#`.
   Fixture: tests/autocorrect/rspec_untrusted_text (RuboCop's output in `rubocop-output/`).
+- `--report-unused-todo-entries` audits only the `.rubocop_todo.yml` entries of cops rbcop
+  implements: for any other cop it cannot tell whether the file is still flagged, so the entry is
+  not listed (RuboCop lists it when its cop no longer flags the file).
+- `--auto-gen-config` keeps ExcludeLimit values (`Max`, `MinDigits`) in memory. RuboCop writes them
+  under its cache root (`auto-gen-tmp/`, left behind empty), where concurrent RuboCop runs sharing
+  that root mix their values; with two such parameters for one cop (Metrics/ParameterLists'
+  `Max` and `MaxOptionalParameters`) rbcop writes them in the order they were first set, RuboCop
+  in the directory listing order of those files.
 
 ## Open gaps
 
@@ -231,13 +239,6 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     `scripts/check-skip.txt` leaves them out of check-cops.sh, and they and two RuboCop -A outputs
     with the same differences are in `scripts/autocorrect-skip.txt`.
 - Command-line options rbcop refuses (`rbcop: --NAME is not supported by rbcop yet`, exit 2):
-  - `--auto-gen-config`, `--regenerate-todo`, `-f autogenconf`: generating `.rubocop_todo.yml`
-    (AutoGenerateConfig and the autogenconf formatter's Exclude/Max output) is not ported. Its
-    companion options (`--exclude-limit`, `--[no-]offense-counts`, `--[no-]auto-gen-timestamp`,
-    `--[no-]auto-gen-only-exclude`) are parsed and give RuboCop's `can only be used together with
-    --auto-gen-config` error; `--no-exclude-limit` and `--[no-]auto-gen-enforced-style` are inert.
-  - `--report-unused-todo-entries`, `--disable-uncorrectable`: need the todo file and
-    `# rubocop:todo` comment insertion, not ported.
   - `--changed [REVISION]`: needs RuboCop's git diff of changed files.
   - `--server`, `--start-server`, `--stop-server`, `--restart-server`, `--server-status`,
     `--no-detach`, `--lsp`, `--mcp`: long-running server modes (`--no-server` is accepted).

@@ -25,9 +25,10 @@ impl Cop for GemVersion {
         let msg = match cx.cfg.str("EnforcedStyle") {
             Some("required") if !specified => "Gem version specification is required.",
             Some("forbidden") if specified => "Gem version specification is forbidden.",
-            _ => return,
+            _ => return cx.correct_style_detected(),
         };
         let (s, e) = send_range(&call);
         cx.add(s, e, msg);
+        cx.opposite_style_detected();
     }
 }

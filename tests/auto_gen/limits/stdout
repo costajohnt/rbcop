@@ -1,0 +1,8 @@
+Added inheritance from `.rubocop_todo.yml` in `.rubocop.yml`.
+Phase 1 of 2: run Layout/LineLength cop (skipped because only excludes will be generated due to `--auto-gen-only-exclude` flag)
+Phase 2 of 2: run all cops
+Inspecting 4 files
+CWWW
+
+4 files inspected, 92 offenses detected, 63 offenses autocorrectable
+Created .rubocop_todo.yml.

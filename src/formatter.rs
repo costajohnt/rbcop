@@ -6,7 +6,10 @@
 
 mod report;
 mod text;
+mod todo;
 pub mod yaml;
+
+pub use todo::DEFAULT_MAXIMUM_EXCLUSION_ITEMS;
 
 pub use report::ruby_platform;
 
@@ -194,6 +197,8 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
             let overflow = o.end.max(o.start).saturating_sub(p.text.len());
             let status = if o.disabled {
                 Status::Disabled
+            } else if o.corrected && o.todo {
+                Status::CorrectedWithTodo
             } else if o.corrected {
                 Status::Corrected
             } else if o.correctable {
@@ -563,6 +568,9 @@ const KEYS: &[&str] = &[
     "[w]orst",
 ];
 
+/// The DisabledConfigFormatter `--auto-gen-config` writes `.rubocop_todo.yml` with.
+pub const TODO: &str = "rbcop-todo";
+
 /// FormatterSet#builtin_formatter_class: the formatter name for a `-f` key.
 pub fn resolve(key: &str) -> Result<&'static str, String> {
     // Not a RuboCop formatter: emacs plus each offense's end position, matched by
@@ -589,6 +597,7 @@ fn build(name: &str, color: bool, cx: &Ctx, tty: bool) -> Box<dyn Formatter> {
     use text::{Kind, Text};
     let p = Paint(color);
     match name.replace(['[', ']'], "").as_str() {
+        "autogenconf" => Box::new(Text::new(Kind::AutoGenConf, p, tty)),
         "clang" => Box::new(Text::new(Kind::Clang, p, tty)),
         "emacs" => Box::new(report::Emacs),
         "rbcop-oracle" => Box::new(report::Oracle),
@@ -645,7 +654,12 @@ impl Set {
                 Some(c) => c,
                 None => tty && cx.global_color,
             };
-            items.push((build(name, color, cx, tty), sink));
+            // DisabledConfigFormatter (the class `--auto-gen-config` adds), which has no `-f` name.
+            let fmt: Box<dyn Formatter> = match path {
+                Some(p) if *name == TODO => Box::new(todo::Todo::new(p)),
+                _ => build(name, color, cx, tty),
+            };
+            items.push((fmt, sink));
         }
         Ok(Set { items, error: None })
     }
@@ -744,6 +758,7 @@ mod tests {
             source: None,
             disabled: false,
             justification: None,
+            todo: false,
         };
         let v = &offenses("source 'x'\n", &[o], |o| o.message.clone())[0];
         assert_eq!((v.line, v.real_column(), v.last_line, v.real_last_column(), v.length), (1, 1, 1, 1, 0));

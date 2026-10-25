@@ -34,8 +34,9 @@ impl Cop for ObjectThen {
         }
         let style = cx.cfg.str("EnforcedStyle").unwrap_or("then").to_string();
         if name == style {
-            return;
+            return cx.correct_style_detected();
         }
+        cx.opposite_style_detected();
         let Some(sel) = call.message_loc() else { return };
         let prefer = if style == "then" && call.receiver().is_none() { "self.then".to_string() } else { style.clone() };
         let (s, e) = (sel.start_offset(), sel.end_offset());

@@ -82,7 +82,12 @@ impl Cop for StringLiterals {
             return;
         }
         if string_help::wrong_quotes(node_text(node), single) && !string_help::inside_interpolation(cx.ancestors) {
+            if cx.block_runs(start, end) {
+                cx.opposite_style_detected();
+            }
             cx.add_fix(start, end, message(single), |c| string_help::correct(c, &s, single, binary));
+        } else {
+            cx.correct_style_detected();
         }
     }
 }

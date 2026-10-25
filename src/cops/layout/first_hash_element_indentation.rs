@@ -62,6 +62,7 @@ impl Cop for FirstHashElementIndentation {
             };
             let (b, t) = base(cx);
             let delta = b + configured_indentation_width(cx) + offset - src.column(start) as i64;
+            helpers::multiline_element_indentation::detect(cx, WORDS.brace_style, (start, end), offset, left, paren, delta);
             if delta != 0 {
                 let key_line = src.line_of(first.key().location().start_offset());
                 let pair = first.as_node();

@@ -94,11 +94,11 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("safe-auto-correct", None, Arg::None, Use::Handle),
     ("autocorrect-all", Some('A'), Arg::None, Use::Handle),
     ("auto-correct-all", None, Arg::None, Use::Handle),
-    ("disable-uncorrectable", None, Arg::None, Use::Unsupported),
+    ("disable-uncorrectable", None, Arg::None, Use::Handle),
     ("diff", None, Arg::None, Use::Handle),
-    ("auto-gen-config", None, Arg::None, Use::Unsupported),
-    ("regenerate-todo", None, Arg::None, Use::Unsupported),
-    ("report-unused-todo-entries", None, Arg::None, Use::Unsupported),
+    ("auto-gen-config", None, Arg::None, Use::Handle),
+    ("regenerate-todo", None, Arg::None, Use::Handle),
+    ("report-unused-todo-entries", None, Arg::None, Use::Handle),
     ("exclude-limit", None, Arg::Required, Use::Handle),
     ("no-exclude-limit", None, Arg::None, Use::Handle),
     ("[no-]offense-counts", None, Arg::None, Use::Handle),
@@ -134,7 +134,7 @@ enum Fail {
     Help,
 }
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 struct Cli {
     opts: Options,
     /// -a / -A
@@ -185,6 +185,13 @@ struct Cli {
     /// Given without `--auto-gen-config` (validate_auto_gen_config, in its order): --exclude-limit,
     /// --[no-]offense-counts, --[no-]auto-gen-timestamp, --[no-]auto-gen-only-exclude.
     auto_gen: [bool; 4],
+    /// `--auto-gen-config` and the options of the todo it writes.
+    auto_gen_config: bool,
+    gen_opts: rbcop::autogen::GenOptions,
+    /// `--disable-uncorrectable`
+    disable_uncorrectable: bool,
+    /// `--report-unused-todo-entries`
+    report_unused_todo: bool,
     version: bool,
     verbose_version: bool,
     /// EXITING_OPTIONS seen, in order (for "Incompatible cli options").
@@ -294,6 +301,7 @@ fn long_spec(name: &str) -> Result<(usize, bool), Fail> {
 
 fn parse_args(args: Vec<String>) -> Result<Cli, Fail> {
     let mut cli = Cli::default();
+    let all = args.clone();
     let mut it = args.into_iter().peekable();
     let mut rest_are_paths = false;
     while let Some(arg) = it.next() {
@@ -358,6 +366,16 @@ fn parse_args(args: Vec<String>) -> Result<Cli, Fail> {
                 let shown = if inline_given { format!("{written}={}", value.unwrap_or_default()) } else { written };
                 return Err(Fail::Parse(format!("missing argument: {shown}")));
             }
+            // `@options.replace(ConfigRegeneration.new.options.merge(@options))`: the options of the
+            // command recorded in the todo file, overridden by those given before this one (then
+            // the rest apply as usual), so the arguments are parsed again in that order.
+            if name == "regenerate-todo" {
+                let rest: Vec<String> = it.collect();
+                let mut again = regeneration_args();
+                again.extend_from_slice(&all[..all.len() - rest.len() - 1]);
+                again.extend(rest);
+                return parse_args(again);
+            }
             if usage == Use::Unsupported {
                 let shown = if neg { format!("--no-{name}") } else { format!("--{name}") };
                 return Err(Fail::Unsupported(format!("{shown} is not supported by rbcop yet")));
@@ -366,6 +384,19 @@ fn parse_args(args: Vec<String>) -> Result<Cli, Fail> {
         }
     }
     Ok(cli)
+}
+
+/// ConfigRegeneration#options: the `rubocop ...` command on the second line of `.rubocop_todo.yml`,
+/// or `--auto-gen-config` without one.
+fn regeneration_args() -> Vec<String> {
+    let text = fs::read_to_string(".rubocop_todo.yml").unwrap_or_default();
+    // File.foreach(...).take(2).last
+    let line = text.split_inclusive('\n').take(2).last().unwrap_or("");
+    // /(?<=`rubocop )(.*?)(?=`)/
+    match line.split_once("`rubocop ").and_then(|(_, r)| r.split_once('`')) {
+        Some((cmd, _)) => cmd.split_whitespace().map(String::from).collect(),
+        None => vec!["--auto-gen-config".into()],
+    }
 }
 
 fn cop_list(name: &str, value: Option<String>) -> Result<Vec<String>, Fail> {
@@ -428,10 +459,30 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
         "only-recognized-file-types" => cli.only_recognized = true,
         "only-guide-cops" => cli.only_guide = true,
         "init" => cli.init = true,
-        "exclude-limit" => cli.auto_gen[0] = true,
-        "offense-counts" => cli.auto_gen[1] = true,
-        "auto-gen-timestamp" => cli.auto_gen[2] = true,
-        "auto-gen-only-exclude" => cli.auto_gen[3] = true,
+        "exclude-limit" => {
+            cli.auto_gen[0] = true;
+            cli.gen_opts.exclude_limit = value;
+        }
+        "offense-counts" => {
+            cli.auto_gen[1] = true;
+            cli.gen_opts.offense_counts = Some(!neg);
+        }
+        "auto-gen-timestamp" => {
+            cli.auto_gen[2] = true;
+            cli.gen_opts.timestamp = Some(!neg);
+        }
+        "auto-gen-only-exclude" => {
+            cli.auto_gen[3] = true;
+            cli.gen_opts.only_exclude = Some(!neg);
+        }
+        "auto-gen-enforced-style" => cli.gen_opts.enforced_style = Some(!neg),
+        "no-exclude-limit" => cli.gen_opts.no_exclude_limit = true,
+        "auto-gen-config" => cli.auto_gen_config = true,
+        "disable-uncorrectable" => {
+            cli.disable_uncorrectable = true;
+            rbcop::autocorrect::set_disable_uncorrectable();
+        }
+        "report-unused-todo-entries" => cli.report_unused_todo = true,
         "list-enabled-cops-for" => {
             cli.list_enabled_for = value;
             cli.exiting.push("list_enabled_cops_for");
@@ -555,13 +606,16 @@ fn validate(cli: &mut Cli, global: bool) -> Result<(), Fail> {
         return Err(Fail::Arg("-C/--cache argument must be true or false".into()));
     }
     const AUTO_GEN: [&str; 4] = ["exclude-limit", "offense-counts", "auto-gen-timestamp", "auto-gen-only-exclude"];
-    if let Some(i) = cli.auto_gen.iter().position(|&given| given) {
+    if let Some(i) = cli.auto_gen.iter().position(|&given| given).filter(|_| !cli.auto_gen_config) {
         return Err(Fail::Arg(format!("--{} can only be used together with --auto-gen-config.", AUTO_GEN[i])));
     }
     if cli.safe_autocorrect && cli.autocorrect_all {
         // Rainbow(<<~MESSAGE).red, then warned red again: the trailing newline is part of the message.
         let m = "Error: Both safe and unsafe autocorrect options are specified, use only one.\n";
         return Err(Fail::Arg(red(global, m)));
+    }
+    if cli.disable_uncorrectable && cli.autocorrect.is_none() {
+        return Err(Fail::Arg("--disable-uncorrectable can only be used together with --autocorrect.".into()));
     }
     if cli.only_failed && cli.format.as_deref() != Some("junit") {
         return Err(Fail::Arg("--display-only-failed can only be used together with --format junit.".into()));
@@ -571,6 +625,9 @@ fn validate(cli: &mut Cli, global: bool) -> Result<(), Fail> {
     }
     if cli.autocorrect.is_some() && (cli.only_correctable || cli.only_safe_correctable) {
         return Err(Fail::Arg("--autocorrect cannot be used with --display-only-[safe-]correctable.".into()));
+    }
+    if cli.diff && cli.auto_gen_config {
+        return Err(Fail::Arg("--diff cannot be used with --auto-gen-config.".into()));
     }
     if cli.enable_all && cli.disable_all {
         return Err(Fail::Arg("--enable-all-cops cannot be used together with --disable-all-cops.".into()));
@@ -681,7 +738,11 @@ fn main() -> ExitCode {
         }
         // CLI#run: --init runs before the configuration is loaded.
         Ok(cli) if cli.init => init_dotfile(parse_color),
-        Ok(cli) => match run(cli, global, parse_color) {
+        Ok(cli) => match if cli.auto_gen_config {
+            auto_gen_config(cli, global, parse_color)
+        } else {
+            run(cli, global, parse_color, None)
+        } {
             Ok(code) => code,
             Err(e) => {
                 warn_red(global, &e);
@@ -693,6 +754,200 @@ fn main() -> ExitCode {
         println!("Finished in {} seconds", ruby_seconds(t0.elapsed().as_secs_f64()));
     }
     ExitCode::from(status)
+}
+
+/// AutoGenerateConfig::AUTO_GENERATED_FILE
+const AUTO_GENERATED_FILE: &str = ".rubocop_todo.yml";
+
+/// `--auto-gen-config`: CLI::Command::AutoGenerateConfig. A run with only Layout/LineLength (so
+/// cops that read its Max see the generated one), then a run of every cop; both write
+/// `.rubocop_todo.yml`, and the first run's Layout/LineLength entry is appended to the second's.
+fn auto_gen_config(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
+    const PHASE_1: &str = "Phase 1 of 2: run Layout/LineLength cop";
+    const PHASE_2: &str = "Phase 2 of 2: run all cops";
+    // CLI#act_on_options handles the exiting options before any command runs.
+    if cli.version
+        || cli.verbose_version
+        || cli.show_cops.is_some()
+        || cli.list_enabled_for.is_some()
+        || cli.show_docs_url.is_some()
+    {
+        return run(cli, global, parse_color, None);
+    }
+    let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).chain(["Lint/Syntax"]).collect();
+    // CLI#run up to execute_runners: the configuration as it is before the todo is wired in.
+    if let Some(c) = &cli.opts.config_file {
+        let abs = expand_path(c, &rbcop::config::cwd());
+        if !abs.is_file() {
+            return Err(format!("Configuration file not found: {}", abs.display()));
+        }
+    }
+    cli.opts.color = parse_color;
+    let load = |opts: &rbcop::config::Options| {
+        Store::new(opts.clone(), names.clone()).and_then(|mut store| {
+            let cwd = store.cwd().to_path_buf();
+            store.for_dir(&cwd)
+        })
+    };
+    let pwd_config = match load(&cli.opts) {
+        Ok(c) => c,
+        Err(e) => {
+            warn_red(parse_color, &e);
+            return Ok(ERROR);
+        }
+    };
+    if !cli.opts.disable_pending_cops && !cli.opts.enable_pending_cops {
+        report_pending_cops(&pwd_config, global);
+    }
+    let mut gen_opts = cli.gen_opts.clone();
+    gen_opts.disable_pending_cops = cli.opts.disable_pending_cops;
+    gen_opts.enable_pending_cops = cli.opts.enable_pending_cops;
+    gen_opts.preview = cli.opts.preview;
+    rbcop::autogen::set_gen_context(rbcop::autogen::GenContext {
+        opts: gen_opts.clone(),
+        store_opts: cli.opts.clone(),
+        cop_names: names.clone(),
+        stderr: cli.stderr,
+    });
+    rbcop::autogen::enable();
+    let paint = formatter::Paint(global);
+    // reset_config_and_auto_gen_file
+    fs::write(AUTO_GENERATED_FILE, "").map_err(|e| runner::io_error(&e, Path::new(AUTO_GENERATED_FILE)))?;
+    add_inheritance_from_auto_generated_file(cli.opts.config_file.as_deref())?;
+    // maybe_run_line_length_cop, with a new ConfigStore (which now reads the empty todo).
+    let pwd_config = match load(&cli.opts) {
+        Ok(c) => c,
+        Err(e) => {
+            warn_red(global, &e);
+            return Ok(ERROR);
+        }
+    };
+    let default = Store::new(cli.opts.clone(), names.clone())?.default_config();
+    let max = |c: &Resolved| c.hash.map("Layout/LineLength").and_then(|m| m.get("Max")).cloned();
+    let skip = if gen_opts.only_exclude == Some(true) {
+        Some("(skipped because only excludes will be generated due to `--auto-gen-only-exclude` flag)")
+    } else if matches!(pwd_config.enable_cop("Layout/LineLength"), rbcop::config::value::Value::Null)
+        || pwd_config.enable_cop("Layout/LineLength") == rbcop::config::value::Value::Bool(false)
+    {
+        Some("(skipped because Layout/LineLength is disabled)")
+    } else if max(&pwd_config) != max(&default) {
+        Some("(skipped because the default Layout/LineLength:Max is overridden)")
+    } else if cli.only.is_some() {
+        Some("(skipped because a list of cops is passed to the `--only` flag)")
+    } else {
+        None
+    };
+    let line_length_contents = match skip {
+        Some(reason) => {
+            println!("{}", paint.yellow(&format!("{PHASE_1} {reason}")));
+            String::new()
+        }
+        None => {
+            println!("{}", paint.yellow(PHASE_1));
+            let mut one = cli.clone();
+            one.only = Some(vec!["Layout/LineLength".into()]);
+            one.opts.only = vec!["Layout/LineLength".into()];
+            if run(one, global, parse_color, Some(1))? == ERROR {
+                return Ok(ERROR);
+            }
+            // Save the todo configuration of the LineLength cop.
+            let text = fs::read_to_string(AUTO_GENERATED_FILE).unwrap_or_default();
+            text.split_inclusive('\n').skip_while(|l| l.starts_with('#')).collect()
+        }
+    };
+    println!("{}", paint.yellow(PHASE_2));
+    let status = run(cli, global, parse_color, Some(2))?;
+    if status == ERROR {
+        return Ok(status);
+    }
+    // This run was made with the current maximum length allowed, so append the saved setting.
+    let mut f = fs::OpenOptions::new()
+        .append(true)
+        .open(AUTO_GENERATED_FILE)
+        .map_err(|e| runner::io_error(&e, Path::new(AUTO_GENERATED_FILE)))?;
+    std::io::Write::write_all(&mut f, line_length_contents.as_bytes()).map_err(|e| e.to_string())?;
+    Ok(status)
+}
+
+/// AutoGenerateConfig#add_inheritance_from_auto_generated_file: `.rubocop.yml` (or the `-c` file)
+/// inherits from the todo first.
+fn add_inheritance_from_auto_generated_file(config_file: Option<&Path>) -> Result<(), String> {
+    const PLACEHOLDER: &str = "###rubocop:inherit_here";
+    // relative_path_to_todo_from_options_config
+    let todo = match config_file {
+        None => AUTO_GENERATED_FILE.to_string(),
+        Some(c) => {
+            let base = rbcop::config::cwd();
+            let dir =
+                fs::canonicalize(c).map_err(|e| e.to_string())?.parent().map(Path::to_path_buf).unwrap_or_default();
+            if dir == base {
+                AUTO_GENERATED_FILE.to_string()
+            } else {
+                format!("{}/{AUTO_GENERATED_FILE}", rbcop::config::relative_path(&base, &dir))
+            }
+        }
+    };
+    let file = config_file.unwrap_or(Path::new(".rubocop.yml"));
+    let mut file_string = format!(" {todo}");
+    let mut contents: Option<String> = None;
+    if file.exists() {
+        let text = fs::read(file).map_err(|e| runner::io_error(&e, file))?;
+        let text = String::from_utf8_lossy(&text).into_owned();
+        use rbcop::config::value::{Value, parse_yaml_file};
+        let inherit = match parse_yaml_file(&text, &file.display().to_string()) {
+            Ok(Value::Map(m)) => m.get("inherit_from").cloned(),
+            _ => None,
+        };
+        // Array(...)
+        let mut files: Vec<String> = match inherit {
+            None | Some(Value::Null) => Vec::new(),
+            Some(Value::Seq(items)) => items.iter().map(|v| v.as_string().unwrap_or_default()).collect(),
+            Some(v) => vec![v.as_string().unwrap_or_default()],
+        };
+        if files.contains(&todo) {
+            return Ok(());
+        }
+        files.insert(0, todo.clone());
+        if files.len() > 1 {
+            file_string = format!("\n  - {}", files.join("\n  - "));
+        }
+        // existing_configuration
+        let single = regex::Regex::new(r"(?m)^inherit_from: *[^\n]+").unwrap();
+        let list = regex::Regex::new(r"(?m)^inherit_from: *(\n *- *[^\n]+)+").unwrap();
+        let text = single.replacen(&text, 1, PLACEHOLDER).into_owned();
+        contents = Some(list.replacen(&text, 1, PLACEHOLDER).into_owned());
+    }
+    // write_config_file
+    let mut lines: Vec<String> = match &contents {
+        Some(c) if c.chars().any(|ch| !(ch.is_ascii_whitespace() || ch == '\x0b')) => {
+            c.split('\n').map(String::from).collect()
+        }
+        _ => Vec::new(),
+    };
+    if !contents.as_deref().is_some_and(|c| c.contains(PLACEHOLDER)) {
+        // YAML_OPTIONAL_DOC_START = /\A---(\s+#|\s*\z)/
+        let doc_start = lines.iter().position(|l| {
+            l.strip_prefix("---").is_some_and(|r| {
+                let t = r.trim_start_matches(|c: char| c.is_ascii_whitespace() || c == '\x0b');
+                t.is_empty() || (t.len() < r.len() && t.starts_with('#'))
+            })
+        });
+        lines.insert(doc_start.map_or(0, |i| i + 1), PLACEHOLDER.to_string());
+    }
+    let joined = lines.join("\n");
+    // .sub(/#{PLACEHOLDER}\n*/, ...)
+    let at = joined.find(PLACEHOLDER).unwrap_or(0);
+    let after = joined[at + PLACEHOLDER.len()..].trim_start_matches('\n');
+    let mut out = format!("{}inherit_from:{file_string}\n\n{after}", &joined[..at]);
+    // .sub(/\n\n+\Z/, "\n")
+    let body = out.trim_end_matches('\n').len();
+    if out.len() - body >= 2 {
+        out.truncate(body);
+        out.push('\n');
+    }
+    fs::write(file, out).map_err(|e| runner::io_error(&e, file))?;
+    println!("Added inheritance from `{todo}` in `.rubocop.yml`.");
+    Ok(())
 }
 
 /// `--init`: CLI::Command::InitDotfile.
@@ -1021,7 +1276,10 @@ fn qualify_cop_options(cli: &mut Cli) -> (Vec<String>, Option<String>) {
 /// One file's result: report, corrected source, loop error, and the warnings its cops raised.
 /// The report, the corrected source, the correction loop's error, the cop warnings and the cop
 /// errors printed for the file.
-type Linted = Result<(FileReport, Option<String>, Option<String>, Vec<String>, Vec<String>), String>;
+/// And the file's `--auto-gen-config` updates (rbcop::autogen).
+type Linted = Result<(FileReport, Option<String>, Option<String>, Vec<String>, Vec<String>, AutogenUpdates), String>;
+
+type AutogenUpdates = rbcop::autogen::Updates;
 
 /// Whether two targets are the same file on disk (one of them through a symlink, say).
 fn same_file_twice(jobs: &[(PathBuf, std::sync::Arc<Resolved>)]) -> bool {
@@ -1030,8 +1288,8 @@ fn same_file_twice(jobs: &[(PathBuf, std::sync::Arc<Resolved>)]) -> bool {
     jobs.iter().filter_map(|(p, _)| fs::metadata(p).ok()).any(|m| !seen.insert((m.dev(), m.ino())))
 }
 
-/// Returns the exit status.
-fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
+/// Returns the exit status. `phase` is the `--auto-gen-config` run (1 or 2) this is.
+fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Result<u8, String> {
     // Lint/Syntax lives in the runner but is a registered cop with its own config in RuboCop.
     let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).chain(["Lint/Syntax"]).collect();
     // ConfigLoader: a missing -c file is an error, even with --force-default-config.
@@ -1082,24 +1340,28 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         show_docs_url(cops, &pwd_config);
         return Ok(0);
     }
-    if !cli.opts.disable_pending_cops && !cli.opts.enable_pending_cops {
+    // AutoGenerateConfig runs after CLI#report_pending_cops.
+    if phase.is_none() && !cli.opts.disable_pending_cops && !cli.opts.enable_pending_cops {
         report_pending_cops(&pwd_config, global);
     }
 
     // CLI#apply_default_formatter, then FormatterSet#add_formatter's lookup.
     let pairs: Vec<(String, Option<PathBuf>)> = if cli.formatters.is_empty() {
-        let default = pwd_config.all_cops().str("DefaultFormatter").unwrap_or("progress").to_string();
-        vec![(default, cli.output_path.clone())]
+        let default = match cli.auto_gen_config {
+            true => "autogenconf",
+            false => pwd_config.all_cops().str("DefaultFormatter").unwrap_or("progress"),
+        };
+        vec![(default.to_string(), cli.output_path.clone())]
     } else {
         cli.formatters.clone()
     };
     let mut resolved = Vec::new();
     for (key, path) in &pairs {
-        let name = formatter::resolve(key)?;
-        if name == "[a]utogenconf" {
-            return Err("rbcop: the autogenconf formatter is not supported yet".into());
-        }
-        resolved.push((name, path.clone()));
+        resolved.push((formatter::resolve(key)?, path.clone()));
+    }
+    // AutoGenerateConfig#add_formatter
+    if phase.is_some() {
+        resolved.push((formatter::TODO, Some(PathBuf::from(AUTO_GENERATED_FILE))));
     }
 
     // Runner#find_target_files. Paths that do not exist are kept, as RuboCop keeps them, and fail
@@ -1375,8 +1637,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         }))
         .unwrap_or_else(|_| Err(format!("rbcop: internal error while inspecting {}", path.display())));
         let errors = runner::take_file_errors();
+        let updates = rbcop::autogen::take_file();
         linted.map(|(report, corrected, loop_error)| {
-            (report, corrected, loop_error, runner::take_file_warnings(), errors)
+            (report, corrected, loop_error, runner::take_file_warnings(), errors, updates)
         })
     };
     // Cops recurse over the AST; runner::MAX_AST_DEPTH (1000) needs under 2 MiB, the rest is
@@ -1507,7 +1770,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             // working directory and the command-line paths) is not written; it is reported as
             // without -a/-A. write_source checks again right before writing. (`--diff` writes nothing.)
             let refused = match &linted {
-                Ok((_, Some(_), _, _, _)) if stdin_text.is_none() && !cli.diff => {
+                Ok((_, Some(_), _, _, _, _)) if stdin_text.is_none() && !cli.diff => {
                     fs::canonicalize(path).ok().filter(|real| rbcop::autocorrect::outside_roots(real, &write_roots))
                 }
                 _ => None,
@@ -1525,7 +1788,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                 }
                 None => linted,
             };
-            let (mut report, corrected, loop_error, warnings, errors) = match linted {
+            let (mut report, corrected, loop_error, warnings, errors, updates) = match linted {
                 Ok(l) => l,
                 Err(e) => {
                     error = Some(e);
@@ -1533,6 +1796,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
                     break;
                 }
             };
+            rbcop::autogen::replay(updates);
             // Lint/RedundantCopDisableDirective's did-you-mean list is the registry of the first
             // file that described an unknown cop name (#599).
             let view = registry_at.get(path).copied();
@@ -1699,6 +1963,20 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             None => std::io::Write::write_all(&mut std::io::stdout(), original).map_err(|e| e.to_string())?,
         }
     }
+    // `all_passed || @options[:auto_gen_config]`
+    all_passed |= phase.is_some();
+    let mut status = if all_passed && cop_errors.is_empty() { 0 } else { OFFENSES };
+    // ExecuteRunner#merge_todo_audit_status
+    if cli.report_unused_todo {
+        let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).chain(["Lint/Syntax"]).collect();
+        let audit = report_unused_todo_entries(&mut store, &cwd, &names, &badge_selected, global)?;
+        if status == 0 {
+            status = audit;
+        }
+    }
+    if phase.is_some() {
+        return Ok(status);
+    }
     // CLI#execute_runners: SuggestExtensions follows ExecuteRunner.
     let suggestions = suggest_extensions(&cli, &pwd_config, &store.default_config(), store.loaded_plugins());
     if cli.stderr {
@@ -1706,5 +1984,92 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     } else {
         print!("{suggestions}");
     }
-    Ok(if all_passed && cop_errors.is_empty() { 0 } else { OFFENSES })
+    Ok(status)
+}
+
+/// `--report-unused-todo-entries`: TodoAudit. Each `Exclude` entry of `.rubocop_todo.yml` whose
+/// file the cop no longer flags (inspected with the todo's exclusions taken out), or that is not a
+/// file, is listed on stderr, and the run fails.
+fn report_unused_todo_entries(
+    store: &mut Store,
+    cwd: &Path,
+    names: &[&'static str],
+    selected: &dyn Fn(&str, &Resolved) -> bool,
+    global: bool,
+) -> Result<u8, String> {
+    use rbcop::config::value::{Map, Value};
+    let paint = formatter::Paint(global);
+    let todo = cwd.join(AUTO_GENERATED_FILE);
+    if !todo.exists() {
+        let msg = paint.yellow(&format!("No `{AUTO_GENERATED_FILE}` found; nothing to audit."));
+        eprintln!("{msg}");
+        return Ok(0);
+    }
+    let dir = todo.parent().unwrap_or(cwd).to_path_buf();
+    let text = fs::read_to_string(&todo).map_err(|e| runner::io_error(&e, &todo))?;
+    let yaml = rbcop::config::value::parse_yaml_file(&text, &todo.display().to_string())?;
+    // todo_exclude_entries: (cop, path as written), for registered cops with an Exclude list.
+    // Deliberate difference: only cops rbcop implements are audited (it cannot tell whether another
+    // cop still flags a file).
+    let implemented = |c: &str| names.contains(&c);
+    let mut entries: Vec<(&'static str, String)> = Vec::new();
+    if let Value::Map(m) = &yaml {
+        for (cop, cfg) in &m.0 {
+            let Some(cop) = names.iter().copied().find(|n| n == cop).filter(|c| c.contains('/') && implemented(c))
+            else {
+                continue;
+            };
+            let Some(Value::Seq(items)) = cfg.as_map().and_then(|c| c.get("Exclude")) else { continue };
+            entries.extend(items.iter().filter_map(|i| match i {
+                Value::Str(s) => Some((cop, s.clone())),
+                _ => None,
+            }));
+        }
+    }
+    let absolute = |p: &str| expand_path(Path::new(p), &dir);
+    let mut files: Vec<PathBuf> = Vec::new();
+    for (_, p) in &entries {
+        let f = absolute(p);
+        if !files.contains(&f) && f.is_file() {
+            files.push(f);
+        }
+    }
+    let mut offending: std::collections::HashMap<PathBuf, std::collections::HashSet<&'static str>> = Default::default();
+    for file in files {
+        let config = store.for_file(&file)?;
+        // audit_config: the todo exclusions removed for the audited cops.
+        let mut hash = config.hash.clone();
+        for (cop, _) in &entries {
+            let Some(Value::Map(cop_cfg)) = hash.get(cop).cloned() else { continue };
+            let Some(Value::Seq(excludes)) = cop_cfg.get("Exclude") else { continue };
+            let removals: Vec<Value> = entries
+                .iter()
+                .filter(|(c, _)| c == cop)
+                .map(|(_, p)| Value::Str(absolute(p).display().to_string()))
+                .collect();
+            let kept: Vec<Value> = excludes.iter().filter(|e| !removals.contains(e)).cloned().collect();
+            let mut new: Map = (*cop_cfg).clone();
+            new.insert("Exclude", Value::Seq(std::sync::Arc::new(kept)));
+            hash.insert(*cop, Value::Map(std::sync::Arc::new(new)));
+        }
+        let audited = config.with_hash(hash, names);
+        let bytes = fs::read(&file).map_err(|e| runner::io_error(&e, &file))?;
+        let display = rbcop::config::relative_path(&file, cwd);
+        let report = runner::inspect_bytes(&file, &display, bytes, &audited, &|cop| selected(cop, &audited));
+        let _ = runner::take_file_errors();
+        let _ = runner::take_file_warnings();
+        let _ = rbcop::autogen::take_file();
+        offending.insert(file, report.offenses.iter().filter(|o| !o.disabled).map(|o| o.cop).collect());
+    }
+    let unused: Vec<&(&'static str, String)> =
+        entries.iter().filter(|(cop, p)| !offending.get(&absolute(p)).is_some_and(|s| s.contains(cop))).collect();
+    if unused.is_empty() {
+        return Ok(0);
+    }
+    let noun = if unused.len() == 1 { "entry" } else { "entries" };
+    eprintln!("{}", paint.red(&format!("\n{} unused todo {noun} found in `{AUTO_GENERATED_FILE}`:", unused.len())));
+    for (cop, p) in unused {
+        eprintln!("  {cop}: {p}");
+    }
+    Ok(OFFENSES)
 }

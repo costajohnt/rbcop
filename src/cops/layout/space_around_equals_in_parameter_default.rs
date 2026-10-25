@@ -25,7 +25,7 @@ impl Cop for SpaceAroundEqualsInParameterDefault {
         let (arg_sp, eq_sp) = (space_after(arg_end), space_after(eq_end));
         let space = cx.cfg.str("EnforcedStyle").unwrap_or("space") == "space";
         if (space && arg_sp && eq_sp) || (!space && !arg_sp && !eq_sp) {
-            return;
+            return cx.correct_style_detected();
         }
         let msg = format!("Surrounding space {} in default value assignment.", if space { "missing" } else { "detected" });
         // `range.source.match(/=\s*(\S+)/)`: whatever non-space text follows the `=` is kept.
@@ -33,6 +33,9 @@ impl Cop for SpaceAroundEqualsInParameterDefault {
         let after_eq = range_src.split_once('=').map_or("", |(_, r)| r.trim_start_matches(|c: char| is_ruby_space(c as u8)));
         let rest: String = after_eq.chars().take_while(|&c| !(c.is_ascii() && is_ruby_space(c as u8))).collect();
         let replacement = format!("{}{rest}", if space { " = " } else { "=" });
+        if cx.block_runs(arg_end, value_start) {
+            cx.opposite_style_detected();
+        }
         cx.add_fix(arg_end, value_start, msg, |c| c.replace(arg_end, value_start, &replacement));
     }
 }

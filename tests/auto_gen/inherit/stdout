@@ -1,0 +1,8 @@
+Added inheritance from `.rubocop_todo.yml` in `.rubocop.yml`.
+Phase 1 of 2: run Layout/LineLength cop (skipped because the default Layout/LineLength:Max is overridden)
+Phase 2 of 2: run all cops
+Inspecting 2 files
+CW
+
+2 files inspected, 9 offenses detected, 5 offenses autocorrectable
+Created .rubocop_todo.yml.

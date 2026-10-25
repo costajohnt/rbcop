@@ -11,6 +11,8 @@ pub(super) enum Kind {
     Quiet,
     Clang,
     Progress,
+    /// AutoGenConfigFormatter: progress without the offenses.
+    AutoGenConf,
     Tap,
     Fuubar,
     Pacman,
@@ -232,7 +234,7 @@ impl Formatter for Text {
         self.corrections = 0;
         self.correctable = 0;
         match self.kind {
-            Kind::Progress => {
+            Kind::Progress | Kind::AutoGenConf => {
                 self.stored.clear();
                 let _ = writeln!(out, "Inspecting {}", pluralize(targets.len(), "file", false));
             }
@@ -281,7 +283,7 @@ impl Formatter for Text {
                     self.report_file(out, cx, f.path, offs);
                 }
             }
-            Kind::Progress => {
+            Kind::Progress | Kind::AutoGenConf => {
                 let mark = match offs.iter().rev().max_by_key(|o| o.severity) {
                     None => self.p.green("."),
                     Some(o) => self.severity_code(o),
@@ -343,6 +345,10 @@ impl Formatter for Text {
                         offs.iter().for_each(|o| self.report_offense(out, cx, file, o));
                     }
                 }
+                self.summary(out, cx, inspected.len());
+            }
+            Kind::AutoGenConf => {
+                out.push('\n');
                 self.summary(out, cx, inspected.len());
             }
             Kind::Quiet if self.offenses == 0 => {}

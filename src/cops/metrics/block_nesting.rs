@@ -56,6 +56,10 @@ impl<'pr> Nesting<'_, '_, '_> {
         let saved = self.level;
         self.level += counts as i64;
         let max = *self.max.get_or_insert_with(|| self.cx.cfg.num("Max").unwrap_or(Num::Int(0)));
+        if self.level as f64 > max.f64() {
+            // `self.max = current_level`, for every node over the limit.
+            self.cx.exclude_limit("Max", self.level);
+        }
         if self.level as f64 > max.f64() && !self.ignored.iter().any(|&(s, e)| s <= range.0 && e >= range.1) {
             let ran = Cell::new(false);
             let msg = format!("Avoid more than {max} levels of block nesting.");

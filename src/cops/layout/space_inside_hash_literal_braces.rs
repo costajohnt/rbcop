@@ -71,6 +71,7 @@ impl Cop for SpaceInsideHashLiteralBraces {
                 style != "no_space"
             };
             if space_after(src, &t1) == expect_space {
+                cx.correct_style_detected();
                 continue;
             }
             let brace = if left_brace(&t1) { t1 } else { t2 };
@@ -94,6 +95,14 @@ impl Cop for SpaceInsideHashLiteralBraces {
             let inside = if is_empty { "empty hash literal braces" } else { src.slice(brace.start, brace.end) };
             let problem = if expect_space { "missing" } else { "detected" };
             let range_src = src.slice(s, e);
+            // ambiguous_or_unexpected_style_detected, with the detected style as a String (nil).
+            if cx.block_runs(s, e) {
+                let ambiguous = src.slice(t1.start, t1.end) == src.slice(t2.start, t2.end);
+                cx.autogen(move |c| {
+                    let detected = if ambiguous { vec![None, Some("compact".to_string())] } else { vec![None] };
+                    c.style_detected("EnforcedStyle", &detected)
+                });
+            }
             cx.add_fix(s, e, format!("Space inside {inside} {problem}."), |c| {
                 if range_src.bytes().any(helpers::parser_tokens::is_ruby_space) {
                     c.remove(s, e);

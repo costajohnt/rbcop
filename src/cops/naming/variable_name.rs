@@ -30,8 +30,9 @@ impl Cop for VariableName {
         }
         let style = cx.cfg.str("EnforcedStyle").unwrap_or("snake_case");
         if naming::naming_valid(style, &name) || helpers::allowed::matches_allowed_pattern(cx.cfg, &name) {
-            return;
+            return cx.correct_style_detected();
         }
+        naming::report_opposing_styles(cx, start, end, |s| naming::naming_valid(s, &name));
         cx.add(start, end, format!("Use {style} for variable names."));
     }
 }

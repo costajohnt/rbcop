@@ -59,6 +59,6 @@ impl Cop for NumberedParametersLimit {
         let parameter = if max.f64() > 1.0 { "parameters" } else { "parameter" };
         let msg = format!("Avoid using more than {} numbered {parameter}; {count} detected.", max.to_i());
         let loc = node.location();
-        cx.add(loc.start_offset(), loc.end_offset(), msg);
+        cx.add_with_limit(loc.start_offset(), loc.end_offset(), msg, "Max", count);
     }
 }

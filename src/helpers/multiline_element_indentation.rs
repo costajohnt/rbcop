@@ -92,6 +92,51 @@ pub fn indent_base(
     (line[..first_non_space(line).unwrap_or(0)].chars().count() as i64, IndentBase::StartOfLine)
 }
 
+/// check_first's style detection (`detected_styles`), `delta` being its `@column_delta`: the
+/// styles under which the first element's column is right.
+#[allow(clippy::too_many_arguments)]
+pub fn detect(
+    cx: &Cx,
+    brace_style: &'static str,
+    first: (usize, usize),
+    offset: i64,
+    left_brace: usize,
+    left_paren: Option<usize>,
+    delta: i64,
+) {
+    if !crate::autogen::on() {
+        return;
+    }
+    let src = cx.src;
+    let column = src.column(first.0) as i64 - configured_indentation_width(cx) - offset;
+    let line = src.lines.get(src.line_of(left_brace) - 1).copied().unwrap_or("");
+    let mut styles = Vec::new();
+    if column == line[..first_non_space(line).unwrap_or(0)].chars().count() as i64 {
+        styles.push("consistent");
+        if left_paren.is_none() {
+            styles.push("special_inside_parentheses");
+        }
+    }
+    if let Some(p) = left_paren
+        && column == src.column(p) as i64 + 1
+    {
+        styles.push("special_inside_parentheses");
+    }
+    if column == src.column(left_brace) as i64 {
+        styles.push(brace_style);
+    }
+    if delta == 0 {
+        // check_expected_style
+        if styles.len() > 1 {
+            cx.style_detected(&styles);
+        } else {
+            cx.correct_style_detected();
+        }
+    } else if cx.block_runs(first.0, first.1) {
+        cx.style_detected(&styles);
+    }
+}
+
 /// Words for one literal kind.
 pub struct Words {
     pub brace_style: &'static str,

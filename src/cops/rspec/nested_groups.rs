@@ -57,7 +57,10 @@ impl Cop for NestedGroups {
             helpers::rspec::add_found(
                 cx,
                 |cx, found| walk(&mut Ctx { l: &l, max, allowed: cx.cfg, found }, group, 1),
-                |cx, ((s, e), nesting)| cx.add(s, e, format!("Maximum example group nesting exceeded [{nesting}/{max}].")),
+                |cx, ((s, e), nesting)| {
+                    cx.exclude_limit("Max", nesting);
+                    cx.add(s, e, format!("Maximum example group nesting exceeded [{nesting}/{max}]."))
+                },
             );
         });
     }

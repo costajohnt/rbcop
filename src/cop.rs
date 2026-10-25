@@ -68,6 +68,8 @@ pub struct Offense {
     pub disabled: bool,
     /// DirectiveComment#reason of the directive that suppressed it (the text after `--`).
     pub justification: Option<String>,
+    /// `--disable-uncorrectable` gave it a `# rubocop:todo` comment (status `:corrected_with_todo`).
+    pub todo: bool,
 }
 
 /// A heredoc's body lines, `first..terminator` (1-based), and its closing delimiter.
@@ -102,6 +104,9 @@ pub struct Facts {
     pub config_disabled: Vec<&'static str>,
     /// The file text shared by correctors.
     pub text: Arc<str>,
+    /// Under `--disable-uncorrectable`: the ranges of heredocs, backslash-continued strings, percent
+    /// arrays and multi-line dstrs, in AST pre-order (AutocorrectLogic#multiline_ranges).
+    pub literal_ranges: Vec<(usize, usize)>,
 }
 
 /// Autocorrect state of the running cop for one file (RuboCop's per-cop `current_corrector`).
@@ -113,6 +118,11 @@ pub struct Fixes {
     pub corrector: Option<Corrector>,
     /// Ranges reported so far (`current_offense_locations`).
     pub seen: HashSet<(usize, usize)>,
+    /// `--disable-uncorrectable`: an offense this run does not correct gets a `# rubocop:todo`
+    /// comment (the cop autocorrects, or its unsafe correction is skipped under `-a`).
+    pub todo: bool,
+    /// Lines given a todo comment so far (`currently_disabled_lines`).
+    pub todo_lines: HashSet<usize>,
 }
 
 /// What a cop sees while it runs on one node or one file.
@@ -158,7 +168,39 @@ impl Cx<'_, '_> {
         if self.fixes.seen.contains(&(start, end)) {
             return;
         }
+        if self.fixes.todo && !self.suppressed(start, end) {
+            return self.push_todo(start, end, message.into());
+        }
         self.push(start, end, message.into(), correctable, false);
+    }
+
+    fn suppressed(&self, start: usize, end: usize) -> bool {
+        crate::directives::suppressed(&self.facts.disabled, self.cop, self.src.line_of(start), self.src.line_of(end))
+    }
+
+    /// Base#disable_uncorrectable: a `# rubocop:todo` comment for the offense (none if its line has
+    /// one from this cop already), status `:corrected_with_todo`.
+    fn push_todo(&mut self, start: usize, end: usize, message: String) {
+        if self.fixes.todo_lines.insert(self.src.line_of(start)) {
+            let mut c = Corrector::new(self.facts.text.clone());
+            crate::autocorrect::disable_offense(
+                &mut c,
+                self.src,
+                &self.facts.literal_ranges,
+                self.config,
+                self.cop,
+                start,
+                end,
+            );
+            let merged = self.fixes.corrector.get_or_insert_with(|| Corrector::new(self.facts.text.clone()));
+            if merged.merge(&c).is_err() {
+                return self.cop_error();
+            }
+        }
+        self.push(start, end, message, true, true);
+        if let Some(o) = self.out.last_mut() {
+            o.todo = true;
+        }
     }
 
     /// Report an offense with no location (RuboCop's `add_global_offense`), e.g. a file name problem.
@@ -180,6 +222,7 @@ impl Cx<'_, '_> {
             source: None,
             disabled: false,
             justification: None,
+            todo: false,
         });
     }
 
@@ -200,6 +243,11 @@ impl Cx<'_, '_> {
         fix(&mut corrector);
         if corrector.clobbered() {
             return self.cop_error();
+        }
+        // Base#use_corrector: under --disable-uncorrectable an offense without a correction (or
+        // whose unsafe correction -a skips) gets a todo comment instead.
+        if self.fixes.todo && (corrector.is_empty() || !self.fixes.autocorrect) {
+            return self.push_todo(start, end, message.into());
         }
         if corrector.is_empty() {
             return self.push(start, end, message.into(), false, false);
@@ -251,12 +299,105 @@ impl Cx<'_, '_> {
             disabled: false,
             justification: None,
             global: false,
+            todo: false,
         });
     }
 
     /// Nearest ancestor (the parent in Prism's tree).
     pub fn parent(&self) -> Option<&Node<'_>> {
         self.ancestors.last()
+    }
+
+    /// Whether the block of an `add_offense` on this range would run now: the range is new and
+    /// its lines are not disabled by a comment. Ask before reporting the offense.
+    pub fn block_runs(&self, start: usize, end: usize) -> bool {
+        !self.fixes.seen.contains(&(start, end))
+            && !crate::directives::suppressed(
+                &self.facts.disabled,
+                self.cop,
+                self.src.line_of(start),
+                self.src.line_of(end),
+            )
+    }
+
+    /// Update this cop's `--auto-gen-config` state (crate::autogen).
+    pub fn autogen(&self, f: impl FnOnce(&mut crate::autogen::CopState) + Send + 'static) {
+        crate::autogen::record(self.cop, f);
+    }
+
+    /// ConfigurableEnforcedStyle#style_detected with the given Symbol styles (`ambiguous_style_detected`
+    /// for several), for the style parameter `param`.
+    pub fn style_detected_for(&self, param: &'static str, detected: &[&str]) {
+        if crate::autogen::on() {
+            let d: Vec<crate::autogen::Style> = detected.iter().map(|s| Some(s.to_string())).collect();
+            self.autogen(move |c| c.style_detected(param, &d));
+        }
+    }
+
+    /// `style_detected` for `EnforcedStyle`.
+    pub fn style_detected(&self, detected: &[&str]) {
+        self.style_detected_for("EnforcedStyle", detected);
+    }
+
+    /// `unexpected_style_detected 'name'` with a String: SYMBOL_TO_STRING_CACHE maps it to nil.
+    pub fn string_style_detected_for(&self, param: &'static str) {
+        self.autogen(move |c| c.style_detected(param, &[None]));
+    }
+
+    /// `correct_style_detected` (the configured style) for `param`.
+    pub fn correct_style_detected_for(&self, param: &'static str) {
+        if crate::autogen::on()
+            && let Some(style) = self.cfg.str(param)
+        {
+            let style = style.to_string();
+            self.style_detected_for(param, &[&style]);
+        }
+    }
+
+    pub fn correct_style_detected(&self) {
+        self.correct_style_detected_for("EnforcedStyle");
+    }
+
+    /// `opposite_style_detected` for `param`: the other of exactly two supported styles.
+    pub fn opposite_style_detected_for(&self, param: &'static str) {
+        if crate::autogen::on() {
+            // Util.to_supported_styles
+            let supported = param.replacen("Enforced", "Supported", 1).replacen("Style", "Styles", 1);
+            let style = self.cfg.str(param).unwrap_or_default().to_string();
+            if let Some(other) = self.cfg.strings(&supported).into_iter().find(|s| *s != style) {
+                self.style_detected_for(param, &[&other]);
+            }
+        }
+    }
+
+    pub fn opposite_style_detected(&self) {
+        self.opposite_style_detected_for("EnforcedStyle");
+    }
+
+    /// `no_acceptable_style!` (also `unrecognized_style_detected`, `conflicting_styles_detected`).
+    pub fn no_acceptable_style(&self) {
+        self.autogen(|c| c.no_acceptable_style_now());
+    }
+
+    /// `add_offense(range, message:) { self.<param> = value }`: the ExcludeLimit value is recorded
+    /// when the block runs.
+    pub fn add_with_limit(
+        &mut self,
+        start: usize,
+        end: usize,
+        message: impl Into<String>,
+        param: &'static str,
+        value: i64,
+    ) {
+        if crate::autogen::on() && self.block_runs(start, end) {
+            self.exclude_limit(param, value);
+        }
+        self.add(start, end, message);
+    }
+
+    /// ExcludeLimit: `self.<param> = value`.
+    pub fn exclude_limit(&self, param: &'static str, value: i64) {
+        self.autogen(move |c| c.limit(param, value));
     }
 }
 

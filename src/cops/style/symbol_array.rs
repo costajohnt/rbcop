@@ -81,7 +81,11 @@ impl Cop for SymbolArray {
             if els.is_empty() || !els.iter().all(sym) || complex_content(&array) {
                 return;
             }
-            if pa::allowed_bracket_array(cx, node) || !percent_style {
+            if pa::allowed_bracket_array(cx, node) {
+                return;
+            }
+            pa::array_style_detected(cx, "brackets", els.len());
+            if !percent_style {
                 return;
             }
             let values: Vec<Vec<u8>> =
@@ -89,9 +93,13 @@ impl Cop for SymbolArray {
             let replacement = pa::percent_literal_replacement(cx, node, &values, 'i');
             cx.add_fix(start, end, PERCENT_MSG, |c| c.replace(start, end, &replacement));
         } else if open.starts_with("%i") || open.starts_with("%I") {
+            pa::array_style_detected(cx, "percent", array.elements().iter().count());
             let brackets_required = complex_content(&array);
             if percent_style && !brackets_required {
                 return;
+            }
+            if brackets_required {
+                cx.no_acceptable_style();
             }
             let syms: Vec<String> = array
                 .elements()

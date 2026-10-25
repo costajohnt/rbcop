@@ -54,6 +54,94 @@ pub fn registry_index(name: &str) -> (usize, usize) {
     (plugin, REGISTRY.order.get(name).copied().unwrap_or(usize::MAX))
 }
 
+static DISABLE_UNCORRECTABLE: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+
+/// `--disable-uncorrectable`
+pub fn set_disable_uncorrectable() {
+    DISABLE_UNCORRECTABLE.store(true, std::sync::atomic::Ordering::Relaxed);
+}
+
+pub fn disable_uncorrectable() -> bool {
+    DISABLE_UNCORRECTABLE.load(std::sync::atomic::Ordering::Relaxed)
+}
+
+/// Cop::Base#autocorrect? (`correctable` is Cop.support_autocorrect?; `--disable-uncorrectable`
+/// makes every cop correctable).
+pub fn autocorrect(correctable: bool, cfg: &CopConfig, mode: Option<Mode>) -> bool {
+    mode.is_some_and(|m| (correctable || disable_uncorrectable()) && cop_autocorrects(cfg, m))
+}
+
+/// AutocorrectLogic#skipped_unsafe_correction_with_disable_uncorrectable?
+fn skipped_unsafe(cfg: &CopConfig, mode: Option<Mode>) -> bool {
+    disable_uncorrectable()
+        && mode == Some(Mode::Safe)
+        && !(cfg.bool("Safe").unwrap_or(true) && cfg.bool("SafeAutoCorrect").unwrap_or(true))
+}
+
+/// Team#partition_by_correcting: the cop runs in the correcting pass (it autocorrects, or puts
+/// todo comments where its unsafe correction is skipped).
+pub fn correcting(correctable: bool, cfg: &CopConfig, mode: Option<Mode>) -> bool {
+    autocorrect(correctable, cfg, mode) || skipped_unsafe(cfg, mode)
+}
+
+/// Whether the cop's uncorrected offenses get todo comments (`--disable-uncorrectable`).
+pub fn todo(correctable: bool, cfg: &CopConfig, mode: Option<Mode>) -> bool {
+    disable_uncorrectable() && correcting(correctable, cfg, mode)
+}
+
+/// AutocorrectLogic#disable_offense: `# rubocop:todo <cop>` at the end of the offense's first line,
+/// or around its lines (`# rubocop:todo` before, `# rubocop:enable` after) when the comment would
+/// make the line too long or land inside a multi-line literal.
+pub fn disable_offense(
+    c: &mut Corrector,
+    src: &crate::source::Source,
+    literals: &[(usize, usize)],
+    config: &Resolved,
+    cop: &str,
+    start: usize,
+    end: usize,
+) {
+    let eol = format!(" # rubocop:todo {cop}");
+    // max_line_length
+    let max = config
+        .cop_enabled("Layout/LineLength")
+        .then(|| config.for_cop("Layout/LineLength").num("Max").map_or(120.0, |n| n.f64()));
+    let line_text = |off: usize| src.lines.get(src.line_of(off) - 1).copied().unwrap_or("");
+    // line_with_eol_comment_too_long?
+    let too_long = max.is_some_and(|m| (line_text(start).chars().count() + eol.chars().count()) as f64 > m);
+    let line = src.line_of(start);
+    let unbreakable = (start != end)
+        .then(|| {
+            literals.iter().copied().find(|&(ls, le)| {
+                start < le && ls < end && (too_long || (line >= src.line_of(ls) && line < src.line_of(le)))
+            })
+        })
+        .flatten();
+    // range_by_lines: from the start of the first line to the end of the last (no newline).
+    let by_lines = |(s, e): (usize, usize)| {
+        let first = src.line_start(src.line_of(s));
+        let last = src.line_of(e);
+        (first, src.line_start(last) + src.lines.get(last - 1).map_or(0, |l| l.len()))
+    };
+    let around = match unbreakable {
+        Some(r) => Some(by_lines(r)),
+        None if too_long => Some(by_lines((start, end))),
+        None => None,
+    };
+    match around {
+        Some((s, e)) => {
+            // disable_offense_before_and_after
+            let first = line_text(s);
+            let ws: String = first.chars().take_while(|ch| matches!(ch, ' ' | '\t' | '\x0b' | '\x0c' | '\r')).collect();
+            c.wrap(s, e + 1, &format!("{ws}# rubocop:todo {cop}\n"), &format!("{ws}# rubocop:enable {cop}\n"));
+        }
+        None => {
+            let eol_at = src.line_start(line) + line_text(start).len();
+            c.insert_after(eol_at, eol_at, &eol);
+        }
+    }
+}
+
 /// Cop::AutocorrectLogic#autocorrect? for a cop that supports autocorrection (`Cop::correctable`).
 pub fn cop_autocorrects(cfg: &CopConfig, mode: Mode) -> bool {
     // autocorrect_enabled?

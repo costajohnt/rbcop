@@ -1,0 +1,2 @@
+b = 'clean'
+puts b

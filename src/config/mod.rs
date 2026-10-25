@@ -287,6 +287,8 @@ pub struct Resolved {
     /// The native plugins loaded (by any config) when this config's first file was inspected:
     /// Runner caches each config's team from then, so plugins loaded later add no cops to it.
     pub team_plugins: std::sync::OnceLock<Vec<&'static str>>,
+    /// Config#loaded_path: the file this config was loaded from (None for the default).
+    pub loaded_path: Option<PathBuf>,
 }
 
 impl Resolved {
@@ -325,6 +327,7 @@ impl Resolved {
             gem_versions: std::sync::OnceLock::new(),
             rspec_language: std::sync::OnceLock::new(),
             team_plugins: std::sync::OnceLock::new(),
+            loaded_path: loaded_path.map(Path::to_path_buf),
         };
         for &name in cop_names {
             let cfg = r.build_cop(name, opts);
@@ -336,6 +339,16 @@ impl Resolved {
                     r.deprecated_warnings.push((name, msg));
                 }
             }
+        }
+        r
+    }
+
+    /// `Config.create(hash, loaded_path, check: false)`: this config's file with another hash.
+    pub fn with_hash(&self, hash: Map, cop_names: &[&'static str]) -> Resolved {
+        let mut r = Resolved::new(hash, self.loaded_path.as_deref(), &self.opts, cop_names);
+        r.unregistered = self.unregistered.clone();
+        if let Some(t) = self.team_plugins.get() {
+            let _ = r.team_plugins.set(t.clone());
         }
         r
     }

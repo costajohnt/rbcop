@@ -27,7 +27,7 @@ impl Cop for LambdaCall {
         let implicit = call.message_loc().is_none();
         let explicit_style = cx.cfg.str("EnforcedStyle") != Some("braces");
         if explicit_style != implicit {
-            return;
+            return cx.correct_style_detected();
         }
         let dot = call.call_operator_loc().map_or("", |d| text(&d));
         let args: Vec<&str> = send_args(&call).iter().map(node_text).collect();
@@ -47,6 +47,7 @@ impl Cop for LambdaCall {
             }
         });
         if ran.get() {
+            cx.opposite_style_detected();
             cx.state::<Vec<(usize, usize)>>().push((s, e));
         }
     }

@@ -131,9 +131,18 @@ impl Cop for FormatStringToken {
             }
             for (seq, detected) in detections {
                 let parts = sequence_parts(seq.source);
-                if detected == style || !correctable_seq(parts.ty) {
+                if detected == style {
+                    cx.correct_style_detected();
                     continue;
                 }
+                if !correctable_seq(parts.ty) {
+                    continue;
+                }
+                cx.style_detected(&[match detected {
+                    Style::Annotated => "annotated",
+                    Style::Template => "template",
+                    Style::Unannotated => "unannotated",
+                }]);
                 let (start, end) = (piece_start + seq.begin, piece_start + seq.end);
                 let msg = format!("Prefer {} over {}.", message_text(style), message_text(detected));
                 if !context {

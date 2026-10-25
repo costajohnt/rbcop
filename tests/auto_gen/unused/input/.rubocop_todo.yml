@@ -1,0 +1,14 @@
+# Offense count: 2
+Style/StringLiterals:
+  Exclude:
+    - 'lib/dirty.rb'
+    - 'lib/clean.rb'
+    - 'lib/missing.rb'
+    - '**/*.gen.rb'
+
+Layout/SpaceAroundOperators:
+  Exclude:
+    - 'lib/clean.rb'
+
+Lint/UselessAssignment:
+  Enabled: false

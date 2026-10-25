@@ -112,7 +112,21 @@ impl Cop for SpecialGlobalVars {
         };
         let Some(pref) = preferred(style, g) else { return };
         if pref.contains(&g) {
-            return;
+            return cx.correct_style_detected();
+        }
+        if crate::autogen::on() {
+            // matching_styles: the styles that prefer this name for some variable.
+            let names: Vec<&str> = VARS.iter().flat_map(|(perl, english)| std::iter::once(*perl).chain(english.iter().copied())).collect();
+            let matching: Vec<&str> = [
+                (Style::English, "use_english_names"),
+                (Style::Perl, "use_perl_names"),
+                (Style::Builtin, "use_builtin_english_names"),
+            ]
+            .into_iter()
+            .filter(|(s, _)| names.iter().any(|n| preferred(*s, n).is_some_and(|p| p.contains(&g))))
+            .map(|(_, name)| name)
+            .collect();
+            cx.style_detected(&matching);
         }
         let msg = message(style, g, &pref);
         let loc = node.location();

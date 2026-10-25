@@ -56,10 +56,21 @@ impl Cop for CaseIndentation {
         let depth = if one_step { "one step more than" } else { "as deep as" };
         let style = if end_style { "end" } else { "case" };
         for (kw, _) in &branches {
-            if src.column(kw.start_offset()) as i64 == base + width {
+            let column = src.column(kw.start_offset()) as i64;
+            if column == base + width {
+                cx.correct_style_detected();
                 continue;
             }
             let start = kw.start_offset();
+            // detect_incorrect_style, in the offense's block
+            if cx.block_runs(start, kw.end_offset()) {
+                let alternative = if end_style { src.column(case_kw.start_offset()) } else { src.column(end_kw.start_offset()) };
+                if column == alternative as i64 {
+                    cx.opposite_style_detected();
+                } else {
+                    cx.no_acceptable_style();
+                }
+            }
             let ls = src.line_start(src.line_of(start));
             let blank = src.text[ls..start].trim_matches(|c: char| c.is_ascii_whitespace() || c == '\0' || c == '\x0b').is_empty();
             let replacement = " ".repeat((base + width).max(0) as usize);

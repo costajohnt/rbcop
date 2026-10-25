@@ -1,0 +1,7 @@
+AllCops:
+  SuggestExtensions: false
+  NewCops: enable
+Layout/LineLength:
+  Max: 80
+Metrics/ParameterLists:
+  Max: 3
