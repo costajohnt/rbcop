@@ -269,6 +269,8 @@ pub struct GenContext {
     pub cop_names: Vec<&'static str>,
     /// `--stderr`: `puts` goes to stderr.
     pub stderr: bool,
+    /// Where the todo may be written (autocorrect::write_roots).
+    pub roots: Vec<std::path::PathBuf>,
 }
 
 static CONTEXT: Mutex<Option<GenContext>> = Mutex::new(None);

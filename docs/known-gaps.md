@@ -150,6 +150,16 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - `--report-unused-todo-entries` audits only the `.rubocop_todo.yml` entries of cops rbcop
   implements: for any other cop it cannot tell whether the file is still flagged, so the entry is
   not listed (RuboCop lists it when its cop no longer flags the file).
+- `--regenerate-todo` takes from the command recorded in `.rubocop_todo.yml` (a file the project
+  controls) only the options `--auto-gen-config` itself records there (`--auto-gen-config`,
+  `--[no-]auto-gen-only-exclude`, `--disable-pending-cops`, `--enable-pending-cops`,
+  `--[no-]preview`, `--exclude-limit N`, `--no-exclude-limit`, `--[no-]offense-counts`,
+  `--[no-]auto-gen-timestamp`, `--[no-]auto-gen-enforced-style`); anything else there (an output
+  file, a config, paths, `--regenerate-todo`) is dropped with a warning. RuboCop parses the whole
+  recorded command. A `--regenerate-todo` is expanded once.
+- `--auto-gen-config` writes `.rubocop_todo.yml` and the config it adds the inheritance to as `-a`
+  writes files: only inside the project (the working directory and the command-line paths), and
+  never through a symlink (`rbcop: not writing PATH: ...`, exit 2).
 - `--auto-gen-config` keeps ExcludeLimit values (`Max`, `MinDigits`) in memory. RuboCop writes them
   under its cache root (`auto-gen-tmp/`, left behind empty), where concurrent RuboCop runs sharing
   that root mix their values; with two such parameters for one cop (Metrics/ParameterLists'

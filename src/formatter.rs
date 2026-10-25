@@ -642,7 +642,13 @@ impl Set {
                     if let Some(dir) = p.parent().filter(|d| !d.as_os_str().is_empty()) {
                         std::fs::create_dir_all(dir).map_err(|e| format!("{}: {e}", dir.display()))?;
                     }
-                    let f = File::create(p).map_err(|e| format!("{}: {e}", p.display()))?;
+                    // The todo file stays inside the project and is never written through a symlink.
+                    let f = if *name == TODO {
+                        crate::autocorrect::write_contained(p, b"", &crate::autogen::gen_context().roots, false)
+                            .map_err(|e| format!("{}: {e}", p.display()))?
+                    } else {
+                        File::create(p).map_err(|e| format!("{}: {e}", p.display()))?
+                    };
                     let tty = f.is_terminal();
                     (Sink::File(f, p.clone()), tty)
                 }

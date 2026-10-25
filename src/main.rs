@@ -373,7 +373,14 @@ fn parse_args(args: Vec<String>) -> Result<Cli, Fail> {
                 let rest: Vec<String> = it.collect();
                 let mut again = regeneration_args();
                 again.extend_from_slice(&all[..all.len() - rest.len() - 1]);
-                again.extend(rest);
+                // Expanded once: a later `--regenerate-todo` would only repeat the same options.
+                let mut paths = false;
+                for a in rest {
+                    paths |= a == "--";
+                    if paths || !is_regenerate_todo(&a) {
+                        again.push(a);
+                    }
+                }
                 return parse_args(again);
             }
             if usage == Use::Unsupported {
@@ -388,15 +395,52 @@ fn parse_args(args: Vec<String>) -> Result<Cli, Fail> {
 
 /// ConfigRegeneration#options: the `rubocop ...` command on the second line of `.rubocop_todo.yml`,
 /// or `--auto-gen-config` without one.
+///
+/// Deliberate difference: the file comes with the project, so only the options
+/// DisabledConfigFormatter#command writes are taken from it; anything else (an output file, a
+/// config, paths, `--regenerate-todo` itself) is dropped with a warning.
 fn regeneration_args() -> Vec<String> {
-    let text = fs::read_to_string(".rubocop_todo.yml").unwrap_or_default();
+    const ALLOWED: &[&str] = &[
+        "--auto-gen-config",
+        "--auto-gen-only-exclude",
+        "--no-auto-gen-only-exclude",
+        "--disable-pending-cops",
+        "--enable-pending-cops",
+        "--preview",
+        "--no-preview",
+        "--no-exclude-limit",
+        "--offense-counts",
+        "--no-offense-counts",
+        "--auto-gen-timestamp",
+        "--no-auto-gen-timestamp",
+        "--auto-gen-enforced-style",
+        "--no-auto-gen-enforced-style",
+    ];
+    let text = fs::read_to_string(AUTO_GENERATED_FILE).unwrap_or_default();
     // File.foreach(...).take(2).last
     let line = text.split_inclusive('\n').take(2).last().unwrap_or("");
     // /(?<=`rubocop )(.*?)(?=`)/
-    match line.split_once("`rubocop ").and_then(|(_, r)| r.split_once('`')) {
-        Some((cmd, _)) => cmd.split_whitespace().map(String::from).collect(),
-        None => vec!["--auto-gen-config".into()],
+    let Some((cmd, _)) = line.split_once("`rubocop ").and_then(|(_, r)| r.split_once('`')) else {
+        return vec!["--auto-gen-config".into()];
+    };
+    let mut out = Vec::new();
+    let mut words = cmd.split_whitespace().peekable();
+    while let Some(w) = words.next() {
+        if ALLOWED.contains(&w) {
+            out.push(w.to_string());
+        } else if w == "--exclude-limit" && words.peek().is_some_and(|n| n.bytes().all(|b| b.is_ascii_digit())) {
+            out.push(w.to_string());
+            out.push(words.next().unwrap().to_string());
+        } else {
+            eprintln!("rbcop: ignoring `{w}` from the command recorded in {AUTO_GENERATED_FILE}");
+        }
     }
+    out
+}
+
+/// A `--regenerate-todo` written in full or as a prefix OptionParser completes to it.
+fn is_regenerate_todo(arg: &str) -> bool {
+    arg.len() >= "--reg".len() && "--regenerate-todo".starts_with(arg)
 }
 
 fn cop_list(name: &str, value: Option<String>) -> Result<Vec<String>, Fail> {
@@ -756,6 +800,14 @@ fn main() -> ExitCode {
     ExitCode::from(status)
 }
 
+/// A write `--auto-gen-config` makes failed, or was refused (autocorrect::write_contained).
+fn not_writing(e: &std::io::Error, path: &Path) -> String {
+    match e.kind() {
+        std::io::ErrorKind::PermissionDenied => format!("rbcop: not writing {}: {e}", path.display()),
+        _ => runner::io_error(e, path),
+    }
+}
+
 /// AutoGenerateConfig::AUTO_GENERATED_FILE
 const AUTO_GENERATED_FILE: &str = ".rubocop_todo.yml";
 
@@ -808,12 +860,17 @@ fn auto_gen_config(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, 
         store_opts: cli.opts.clone(),
         cop_names: names.clone(),
         stderr: cli.stderr,
+        roots: rbcop::autocorrect::write_roots(&rbcop::config::cwd(), &cli.paths),
     });
     rbcop::autogen::enable();
     let paint = formatter::Paint(global);
-    // reset_config_and_auto_gen_file
-    fs::write(AUTO_GENERATED_FILE, "").map_err(|e| runner::io_error(&e, Path::new(AUTO_GENERATED_FILE)))?;
-    add_inheritance_from_auto_generated_file(cli.opts.config_file.as_deref())?;
+    // reset_config_and_auto_gen_file. Deliberate difference: like autocorrect, these writes stay
+    // inside the project (the working directory and the command-line paths) and never follow a
+    // symlink.
+    let roots = rbcop::autocorrect::write_roots(&rbcop::config::cwd(), &cli.paths);
+    rbcop::autocorrect::write_contained(Path::new(AUTO_GENERATED_FILE), b"", &roots, false)
+        .map_err(|e| not_writing(&e, Path::new(AUTO_GENERATED_FILE)))?;
+    add_inheritance_from_auto_generated_file(cli.opts.config_file.as_deref(), &roots)?;
     // maybe_run_line_length_cop, with a new ConfigStore (which now reads the empty todo).
     let pwd_config = match load(&cli.opts) {
         Ok(c) => c,
@@ -861,17 +918,14 @@ fn auto_gen_config(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, 
         return Ok(status);
     }
     // This run was made with the current maximum length allowed, so append the saved setting.
-    let mut f = fs::OpenOptions::new()
-        .append(true)
-        .open(AUTO_GENERATED_FILE)
-        .map_err(|e| runner::io_error(&e, Path::new(AUTO_GENERATED_FILE)))?;
-    std::io::Write::write_all(&mut f, line_length_contents.as_bytes()).map_err(|e| e.to_string())?;
+    rbcop::autocorrect::write_contained(Path::new(AUTO_GENERATED_FILE), line_length_contents.as_bytes(), &roots, true)
+        .map_err(|e| not_writing(&e, Path::new(AUTO_GENERATED_FILE)))?;
     Ok(status)
 }
 
 /// AutoGenerateConfig#add_inheritance_from_auto_generated_file: `.rubocop.yml` (or the `-c` file)
 /// inherits from the todo first.
-fn add_inheritance_from_auto_generated_file(config_file: Option<&Path>) -> Result<(), String> {
+fn add_inheritance_from_auto_generated_file(config_file: Option<&Path>, roots: &[PathBuf]) -> Result<(), String> {
     const PLACEHOLDER: &str = "###rubocop:inherit_here";
     // relative_path_to_todo_from_options_config
     let todo = match config_file {
@@ -945,7 +999,7 @@ fn add_inheritance_from_auto_generated_file(config_file: Option<&Path>) -> Resul
         out.truncate(body);
         out.push('\n');
     }
-    fs::write(file, out).map_err(|e| runner::io_error(&e, file))?;
+    rbcop::autocorrect::write_contained(file, out.as_bytes(), roots, false).map_err(|e| not_writing(&e, file))?;
     println!("Added inheritance from `{todo}` in `.rubocop.yml`.");
     Ok(())
 }

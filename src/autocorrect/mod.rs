@@ -418,6 +418,31 @@ pub fn write_source(path: &Path, new: &str, roots: &[PathBuf]) -> std::io::Resul
     file.write_all(new.as_bytes())
 }
 
+/// Create or truncate (`append`: append to) `path` with `content`, refusing a file whose directory
+/// resolves outside the `roots` (write_roots) and a symlink at any step below the root. Returns the
+/// open file.
+pub fn write_contained(path: &Path, content: &[u8], roots: &[PathBuf], append: bool) -> std::io::Result<std::fs::File> {
+    use std::io::Write;
+    let refuse = |what: String| std::io::Error::new(std::io::ErrorKind::PermissionDenied, what);
+    let parent = path.parent().filter(|p| !p.as_os_str().is_empty()).unwrap_or(Path::new("."));
+    let Some(name) = path.file_name() else { return Err(std::io::ErrorKind::InvalidInput.into()) };
+    let dir_path = std::fs::canonicalize(parent)?;
+    let Some(root) = roots.iter().find(|r| dir_path.starts_with(r)) else {
+        return Err(refuse(format!("{} resolves to {}, outside the project", path.display(), dir_path.display())));
+    };
+    if std::fs::symlink_metadata(path).is_ok_and(|m| m.file_type().is_symlink()) {
+        return Err(refuse(format!("{} is a symbolic link", path.display())));
+    }
+    let mut dir = at::open_dir(root)?;
+    for c in dir_path.strip_prefix(root).unwrap_or(Path::new("")).components() {
+        dir = at::open(&dir, c.as_os_str(), at::DIR | libc::O_NOFOLLOW, 0)?;
+    }
+    let mode = if append { libc::O_APPEND } else { libc::O_TRUNC };
+    let mut f = at::open(&dir, name, libc::O_WRONLY | libc::O_CREAT | libc::O_NOFOLLOW | mode, 0o666)?;
+    f.write_all(content)?;
+    Ok(f)
+}
+
 /// `openat`, `renameat` and `unlinkat` relative to an open directory.
 mod at {
     use std::ffi::{CString, OsStr};
