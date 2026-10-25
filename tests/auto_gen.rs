@@ -155,3 +155,20 @@ fn todo_symlink_is_not_followed() {
     let _ = fs::remove_dir_all(&dir);
     let _ = fs::remove_file(&victim);
 }
+
+/// Nor through a hard link to a file outside the project.
+#[test]
+fn todo_hard_link_is_not_written() {
+    let dir = project("todo-hardlink");
+    let victim = dir.with_extension("hardvictim");
+    fs::write(&victim, "keep\n").unwrap();
+    fs::hard_link(&victim, dir.join(".rubocop_todo.yml")).unwrap();
+    let out = rbcop(&dir, &["--cache", "false", "--auto-gen-config"]);
+    let stderr = String::from_utf8_lossy(&out.stderr);
+    assert_eq!(out.status.code(), Some(2), "{stderr}");
+    assert!(stderr.contains("not a regular file of its own"), "{stderr}");
+    assert_eq!(fs::read_to_string(&victim).unwrap(), "keep\n");
+    assert_eq!(fs::read_to_string(dir.join(".rubocop.yml")).unwrap(), "AllCops:\n  SuggestExtensions: false\n");
+    let _ = fs::remove_dir_all(&dir);
+    let _ = fs::remove_file(&victim);
+}

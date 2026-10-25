@@ -418,11 +418,14 @@ pub fn write_source(path: &Path, new: &str, roots: &[PathBuf]) -> std::io::Resul
     file.write_all(new.as_bytes())
 }
 
-/// Create or truncate (`append`: append to) `path` with `content`, refusing a file whose directory
-/// resolves outside the `roots` (write_roots) and a symlink at any step below the root. Returns the
+/// Create or replace (`append`: append to) `path` with `content`, refusing a file whose directory
+/// resolves outside the `roots` (write_roots), a symlink at any step below the root, and an
+/// existing file that is not a regular file of the current user with a single link (a hard link
+/// to a file elsewhere). A replaced file is written to a new file renamed over it. Returns the
 /// open file.
 pub fn write_contained(path: &Path, content: &[u8], roots: &[PathBuf], append: bool) -> std::io::Result<std::fs::File> {
     use std::io::Write;
+    use std::os::unix::fs::MetadataExt;
     let refuse = |what: String| std::io::Error::new(std::io::ErrorKind::PermissionDenied, what);
     let parent = path.parent().filter(|p| !p.as_os_str().is_empty()).unwrap_or(Path::new("."));
     let Some(name) = path.file_name() else { return Err(std::io::ErrorKind::InvalidInput.into()) };
@@ -437,9 +440,45 @@ pub fn write_contained(path: &Path, content: &[u8], roots: &[PathBuf], append: b
     for c in dir_path.strip_prefix(root).unwrap_or(Path::new("")).components() {
         dir = at::open(&dir, c.as_os_str(), at::DIR | libc::O_NOFOLLOW, 0)?;
     }
-    let mode = if append { libc::O_APPEND } else { libc::O_TRUNC };
-    let mut f = at::open(&dir, name, libc::O_WRONLY | libc::O_CREAT | libc::O_NOFOLLOW | mode, 0o666)?;
-    f.write_all(content)?;
+    let create = libc::O_WRONLY | libc::O_CREAT | libc::O_EXCL | libc::O_NOFOLLOW;
+    // Opened without truncating (O_NONBLOCK: a FIFO does not hang the open) and checked first.
+    let existing = match at::open(&dir, name, libc::O_WRONLY | libc::O_NOFOLLOW | libc::O_NONBLOCK, 0) {
+        Ok(f) => f,
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
+            let mut f = at::open(&dir, name, create, 0o666)?;
+            f.write_all(content)?;
+            return Ok(f);
+        }
+        Err(e) => return Err(e),
+    };
+    let meta = existing.metadata()?;
+    // SAFETY: geteuid has no preconditions.
+    let mine = meta.uid() == unsafe { libc::geteuid() };
+    if !meta.file_type().is_file() || meta.nlink() != 1 || !mine {
+        return Err(refuse(format!("{} is not a regular file of its own (a link, or another user's)", path.display())));
+    }
+    if append {
+        drop(existing);
+        let mut f = at::open(&dir, name, libc::O_WRONLY | libc::O_APPEND | libc::O_NOFOLLOW, 0)?;
+        f.write_all(content)?;
+        return Ok(f);
+    }
+    drop(existing);
+    static COUNTER: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+    let n = COUNTER.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+    let nanos = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map_or(0, |d| d.as_nanos());
+    let tmp = format!(".{}.rbcop-{}-{n}-{nanos:x}.tmp", name.to_string_lossy(), std::process::id());
+    let tmp = std::ffi::OsStr::new(&tmp);
+    let mut f = at::open(&dir, tmp, create, 0o600)?;
+    let written = (|| {
+        f.set_permissions(meta.permissions())?;
+        f.write_all(content)?;
+        at::rename(&dir, tmp, name)
+    })();
+    if let Err(e) = written {
+        let _ = at::unlink(&dir, tmp);
+        return Err(e);
+    }
     Ok(f)
 }
 
