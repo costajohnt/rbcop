@@ -182,6 +182,42 @@ Further large gains need method-name dispatch (calling a cop only for the call n
 like RuboCop's `RESTRICT_ON_SEND`), which changes the cop trait. Layout/RedundantLineBreak (off
 by default) reparses and re-serializes the enclosing scope per offense and dominates all-cops runs.
 
+### Second round: each corpus with its own config
+
+Profiled on the Linux box of the CI-shaped runs (no `perf` in the container, so an in-process
+sampler, pprof-rs, in a scratch build), rbcop at 64b4a66f linting rails, discourse and mastodon
+with their own `.rubocop.yml`. With a project config, choosing each file's cops cost more than
+any cop: every one of the ~800 cops matched its Include/Exclude globs against the file, though
+most share their department's lists. Shares of the profile samples, before and after:
+
+| hot spot | rails | discourse | mastodon |
+|---|---:|---:|---:|
+| glob miss falling through to the hidden-file test (`hidden_file_in_not_hidden_dir`) | 5.4% to 0.4% | 9.9% to 1.7% | 6.9% to 0.7% |
+| `Resolved::relevant` per cop (now a per-file memo over shared lists) | 8.9% to 1.0% | 12.0% to 5.5% | 16.1% to 2.4% |
+| per-file scan of every cop's config and plugin, `disabled_names` per file | 12.3% to 0.7% | 7.8% to 0.6% | 4.1% to 0.4% |
+| VariableForce's `lvasgn` keys built for files without a loop | 6.2% to 0.9% | 5.1% to 0.4% | 0.4% to 0.1% |
+| depth guard walking the tree up to four times | 1.8% to 0.6% | 1.5% to 0.7% | 0.5% to 0.2% |
+| `Source::comment_on_line` scanning every comment | 1.3% to 0.03% | 0.06% to 0% | 0.06% to 0% |
+| fancy-regex compiling an unused anchored copy (RSpec/SpecFilePathFormat, per file) | | | 2.9 to 2.0 per parse sample |
+
+Each corpus with its own config, all 10 CPUs of the container, `--cache false --format
+quiet`, master 64b4a66f against the branch (release builds), alternating, median of 3. Load
+average before the runs 4.1 to 8.1, mostly the previous run decaying; two single-threaded
+RuboCop processes of another job ran throughout. Output was identical (`--format emacs` and
+exit status, also on jekyll), and the gates below are unchanged.
+
+| corpus | wall s, before | wall s, after | user s, before | user s, after |
+|---|---:|---:|---:|---:|
+| rails | 1.66 | 1.40 | 9.46 | 7.37 |
+| discourse | 5.59 | 4.25 | 34.2 | 23.9 |
+| mastodon | 3.08 | 2.54 | 21.6 | 18.0 |
+
+What is left: on discourse `relevant` still takes about 5% (a list no other cop of the config
+has is matched once per file and cop); the rest is the cops and their shared
+analyses (token translation, charged to Style/Semicolon or Layout/ExtraSpacing as the first to
+ask; VariableForce, charged to Lint/ShadowedArgument or Lint/UselessAssignment), parsing, and
+the walker's dispatch.
+
 ## Reproducing
 
 CI-shaped runs (Linux, needs `taskset` and RuboCop 1.91 on `PATH`):
