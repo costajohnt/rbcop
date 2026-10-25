@@ -1336,8 +1336,10 @@ fn qualify_cop_options(cli: &mut Cli) -> (Vec<String>, Option<String>) {
 /// The report, the corrected source, the correction loop's error, the cop warnings and the cop
 /// errors printed for the file, what the result cache needs to save it, and the file's
 /// `--auto-gen-config` updates (rbcop::autogen).
-type Linted =
-    Result<(FileReport, Option<String>, Option<String>, Vec<String>, Vec<String>, Saving, rbcop::autogen::Updates), String>;
+type Linted = Result<
+    (FileReport, Option<String>, Option<String>, Vec<String>, Vec<String>, Saving, rbcop::autogen::Updates),
+    String,
+>;
 
 /// What `lint` returns for one file: the report, the corrected source, the correction loop's
 /// error, and the result cache key to save the report under.
@@ -1928,7 +1930,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             // working directory and the command-line paths) is not written; it is reported as
             // without -a/-A. write_source checks again right before writing. (`--diff` writes nothing.)
             let refused = match &linted {
-                Ok((_, Some(_), _, _, _, _)) if stdin_text.is_none() && !cli.diff => {
+                Ok((_, Some(_), _, _, _, _, _)) if stdin_text.is_none() && !cli.diff => {
                     fs::canonicalize(path).ok().filter(|real| rbcop::autocorrect::outside_roots(real, &write_roots))
                 }
                 _ => None,
