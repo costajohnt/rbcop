@@ -8,6 +8,8 @@ use std::sync::{LazyLock, RwLock};
 /// not be installed: `plugins:` / `require:` of it registers its cops and merges that file.
 pub struct NativePlugin {
     pub gem: &'static str,
+    /// The version in docs/plugins.md (what `-V` lists).
+    pub version: &'static str,
     /// Its `default_lint_roller_plugin` class.
     pub plugin_class: &'static str,
     /// The departments its cops live in.
@@ -21,6 +23,7 @@ pub struct NativePlugin {
 pub const NATIVE_PLUGINS: &[NativePlugin] = &[
     NativePlugin {
         gem: "rubocop-performance",
+        version: "1.27.0",
         plugin_class: "RuboCop::Performance::Plugin",
         departments: &["Performance"],
         default_yml: include_str!("../../config/plugins/rubocop-performance.yml"),
@@ -28,6 +31,7 @@ pub const NATIVE_PLUGINS: &[NativePlugin] = &[
     },
     NativePlugin {
         gem: "rubocop-rails",
+        version: "2.38.0",
         plugin_class: "RuboCop::Rails::Plugin",
         departments: &["Rails"],
         default_yml: include_str!("../../config/plugins/rubocop-rails.yml"),
@@ -35,6 +39,7 @@ pub const NATIVE_PLUGINS: &[NativePlugin] = &[
     },
     NativePlugin {
         gem: "rubocop-minitest",
+        version: "0.41.0",
         plugin_class: "RuboCop::Minitest::Plugin",
         departments: &["Minitest"],
         default_yml: include_str!("../../config/plugins/rubocop-minitest.yml"),
@@ -42,6 +47,7 @@ pub const NATIVE_PLUGINS: &[NativePlugin] = &[
     },
     NativePlugin {
         gem: "rubocop-rspec",
+        version: "3.10.2",
         plugin_class: "RuboCop::RSpec::Plugin",
         departments: &["RSpec"],
         default_yml: include_str!("../../config/plugins/rubocop-rspec.yml"),
@@ -49,6 +55,7 @@ pub const NATIVE_PLUGINS: &[NativePlugin] = &[
     },
     NativePlugin {
         gem: "rubocop-rspec_rails",
+        version: "2.33.0",
         plugin_class: "RuboCop::RSpecRails::Plugin",
         departments: &["RSpecRails"],
         default_yml: include_str!("../../config/plugins/rubocop-rspec_rails.yml"),
@@ -56,6 +63,7 @@ pub const NATIVE_PLUGINS: &[NativePlugin] = &[
     },
     NativePlugin {
         gem: "rubocop-factory_bot",
+        version: "2.28.0",
         plugin_class: "RuboCop::FactoryBot::Plugin",
         departments: &["FactoryBot"],
         default_yml: include_str!("../../config/plugins/rubocop-factory_bot.yml"),
@@ -63,6 +71,7 @@ pub const NATIVE_PLUGINS: &[NativePlugin] = &[
     },
     NativePlugin {
         gem: "rubocop-capybara",
+        version: "3.0.0",
         plugin_class: "RuboCop::Capybara::Plugin",
         departments: &["Capybara", "Capybara/RSpec"],
         default_yml: include_str!("../../config/plugins/rubocop-capybara.yml"),
