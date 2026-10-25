@@ -15,11 +15,15 @@ struct Check<'a> {
 }
 
 impl Check<'_> {
-    fn offense(&self, cx: &mut Cx, s: isize, e: isize, msg: &str) {
+    /// `enforced`: the offense is about `EnforcedStyle` (not `EnforcedStyleForEmptyBraces`).
+    fn offense(&self, cx: &mut Cx, s: isize, e: isize, msg: &str, enforced: bool) {
         if s > e {
             return;
         }
         let (s, e) = (s as usize, e as usize);
+        if enforced && cx.block_runs(s, e) {
+            cx.opposite_style_detected();
+        }
         let range_src = cx.src.slice(s, e);
         cx.add_fix(s, e, msg, |c| {
             if range_src.bytes().any(helpers::parser_tokens::is_ruby_space) {
@@ -36,13 +40,17 @@ impl Check<'_> {
 
     fn no_space(&self, cx: &mut Cx, s: usize, e: usize, msg: &str) {
         if self.style == "space" {
-            self.offense(cx, s as isize, e as isize, msg);
+            self.offense(cx, s as isize, e as isize, msg, true);
+        } else {
+            cx.correct_style_detected();
         }
     }
 
     fn space(&self, cx: &mut Cx, s: isize, e: isize, msg: &str) {
         if self.style == "no_space" {
-            self.offense(cx, s, e, msg);
+            self.offense(cx, s, e, msg, true);
+        } else {
+            cx.correct_style_detected();
         }
     }
 }
@@ -80,14 +88,14 @@ impl Cop for SpaceInsideBlockBraces {
         let check = Check { style: &style };
         if le == rb {
             if empty_style == "space" {
-                check.offense(cx, lb as isize, re as isize, "Space missing inside empty braces.");
+                check.offense(cx, lb as isize, re as isize, "Space missing inside empty braces.", false);
             }
             return;
         }
         let inner = src.slice(le, rb);
         if !inner.bytes().any(|b| !helpers::parser_tokens::is_ruby_space(b)) {
             if empty_style == "no_space" {
-                check.offense(cx, le as isize, rb as isize, "Space inside empty braces detected.");
+                check.offense(cx, le as isize, rb as isize, "Space inside empty braces detected.", false);
             }
             return;
         }
@@ -107,15 +115,19 @@ impl Cop for SpaceInsideBlockBraces {
         if !helpers::parser_tokens::is_ruby_space(first) {
             if let Some((ds, de)) = pipe {
                 if le == ds && before_params {
-                    check.offense(cx, lb as isize, de as isize, "Space between { and | missing.");
+                    check.offense(cx, lb as isize, de as isize, "Space between { and | missing.", true);
+                } else {
+                    cx.correct_style_detected();
                 }
             } else {
                 // One character after the brace (it may be multibyte: `{\u3000` is an identifier).
                 check.no_space(cx, le, le + inner.chars().next().map_or(1, char::len_utf8), "Space missing inside {.");
             }
         } else if let Some((ds, _)) = pipe {
-            if !before_params {
-                check.offense(cx, le as isize, ds as isize, "Space between { and | detected.");
+            if before_params {
+                cx.correct_style_detected();
+            } else {
+                check.offense(cx, le as isize, ds as isize, "Space between { and | detected.", true);
             }
         } else {
             let (_, e) = range_with_surrounding_space(src.text, lb, le, Surrounding { side: Side::Right, ..Default::default() });

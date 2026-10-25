@@ -1,0 +1,4 @@
+== Gemfile ==
+C:  1:  8: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+
+3 files inspected, 1 offense detected, 1 offense autocorrectable

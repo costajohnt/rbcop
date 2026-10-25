@@ -51,8 +51,9 @@ impl Cop for FirstArrayElementIndentation {
             }
             let (b, t) = base(cx);
             let delta = b + configured_indentation_width(cx) - src.column(start) as i64;
+            let end = first.location().end_offset();
+            helpers::multiline_element_indentation::detect(cx, WORDS.brace_style, (start, end), 0, left, paren, delta);
             if delta != 0 {
-                let end = first.location().end_offset();
                 let set = Settings::of(cx);
                 cx.add_fix(start, end, first_message(cx, &WORDS, &t), |c| {
                     correct(c, src, set, start, end, Some(first), delta, false)

@@ -89,9 +89,20 @@ impl Cop for AccessModifierIndentation {
             if src.line_of(loc.start_offset()) == node_line {
                 continue;
             }
-            let delta = expected - (effective_column(src, loc.start_offset()) - end_col);
-            if delta != 0 {
+            let offset = effective_column(src, loc.start_offset()) - end_col;
+            let delta = expected - offset;
+            if delta == 0 {
+                cx.correct_style_detected();
+            } else {
                 let (s, e) = (loc.start_offset(), loc.end_offset());
+                if cx.block_runs(s, e) {
+                    // unexpected_indent_offset
+                    if offset == helpers::alignment::configured_indentation_width(cx) - expected {
+                        cx.opposite_style_detected();
+                    } else {
+                        cx.no_acceptable_style();
+                    }
+                }
                 let msg = format!("{label} access modifiers like `{}`.", node_text(&m));
                 cx.add_fix(s, e, msg, |c| helpers::alignment_corrector::correct(c, src, set, s, e, Some(&m), delta, false));
             }

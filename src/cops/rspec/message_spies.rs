@@ -60,7 +60,13 @@ impl Cop for MessageSpies {
             v.visit(&a);
         }
         for (s, e) in v.found {
+            if cx.block_runs(s, e) {
+                cx.opposite_style_detected();
+            }
             cx.add(s, e, msg.clone());
+        }
+        if v.stop {
+            cx.correct_style_detected();
         }
     }
 }

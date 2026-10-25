@@ -26,7 +26,7 @@ impl Cop for VariableNumber {
                     return;
                 }
                 if def.receiver().is_some() && naming::class_emitter_method(cx.ancestors, &name) {
-                    return;
+                    return cx.correct_style_detected();
                 }
                 (name, loc.start_offset(), loc.end_offset(), "method name")
             }
@@ -51,9 +51,11 @@ impl Cop for VariableNumber {
             }
         };
         let style = cx.cfg.str("EnforcedStyle").unwrap_or("normalcase");
-        if naming::numbering_valid(style, &name) || helpers::allowed::matches_allowed_pattern(cx.cfg, &name) {
-            return;
+        let allowed = helpers::allowed::matches_allowed_pattern(cx.cfg, &name);
+        if naming::numbering_valid(style, &name) || allowed {
+            return cx.correct_style_detected();
         }
+        naming::report_opposing_styles(cx, start, end, |s| naming::numbering_valid(s, &name));
         cx.add(start, end, format!("Use {style} for {what} numbers."));
     }
 }

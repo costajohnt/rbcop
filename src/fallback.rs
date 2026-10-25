@@ -220,6 +220,7 @@ pub fn run(
             source: originals.get(&path).cloned(),
             disabled: disabled == "1",
             justification: (!justification.is_empty()).then(|| unescape(justification)),
+            todo: false,
         };
         out.entry(path).or_insert_with(Vec::new).push(offense);
     }

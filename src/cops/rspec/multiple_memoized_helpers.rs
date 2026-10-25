@@ -37,6 +37,7 @@ impl Cop for MultipleMemoizedHelpers {
             return;
         }
         let (s, e) = helpers::rspec::node_range(node);
+        cx.exclude_limit("Max", count);
         cx.add(s, e, format!("Example group has too many memoized helpers [{count}/{max}]"));
     }
 }

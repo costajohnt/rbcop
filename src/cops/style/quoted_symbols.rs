@@ -82,7 +82,15 @@ impl Cop for QuotedSymbols {
         let wrong = if hash_key { wrong_quotes(src, single) } else { wrong_quotes(&src[1..], single) };
         let invalid_double = style == "double_quotes" && !needs_double(src);
         if !(wrong || invalid_double) {
-            return;
+            // correct_style_detected with the resolved `style`.
+            return cx.style_detected(&[&style]);
+        }
+        if cx.block_runs(start, end) {
+            // alternative_style: `(supported_styles - [style, :same_as_string_literals]).first`
+            let other = cx.cfg.strings("SupportedStyles").into_iter().find(|s| *s != style && s != "same_as_string_literals");
+            if let Some(other) = other {
+                cx.style_detected(&[&other]);
+            }
         }
         let binary = cx.src.binary;
         let correct_quotes = |s: &str| {

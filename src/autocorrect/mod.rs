@@ -54,6 +54,94 @@ pub fn registry_index(name: &str) -> (usize, usize) {
     (plugin, REGISTRY.order.get(name).copied().unwrap_or(usize::MAX))
 }
 
+static DISABLE_UNCORRECTABLE: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+
+/// `--disable-uncorrectable`
+pub fn set_disable_uncorrectable() {
+    DISABLE_UNCORRECTABLE.store(true, std::sync::atomic::Ordering::Relaxed);
+}
+
+pub fn disable_uncorrectable() -> bool {
+    DISABLE_UNCORRECTABLE.load(std::sync::atomic::Ordering::Relaxed)
+}
+
+/// Cop::Base#autocorrect? (`correctable` is Cop.support_autocorrect?; `--disable-uncorrectable`
+/// makes every cop correctable).
+pub fn autocorrect(correctable: bool, cfg: &CopConfig, mode: Option<Mode>) -> bool {
+    mode.is_some_and(|m| (correctable || disable_uncorrectable()) && cop_autocorrects(cfg, m))
+}
+
+/// AutocorrectLogic#skipped_unsafe_correction_with_disable_uncorrectable?
+fn skipped_unsafe(cfg: &CopConfig, mode: Option<Mode>) -> bool {
+    disable_uncorrectable()
+        && mode == Some(Mode::Safe)
+        && !(cfg.bool("Safe").unwrap_or(true) && cfg.bool("SafeAutoCorrect").unwrap_or(true))
+}
+
+/// Team#partition_by_correcting: the cop runs in the correcting pass (it autocorrects, or puts
+/// todo comments where its unsafe correction is skipped).
+pub fn correcting(correctable: bool, cfg: &CopConfig, mode: Option<Mode>) -> bool {
+    autocorrect(correctable, cfg, mode) || skipped_unsafe(cfg, mode)
+}
+
+/// Whether the cop's uncorrected offenses get todo comments (`--disable-uncorrectable`).
+pub fn todo(correctable: bool, cfg: &CopConfig, mode: Option<Mode>) -> bool {
+    disable_uncorrectable() && correcting(correctable, cfg, mode)
+}
+
+/// AutocorrectLogic#disable_offense: `# rubocop:todo <cop>` at the end of the offense's first line,
+/// or around its lines (`# rubocop:todo` before, `# rubocop:enable` after) when the comment would
+/// make the line too long or land inside a multi-line literal.
+pub fn disable_offense(
+    c: &mut Corrector,
+    src: &crate::source::Source,
+    literals: &[(usize, usize)],
+    config: &Resolved,
+    cop: &str,
+    start: usize,
+    end: usize,
+) {
+    let eol = format!(" # rubocop:todo {cop}");
+    // max_line_length
+    let max = config
+        .cop_enabled("Layout/LineLength")
+        .then(|| config.for_cop("Layout/LineLength").num("Max").map_or(120.0, |n| n.f64()));
+    let line_text = |off: usize| src.lines.get(src.line_of(off) - 1).copied().unwrap_or("");
+    // line_with_eol_comment_too_long?
+    let too_long = max.is_some_and(|m| (line_text(start).chars().count() + eol.chars().count()) as f64 > m);
+    let line = src.line_of(start);
+    let unbreakable = (start != end)
+        .then(|| {
+            literals.iter().copied().find(|&(ls, le)| {
+                start < le && ls < end && (too_long || (line >= src.line_of(ls) && line < src.line_of(le)))
+            })
+        })
+        .flatten();
+    // range_by_lines: from the start of the first line to the end of the last (no newline).
+    let by_lines = |(s, e): (usize, usize)| {
+        let first = src.line_start(src.line_of(s));
+        let last = src.line_of(e);
+        (first, src.line_start(last) + src.lines.get(last - 1).map_or(0, |l| l.len()))
+    };
+    let around = match unbreakable {
+        Some(r) => Some(by_lines(r)),
+        None if too_long => Some(by_lines((start, end))),
+        None => None,
+    };
+    match around {
+        Some((s, e)) => {
+            // disable_offense_before_and_after
+            let first = line_text(s);
+            let ws: String = first.chars().take_while(|ch| matches!(ch, ' ' | '\t' | '\x0b' | '\x0c' | '\r')).collect();
+            c.wrap(s, e + 1, &format!("{ws}# rubocop:todo {cop}\n"), &format!("{ws}# rubocop:enable {cop}\n"));
+        }
+        None => {
+            let eol_at = src.line_start(line) + line_text(start).len();
+            c.insert_after(eol_at, eol_at, &eol);
+        }
+    }
+}
+
 /// Cop::AutocorrectLogic#autocorrect? for a cop that supports autocorrection (`Cop::correctable`).
 pub fn cop_autocorrects(cfg: &CopConfig, mode: Mode) -> bool {
     // autocorrect_enabled?
@@ -385,6 +473,72 @@ pub fn write_source(path: &Path, new: &str, roots: &[PathBuf]) -> std::io::Resul
     file.write_all(new.as_bytes())
 }
 
+/// Create or replace (`append`: append to) `path` with `content`, refusing a file whose directory
+/// resolves outside the `roots` (write_roots), a symlink at any step below the root, and an
+/// existing file that is not a regular file of the current user with a single link (a hard link
+/// to a file elsewhere). A replaced file is written to a new file renamed over it. Returns the
+/// open file.
+pub fn write_contained(path: &Path, content: &[u8], roots: &[PathBuf], append: bool) -> std::io::Result<std::fs::File> {
+    use std::io::Write;
+    use std::os::unix::fs::MetadataExt;
+    let refuse = |what: String| std::io::Error::new(std::io::ErrorKind::PermissionDenied, what);
+    let parent = path.parent().filter(|p| !p.as_os_str().is_empty()).unwrap_or(Path::new("."));
+    let Some(name) = path.file_name() else { return Err(std::io::ErrorKind::InvalidInput.into()) };
+    let dir_path = std::fs::canonicalize(parent)?;
+    let Some(root) = roots.iter().find(|r| dir_path.starts_with(r)) else {
+        return Err(refuse(format!("{} resolves to {}, outside the project", path.display(), dir_path.display())));
+    };
+    if std::fs::symlink_metadata(path).is_ok_and(|m| m.file_type().is_symlink()) {
+        return Err(refuse(format!("{} is a symbolic link", path.display())));
+    }
+    let mut dir = at::open_dir(root)?;
+    for c in dir_path.strip_prefix(root).unwrap_or(Path::new("")).components() {
+        dir = at::open(&dir, c.as_os_str(), at::DIR | libc::O_NOFOLLOW, 0)?;
+    }
+    let create = libc::O_WRONLY | libc::O_CREAT | libc::O_EXCL | libc::O_NOFOLLOW;
+    // Opened without truncating (O_NONBLOCK: a FIFO does not hang the open) and checked first.
+    let existing = match at::open(&dir, name, libc::O_WRONLY | libc::O_NOFOLLOW | libc::O_NONBLOCK, 0) {
+        Ok(f) => f,
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
+            let mut f = at::open(&dir, name, create, 0o666)?;
+            f.write_all(content)?;
+            return Ok(f);
+        }
+        Err(e) => return Err(e),
+    };
+    let meta = existing.metadata()?;
+    // SAFETY: geteuid has no preconditions.
+    let mine = meta.uid() == unsafe { libc::geteuid() };
+    if !meta.file_type().is_file() || meta.nlink() != 1 || !mine {
+        return Err(refuse(format!("{} is not a regular file of its own (a link, or another user's)", path.display())));
+    }
+    if append {
+        // The descriptor just checked, switched to appending (no second open by name).
+        let mut f = existing;
+        at::set_append(&f)?;
+        f.write_all(content)?;
+        return Ok(f);
+    }
+    // A new file renamed over the name: whatever the name now points at is replaced, not written.
+    drop(existing);
+    static COUNTER: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+    let n = COUNTER.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+    let nanos = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map_or(0, |d| d.as_nanos());
+    let tmp = format!(".{}.rbcop-{}-{n}-{nanos:x}.tmp", name.to_string_lossy(), std::process::id());
+    let tmp = std::ffi::OsStr::new(&tmp);
+    let mut f = at::open(&dir, tmp, create, 0o600)?;
+    let written = (|| {
+        f.set_permissions(meta.permissions())?;
+        f.write_all(content)?;
+        at::rename(&dir, tmp, name)
+    })();
+    if let Err(e) = written {
+        let _ = at::unlink(&dir, tmp);
+        return Err(e);
+    }
+    Ok(f)
+}
+
 /// `openat`, `renameat` and `unlinkat` relative to an open directory.
 mod at {
     use std::ffi::{CString, OsStr};
@@ -432,6 +586,15 @@ mod at {
         })?;
         // SAFETY: `fd` was just returned by openat and is owned by nothing else.
         Ok(unsafe { File::from_raw_fd(fd) })
+    }
+
+    /// `fcntl(F_SETFL)`: O_APPEND on, O_NONBLOCK off.
+    pub fn set_append(f: &File) -> Result<()> {
+        let fd = f.as_raw_fd();
+        // SAFETY: fcntl on an open descriptor owned by `f`.
+        let flags = check(unsafe { libc::fcntl(fd, libc::F_GETFL) })?;
+        // SAFETY: as above.
+        check(unsafe { libc::fcntl(fd, libc::F_SETFL, (flags | libc::O_APPEND) & !libc::O_NONBLOCK) }).map(drop)
     }
 
     pub fn rename(dir: &File, from: &OsStr, to: &OsStr) -> Result<()> {

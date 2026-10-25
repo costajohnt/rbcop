@@ -428,7 +428,8 @@ pub fn check_score(cx: &mut Cx, node: &Node, perceived: bool, label: &str) {
     if (score as f64) <= max {
         return;
     }
-    cx.add(start, end, format!("{label} complexity for `{name}` is too high. [{score}/{}]", max as i64));
+    let msg = format!("{label} complexity for `{name}` is too high. [{score}/{}]", max as i64);
+    cx.add_with_limit(start, end, msg, "Max", score);
 }
 
 /// Ruby `format('%.4g', x)` for a positive x: a port of the digit generation of Ruby's dtoa

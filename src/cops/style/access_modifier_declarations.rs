@@ -232,8 +232,9 @@ impl Cop for AccessModifierDeclarations {
             !inlined && grouped_defs(siblings).next().is_some()
         };
         if !offense {
-            return;
+            return cx.correct_style_detected();
         }
+        cx.opposite_style_detected();
         let sel = call.message_loc().unwrap();
         let msg = if ctx.group {
             format!("`{name}` should not be inlined in method definitions.")

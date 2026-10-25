@@ -2,6 +2,7 @@
 
 pub mod ast;
 pub mod autocorrect;
+pub mod autogen;
 pub mod config;
 pub mod cop;
 pub mod cops;

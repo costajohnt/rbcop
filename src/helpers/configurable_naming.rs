@@ -33,6 +33,19 @@ pub fn numbering_valid(style: &str, name: &str) -> bool {
     }
 }
 
+/// ConfigurableFormatting#report_opposing_styles, in check_name's offense block: the first other
+/// supported style the name is valid in, else unrecognized.
+pub fn report_opposing_styles(cx: &crate::cop::Cx, start: usize, end: usize, valid: impl Fn(&str) -> bool) {
+    if !crate::autogen::on() || !cx.block_runs(start, end) {
+        return;
+    }
+    let style = cx.cfg.str("EnforcedStyle").unwrap_or_default().to_string();
+    match cx.cfg.strings("SupportedStyles").into_iter().filter(|s| *s != style).find(|s| valid(s)) {
+        Some(alternative) => cx.style_detected(&[&alternative]),
+        None => cx.no_acceptable_style(),
+    }
+}
+
 fn strip_sigils(name: &str) -> std::borrow::Cow<'_, str> {
     if name.contains(['@', '$']) { name.chars().filter(|&c| c != '@' && c != '$').collect() } else { name.into() }
 }

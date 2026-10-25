@@ -42,9 +42,12 @@ impl Cop for MessageExpectation {
         }
         let style = cx.cfg.str("EnforcedStyle").unwrap_or("allow");
         if method_name(&m) == style {
-            return;
+            return cx.correct_style_detected();
         }
         let sel = m.message_loc().unwrap();
+        if cx.block_runs(sel.start_offset(), sel.end_offset()) {
+            cx.opposite_style_detected();
+        }
         cx.add(sel.start_offset(), sel.end_offset(), format!("Prefer `{style}` for setting message expectations."));
     }
 }

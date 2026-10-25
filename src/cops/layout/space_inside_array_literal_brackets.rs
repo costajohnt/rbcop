@@ -118,25 +118,26 @@ impl Cop for SpaceInsideArrayLiteralBrackets {
             col == 0 || src.lines[line(&right) - 1].chars().take(col).all(helpers::ruby_string::is_space)
         };
 
+        let unc = ss::uncorrectable(cx);
         let planned: Vec<Planned> = match style.as_str() {
             "no_space" => {
                 let start_ok = tokens[li + 1].kind == sys::PM_TOKEN_COMMENT;
-                ss::no_space_offenses(src, Some(&left), Some(&right), start_ok, end_ok)
+                ss::no_space_offenses(src, Some(&left), Some(&right), start_ok, end_ok, unc)
             }
-            "space" => ss::space_offenses(src, Some(&left), Some(&right), start_ok, end_ok),
+            "space" => ss::space_offenses(src, Some(&left), Some(&right), start_ok, end_ok, unc),
             _ => {
                 let mut out = Vec::new();
                 let md_left = multi_dimensional(&tokens, li, true);
                 if md_left && space_after(src, &left) {
                     out.push((left, Side::Right, ss::NO_SPACE_COMMAND));
                 } else if !md_left {
-                    out.extend(ss::space_offenses(src, Some(&left), None, start_ok, true));
+                    out.extend(ss::space_offenses(src, Some(&left), None, start_ok, true, unc));
                 }
                 let md_right = multi_dimensional(&tokens, ri, false);
                 if md_right && space_before(src, &right) {
                     out.push((right, Side::Left, ss::NO_SPACE_COMMAND));
                 } else if !md_right {
-                    out.extend(ss::space_offenses(src, None, Some(&right), true, end_ok));
+                    out.extend(ss::space_offenses(src, None, Some(&right), true, end_ok, unc));
                 }
                 out
             }

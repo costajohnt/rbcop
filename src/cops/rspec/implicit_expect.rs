@@ -45,8 +45,9 @@ impl Cop for ImplicitExpect {
         let source = cx.src.slice(s, e);
         let style = cx.cfg.str("EnforcedStyle").unwrap_or("is_expected");
         if source.starts_with(style) {
-            return;
+            return cx.correct_style_detected();
         }
+        cx.opposite_style_detected();
         // ENFORCED_REPLACEMENTS.fetch raises for any other spelling: no offense
         let Some(good) = replacement(source) else { return };
         cx.add_fix(s, e, format!("Prefer `{good}` over `{source}`."), |c| c.replace(s, e, good));

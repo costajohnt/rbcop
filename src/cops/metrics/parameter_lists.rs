@@ -84,10 +84,12 @@ impl Cop for ParameterLists {
                 let max_opt = cx.cfg.int("MaxOptionalParameters").unwrap_or(0);
                 if optargs > max_opt {
                     let l = node.location();
-                    cx.add(
+                    cx.add_with_limit(
                         l.start_offset(),
                         l.end_offset(),
                         format!("Method has too many optional parameters. [{optargs}/{max_opt}]"),
+                        "MaxOptionalParameters",
+                        optargs,
                     );
                 }
             });
@@ -105,7 +107,8 @@ impl Cop for ParameterLists {
             let Some(range) = range.filter(|_| count > max) else { return };
             // The offense is on_args': so is its cop error.
             crate::runner::visit_at(range.0);
-            cx.add(range.0, range.1, format!("Avoid parameter lists longer than {max} parameters. [{count}/{max}]"));
+            let msg = format!("Avoid parameter lists longer than {max} parameters. [{count}/{max}]");
+            cx.add_with_limit(range.0, range.1, msg, "Max", count);
             return;
         }
         // a block's or lambda's `args` (none for numbered or `it` parameters)
@@ -132,6 +135,6 @@ impl Cop for ParameterLists {
         }
         let (s, e) = range.unwrap();
         crate::runner::visit_at(s);
-        cx.add(s, e, format!("Avoid parameter lists longer than {max} parameters. [{count}/{max}]"));
+        cx.add_with_limit(s, e, format!("Avoid parameter lists longer than {max} parameters. [{count}/{max}]"), "Max", count);
     }
 }

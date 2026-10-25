@@ -1,0 +1,10 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+Style/StringLiterals:
+  Exclude:
+    - lib/x.rb
+Metrics/MethodLength:
+  Max: 5

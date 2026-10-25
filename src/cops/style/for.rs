@@ -31,7 +31,7 @@ impl Cop for For {
         let each_style = cx.cfg.str("EnforcedStyle") != Some("for");
         if let Some(f) = node.as_for_node() {
             if !each_style {
-                return;
+                return cx.correct_style_detected();
             }
             let coll = f.collection();
             let coll_src = node_text(&coll);
@@ -41,6 +41,9 @@ impl Cop for For {
             let loc = node.location();
             let (s, e) = (loc.start_offset(), loc.end_offset());
             let end = f.do_keyword_loc().map_or(coll.location().end_offset(), |d| d.end_offset());
+            if cx.block_runs(s, e) {
+                cx.opposite_style_detected();
+            }
             cx.add_fix(s, e, "Prefer `each` over `for`.", |c| c.replace(s, end, &correction));
             return;
         }
@@ -51,9 +54,11 @@ impl Cop for For {
         if src.line_of(open.start_offset()) == src.line_of(close.start_offset())
             || method_name(&call) != "each"
             || call.arguments().is_some()
-            || each_style
         {
             return;
+        }
+        if each_style {
+            return cx.correct_style_detected();
         }
         let Some(recv) = call.receiver() else { return };
         if block.body().is_some_and(|b| b.as_begin_node().is_some_and(|b| b.begin_keyword_loc().is_none())) {
@@ -70,6 +75,9 @@ impl Cop for For {
             let p = params.unwrap().location().end_offset();
             (p, format!("for {} in {} do", names.join(", "), node_text(&recv)))
         };
+        if cx.block_runs(s, e) {
+            cx.opposite_style_detected();
+        }
         cx.add_fix(s, e, "Prefer `for` over `each`.", |c| c.replace(s, end, &correction));
     }
 }

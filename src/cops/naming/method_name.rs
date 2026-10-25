@@ -41,8 +41,11 @@ impl MethodName {
 
     fn check_name(&self, cx: &mut Cx, name: &str, (start, end): (usize, usize)) {
         let style = self.style(cx);
-        if !naming::naming_valid(style, name) {
+        if naming::naming_valid(style, name) {
+            cx.correct_style_detected();
+        } else {
             let msg = format!("Use {style} for method names.");
+            naming::report_opposing_styles(cx, start, end, |s| naming::naming_valid(s, name));
             cx.add(start, end, msg);
         }
     }
@@ -148,7 +151,7 @@ impl Cop for MethodName {
                     return self.forbidden(cx, &name, at);
                 }
                 if def.receiver().is_some() && naming::class_emitter_method(cx.ancestors, &name) {
-                    return;
+                    return cx.correct_style_detected();
                 }
                 self.check_name(cx, &name, at);
             }

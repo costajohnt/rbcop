@@ -31,9 +31,12 @@ impl Cop for VariableName {
         }
         let style = cx.cfg.str("EnforcedStyle").unwrap_or("snake_case").to_string();
         if helpers::configurable_naming::naming_valid(&style, &name) {
-            return;
+            return cx.correct_style_detected();
         }
         let (s, e) = helpers::rspec::node_range(&variable);
+        helpers::configurable_naming::report_opposing_styles(cx, s, e, |st| {
+            helpers::configurable_naming::naming_valid(st, &name)
+        });
         cx.add(s, e, format!("Use {style} for variable names."));
     }
 }

@@ -1,0 +1,1 @@
+`Style/StringLiterals: Exclude` in `.rubocop.yml` overrides a generated `Exclude` in `.rubocop_todo.yml`. Either remove `Style/StringLiterals: Exclude` or add `inherit_mode: merge: - Exclude`.

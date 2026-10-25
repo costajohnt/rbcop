@@ -409,8 +409,10 @@ impl Cop for MultilineMethodCallIndentation {
             },
             None => return,
         };
+        // Each way out without an offense below is `correct_style_detected` (offending_range is
+        // falsy).
         if !alignment::begins_its_line(src, rhs.0) {
-            return;
+            return cx.correct_style_detected();
         }
         let range = send_range(&call);
         let ctx = Ctx::new(cx.ancestors, node, range);
@@ -456,12 +458,12 @@ impl Cop for MultilineMethodCallIndentation {
                 .then(|| check.chain_call(check.first_call_with_dot()).and_then(|c| dot_sel(&c)))
                 .flatten();
             if hash_base.is_none() && check.inside_multiline_chain_arg() {
-                return;
+                return check.cx.correct_style_detected();
             }
             let b = hash_base.or_else(|| check.first_dot_alignment_base(rhs)).unwrap_or(lhs);
             base = Some(b);
             if check.aligned_with_first_line_dot(rhs) {
-                return;
+                return check.cx.correct_style_detected();
             }
             check.col(b.0) - check.col(rhs.0)
         } else if let Some(j) = pair.filter(|_| style == "indented" && kind::of(check.base_receiver()) == kind::HASH_NODE) {
@@ -471,7 +473,7 @@ impl Cop for MultilineMethodCallIndentation {
             key_col + 2 * width - check.col(rhs.0)
         } else {
             if if pair.is_some() { check.inside_multiline_chain_arg() } else { check.ctx.not_for_this_cop() } {
-                return;
+                return check.cx.correct_style_detected();
             }
             // check_regular_indentation
             base = match style.as_str() {
@@ -505,7 +507,7 @@ impl Cop for MultilineMethodCallIndentation {
             if let Some(h) = new_hpbc {
                 cx.state::<State>().hash_pair_base_column = Some(h);
             }
-            return;
+            return cx.correct_style_detected();
         }
         let rhs_src = check.text(rhs).to_string();
         let msg = match base {
@@ -537,6 +539,10 @@ impl Cop for MultilineMethodCallIndentation {
             cx.state::<State>().hash_pair_base_column = Some(h);
         }
         let (src, set) = (cx.src, helpers::alignment_corrector::Settings::of(cx));
+        // incorrect_style_detected: more than two supported styles.
+        if cx.block_runs(rhs.0, rhs.1) {
+            cx.no_acceptable_style();
+        }
         cx.add_fix(rhs.0, rhs.1, msg, |c| {
             for (s, e, node) in &targets {
                 helpers::alignment_corrector::correct(c, src, set, *s, *e, node.as_ref(), delta, false);

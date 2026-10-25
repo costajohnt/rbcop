@@ -63,6 +63,7 @@ impl Cop for MultipleExpectations {
             return;
         }
         let (s, e) = send_range(&call);
+        cx.exclude_limit("Max", v.count);
         cx.add(s, e, format!("Example has too many expectations [{}/{max}].", v.count));
     }
 }

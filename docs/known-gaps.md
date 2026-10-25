@@ -163,6 +163,24 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   - Pruning removes directories it emptied up to `rbcop_cache`, not above it.
   - Where RuboCop raises (no home directory, a cache directory that cannot be created for a
     reason other than EACCES/EROFS, an entry that cannot be written), rbcop runs without saving.
+- `--report-unused-todo-entries` audits only the `.rubocop_todo.yml` entries of cops rbcop
+  implements: for any other cop it cannot tell whether the file is still flagged, so the entry is
+  not listed (RuboCop lists it when its cop no longer flags the file).
+- `--regenerate-todo` takes from the command recorded in `.rubocop_todo.yml` (a file the project
+  controls) only the options `--auto-gen-config` itself records there (`--auto-gen-config`,
+  `--[no-]auto-gen-only-exclude`, `--disable-pending-cops`, `--enable-pending-cops`,
+  `--[no-]preview`, `--exclude-limit N`, `--no-exclude-limit`, `--[no-]offense-counts`,
+  `--[no-]auto-gen-timestamp`, `--[no-]auto-gen-enforced-style`); anything else there (an output
+  file, a config, paths, `--regenerate-todo`) is dropped with a warning. RuboCop parses the whole
+  recorded command. A `--regenerate-todo` is expanded once.
+- `--auto-gen-config` writes `.rubocop_todo.yml` and the config it adds the inheritance to as `-a`
+  writes files: only inside the project (the working directory and the command-line paths), and
+  never through a symlink (`rbcop: not writing PATH: ...`, exit 2).
+- `--auto-gen-config` keeps ExcludeLimit values (`Max`, `MinDigits`) in memory. RuboCop writes them
+  under its cache root (`auto-gen-tmp/`, left behind empty), where concurrent RuboCop runs sharing
+  that root mix their values; with two such parameters for one cop (Metrics/ParameterLists'
+  `Max` and `MaxOptionalParameters`) rbcop writes them in the order they were first set, RuboCop
+  in the directory listing order of those files.
 
 ## Open gaps
 
@@ -278,13 +296,6 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   (as for `-a`) and never through a symlink (`tmp` or the report file); otherwise it prints
   `rbcop: not writing the --profile report: <reason>` to stderr instead of the `generated at` line.
 - Command-line options rbcop refuses (`rbcop: --NAME is not supported by rbcop yet`, exit 2):
-  - `--auto-gen-config`, `--regenerate-todo`, `-f autogenconf`: generating `.rubocop_todo.yml`
-    (AutoGenerateConfig and the autogenconf formatter's Exclude/Max output) is not ported. Its
-    companion options (`--exclude-limit`, `--[no-]offense-counts`, `--[no-]auto-gen-timestamp`,
-    `--[no-]auto-gen-only-exclude`) are parsed and give RuboCop's `can only be used together with
-    --auto-gen-config` error; `--no-exclude-limit` and `--[no-]auto-gen-enforced-style` are inert.
-  - `--report-unused-todo-entries`, `--disable-uncorrectable`: need the todo file and
-    `# rubocop:todo` comment insertion, not ported.
   - `--changed [REVISION]`: needs RuboCop's git diff of changed files.
   - `--server`, `--start-server`, `--stop-server`, `--restart-server`, `--server-status`,
     `--no-detach`, `--lsp`, `--mcp`: long-running server modes (`--no-server` is accepted).

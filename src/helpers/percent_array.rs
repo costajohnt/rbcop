@@ -110,6 +110,11 @@ pub fn comments_in_array(src: &Source, node: &Node) -> bool {
     src.comments.iter().any(|c| (first..last).contains(&src.line_of(c.start)))
 }
 
+/// ArrayMinSize#array_style_detected, for --auto-gen-config.
+pub fn array_style_detected(cx: &Cx, style: &'static str, size: usize) {
+    cx.autogen(move |c| c.array_style_detected(style, size as i64));
+}
+
 /// PercentArray#allowed_bracket_array?
 pub fn allowed_bracket_array(cx: &Cx, node: &Node) -> bool {
     let size = node.as_array_node().unwrap().elements().iter().count() as f64;

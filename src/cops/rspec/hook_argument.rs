@@ -41,6 +41,11 @@ impl Cop for HookArgument {
         // LocationHelp.arguments_with_whitespace: from the selector's end to the send's end
         let (ws, we) = (sel.end_offset(), send_end);
         let replacement = if implicit { String::new() } else { format!("(:{style})") };
+        match &scope {
+            Some(scope) if *scope == style => cx.correct_style_detected(),
+            Some(scope) => cx.style_detected(&[scope]),
+            None => cx.style_detected(&["implicit"]),
+        }
         match scope {
             Some(scope) if scope == style => {}
             Some(scope) => {

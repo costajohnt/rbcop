@@ -36,10 +36,31 @@ pub fn start_line_range(src: &Source, node_start: usize) -> (usize, usize) {
 /// `end_kw` is `node.loc.end`, `ranges` the candidate (style, range) pairs.
 /// `align_column` is where the autocorrection (`AlignmentCorrector.align_end`) puts the `end`.
 pub fn check(cx: &mut Cx, end_kw: (usize, usize), ranges: &[(&str, (usize, usize))], style: &str, align_column: usize) {
+    detect(cx, end_kw, ranges, style);
     if let Some(msg) = misalignment(cx.src, end_kw, ranges, style) {
         let src = cx.src;
         let tabs = super::alignment_corrector::Settings::of(cx).tabs;
         cx.add_fix(end_kw.0, end_kw.1, msg, |c| super::alignment_corrector::align_end(c, src, tabs, end_kw.0, align_column));
+    }
+}
+
+/// `check_end_kw_alignment`'s style detection (`EnforcedStyleAlignWith`): the configured style if
+/// its range is aligned with the `end`, else the styles whose ranges are.
+pub fn detect(cx: &Cx, end_kw: (usize, usize), ranges: &[(&str, (usize, usize))], style: &str) {
+    if !crate::autogen::on() {
+        return;
+    }
+    let src = cx.src;
+    let end_line = src.line_of(end_kw.0);
+    let matching: Vec<&str> = ranges
+        .iter()
+        .filter(|(_, r)| src.line_of(r.0) == end_line || column_offset_between(src, r.0, end_kw.0) == 0)
+        .map(|(s, _)| *s)
+        .collect();
+    if matching.contains(&style) {
+        cx.correct_style_detected_for("EnforcedStyleAlignWith");
+    } else {
+        cx.style_detected_for("EnforcedStyleAlignWith", &matching);
     }
 }
 

@@ -26,6 +26,7 @@ impl Cop for MultipleAssertions {
             let max = cx.cfg.integer_fetch("Max", 3);
             if count > max {
                 let (s, e) = range(&n);
+                cx.exclude_limit("Max", count);
                 cx.add(s, e, format!("Test case has too many assertions [{count}/{max}]."));
             }
         }
