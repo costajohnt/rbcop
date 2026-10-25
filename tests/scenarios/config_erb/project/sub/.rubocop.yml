@@ -1,0 +1,11 @@
+inherit_from: ../.rubocop.yml
+
+# ERB runs with this file's directory as the working directory.
+Style/FrozenStringLiteralComment:
+  Enabled: <%= !File.exist?("marker") %>
+
+# rubocop-shopify's rubocop.yml reads the running RuboCop's version this way.
+<% if Gem.loaded_specs.fetch("rubocop").version >= Gem::Version.new("1.91.0") %>
+Lint/UselessAssignment:
+  Enabled: false
+<% end %>

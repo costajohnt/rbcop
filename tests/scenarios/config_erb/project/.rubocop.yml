@@ -1,0 +1,13 @@
+<%# Rendered by ERB before YAML, as RuboCop does. %>
+Layout/LineLength:
+  Max: <%= ENV.fetch("RBCOP_ERB_SCENARIO_UNSET", "20") %>
+<% if ENV.key?("PATH") %>
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+<% else %>
+Style/StringLiterals:
+  Enabled: false
+<% end %>
+Naming/VariableName:
+  # A literal <%% stays in the YAML.
+  AllowedIdentifiers: [<%= %w[a b].map { |s| "#{s}1" }.join(", ") %>]

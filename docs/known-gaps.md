@@ -276,7 +276,12 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   directive naming a cop in a department rbcop does not know is not reported as unknown.
 - A native plugin uses its vendored default.yml and pinned behaviour whatever version of the gem is
   installed, and works when the gem is not installed (RuboCop fails to load it then).
-- ERB in `.rubocop.yml` is not evaluated; remote `inherit_from` URLs are skipped with a warning.
+- Remote `inherit_from` URLs are skipped with a warning.
+- ERB in a config file is rendered by `ruby` on PATH (from the file's directory), not inside
+  RuboCop: the template sees the standard library and `Gem.loaded_specs["rubocop"]` (version
+  1.91.0), but not RuboCop's own constants (`RuboCop::Version`). A template that raises prints its
+  message and its `(erb)` frames, not RuboCop's backtrace. Without a runnable `ruby` the file is
+  parsed as plain YAML with a warning.
 - A duplicated YAML key: the last value wins in the first key's place, as in Psych, but the
   `... is concealed by line N` warning is not printed. Wrong value types (`Enabled: "true"`) and
   invalid `Severity` values are not reported (see ConfigValidator below).

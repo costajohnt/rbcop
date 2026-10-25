@@ -893,9 +893,21 @@ impl Store {
             std::io::ErrorKind::NotFound => format!("Configuration file not found: {}", path.display()),
             _ => format!("{}: {e}", path.display()),
         })?;
-        if text.windows(2).any(|w| w == b"<%") {
-            self.warnings.push(format!("{}: ERB in config is not supported; parsed as plain YAML", path.display()));
-        }
+        // ConfigLoader.load_yaml_configuration runs every config file through ERB; text without
+        // `<%` comes out of ERB unchanged.
+        let text = match text.windows(2).any(|w| w == b"<%") {
+            true => match render_erb(path, &text)? {
+                Some(yaml) => yaml,
+                None => {
+                    self.warnings.push(format!(
+                        "{}: ERB in config needs ruby, which cannot be run; parsed as plain YAML",
+                        path.display()
+                    ));
+                    text
+                }
+            },
+            false => text,
+        };
         let mut hash = match parse_yaml_bytes(&text, &path.display().to_string())? {
             Value::Map(m) => Arc::unwrap_or_clone(m),
             // `yaml_tree_to_hash(yaml_tree) || {}`
@@ -1595,6 +1607,47 @@ impl Store {
         let mut path = || lines.next().filter(|l| !l.is_empty()).map(PathBuf::from);
         Ok(Feature { plugin, dir: path(), file: path() })
     }
+}
+
+/// `Dir.chdir(File.dirname(path)) { ERB.new(contents).result }`, run by the project's Ruby (the
+/// one inherit_gem uses). On failure RuboCop's CLI prints the exception's message and backtrace;
+/// rbcop prints the message and the template's own frames (`(erb):N`), not RuboCop's. None when
+/// ruby cannot be run.
+// ponytail: plain ruby, not RuboCop's process, so the template does not see RuboCop's constants.
+fn render_erb(path: &Path, text: &[u8]) -> Result<Option<Vec<u8>>, String> {
+    use std::io::Write;
+    use std::process::{Command, Stdio};
+    // No local variables before `result`: ERB's default binding is a fresh top level. Inside
+    // RuboCop the rubocop gem is activated; templates such as rubocop-shopify's read its version
+    // from Gem.loaded_specs, so that sees the version rbcop matches.
+    let script = format!(
+        r#"begin
+  Gem.loaded_specs["rubocop"] = Gem::Specification.new("rubocop", "{RUBOCOP_VERSION}")
+  $stdout.binmode
+  print ERB.new($stdin.binmode.read.force_encoding(Encoding::UTF_8)).result
+rescue StandardError, SyntaxError, LoadError => e
+  $stderr.puts e.message, e.backtrace.grep(/\A\(erb\)/)
+  exit 1
+end"#
+    );
+    let dir = path.parent().filter(|d| !d.as_os_str().is_empty()).unwrap_or(Path::new("."));
+    let Ok(mut child) = Command::new("ruby")
+        .args(["-rerb", "-e", &script])
+        .current_dir(dir)
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+    else {
+        return Ok(None);
+    };
+    // A template that exits before reading its input closes the pipe; the exit status tells.
+    let _ = child.stdin.take().expect("piped stdin").write_all(text);
+    let out = child.wait_with_output().map_err(|e| format!("{}: ruby: {e}", path.display()))?;
+    if !out.status.success() {
+        return Err(String::from_utf8_lossy(&out.stderr).trim_end().to_string());
+    }
+    Ok(Some(out.stdout))
 }
 
 /// Plugin::LoadError when no plugin class can be determined for an entry.

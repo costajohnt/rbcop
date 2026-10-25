@@ -1,0 +1,4 @@
+a.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
+a.rb:1:21: C: Layout/LineLength: Line is too long. [39/20]
+a.rb:1:5: C: [Correctable] Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
