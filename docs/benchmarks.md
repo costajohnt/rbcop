@@ -53,7 +53,7 @@ Start-up and one file (2 vCPUs, median of 3):
   hosted runner's vCPUs are hyperthreads. Single-process RuboCop ran at 2 vCPUs only; it uses one
   thread, so 4 vCPUs would not change it.
 - RuboCop `--parallel` got a fresh `--cache-root` per run (cold cache, as on a runner without a
-  restored cache); single-process RuboCop ran with `--cache false`. rbcop has no cache. The
+  restored cache); single-process RuboCop ran with `--cache false`. rbcop at 4b08150 had no cache (`scripts/bench-ci.sh` now runs it with `--cache false`). The
   corpus files were in the OS page cache for every run.
 - Plugins each config loads: rails: minitest, packaging, performance, rails (`DisabledByDefault`,
   so only the cops it lists run). discourse: rubocop-discourse's `stree-compat.yml`, which loads
@@ -100,6 +100,22 @@ CPU-seconds per second during any run, and a `top` on the host during a run show
   for RuboCop and its plugins and which the rbcop binary (action or gem) does not need.
 - RuboCop's cache is cold, as on a runner without a restored cache. A workflow that restores
   RuboCop's cache from an earlier run on the same files is not what this measures.
+
+## Result cache (#281)
+
+rbcop at 88c23816, each corpus with its own `.rubocop.yml`, pinned to 4 vCPUs (CPUs 1,7,2,8),
+median of 3: `--cache false`, then a fresh `--cache-root` (cold), then the same root again on the
+unchanged tree (warm). Raw rows: [benchmarks/cache.tsv](benchmarks/cache.tsv).
+
+| corpus | `--cache false` wall s | cold wall s | warm wall s | `--cache false` user s | cold user s | warm user s |
+|---|---:|---:|---:|---:|---:|---:|
+| rails | 8.94 | 9.57 | 1.09 | 27.1 | 27.7 | 0.86 |
+| discourse | 27.66 | 26.65 | 3.72 | 81.8 | 78.0 | 3.03 |
+
+The machine was shared with other jobs (load average about 20 on 10 cores for every run), so the
+wall times are about 3x the quiet-machine numbers in the table above; user time does not depend
+on that. A cold run costs what an uncached one does (within the noise); a warm run reads each
+file, hashes it and loads its entry, about 3% of the CPU time of inspecting it.
 
 ## Where rbcop's time went (#388)
 

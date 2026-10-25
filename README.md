@@ -83,7 +83,7 @@ CI-shaped runs (Linux container, 4 vCPUs, each project's own config, RuboCop wit
 | solidus | 2,171 | 28.3 s | 2.12 s | 13x |
 | fastlane | 1,355 | 30.3 s | 2.02 s | 15x |
 
-rbcop has no result cache, so RuboCop with a warm cache can be faster on an unchanged tree. Method, 2 vCPU numbers and raw data: [docs/benchmarks.md](docs/benchmarks.md).
+rbcop with a warm result cache (an unchanged tree, as RuboCop's cache serves it) takes about 3% of the CPU time of an uncached run: 0.9 s of CPU instead of 27 s on rails, 3.0 s instead of 82 s on discourse. Method, 2 vCPU numbers and raw data: [docs/benchmarks.md](docs/benchmarks.md).
 
 ## Gates
 
