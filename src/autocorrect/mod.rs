@@ -182,37 +182,54 @@ pub struct Corrected {
     pub error: Option<String>,
 }
 
+/// What the next ProcessedSource makes of a corrected source: the text, or Lint/Syntax's message.
+/// RuboCop keeps each corrected source as UTF-8 and parses it again, so Parser::Source::Buffer
+/// transcodes it from the encoding a magic comment (still or newly) on its first line names once
+/// more: mojibake for non-ASCII text, or a transcoding error.
+fn reread(written: &Arc<str>) -> Result<Arc<str>, String> {
+    match crate::source::reencode(written.as_bytes().to_vec()) {
+        crate::source::Reencoded::Text(text) => Ok(Arc::from(text)),
+        crate::source::Reencoded::Error(_, message) => Err(message),
+        crate::source::Reencoded::AsIs(_) => Ok(written.clone()),
+    }
+}
+
 /// Runner#do_inspection_loop: inspect and correct until nothing changes. The report holds the
 /// offenses corrected in earlier iterations (each with the source it was found in) plus all
-/// offenses of the last iteration, deduplicated and sorted like RuboCop's.
-pub fn correct(
+/// offenses of the last iteration, deduplicated and sorted like RuboCop's. `original` is the source
+/// as parsed; `written` the file as read (another text when transcoded), None when not UTF-8.
+fn correct(
     path: &Path,
     display: &str,
-    text: String,
+    original: Arc<str>,
+    written: Option<Arc<str>>,
     cfg: &Resolved,
     selected: &dyn Fn(&str) -> bool,
     mode: Mode,
 ) -> Corrected {
     crate::directives::take_warnings();
     runner::take_abort();
-    let original: Arc<str> = Arc::from(text);
-    let (mut offenses, mut current, changed, error, disabled) =
-        inspection_loop(path, display, original.clone(), cfg, selected, mode);
+    let mut pass = inspection_loop(path, display, written, Ok(original.clone()), cfg, selected, mode);
     // Runner#finalize_corrections: each loop's result against the source it started from.
     let mut diffs = Vec::new();
-    if changed {
-        diffs.push((original, current.clone()));
+    if pass.changed {
+        diffs.push((original.clone(), pass.written.clone().unwrap()));
     }
-    let mut changed = changed;
+    let mut changed = pass.changed;
+    let mut offenses = std::mem::take(&mut pass.offenses);
     // Runner#add_redundant_disables (skipped when the loop raised): Lint/RedundantCopDisableDirective
     // judges the final source against every offense found, and when it removed directives the
     // whole loop runs once more; both offense lists are kept (`offenses |= new_offenses`).
-    // (Nor when the file ends the run: Runner#check_for_redundant_disables? raised.)
-    if error.is_none() && !runner::aborting() {
+    // (Nor when the file ends the run: Runner#check_for_redundant_disables? raised; nor when the
+    // final source could not be transcoded: it has no comments.)
+    if let Ok(view) = pass.view.clone()
+        && pass.error.is_none()
+        && !runner::aborting()
+    {
         let mut lines = Lines::default();
         let span = |o: &Offense| (o.cop, lines.line_col(o, o.start).0, lines.line_col(o, o.end.max(o.start)).0);
-        let checked: Vec<runner::Span> = offenses.iter().chain(&disabled).map(span).collect();
-        let normalised = normalise(&current);
+        let checked: Vec<runner::Span> = offenses.iter().chain(&pass.disabled).map(span).collect();
+        let normalised = normalise(&view);
         let (mut found, corrector) =
             runner::redundant_disables(path, display, &normalised, cfg, selected, mode, &checked);
         for o in &mut found {
@@ -221,7 +238,7 @@ pub fn correct(
         offenses.extend(found);
         // Runner#file_offenses rejects the disabled offenses unless --display-suppressed.
         if runner::display_suppressed() {
-            offenses.extend(disabled);
+            offenses.extend(std::mem::take(&mut pass.disabled));
         }
         if let Some(c) = corrector {
             // RuboCop 1.91.0's redundant-disable team writes its correction to the file even under
@@ -229,30 +246,32 @@ pub fn correct(
             // that source and the directives it removed are in no diff. rbcop writes nothing
             // (docs/known-gaps.md) but prints the same diffs.
             let rewritten: Arc<str> = Arc::from(c.rewrite());
-            let (again, text, again_changed, err, again_disabled) =
-                inspection_loop(path, display, rewritten.clone(), cfg, selected, mode);
-            if again_changed {
-                diffs.push((rewritten, text.clone()));
+            let again =
+                inspection_loop(path, display, Some(rewritten.clone()), reread(&rewritten), cfg, selected, mode);
+            if again.changed {
+                diffs.push((rewritten.clone(), again.written.clone().unwrap()));
             }
-            offenses.extend(again);
+            offenses.extend(again.offenses);
             if runner::display_suppressed() {
-                offenses.extend(again_disabled);
+                offenses.extend(again.disabled);
             }
-            current = text;
+            pass.written = again.written.or(Some(rewritten));
+            pass.view = again.view;
             changed = true;
-            if let Some(e) = err {
+            if let Some(e) = again.error {
                 runner::file_error(e);
             }
         }
     }
+    let written = pass.written.unwrap_or_else(|| original.clone());
     let report = FileReport {
         offenses: uniq_sorted(offenses),
-        text: normalise(&current).to_string(),
+        text: normalise(pass.view.as_ref().unwrap_or(&written)).to_string(),
         warnings: crate::directives::take_warnings(),
         abort: runner::take_abort(),
         diffs,
     };
-    Corrected { source: changed.then(|| current.to_string()), report, error }
+    Corrected { source: changed.then(|| written.to_string()), report, error: pass.error }
 }
 
 /// parser's Source::Buffer#source: CRLF normalised to LF (what cops see and corrections apply to).
@@ -260,31 +279,48 @@ fn normalise(text: &Arc<str>) -> Arc<str> {
     if text.contains("\r\n") { Arc::from(text.replace("\r\n", "\n")) } else { text.clone() }
 }
 
-/// Runner#do_inspection_loop: the offenses (unsorted, may repeat), the final source, whether it
-/// changed, the infinite-loop error if any, and the last iteration's comment-disabled offenses.
-/// Each iteration parses the source as written so far (RuboCop re-reads the file): its raw text
-/// (CRLF intact, e.g. for Layout/EndOfLine) and the normalised text the corrections apply to, so
-/// a CRLF a correction produced (`a\r` + inserted `\n`) disappears only if a later pass corrects.
+/// One inspection loop's result.
+struct Pass {
+    /// Unsorted, may repeat.
+    offenses: Vec<Offense>,
+    /// The final source as written (the one given when nothing was corrected).
+    written: Option<Arc<str>>,
+    /// The final source as parsed, or the message of its transcoding error.
+    view: Result<Arc<str>, String>,
+    changed: bool,
+    /// The infinite-loop error, if any.
+    error: Option<String>,
+    /// The last iteration's comment-disabled offenses.
+    disabled: Vec<Offense>,
+}
+
+/// Runner#do_inspection_loop. Each iteration parses the source as written so far (RuboCop
+/// re-reads the file, transcoding it again: `reread`): its raw text (CRLF intact, e.g. for
+/// Layout/EndOfLine) and the normalised text the corrections apply to, so a CRLF a correction
+/// produced (`a\r` + inserted `\n`) disappears only if a later pass corrects. `written` is the
+/// first source as written (None: bytes no corrected source equals), `view` as parsed.
 fn inspection_loop(
     path: &Path,
     display: &str,
-    mut current: Arc<str>,
+    mut written: Option<Arc<str>>,
+    mut view: Result<Arc<str>, String>,
     cfg: &Resolved,
     selected: &dyn Fn(&str) -> bool,
     mode: Mode,
-) -> (Vec<Offense>, Arc<str>, bool, Option<String>, Vec<Offense>) {
-    let mut seen: Vec<Arc<str>> = Vec::new();
+) -> Pass {
+    // check_for_infinite_loop compares checksums of the sources as written.
+    let mut seen: Vec<Option<Arc<str>>> = Vec::new();
     let mut disabled = Vec::new();
     let mut by_iteration: Vec<Vec<Offense>> = Vec::new();
     let mut changed = false;
     let mut error = None;
     loop {
         // check_for_infinite_loop, then the iteration limit.
-        if let Some(start) = seen.iter().position(|s| *s == current) {
+        if let Some(start) = seen.iter().position(|s| s.is_some() && *s == written) {
             error = Some(infinite_loop(path, &by_iteration[start..]));
             break;
         }
-        seen.push(current.clone());
+        seen.push(written.clone());
         if seen.len() > MAX_ITERATIONS {
             error = Some(infinite_loop(path, &by_iteration[by_iteration.len() - 1..]));
             break;
@@ -292,6 +328,16 @@ fn inspection_loop(
         if let Some(last) = by_iteration.last_mut() {
             last.retain(|o| o.corrected);
         }
+        let current = match &view {
+            Ok(v) => v.clone(),
+            // The corrected source no longer transcodes: Lint/Syntax alone, nothing to correct.
+            Err(message) => {
+                by_iteration
+                    .push(runner::encoding_error_offense(path, cfg, message.clone(), selected).into_iter().collect());
+                disabled.clear();
+                break;
+            }
+        };
         let normalised = normalise(&current);
         let raw = (normalised.len() != current.len()).then_some(&*current);
         let (mut offenses, corrector, off) =
@@ -303,13 +349,15 @@ fn inspection_loop(
         by_iteration.push(offenses);
         match corrector {
             Some(c) => {
-                current = Arc::from(c.rewrite());
+                let w: Arc<str> = Arc::from(c.rewrite());
+                view = reread(&w);
+                written = Some(w);
                 changed = true;
             }
             None => break,
         }
     }
-    (by_iteration.concat(), current, changed, error, disabled)
+    Pass { offenses: by_iteration.concat(), written, view, changed, error, disabled }
 }
 
 /// Autocorrect one file on disk: read, inspect and correct. The caller writes `source` back with
@@ -326,7 +374,8 @@ pub fn correct_file(
     Ok(correct_bytes(path, display, bytes, cfg, selected, mode))
 }
 
-/// `correct` for a source as read (a file or stdin).
+/// `correct` for a source as read (a file or stdin), transcoded as `runner::inspect_bytes` does.
+/// The corrected source is UTF-8 whatever the encoding, as RuboCop writes it.
 pub fn correct_bytes(
     path: &Path,
     display: &str,
@@ -335,19 +384,25 @@ pub fn correct_bytes(
     selected: &dyn Fn(&str) -> bool,
     mode: Mode,
 ) -> Corrected {
-    match String::from_utf8(bytes) {
-        Ok(text) if crate::source::encoding_error(text.as_bytes()).is_none() => {
-            correct(path, display, text, cfg, selected, mode)
+    let inspected = |bytes: Vec<u8>| Corrected {
+        report: runner::inspect_bytes(path, display, bytes, cfg, selected),
+        source: None,
+        error: None,
+    };
+    match crate::source::reencode(bytes.clone()) {
+        crate::source::Reencoded::Text(text) => {
+            let written = String::from_utf8(bytes).ok().map(Arc::from);
+            correct(path, display, Arc::from(text), written, cfg, selected, mode)
         }
-        Ok(text) => {
-            let report = runner::inspect_bytes(path, display, text.into_bytes(), cfg, selected);
-            Corrected { report, source: None, error: None }
-        }
-        // ponytail: never rewrite a source that is not valid UTF-8; it is only inspected.
-        Err(e) => {
-            let report = runner::inspect_bytes(path, display, e.into_bytes(), cfg, selected);
-            Corrected { report, source: None, error: None }
-        }
+        crate::source::Reencoded::AsIs(_) => match String::from_utf8(bytes) {
+            Ok(text) => {
+                let text: Arc<str> = Arc::from(text);
+                correct(path, display, text.clone(), Some(text), cfg, selected, mode)
+            }
+            // ponytail: never rewrite a source that is not valid UTF-8 and has no table; it is only inspected.
+            Err(e) => inspected(e.into_bytes()),
+        },
+        crate::source::Reencoded::Error(..) => inspected(bytes),
     }
 }
 

@@ -7,6 +7,7 @@ pub mod config;
 pub mod cop;
 pub mod cops;
 pub mod directives;
+pub mod encoding;
 pub mod formatter;
 pub mod helpers;
 pub mod legacy_syntax;

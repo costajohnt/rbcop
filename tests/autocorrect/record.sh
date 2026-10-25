@@ -20,7 +20,8 @@ for case in "$here"/*/; do
     --format emacs . 2>/dev/null | sed "s|^$case/$out/||" > "../$out.txt") || true
   # `rubocop --diff -A` stdout (report, then the diffs) into diff.txt, on a scratch copy of input/:
   # RuboCop 1.91.0 can write a file under --diff (docs/known-gaps.md).
-  [ "$out" = expected ] || continue
+  # A case with a no-diff file has no diff.txt (its --diff output is a deliberate difference).
+  [ "$out" = expected ] && [ ! -f "$case/no-diff" ] || continue
   rm -rf "$case/diff-run"
   cp -R "$case/input" "$case/diff-run"
   (cd "$case/diff-run" && RBENV_VERSION=4.0.6 rbenv exec rubocop --diff -A -c ../config.yml $only --cache false \

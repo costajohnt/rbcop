@@ -147,6 +147,22 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   without backslashes, `#` or `()[]{}*+?|` (so the regexp is always valid and its `inspect` is the
   text with `/` escaped); a backtick string has no backslash, backtick or `#`.
   Fixture: tests/autocorrect/rspec_untrusted_text (RuboCop's output in `rubocop-output/`).
+- The result cache (`src/cache.rs`, #281) follows RuboCop's `AllCops: UseCache`, `--cache`,
+  root lookup (`RUBOCOP_CACHE_ROOT`, then `--cache-root`, then `AllCops: CacheRootDirectory`, then
+  `$XDG_CACHE_HOME/<uid>`, then `~/.cache`), symlink refusal, `MaxFilesInCache` pruning and its
+  warnings, with these differences:
+  - Entries live in `<root>/rbcop_cache`, in rbcop's own format, so the two tools never read or
+    prune each other's entries.
+  - The key also covers what RuboCop's leaves out: the target Ruby version (from `.ruby-version`,
+    `Gemfile.lock`, ...), the locked gem versions, the plugins loaded and the cop registry a file
+    sees. Where RuboCop serves a stale result after such a change, rbcop inspects the file again.
+    The existence of the file `RSpec/SpecFilePathFormat: InflectorPath` names is not in the key.
+  - With `-a`/`-A`, only files without offenses are saved (RuboCop saves every inspected file,
+    corrected offenses marked uncorrected, at offsets of the source before correction). A cached
+    file without offenses is skipped and one with offenses is inspected again, as in RuboCop.
+  - Pruning removes directories it emptied up to `rbcop_cache`, not above it.
+  - Where RuboCop raises (no home directory, a cache directory that cannot be created for a
+    reason other than EACCES/EROFS, an entry that cannot be written), rbcop runs without saving.
 - `--report-unused-todo-entries` audits only the `.rubocop_todo.yml` entries of cops rbcop
   implements: for any other cop it cannot tell whether the file is still flagged, so the entry is
   not listed (RuboCop lists it when its cop no longer flags the file).
@@ -262,8 +278,8 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     sets the default configuration (an extension's `Inject.defaults!`). Conditions on a require
     line are not evaluated.
   - `-d/--debug`, `--profile`, `--memory`: Ruby-level diagnostics (backtraces, stackprof).
-  - `-C/--cache`, `--cache-root`, `-P/--[no-]parallel`, `--raise-cop-error` are accepted and have
-    no effect (rbcop keeps no result cache and always lints in parallel).
+  - `-P/--[no-]parallel` and `--raise-cop-error` are accepted and have no effect (rbcop always
+    lints in parallel); `-P` with `AllCops: UseCache: false` fails as in RuboCop.
 - The cops of a loaded plugin rbcop does not implement (`--show-cops`, `--list-enabled-cops-for`,
   `--show-docs-url`, `--only`, directives, the skipped-cops notice) are the cop classes its gem's
   `lib/` defines, found by reading the `module`/`class` nesting (`RuboCop::Cop::<Dept>::<Name>`
@@ -301,15 +317,22 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
 - A duplicated YAML key: the last value wins in the first key's place, as in Psych, but the
   `... is concealed by line N` warning is not printed. Wrong value types (`Enabled: "true"`) and
   invalid `Severity` values are not reported (see ConfigValidator below).
-- Sources whose magic comment names another encoding (`# encoding: iso-8859-1`) are inspected with
-  invalid UTF-8 bytes replaced; RuboCop transcodes them to UTF-8. They are never autocorrected.
-  The same holds for binary (`# encoding: BINARY`) sources with such bytes, where each replacement
+- Sources whose magic comment names another encoding (`# encoding: iso-8859-1`) are transcoded to
+  UTF-8 as RuboCop's Ruby does it (tables from `scripts/encodings.rb`), with its Lint/Syntax
+  message for a byte sequence the encoding rejects or cannot convert (`"\xa4" followed by "\""
+  on euc-jp.`), and autocorrected as RuboCop does: the corrected source is written as UTF-8 and
+  read back through the magic comment's encoding again, so its non-ASCII text turns to mojibake
+  on each later pass (or into a transcoding error). The tables cover every single-byte encoding
+  Ruby converts and Shift_JIS, Windows-31J, EUC-JP, eucJP-ms and CP51932. Sources in the other
+  multibyte encodings (Big5, GBK, GB18030, GB2312, EUC-KR, CP949, ...) and in UTF-16/UTF-32/UTF-7
+  (where RuboCop raises `incompatible character encodings`) are inspected with invalid UTF-8 bytes
+  replaced and never autocorrected. `--diff` shows a transcoded source's `-` lines as UTF-8 text
+  where RuboCop prints the bytes as read.
+  Binary (`# encoding: BINARY`) sources with invalid UTF-8 bytes are inspected with those bytes
+  replaced and never autocorrected; each replacement
   also counts as 3 bytes in later columns of its line (RuboCop: 1 per byte), e.g. the end of
   Lint/PercentSymbolArray's range on `%i[\xC0 :foo]` (`scripts/cold-skip.txt`).
   Sources that must be UTF-8 and are not get RuboCop's `Lint/Syntax: Invalid byte sequence in utf-8.`
-  RuboCop's transcoding error is reproduced only for US-ASCII (`"\xe3" on us-ascii.`); a source
-  in another encoding with a byte sequence invalid there (`# encoding: euc-jp`) is inspected as
-  UTF-8 instead.
   In a binary source a one-character range on a multibyte character (Layout/
   EmptyLineAfterMagicComment's `source_range(buffer, line, 0)`) is one byte for RuboCop and the
   whole character for rbcop.

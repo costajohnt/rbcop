@@ -67,7 +67,7 @@ end
 
 ## CI
 
-rbcop has no result cache: every run inspects every file, using all cores. On a cold CI runner that is where it gains most, since RuboCop's cache is usually empty there.
+rbcop keeps a result cache as RuboCop does (`AllCops: UseCache`, `--cache`, `--cache-root`, `RUBOCOP_CACHE_ROOT`), in `rbcop_cache` next to RuboCop's `rubocop_cache`. On a cold CI runner the cache is empty and every file is inspected, using all cores; a workflow that restores the cache directory between runs skips the unchanged files.
 
 ### GitHub Actions
 

@@ -47,8 +47,9 @@ fn autocorrect_matches_rubocop() {
         let report = String::from_utf8(out.stdout).unwrap().replace(&prefix, "");
         assert_eq!(report, fs::read_to_string(dir.join("expected.txt")).unwrap(), "{case}: report");
         for e in fs::read_dir(dir.join("expected")).unwrap().flatten() {
-            let actual = fs::read_to_string(work.join(e.file_name())).unwrap();
-            assert_eq!(actual, fs::read_to_string(e.path()).unwrap(), "{case}: {:?}", e.file_name());
+            // Bytes: a file in another encoding stays as it was when RuboCop rejects it.
+            let actual = fs::read(work.join(e.file_name())).unwrap();
+            assert_eq!(actual, fs::read(e.path()).unwrap(), "{case}: {:?}", e.file_name());
         }
         assert_eq!(out.status.code(), Some(1), "{case}: uncorrected offenses remain");
         fs::remove_dir_all(&work).unwrap();

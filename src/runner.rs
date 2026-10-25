@@ -64,10 +64,10 @@ pub fn inspect(
     FileReport { offenses, text, warnings: directives::take_warnings(), abort: take_abort(), diffs: Vec::new() }
 }
 
-/// Inspect a file's bytes as read. A source that must be UTF-8 (`source::must_be_utf8`) but is not
-/// gets only RuboCop's Lint/Syntax `Invalid byte sequence in utf-8.` (a US-ASCII one with a byte
-/// above 0x7f its transcoding error, `source::encoding_error`); other non-UTF-8 sources are
-/// inspected lossily.
+/// Inspect a file's bytes as read, transcoded from the encoding its magic comment names
+/// (`source::reencode`; a transcoding error is all RuboCop reports). A source that must be UTF-8
+/// (`source::must_be_utf8`) but is not gets only RuboCop's Lint/Syntax `Invalid byte sequence in
+/// utf-8.`; other non-UTF-8 sources (encodings without a table) are inspected lossily.
 pub fn inspect_bytes(
     path: &Path,
     display: &str,
@@ -78,21 +78,26 @@ pub fn inspect_bytes(
     // Team#roundup_relevant_cops drops an excluded Lint/Syntax too: a project config cannot
     // exclude it, but a plugin's default.yml can (rubocop-erb's `**/*.erb`).
     let selected = &|cop: &str| selected(cop) && (cop != "Lint/Syntax" || cfg.relevant(cfg.cop(cop), path));
-    let error = crate::source::encoding_error(&bytes);
+    let bytes = match crate::source::reencode(bytes) {
+        crate::source::Reencoded::AsIs(b) => b,
+        crate::source::Reencoded::Text(text) => text.into_bytes(),
+        crate::source::Reencoded::Error(b, msg) => {
+            let offenses = encoding_error_offense(path, cfg, msg, selected).into_iter().collect();
+            let text = String::from_utf8_lossy(&b).into_owned();
+            return FileReport { offenses, text, warnings: Vec::new(), abort: None, diffs: Vec::new() };
+        }
+    };
     match String::from_utf8(bytes) {
-        Ok(text) => match error {
-            Some(msg) => encoding_error_report(text, msg, selected),
-            None => inspect(path, display, text, cfg, selected),
-        },
+        Ok(text) => inspect(path, display, text, cfg, selected),
         Err(e) => {
             let text = String::from_utf8_lossy(e.as_bytes()).into_owned();
-            if let Some(msg) = error {
-                return encoding_error_report(text, msg, selected);
-            }
             if !crate::source::must_be_utf8(&text) {
                 return inspect(path, display, text, cfg, selected);
             }
-            encoding_error_report(text, "Invalid byte sequence in utf-8.".into(), selected)
+            let offenses = encoding_error_offense(path, cfg, "Invalid byte sequence in utf-8.".into(), selected)
+                .into_iter()
+                .collect();
+            FileReport { offenses, text, warnings: Vec::new(), abort: None, diffs: Vec::new() }
         }
     }
 }
@@ -184,13 +189,20 @@ fn literal_ranges(src: &Source, program: &Node) -> Vec<(usize, usize)> {
     v.out
 }
 
-/// Lint/Syntax#add_offense_from_error: a global offense, beautified message, no version note.
-fn encoding_error_report(text: String, message: String, selected: &dyn Fn(&str) -> bool) -> FileReport {
-    // Lint/Syntax is not mobilized under -x, --only-guide-cops or `StyleGuideCopsOnly`.
-    if !selected("Lint/Syntax") {
-        return FileReport { offenses: Vec::new(), text, warnings: Vec::new(), abort: None, diffs: Vec::new() };
+/// Lint/Syntax#add_offense_from_error for a source Parser::Source::Buffer#source= rejected: a
+/// global offense, beautified message, no version note.
+pub fn encoding_error_offense(
+    path: &Path,
+    cfg: &Resolved,
+    message: String,
+    selected: &dyn Fn(&str) -> bool,
+) -> Option<Offense> {
+    // Lint/Syntax is not mobilized under -x, --only-guide-cops or `StyleGuideCopsOnly`, nor where
+    // it is excluded (see inspect_bytes).
+    if !selected("Lint/Syntax") || !cfg.relevant(cfg.cop("Lint/Syntax"), path) {
+        return None;
     }
-    let offense = Offense {
+    Some(Offense {
         start: 0,
         end: 0,
         cop: "Lint/Syntax",
@@ -203,8 +215,7 @@ fn encoding_error_report(text: String, message: String, selected: &dyn Fn(&str) 
         disabled: false,
         justification: None,
         todo: false,
-    };
-    FileReport { offenses: vec![offense], text, warnings: Vec::new(), abort: None, diffs: Vec::new() }
+    })
 }
 
 /// How Ruby words a failed `File.read`/`File.open` of `path` (RuboCop raises its own error for a
@@ -1192,6 +1203,7 @@ pub fn file_error(msg: String) {
 }
 
 fn record_error(cop: Option<&str>, msg: String) {
+    ERRORED.with(|e| e.set(true));
     let deferred = POISON.with(|p| match &mut *p.borrow_mut() {
         Some((_, errors)) => {
             errors.push(msg.clone());
@@ -1204,6 +1216,17 @@ fn record_error(cop: Option<&str>, msg: String) {
     } else {
         FILE_ERRORS.with(|e| e.borrow_mut().push((cop.map(String::from), msg, false)));
     }
+}
+
+thread_local! {
+    /// An error was recorded on this thread since the last `take_errored` (Runner#errors grew).
+    static ERRORED: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+}
+
+/// Whether an error was recorded on this thread since the last call: the result cache keeps no
+/// file whose inspection raised (Runner#save_in_cache).
+pub fn take_errored() -> bool {
+    ERRORED.with(|e| e.replace(false))
 }
 
 thread_local! {

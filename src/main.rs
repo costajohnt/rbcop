@@ -12,6 +12,7 @@ use std::process::ExitCode;
 use std::time::Instant;
 use std::{env, fs, thread};
 
+mod cache;
 mod fallback;
 
 // musl's malloc is a bottleneck for the worker threads; glibc and macOS keep the system allocator.
@@ -168,6 +169,8 @@ struct Cli {
     fail_fast: bool,
     parallel: Option<bool>,
     cache: Option<String>,
+    /// `--cache-root DIR`
+    cache_root: Option<String>,
     show_cops: Option<Vec<String>>,
     /// `--list-enabled-cops-for PATH`
     list_enabled_for: Option<String>,
@@ -564,6 +567,7 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
             if cli.cache.as_deref() == Some("false") {
                 return Err(Fail::Arg("--cache-root cannot be used with --cache false".into()));
             }
+            cli.cache_root = value;
         }
         "server" if !neg => return Err(Fail::Unsupported("--server is not supported by rbcop yet".into())),
         "format" => {
@@ -688,6 +692,7 @@ fn validate(cli: &mut Cli, global: bool) -> Result<(), Fail> {
         .flatten()
         .collect();
         if !invalid.is_empty() {
+            cli.parallel = None;
             println!("-P/--parallel is being ignored because it is not compatible with {}.", invalid.join(", "));
         }
     }
@@ -1329,11 +1334,21 @@ fn qualify_cop_options(cli: &mut Cli) -> (Vec<String>, Option<String>) {
 /// One linted file: (report, corrected source to write back, infinite-loop error), or a read error.
 /// One file's result: report, corrected source, loop error, and the warnings its cops raised.
 /// The report, the corrected source, the correction loop's error, the cop warnings and the cop
-/// errors printed for the file.
-/// And the file's `--auto-gen-config` updates (rbcop::autogen).
-type Linted = Result<(FileReport, Option<String>, Option<String>, Vec<String>, Vec<String>, AutogenUpdates), String>;
+/// errors printed for the file, what the result cache needs to save it, and the file's
+/// `--auto-gen-config` updates (rbcop::autogen).
+type Linted =
+    Result<(FileReport, Option<String>, Option<String>, Vec<String>, Vec<String>, Saving, rbcop::autogen::Updates), String>;
 
-type AutogenUpdates = rbcop::autogen::Updates;
+/// What `lint` returns for one file: the report, the corrected source, the correction loop's
+/// error, and the result cache key to save the report under.
+type LintResult = Result<(FileReport, Option<String>, Option<String>, Option<String>), String>;
+
+/// A file that was inspected with the result cache on: its cache key, and whether an error was
+/// recorded while inspecting it (Runner#errors).
+struct Saving {
+    key: Option<String>,
+    errored: bool,
+}
 
 /// Whether two targets are the same file on disk (one of them through a symlink, say).
 fn same_file_twice(jobs: &[(PathBuf, std::sync::Arc<Resolved>)]) -> bool {
@@ -1369,6 +1384,31 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     store.set_color(global);
     let cwd = store.cwd().to_path_buf();
     let pwd = cwd.display().to_string();
+    // CLI#warn_if_cache_root_changed: remote configs (which rbcop does not load) were cached under
+    // the root the top-level config names, not the one the resolved config does.
+    let configured_root =
+        cli.cache_root.clone().or_else(|| pwd_config.all_cops().get("CacheRootDirectory")?.as_string());
+    if let (Some(early), Some(desired)) = (
+        cache::root_dir(cli.cache_root.clone().or_else(|| store.toplevel_cache_root())),
+        cache::root_dir(configured_root.clone()),
+    ) {
+        let (early, desired) = (early.join("rubocop_cache"), desired.join("rubocop_cache"));
+        let same =
+            |a: &Path, b: &Path| a.exists() && b.exists() && fs::canonicalize(a).ok() == fs::canonicalize(b).ok();
+        if early != desired && !same(&early, &desired) {
+            eprintln!(
+                "{}",
+                formatter::Paint(parse_color).yellow(&format!(
+                    "Warning: Remote configuration cache files were stored in `{}` because a desired cache root \
+                     (`{}`) was not set at the top level. Consider setting `AllCops: CacheRootDirectory` in your \
+                     toplevel configuration file, using the `RUBOCOP_CACHE_ROOT` environment variable, or using \
+                     CLI options.",
+                    early.display(),
+                    desired.display()
+                ))
+            );
+        }
+    }
 
     // CLI#handle_exiting_options
     if cli.version {
@@ -1393,6 +1433,12 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     if let Some(cops) = &cli.show_docs_url {
         show_docs_url(cops, &pwd_config);
         return Ok(0);
+    }
+    // CLI#validate_options_vs_config
+    if cli.parallel == Some(true) && !pwd_config.all_cops().truthy("UseCache") {
+        return Err("-P/--parallel uses caching to speed up execution, so combining with AllCops: UseCache: false \
+                    is not allowed."
+            .into());
     }
     // AutoGenerateConfig runs after CLI#report_pending_cops.
     if phase.is_none() && !cli.opts.disable_pending_cops && !cli.opts.enable_pending_cops {
@@ -1652,6 +1698,47 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             eprintln!("{}", fallback::notice(&skipped, store.requires_ruby_code(), &copless));
         }
     }
+    // Runner#cached_run?: `--cache true|false`, else `AllCops: UseCache`; never for --stdin. Under
+    // --auto-gen-config (AutoGenerateConfig#use_temporary_cache: a cache root of its own, removed
+    // afterwards) every file is inspected and nothing is kept.
+    let use_cache = stdin_text.is_none()
+        && phase.is_none()
+        && match cli.cache.as_deref() {
+            Some("true") => true,
+            Some("false") => false,
+            _ => pwd_config.all_cops().truthy("UseCache"),
+        };
+    let result_cache = use_cache.then(|| cache::root_dir(configured_root.clone())).flatten().and_then(|root| {
+        // ResultCache#context_checksum: the options that change offenses, plus what the cops
+        // read outside each file's config: rubocop-rails' db/schema.rb (ActiveRecordHelper's
+        // external_dependency_checksum), the working directory and the plugins loaded.
+        let schema = cwd.ancestors().find_map(|d| fs::read(d.join("db/schema.rb")).ok());
+        let context = format!(
+            "{only:?}|{except:?}|{}|{}|{}|{:?}|{}",
+            cli.only_guide,
+            runner::display_suppressed(),
+            cwd.display(),
+            store.loaded_plugins(),
+            schema.map(|s| cache::digest(&[&s])).unwrap_or_default()
+        );
+        let all = pwd_config.all_cops();
+        cache::Cache::new(
+            &root,
+            &context,
+            all.truthy("AllowSymlinksInCacheRootDirectory"),
+            all.int("MaxFilesInCache"),
+            implemented.clone(),
+        )
+    });
+    // Each config's signature (Config#signature), once.
+    let mut signatures = std::collections::HashMap::new();
+    if result_cache.is_some() {
+        for (_, c) in &jobs {
+            signatures
+                .entry(std::sync::Arc::as_ptr(c) as usize)
+                .or_insert_with(|| cache::digest(&[c.signature().as_bytes()]));
+        }
+    }
     let stdin_text = &stdin_text;
     // --stdin with -a/-A: the corrected source, printed after the report.
     let mut stdin_corrected: Option<String> = None;
@@ -1659,10 +1746,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     // One file: (report, corrected source to write back, infinite-loop error), or a read error.
     // -a/-A: read, correct until stable; offenses from every iteration come back (fixed ones marked
     // corrected). The file is written in the reporting loop below, in file order, as RuboCop does.
-    let lint = |path: &PathBuf,
-                cfg: &Resolved,
-                mode: Option<rbcop::autocorrect::Mode>|
-     -> Result<(FileReport, Option<String>, Option<String>), String> {
+    let lint = |path: &PathBuf, cfg: &Resolved, mode: Option<rbcop::autocorrect::Mode>| -> LintResult {
         let display = rbcop::config::relative_path(path, &cwd);
         let plugin_file = plugin_files.contains(path);
         let selected = |cop: &str| !plugin_file && badge_selected(cop, cfg);
@@ -1670,16 +1754,34 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             // --stdin with -a/-A: the corrected source is printed after the report (@options[:stdin]).
             if let Some(mode) = mode {
                 let c = rbcop::autocorrect::correct_bytes(path, &display, bytes.clone(), cfg, &selected, mode);
-                return Ok((c.report, c.source, c.error));
+                return Ok((c.report, c.source, c.error, None));
             }
-            return Ok((runner::inspect_bytes(path, &display, bytes.clone(), cfg, &selected), None, None));
+            return Ok((runner::inspect_bytes(path, &display, bytes.clone(), cfg, &selected), None, None, None));
+        }
+        // Runner#file_offense_cache: a cached report is used as is, except that with -a/-A one with
+        // offenses is inspected (and corrected) again. The key comes back when a real run should
+        // be saved.
+        let mut key = None;
+        if let Some(cache) = &result_cache {
+            let bytes = fs::read(path).map_err(|e| runner::io_error(&e, path))?;
+            let config = &signatures[&(std::ptr::from_ref(cfg) as usize)];
+            let signature = format!("{config}|{:?}|{plugin_file}", registry_at.get(path));
+            key = cache.key(path, &signature, &bytes);
+            if let Some(report) = key.as_ref().and_then(|k| cache.load(k, &bytes))
+                && (mode.is_none() || report.offenses.is_empty())
+            {
+                return Ok((report, None, None, None));
+            }
+            if mode.is_none() {
+                return Ok((runner::inspect_bytes(path, &display, bytes, cfg, &selected), None, None, key));
+            }
         }
         if let Some(mode) = mode {
             let c = rbcop::autocorrect::correct_file(path, &display, cfg, &selected, mode)?;
-            return Ok((c.report, c.source, c.error));
+            return Ok((c.report, c.source, c.error, key));
         }
         let bytes = fs::read(path).map_err(|e| runner::io_error(&e, path))?;
-        Ok((runner::inspect_bytes(path, &display, bytes, cfg, &selected), None, None))
+        Ok((runner::inspect_bytes(path, &display, bytes, cfg, &selected), None, None, None))
     };
     // A panic outside a cop (cop panics are reported by runner::guarded) ends the run at that file,
     // like any error, instead of taking down every worker's results with it.
@@ -1691,9 +1793,10 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
         }))
         .unwrap_or_else(|_| Err(format!("rbcop: internal error while inspecting {}", path.display())));
         let errors = runner::take_file_errors();
+        let errored = runner::take_errored();
         let updates = rbcop::autogen::take_file();
-        linted.map(|(report, corrected, loop_error)| {
-            (report, corrected, loop_error, runner::take_file_warnings(), errors, updates)
+        linted.map(|(report, corrected, loop_error, key)| {
+            (report, corrected, loop_error, runner::take_file_warnings(), errors, Saving { key, errored }, updates)
         })
     };
     // Cops recurse over the AST; runner::MAX_AST_DEPTH (1000) needs under 2 MiB, the rest is
@@ -1772,6 +1875,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     let mut config_failure = None;
     let mut cop_warnings_raised: Vec<String> = Vec::new();
     let mut aborted = false;
+    let mut cache_dirty = false;
     if error.is_none() {
         let mut cop_notes = Some((cop_warnings, cop_error));
         let mut stopped = false;
@@ -1842,7 +1946,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                 }
                 None => linted,
             };
-            let (mut report, corrected, loop_error, warnings, errors, updates) = match linted {
+            let (mut report, corrected, loop_error, warnings, errors, saving, updates) = match linted {
                 Ok(l) => l,
                 Err(e) => {
                     error = Some(e);
@@ -1851,6 +1955,22 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                 }
             };
             rbcop::autogen::replay(updates);
+            // Runner#save_in_cache: nothing is saved for a file that warned, nor once a cop has
+            // raised an error or a warning in this run. Saved here, before anything below
+            // changes the report; what RuboCop prints in between, it prints only for files it
+            // does not save.
+            cache_dirty |= saving.errored || !warnings.is_empty() || loop_error.is_some();
+            if let (Some(cache), Some(key)) = (&result_cache, &saving.key)
+                && !cache_dirty
+                && errors.is_empty()
+                && report.warnings.is_empty()
+                && report.abort.is_none()
+            {
+                // With -a/-A only a file without offenses (so uncorrected) is known to have the
+                // offenses of a plain inspection; RuboCop also saves the others, with their
+                // corrections marked uncorrected, against the source before correction.
+                cache.save(key, &report, cli.autocorrect.is_none() || report.offenses.is_empty());
+            }
             // Lint/RedundantCopDisableDirective's did-you-mean list is the registry of the first
             // file that described an unknown cop name (#599).
             let view = registry_at.get(path).copied();
@@ -1944,6 +2064,12 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             set.file_started(&cx, &path);
             config_failure = Some(e);
         }
+    }
+    // Runner#inspect_files' ensure: pruning is skipped for a single file (an editor's run).
+    if files.len() > 1
+        && let Some(cache) = &result_cache
+    {
+        cache.cleanup();
     }
     set.finished(&cx, &inspected);
     if let Some(e) = set.take_error() {
