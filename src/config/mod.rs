@@ -18,7 +18,7 @@ pub const RUBOCOP_VERSION: &str = "1.91.0";
 const DOTFILE: &str = ".rubocop.yml";
 
 /// Command-line switches that change how configs resolve.
-#[derive(Clone, Default)]
+#[derive(Clone, Debug, Default)]
 pub struct Options {
     /// `-c FILE`
     pub config_file: Option<PathBuf>,
@@ -395,6 +395,23 @@ impl Resolved {
         format!("{major}.{minor}").parse().unwrap_or(5.0)
     }
 
+    /// Every input that resolves into this config's offenses, for the result cache key
+    /// (Config#signature, plus what RuboCop reads outside the config: the target Ruby, the locked
+    /// gem versions and the plugins in the team).
+    pub fn signature(&self) -> String {
+        let mut gems: Vec<_> = self.gem_versions_in_target().map(|g| g.iter().collect()).unwrap_or_default();
+        gems.sort();
+        format!(
+            "{:?}|{:?}|{}|{:?}|{:?}|{:?}",
+            self.hash,
+            self.base_dir,
+            self.target_ruby,
+            self.opts,
+            self.team_plugins.get(),
+            gems
+        )
+    }
+
     pub fn all_cops(&self) -> &Map {
         static EMPTY: Map = Map(Vec::new());
         self.hash.map("AllCops").unwrap_or(&EMPTY)
@@ -756,6 +773,24 @@ impl Store {
 
     pub fn cwd(&self) -> &Path {
         &self.cwd
+    }
+
+    /// CacheConfig.root_dir_from_toplevel_config: `AllCops: CacheRootDirectory` as written in the
+    /// config file found from the working directory (no inheritance, no -c).
+    pub fn toplevel_cache_root(&self) -> Option<String> {
+        let path = self.find_config_path(&self.cwd)?;
+        let text = std::fs::read(&path).ok()?;
+        if !text.windows(18).any(|w| w == b"CacheRootDirectory") {
+            return None;
+        }
+        let text = match text.windows(2).any(|w| w == b"<%") {
+            true => render_erb(&path, &text).ok().flatten().unwrap_or(text),
+            false => text,
+        };
+        match parse_yaml_bytes(&text, &path.display().to_string()).ok()? {
+            Value::Map(m) => m.map("AllCops")?.get("CacheRootDirectory")?.as_string(),
+            _ => None,
+        }
     }
 
     /// A config so far loaded `require:`s Ruby code rbcop cannot load (custom cops, or a plugin

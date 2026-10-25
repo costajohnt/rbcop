@@ -1096,6 +1096,7 @@ pub fn file_error(msg: String) {
 }
 
 fn record_error(cop: Option<&str>, msg: String) {
+    ERRORED.with(|e| e.set(true));
     let deferred = POISON.with(|p| match &mut *p.borrow_mut() {
         Some((_, errors)) => {
             errors.push(msg.clone());
@@ -1108,6 +1109,17 @@ fn record_error(cop: Option<&str>, msg: String) {
     } else {
         FILE_ERRORS.with(|e| e.borrow_mut().push((cop.map(String::from), msg, false)));
     }
+}
+
+thread_local! {
+    /// An error was recorded on this thread since the last `take_errored` (Runner#errors grew).
+    static ERRORED: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+}
+
+/// Whether an error was recorded on this thread since the last call: the result cache keeps no
+/// file whose inspection raised (Runner#save_in_cache).
+pub fn take_errored() -> bool {
+    ERRORED.with(|e| e.replace(false))
 }
 
 thread_local! {

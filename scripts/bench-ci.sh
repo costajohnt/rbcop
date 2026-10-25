@@ -2,8 +2,10 @@
 # CI-shaped benchmark (docs/benchmarks.md): RuboCop with a cold cache vs rbcop, pinned to the CPUs
 # of an emulated GitHub-hosted runner. Linux only (taskset).
 # usage: scripts/bench-ci.sh <out.tsv> <reps> <tools> <dir>...
-#   tools: comma-separated from rubocop-single, rubocop-par, rbcop, boot, file
+#   tools: comma-separated from rubocop-single, rubocop-par, rbcop, rbcop-cache, boot, file
 #     rubocop-single: RuboCop without --parallel, 2 vCPUs; rubocop-par, rbcop: 2 and 4 vCPUs;
+#     rubocop-par is a cold-cache run then a warm one (rubocop-par-warm); rbcop runs with
+#     --cache false; rbcop-cache is rbcop with a cold cache (rbcop-cold) then warm (rbcop-warm);
 #     boot: `rubocop --version`, `bundle exec rubocop --version` (Gemfile in <dir>), `rbcop --version`;
 #     file: RuboCop and rbcop on the one file $FILE (relative to <dir>), 2 vCPUs.
 #   PROJECT_CONFIG=1: use each directory's own .rubocop.yml (plugins must be installed for
@@ -63,9 +65,17 @@ for rep in $(seq 1 "$reps"); do
           for n in 2 4; do
             cache=$(mktemp -d)
             time_one "$dir" $n "$tool" "${rubocop[@]}" $cfg --cache true --cache-root "$cache" --parallel --format quiet .
+            time_one "$dir" $n rubocop-par-warm "${rubocop[@]}" $cfg --cache true --cache-root "$cache" --parallel --format quiet .
             rm -rf "$cache"
           done ;;
-        rbcop) for n in 2 4; do time_one "$dir" $n "$tool" "$bin" $cfg --format quiet .; done ;;
+        rbcop) for n in 2 4; do time_one "$dir" $n "$tool" "$bin" $cfg --cache false --format quiet .; done ;;
+        rbcop-cache)
+          for n in 2 4; do
+            cache=$(mktemp -d)
+            time_one "$dir" $n rbcop-cold "$bin" $cfg --cache-root "$cache" --format quiet .
+            time_one "$dir" $n rbcop-warm "$bin" $cfg --cache-root "$cache" --format quiet .
+            rm -rf "$cache"
+          done ;;
         boot)
           time_one "$dir" 2 rubocop-version "${rubocop[@]}" --version
           time_one "$dir" 2 bundle-rubocop-version bundle exec rubocop --version
@@ -74,7 +84,7 @@ for rep in $(seq 1 "$reps"); do
           cache=$(mktemp -d)
           time_one "$dir" 2 rubocop-file "${rubocop[@]}" $cfg --cache true --cache-root "$cache" --format quiet "$FILE"
           rm -rf "$cache"
-          time_one "$dir" 2 rbcop-file "$bin" $cfg --format quiet "$FILE" ;;
+          time_one "$dir" 2 rbcop-file "$bin" $cfg --cache false --format quiet "$FILE" ;;
       esac
     done
   done

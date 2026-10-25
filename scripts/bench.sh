@@ -48,4 +48,4 @@ run "rubocop, one process" $rubocop --force-default-config --cache false --forma
 run "rubocop --parallel, cold cache" $rubocop --force-default-config --cache true --cache-root "$cache" --parallel --format quiet --only "$cops" .
 # shellcheck disable=SC2086
 run "rubocop --parallel, warm cache" $rubocop --force-default-config --cache true --cache-root "$cache" --parallel --format quiet --only "$cops" .
-run "rbcop" "$bin" --force-default-config --format quiet --only "$cops" .
+run "rbcop" "$bin" --force-default-config --cache false --format quiet --only "$cops" .
