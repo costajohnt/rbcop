@@ -15,6 +15,8 @@ pub fn command(program: impl AsRef<OsStr>) -> Command {
         "RUBY_PROGRESS_BAR_LENGTH",
         "RBCOP_DEBUG",
         "XDG_CONFIG_HOME",
+        "XDG_CACHE_HOME",
+        "RUBOCOP_CACHE_ROOT",
         "RBCOP_FALLBACK",
         "RBCOP_RUBOCOP",
     ] {

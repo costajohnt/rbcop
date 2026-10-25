@@ -142,6 +142,22 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   without backslashes, `#` or `()[]{}*+?|` (so the regexp is always valid and its `inspect` is the
   text with `/` escaped); a backtick string has no backslash, backtick or `#`.
   Fixture: tests/autocorrect/rspec_untrusted_text (RuboCop's output in `rubocop-output/`).
+- The result cache (`src/cache.rs`, #281) follows RuboCop's `AllCops: UseCache`, `--cache`,
+  root lookup (`RUBOCOP_CACHE_ROOT`, then `--cache-root`, then `AllCops: CacheRootDirectory`, then
+  `$XDG_CACHE_HOME/<uid>`, then `~/.cache`), symlink refusal, `MaxFilesInCache` pruning and its
+  warnings, with these differences:
+  - Entries live in `<root>/rbcop_cache`, in rbcop's own format, so the two tools never read or
+    prune each other's entries.
+  - The key also covers what RuboCop's leaves out: the target Ruby version (from `.ruby-version`,
+    `Gemfile.lock`, ...), the locked gem versions, the plugins loaded and the cop registry a file
+    sees. Where RuboCop serves a stale result after such a change, rbcop inspects the file again.
+    The existence of the file `RSpec/SpecFilePathFormat: InflectorPath` names is not in the key.
+  - With `-a`/`-A`, only files without offenses are saved (RuboCop saves every inspected file,
+    corrected offenses marked uncorrected, at offsets of the source before correction). A cached
+    file without offenses is skipped and one with offenses is inspected again, as in RuboCop.
+  - Pruning removes directories it emptied up to `rbcop_cache`, not above it.
+  - Where RuboCop raises (no home directory, a cache directory that cannot be created for a
+    reason other than EACCES/EROFS, an entry that cannot be written), rbcop runs without saving.
 
 ## Open gaps
 
@@ -249,8 +265,8 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     sets the default configuration (an extension's `Inject.defaults!`). Conditions on a require
     line are not evaluated.
   - `-d/--debug`, `--profile`, `--memory`: Ruby-level diagnostics (backtraces, stackprof).
-  - `-C/--cache`, `--cache-root`, `-P/--[no-]parallel`, `--raise-cop-error` are accepted and have
-    no effect (rbcop keeps no result cache and always lints in parallel).
+  - `-P/--[no-]parallel` and `--raise-cop-error` are accepted and have no effect (rbcop always
+    lints in parallel); `-P` with `AllCops: UseCache: false` fails as in RuboCop.
 - The cops of a loaded plugin rbcop does not implement (`--show-cops`, `--list-enabled-cops-for`,
   `--show-docs-url`, `--only`, directives, the skipped-cops notice) are the cop classes its gem's
   `lib/` defines, found by reading the `module`/`class` nesting (`RuboCop::Cop::<Dept>::<Name>`
