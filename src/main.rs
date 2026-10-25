@@ -867,8 +867,16 @@ fn main() -> ExitCode {
     // An editor or a server opening a project runs none of its Ruby unless RBCOP_FALLBACK=1: the
     // server options (those server_cli took out of argv, or any parsed from `.rubocop` and
     // RUBOCOP_OPTS or abbreviated), --editor-mode and --stdin. (--lsp and --mcp are refused.)
-    const EDITOR: [&str; 8] =
-        ["server", "start_server", "restart_server", "stop_server", "server_status", "no_detach", "editor_mode", "stdin"];
+    const EDITOR: [&str; 8] = [
+        "server",
+        "start_server",
+        "restart_server",
+        "stop_server",
+        "server_status",
+        "no_detach",
+        "editor_mode",
+        "stdin",
+    ];
     let server = argv.len() != given;
     let parsed = all_args(argv.clone()).and_then(parse_args).and_then(|mut cli| {
         if server || cli.keys.iter().any(|k| EDITOR.contains(&k.as_str())) {
