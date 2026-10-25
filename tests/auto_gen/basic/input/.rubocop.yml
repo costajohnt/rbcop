@@ -1,0 +1,8 @@
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+Style/StringLiterals:
+  Exclude:
+    - lib/x.rb
+Metrics/MethodLength:
+  Max: 5

@@ -91,19 +91,27 @@ pub fn space_offense(
 /// Offense list entry produced by `no_space_offenses` / `space_offenses`: (token, side, command).
 pub type Planned = (Token, Side, &'static str);
 
-/// `no_space_offenses(node, left, right, message, start_ok:, end_ok:)`.
+/// `autocorrect_with_disable_uncorrectable?`: then only the left side of a pair is reported
+/// (unless the left side is fine), so one todo comment covers both.
+pub fn uncorrectable(cx: &crate::cop::Cx) -> bool {
+    cx.fixes.autocorrect && crate::autocorrect::disable_uncorrectable()
+}
+
+/// `no_space_offenses(node, left, right, message, start_ok:, end_ok:)`; `uncorrectable` is
+/// `autocorrect_with_disable_uncorrectable?`.
 pub fn no_space_offenses(
     src: &Source,
     left: Option<&Token>,
     right: Option<&Token>,
     start_ok: bool,
     end_ok: bool,
+    uncorrectable: bool,
 ) -> Vec<Planned> {
     let mut out = Vec::new();
     if extra_space(src, left, Side::Left) && !start_ok {
         out.push((*left.unwrap(), Side::Right, NO_SPACE_COMMAND));
     }
-    if extra_space(src, right, Side::Right) && !end_ok {
+    if extra_space(src, right, Side::Right) && !end_ok && !(uncorrectable && !start_ok) {
         out.push((*right.unwrap(), Side::Left, NO_SPACE_COMMAND));
     }
     out
@@ -116,6 +124,7 @@ pub fn space_offenses(
     right: Option<&Token>,
     start_ok: bool,
     end_ok: bool,
+    uncorrectable: bool,
 ) -> Vec<Planned> {
     let mut out = Vec::new();
     if !(extra_space(src, left, Side::Left) || start_ok) {
@@ -124,7 +133,7 @@ pub fn space_offenses(
             out.push((*l, Side::None, SPACE_COMMAND));
         }
     }
-    if !(extra_space(src, right, Side::Right) || end_ok)
+    if !(extra_space(src, right, Side::Right) || end_ok || (uncorrectable && !start_ok))
         && let Some(r) = right
     {
         out.push((*r, Side::None, SPACE_COMMAND));

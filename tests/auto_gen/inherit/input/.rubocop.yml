@@ -1,0 +1,18 @@
+---
+# Project settings.
+inherit_from:
+  - base.yml
+  - other.yml
+
+inherit_mode:
+  merge:
+    - Exclude
+
+Layout/LineLength:
+  Max: 100
+
+Naming/MethodParameterName:
+  Exclude:
+    - 'legacy/**/*'
+
+

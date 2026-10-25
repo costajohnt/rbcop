@@ -102,6 +102,93 @@ pub fn inspect_bytes(
     }
 }
 
+/// AutocorrectLogic#multiline_ranges: heredocs (to their terminator), backslash-continued strings
+/// (whole lines), percent arrays and multi-line dstrs, in AST pre-order.
+fn literal_ranges(src: &Source, program: &Node) -> Vec<(usize, usize)> {
+    use ruby_prism::Visit;
+    struct V<'a> {
+        src: &'a Source<'a>,
+        out: Vec<(usize, usize)>,
+    }
+    impl V<'_> {
+        fn string(
+            &mut self,
+            node: &Node,
+            opening: Option<ruby_prism::Location>,
+            closing: Option<ruby_prism::Location>,
+        ) {
+            let l = node.location();
+            let (s, e) = (l.start_offset(), l.end_offset());
+            if let (Some(o), Some(c)) = (&opening, &closing)
+                && o.as_slice().starts_with(b"<<")
+            {
+                // `source_range.join(loc.heredoc_end)`: the terminator without its newline.
+                let end = c.end_offset() - usize::from(c.as_slice().ends_with(b"\n"));
+                self.out.push((o.start_offset(), end));
+                return;
+            }
+            let text = &self.src.text[s..e];
+            // /\\\s*$/: a backslash with only whitespace after it on its line.
+            let continued = text.match_indices('\\').any(|(i, _)| {
+                text[i + 1..]
+                    .split('\n')
+                    .next()
+                    .unwrap_or("")
+                    .bytes()
+                    .all(|b| matches!(b, b' ' | b'\t' | b'\r' | b'\x0b' | b'\x0c'))
+            });
+            if continued {
+                let first = self.src.line_start(self.src.line_of(s));
+                let last = self.src.line_of(e);
+                self.out.push((first, self.src.line_start(last) + self.src.lines.get(last - 1).map_or(0, |l| l.len())));
+                return;
+            }
+            let dstr = node.as_interpolated_string_node().is_some() || crate::ast::is_parser_dstr(node);
+            if dstr && self.src.line_of(s) != self.src.line_of(e) {
+                self.out.push((s, e));
+            }
+        }
+    }
+    impl<'pr> Visit<'pr> for V<'_> {
+        fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
+            match &node {
+                Node::InterpolatedStringNode { .. } => {
+                    let n = node.as_interpolated_string_node().unwrap();
+                    self.string(&node, n.opening_loc(), n.closing_loc());
+                }
+                Node::InterpolatedXStringNode { .. } => {
+                    let n = node.as_interpolated_x_string_node().unwrap();
+                    self.string(&node, Some(n.opening_loc()), Some(n.closing_loc()));
+                }
+                Node::ArrayNode { .. } => {
+                    let n = node.as_array_node().unwrap();
+                    if n.opening_loc().is_some_and(|o| o.as_slice().starts_with(b"%")) {
+                        let l = node.location();
+                        self.out.push((l.start_offset(), l.end_offset()));
+                    }
+                }
+                _ => {}
+            }
+        }
+        fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
+            match &node {
+                Node::StringNode { .. } => {
+                    let n = node.as_string_node().unwrap();
+                    self.string(&node, n.opening_loc(), n.closing_loc());
+                }
+                Node::XStringNode { .. } => {
+                    let n = node.as_x_string_node().unwrap();
+                    self.string(&node, Some(n.opening_loc()), Some(n.closing_loc()));
+                }
+                _ => {}
+            }
+        }
+    }
+    let mut v = V { src, out: Vec::new() };
+    v.visit(program);
+    v.out
+}
+
 /// Lint/Syntax#add_offense_from_error for a source Parser::Source::Buffer#source= rejected: a
 /// global offense, beautified message, no version note.
 pub fn encoding_error_offense(
@@ -127,6 +214,7 @@ pub fn encoding_error_offense(
         source: None,
         disabled: false,
         justification: None,
+        todo: false,
     })
 }
 
@@ -700,6 +788,9 @@ fn investigate(
             return (Vec::new(), None, Vec::new());
         }
         let ruby = format_ruby_version(cfg.target_ruby);
+        // --disable-uncorrectable: status :corrected_with_todo (no corrector applies to a file that does
+        // not parse).
+        let todo = autocorrect::todo(false, cfg.cop("Lint/Syntax"), mode);
         let mut out: Vec<Offense> = errors
             .into_iter()
             .map(|(start, end, msg)| Offense {
@@ -717,10 +808,11 @@ fn investigate(
                 severity: Severity::Fatal,
                 correctable: false,
                 global: false,
-                corrected: false,
+                corrected: todo,
                 source: None,
                 disabled: false,
                 justification: None,
+                todo,
             })
             .collect();
         // The parser translation layer reports one diagnostic per range; Prism can stack two
@@ -790,6 +882,9 @@ fn investigate(
         facts.config_disabled = config_disabled;
     }
     facts.text = shared.clone();
+    if mode.is_some() && autocorrect::disable_uncorrectable() {
+        facts.literal_ranges = literal_ranges(&src, &program);
+    }
     // Directives naming an ambiguous cop: see poison_raise.
     let poison = facts.comment_config.poison.clone().filter(|_| !only_redundant);
     if let Some(p) = &poison {
@@ -799,7 +894,8 @@ fn investigate(
     let mut fixes: Vec<Fixes> = active
         .iter()
         .map(|a| Fixes {
-            autocorrect: mode.is_some_and(|m| a.cop.correctable() && autocorrect::cop_autocorrects(a.cfg, m)),
+            autocorrect: autocorrect::autocorrect(a.cop.correctable(), a.cfg, mode),
+            todo: autocorrect::todo(a.cop.correctable(), a.cfg, mode),
             ..Fixes::default()
         })
         .collect();
@@ -940,7 +1036,7 @@ fn investigate(
             // Team#investigate_with_corrector: the other cops do not run in a correcting iteration.
             let correcting: Vec<&str> = active
                 .iter()
-                .filter(|a| a.cop.correctable() && autocorrect::cop_autocorrects(a.cfg, mode.unwrap()))
+                .filter(|a| autocorrect::correcting(a.cop.correctable(), a.cfg, mode))
                 .map(|a| a.name)
                 .collect();
             out.retain(|o| correcting.contains(&o.cop));

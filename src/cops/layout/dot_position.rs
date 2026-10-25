@@ -51,12 +51,13 @@ impl Cop for DotPosition {
         }
         let src = cx.src;
         let selector_line = src.line_of(selector.start_offset());
+        // proper_dot_position? is correct_style_detected.
         if selector_line == src.line_of(receiver.location().end_offset()) {
-            return;
+            return cx.correct_style_detected();
         }
         let dot_line = src.line_of(dot.start_offset());
         if selector_line as isize - receiver_end_line(src, &receiver).max(dot_line) as isize > 1 {
-            return;
+            return cx.correct_style_detected();
         }
         let leading = match cx.cfg.str("EnforcedStyle").unwrap_or("leading") {
             "leading" => true,
@@ -64,8 +65,9 @@ impl Cop for DotPosition {
             _ => return,
         };
         if (dot_line == selector_line) == leading {
-            return;
+            return cx.correct_style_detected();
         }
+        cx.opposite_style_detected();
         let msg = if leading {
             format!("Place the {} on the next line, together with the method name.", text(&dot))
         } else {

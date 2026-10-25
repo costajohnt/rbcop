@@ -23,6 +23,6 @@ impl Cop for AbcSize {
             format_g4(size),
             format_g4(max)
         );
-        cx.add(start, end, msg);
+        cx.add_with_limit(start, end, msg, "Max", size.ceil() as i64);
     }
 }

@@ -49,7 +49,7 @@ pub fn check(cx: &mut Cx, m: Measured, span: (usize, usize), offense: (usize, us
         return;
     }
     let offense = crate::helpers::lsp::location(root, offense);
-    cx.add(offense.0, offense.1, msg(length as usize, max));
+    cx.add_with_limit(offense.0, offense.1, msg(length as usize, max), "Max", length);
 }
 
 #[derive(Default, Clone, Copy)]

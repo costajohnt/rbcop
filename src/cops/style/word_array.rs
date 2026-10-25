@@ -56,16 +56,24 @@ impl Cop for WordArray {
             if complex_content(&els, re.as_ref()) || self.within_matrix(cx, re.as_ref()) {
                 return;
             }
-            if pa::allowed_bracket_array(cx, node) || !percent_style {
+            if pa::allowed_bracket_array(cx, node) {
+                return;
+            }
+            pa::array_style_detected(cx, "brackets", els.len());
+            if !percent_style {
                 return;
             }
             let values: Vec<Vec<u8>> = els.iter().map(|e| str_content(e).unwrap()).collect();
             let replacement = pa::percent_literal_replacement(cx, node, &values, 'w');
             cx.add_fix(start, end, PERCENT_MSG, |c| c.replace(start, end, &replacement));
         } else if open.starts_with("%w") || open.starts_with("%W") {
+            pa::array_style_detected(cx, "percent", els.len());
             let brackets_required = complex_content(&els, None);
             if percent_style && !brackets_required {
                 return;
+            }
+            if brackets_required {
+                cx.no_acceptable_style();
             }
             // The message mirrors RuboCop exactly; the written code never loses invalid-UTF-8 bytes.
             let build = |literal: fn(&[u8]) -> String| -> String {

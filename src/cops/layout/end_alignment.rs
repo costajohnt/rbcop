@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use helpers::check_assignment::{KINDS, extract_rhs, first_part_of_call_chain};
-use helpers::end_keyword_alignment::{misalignment, start_line_range};
+use helpers::end_keyword_alignment::{detect, misalignment, start_line_range};
 use ruby_prism::Location;
 use std::collections::{HashMap, HashSet};
 
@@ -97,6 +97,7 @@ fn check_other(cx: &mut Cx, node: &Node) {
     let sol = start_line_range(cx.src, span(node).0);
     let style = style(cx);
     let ranges = [("keyword", kw), ("variable", kw), ("start_of_line", sol)];
+    detect(cx, end, &ranges, &style);
     if let Some(msg) = misalignment(cx.src, end, &ranges, &style) {
         emit(cx, node, end, msg);
     }
@@ -116,8 +117,9 @@ fn check_asgn(cx: &mut Cx, outer_start: usize, inner: &Node) {
         if src.line_of(span(inner).0) > src.line_of(outer_start) { kw } else { (outer_start, kw.1) };
     let sol = start_line_range(src, span(inner).0);
     let style = style(cx);
-    if let Some(msg) = misalignment(src, end, &[("keyword", kw), ("start_of_line", sol), ("variable", variable)], &style)
-    {
+    let ranges = [("keyword", kw), ("start_of_line", sol), ("variable", variable)];
+    detect(cx, end, &ranges, &style);
+    if let Some(msg) = misalignment(src, end, &ranges, &style) {
         cx.state::<Ignored>().1.insert(span(inner), (end, msg));
     }
 }

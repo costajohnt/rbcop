@@ -110,7 +110,9 @@ impl Cop for SpaceInsideStringInterpolation {
                 [left_space.then_some((o.1, o.1 + lead)), right_space.then_some((c.0 - trail, c.0))],
             )
         };
-        for (s, e) in ranges.into_iter().flatten() {
+        // autocorrect_with_disable_uncorrectable?: only the left side.
+        let sides = if helpers::surrounding_space::uncorrectable(cx) { 1 } else { 2 };
+        for (s, e) in ranges.into_iter().take(sides).flatten() {
             cx.add_fix(s, e, msg, &mut fix);
         }
     }

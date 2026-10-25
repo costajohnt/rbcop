@@ -518,6 +518,7 @@ impl Cop for LineLength {
             };
             if let Some(rewrite) = endless.get(&i) {
                 let from = s.highlight_start(line);
+                limit(cx, at(from), at(len), len);
                 cx.add_fix(at(from), at(len), s.message(len), |c| {
                     if let Some((b, e, r)) = rewrite {
                         c.replace(*b, *e, r);
@@ -537,6 +538,7 @@ impl Cop for LineLength {
                 if before as f64 > max.f64() {
                     // `max..(length - 1)`
                     let Num::Int(from) = max else { panic!("can't iterate from Float") };
+                    limit(cx, at(from as usize), at(before), len);
                     cx.add_fix(at(from as usize), at(before), s.message(before), break_line);
                 }
                 continue;
@@ -561,7 +563,15 @@ impl Cop for LineLength {
                 _ => s.highlight_start(line),
             };
             // ponytail: SplitStrings break points (strings split with a backslash) are not modelled yet.
+            limit(cx, at(from), at(len), len);
             cx.add_fix(at(from), at(len), s.message(len), break_line);
         }
+    }
+}
+
+/// `self.max = line_length(line)` in the offense's block.
+fn limit(cx: &Cx, start: usize, end: usize, len: usize) {
+    if crate::autogen::on() && cx.block_runs(start, end) {
+        cx.exclude_limit("Max", len as i64);
     }
 }

@@ -125,9 +125,9 @@ impl Cop for SpaceInsideReferenceBrackets {
         }
         let no_space = style == "no_space";
         let planned = if no_space {
-            ss::no_space_offenses(src, Some(&left), right.as_ref(), false, false)
+            ss::no_space_offenses(src, Some(&left), right.as_ref(), false, false, ss::uncorrectable(cx))
         } else {
-            ss::space_offenses(src, Some(&left), right.as_ref(), false, false)
+            ss::space_offenses(src, Some(&left), right.as_ref(), false, false, ss::uncorrectable(cx))
         };
         let correct = |c: &mut Corrector| {
             let Some(r) = right else { return };

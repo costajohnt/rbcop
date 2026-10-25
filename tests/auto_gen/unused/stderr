@@ -1,0 +1,6 @@
+
+4 unused todo entries found in `.rubocop_todo.yml`:
+  Style/StringLiterals: lib/clean.rb
+  Style/StringLiterals: lib/missing.rb
+  Style/StringLiterals: **/*.gen.rb
+  Layout/SpaceAroundOperators: lib/clean.rb

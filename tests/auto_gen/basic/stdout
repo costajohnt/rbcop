@@ -1,0 +1,13 @@
+Added inheritance from `.rubocop_todo.yml` in `.rubocop.yml`.
+Phase 1 of 2: run Layout/LineLength cop
+Inspecting 4 files
+....
+
+4 files inspected, no offenses detected
+Created .rubocop_todo.yml.
+Phase 2 of 2: run all cops
+Inspecting 4 files
+CWWW
+
+4 files inspected, 92 offenses detected, 63 offenses autocorrectable
+Created .rubocop_todo.yml.

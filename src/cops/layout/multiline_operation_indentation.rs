@@ -55,24 +55,37 @@ impl Cop for MultilineOperationIndentation {
             }
         };
         let src = cx.src;
+        // Each way out without an offense is `correct_style_detected` (offending_range is falsy).
         if !alignment::begins_its_line(src, rhs.0) {
-            return;
+            return cx.correct_style_detected();
         }
         let ctx = Ctx::new(cx.ancestors, node, range);
         if ctx.not_for_this_cop() {
-            return;
+            return cx.correct_style_detected();
         }
         let aligned = cx.cfg.str("EnforcedStyle") != Some("indented");
         let width = alignment::configured_indentation_width(cx);
-        let align = should_align(cx, &ctx, rhs, aligned);
-        let correct = if align {
-            src.column(range.0) as i64
-        } else {
-            indentation(cx, lhs.0) + ctx.correct_indentation(cx, width)
+        // offending_range's column delta for a style
+        let delta_for = |aligned: bool| {
+            let correct = if should_align(cx, &ctx, rhs, aligned) {
+                src.column(range.0) as i64
+            } else {
+                indentation(cx, lhs.0) + ctx.correct_indentation(cx, width)
+            };
+            correct - src.column(rhs.0) as i64
         };
-        let delta = correct - src.column(rhs.0) as i64;
+        let align = should_align(cx, &ctx, rhs, aligned);
+        let delta = delta_for(aligned);
         if delta == 0 {
-            return;
+            return cx.correct_style_detected();
+        }
+        // incorrect_style_detected: the other style would be wrong too, or is what is used.
+        if cx.block_runs(rhs.0, rhs.1) {
+            if delta_for(!aligned) != 0 {
+                cx.no_acceptable_style();
+            } else {
+                cx.opposite_style_detected();
+            }
         }
         let what = ctx.operation_description(Some(rhs));
         let msg = if align {

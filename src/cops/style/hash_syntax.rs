@@ -370,7 +370,20 @@ impl Cop for HashSyntax {
             let in_return = parent.is_some_and(|p| p.as_return_node().is_some()) && !braces;
             let first_pair = pairs[0].range;
             let no_mixed = matches!(ctx.style, Style::NoMixedKeys | Style::Ruby19NoMixedKeys);
-            for p in pairs.iter().filter(|p| p.rocket == delim_rocket) {
+            // HashSyntax#alternative_style (nil for no_mixed_keys: no acceptable style).
+            let alternative: &[&str] = match ctx.style {
+                Style::HashRockets => &["ruby19"],
+                Style::Ruby19 | Style::Ruby19NoMixedKeys => &["hash_rockets"],
+                Style::NoMixedKeys => &[],
+            };
+            for p in pairs.iter() {
+                if p.rocket != delim_rocket {
+                    cx.correct_style_detected();
+                    continue;
+                }
+                if cx.block_runs(p.key.0, p.op.1) {
+                    cx.style_detected(alternative);
+                }
                 let rockets_fix = rockets_enforced || (no_mixed && !p.rocket);
                 let (key, op) = (p.key, p.op);
                 let key_src = text(key);
@@ -416,6 +429,7 @@ impl Cop for HashSyntax {
                     if p.omitted || require_value(p) {
                         continue;
                     }
+                    cx.no_acceptable_style();
                     shorthand_offense(cx, p, OMIT, format!("{k}:"));
                 } else if p.omitted {
                     shorthand_offense(cx, p, EXPLICIT, format!("{k}: {k}"));

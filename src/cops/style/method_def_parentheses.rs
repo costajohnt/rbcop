@@ -29,14 +29,23 @@ impl Cop for MethodDefParentheses {
                 // Util#add_parentheses on an `args` node.
                 let (s, e) = (p.location().start_offset(), p.location().end_offset());
                 let fix = add_parentheses::plan(&p.as_node(), cx.src.text).unwrap();
+                // `unexpected_style_detected 'require_no_parentheses'`: a String, so nil.
+                if cx.block_runs(s, e) {
+                    cx.string_style_detected_for("EnforcedStyle");
+                }
                 cx.add_fix(s, e, "Use def with parentheses when there are parameters.", |c| add_parentheses::apply(c, &fix));
+            } else {
+                cx.correct_style_detected();
             }
             return;
         }
         if def.equal_loc().is_some() || params.as_ref().is_some_and(anonymous_arguments) {
-            return;
+            return cx.correct_style_detected();
         }
         if let Some((s, e)) = parens {
+            if cx.block_runs(s, e) {
+                cx.string_style_detected_for("EnforcedStyle");
+            }
             cx.add_fix(s, e, "Use def without parentheses.", |c| {
                 c.replace(s, s + 1, " ");
                 c.remove(e - 1, e);

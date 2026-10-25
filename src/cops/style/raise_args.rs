@@ -30,7 +30,7 @@ impl Cop for RaiseArgs {
         };
         if cx.cfg.str("EnforcedStyle") == Some("compact") {
             if args.len() <= 1 {
-                return;
+                return cx.correct_style_detected();
             }
             let exception = &args[0];
             if plain_send(exception).is_some_and(|c| call_args(&c).first().is_some_and(is_hash)) {
@@ -41,13 +41,16 @@ impl Cop for RaiseArgs {
                 wrap(format!("{class}.new({})", node_text(&args[1])))
             });
             let msg = format!("Provide an exception object as an argument to `{method}`.");
+            if cx.block_runs(s, e) {
+                cx.opposite_style_detected();
+            }
             return cx.add_fix(s, e, msg, |c| {
                 if let Some(fix) = &fix {
                     c.replace(s, e, fix);
                 }
             });
         }
-        let [first] = args.as_slice() else { return };
+        let [first] = args.as_slice() else { return cx.correct_style_detected() };
         let Some(new) = plain_send(first) else { return };
         let Some(recv) = new.receiver().filter(|_| method_name(&new) == "new") else { return };
         let new_args = send_args(&new);
@@ -68,6 +71,9 @@ impl Cop for RaiseArgs {
         let arguments = std::iter::once(node_text(&recv)).chain(new_args.first().map(node_text)).collect::<Vec<_>>();
         let fix = wrap(arguments.join(", "));
         let msg = format!("Provide an exception class and message as arguments to `{method}`.");
+        if cx.block_runs(s, e) {
+            cx.opposite_style_detected();
+        }
         cx.add_fix(s, e, msg, |c| c.replace(s, e, &fix));
     }
 }
