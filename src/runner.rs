@@ -553,6 +553,9 @@ fn investigate(
     let mut buf = Vec::new();
     let (result, tokens, fake, edits) = parse_for_target(text, &mut buf, version, cfg.target_ruby);
     let sclass_returns = if parser_gem { crate::syntax::sclass_returns(&result) } else { Vec::new() };
+    // The depth guard is asked up to four times below; the tree is walked for it once (#388).
+    let too_deep = std::cell::OnceCell::new();
+    let too_deep = || *too_deep.get_or_init(|| crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH));
     let mut errors: Vec<(usize, usize, String)> = result
         .errors()
         .filter(|e| !tolerated(e, parser_gem, cfg.target_ruby, text, &sclass_returns))
@@ -566,7 +569,7 @@ fn investigate(
     if parser_gem {
         // The parser-gem simulation below walks the tree recursively (`legacy_syntax::diagnostics`),
         // so the depth guard (see `program` below) comes first here: a long chain overflowed (#351).
-        if crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH) {
+        if too_deep() {
             file_error(format!("rbcop: {display}: nested more than {MAX_AST_DEPTH} levels deep, not inspected."));
             return (Vec::new(), None, Vec::new());
         }
@@ -732,19 +735,12 @@ fn investigate(
     }
     // Pattern variable names the parser gem's builder rejects, only reached when Prism found no
     // error (a tree walk, so only on trees the depth check below accepts; patterns need `in`/`=>`).
-    if errors.is_empty()
-        && (text.contains("in") || text.contains("=>"))
-        && !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH)
-    {
+    if errors.is_empty() && (text.contains("in") || text.contains("=>")) && !too_deep() {
         errors.extend(crate::syntax::pattern_variable_errors(&result.node()));
     }
     // Onigmo compile errors of static regexps (below 3.3 they are semantic errors above), reported
     // by the Prism translation only when the file otherwise parses.
-    if !parser_gem
-        && errors.is_empty()
-        && text.contains(['/', '%'])
-        && !crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH)
-    {
+    if !parser_gem && errors.is_empty() && text.contains(['/', '%']) && !too_deep() {
         errors.extend(crate::syntax::regexp_compile_errors(&result.node(), text));
     }
     let comments: Vec<Comment> = result
@@ -839,11 +835,17 @@ fn investigate(
 
     let opted_in = directives::opted_in(&src);
     let only_redundant = matches!(redundant, Redundant::Only(_));
+    // Every file asks this of every cop: each cop's plugin is looked up once per run (#388).
+    static PLUGINS: std::sync::LazyLock<Vec<Option<&'static crate::helpers::cop_registry::NativePlugin>>> =
+        std::sync::LazyLock::new(|| {
+            crate::cops::ALL.iter().map(|r| crate::helpers::cop_registry::plugin_of(r.name)).collect()
+        });
     let active: Vec<Active> = crate::cops::ALL
         .iter()
-        .filter(|r| selected(r.name) && !only_redundant && cfg.team_has(r.name))
-        .filter_map(|r| {
-            let c = cfg.cop(r.name);
+        .enumerate()
+        .filter(|&(i, r)| selected(r.name) && !only_redundant && cfg.team_has_plugin(PLUGINS[i]))
+        .filter_map(|(i, r)| {
+            let c = cfg.cop_at(i, r.name);
             let (mut min, max) = r.cop.ruby_range();
             // rubocop-rails: `Style::HashExcept.minimum_target_ruby_version(2.0)` once it is loaded.
             if r.name == "Style/HashExcept" && rails {
@@ -863,7 +865,7 @@ fn investigate(
     let program = result.node();
     // Deliberate difference: RuboCop dies with SystemStackError on very deep nesting; rbcop skips the
     // file with an error instead, so cops (many of them recursive) never see such a tree.
-    if crate::ast::deeper_than(&program, MAX_AST_DEPTH) {
+    if too_deep() {
         file_error(format!("rbcop: {}: nested more than {MAX_AST_DEPTH} levels deep, not inspected.", src.path));
         return (Vec::new(), None, Vec::new());
     }
@@ -875,13 +877,14 @@ fn investigate(
     let pn = program.as_program_node().unwrap();
     let first_code = pn.statements().body().iter().next().map(|n| n.location().start_offset());
     facts.first_code = first_code;
-    // Registry#disabled_names of the --only/--except filtered registry.
-    let config_disabled: Vec<&'static str> = crate::helpers::cop_registry::REGISTRY
-        .iter()
-        .copied()
-        .filter(|&c| selected(c) && !cfg.cop_enabled(c))
-        .collect();
     if src.text.contains("rubocop") {
+        // Registry#disabled_names of the --only/--except filtered registry (only directives read
+        // it, so a file without one skips the scan of every cop name, #388).
+        let config_disabled: Vec<&'static str> = crate::helpers::cop_registry::REGISTRY
+            .iter()
+            .copied()
+            .filter(|&c| selected(c) && !cfg.cop_enabled(c))
+            .collect();
         // DisableNext needs statement bounds before the cops run (disabled ranges gate `add_fix`).
         let bounds = directives::needs_statement_bounds(&src).then(|| StatementBounds::build(&src, &program));
         let bounds = bounds.unwrap_or_default();

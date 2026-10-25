@@ -1535,7 +1535,15 @@ impl<'a> Badges<'a> {
     // ponytail: it so also enters Registry#disabled_names under the filter, which matters only
     // for a config that disables it.
     fn badge_selected(&self, cop: &str, cfg: &Resolved) -> bool {
-        let guide_only = self.only.is_empty() && (self.only_guide || cfg.all_cops().truthy("StyleGuideCopsOnly"));
+        self.badge_selected_in(cop, cfg, self.guide_only(cfg))
+    }
+
+    /// Whether the style-guide filter applies to `cfg` (hoisted out of per-cop checks).
+    fn guide_only(&self, cfg: &Resolved) -> bool {
+        self.only.is_empty() && (self.only_guide || cfg.all_cops().truthy("StyleGuideCopsOnly"))
+    }
+
+    fn badge_selected_in(&self, cop: &str, cfg: &Resolved, guide_only: bool) -> bool {
         self.selected(cop)
             && (!guide_only
                 || cfg.hash.map(cop).is_some_and(|c| c.truthy("StyleGuide"))
@@ -1825,6 +1833,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     let badges = Badges::new(only, except, cli.only_guide);
     let selected = |cop: &str| badges.selected(cop);
     let badge_selected = |cop: &str, cfg: &Resolved| badges.badge_selected(cop, cfg);
+    let guide_only = |cfg: &Resolved| badges.guide_only(cfg);
+    let badge_selected_in =
+        |cop: &str, cfg: &Resolved, guide_only: bool| badges.badge_selected_in(cop, cfg, guide_only);
     // Resolve configs up front (single-threaded), then lint in parallel.
     let mut jobs = Vec::with_capacity(files.len());
     // RuboCop loads a file's config when the file's turn comes, so an invalid config stops the run
@@ -1964,7 +1975,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     let lint = |path: &PathBuf, cfg: &Resolved, mode: Option<rbcop::autocorrect::Mode>| -> LintResult {
         let display = rbcop::config::relative_path(path, &cwd);
         let plugin_file = plugin_files.contains(path);
-        let selected = |cop: &str| !plugin_file && badge_selected(cop, cfg);
+        // Asked for every cop of the file: the config's StyleGuideCopsOnly is read once (#388).
+        let guide_only = guide_only(cfg);
+        let selected = |cop: &str| !plugin_file && badge_selected_in(cop, cfg, guide_only);
         if let Some(bytes) = stdin_text {
             // --stdin with -a/-A: the corrected source is printed after the report (@options[:stdin]).
             if let Some(mode) = mode {

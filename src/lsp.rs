@@ -319,7 +319,8 @@ impl Server {
             badges.badge_selected(cop, &cfg) && cfg.cop_enabled(cop)
         })?;
         let plugin_file = self.store.copless_plugin_file(&cfg, &abs);
-        let selected = |cop: &str| !plugin_file && badges.badge_selected(cop, &cfg);
+        let guide_only = badges.guide_only(&cfg);
+        let selected = |cop: &str| !plugin_file && badges.badge_selected_in(cop, &cfg, guide_only);
         let display = relative_path(&abs, &self.cwd);
         rbcop::config::value::reset_run_budget();
         runner::take_literal_ranges();
