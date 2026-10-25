@@ -101,6 +101,35 @@ fn autocorrect_on_a_warm_cache_still_corrects() {
 }
 
 #[test]
+fn pruning_never_follows_a_symlink_in_the_cache_tree() {
+    let dir = project("prune");
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "AllCops:\n  NewCops: enable\n  SuggestExtensions: false\n  MaxFilesInCache: 1\n",
+    )
+    .unwrap();
+    rbcop(&dir, &[]);
+    // Files outside the cache, reachable through a planted directory link and a planted entry link.
+    let outside = dir.join("outside");
+    fs::create_dir_all(outside.join("b/c")).unwrap();
+    fs::write(outside.join("b/c/victim"), "keep").unwrap();
+    fs::write(outside.join("victim2"), "keep").unwrap();
+    let top = dir.join("cache-root/rbcop_cache");
+    std::os::unix::fs::symlink(&outside, top.join("evil")).unwrap();
+    let entry_dir = below(&below(&top).into_iter().find(|p| !p.is_symlink()).unwrap())[0].clone();
+    std::os::unix::fs::symlink(outside.join("victim2"), entry_dir.join("link")).unwrap();
+    for _ in 0..3 {
+        fs::write(dir.join("a.rb"), format!("{}\n", fs::read_to_string(dir.join("a.rb")).unwrap())).unwrap();
+        rbcop(&dir, &[]);
+    }
+    assert_eq!(fs::read_to_string(outside.join("b/c/victim")).unwrap(), "keep");
+    assert_eq!(fs::read_to_string(outside.join("victim2")).unwrap(), "keep");
+    // Pruning did run on the real entries.
+    assert!(entries(&dir) < 7, "{}", entries(&dir));
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
 fn stdin_and_cache_false_never_touch_the_cache() {
     let dir = project("stdin");
     let mut child = common::command(env!("CARGO_BIN_EXE_rbcop"))

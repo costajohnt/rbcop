@@ -7,7 +7,9 @@ use rbcop::cop::{Offense, Severity};
 use rbcop::runner::FileReport;
 use std::collections::HashSet;
 use std::fs;
-use std::hash::Hasher;
+use std::hash::{BuildHasher, Hasher};
+use std::io::{Read, Write};
+use std::os::unix::fs::OpenOptionsExt;
 use std::path::{Path, PathBuf};
 
 /// CacheConfig.root_dir, without its `rubocop_cache` part: `RUBOCOP_CACHE_ROOT`, then `configured`
@@ -86,7 +88,11 @@ impl Cache {
 
     /// CachedData#from_json: the report saved for `key`, against `bytes` (the file as read now).
     pub fn load(&self, key: &str, bytes: &[u8]) -> Option<FileReport> {
-        let data = fs::read_to_string(self.dir.join(key)).ok()?;
+        // Not through a symlink planted as an entry.
+        let mut data = String::new();
+        let mut file =
+            fs::OpenOptions::new().read(true).custom_flags(libc::O_NOFOLLOW).open(self.dir.join(key)).ok()?;
+        file.read_to_string(&mut data).ok()?;
         let mut lines = data.split('\n');
         let text_len: usize = lines.next()?.parse().ok()?;
         let mut offenses = Vec::new();
@@ -123,15 +129,8 @@ impl Cache {
             Err(None) => return,
         }
         // A symbolic link anywhere in the cache directory's path can be a symlink attack.
-        if !self.allow_symlinks {
-            let mut p = self.dir.as_path();
-            while let Some(parent) = p.parent() {
-                if p.is_symlink() {
-                    eprintln!("Warning: {} is a symlink, which is not allowed.", p.display());
-                    return;
-                }
-                p = parent;
-            }
+        if let Some(link) = self.refused_symlink(&self.dir) {
+            return eprintln!("Warning: {} is a symlink, which is not allowed.", link.display());
         }
         if !write {
             return;
@@ -142,30 +141,61 @@ impl Cache {
             let message = o.message.replace('\\', "\\\\").replace('\n', "\\n");
             out.push_str(&format!("{} {} {} {flags} {} {message}\n", o.start, o.end, o.severity.name(), o.cop));
         }
-        // Written aside and renamed, so a parallel run never reads half an entry.
+        // Written aside and renamed, so a parallel run never reads half an entry. The temporary
+        // name is unpredictable and created fresh (never through an existing file or symlink);
+        // any failure only skips saving.
         let n = self.saved.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
-        let tmp = self.dir.join(format!("{key}_{}_{}", std::process::id(), n));
-        if fs::write(&tmp, out).and_then(|()| fs::rename(&tmp, self.dir.join(key))).is_err() {
+        let random = std::collections::hash_map::RandomState::new().hash_one(n);
+        let tmp = self.dir.join(format!("{key}_{}_{random:016x}", std::process::id()));
+        let written = fs::OpenOptions::new()
+            .write(true)
+            .create_new(true)
+            .custom_flags(libc::O_NOFOLLOW)
+            .open(&tmp)
+            .and_then(|mut f| f.write_all(out.as_bytes()))
+            .and_then(|()| fs::rename(&tmp, self.dir.join(key)));
+        if written.is_err() {
             let _ = fs::remove_file(&tmp);
         }
+    }
+
+    /// ResultCache#any_symlink?: the deepest symlink in `path` or its ancestors, unless
+    /// AllowSymlinksInCacheRootDirectory.
+    fn refused_symlink<'p>(&self, path: &'p Path) -> Option<&'p Path> {
+        if self.allow_symlinks {
+            return None;
+        }
+        path.ancestors().take_while(|p| p.parent().is_some()).find(|p| p.is_symlink())
     }
 
     /// ResultCache.cleanup: past MaxFilesInCache entries, remove the oldest half (and one more).
     pub fn cleanup(&self) {
         let Some(max) = self.max_files else { return };
-        let below = |d: &Path| -> Vec<PathBuf> {
+        // Never prune through a symlink: none in the root's path (skipped quietly; RuboCop warns
+        // only when saving), and inside the tree only real directories are entered and only
+        // regular files removed.
+        if self.refused_symlink(&self.top).is_some() {
+            return;
+        }
+        let below = |d: &Path, dirs: bool| -> Vec<PathBuf> {
             fs::read_dir(d)
-                .map(|r| r.flatten().filter(|e| !e.file_name().as_encoded_bytes().starts_with(b".")).map(|e| e.path()))
+                .map(|r| {
+                    r.flatten()
+                        .filter(|e| !e.file_name().as_encoded_bytes().starts_with(b"."))
+                        .filter(|e| e.file_type().is_ok_and(|t| if dirs { t.is_dir() } else { t.is_file() }))
+                        .map(|e| e.path())
+                })
                 .into_iter()
                 .flatten()
                 .collect()
         };
-        let mut files: Vec<PathBuf> = below(&self.top).iter().flat_map(|a| below(a)).flat_map(|b| below(&b)).collect();
+        let mut files: Vec<PathBuf> =
+            below(&self.top, true).iter().flat_map(|a| below(a, true)).flat_map(|b| below(&b, false)).collect();
         if files.len() <= 1 || files.len() as i64 <= max {
             return;
         }
         let remove = files.len() / 2 + 1;
-        files.sort_by_cached_key(|f| fs::metadata(f).and_then(|m| m.modified()).ok());
+        files.sort_by_cached_key(|f| fs::symlink_metadata(f).and_then(|m| m.modified()).ok());
         for f in &files[..remove] {
             let _ = fs::remove_file(f);
         }
