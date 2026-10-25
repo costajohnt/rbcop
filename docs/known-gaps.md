@@ -297,8 +297,14 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   `rbcop: not writing the --profile report: <reason>` to stderr instead of the `generated at` line.
 - Command-line options rbcop refuses (`rbcop: --NAME is not supported by rbcop yet`, exit 2):
   - `--changed [REVISION]`: needs RuboCop's git diff of changed files.
-  - `--server`, `--start-server`, `--stop-server`, `--restart-server`, `--server-status`,
-    `--no-detach`, `--lsp`, `--mcp`: long-running server modes (`--no-server` is accepted).
+  - `--lsp`, `--mcp`: long-running protocol servers on stdio.
+- The server options (#293): rbcop runs in process and never starts a server, so none is ever
+  running. They are taken out of the arguments and checked as RuboCop::Server::CLI does (same
+  `cannot be specified together` / `cannot be combined with` errors, exit 2); then `--server-status`
+  prints `RuboCop server is not running.`, `--stop-server` warns it, `--start-server` exits 0 without
+  RuboCop's `RuboCop server starting on <host>:<port>.` line, `--restart-server` only warns from its
+  stop half, and `--server`, `--no-server` and `--no-detach --server` lint in this process (RuboCop
+  prints the starting line first, and with `--no-detach` serves in the foreground instead).
   - `-r/--require`, `--plugin`: load Ruby code. In a config file, `plugins:` / `require:` of a
     plugin rbcop implements natively (docs/plugins.md) runs its cops; any other gem only merges its
     default configuration and its cops do not run. A `require:` of a gem that is not a lint_roller
