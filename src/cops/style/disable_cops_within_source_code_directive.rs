@@ -15,8 +15,7 @@ fn listed(names: &[String], cop: &str) -> bool {
 
 /// DirectiveComment#reason is present (non-empty text after `--`).
 fn has_reason(text: &str, d: &directives::Directive) -> bool {
-    let ws = [' ', '\t', '\n', '\x0b', '\x0c', '\r', '\0'];
-    text[d.end..].trim_start_matches(ws).strip_prefix("--").is_some_and(|r| !r.trim_matches(ws).is_empty())
+    directives::reason(text, d).is_some()
 }
 
 impl Cop for DisableCopsWithinSourceCodeDirective {

@@ -60,6 +60,18 @@ fn warm_run_prints_what_a_cold_run_prints() {
     }
     // Every file is cached (the Gemfile too), the one that does not parse included.
     assert_eq!(entries(&dir), 7);
+    // Suppressed offenses, with a directive's justification, under --display-suppressed.
+    fs::write(
+        dir.join("lib/suppressed.rb"),
+        "# frozen_string_literal: true\n\nz = 1 # rubocop:disable Lint/UselessAssignment -- tab\there\n",
+    )
+    .unwrap();
+    for format in ["json", "emacs"] {
+        let args = ["--display-suppressed", "-f", format];
+        let base = rbcop(&dir, &[&["--cache", "false"][..], &args].concat());
+        assert_same(&base, &rbcop(&dir, &args), format);
+        assert_same(&base, &rbcop(&dir, &args), format);
+    }
     let _ = fs::remove_dir_all(&dir);
 }
 

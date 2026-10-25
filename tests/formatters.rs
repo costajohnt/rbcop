@@ -30,12 +30,12 @@ fn formatters_match_rubocop() {
             continue;
         }
         let mut parts = line.splitn(4, '|');
-        let (name, cwd, args) = (parts.next().unwrap(), parts.next().unwrap(), parts.next().unwrap());
+        let (name, cwd_name, args) = (parts.next().unwrap(), parts.next().unwrap(), parts.next().unwrap());
         let stdin = match parts.next() {
             Some(f) => Stdio::from(std::fs::File::open(root.join(f)).unwrap()),
             None => Stdio::null(),
         };
-        let mut cwd = root.join(cwd);
+        let mut cwd = root.join(cwd_name);
         // fix-* cases autocorrect, so they run on a fresh copy of their directory.
         if name.starts_with("fix-") {
             let work = std::env::temp_dir().join(format!("rbcop-formatters-{name}-{}", std::process::id()));
@@ -59,6 +59,13 @@ fn formatters_match_rubocop() {
             .unwrap();
         count += 1;
         if name.starts_with("fix-") {
+            // `--diff` writes nothing.
+            if name.starts_with("fix-diff-") {
+                for e in std::fs::read_dir(root.join(cwd_name)).unwrap().flatten() {
+                    let copy = std::fs::read(cwd.join(e.file_name())).unwrap();
+                    assert!(copy == std::fs::read(e.path()).unwrap(), "{name}: {:?} was written", e.file_name());
+                }
+            }
             let _ = std::fs::remove_dir_all(&cwd);
         }
         let expected = std::fs::read_to_string(dir.join(format!("expected/{name}.txt"))).unwrap();

@@ -13,6 +13,11 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   `rbcop: not autocorrecting <file>: it resolves to <path>, outside the project` goes to stderr;
   the exit status follows its offenses. The check is repeated right before the write, which follows
   no symlink after it (directories are opened one by one, relative to the last). `--stdin` is unaffected.
+- `--diff` never writes a file. RuboCop 1.91.0 does when Lint/RedundantCopDisableDirective corrects:
+  its redundant-disable team does not defer corrections, so `File.write` puts every correction in
+  the file, and the inspection loop it then reruns reads that file. rbcop prints the same report
+  and the same diffs (which leave out the removed directives) and leaves the file as it was. With
+  `RBCOP_FALLBACK=1`, `--diff` is refused when the RuboCop child would run (it corrects by writing).
 - HTML formatter escapes `& < >` in messages outside code spans and fully escapes paths; GitHub
   Actions formatter escapes CR/LF in the `file=` property. Output differs only when those appear.
 - JUnit escapes cop names in attributes (no effect for real cop names).
@@ -249,9 +254,6 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     --auto-gen-config` error; `--no-exclude-limit` and `--[no-]auto-gen-enforced-style` are inert.
   - `--report-unused-todo-entries`, `--disable-uncorrectable`: need the todo file and
     `# rubocop:todo` comment insertion, not ported.
-  - `--display-suppressed`: the runner drops offenses disabled by comments instead of reporting
-    them with a disabled status.
-  - `--diff`: the unified-diff dry run of autocorrection is not ported.
   - `--changed [REVISION]`: needs RuboCop's git diff of changed files.
   - `--server`, `--start-server`, `--stop-server`, `--restart-server`, `--server-status`,
     `--no-detach`, `--lsp`, `--mcp`: long-running server modes (`--no-server` is accepted).
@@ -292,7 +294,10 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   directive naming a cop in a department rbcop does not know is not reported as unknown.
 - A native plugin uses its vendored default.yml and pinned behaviour whatever version of the gem is
   installed, and works when the gem is not installed (RuboCop fails to load it then).
-- Remote `inherit_from` URLs are skipped with a warning.
+- Remote `inherit_from` URLs are fetched by `ruby` on PATH running RuboCop's RemoteConfig
+  (src/config/remote_config.rb): the same cache file, refresh rule, redirects and messages. When
+  a download fails rbcop prints RuboCop's message without its backtrace. Without a runnable
+  `ruby` the entry is skipped with a warning.
 - ERB in a config file is rendered by `ruby` on PATH (from the file's directory), not inside
   RuboCop: the template sees the standard library and `Gem.loaded_specs["rubocop"]` (version
   1.91.0), but not RuboCop's own constants (`RuboCop::Version`). A template that raises prints its

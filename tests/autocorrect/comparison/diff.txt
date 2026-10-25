@@ -1,0 +1,47 @@
+styles.rb:3:1: C: [Corrected] Style/FrozenStringLiteralComment: Frozen string literal comment must be set to `true`.
+styles.rb:4:6: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+styles.rb:6:1: C: [Corrected] Layout/EmptyLines: Extra blank line detected.
+styles.rb:7:1: C: [Corrected] Layout/EmptyLines: Extra blank line detected.
+styles.rb:8:6: C: [Corrected] Style/NilComparison: Prefer the use of the `==` comparison.
+styles.rb:8:17: C: [Corrected] Style/NilComparison: Prefer the use of the `==` comparison.
+styles.rb:9:1: C: [Corrected] Layout/IndentationStyle: Tab detected in indentation.
+styles.rb:9:8: C: [Corrected] Style/NilComparison: Prefer the use of the `==` comparison.
+styles.rb:9:31: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+styles.rb:11:41: C: [Corrected] Layout/LineLength: Line is too long. [63/40]
+styles.rb:13:8: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+styles.rb:14:1: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+styles.rb:17:6: C: Layout/TrailingWhitespace: Trailing whitespace detected.
+styles.rb:20:1: C: [Corrected] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+
+--- a/styles.rb
++++ b/styles.rb
+@@ -1,21 +1,18 @@
+ #!/usr/bin/env ruby
+ # encoding: utf-8
+-# frozen_string_literal: false
+-x = 1   
++# frozen_string_literal: true
++x = 1
+ 
+-
+-
+-if x.nil? && !y.nil?
+-	z = x.nil?
++if (x == nil) && !(y == nil)
++  z = (x == nil)
+ end
+-foo(aaaaaaaaaa, bbbbbbbbbbbbb, ccccccccccc, ddddddddddd, eeeee)
++foo(aaaaaaaaaa, bbbbbbbbbbbbb,
++ccccccccccc, ddddddddddd, eeeee)
+ puts <<~TEXT
+-  hello   
+-     
++  hello#{'   '}
++  #{'   '}
+   w
+ TEXT
+ puts <<~'RAW'
+   raw   
+ RAW
+-
+-

@@ -63,6 +63,8 @@ pub struct Off {
     pub source_line: Arc<str>,
     /// `add_global_offense`: the location is Offense::NO_LOCATION, a PseudoSourceRange.
     pub global: bool,
+    /// Offense#justification: the suppressing directive's reason.
+    pub justification: Option<String>,
 }
 
 impl Off {
@@ -190,7 +192,9 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
             let (last_line, last_column, _, end) = p.pos(o.end.max(o.start));
             // Range#length is end_pos - begin_pos, past the end of the source included.
             let overflow = o.end.max(o.start).saturating_sub(p.text.len());
-            let status = if o.corrected {
+            let status = if o.disabled {
+                Status::Disabled
+            } else if o.corrected {
                 Status::Corrected
             } else if o.correctable {
                 Status::Uncorrected
@@ -214,6 +218,7 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                     length,
                     source_line,
                     global: true,
+                    justification: o.justification.clone(),
                 };
             }
             Off {
@@ -228,6 +233,7 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                 length: p.count(start, end) + overflow,
                 source_line: p.line(ls),
                 global: false,
+                justification: o.justification.clone(),
             }
         })
         .collect();
@@ -736,6 +742,8 @@ mod tests {
             global: true,
             corrected: false,
             source: None,
+            disabled: false,
+            justification: None,
         };
         let v = &offenses("source 'x'\n", &[o], |o| o.message.clone())[0];
         assert_eq!((v.line, v.real_column(), v.last_line, v.real_last_column(), v.length), (1, 1, 1, 1, 0));

@@ -1,0 +1,49 @@
+Inspecting 2 files
+CW
+
+Offenses:
+
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+source 'https://rubygems.org'
+^
+d.rb:3:6: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+x = 1 
+     ^
+d.rb:4:50: C: [Suppressed] Layout/TrailingWhitespace: Trailing whitespace detected.
+y = 2 # rubocop:disable Layout/TrailingWhitespace 
+                                                 ^
+d.rb:6:6: C: [Suppressed] Layout/TrailingWhitespace: Trailing whitespace detected.
+z = 3 
+     ^
+d.rb:8:6: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+a = 4 
+     ^
+d.rb:10:1: W: [Suppressed] Lint/Debugger: Remove debugger entry point binding.pry.
+binding.pry
+^^^^^^^^^^^
+d.rb:12:1: W: Lint/Debugger: Remove debugger entry point binding.pry.
+binding.pry
+^^^^^^^^^^^
+d.rb:13:7: C: [Suppressed] Style/NilComparison: Prefer the use of the nil? predicate.
+b = x == nil # rubocop:todo Style/NilComparison
+      ^^
+d.rb:14:7: C: [Suppressed] Style/NilComparison: Prefer the use of the nil? predicate.
+c = y == nil # rubocop:disable NilComparison -- with a reason
+      ^^
+d.rb:15:7: C: [Correctable] Style/NilComparison: Prefer the use of the nil? predicate.
+d = z == nil ## rubocop:disable Style/NilComparison
+      ^^
+d.rb:17:1: W: [Suppressed] Lint/Debugger: Remove debugger entry point binding.pry.
+binding.pry
+^^^^^^^^^^^
+d.rb:18:7: C: [Suppressed] Style/NilComparison: Prefer the use of the nil? predicate.
+e = a == nil
+      ^^
+d.rb:20:1: W: Lint/Debugger: Remove debugger entry point binding.pry.
+binding.pry
+^^^^^^^^^^^
+d.rb:21:7: C: [Suppressed] Style/NilComparison: Prefer the use of the nil? predicate.
+f = b == nil
+      ^^
+
+2 files inspected, 14 offenses detected, 4 offenses autocorrectable

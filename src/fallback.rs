@@ -162,6 +162,7 @@ pub fn run(
         (o.disable_pending_cops, "--disable-pending-cops"),
         (o.force_default_config, "--force-default-config"),
         (rbcop::directives::ignoring_disable_comments(), "--ignore-disable-comments"),
+        (rbcop::runner::display_suppressed(), "--display-suppressed"),
         (rbcop::helpers::lsp::enabled(), "--editor-mode"),
         (o.ignore_parent_exclusion, "--ignore-parent-exclusion"),
         (o.ignore_unrecognized_cops, "--ignore-unrecognized-cops"),
@@ -200,7 +201,8 @@ pub fn run(
     let mut names: HashMap<String, &'static str> = HashMap::new();
     for line in String::from_utf8_lossy(&result.stdout).lines() {
         let f: Vec<&str> = line.split('\t').collect();
-        let [path, start, end, severity, correctable, corrected, global, cop, message] = f[..] else {
+        let [path, start, end, severity, correctable, corrected, global, cop, message, disabled, justification] = f[..]
+        else {
             return Err(format!("rbcop: RBCOP_FALLBACK: unexpected output from {program}: {line}"));
         };
         let path = PathBuf::from(unescape(path));
@@ -216,6 +218,8 @@ pub fn run(
             global: global == "1",
             corrected: corrected == "1",
             source: originals.get(&path).cloned(),
+            disabled: disabled == "1",
+            justification: (!justification.is_empty()).then(|| unescape(justification)),
         };
         out.entry(path).or_insert_with(Vec::new).push(offense);
     }

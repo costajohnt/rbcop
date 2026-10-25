@@ -1,0 +1,39 @@
+ambiguous.rb:1:1: W: [Corrected] Lint/AmbiguousBlockAssociation: Parenthesize the param `proc { it.history << 1 }` to make sure that the block will be associated with the `proc` method call.
+ambiguous.rb:2:1: W: [Corrected] Lint/AmbiguousBlockAssociation: Parenthesize the param `proc { _1.history << 1 }` to make sure that the block will be associated with the `proc` method call.
+ambiguous.rb:4:1: W: [Corrected] Lint/AmbiguousBlockAssociation: Parenthesize the param `Proc.new { it }` to make sure that the block will be associated with the `Proc.new` method call.
+ambiguous.rb:9:1: W: [Corrected] Lint/AmbiguousBlockAssociation: Parenthesize the param `Proc.new { _1 }` to make sure that the block will be associated with the `Proc.new` method call.
+line_end.rb:3:5: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
+line_end.rb:7:5: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
+line_end.rb:22:121: C: Layout/LineLength: Line is too long. [129/120]
+
+--- a/ambiguous.rb
++++ b/ambiguous.rb
+@@ -1,9 +1,9 @@
+-before_validation proc { it.history << 1 }
+-before_validation proc { _1.history << 1 }
++before_validation(proc { it.history << 1 })
++before_validation(proc { _1.history << 1 })
+ before_validation proc { |m| m.history << 1 }
+-foo Proc.new { it }
++foo(Proc.new { it })
+ foo lambda { it.x }
+ foo lambda { _1.x }
+ foo -> { it.x }
+ foo -> { _1.x }
+-foo Proc.new { _1 }
++foo(Proc.new { _1 })
+--- a/line_end.rb
++++ b/line_end.rb
+@@ -1,10 +1,10 @@
+ foo do
+   "expected #{it} to be " \
+-    "x"
++  "x"
+ end
+ foo do
+   "expected #{_1} to be " \
+-    "x"
++  "x"
+ end
+ foo do |a|
+   "expected #{a} to be " \

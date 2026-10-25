@@ -54,3 +54,41 @@ fn autocorrect_matches_rubocop() {
         fs::remove_dir_all(&work).unwrap();
     }
 }
+
+/// `rbcop --diff -A` prints what `rubocop --diff -A` printed (diff.txt, recorded by record.sh for
+/// the cases without a deliberate difference) and leaves input/ as it was (#290).
+#[test]
+fn diff_matches_rubocop() {
+    let root = Path::new(concat!(env!("CARGO_MANIFEST_DIR"), "/tests/autocorrect"));
+    let mut cases: Vec<_> = fs::read_dir(root).unwrap().flatten().map(|e| e.path()).filter(|p| p.is_dir()).collect();
+    cases.sort();
+    let mut count = 0;
+    for dir in cases.iter().filter(|d| d.join("diff.txt").is_file()) {
+        let case = dir.file_name().unwrap().to_string_lossy();
+        let cops =
+            fs::read_to_string(dir.join("cops.txt")).or_else(|_| fs::read_to_string(root.join("cops.txt"))).unwrap();
+        let work = std::env::temp_dir().join(format!("rbcop-diff-{case}-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&work);
+        copy_dir(&dir.join("input"), &work);
+        let only = if cops.trim() == "all" { vec![] } else { vec!["--only", cops.trim()] };
+        let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
+            .current_dir(&work)
+            .args(["--diff", "-A", "--format", "emacs"])
+            .args(only)
+            .arg("-c")
+            .arg(dir.join("config.yml"))
+            .arg(".")
+            .output()
+            .unwrap();
+        let prefix = format!("{}/", work.canonicalize().unwrap().display());
+        let report = String::from_utf8(out.stdout).unwrap().replace(&prefix, "");
+        assert_eq!(report, fs::read_to_string(dir.join("diff.txt")).unwrap(), "{case}: --diff output");
+        for e in fs::read_dir(dir.join("input")).unwrap().flatten() {
+            assert_eq!(fs::read(work.join(e.file_name())).unwrap(), fs::read(e.path()).unwrap(), "{case}: written");
+        }
+        assert_eq!(out.status.code(), Some(1), "{case}: status");
+        fs::remove_dir_all(&work).unwrap();
+        count += 1;
+    }
+    assert!(count > 20, "only {count} cases have diff.txt");
+}

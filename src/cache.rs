@@ -98,25 +98,39 @@ impl Cache {
         let mut offenses = Vec::new();
         for line in lines.filter(|l| !l.is_empty()) {
             let mut f = line.splitn(6, ' ');
-            let (start, end, severity, flags, cop, message) =
+            let (start, end, severity, flags, cop, rest) =
                 (f.next()?, f.next()?, f.next()?, f.next()?, f.next()?, f.next()?);
+            // The message, then a tab and the directive's justification when there is one.
+            let (message, justification) = match rest.split_once('\t') {
+                Some((m, j)) => (m, Some(unescape(j))),
+                None => (rest, None),
+            };
+            let flag = |i: usize| flags.as_bytes().get(i) == Some(&b'1');
             offenses.push(Offense {
                 start: start.parse().ok()?,
                 end: end.parse().ok()?,
                 cop: self.names.get(cop)?,
                 message: unescape(message),
                 severity: Severity::parse(severity)?,
-                correctable: flags.as_bytes().first() == Some(&b'1'),
-                global: flags.as_bytes().get(1) == Some(&b'1'),
+                correctable: flag(0),
+                global: flag(1),
                 corrected: false,
                 source: None,
+                disabled: flag(2),
+                justification,
             });
         }
         // runner::inspect_bytes keeps the source as read for an encoding error, else with CRLF
         // normalised; the saved length tells which.
         let raw = String::from_utf8_lossy(bytes).into_owned();
         let text = if raw.len() == text_len { raw } else { raw.replace("\r\n", "\n") };
-        (text.len() == text_len).then_some(FileReport { offenses, text, warnings: Vec::new(), abort: None })
+        (text.len() == text_len).then_some(FileReport {
+            offenses,
+            text,
+            warnings: Vec::new(),
+            abort: None,
+            diffs: Vec::new(),
+        })
     }
 
     /// ResultCache#save, reached where Runner#save_in_cache would save. Only writes when `write`
@@ -137,8 +151,11 @@ impl Cache {
         }
         let mut out = format!("{}\n", report.text.len());
         for o in &report.offenses {
-            let flags = format!("{}{}", u8::from(o.correctable), u8::from(o.global));
-            let message = o.message.replace('\\', "\\\\").replace('\n', "\\n");
+            let flags = format!("{}{}{}", u8::from(o.correctable), u8::from(o.global), u8::from(o.disabled));
+            let mut message = escape(&o.message);
+            if let Some(j) = &o.justification {
+                message = format!("{message}\t{}", escape(j));
+            }
             out.push_str(&format!("{} {} {} {flags} {} {message}\n", o.start, o.end, o.severity.name(), o.cop));
         }
         // Written aside and renamed, so a parallel run never reads half an entry. The temporary
@@ -210,6 +227,12 @@ impl Cache {
     }
 }
 
+/// One line, no tabs: an entry line is space-separated fields, then the message and an optional
+/// tab-separated justification.
+fn escape(s: &str) -> String {
+    s.replace('\\', "\\\\").replace('\n', "\\n").replace('\t', "\\t")
+}
+
 fn unescape(s: &str) -> String {
     let mut out = String::with_capacity(s.len());
     let mut chars = s.chars();
@@ -217,7 +240,11 @@ fn unescape(s: &str) -> String {
         if c != '\\' {
             out.push(c);
         } else if let Some(next) = chars.next() {
-            out.push(if next == 'n' { '\n' } else { next });
+            out.push(match next {
+                'n' => '\n',
+                't' => '\t',
+                other => other,
+            });
         }
     }
     out
@@ -252,8 +279,8 @@ mod tests {
     #[test]
     fn messages_round_trip() {
         for m in ["plain", "a\\nb", "line\nbreak", "back\\\\slash\n", "tab\tand space "] {
-            let escaped = m.replace('\\', "\\\\").replace('\n', "\\n");
-            assert!(!escaped.contains('\n'));
+            let escaped = escape(m);
+            assert!(!escaped.contains('\n') && !escaped.contains('\t'));
             assert_eq!(unescape(&escaped), m);
         }
     }

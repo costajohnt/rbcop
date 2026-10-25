@@ -1,0 +1,37 @@
+foo_spec.rb:10:3: C: [Corrected] RSpec/EmptyExampleGroup: Empty example group detected.
+foo_spec.rb:14:3: C: [Corrected] RSpec/EmptyExampleGroup: Empty example group detected.
+foo_spec.rb:22:3: C: [Corrected] RSpec/EmptyExampleGroup: Empty example group detected.
+module_inclusion.rb:2:17: C: [Corrected] Layout/EmptyLinesAfterModuleInclusion: Add an empty line after module inclusion.
+module_inclusion.rb:18:121: C: Layout/LineLength: Line is too long. [129/120]
+
+--- a/foo_spec.rb
++++ b/foo_spec.rb
+@@ -7,19 +7,10 @@
+     end
+   end
+ 
+-  describe 'hooks' do
+-    before { 1 }
+-  end
+ 
+-  describe 'csend hook' do
+-    self&.before { 1 }
+-  end
+ 
+   describe 'csend hook with example' do
+     self&.before { it { 1 } }
+   end
+ 
+-  describe 'numbered' do
+-    cases&.each { it { expect(_1).to be_ok } }
+-  end
+ end
+--- a/module_inclusion.rb
++++ b/module_inclusion.rb
+@@ -1,5 +1,6 @@
+ it "a" do
+   expect(x)&.to include(a),
++
+   "m"
+   foo
+ end

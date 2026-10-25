@@ -1,0 +1,38 @@
+== crlf.rb ==
+C:  3:  6: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+== unicode.rb ==
+C:  4: 18: [Corrected] Style/NilComparison: Prefer the use of the nil? predicate.
+C:  4: 24: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+C:  5:  1: [Corrected] Layout/IndentationStyle: Tab detected in indentation.
+C:  5: 14: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+C:  6: 32: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+C:  8:  1: [Corrected] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
+
+2 files inspected, 7 offenses detected, 7 offenses corrected
+
+--- a/crlf.rb
++++ b/crlf.rb
+@@ -1,4 +1,4 @@
+-# frozen_string_literal: true
+-
+-x = 1  
+-puts x
++# frozen_string_literal: true
++
++x = 1
++puts x
+--- a/unicode.rb
++++ b/unicode.rb
+@@ -1,9 +1,7 @@
+ # frozen_string_literal: true
+ 
+ # Ünïcödé コメント
+-name = "日本語テキスト" == nil  
+-	value = name   
+-msg = "<b>&amp; `tick` 'q'</b>" 
++name = "日本語テキスト".nil?
++  value = name
++msg = "<b>&amp; `tick` 'q'</b>"
+ puts msg, value
+-
+-

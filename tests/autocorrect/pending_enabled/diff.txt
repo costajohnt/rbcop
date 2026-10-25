@@ -1,0 +1,28 @@
+endless_require_always.rb:2:3: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+endless_require_always.rb:2:101: C: Layout/LineLength: Line is too long. [101/100]
+endless_require_always.rb:3:37: C: [Corrected] Layout/SpaceInsideParens: No space inside parentheses detected.
+endless_require_always.rb:3:73: C: [Corrected] Layout/SpaceInsideParens: No space inside parentheses detected.
+non_nil_check.rb:2:4: C: [Corrected] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+non_nil_check.rb:5:4: C: [Corrected] Style/NonNilCheck: Explicit non-nil checks are usually redundant.
+
+--- a/endless_require_always.rb
++++ b/endless_require_always.rb
+@@ -1,5 +1,3 @@
+ class C
+-  def self.permission_types
+-    @_permission_types ||= Enum.new(full: 1, create_post: 2, readonly: 3)
+-  end
++  def self.permission_types = @_permission_types ||= Enum.new( full: 1, create_post: 2, readonly: 3 )
+ end
+--- a/non_nil_check.rb
++++ b/non_nil_check.rb
+@@ -1,7 +1,7 @@
+ x = 1
+-if !x.nil?
++if x
+   p 1
+ end
+-if x != nil
++if x
+   p 2
+ end

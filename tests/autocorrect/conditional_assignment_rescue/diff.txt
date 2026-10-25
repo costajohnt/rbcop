@@ -1,0 +1,108 @@
+long.rb:3:81: C: Layout/LineLength: Line is too long. [101/80]
+rescue_in_branch.rb:2:3: C: [Corrected] Style/ConditionalAssignment: Assign variables inside of conditionals.
+rescue_in_branch.rb:27:3: C: [Corrected] Style/ConditionalAssignment: Assign variables inside of conditionals.
+s.rb:2:3: C: [Corrected] Style/ConditionalAssignment: Assign variables inside of conditionals.
+
+--- a/rescue_in_branch.rb
++++ b/rescue_in_branch.rb
+@@ -1,37 +1,39 @@
+ def m(sig, rc, meth)
+-  definition = \
+-    if sig
+-      sig
+-    elsif meth
+-      "arg"
+-    else
+-      obj = if rc
+-        begin
+-          rc.foo(meth)
+-        rescue NameError
+-          raise
+-        rescue ArgumentError, TypeError => e
+-          e
++  if sig
++    definition = \
++    sig
++  elsif meth
++    definition = \
++    "arg"
++  else
++    obj = if rc
++    begin
++    rc.foo(meth)
++    rescue NameError
++    raise
++    rescue ArgumentError, TypeError => e
++    e
+         else
+-          3
++    3
+         ensure
+-          4
++    4
+         end
+       end
+-      obj
+-    end
++    definition = \
++    obj
++  end
+   definition
+ end
+ 
+ def n(a)
+-  x = if a
+-        begin
+-          1
+-        rescue
+-          2
++  if a
++    x = begin
++    1
++    rescue
++    2
+         end
+-      else
+-        3
+-      end
++  else
++    x = 3
++  end
+   x
+ end
+--- a/s.rb
++++ b/s.rb
+@@ -1,18 +1,20 @@
+ def m(sig, rc, meth)
+-  definition = \
+-    if sig
+-      sig
+-    elsif meth
+-      "arg"
+-    else
+-      obj = if rc
+-        begin
+-          rc.foo(meth)
+-        rescue NameError
+-          raise
++  if sig
++    definition = \
++    sig
++  elsif meth
++    definition = \
++    "arg"
++  else
++    obj = if rc
++    begin
++    rc.foo(meth)
++    rescue NameError
++    raise
+         end
+       end
+-      obj
+-    end
++    definition = \
++    obj
++  end
+   definition
+ end

@@ -1,0 +1,8 @@
+
+5   Style/NilComparison [Safe Correctable]
+4   Layout/TrailingWhitespace [Safe Correctable]
+4   Lint/Debugger
+1   Style/FrozenStringLiteralComment [Unsafe Correctable]
+--
+14  Total in 2 files
+

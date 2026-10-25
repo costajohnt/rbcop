@@ -1,0 +1,162 @@
+a.rb:3:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+b.rb:5:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+c.rb:4:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+d.rb:4:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+e.rb:4:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+f.rb:5:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_c.rb:3:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_d.rb:3:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_e.rb:3:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_f.rb:3:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_g.rb:3:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_h.rb:3:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_i.rb:5:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_j.rb:4:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_k.rb:3:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_l.rb:4:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+s326_m.rb:3:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+z.rb:1:121: C: Layout/LineLength: Line is too long. [132/120]
+
+--- a/a.rb
++++ b/a.rb
+@@ -1,3 +1,3 @@
++require "a"
+ # c
+ require "b"
+-require "a"
+--- a/b.rb
++++ b/b.rb
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env ruby
+ # frozen_string_literal: true
++require "a"
+ # c
+ require "b"
+-require "a"
+--- a/c.rb
++++ b/c.rb
+@@ -1,4 +1,4 @@
+ # frozen_string_literal: true
++require "a"
+ # typed: strict
+ require "b"
+-require "a"
+--- a/d.rb
++++ b/d.rb
+@@ -1,5 +1,5 @@
+ def m
++  require "a"
+   # c
+   require "b"
+-  require "a"
+ end
+--- a/e.rb
++++ b/e.rb
+@@ -1,4 +1,4 @@
+ x = 1
++require "a"
+ # c
+ require "b"
+-require "a"
+--- a/f.rb
++++ b/f.rb
+@@ -1,5 +1,5 @@
++require "a"
+ # c
+ 
+ # d
+ require "b"
+-require "a"
+--- a/s326_c.rb
++++ b/s326_c.rb
+@@ -1,4 +1,4 @@
++  require "a"
+ def m # :nodoc:
+   require "b"
+-  require "a"
+ end
+--- a/s326_d.rb
++++ b/s326_d.rb
+@@ -1,4 +1,4 @@
+ def m(x) # :nodoc:
+-  require "b"
+   require "a"
++  require "b"
+ end
+--- a/s326_e.rb
++++ b/s326_e.rb
+@@ -1,4 +1,4 @@
+ def self.m # :nodoc:
+-  require "b"
+   require "a"
++  require "b"
+ end
+--- a/s326_f.rb
++++ b/s326_f.rb
+@@ -1,4 +1,4 @@
+ class Foo # c
+-  require "b"
+   require "a"
++  require "b"
+ end
+--- a/s326_g.rb
++++ b/s326_g.rb
+@@ -1,4 +1,4 @@
+ foo do # c
+-  require "b"
+   require "a"
++  require "b"
+ end
+--- a/s326_h.rb
++++ b/s326_h.rb
+@@ -1,4 +1,4 @@
++  require "a"
+ begin # c
+   require "b"
+-  require "a"
+ end
+--- a/s326_i.rb
++++ b/s326_i.rb
+@@ -1,6 +1,6 @@
+ if x
+   foo
++  require "a"
+ else # c
+   require "b"
+-  require "a"
+ end
+--- a/s326_j.rb
++++ b/s326_j.rb
+@@ -1,5 +1,5 @@
++  require "a" # trail
+ def m # :nodoc:
+   # lead
+   require "b"
+-  require "a" # trail
+ end
+--- a/s326_k.rb
++++ b/s326_k.rb
+@@ -1,6 +1,6 @@
+ def m # :nodoc:
+-  require "b"
+   require "a"
++  require "b"
+ rescue
+   nil
+ end
+--- a/s326_l.rb
++++ b/s326_l.rb
+@@ -1,4 +1,4 @@
+ # frozen_string_literal: true
+ 
+-require "b"
+ require "a"
++require "b"
+--- a/s326_m.rb
++++ b/s326_m.rb
+@@ -1,4 +1,4 @@
+ def m() # :nodoc:
+-  require "b"
+   require "a"
++  require "b"
+ end

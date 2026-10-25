@@ -89,14 +89,14 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("display-only-fail-level-offenses", None, Arg::None, Use::Handle),
     ("display-only-correctable", None, Arg::None, Use::Handle),
     ("display-only-safe-correctable", None, Arg::None, Use::Handle),
-    ("display-suppressed", None, Arg::None, Use::Unsupported),
+    ("display-suppressed", None, Arg::None, Use::Handle),
     ("autocorrect", Some('a'), Arg::None, Use::Handle),
     ("auto-correct", None, Arg::None, Use::Handle),
     ("safe-auto-correct", None, Arg::None, Use::Handle),
     ("autocorrect-all", Some('A'), Arg::None, Use::Handle),
     ("auto-correct-all", None, Arg::None, Use::Handle),
     ("disable-uncorrectable", None, Arg::None, Use::Unsupported),
-    ("diff", None, Arg::None, Use::Unsupported),
+    ("diff", None, Arg::None, Use::Handle),
     ("auto-gen-config", None, Arg::None, Use::Unsupported),
     ("regenerate-todo", None, Arg::None, Use::Unsupported),
     ("report-unused-todo-entries", None, Arg::None, Use::Unsupported),
@@ -140,6 +140,8 @@ struct Cli {
     opts: Options,
     /// -a / -A
     autocorrect: Option<rbcop::autocorrect::Mode>,
+    /// `--diff`: autocorrect in memory and print the unified diffs instead of writing files.
+    diff: bool,
     /// `@options[:safe_autocorrect]` / `[:autocorrect_all]`: both may be given (and then refused).
     safe_autocorrect: bool,
     autocorrect_all: bool,
@@ -511,6 +513,8 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
             cli.autocorrect = Some(rbcop::autocorrect::Mode::All);
             cli.autocorrect_all = true;
         }
+        "display-suppressed" => rbcop::runner::set_display_suppressed(true),
+        "diff" => cli.diff = true,
         "display-only-failed" => cli.only_failed = true,
         "display-only-fail-level-offenses" => cli.only_fail_level = true,
         "display-only-correctable" => cli.only_correctable = true,
@@ -537,6 +541,12 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
 
 /// OptionsValidator#validate_compatibility (the checks that apply to what rbcop supports).
 fn validate(cli: &mut Cli, global: bool) -> Result<(), Fail> {
+    // Options#imply_autocorrect_for_diff (before the validation): safe autocorrection unless -a,
+    // -A or -x picked a mode.
+    if cli.diff && cli.autocorrect.is_none() {
+        cli.autocorrect = Some(rbcop::autocorrect::Mode::Safe);
+        cli.safe_autocorrect = true;
+    }
     if cli.only.as_ref().is_some_and(|o| {
         o.iter().any(|c| c == "Lint/RedundantCopDisableDirective" || c == "RedundantCopDisableDirective")
     }) {
@@ -1347,6 +1357,11 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     let unrunnable = !skipped.is_empty() || store.requires_ruby_code();
     if unrunnable || !copless.is_empty() {
         if fallback::enabled() && stdin_text.is_none() && config_error.is_none() && team_error.is_none() {
+            // Deliberate difference: the RuboCop child corrects by writing the files, which
+            // `--diff` promises not to do.
+            if cli.diff {
+                return Err("rbcop: --diff cannot be combined with RBCOP_FALLBACK=1".into());
+            }
             let child = fallback::Child {
                 opts: &cli.opts,
                 except,
@@ -1381,8 +1396,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         // external_dependency_checksum), the working directory and the plugins loaded.
         let schema = cwd.ancestors().find_map(|d| fs::read(d.join("db/schema.rb")).ok());
         let context = format!(
-            "{only:?}|{except:?}|{}|{}|{:?}|{}",
+            "{only:?}|{except:?}|{}|{}|{}|{:?}|{}",
             cli.only_guide,
+            runner::display_suppressed(),
             cwd.display(),
             store.loaded_plugins(),
             schema.map(|s| cache::digest(&[&s])).unwrap_or_default()
@@ -1534,6 +1550,8 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
     let mut annotate = cli.annotate;
     annotate.json = cli.format.as_deref() == Some("json");
     let mut all_passed = true;
+    // Runner#diffs (`--diff`), in file order.
+    let mut diffs: Vec<String> = Vec::new();
     let mut inspected: Vec<PathBuf> = Vec::new();
     let mut config_failure = None;
     let mut cop_warnings_raised: Vec<String> = Vec::new();
@@ -1589,9 +1607,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             };
             // Deliberate difference: under -a/-A a file that resolves outside the project (the
             // working directory and the command-line paths) is not written; it is reported as
-            // without -a/-A. write_source checks again right before writing.
+            // without -a/-A. write_source checks again right before writing. (`--diff` writes nothing.)
             let refused = match &linted {
-                Ok((_, Some(_), _, _, _, _)) if stdin_text.is_none() => {
+                Ok((_, Some(_), _, _, _, _)) if stdin_text.is_none() && !cli.diff => {
                     fs::canonicalize(path).ok().filter(|real| rbcop::autocorrect::outside_roots(real, &write_roots))
                 }
                 _ => None,
@@ -1677,8 +1695,16 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
             }
             cop_warnings_raised.extend(warnings);
             // Team#autocorrect writes the file before it is reported (with --stdin, keeps the source
-            // for printing); a failed write ends the run.
-            if stdin_text.is_some() {
+            // for printing); a failed write ends the run. Runner#record_diff: under `--diff` the
+            // corrections are diffed against the source as read instead.
+            if cli.diff {
+                for (before, after) in &report.diffs {
+                    let diff = rbcop::unified_diff::unified_diff(&cx.smart_path(path), before, after);
+                    if !diff.is_empty() {
+                        diffs.push(diff);
+                    }
+                }
+            } else if stdin_text.is_some() {
                 stdin_corrected = corrected;
             } else if let Some(new) = &corrected
                 && let Err(e) = rbcop::autocorrect::write_source(path, new, &write_roots)
@@ -1766,10 +1792,24 @@ fn run(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, String> {
         eprintln!("{}", red(global, e.trim_end()));
         return Ok(ERROR);
     }
+    let integration = matches!(cli.format.as_deref(), Some("h" | "html" | "j" | "json" | "ju" | "junit"));
+    // ExecuteRunner#print_diffs: a blank line, then each diff, to --stderr's stream; not for the
+    // integration formatters. Diffs mean the run has not passed.
+    if cli.diff {
+        if !diffs.is_empty() && !integration {
+            let text = format!("\n{}", diffs.concat());
+            if cli.stderr {
+                eprint!("{text}");
+            } else {
+                print!("{text}");
+            }
+        }
+        all_passed &= diffs.is_empty();
+    }
     // ExecuteRunner#maybe_print_corrected_source: the separator follows --stderr, the source is
     // printed to stdout either way; integration formatters get neither.
-    if let (Some(_), Some(original)) = (cli.autocorrect, stdin_text)
-        && !matches!(cli.format.as_deref(), Some("h" | "html" | "j" | "json" | "ju" | "junit"))
+    else if let (Some(_), Some(original)) = (cli.autocorrect, stdin_text)
+        && !integration
     {
         let separator = "=".repeat(20);
         if cli.stderr {
