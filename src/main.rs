@@ -1789,13 +1789,15 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     // runs it past this filter.
     // ponytail: it so also enters Registry#disabled_names under the filter, which matters only
     // for a config that disables it.
-    let badge_selected = |cop: &str, cfg: &Resolved| {
-        let guide_only = only.is_empty() && (cli.only_guide || cfg.all_cops().truthy("StyleGuideCopsOnly"));
+    let guide_only =
+        |cfg: &Resolved| only.is_empty() && (cli.only_guide || cfg.all_cops().truthy("StyleGuideCopsOnly"));
+    let badge_selected_in = |cop: &str, cfg: &Resolved, guide_only: bool| {
         selected(cop)
             && (!guide_only
                 || cfg.hash.map(cop).is_some_and(|c| c.truthy("StyleGuide"))
                 || cop == "Lint/RedundantCopDisableDirective")
     };
+    let badge_selected = |cop: &str, cfg: &Resolved| badge_selected_in(cop, cfg, guide_only(cfg));
     // Resolve configs up front (single-threaded), then lint in parallel.
     let mut jobs = Vec::with_capacity(files.len());
     // RuboCop loads a file's config when the file's turn comes, so an invalid config stops the run
@@ -1935,7 +1937,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     let lint = |path: &PathBuf, cfg: &Resolved, mode: Option<rbcop::autocorrect::Mode>| -> LintResult {
         let display = rbcop::config::relative_path(path, &cwd);
         let plugin_file = plugin_files.contains(path);
-        let selected = |cop: &str| !plugin_file && badge_selected(cop, cfg);
+        // Asked for every cop of the file: the config's StyleGuideCopsOnly is read once (#388).
+        let guide_only = guide_only(cfg);
+        let selected = |cop: &str| !plugin_file && badge_selected_in(cop, cfg, guide_only);
         if let Some(bytes) = stdin_text {
             // --stdin with -a/-A: the corrected source is printed after the report (@options[:stdin]).
             if let Some(mode) = mode {

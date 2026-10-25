@@ -1012,7 +1012,11 @@ pub fn regexp_to_s(literal: &str) -> String {
 #[derive(Clone, Debug)]
 pub enum RubyRegex {
     Plain(Regex),
-    Backtracking { re: Box<fancy_regex::Regex>, anchored: Box<fancy_regex::Regex> },
+    /// `anchored` is compiled on first use (see compile_ruby_regex), shared by the clones.
+    Backtracking {
+        re: Box<fancy_regex::Regex>,
+        anchored: Arc<std::sync::OnceLock<Option<Box<fancy_regex::Regex>>>>,
+    },
 }
 
 // ponytail: fancy-regex has no match cache, so these budgets only bound the cost of exponential
@@ -1095,6 +1099,7 @@ impl RubyRegex {
         if !charge(re.as_str(), SEARCH_LIMIT) {
             return None;
         }
+        let anchored = anchored.get_or_init(|| fancy(&anchored_source(re.as_str()), ANCHORED_LIMIT)).as_ref()?;
         for p in (start..=text.len()).filter(|&p| text.is_char_boundary(p)) {
             if *budget < ANCHORED_LIMIT || !charge(re.as_str(), ANCHORED_LIMIT) {
                 return None;
@@ -1177,11 +1182,23 @@ fn compile_ruby_regex(literal: &str) -> Option<RubyRegex> {
     let pattern = format!("(?{prefix}){}", crate::helpers::ruby_string::ruby_regex_classes(source));
     match Regex::new(&pattern) {
         Ok(r) => Some(RubyRegex::Plain(r)),
-        Err(_) => Some(RubyRegex::Backtracking {
-            re: fancy(&pattern, SEARCH_LIMIT)?,
-            anchored: fancy(&format!(r"\G(?:{pattern})"), ANCHORED_LIMIT)?,
-        }),
+        Err(_) => {
+            let re = fancy(&pattern, SEARCH_LIMIT)?;
+            // The anchored copy is only needed once a search gives up, so it is compiled then: some
+            // cops build a pattern per file (#388). Wrapping a pattern that compiles fails only where
+            // an `(?x)` comment swallows the closing parenthesis, so a pattern with a `#` is
+            // compiled now, failing as a whole as before.
+            let anchored = Arc::new(std::sync::OnceLock::new());
+            if pattern.contains('#') {
+                let _ = anchored.set(Some(fancy(&anchored_source(&pattern), ANCHORED_LIMIT)?));
+            }
+            Some(RubyRegex::Backtracking { re, anchored })
+        }
     }
+}
+
+fn anchored_source(pattern: &str) -> String {
+    format!(r"\G(?:{pattern})")
 }
 
 #[cfg(test)]
@@ -1248,6 +1265,18 @@ mod tests {
         assert!(!re.is_match(&long));
         assert_eq!(re.replace_all(&long, ""), long);
         assert!(t0.elapsed() < std::time::Duration::from_secs(20), "took {:?}", t0.elapsed());
+    }
+
+    // The `\G` copy is compiled once a search gives up (above), not up front (#388); where an
+    // `(?x)` comment swallows its closing parenthesis it is compiled up front, and the pattern
+    // fails as a whole as it did before.
+    #[test]
+    fn anchored_copy_compiled_on_first_use() {
+        let re = ruby_regex("x(?=b)").unwrap();
+        let RubyRegex::Backtracking { anchored, .. } = &re else { panic!("backtracking") };
+        assert!(anchored.get().is_none());
+        assert!(re.is_match("xb"));
+        assert!(ruby_regex("/x(?=b) # c/x").is_none());
     }
 
     // A pattern that gives up on every call stops being searched once it has spent RUN_BUDGET:

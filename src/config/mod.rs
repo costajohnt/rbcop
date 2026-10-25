@@ -92,12 +92,15 @@ impl Pattern {
 }
 
 fn hidden_file_in_not_hidden_dir(pattern: &str, path: &str) -> bool {
+    // Cheapest test first: every glob that misses lands here, and almost no file is hidden (#388).
     let p = Path::new(path);
-    let hidden_file = p.file_name().is_some_and(|n| n.to_string_lossy().starts_with('.')) && path.contains("/.");
-    let hidden_dir = p.parent().is_some_and(|d| {
-        d.components().any(|c| matches!(c, Component::Normal(n) if n.to_string_lossy().starts_with('.')))
-    });
-    hidden_file && glob::fnmatch(pattern, path, true) && !hidden_dir
+    let hidden_file = path.contains("/.") && p.file_name().is_some_and(|n| n.to_string_lossy().starts_with('.'));
+    let hidden_dir = || {
+        p.parent().is_some_and(|d| {
+            d.components().any(|c| matches!(c, Component::Normal(n) if n.to_string_lossy().starts_with('.')))
+        })
+    };
+    hidden_file && glob::fnmatch(pattern, path, true) && !hidden_dir()
 }
 
 fn patterns(map: &Map, key: &str) -> Option<Vec<Pattern>> {
@@ -108,15 +111,57 @@ fn patterns(map: &Map, key: &str) -> Option<Vec<Pattern>> {
     }
 }
 
+/// An Include or Exclude list, shared by the cops of one config that have equal lists (`intern`).
+type Patterns = Option<Arc<[Pattern]>>;
+
 /// A cop's effective settings in one resolved config.
 #[derive(Clone, Debug)]
 pub struct CopConfig {
     pub enabled: bool,
     pub severity: Option<Severity>,
-    include: Option<Vec<Pattern>>,
-    exclude: Option<Vec<Pattern>>,
+    include: Patterns,
+    exclude: Patterns,
     /// Department params merged under the cop's (Config#for_badge).
     pub params: Map,
+}
+
+/// Gives the cops of one config with equal Include (or Exclude) lists one shared list, so that
+/// `Resolved::relevant` matches each list once per file, not once per cop (#388).
+fn intern(seen: &mut HashMap<String, Arc<[Pattern]>>, cop: &mut CopConfig) {
+    for list in [&mut cop.include, &mut cop.exclude] {
+        let Some(l) = list else { continue };
+        let key: String = l
+            .iter()
+            .map(|p| match p {
+                Pattern::Exact(s) => format!("e{s}\0"),
+                Pattern::Glob(s) => format!("g{s}\0"),
+                Pattern::Regex(r) => format!("r{}\0", r.as_str()),
+            })
+            .collect();
+        *list = Some(seen.entry(key).or_insert_with(|| l.clone()).clone());
+    }
+}
+
+/// `Resolved::relevant`'s answers for the file a thread is inspecting, by the lists' identity.
+struct RelevantMemo {
+    file: PathBuf,
+    base: PathBuf,
+    rel: String,
+    abs: String,
+    /// (include, exclude, relevant); holding the lists keeps their addresses from being reused.
+    seen: Vec<(Patterns, Patterns, bool)>,
+}
+
+thread_local! {
+    static RELEVANT: std::cell::RefCell<Option<RelevantMemo>> = const { std::cell::RefCell::new(None) };
+}
+
+fn same_list(a: &Patterns, b: &Patterns) -> bool {
+    match (a, b) {
+        (Some(a), Some(b)) => Arc::ptr_eq(a, b),
+        (None, None) => true,
+        _ => false,
+    }
 }
 
 impl CopConfig {
@@ -273,8 +318,10 @@ pub struct Resolved {
     pub base_dir: PathBuf,
     /// TargetRuby#version (e.g. 3.4).
     pub target_ruby: f64,
-    /// Looked up twice per cop and file, so with a cheap hash (the keys are cop names).
-    cops: HashMap<String, CopConfig, std::hash::BuildHasherDefault<Fnv>>,
+    /// Each implemented cop's config, in the order of the cop names it was built from (`cop_at`).
+    cop_list: Vec<(&'static str, CopConfig)>,
+    /// Index in `cop_list` by name, with a cheap hash (the keys are cop names).
+    cops: HashMap<&'static str, usize, std::hash::BuildHasherDefault<Fnv>>,
     /// (cop, warning) for configuration under a cop's deprecated name, which Config#for_cop warns
     /// about the first time the cop's config is asked for.
     pub deprecated_warnings: Vec<(&'static str, String)>,
@@ -301,7 +348,12 @@ impl Resolved {
     /// a native plugin's when the plugin was loaded before the team was mobilized (see
     /// `team_plugins`; until then, when it is loaded at all).
     pub fn team_has(&self, cop: &str) -> bool {
-        match crate::helpers::cop_registry::plugin_of(cop) {
+        self.team_has_plugin(crate::helpers::cop_registry::plugin_of(cop))
+    }
+
+    /// `team_has` for a cop of `plugin` (None: RuboCop's own).
+    pub fn team_has_plugin(&self, plugin: Option<&crate::helpers::cop_registry::NativePlugin>) -> bool {
+        match plugin {
             None => true,
             Some(p) => self
                 .team_plugins
@@ -324,6 +376,7 @@ impl Resolved {
             hash,
             base_dir,
             target_ruby,
+            cop_list: Vec::new(),
             cops: HashMap::default(),
             deprecated_warnings: Vec::new(),
             unregistered: Vec::new(),
@@ -334,9 +387,11 @@ impl Resolved {
             team_plugins: std::sync::OnceLock::new(),
             loaded_path: loaded_path.map(Path::to_path_buf),
         };
+        let mut lists = HashMap::new();
         for &name in cop_names {
-            let cfg = r.build_cop(name, opts);
-            r.cops.insert(name.to_string(), cfg);
+            let mut cfg = r.build_cop(name, opts);
+            intern(&mut lists, &mut cfg);
+            r.set_cop(name, cfg);
             for old in validator::deprecated_names_for(name) {
                 if r.hash.map(&old).is_some_and(|m| !m.0.is_empty()) {
                     let path = loaded_path.map(|p| p.display().to_string()).unwrap_or_default();
@@ -436,7 +491,27 @@ impl Resolved {
     }
 
     pub fn cop(&self, name: &str) -> &CopConfig {
-        &self.cops[name]
+        &self.cop_list[self.cops[name]].1
+    }
+
+    /// The config of `name`, the `i`th of the cop names this config was built from (as
+    /// `crate::cops::ALL` is in rbcop's run): no hashing for the runner's per-file scan of every
+    /// cop (#388).
+    pub fn cop_at(&self, i: usize, name: &str) -> &CopConfig {
+        match self.cop_list.get(i) {
+            Some((n, c)) if *n == name => c,
+            _ => self.cop(name),
+        }
+    }
+
+    fn set_cop(&mut self, name: &'static str, cfg: CopConfig) {
+        match self.cops.get(name) {
+            Some(&i) => self.cop_list[i].1 = cfg,
+            None => {
+                self.cops.insert(name, self.cop_list.len());
+                self.cop_list.push((name, cfg));
+            }
+        }
     }
 
     /// Any cop's raw parameters (department merged under cop), implemented by rbcop or not.
@@ -568,7 +643,7 @@ impl Resolved {
     /// that applies config, `--only`, `--safe`, pending/preview options and `--disable-all-cops`.
     pub fn cop_enabled(&self, name: &str) -> bool {
         match self.cops.get(name) {
-            Some(c) => c.enabled,
+            Some(&i) => self.cop_list[i].1.enabled,
             None => {
                 static EMPTY: Map = Map(Vec::new());
                 let cop = self.hash.map(name).unwrap_or(&EMPTY);
@@ -612,8 +687,8 @@ impl Resolved {
         CopConfig {
             enabled,
             severity,
-            include: patterns(&params, "Include"),
-            exclude: patterns(&params, "Exclude"),
+            include: patterns(&params, "Include").map(Into::into),
+            exclude: patterns(&params, "Exclude").map(Into::into),
             params,
         }
     }
@@ -628,17 +703,48 @@ impl Resolved {
         if cop.include.is_none() && cop.exclude.is_none() {
             return true;
         }
-        let rel = self.relative(file);
-        let abs = file.display().to_string();
+        // Regexps charge a per-file step budget (value::charge), so their lists match every time.
+        let memo =
+            !cop.include.iter().chain(&cop.exclude).flat_map(|l| l.iter()).any(|p| matches!(p, Pattern::Regex(_)));
+        RELEVANT.with(|m| {
+            let mut m = m.borrow_mut();
+            let current = m.as_ref().is_some_and(|m| {
+                m.file.as_os_str() == file.as_os_str() && m.base.as_os_str() == self.base_dir.as_os_str()
+            });
+            if !current {
+                *m = Some(RelevantMemo {
+                    file: file.to_path_buf(),
+                    base: self.base_dir.clone(),
+                    rel: self.relative(file),
+                    abs: file.display().to_string(),
+                    seen: Vec::new(),
+                });
+            }
+            let m = m.as_mut().unwrap();
+            if memo
+                && let Some(hit) =
+                    m.seen.iter().find(|s| same_list(&s.0, &cop.include) && same_list(&s.1, &cop.exclude))
+            {
+                return hit.2;
+            }
+            let relevant = Self::relevant_to(cop, &m.rel, &m.abs);
+            if memo {
+                m.seen.push((cop.include.clone(), cop.exclude.clone(), relevant));
+            }
+            relevant
+        })
+    }
+
+    fn relevant_to(cop: &CopConfig, rel: &str, abs: &str) -> bool {
         let included = match &cop.include {
             None => true,
             Some(pats) => {
-                pats.iter().any(|p| p.matches(&rel))
-                    || (!rel.starts_with("..") && pats.iter().any(|p| p.is_absolute_or_parent() && p.matches(&abs)))
-                    || (rel.starts_with("..") && pats.iter().any(|p| p.matches(&abs)))
+                pats.iter().any(|p| p.matches(rel))
+                    || (!rel.starts_with("..") && pats.iter().any(|p| p.is_absolute_or_parent() && p.matches(abs)))
+                    || (rel.starts_with("..") && pats.iter().any(|p| p.matches(abs)))
             }
         };
-        let excluded = cop.exclude.as_ref().is_some_and(|pats| pats.iter().any(|p| p.matches(&rel) || p.matches(&abs)));
+        let excluded = cop.exclude.as_ref().is_some_and(|pats| pats.iter().any(|p| p.matches(rel) || p.matches(abs)));
         included && !excluded
     }
 
@@ -956,9 +1062,11 @@ impl Store {
         for r in self.resolved.values_mut().chain(self.forced.iter_mut()) {
             let r = Arc::make_mut(r);
             r.opts = self.opts.clone();
+            let mut lists = HashMap::new();
             for &name in &self.cop_names {
-                let cfg = r.build_cop(name, &self.opts);
-                r.cops.insert(name.to_string(), cfg);
+                let mut cfg = r.build_cop(name, &self.opts);
+                intern(&mut lists, &mut cfg);
+                r.set_cop(name, cfg);
             }
         }
     }
@@ -2745,4 +2853,39 @@ fn find_last_upwards(names: &[&str], start: &Path) -> Option<PathBuf> {
         }
     }
     last
+}
+
+#[cfg(test)]
+mod relevant_tests {
+    use super::*;
+
+    // Cops with equal lists share one (`intern`), and `relevant`'s per-file memo answers each cop
+    // by its own lists as the file changes; a list with a regexp is matched every time (#388).
+    #[test]
+    fn shared_lists_and_the_per_file_memo() {
+        let yaml = "Lint/Debugger:\n  Include: ['**/*_spec.rb']\n\
+                    Style/Not:\n  Include: ['**/*_spec.rb']\n  Exclude: ['vendor/**/*']\n\
+                    Layout/Other:\n  Include: ['**/*_spec.rb']\n  Exclude: ['vendor/**/*']\n\
+                    Lint/Rx:\n  Exclude: !ruby/regexp /vendor/\n";
+        let Ok(Value::Map(m)) = parse_yaml(yaml) else { panic!("yaml") };
+        let names = ["Lint/Debugger", "Style/Not", "Layout/Other", "Lint/Rx"];
+        let r = Resolved::new(Arc::unwrap_or_clone(m), None, &Options::default(), &names);
+        let (debugger, not, other) = (r.cop("Lint/Debugger"), r.cop("Style/Not"), r.cop("Layout/Other"));
+        assert!(same_list(&debugger.include, &not.include) && same_list(&not.exclude, &other.exclude));
+        assert!(std::ptr::eq(r.cop_at(1, "Style/Not"), not) && std::ptr::eq(r.cop_at(0, "Style/Not"), not));
+        let at = |p: &str| r.base_dir.join(p);
+        for _ in 0..2 {
+            for (file, want) in [
+                ("a_spec.rb", [true, true, true, true]),
+                ("vendor/a_spec.rb", [true, false, false, false]),
+                ("a.rb", [false, false, false, true]),
+                // A hidden file matches `**/*` outside hidden directories (match_path?).
+                ("lib/.a_spec.rb", [true, true, true, true]),
+                (".git/lib/.a_spec.rb", [false, false, false, true]),
+            ] {
+                let got = names.map(|n| r.relevant(r.cop(n), &at(file)));
+                assert_eq!(got, want, "{file}");
+            }
+        }
+    }
 }
