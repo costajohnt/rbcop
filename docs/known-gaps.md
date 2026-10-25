@@ -13,8 +13,9 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   (`RBCOP_RUBOCOP`, else `bundle exec rubocop`, else `rubocop` on PATH), which loads the project's
   Gemfile, plugins and cop files. Each run prints `rbcop: running <command> for <what>; set
   RBCOP_FALLBACK=0 to never run Ruby` on stderr first (not under `RBCOP_FALLBACK=1`, which asked for
-  it). Under the server options, `--lsp` or `--mcp` (an editor opening a project) it runs only with
-  `RBCOP_FALLBACK=1`. Turn it off with `RBCOP_FALLBACK=0`: the fallback then starts no Ruby at all,
+  it). Under the server options, `--editor-mode` or `--stdin` (an editor opening a project), given
+  anywhere (command line, `.rubocop`, `RUBOCOP_OPTS`, abbreviated), it runs only with
+  `RBCOP_FALLBACK=1`; `--lsp` and `--mcp` are refused. Turn it off with `RBCOP_FALLBACK=0`: the fallback then starts no Ruby at all,
   and rbcop skips those cops (or refuses those options) with a notice.
 - **ERB in config files** (#650): a `.rubocop.yml` (or inherited file) containing `<%` is rendered
   by `ruby -rerb` in that file's directory, which runs the template's code. Only files with ERB tags

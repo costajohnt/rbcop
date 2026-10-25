@@ -211,6 +211,9 @@ struct Cli {
     memory: bool,
     /// The keys of RuboCop's `@options` hash (CLI#parallel_by_default! looks at them).
     keys: Vec<String>,
+    /// The first option that loads Ruby code (`-r`, `--plugin`): the run goes to RuboCop
+    /// (Fail::Ruby) once every option has parsed.
+    ruby: Option<String>,
 }
 
 /// Shellwords.split; Err is its ArgumentError for an unterminated quote.
@@ -456,7 +459,8 @@ fn parse_args(args: Vec<String>) -> Result<Cli, Fail> {
                 return Err(Fail::Unsupported(format!("{shown} is not supported by rbcop yet")));
             }
             if usage == Use::Ruby {
-                return Err(Fail::Ruby(format!("--{name} loads Ruby code, which rbcop cannot run")));
+                cli.ruby.get_or_insert_with(|| format!("--{name} loads Ruby code, which rbcop cannot run"));
+                continue;
             }
             cli.keys.push(name.replace('-', "_"));
             apply(&mut cli, name, neg, value)?;
@@ -856,20 +860,24 @@ fn main() -> ExitCode {
     }));
     // env::args panics on an argument that is not UTF-8 (a file name on Linux, say).
     let mut argv: Vec<String> = env::args_os().skip(1).map(|a| a.to_string_lossy().into_owned()).collect();
-    // An editor or a server opening a project runs none of its Ruby unless RBCOP_FALLBACK=1: the
-    // server options (taken out of argv here), and `--lsp`/`--mcp`, which are refused unless a `-r`
-    // before them would hand the run to RuboCop (`.rubocop` and RUBOCOP_OPTS come first, so one
-    // there is refused before any `-r`).
     let given = argv.len();
     if let Some(status) = server_cli(&mut argv, global_color(None)) {
         return ExitCode::from(status);
     }
-    if argv.len() != given || argv.iter().any(|a| a == "--lsp" || a == "--mcp") {
-        fallback::editor_context();
-    }
-    let parsed = all_args(argv.clone()).and_then(parse_args).and_then(|cli| {
-        match cli.formatters.iter().find(|(k, _)| formatter::is_class(k)) {
-            Some((k, _)) => Err(Fail::Ruby(format!("custom formatter classes are not supported by rbcop: {k}"))),
+    // An editor or a server opening a project runs none of its Ruby unless RBCOP_FALLBACK=1: the
+    // server options (those server_cli took out of argv, or any parsed from `.rubocop` and
+    // RUBOCOP_OPTS or abbreviated), --editor-mode and --stdin. (--lsp and --mcp are refused.)
+    const EDITOR: [&str; 8] =
+        ["server", "start_server", "restart_server", "stop_server", "server_status", "no_detach", "editor_mode", "stdin"];
+    let server = argv.len() != given;
+    let parsed = all_args(argv.clone()).and_then(parse_args).and_then(|mut cli| {
+        if server || cli.keys.iter().any(|k| EDITOR.contains(&k.as_str())) {
+            fallback::editor_context();
+        }
+        let ruby = cli.ruby.take();
+        let class = cli.formatters.iter().find(|(k, _)| formatter::is_class(k));
+        match ruby.or_else(|| class.map(|(k, _)| format!("custom formatter classes are not supported by rbcop: {k}"))) {
+            Some(m) => Err(Fail::Ruby(m)),
             None => Ok(cli),
         }
     });

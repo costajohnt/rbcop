@@ -21,8 +21,8 @@ const PRELOAD: &str = "module RuboCop\n  class ArgumentsFile\n    singleton_clas
 /// off; otherwise `RBCOP_RUBOCOP` when set, else `bundle exec rubocop` when the bundle locks the
 /// rubocop gem, else `rubocop` when it is on PATH. RBCOP_FALLBACK=1 runs `rubocop` even when none
 /// was found (and fails if it cannot start). Called only once something needs RuboCop, so a project
-/// that needs nothing never looks. Under the server options, `--lsp` or `--mcp` (an editor opening
-/// a project) only RBCOP_FALLBACK=1 runs it.
+/// that needs nothing never looks. In an editor or server context (`editor_context`) only
+/// RBCOP_FALLBACK=1 runs it.
 pub fn rubocop() -> Option<String> {
     let mode = std::env::var("RBCOP_FALLBACK").unwrap_or_default();
     if mode == "0" || (mode != "1" && EDITOR.load(Relaxed)) {

@@ -721,12 +721,23 @@ fn fallback_is_the_default() {
     // An editor or server context (the server options, --lsp, --mcp) runs no RuboCop on its own.
     let out = run(&[], &["--server", "-f", "e"]);
     assert_eq!(text(&out.stderr), notice);
-    let out = run(&[], &["-r", "./no_foo.rb", "--lsp"]);
-    assert_eq!(text(&out.stderr), "rbcop: --require loads Ruby code, which rbcop cannot run\n");
-    let out = run(&[], &["--plugin", "rubocop-sorbet", "--mcp"]);
-    assert_eq!(text(&out.stderr), "rbcop: --plugin loads Ruby code, which rbcop cannot run\n");
-    let out = run(&[], &["--server", "-r", "./no_foo.rb", "-f", "e"]);
-    assert_eq!(text(&out.stderr), "rbcop: --require loads Ruby code, which rbcop cannot run\n");
+    let refused = "rbcop: --require loads Ruby code, which rbcop cannot run\n";
+    // Options parse to the end: `--ls` (OptionParser's completion of --lsp) is refused itself.
+    let out = run(&[], &["-r", "./no_foo.rb", "--ls"]);
+    assert_eq!(text(&out.stderr), "rbcop: --lsp is not supported by rbcop yet\n");
+    for (env, args) in [
+        (&[][..], &["--server", "-r", "./no_foo.rb", "-f", "e"][..]),
+        // Abbreviated, and from RUBOCOP_OPTS.
+        (&[], &["-r", "./no_foo.rb", "--editor-m", "-f", "e"]),
+        (&[("RUBOCOP_OPTS", "--server")], &["-r", "./no_foo.rb", "-f", "e"]),
+        (&[("RUBOCOP_OPTS", "--editor-mode")], &["-r", "./no_foo.rb", "-f", "e"]),
+        (&[], &["-r", "./no_foo.rb", "--stdin", "a.rb"]),
+    ] {
+        let out = run(env, args);
+        assert_eq!((text(&out.stderr), out.status.code()), (refused.to_string(), Some(2)), "{env:?} {args:?}");
+    }
+    let out = run(&[("RUBOCOP_OPTS", "--editor-mode")], &["-f", "e"]);
+    assert_eq!(text(&out.stderr), notice);
     assert_eq!(fs::read_to_string(bin.join("log")).unwrap(), log);
     // RBCOP_FALLBACK=1 runs it there too, and asked for, is not announced.
     let out = run(&[("RBCOP_FALLBACK", "1")], &["--server", "-f", "e"]);
