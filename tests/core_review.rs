@@ -290,6 +290,58 @@ fn target_ruby_found_above_project_root() {
     let _ = fs::remove_dir_all(&top);
 }
 
+/// `-V` lists the loaded plugins under the version line (#662): `plugins:` in load order, then the
+/// other `require:`d `rubocop-*` gems sorted. Lines recorded with RuboCop 1.91.0.
+#[test]
+fn verbose_version_lists_plugins() {
+    let dir = scratch("verbose-version");
+    let cases: &[(&str, &str)] = &[
+        ("", ""),
+        ("plugins:\n  - rubocop-performance\n", "  - rubocop-performance 1.27.0\n"),
+        (
+            "plugins:\n  - rubocop-rspec\n  - rubocop-performance\n  - rubocop-rails\n  - rubocop-minitest\n  - \
+             rubocop-capybara\n  - rubocop-factory_bot\n  - rubocop-rspec_rails\n",
+            "  - rubocop-rspec 3.10.2\n  - rubocop-performance 1.27.0\n  - rubocop-rails 2.38.0\n  - rubocop-minitest \
+             0.41.0\n  - rubocop-capybara 3.0.0\n  - rubocop-factory_bot 2.28.0\n  - rubocop-rspec_rails 2.33.0\n",
+        ),
+        // A plugin-capable `require:` loads as a plugin but is listed as a feature: sorted.
+        (
+            "require:\n  - rubocop-rails\n  - rubocop-performance\n",
+            "  - rubocop-performance 1.27.0\n  - rubocop-rails 2.38.0\n",
+        ),
+        (
+            "plugins:\n  - rubocop-rails\nrequire:\n  - rubocop-performance\n  - rubocop-rails\n",
+            "  - rubocop-rails 2.38.0\n  - rubocop-performance 1.27.0\n",
+        ),
+    ];
+    for (config, plugins) in cases {
+        fs::write(dir.join(".rubocop.yml"), config).unwrap();
+        let out = text(&rbcop(&dir, &["-V"]).stdout);
+        let (first, rest) = out.split_once('\n').unwrap();
+        assert!(first.starts_with("1.91.0 (using "), "{out}");
+        assert_eq!(rest, *plugins, "{config}");
+    }
+    // A plugin rbcop does not implement is listed at its installed version.
+    let gems = dir.join("gems");
+    fs::create_dir_all(gems.join("specifications")).unwrap();
+    fs::create_dir_all(gems.join("gems/rubocop-fake-0.1.0/lib")).unwrap();
+    fs::write(gems.join("gems/rubocop-fake-0.1.0/lib/rubocop-fake.rb"), "").unwrap();
+    fs::write(
+        gems.join("specifications/rubocop-fake-0.1.0.gemspec"),
+        "Gem::Specification.new { |s| s.name = 'rubocop-fake'; s.version = '0.1.0'; \
+         s.metadata = { 'default_lint_roller_plugin' => 'RuboCop::Fake::Plugin' } }\n",
+    )
+    .unwrap();
+    fs::write(dir.join(".rubocop.yml"), "plugins:\n  - rubocop-fake\n  - rubocop-performance\n").unwrap();
+    let out = common::command(env!("CARGO_BIN_EXE_rbcop")).env("GEM_PATH", &gems).arg("-V").current_dir(&dir).output();
+    let out = text(&out.unwrap().stdout);
+    // Without a ruby on PATH the gem cannot be found.
+    if out.contains("rubocop-fake") {
+        assert_eq!(out.split_once('\n').unwrap().1, "  - rubocop-fake 0.1.0\n  - rubocop-performance 1.27.0\n");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// A failed write to an -o file (here a file size limit) fails the run like RuboCop's raise,
 /// instead of leaving a truncated report behind a normal exit status.
 #[test]
