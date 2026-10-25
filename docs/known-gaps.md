@@ -276,7 +276,10 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   directive naming a cop in a department rbcop does not know is not reported as unknown.
 - A native plugin uses its vendored default.yml and pinned behaviour whatever version of the gem is
   installed, and works when the gem is not installed (RuboCop fails to load it then).
-- Remote `inherit_from` URLs are skipped with a warning.
+- Remote `inherit_from` URLs are fetched by `ruby` on PATH running RuboCop's RemoteConfig
+  (src/config/remote_config.rb): the same cache file, refresh rule, redirects and messages. When
+  a download fails rbcop prints RuboCop's message without its backtrace. Without a runnable
+  `ruby` the entry is skipped with a warning.
 - ERB in a config file is rendered by `ruby` on PATH (from the file's directory), not inside
   RuboCop: the template sees the standard library and `Gem.loaded_specs["rubocop"]` (version
   1.91.0), but not RuboCop's own constants (`RuboCop::Version`). A template that raises prints its

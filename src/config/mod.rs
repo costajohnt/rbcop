@@ -684,6 +684,8 @@ pub struct Store {
     dir_to_file: HashMap<PathBuf, Option<PathBuf>>,
     /// inherit_from files being loaded (outermost first), to detect cycles.
     loading: Vec<PathBuf>,
+    /// Remote config files (their cache paths) with their URLs (RemoteConfig#uri).
+    remote: HashMap<PathBuf, String>,
     resolved: HashMap<Option<PathBuf>, Arc<Resolved>>,
     forced: Option<Arc<Resolved>>,
     pub warnings: Vec<String>,
@@ -717,6 +719,7 @@ impl Store {
             open_constants: Default::default(),
             dir_to_file: HashMap::new(),
             loading: Vec::new(),
+            remote: HashMap::new(),
             resolved: HashMap::new(),
             forced: None,
             warnings: Vec::new(),
@@ -1114,11 +1117,35 @@ impl Store {
             .flat_map(|e| if glob::is_glob(&e) { glob::dir_glob(&e, &self.cwd) } else { vec![e] })
             .collect();
         for entry in entries {
-            if entry.starts_with("http://") || entry.starts_with("https://") {
-                self.warnings.push(format!("{}: remote inherit_from {entry} is not supported", path.display()));
-                continue;
-            }
-            let base_path = expand_path(Path::new(&entry), dir);
+            // ConfigLoaderResolver#inherited_file: a URL, an absolute path, a path relative to the
+            // URL of a remote file, or a path relative to this file.
+            let remote = if entry.starts_with("http://") || entry.starts_with("https://") {
+                Some((entry.clone(), ""))
+            } else if !Path::new(&entry).is_absolute() {
+                self.remote.get(path).map(|url| (url.clone(), entry.as_str()))
+            } else {
+                None
+            };
+            let base_path = match remote {
+                Some((url, relative)) => {
+                    let Some((url, cache)) = self.remote_file(&url, relative)? else {
+                        self.warnings.push(format!(
+                            "{}: remote inherit_from {entry} needs ruby, which cannot be run; skipped",
+                            path.display()
+                        ));
+                        continue;
+                    };
+                    // RemoteConfig#inherit_from_remote rewrites the path of the URI it shares
+                    // with the remote file's own, so a later relative entry there is relative
+                    // to this one's URL.
+                    if !relative.is_empty() {
+                        self.remote.insert(path.to_path_buf(), url.clone());
+                    }
+                    self.remote.insert(cache.clone(), url);
+                    cache
+                }
+                None => expand_path(Path::new(&entry), dir),
+            };
             if base_path == path {
                 continue;
             }
@@ -1525,6 +1552,27 @@ impl Store {
             }
         }
         libs
+    }
+
+    /// RemoteConfig#file (downloading into ConfigLoader.cache_root, refreshed after a day), for
+    /// `url` or for `relative` resolved against it: the effective URL and the cache file. Run by
+    /// the project's ruby with RuboCop's own code (src/config/remote_config.rb); None when ruby
+    /// cannot be run. On failure RuboCop prints the message and its backtrace; rbcop the message.
+    fn remote_file(&self, url: &str, relative: &str) -> Result<Option<(String, PathBuf)>, String> {
+        let config = self.find_config_path(&self.cwd).map(|p| p.display().to_string()).unwrap_or_default();
+        let Ok(out) = std::process::Command::new("ruby")
+            .args(["-e", include_str!("remote_config.rb"), url, relative, &config])
+            .current_dir(&self.cwd)
+            .output()
+        else {
+            return Ok(None);
+        };
+        if !out.status.success() {
+            return Err(String::from_utf8_lossy(&out.stderr).trim_end().to_string());
+        }
+        let out = String::from_utf8_lossy(&out.stdout);
+        let (url, cache) = out.split_once('\0').ok_or_else(|| format!("{url}: ruby: unexpected output"))?;
+        Ok(Some((url.to_string(), PathBuf::from(cache))))
     }
 
     fn gem_dir(&mut self, gem: &str) -> Result<PathBuf, String> {
