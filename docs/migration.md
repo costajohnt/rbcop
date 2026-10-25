@@ -81,7 +81,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: costajohnt/rbcop@v0.1.1
+      - uses: costajohnt/rbcop@v0.1.2
 ```
 
 By default it runs `rbcop --format github --format progress`: offenses become annotations on the pull request, and the log keeps the usual progress output. Inputs:
@@ -100,7 +100,7 @@ With plugins, install the bundle first and turn on the fallback:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - uses: costajohnt/rbcop@v0.1.1
+      - uses: costajohnt/rbcop@v0.1.2
         with:
           fallback: true
 ```
