@@ -458,11 +458,13 @@ pub fn write_contained(path: &Path, content: &[u8], roots: &[PathBuf], append: b
         return Err(refuse(format!("{} is not a regular file of its own (a link, or another user's)", path.display())));
     }
     if append {
-        drop(existing);
-        let mut f = at::open(&dir, name, libc::O_WRONLY | libc::O_APPEND | libc::O_NOFOLLOW, 0)?;
+        // The descriptor just checked, switched to appending (no second open by name).
+        let mut f = existing;
+        at::set_append(&f)?;
         f.write_all(content)?;
         return Ok(f);
     }
+    // A new file renamed over the name: whatever the name now points at is replaced, not written.
     drop(existing);
     static COUNTER: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
     let n = COUNTER.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
@@ -529,6 +531,15 @@ mod at {
         })?;
         // SAFETY: `fd` was just returned by openat and is owned by nothing else.
         Ok(unsafe { File::from_raw_fd(fd) })
+    }
+
+    /// `fcntl(F_SETFL)`: O_APPEND on, O_NONBLOCK off.
+    pub fn set_append(f: &File) -> Result<()> {
+        let fd = f.as_raw_fd();
+        // SAFETY: fcntl on an open descriptor owned by `f`.
+        let flags = check(unsafe { libc::fcntl(fd, libc::F_GETFL) })?;
+        // SAFETY: as above.
+        check(unsafe { libc::fcntl(fd, libc::F_SETFL, (flags | libc::O_APPEND) & !libc::O_NONBLOCK) }).map(drop)
     }
 
     pub fn rename(dir: &File, from: &OsStr, to: &OsStr) -> Result<()> {
