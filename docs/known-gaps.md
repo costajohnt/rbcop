@@ -246,6 +246,37 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     follow-up `unterminated string meets end of file`; the `{{` template above):
     `scripts/check-skip.txt` leaves them out of check-cops.sh, and they and two RuboCop -A outputs
     with the same differences are in `scripts/autocorrect-skip.txt`.
+- `-d/--debug` (#297, tests/debug.rs) prints RuboCop's lines: each config file as it loads
+  (`For <dir>: `, `configuration from`, `Inheriting `, `AllCops/Exclude `, `Plugin `, `Ignoring
+  AllCops/Exclude from parent folders`), a setting an inherited file's overrides, `Use parallel by
+  default.`, `Running parallel inspection` / `Skipping parallel inspection: ...`, `Scanning <file>`,
+  `Loading cache from <entry>`, the result cache pruning and `Finished in N seconds`; it shows cop
+  names and skips the extension suggestions, as RuboCop does. Differences:
+  - default.yml files rbcop has built in are named `<rbcop built-in>/rubocop/config/default.yml`
+    and `<rbcop built-in>/<plugin gem>/config/default.yml` (RuboCop names the installed gem's file).
+  - Cache entries and the pruned directory are rbcop's own (`rbcop_cache`, see the result cache
+    above).
+  - In parallel inspection (RuboCop's default when only output options are given) RuboCop's worker
+    processes print the configs they load and the cache entries they read in an order that depends
+    on scheduling and output buffering, and a directory's config once per worker that loads it.
+    rbcop prints them in file order, each config once, after `Running parallel inspection` and
+    before the `Scanning` lines (the order RuboCop's output has when there are no more files than
+    workers). Serial inspection (`--cache`, `--no-parallel`, `-F`, ...) matches line for line.
+  - Cop errors and warnings get no Ruby backtrace (rbcop has none), so `-d` does not change them.
+  - A `-V` under `-d` names the config file it reads, as RuboCop does; RuboCop's `-V` lists the
+    loaded plugins' versions, which rbcop's does not.
+- `--profile` and `--memory` (#297): RuboCop's are StackProf's CPU profile and MemoryProfiler's
+  allocation report of the Ruby VM (and without those gems installed it stops with `You don't have
+  stackprof installed...`, exit 2). rbcop has no Ruby VM to profile, so it reports what it can
+  measure: `--profile` writes the wall time spent in each cop (summed over files and threads) to
+  `<project root>/tmp/rbcop-profile.txt` and prints `Profile report generated at <path>`;
+  `--profile --memory` also prints `Building memory report...` and writes the peak resident set
+  size to `tmp/rbcop-memory.txt` (`Memory report generated at <path>`). As in RuboCop `--profile`
+  turns the result cache off unless `--cache` comes before it, and `--memory` without `--profile`
+  does nothing. Without a Gemfile (no project root) RuboCop fails; rbcop writes under the working
+  directory. rbcop writes the reports only inside the working directory and the command-line paths
+  (as for `-a`) and never through a symlink (`tmp` or the report file); otherwise it prints
+  `rbcop: not writing the --profile report: <reason>` to stderr instead of the `generated at` line.
 - Command-line options rbcop refuses (`rbcop: --NAME is not supported by rbcop yet`, exit 2):
   - `--auto-gen-config`, `--regenerate-todo`, `-f autogenconf`: generating `.rubocop_todo.yml`
     (AutoGenerateConfig and the autogenconf formatter's Exclude/Max output) is not ported. Its
@@ -266,7 +297,6 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
     cop classes found there, and merges the gem's `config/default.yml` only when one of those files
     sets the default configuration (an extension's `Inject.defaults!`). Conditions on a require
     line are not evaluated.
-  - `-d/--debug`, `--profile`, `--memory`: Ruby-level diagnostics (backtraces, stackprof).
   - `-P/--[no-]parallel` and `--raise-cop-error` are accepted and have no effect (rbcop always
     lints in parallel); `-P` with `AllCops: UseCache: false` fails as in RuboCop.
 - The cops of a loaded plugin rbcop does not implement (`--show-cops`, `--list-enabled-cops-for`,
