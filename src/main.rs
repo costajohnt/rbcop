@@ -73,11 +73,11 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("lsp", None, Arg::None, Use::Unsupported),
     ("mcp", None, Arg::None, Use::Unsupported),
     ("[no-]server", None, Arg::None, Use::Handle),
-    ("restart-server", None, Arg::None, Use::Unsupported),
-    ("start-server", None, Arg::None, Use::Unsupported),
-    ("stop-server", None, Arg::None, Use::Unsupported),
-    ("server-status", None, Arg::None, Use::Unsupported),
-    ("no-detach", None, Arg::None, Use::Unsupported),
+    ("restart-server", None, Arg::None, Use::Ignore),
+    ("start-server", None, Arg::None, Use::Ignore),
+    ("stop-server", None, Arg::None, Use::Ignore),
+    ("server-status", None, Arg::None, Use::Ignore),
+    ("no-detach", None, Arg::None, Use::Ignore),
     ("format", Some('f'), Arg::Required, Use::Handle),
     ("[no-]display-cop-names", Some('D'), Arg::None, Use::Handle),
     ("extra-details", Some('E'), Arg::None, Use::Handle),
@@ -259,7 +259,7 @@ fn shellsplit(s: &str) -> Result<Vec<String>, String> {
 ///
 /// Deliberate difference: a checked-out project controls `.rubocop`, so `-o/--out` there is refused
 /// rather than letting a repository choose which files rbcop writes.
-fn all_args() -> Result<Vec<String>, Fail> {
+fn all_args(argv: Vec<String>) -> Result<Vec<String>, Fail> {
     let mut args = Vec::new();
     if Path::new(".rubocop").is_file() {
         let text = fs::read_to_string(".rubocop").map_err(|e| Fail::Arg(format!(".rubocop: {e}")))?;
@@ -281,9 +281,62 @@ fn all_args() -> Result<Vec<String>, Fail> {
         args.extend(from_file);
     }
     args.extend(shellsplit(&env::var("RUBOCOP_OPTS").unwrap_or_default()).map_err(Fail::Arg)?);
-    // env::args panics on an argument that is not UTF-8 (a file name on Linux, say).
-    args.extend(env::args_os().skip(1).map(|a| a.to_string_lossy().into_owned()));
+    args.extend(argv);
     Ok(args)
+}
+
+/// RuboCop::Server::CLI#run, which exe/rubocop runs on ARGV before anything else: it takes the server
+/// options out of ARGV, rejects bad combinations, and runs `--start-server` & co. (Some(status) when
+/// the command ends there).
+///
+/// Deliberate difference: rbcop runs in process and never starts a server, so the server is never
+/// running: `--server-status` says so, `--stop-server` warns it, `--start-server` starts nothing and
+/// prints no `RuboCop server starting on ...` line (`--restart-server` only warns from the stop), and
+/// `--server` / `--no-detach` lint in this process.
+fn server_cli(argv: &mut Vec<String>, color: bool) -> Option<u8> {
+    const SERVER_OPTIONS: [&str; 7] = [
+        "--server",
+        "--no-server",
+        "--server-status",
+        "--restart-server",
+        "--start-server",
+        "--stop-server",
+        "--no-detach",
+    ];
+    let fail = |m: String| {
+        warn_red(color, &m);
+        Some(ERROR)
+    };
+    // Server::CLI#fetch_cache_root_path_from: `split('=')[1]` (nil when only `=`s follow, as
+    // String#split drops trailing empty fields), or the next argument.
+    let cache_root = argv.iter().position(|a| a.starts_with("--cache-root")).is_some_and(|i| {
+        match argv[i].strip_prefix("--cache-root=") {
+            Some(v) => v.chars().any(|c| c != '='),
+            None => i + 1 < argv.len(),
+        }
+    });
+    let mut server_arguments: Vec<&str> = SERVER_OPTIONS.into_iter().filter(|o| argv.iter().any(|a| a == o)).collect();
+    argv.retain(|a| !SERVER_OPTIONS.contains(&a.as_str()));
+    let detach =
+        server_arguments.iter().position(|o| *o == "--no-detach").map(|i| server_arguments.remove(i)).is_none();
+    if server_arguments.len() >= 2 {
+        return fail(format!("{} cannot be specified together.", server_arguments.join(", ")));
+    }
+    let command = server_arguments.first().copied().unwrap_or("");
+    if !detach && !["--server", "--start-server", "--restart-server"].contains(&command) {
+        return fail(format!("{command} cannot be combined with --no-detach."));
+    }
+    let allowed = if cache_root { 2 } else { 1 };
+    if SERVER_OPTIONS[2..].contains(&command) && argv.len() > allowed {
+        return fail(format!("{command} cannot be combined with {}.", argv[0]));
+    }
+    match command {
+        "--server-status" => println!("RuboCop server is not running."),
+        "--stop-server" | "--restart-server" => eprintln!("RuboCop server is not running."),
+        "--start-server" => {}
+        _ => return None,
+    }
+    Some(0)
 }
 
 /// Find the option spec for `--name` (with OptionParser's unique-prefix completion).
@@ -589,7 +642,6 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
             }
             cli.cache_root = value;
         }
-        "server" if !neg => return Err(Fail::Unsupported("--server is not supported by rbcop yet".into())),
         "format" => {
             let v = value.unwrap_or_default();
             cli.format = Some(v.clone());
@@ -794,7 +846,12 @@ fn main() -> ExitCode {
             default_hook(info);
         }
     }));
-    let parsed = all_args().and_then(parse_args);
+    // env::args panics on an argument that is not UTF-8 (a file name on Linux, say).
+    let mut argv: Vec<String> = env::args_os().skip(1).map(|a| a.to_string_lossy().into_owned()).collect();
+    if let Some(status) = server_cli(&mut argv, global_color(None)) {
+        return ExitCode::from(status);
+    }
+    let parsed = all_args(argv).and_then(parse_args);
     let color_opt = parsed.as_ref().ok().and_then(|cli| cli.color);
     // CLI#run's ensure: `@options` is only set once Options#parse (validation included) succeeded.
     let mut display_time = false;
