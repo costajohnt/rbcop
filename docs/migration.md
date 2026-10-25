@@ -5,7 +5,7 @@ rbcop is RuboCop 1.91.0's command line reimplemented in Rust. It reads the same 
 Before switching, check two things:
 
 - **Plugins and custom cops.** rbcop runs RuboCop's 613 core cops and the plugins listed in [plugins.md](plugins.md) (rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot, rubocop-capybara). Cops from other plugins and custom cops loaded with `require:` are not run natively. rbcop names them on stderr, and `RBCOP_FALLBACK=1` runs them with RuboCop (see [Plugins and custom cops](#plugins-and-custom-cops) below). A project that uses only core cops needs nothing else.
-- **Unsupported options.** `--lsp`, `--mcp` and a few others are not implemented (the `--server` options are accepted and run in process); [known-gaps.md](known-gaps.md) lists them and every known difference.
+- **Unsupported options.** `--mcp` and a few others are not implemented (the `--server` options are accepted and run in process); [known-gaps.md](known-gaps.md) lists them and every known difference.
 
 ## Gemfile
 
@@ -126,7 +126,7 @@ Cops from Ruby files the config requires (`require: ./lib/cops/foo.rb`) are name
 ## Editors
 
 - Editors that run the `rubocop` executable with `--stdin` (Vim/ALE, Neovim's nvim-lint, Sublime Text's SublimeLinter-rubocop, Emacs flycheck) work with rbcop: point their executable setting at `rbcop` (or `bundle exec rbcop`, or `bin/rubocop` once the binstub runs rbcop). `--stdin` with `-a`/`-A` prints the corrected source as RuboCop does.
-- Language-server integrations (`rubocop --lsp`, ruby-lsp's RuboCop add-on, which loads RuboCop as a library) are not supported: keep RuboCop for those.
+- Editors that start `rubocop --lsp` (vscode-rubocop, Neovim's built-in LSP client, Helix, Zed, Eglot) can start `rbcop --lsp` instead: diagnostics, formatting, quick fixes and the `rubocop.formatAutocorrects` commands answer as RuboCop's server does. ruby-lsp's RuboCop add-on loads RuboCop as a library, so it needs RuboCop.
 
 ## Switching back
 

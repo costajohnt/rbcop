@@ -14,6 +14,7 @@ use std::{env, fs, thread};
 
 mod cache;
 mod fallback;
+mod lsp;
 
 // musl's malloc is a bottleneck for the worker threads; glibc and macOS keep the system allocator.
 #[cfg(target_env = "musl")]
@@ -70,7 +71,7 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("fail-level", None, Arg::Required, Use::Handle),
     ("cache", Some('C'), Arg::Required, Use::Handle),
     ("cache-root", None, Arg::Required, Use::Handle),
-    ("lsp", None, Arg::None, Use::Unsupported),
+    ("lsp", None, Arg::None, Use::Handle),
     ("mcp", None, Arg::None, Use::Unsupported),
     ("[no-]server", None, Arg::None, Use::Handle),
     ("restart-server", None, Arg::None, Use::Ignore),
@@ -197,6 +198,8 @@ struct Cli {
     report_unused_todo: bool,
     version: bool,
     verbose_version: bool,
+    /// `--lsp`
+    lsp: bool,
     /// EXITING_OPTIONS seen, in order (for "Incompatible cli options").
     exiting: Vec<&'static str>,
     /// `-d/--debug`
@@ -700,6 +703,10 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
             cli.version = true;
             cli.exiting.push("version");
         }
+        "lsp" => {
+            cli.lsp = true;
+            cli.exiting.push("lsp");
+        }
         "verbose-version" => {
             cli.verbose_version = true;
             cli.exiting.push("verbose_version");
@@ -760,6 +767,9 @@ fn validate(cli: &mut Cli, global: bool) -> Result<(), Fail> {
     }
     if cli.autocorrect.is_some() && (cli.only_correctable || cli.only_safe_correctable) {
         return Err(Fail::Arg("--autocorrect cannot be used with --display-only-[safe-]correctable.".into()));
+    }
+    if cli.lsp && cli.keys.iter().any(|k| k == "editor_mode") {
+        return Err(Fail::Arg("Do not specify `--editor-mode` as it is redundant in `--lsp`.".into()));
     }
     if cli.diff && cli.auto_gen_config {
         return Err(Fail::Arg("--diff cannot be used with --auto-gen-config.".into()));
@@ -1545,6 +1555,59 @@ fn same_file_twice(jobs: &[(PathBuf, std::sync::Arc<Resolved>)]) -> bool {
 }
 
 /// Returns the exit status. `phase` is the `--auto-gen-config` run (1 or 2) this is.
+/// Runner#mobilize_cop_badge?: the cops `--only` / `--except` (cop or department names) and the
+/// style-guide filter let in.
+struct Badges<'a> {
+    // Sets: every file asks about every cop, and `--only` may list all of them.
+    only: std::collections::HashSet<&'a str>,
+    except: std::collections::HashSet<&'a str>,
+    only_guide: bool,
+}
+
+impl<'a> Badges<'a> {
+    fn new(only: &'a [String], except: &'a [String], only_guide: bool) -> Self {
+        let set = |l: &'a [String]| l.iter().map(String::as_str).collect();
+        Badges { only: set(only), except: set(except), only_guide }
+    }
+
+    /// Badge#match_name? takes cop names and department names.
+    fn matches(list: &std::collections::HashSet<&str>, cop: &str) -> bool {
+        list.contains(cop) || cop.rsplit_once('/').is_some_and(|(d, _)| list.contains(d))
+    }
+
+    fn selected(&self, cop: &str) -> bool {
+        // Runner#check_for_redundant_disables? never runs the directive cop under --only.
+        // ponytail: so it also drops out of Registry#disabled_names there; matters only when the
+        // config disables Lint/RedundantCopDisableDirective and --only names its department.
+        if cop == "Lint/RedundantCopDisableDirective" && !self.only.is_empty() {
+            return false;
+        }
+        (self.only.is_empty() || Self::matches(&self.only, cop))
+            && (self.except.is_empty() || !Self::matches(&self.except, cop))
+    }
+
+    /// Without --only, --only-guide-cops or `AllCops: StyleGuideCopsOnly` keeps only cops whose
+    /// own config has a StyleGuide. Lint/RedundantCopDisableDirective is not a team cop:
+    /// Runner#redundant_cop_disable_directive runs it past this filter.
+    // ponytail: it so also enters Registry#disabled_names under the filter, which matters only
+    // for a config that disables it.
+    fn badge_selected(&self, cop: &str, cfg: &Resolved) -> bool {
+        self.badge_selected_in(cop, cfg, self.guide_only(cfg))
+    }
+
+    /// Whether the style-guide filter applies to `cfg` (hoisted out of per-cop checks).
+    fn guide_only(&self, cfg: &Resolved) -> bool {
+        self.only.is_empty() && (self.only_guide || cfg.all_cops().truthy("StyleGuideCopsOnly"))
+    }
+
+    fn badge_selected_in(&self, cop: &str, cfg: &Resolved, guide_only: bool) -> bool {
+        self.selected(cop)
+            && (!guide_only
+                || cfg.hash.map(cop).is_some_and(|c| c.truthy("StyleGuide"))
+                || cop == "Lint/RedundantCopDisableDirective")
+    }
+}
+
 fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Result<u8, String> {
     // MessageAnnotator#display_cop_names?: always under -d.
     if cli.debug {
@@ -1631,6 +1694,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     if let Some(cops) = &cli.show_docs_url {
         show_docs_url(cops, &pwd_config);
         return Ok(0);
+    }
+    if cli.lsp {
+        return lsp::serve(store, pwd_config);
     }
     // CLI#validate_options_vs_config
     if cli.parallel == Some(true) && !pwd_config.all_cops().truthy("UseCache") {
@@ -1824,37 +1890,12 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
 
     let only = &cli.opts.only;
     let except = &cli.except;
-    // Runner#mobilize_cop_badge?: Badge#match_name? takes cop names and department names.
-    // Sets: every file asks about every cop, and `--only` may list all of them.
-    let only_set: std::collections::HashSet<&str> = only.iter().map(String::as_str).collect();
-    let except_set: std::collections::HashSet<&str> = except.iter().map(String::as_str).collect();
-    let match_name = |list: &std::collections::HashSet<&str>, cop: &str| {
-        list.contains(cop) || cop.rsplit_once('/').is_some_and(|(d, _)| list.contains(d))
-    };
-    let selected = |cop: &str| {
-        // Runner#check_for_redundant_disables? never runs the directive cop under --only.
-        // ponytail: so it also drops out of Registry#disabled_names there; matters only when the
-        // config disables Lint/RedundantCopDisableDirective and --only names its department.
-        if cop == "Lint/RedundantCopDisableDirective" && !only.is_empty() {
-            return false;
-        }
-        (only.is_empty() || match_name(&only_set, cop)) && (except.is_empty() || !match_name(&except_set, cop))
-    };
-    // Runner#mobilize_cop_badge?: without --only, --only-guide-cops or `AllCops:
-    // StyleGuideCopsOnly` keeps only cops whose own config has a StyleGuide.
-    // Lint/RedundantCopDisableDirective is not a team cop: Runner#redundant_cop_disable_directive
-    // runs it past this filter.
-    // ponytail: it so also enters Registry#disabled_names under the filter, which matters only
-    // for a config that disables it.
-    let guide_only =
-        |cfg: &Resolved| only.is_empty() && (cli.only_guide || cfg.all_cops().truthy("StyleGuideCopsOnly"));
-    let badge_selected_in = |cop: &str, cfg: &Resolved, guide_only: bool| {
-        selected(cop)
-            && (!guide_only
-                || cfg.hash.map(cop).is_some_and(|c| c.truthy("StyleGuide"))
-                || cop == "Lint/RedundantCopDisableDirective")
-    };
-    let badge_selected = |cop: &str, cfg: &Resolved| badge_selected_in(cop, cfg, guide_only(cfg));
+    let badges = Badges::new(only, except, cli.only_guide);
+    let selected = |cop: &str| badges.selected(cop);
+    let badge_selected = |cop: &str, cfg: &Resolved| badges.badge_selected(cop, cfg);
+    let guide_only = |cfg: &Resolved| badges.guide_only(cfg);
+    let badge_selected_in =
+        |cop: &str, cfg: &Resolved, guide_only: bool| badges.badge_selected_in(cop, cfg, guide_only);
     // Resolve configs up front (single-threaded), then lint in parallel.
     let mut jobs = Vec::with_capacity(files.len());
     // RuboCop loads a file's config when the file's turn comes, so an invalid config stops the run

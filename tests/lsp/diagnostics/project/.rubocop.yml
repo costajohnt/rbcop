@@ -1,0 +1,9 @@
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - 'skip/**/*'
+Style/StringLiterals:
+  Severity: error
+Naming/MethodName:
+  DocumentationBaseURL: https://example.com/docs
