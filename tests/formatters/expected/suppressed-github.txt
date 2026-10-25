@@ -1,0 +1,15 @@
+
+::error file=Gemfile,line=1,col=1::Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+::error file=d.rb,line=3,col=6::Layout/TrailingWhitespace: Trailing whitespace detected.
+::error file=d.rb,line=4,col=50::Layout/TrailingWhitespace: Trailing whitespace detected.
+::error file=d.rb,line=6,col=6::Layout/TrailingWhitespace: Trailing whitespace detected.
+::error file=d.rb,line=8,col=6::Layout/TrailingWhitespace: Trailing whitespace detected.
+::error file=d.rb,line=10,col=1::Lint/Debugger: Remove debugger entry point `binding.pry`.
+::error file=d.rb,line=12,col=1::Lint/Debugger: Remove debugger entry point `binding.pry`.
+::error file=d.rb,line=13,col=7::Style/NilComparison: Prefer the use of the `nil?` predicate.
+::error file=d.rb,line=14,col=7::Style/NilComparison: Prefer the use of the `nil?` predicate.
+::error file=d.rb,line=15,col=7::Style/NilComparison: Prefer the use of the `nil?` predicate.
+::error file=d.rb,line=17,col=1::Lint/Debugger: Remove debugger entry point `binding.pry`.
+::error file=d.rb,line=18,col=7::Style/NilComparison: Prefer the use of the `nil?` predicate.
+::error file=d.rb,line=20,col=1::Lint/Debugger: Remove debugger entry point `binding.pry`.
+::error file=d.rb,line=21,col=7::Style/NilComparison: Prefer the use of the `nil?` predicate.

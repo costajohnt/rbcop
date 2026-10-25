@@ -1,0 +1,39 @@
+a.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+b.rb:3:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -2) spaces for indentation.
+c.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
+d.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not -2) spaces for indentation.
+e.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 6) spaces for indentation.
+z.rb:1:121: C: Layout/LineLength: Line is too long. [132/120]
+
+--- a/a.rb
++++ b/a.rb
+@@ -1,2 +1,2 @@
+ x rescue
+-  foo
++    foo
+--- a/b.rb
++++ b/b.rb
+@@ -1,4 +1,4 @@
+ def f
+   x rescue
+-  foo
++      foo
+ end
+--- a/c.rb
++++ b/c.rb
+@@ -1,2 +1,2 @@
+ a = x rescue
+-  foo
++        foo
+--- a/d.rb
++++ b/d.rb
+@@ -1,2 +1,2 @@
+ x rescue
+-foo
++    foo
+--- a/e.rb
++++ b/e.rb
+@@ -1,2 +1,2 @@
+ x rescue
+-        foo
++    foo

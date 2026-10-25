@@ -24,6 +24,9 @@ pub struct FileReport {
     pub warnings: Vec<String>,
     /// The error that ends the run at this file, before it is reported (see `poison_raise`).
     pub abort: Option<String>,
+    /// Under autocorrect, the (before, after) sources Runner#record_diff diffs for `--diff`: one
+    /// per correcting inspection loop.
+    pub diffs: Vec<(Arc<str>, Arc<str>)>,
 }
 
 impl FileReport {
@@ -53,8 +56,12 @@ pub fn inspect(
     let shared: Arc<str> = Arc::from(text.as_str());
     directives::take_warnings();
     take_abort();
-    let (offenses, _, _) = analyze(path, display, &shared, raw.as_deref(), cfg, selected, None, Redundant::Own);
-    FileReport { offenses, text, warnings: directives::take_warnings(), abort: take_abort() }
+    let (mut offenses, _, disabled) =
+        analyze(path, display, &shared, raw.as_deref(), cfg, selected, None, Redundant::Own);
+    if display_suppressed() {
+        offenses.extend(disabled);
+    }
+    FileReport { offenses, text, warnings: directives::take_warnings(), abort: take_abort(), diffs: Vec::new() }
 }
 
 /// Inspect a file's bytes as read. A source that must be UTF-8 (`source::must_be_utf8`) but is not
@@ -94,7 +101,7 @@ pub fn inspect_bytes(
 fn encoding_error_report(text: String, message: String, selected: &dyn Fn(&str) -> bool) -> FileReport {
     // Lint/Syntax is not mobilized under -x, --only-guide-cops or `StyleGuideCopsOnly`.
     if !selected("Lint/Syntax") {
-        return FileReport { offenses: Vec::new(), text, warnings: Vec::new(), abort: None };
+        return FileReport { offenses: Vec::new(), text, warnings: Vec::new(), abort: None, diffs: Vec::new() };
     }
     let offense = Offense {
         start: 0,
@@ -106,8 +113,10 @@ fn encoding_error_report(text: String, message: String, selected: &dyn Fn(&str) 
         global: true,
         corrected: false,
         source: None,
+        disabled: false,
+        justification: None,
     };
-    FileReport { offenses: vec![offense], text, warnings: Vec::new(), abort: None }
+    FileReport { offenses: vec![offense], text, warnings: Vec::new(), abort: None, diffs: Vec::new() }
 }
 
 /// How Ruby words a failed `File.read`/`File.open` of `path` (RuboCop raises its own error for a
@@ -124,8 +133,8 @@ pub fn io_error(e: &std::io::Error, path: &Path) -> String {
 /// One autocorrect iteration (see `crate::autocorrect::correct`): the offenses and, unless nothing
 /// was corrected, the collated corrector. Like Team#investigate_with_corrector, offenses of cops
 /// that do not autocorrect are only reported when no correction was made. Also returns the
-/// (cop, first line, last line) of the offenses disabled by comments, which RuboCop keeps for
-/// Lint/RedundantCopDisableDirective.
+/// offenses disabled by comments (status :disabled), which RuboCop keeps for
+/// Lint/RedundantCopDisableDirective and `--display-suppressed`.
 pub fn analyze_for_correction(
     path: &Path,
     display: &str,
@@ -134,7 +143,7 @@ pub fn analyze_for_correction(
     cfg: &Resolved,
     selected: &dyn Fn(&str) -> bool,
     mode: Mode,
-) -> (Vec<Offense>, Option<Corrector>, Vec<Span>) {
+) -> (Vec<Offense>, Option<Corrector>, Vec<Offense>) {
     analyze(path, display, text, raw_text, cfg, selected, Some(mode), Redundant::Skip)
 }
 
@@ -149,8 +158,11 @@ pub fn redundant_disables(
     mode: Mode,
     checked: &[Span],
 ) -> (Vec<Offense>, Option<Corrector>) {
-    let (offenses, corrector, _) =
+    let (mut offenses, corrector, disabled) =
         analyze(path, display, text, None, cfg, selected, Some(mode), Redundant::Only(checked));
+    if display_suppressed() {
+        offenses.extend(disabled);
+    }
     (offenses, corrector)
 }
 
@@ -393,7 +405,7 @@ fn analyze(
     selected: &dyn Fn(&str) -> bool,
     mode: Option<Mode>,
     redundant: Redundant,
-) -> (Vec<Offense>, Option<Corrector>, Vec<Span>) {
+) -> (Vec<Offense>, Option<Corrector>, Vec<Offense>) {
     let rails = crate::helpers::cop_registry::plugin_loaded("rubocop-rails");
     if rails && already_migrated_file(path, cfg) {
         // MigrationFileSkippable skips only add_offense: the cops still run, so their errors and
@@ -417,7 +429,7 @@ fn investigate(
     mode: Option<Mode>,
     redundant: Redundant,
     rails: bool,
-) -> (Vec<Offense>, Option<Corrector>, Vec<Span>) {
+) -> (Vec<Offense>, Option<Corrector>, Vec<Offense>) {
     let text: &str = shared;
     let raw_text = raw_text.unwrap_or(text);
     let errors_before = file_errors_len();
@@ -696,6 +708,8 @@ fn investigate(
                 global: false,
                 corrected: false,
                 source: None,
+                disabled: false,
+                justification: None,
             })
             .collect();
         // The parser translation layer reports one diagnostic per range; Prism can stack two
@@ -848,20 +862,30 @@ fn investigate(
     dedup(&mut out);
     // Parser's Range#last_line is the line of end_pos.
     let span = |o: &Offense| (o.cop, src.line_of(o.start), src.line_of(o.end.max(o.start)));
-    let mut disabled: Vec<Span> = Vec::new();
-    out.retain(|o| {
-        let s = span(o);
-        let off = directives::suppressed(&facts.disabled, s.0, s.1, s.2);
-        if off {
-            disabled.push(s);
-        }
-        !off
-    });
+    // Status :disabled (Base#add_offense): not correctable, with the directive's reason.
+    let suppress = |list: Vec<Offense>, disabled: &mut Vec<Offense>| -> Vec<Offense> {
+        let (off, kept): (Vec<Offense>, Vec<Offense>) = list.into_iter().partition(|o| {
+            let s = span(o);
+            directives::suppressed(&facts.disabled, s.0, s.1, s.2)
+        });
+        disabled.extend(off.into_iter().map(|mut o| {
+            let s = span(&o);
+            o.disabled = true;
+            o.correctable = false;
+            // add_global_offense passes no justification.
+            o.justification =
+                if o.global { None } else { directives::justification(&src, &facts.comment_config, s.0, s.1, s.2) };
+            o
+        }));
+        kept
+    };
+    let mut disabled: Vec<Offense> = Vec::new();
+    out = suppress(out, &mut disabled);
 
     let errors_after_cops = file_errors_len();
     // Runner#add_redundant_disables: offenses_to_check are all offenses, the disabled ones included.
     let checked: Option<Vec<Span>> = match redundant {
-        Redundant::Own if mode.is_none() => Some(out.iter().map(span).chain(disabled.iter().copied()).collect()),
+        Redundant::Own if mode.is_none() => Some(out.iter().chain(&disabled).map(span).collect()),
         Redundant::Only(c) => Some(c.to_vec()),
         _ => None,
     };
@@ -891,11 +915,7 @@ fn investigate(
         guarded(REDUNDANT_DISABLE, &src, None, || {
             crate::cops::lint_redundant_cop_disable_directive::check(&mut cx, &checked)
         });
-        found.retain(|o| {
-            let s = span(o);
-            !directives::suppressed(&facts.disabled, s.0, s.1, s.2)
-        });
-        out.extend(found);
+        out.extend(suppress(found, &mut disabled));
         redundant_fix = fixes.corrector;
     }
 
@@ -913,6 +933,7 @@ fn investigate(
                 .map(|a| a.name)
                 .collect();
             out.retain(|o| correcting.contains(&o.cop));
+            disabled.retain(|o| correcting.contains(&o.cop));
             // Nor do they raise there: only the correcting cops' errors count for this pass.
             FILE_ERRORS.with(|e| {
                 let mut i = 0;
@@ -923,7 +944,7 @@ fn investigate(
             });
         }
     }
-    for o in out.iter_mut() {
+    for o in out.iter_mut().chain(disabled.iter_mut()) {
         let c = cfg.cop(o.cop);
         // find_severity: the configured Severity, else one the cop passed to add_offense (any
         // but the Convention placeholder), else the department default.
@@ -1106,6 +1127,17 @@ static EXCEPT_REDUNDANT: std::sync::atomic::AtomicBool = std::sync::atomic::Atom
 
 pub fn set_except_redundant(on: bool) {
     EXCEPT_REDUNDANT.store(on, std::sync::atomic::Ordering::Relaxed);
+}
+
+/// `--display-suppressed`: Runner#file_offenses keeps the offenses directives disabled.
+static DISPLAY_SUPPRESSED: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+
+pub fn set_display_suppressed(on: bool) {
+    DISPLAY_SUPPRESSED.store(on, std::sync::atomic::Ordering::Relaxed);
+}
+
+pub fn display_suppressed() -> bool {
+    DISPLAY_SUPPRESSED.load(std::sync::atomic::Ordering::Relaxed)
 }
 
 /// A running cop reads CommentConfig#cop_disabled_line_ranges (Base#add_offense's enabled_lines?,

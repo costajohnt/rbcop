@@ -1,0 +1,36 @@
+a.rb:2:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+a.rb:4:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+b.rb:2:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+c.rb:3:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+c.rb:5:1: C: [Corrected] Style/RequireOrder: Sort `require_relative` in alphabetical order.
+c.rb:6:121: C: Layout/LineLength: Line is too long. [129/120]
+
+--- a/a.rb
++++ b/a.rb
+@@ -1,4 +1,4 @@
+-require 'b'
+ self.require 'a'
+-require 'd'
++require 'b'
+ foo.require 'c'
++require 'd'
+--- a/b.rb
++++ b/b.rb
+@@ -1,5 +1,5 @@
+-require 'b'
+ require 'a'
++require 'b'
+ self.require 'c'
+ require 'a0'
+ foo&.require 'a1'
+--- a/c.rb
++++ b/c.rb
+@@ -1,6 +1,6 @@
+-require 'z'
+ # c
+ self.require 'y' if x
+-require_relative 'b'
++require 'z'
+ self.require_relative 'a'
++require_relative 'b'
+ # Long line so an offense remains: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

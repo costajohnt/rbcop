@@ -1,0 +1,11 @@
+c.rb:2:8: C: [Corrected] Style/BlockDelimiters: Prefer `do...end` over `{...}` for procedural blocks.
+g.rb:1:121: C: Layout/LineLength: Line is too long. [132/120]
+
+--- a/c.rb
++++ b/c.rb
+@@ -1,4 +1,4 @@
+ def m
+-  each { puts }
++  each do puts end
+   each { puts 1 }
+ end

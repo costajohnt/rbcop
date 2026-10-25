@@ -1,0 +1,30 @@
+brace_block.rb:1:21: C: [Corrected] Style/ItBlockParameter: Use `it` block parameter.
+brace_block.rb:2:23: C: [Corrected] Style/ItBlockParameter: Use `it` block parameter.
+brace_block.rb:3:29: C: [Corrected] Style/ItBlockParameter: Use `it` block parameter.
+do_block.rb:2:7: C: [Corrected] Style/ItBlockParameter: Use `it` block parameter.
+long.rb:1:51: C: Layout/LineLength: Line is too long. [82/50]
+reduce.rb:1:19: C: [Corrected] Style/SingleLineBlockParams: Name `reduce` block params `|acc, elem|`.
+
+--- a/brace_block.rb
++++ b/brace_block.rb
+@@ -1,4 +1,4 @@
+-foo.each { |post| { post: } }
+-foo.each { |post| bar(post:, x: 1) }
+-foo.each { |post| bar(post: post) }
++foo.each {  { it: } }
++foo.each {  bar(it:, x: 1) }
++foo.each {  bar(post: it) }
+ foo.each { |post| bar(:post, posts) }
+--- a/do_block.rb
++++ b/do_block.rb
+@@ -1,3 +1,3 @@
+-foo.each do |post|
+-  bar(post:)
++foo.each do 
++  bar(it:)
+ end
+--- a/reduce.rb
++++ b/reduce.rb
+@@ -1 +1 @@
+-items.reduce(0) { |a, e| f(a:, e:) }
++items.reduce(0) { |acc, elem| f(acc:, elem:) }

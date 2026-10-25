@@ -1,0 +1,19 @@
+[33m== a.rb ==[0m
+[33mC[0m:  1:  1: [33m[Correctable] [0mStyle/FrozenStringLiteralComment: Missing frozen string literal comment.
+[33mC[0m:  1:  7: [32m[Corrected] [0mLayout/TrailingWhitespace: Trailing whitespace detected.
+[33mC[0m:  2:  1: [32m[Corrected] [0mStyle/NegatedIf: Favor [33munless[0m over [33mif[0m for negative conditions.
+[33mC[0m:  3:  1: [32m[Corrected] [0mStyle/NegatedIf: Favor [33munless[0m over [33mif[0m for negative conditions.
+[33m== b.rb ==[0m
+[33mC[0m:  1:  1: [33m[Correctable] [0mStyle/FrozenStringLiteralComment: Missing frozen string literal comment.
+
+2 files inspected, [31m5 offenses[0m detected, [36m3 offenses[0m corrected, [33m2 more offenses[0m can be corrected with `rubocop -A`
+
+--- a/a.rb
++++ b/a.rb
+@@ -1,3 +1,3 @@
+-puts x 
+-puts(1) if !x
+-puts 2 if !x
++puts x
++puts(1) unless x
++puts 2 unless x

@@ -107,8 +107,14 @@ pub fn correct(
 ) -> Corrected {
     crate::directives::take_warnings();
     runner::take_abort();
+    let original: Arc<str> = Arc::from(text);
     let (mut offenses, mut current, changed, error, disabled) =
-        inspection_loop(path, display, Arc::from(text), cfg, selected, mode);
+        inspection_loop(path, display, original.clone(), cfg, selected, mode);
+    // Runner#finalize_corrections: each loop's result against the source it started from.
+    let mut diffs = Vec::new();
+    if changed {
+        diffs.push((original, current.clone()));
+    }
     let mut changed = changed;
     // Runner#add_redundant_disables (skipped when the loop raised): Lint/RedundantCopDisableDirective
     // judges the final source against every offense found, and when it removed directives the
@@ -117,7 +123,7 @@ pub fn correct(
     if error.is_none() && !runner::aborting() {
         let mut lines = Lines::default();
         let span = |o: &Offense| (o.cop, lines.line_col(o, o.start).0, lines.line_col(o, o.end.max(o.start)).0);
-        let checked: Vec<runner::Span> = offenses.iter().map(span).chain(disabled).collect();
+        let checked: Vec<runner::Span> = offenses.iter().chain(&disabled).map(span).collect();
         let normalised = normalise(&current);
         let (mut found, corrector) =
             runner::redundant_disables(path, display, &normalised, cfg, selected, mode, &checked);
@@ -125,9 +131,25 @@ pub fn correct(
             o.source = Some(normalised.clone());
         }
         offenses.extend(found);
+        // Runner#file_offenses rejects the disabled offenses unless --display-suppressed.
+        if runner::display_suppressed() {
+            offenses.extend(disabled);
+        }
         if let Some(c) = corrector {
-            let (again, text, _, err, _) = inspection_loop(path, display, Arc::from(c.rewrite()), cfg, selected, mode);
+            // RuboCop 1.91.0's redundant-disable team writes its correction to the file even under
+            // `--diff` (its corrections are not deferred), so the loop it reruns diffs against
+            // that source and the directives it removed are in no diff. rbcop writes nothing
+            // (docs/known-gaps.md) but prints the same diffs.
+            let rewritten: Arc<str> = Arc::from(c.rewrite());
+            let (again, text, again_changed, err, again_disabled) =
+                inspection_loop(path, display, rewritten.clone(), cfg, selected, mode);
+            if again_changed {
+                diffs.push((rewritten, text.clone()));
+            }
             offenses.extend(again);
+            if runner::display_suppressed() {
+                offenses.extend(again_disabled);
+            }
             current = text;
             changed = true;
             if let Some(e) = err {
@@ -140,6 +162,7 @@ pub fn correct(
         text: normalise(&current).to_string(),
         warnings: crate::directives::take_warnings(),
         abort: runner::take_abort(),
+        diffs,
     };
     Corrected { source: changed.then(|| current.to_string()), report, error }
 }
@@ -161,7 +184,7 @@ fn inspection_loop(
     cfg: &Resolved,
     selected: &dyn Fn(&str) -> bool,
     mode: Mode,
-) -> (Vec<Offense>, Arc<str>, bool, Option<String>, Vec<runner::Span>) {
+) -> (Vec<Offense>, Arc<str>, bool, Option<String>, Vec<Offense>) {
     let mut seen: Vec<Arc<str>> = Vec::new();
     let mut disabled = Vec::new();
     let mut by_iteration: Vec<Vec<Offense>> = Vec::new();
@@ -186,7 +209,7 @@ fn inspection_loop(
         let (mut offenses, corrector, off) =
             runner::analyze_for_correction(path, display, &normalised, raw, cfg, selected, mode);
         disabled = off;
-        for o in &mut offenses {
+        for o in offenses.iter_mut().chain(disabled.iter_mut()) {
             o.source = Some(normalised.clone());
         }
         by_iteration.push(offenses);

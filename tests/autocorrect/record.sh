@@ -18,4 +18,12 @@ for case in "$here"/*/; do
   [ "$cops" = all ] && only=
   (cd "$case/$out" && RBENV_VERSION=4.0.6 rbenv exec rubocop -A -c ../config.yml $only --cache false \
     --format emacs . 2>/dev/null | sed "s|^$case/$out/||" > "../$out.txt") || true
+  # `rubocop --diff -A` stdout (report, then the diffs) into diff.txt, on a scratch copy of input/:
+  # RuboCop 1.91.0 can write a file under --diff (docs/known-gaps.md).
+  [ "$out" = expected ] || continue
+  rm -rf "$case/diff-run"
+  cp -R "$case/input" "$case/diff-run"
+  (cd "$case/diff-run" && RBENV_VERSION=4.0.6 rbenv exec rubocop --diff -A -c ../config.yml $only --cache false \
+    --format emacs . 2>/dev/null | sed "s|^$case/diff-run/||" > ../diff.txt) || true
+  rm -rf "${case:?}/diff-run"
 done

@@ -508,3 +508,20 @@ pub fn suppressed(ranges: &HashMap<String, Vec<(i64, i64)>>, cop: &str, first: u
 pub fn is_disabled(ranges: &HashMap<String, Vec<(i64, i64)>>, cop: &str, first: usize, last: usize) -> bool {
     ranges.get(cop).is_some_and(|rs| rs.iter().any(|&(a, b)| b >= first as i64 && a <= last as i64))
 }
+
+/// DirectiveComment#reason: the text of the directive's `--` trailing comment, stripped, unless empty.
+pub fn reason<'a>(text: &'a str, d: &Directive) -> Option<&'a str> {
+    // Ruby's String#strip whitespace.
+    let ws = [' ', '\t', '\n', '\x0b', '\x0c', '\r', '\0'];
+    let r = text[d.end..].trim_start_matches(ws).strip_prefix("--")?.trim_matches(ws);
+    (!r.is_empty()).then_some(r)
+}
+
+/// Cop::Base#suppression_reason: the reason on the directive that opened the first of `cop`'s
+/// disabled ranges covering these lines (none for a cop disabled in config).
+pub fn justification(src: &Source, cc: &CommentConfig, cop: &str, first: usize, last: usize) -> Option<String> {
+    let &(_, _, index) = cc.ranges.get(cop)?.iter().find(|&&(a, b, _)| b >= first as i64 && a <= last as i64)?;
+    let c = src.comments.get(index?)?;
+    let text = src.slice(c.start, c.end);
+    reason(text, &parse(text)?).map(String::from)
+}
