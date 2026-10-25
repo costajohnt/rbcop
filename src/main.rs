@@ -1655,6 +1655,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
         store.debug_pwd_yaml();
         print!("{}", rbcop::config::take_debug());
         println!("{}", verbose_version(&pwd_config));
+        for line in store.extension_versions() {
+            println!("{line}");
+        }
         return Ok(0);
     }
     if let Some(patterns) = &cli.show_cops {
