@@ -87,12 +87,15 @@ impl Pattern {
 }
 
 fn hidden_file_in_not_hidden_dir(pattern: &str, path: &str) -> bool {
+    // Cheapest test first: every glob that misses lands here, and almost no file is hidden (#388).
     let p = Path::new(path);
-    let hidden_file = p.file_name().is_some_and(|n| n.to_string_lossy().starts_with('.')) && path.contains("/.");
-    let hidden_dir = p.parent().is_some_and(|d| {
-        d.components().any(|c| matches!(c, Component::Normal(n) if n.to_string_lossy().starts_with('.')))
-    });
-    hidden_file && glob::fnmatch(pattern, path, true) && !hidden_dir
+    let hidden_file = path.contains("/.") && p.file_name().is_some_and(|n| n.to_string_lossy().starts_with('.'));
+    let hidden_dir = || {
+        p.parent().is_some_and(|d| {
+            d.components().any(|c| matches!(c, Component::Normal(n) if n.to_string_lossy().starts_with('.')))
+        })
+    };
+    hidden_file && glob::fnmatch(pattern, path, true) && !hidden_dir()
 }
 
 fn patterns(map: &Map, key: &str) -> Option<Vec<Pattern>> {
