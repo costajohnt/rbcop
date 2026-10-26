@@ -106,7 +106,7 @@ RBCOP_CORPUS=<corpus dir> RBCOP_ORACLE=<oracle dir> scripts/verify.sh   # the ab
 
 `cargo test` replays recorded RuboCop output: every cop's RuboCop spec examples with their config variants, offenses and `-A` results (`tests/spec_corpus`, recorded by `scripts/record-spec-corpus.sh`), config scenarios (`tests/scenarios`), formatter and CLI goldens (`tests/formatters`), `--show-cops` (`tests/show_cops`) and autocorrect cases (`tests/autocorrect`). The scripts that record them (`scripts/record-spec-corpus.sh`, `scripts/scenarios.sh`, `scripts/formatters.sh`, `scripts/show-cops.sh`, `tests/autocorrect/record.sh`) and the oracle, autocorrect and cold-corpus gates need RuboCop 1.91.0 on `PATH` (with rbenv: `RBENV_VERSION=4.0.6`). Each script's header documents its arguments and environment.
 
-[docs/porting-cops.md](docs/porting-cops.md) describes how a cop is ported and checked, including how the corpora and oracles are laid out. [docs/rubocop-config-semantics.md](docs/rubocop-config-semantics.md) describes the configuration rules `src/config/` follows.
+[docs/porting-cops.md](docs/porting-cops.md) describes how a cop is ported and checked, including how the corpora and oracles are laid out. [docs/rubocop-config-semantics.md](docs/rubocop-config-semantics.md) describes the configuration rules `src/config/` follows. [docs/upgrading-rubocop.md](docs/upgrading-rubocop.md) is the process for moving to a new RuboCop release.
 
 ## License and credits
 
