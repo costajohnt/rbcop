@@ -48,11 +48,38 @@ impl Cop for ClassMethodsDefinitions {
         if !defs.iter().all(|&i| visibility(i) == "public") {
             return;
         }
-        // autocorrect_sclass
         let src = cx.src;
         let text = src.text;
+        // no_code_after?: only a comment (after any `;`) may follow each def on its last line.
+        let code_after = |i: usize| {
+            let end = stmts[i].location().end_offset();
+            let line_end = text[end..].find('\n').map_or(text.len(), |p| end + p);
+            let trailing = text[end..line_end].trim_matches(|c: char| c.is_ascii_whitespace() || c == '\0');
+            let trailing = trailing.trim_start_matches(';').trim_start_matches(|c: char| c.is_ascii_whitespace());
+            !trailing.is_empty() && !trailing.starts_with('#')
+        };
+        if defs.iter().any(|&i| code_after(i)) {
+            return;
+        }
         let sloc = node.location();
         let (s_start, s_end) = (sloc.start_offset(), sloc.end_offset());
+        // inside_corrected_sclass?: an enclosing `class << self` was corrected (ignore_node).
+        let outer: Vec<(usize, usize)> = cx
+            .ancestors
+            .iter()
+            .filter(|a| a.as_singleton_class_node().is_some())
+            .map(|a| (a.location().start_offset(), a.location().end_offset()))
+            .collect();
+        let corrected = cx.state::<Vec<(usize, usize)>>();
+        let inside_corrected = outer.iter().any(|r| corrected.contains(r));
+        if inside_corrected {
+            cx.add_fix(s_start, s_end, "Do not define public methods within class << self.", |_| {});
+            return;
+        }
+        if cx.block_runs(s_start, s_end) {
+            cx.state::<Vec<(usize, usize)>>().push((s_start, s_end));
+        }
+        // autocorrect_sclass
         let s_col = src.column(s_start);
         let mut removals = Vec::new();
         let mut rewritten: Vec<String> = Vec::new();

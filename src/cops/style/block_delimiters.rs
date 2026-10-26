@@ -62,7 +62,7 @@ impl Cop for BlockDelimiters {
     }
 
     fn kinds(&self) -> &'static [usize] {
-        &[kind::CALL_NODE, kind::SUPER_NODE, kind::FORWARDING_SUPER_NODE, kind::LAMBDA_NODE]
+        &[kind::CALL_NODE, kind::SUPER_NODE, kind::FORWARDING_SUPER_NODE, kind::LAMBDA_NODE, kind::YIELD_NODE]
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
@@ -72,6 +72,25 @@ impl Cop for BlockDelimiters {
         }
         if let Some(call) = node.as_call_node() {
             on_send(cx, &call);
+        }
+        // on_super / on_yield: arguments without parentheses.
+        let args = match node {
+            Node::SuperNode { .. } => {
+                let s = node.as_super_node().unwrap();
+                s.arguments().filter(|_| s.lparen_loc().is_none())
+            }
+            Node::YieldNode { .. } => {
+                let y = node.as_yield_node().unwrap();
+                y.arguments().filter(|_| y.lparen_loc().is_none())
+            }
+            _ => None,
+        };
+        if let Some(args) = args {
+            let mut found = Vec::new();
+            for arg in args.arguments().iter() {
+                get_blocks(&arg, &mut found);
+            }
+            cx.state::<Ignored>().0.extend(found);
         }
     }
 }
@@ -135,6 +154,13 @@ fn on_block(cx: &mut Cx, b: &Block, node: &Node) {
     if require_do_end(b, braces, multiline) {
         return;
     }
+    // collection_of_for_loop?
+    if helpers::parser_parent::parser_parent(cx.ancestors)
+        .and_then(|p| p.as_for_node())
+        .is_some_and(|f| (f.collection().location().start_offset(), f.collection().location().end_offset()) == b.range)
+    {
+        return;
+    }
     if helpers::allowed::allowed_method(cx.cfg, &b.method) || helpers::allowed::matches_allowed_pattern(cx.cfg, &b.method) {
         return;
     }
@@ -187,7 +213,7 @@ fn on_block(cx: &mut Cx, b: &Block, node: &Node) {
     };
 
     // correction_would_break_code?
-    let breaks = !braces && b.unparenthesized_args;
+    let breaks = if braces { loop_condition(ancestors, b.range) } else { b.unparenthesized_args };
     let (open, close) = (b.opening, b.closing);
     let text = src.text;
     let ws = |i: usize| text.as_bytes().get(i).is_some_and(|&c| helpers::parser_tokens::is_ruby_space(c));
@@ -196,6 +222,8 @@ fn on_block(cx: &mut Cx, b: &Block, node: &Node) {
     let comment_move = (braces && !breaks)
         .then(|| src.comment_on_line(src.line_of(close.0)).map(|c| (c.start, c.end)))
         .flatten()
+        // a directive comment stays where it is
+        .filter(|&(cs, ce)| !crate::directives::DIRECTIVE.is_match(&text[cs..ce]))
         .map(|(cs, ce)| {
             let anchor = if chained { end_of_chain(ancestors, b.range) } else { close };
             // parser's Range#join takes the min begin and max end, so a chain ending after the
@@ -217,7 +245,16 @@ fn on_block(cx: &mut Cx, b: &Block, node: &Node) {
         && b.body.as_ref().and_then(|n| n.as_begin_node()).is_some_and(|n| {
             n.begin_keyword_loc().is_none() && (n.rescue_clause().is_some() || n.ensure_clause().is_some())
         });
-    let body_range = b.body.as_ref().map(body_range);
+    // wrap_body_with_begin: `end` goes after the last heredoc body in the block body.
+    let body_range = b.body.as_ref().map(|n| {
+        let r = body_range(n);
+        // loc.heredoc_end excludes the terminator's newline
+        let last = helpers::heredoc::last_heredoc_end(n)
+            .map(|(s, e)| (s, s + src.text[s..e].trim_end_matches(['\n', '\r']).len()))
+            .filter(|h| h.1 > r.1)
+            .unwrap_or(r);
+        (r, last)
+    });
     let block_range = b.range;
 
     let mut ran = false;
@@ -252,14 +289,43 @@ fn on_block(cx: &mut Cx, b: &Block, node: &Node) {
             }
             c.replace(open.0, open.1, "{");
             c.replace(close.0, close.1, "}");
-            if begin_required && let Some((s, e)) = body_range {
-                c.wrap(s, e, "begin\n", "\nend");
+            if begin_required && let Some((body, last)) = body_range {
+                c.insert_before(body.0, body.1, "begin\n");
+                c.insert_after(last.0, last.1, "\nend");
             }
         }
     });
     if ran {
         cx.state::<Ignored>().0.push(b.range);
     }
+}
+
+/// `loop_condition?`: the block is (within) the condition of a `while`/`until`, with no block
+/// in between.
+fn loop_condition(ancestors: &[Node], range: (usize, usize)) -> bool {
+    for a in ancestors.iter().rev() {
+        let owns_block = |b: Option<Node>| b.is_some_and(|b| b.as_block_node().is_some());
+        let boundary = match a {
+            Node::BlockNode { .. } | Node::LambdaNode { .. } => true,
+            Node::CallNode { .. } => owns_block(a.as_call_node().unwrap().block()),
+            Node::SuperNode { .. } => owns_block(a.as_super_node().unwrap().block()),
+            Node::ForwardingSuperNode { .. } => a.as_forwarding_super_node().unwrap().block().is_some(),
+            _ => false,
+        };
+        if boundary {
+            return false;
+        }
+        let predicate = match a {
+            Node::WhileNode { .. } => a.as_while_node().unwrap().predicate(),
+            Node::UntilNode { .. } => a.as_until_node().unwrap().predicate(),
+            _ => continue,
+        };
+        let l = predicate.location();
+        if l.start_offset() <= range.0 && range.1 <= l.end_offset() {
+            return true;
+        }
+    }
+    false
 }
 
 /// require_do_end?: a single-line do-end block whose body needs `ensure`/`rescue`.

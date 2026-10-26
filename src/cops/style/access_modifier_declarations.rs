@@ -153,6 +153,8 @@ impl Ctx<'_, '_> {
         let access_modifier = helpers::macro_scope::is_macro(call, ancestors);
         !access_modifier
             || matches!(parent, Parent::Pair | Parent::Block)
+            // dynamic_method_list?: `private(*names)` names no definition to group with
+            || (send_args(call).iter().any(|a| a.as_splat_node().is_some()) && !with_symbol(call))
             || (self.cfg_symbols && with_symbol(call))
             || (self.cfg_attrs && with_inner_send(call, &["attr", "attr_reader", "attr_writer", "attr_accessor"], |n| n > 0))
             || (self.cfg_alias && with_inner_send(call, &["alias_method"], |n| n == 2))
@@ -229,7 +231,10 @@ impl Cop for AccessModifierDeclarations {
                     })
                 })
         } else {
-            !inlined && grouped_defs(siblings).next().is_some()
+            // inlinable?
+            let defs: Vec<Node> = grouped_defs(siblings).collect();
+            let ruby = cx.config.target_ruby;
+            !inlined && !defs.is_empty() && !defs.iter().any(|d| unsafe_endless(d, ruby))
         };
         if !offense {
             return cx.correct_style_detected();
@@ -337,6 +342,46 @@ enum Edit {
     Replace(usize, usize, String),
     InsertBefore(usize, usize, String),
     InsertAfter(usize, usize, String),
+}
+
+/// An endless def whose body would change meaning after `private def ...`: it holds a `do`
+/// block, or (before Ruby 4.0) is a command call or `not x`.
+fn unsafe_endless(def: &Node, ruby: f64) -> bool {
+    let d = def.as_def_node().unwrap();
+    if d.equal_loc().is_none() {
+        return false;
+    }
+    let Some(body) = d.body() else { return false };
+    let mut body = match body.as_statements_node() {
+        Some(s) if s.body().len() == 1 => s.body().iter().next().unwrap(),
+        _ => body,
+    };
+    struct DoBlock(bool);
+    impl<'pr> ruby_prism::Visit<'pr> for DoBlock {
+        fn visit_block_node(&mut self, node: &ruby_prism::BlockNode<'pr>) {
+            self.0 |= node.opening_loc().as_slice() == b"do";
+            ruby_prism::visit_block_node(self, node);
+        }
+    }
+    let mut v = DoBlock(false);
+    ruby_prism::Visit::visit(&mut v, &body);
+    if v.0 {
+        return true;
+    }
+    if ruby >= 4.0 {
+        return false;
+    }
+    // command_body?
+    while let Some(r) = body.as_rescue_modifier_node() {
+        body = r.expression();
+    }
+    if let Some(c) = body.as_call_node()
+        && c.message_loc().is_some_and(|l| l.as_slice() == b"not")
+        && c.closing_loc().is_none_or(|l| l.as_slice() != b")")
+    {
+        return true;
+    }
+    helpers::endless_method_body_help::command_call(&body)
 }
 
 /// `select_grouped_def_nodes`: defs among the right siblings up to the next bare modifier.
