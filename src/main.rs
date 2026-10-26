@@ -43,7 +43,6 @@ enum Arg {
 enum Use {
     Handle,
     Ignore,
-    Unsupported,
     /// Loads Ruby code: the whole run goes to RuboCop (Fail::Ruby).
     Ruby,
 }
@@ -67,7 +66,7 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("ignore-parent-exclusion", None, Arg::None, Use::Handle),
     ("ignore-unrecognized-cops", None, Arg::None, Use::Handle),
     ("force-default-config", None, Arg::None, Use::Handle),
-    ("changed", None, Arg::Optional, Use::Unsupported),
+    ("changed", None, Arg::Optional, Use::Handle),
     ("stdin", Some('s'), Arg::Required, Use::Handle),
     ("editor-mode", None, Arg::None, Use::Handle),
     ("[no-]parallel", Some('P'), Arg::None, Use::Handle),
@@ -220,6 +219,8 @@ struct Cli {
     /// The first option that loads Ruby code (`-r`, `--plugin`): the run goes to RuboCop
     /// (Fail::Ruby) once every option has parsed.
     ruby: Option<String>,
+    /// `--changed [REVISION]`: the revision (HEAD when none is given).
+    changed: Option<String>,
 }
 
 /// Shellwords.split; Err is its ArgumentError for an unterminated quote.
@@ -460,10 +461,6 @@ fn parse_args(args: Vec<String>) -> Result<Cli, Fail> {
                 }
                 return parse_args(again);
             }
-            if usage == Use::Unsupported {
-                let shown = if neg { format!("--no-{name}") } else { format!("--{name}") };
-                return Err(Fail::Unsupported(format!("{shown} is not supported by rbcop yet")));
-            }
             if usage == Use::Ruby {
                 cli.ruby.get_or_insert_with(|| format!("--{name} loads Ruby code, which rbcop cannot run"));
                 continue;
@@ -644,6 +641,17 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
         "config" => cli.opts.config_file = value.map(PathBuf::from),
         "force-default-config" => cli.opts.force_default_config = true,
         "force-exclusion" => cli.force_exclusion = true,
+        "changed" => {
+            // OptionsValidator#validate_changed_revision: OptionParser hands `--changed lib/` the
+            // path as the revision.
+            if let Some(r) = value.as_deref().filter(|r| Path::new(r).exists()) {
+                return Err(Fail::Arg(format!(
+                    "--changed takes a git revision, but `{r}` is a path. Write the revision as \
+                     `--changed={r}` if that is really what you meant, or drop it to compare against HEAD."
+                )));
+            }
+            cli.changed = Some(value.unwrap_or_else(|| "HEAD".into()));
+        }
         "ignore-parent-exclusion" => cli.opts.ignore_parent_exclusion = true,
         "ignore-unrecognized-cops" => cli.opts.ignore_unrecognized_cops = true,
         "enable-pending-cops" => cli.opts.enable_pending_cops = true,
@@ -792,6 +800,9 @@ fn validate(cli: &mut Cli, global: bool) -> Result<(), Fail> {
     }
     if cli.diff && cli.auto_gen_config {
         return Err(Fail::Arg("--diff cannot be used with --auto-gen-config.".into()));
+    }
+    if cli.changed.is_some() && cli.stdin.is_some() {
+        return Err(Fail::Arg("--changed cannot be used with --stdin.".into()));
     }
     if cli.enable_all && cli.disable_all {
         return Err(Fail::Arg("--enable-all-cops cannot be used together with --disable-all-cops.".into()));
@@ -1871,6 +1882,11 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             }
             let mut seen = std::collections::HashSet::new();
             files.retain(|f| seen.insert(f.clone()));
+            // Runner#only_changed
+            if let Some(revision) = &cli.changed {
+                let changed = targets::changed(revision).map_err(|e| format!("Error: {e}"))?;
+                files.retain(|f| changed.contains(f));
+            }
             None
         }
     };
