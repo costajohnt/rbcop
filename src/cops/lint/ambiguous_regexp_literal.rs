@@ -61,6 +61,10 @@ impl Cop for AmbiguousRegexpLiteral {
         };
         let first_argument_is_regexp =
             |f: (usize, bool)| is_send(f) && send_args(&call(f).unwrap()).first().is_some_and(is_regexp);
+        // part_of_hash_argument? (1.92): a pair, a pair's value, or a brace-less hash.
+        let hash_part = |(i, block): (usize, bool)| {
+            !block && matches!(kind::of(&ancestors[i]), kind::ASSOC_NODE | kind::KEYWORD_HASH_NODE)
+        };
         let Some(mut at) = chain.first().map(|_| 0) else { return };
         // find_offense_node
         while !first_argument_is_regexp(chain[at]) && at + 1 < chain.len() {
@@ -69,7 +73,9 @@ impl Cop for AmbiguousRegexpLiteral {
                 || (at + 2 < chain.len()
                     && receiver(parent_i)
                         .and_then(|r| r.as_call_node().and_then(|c| c.receiver()))
-                        .is_some_and(|rr| range(&rr) == regexp));
+                        .is_some_and(|rr| range(&rr) == regexp))
+                || hash_part(node_i)
+                || (hash_part(parent_i) && kind::of(&ancestors[parent_i.0]) == kind::ASSOC_NODE);
             if !up {
                 break;
             }

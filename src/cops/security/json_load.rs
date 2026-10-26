@@ -22,8 +22,13 @@ impl Cop for JSONLoad {
         if call.receiver().is_none_or(|r| helpers::const_name::const_name(&r).as_deref() != Some("JSON")) {
             return;
         }
-        // ... !`(pair (sym :create_additions) _): the last argument has no such pair anywhere inside.
-        if send_args(&call).last().is_none_or(has_create_additions) {
+        // { _ hash | ... !`(pair (sym :create_additions) _) }: options as the second argument are
+        // always reported (json < 2.17 ignores them); otherwise the last argument has no such pair
+        // anywhere inside.
+        let args = send_args(&call);
+        let hash_second =
+            args.len() == 2 && (args[1].as_hash_node().is_some() || args[1].as_keyword_hash_node().is_some());
+        if !hash_second && args.last().is_none_or(has_create_additions) {
             return;
         }
         let sel = call.message_loc().unwrap();

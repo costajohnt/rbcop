@@ -32,7 +32,8 @@ impl Cop for MissingCopEnableDirective {
             let Some(ranges) = cc.ranges.get(cop) else { continue };
             for r in ranges {
                 let directive = r.2.and_then(|i| directives::parse(src.slice(src.comments[i].start, src.comments[i].end)));
-                if directive.as_ref().is_some_and(|d| d.mode == "disable-next" || d.mode == "todo-next") {
+                // A `disable-next` or `next` scope closes itself with its statement.
+                if directive.as_ref().is_some_and(|d| matches!(d.mode.as_str(), "disable-next" | "todo-next" | "next")) {
                     continue;
                 }
                 // acceptable_range?
@@ -44,8 +45,11 @@ impl Cop for MissingCopEnableDirective {
                 if r.0 == i64::MIN || (!cx.config.cop_enabled(cop) && r.1 == i64::MAX) {
                     continue;
                 }
+                // opening_comment: the range's directive (a disable suspended by `enable-next` or
+                // `next +Cop` reopens below the statement, on a code line), else
                 // processed_source.comment_at_line(line_range.begin); RuboCop raises on nil.
-                let Some(c) = src.comments.iter().rev().find(|c| src.line_of(c.start) as i64 == r.0) else {
+                let opening = r.2.map(|i| &src.comments[i]);
+                let Some(c) = opening.or_else(|| src.comments.iter().rev().find(|c| src.line_of(c.start) as i64 == r.0)) else {
                     crate::runner::cop_error(NAME, src, 0);
                     return emit(cx, found);
                 };

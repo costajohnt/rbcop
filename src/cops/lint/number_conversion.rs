@@ -83,6 +83,10 @@ fn handle_as_symbol(cx: &mut Cx, call: &ruby_prism::CallNode, arg: &Node) {
         None => sym_value(arg),
     };
     let Some(to_method) = to_method else { return };
+    // `x + :to_i` is an operator, not a conversion block (1.92).
+    if helpers::node_types::is_operator_method(&String::from_utf8_lossy(call.name().as_slice())) {
+        return;
+    }
     let Some(body) = corrected(&to_method, "i") else { return };
     let replacement = format!("{{ |i| {body} }}");
     let loc = arg.location();
@@ -94,7 +98,12 @@ fn handle_as_symbol(cx: &mut Cx, call: &ruby_prism::CallNode, arg: &Node) {
         .zip(call.closing_loc())
         .map(|(o, c)| (o.start_offset(), o.end_offset(), c.start_offset(), c.end_offset()));
     let (start, end) = send_range(call);
+    // part_of_ignored_node?: a receiver correction already rewrote this send (1.92).
+    let ignored = cx.state::<Ignored>().0.iter().any(|&(s, e)| s <= start && e >= end);
     cx.add_fix(start, end, msg, |c| {
+        if ignored {
+            return;
+        }
         if let Some((os, oe, cs, ce)) = parens {
             c.replace(os, oe, " ");
             c.remove(cs, ce);

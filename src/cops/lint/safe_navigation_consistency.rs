@@ -7,29 +7,64 @@ pub const NAME: &str = "Lint/SafeNavigationConsistency";
 pub static COP: SafeNavigationConsistency = SafeNavigationConsistency;
 pub struct SafeNavigationConsistency;
 
+/// An and/or node on an operand's way up: (start, is `and`, the operand is under its lhs).
+type Level = (usize, bool, bool);
+
 struct Operand<'pr> {
     call: CallNode<'pr>,
     /// The operand's parent is an `and` (else an `or`).
     in_and: bool,
+    /// The and/or nodes from the checked node down to the operand's parent.
+    path: Vec<Level>,
 }
 
 /// `collect_operands`: call operands of an and/or tree, left to right (parenthesized
 /// operands are not entered).
-fn collect<'pr>(node: &Node<'pr>, out: &mut Vec<Operand<'pr>>) {
+fn collect<'pr>(node: &Node<'pr>, path: &mut Vec<Level>, out: &mut Vec<Operand<'pr>>) {
     let (lhs, rhs, in_and) = match (node.as_and_node(), node.as_or_node()) {
         (Some(a), _) => (a.left(), a.right(), true),
         (_, Some(o)) => (o.left(), o.right(), false),
         _ => return,
     };
-    for operand in [lhs, rhs] {
+    for (operand, via_lhs) in [(lhs, true), (rhs, false)] {
+        path.push((node.location().start_offset(), in_and, via_lhs));
         if operand.as_and_node().is_some() || operand.as_or_node().is_some() {
-            collect(&operand, out);
+            collect(&operand, path, out);
         } else if let Some(call) = operand.as_call_node()
             && call.block().is_none_or(|b| b.as_block_node().is_none())
         {
-            out.push(Operand { call, in_and });
+            out.push(Operand { call, in_and, path: path.clone() });
         }
+        path.pop();
     }
+}
+
+#[derive(Clone, Copy, PartialEq)]
+enum Truthiness {
+    Truthy,
+    Falsey,
+    Unknown,
+}
+
+/// `guaranteed_by?`: evaluating `operand` implies `guard` ran without its receiver being nil.
+fn guaranteed_by(guard: &Operand, operand: &Operand) -> bool {
+    use Truthiness::*;
+    // logical_path: the lowest and/or both are under.
+    let common = guard.path.iter().zip(&operand.path).take_while(|(g, o)| g.0 == o.0).count();
+    let Some(lca) = common.checked_sub(1) else { return false };
+    let mut truthiness = if guard.path[lca].1 { Truthy } else { Falsey };
+    for &(_, is_and, via_lhs) in &guard.path[lca + 1..] {
+        // child_truthiness
+        let deciding = if is_and { Truthy } else { Falsey };
+        truthiness = if via_lhs {
+            if truthiness == deciding { deciding } else { Unknown }
+        } else if truthiness == deciding {
+            deciding
+        } else {
+            return false;
+        };
+    }
+    !is_csend(&guard.call) || truthiness == Truthy
 }
 
 impl Cop for SafeNavigationConsistency {
@@ -43,7 +78,7 @@ impl Cop for SafeNavigationConsistency {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let mut operands = Vec::new();
-        collect(node, &mut operands);
+        collect(node, &mut Vec::new(), &mut operands);
         // group_by receiver source, groups in order of first appearance
         let mut groups: Vec<(&str, Vec<&Operand>)> = Vec::new();
         for op in &operands {
@@ -84,7 +119,7 @@ impl Cop for SafeNavigationConsistency {
             } else {
                 continue;
             };
-            for op in group.iter().skip(begin) {
+            for (index, op) in group.iter().enumerate().skip(begin) {
                 let call = &op.call;
                 let dot = call.call_operator_loc();
                 let dot_text = dot.as_ref().map(|d| d.as_slice());
@@ -93,6 +128,10 @@ impl Cop for SafeNavigationConsistency {
                     continue;
                 }
                 if dot_op == "." && (dot_text == Some(b".") || operator) {
+                    continue;
+                }
+                // correction_needed? (1.92): `.` only where an earlier operand guarantees the receiver.
+                if dot_op == "." && !group[..index].iter().any(|g| guaranteed_by(g, op)) {
                     continue;
                 }
                 let msg = if dot_op == "." {

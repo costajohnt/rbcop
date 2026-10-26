@@ -90,15 +90,14 @@ fn sequential_assignment(tree: &Tree, node: Id) -> bool {
 }
 
 fn variable_in_loop_condition(tree: &Tree, node: Id, name: &str) -> bool {
-    if tree.ancestors(node).any(|a| matches!(tree.t(a), T::Def | T::Defs)) {
-        return false;
-    }
-    let Some(lp) =
-        tree.ancestors(node).find(|&a| matches!(tree.t(a), T::While | T::Until | T::WhilePost | T::UntilPost | T::For))
-    else {
+    // A method defined inside the loop has its own scope, so the loop condition can only read
+    // the variable if the loop is nearer than any method definition (1.92).
+    let Some(lp) = tree.ancestors(node).find(|&a| {
+        matches!(tree.t(a), T::While | T::Until | T::WhilePost | T::UntilPost | T::For | T::Def | T::Defs)
+    }) else {
         return false;
     };
-    if tree.t(lp) == T::For {
+    if matches!(tree.t(lp), T::For | T::Def | T::Defs) {
         return false;
     }
     let Some(cond) = tree.child(lp, 0) else { return false };
@@ -138,7 +137,29 @@ fn operator(src: &str, lhs_end: usize, value_start: usize) -> Option<(usize, usi
     Some((start, end))
 }
 
+/// rubocop-ast ArrayNode#bracketed? of the array at `range` (`[...]` or a `%w`-style literal).
+fn bracketed(program: &Node, range: (usize, usize)) -> bool {
+    struct Find {
+        range: (usize, usize),
+        found: Option<bool>,
+    }
+    impl<'pr> ruby_prism::Visit<'pr> for Find {
+        fn visit_array_node(&mut self, node: &ruby_prism::ArrayNode<'pr>) {
+            let l = node.location();
+            if (l.start_offset(), l.end_offset()) == self.range {
+                self.found.get_or_insert(node.opening_loc().is_some());
+            }
+            ruby_prism::visit_array_node(self, node);
+        }
+    }
+    let mut f = Find { range, found: None };
+    ruby_prism::Visit::visit(&mut f, program);
+    f.found.unwrap_or(true)
+}
+
 enum Fix {
+    /// Replace `start..value` with `[` and insert `]` at `end`.
+    Bracket(usize, usize, usize),
     None,
     Remove(usize, usize),
     Replace(usize, usize, String),
@@ -170,7 +191,7 @@ impl Cop for UselessAssignment {
                 for a in var.assignments.iter().rev() {
                     let an = a.node;
                     let (as_, ae) = tree.range(an);
-                    let used = (!a.reassigned && var.captured_by_block) || a.referenced;
+                    let used = (!a.reassigned && var.captured_by_block && !var.references.is_empty()) || a.referenced;
                     if used
                         || ignored.iter().any(|&(s, e)| s <= as_ && e >= ae)
                         || variable_in_loop_condition(tree, an, &var.name)
@@ -265,6 +286,10 @@ impl Cop for UselessAssignment {
                         Fix::Replace(rs, re, text.replacen(&format!("(?<{}>", var.name), "(?:", 1))
                     } else {
                         match tree.child(an, 0) {
+                            // `x = 1, 2` cannot become `1, 2`, so the values become an array literal.
+                            Some(expr) if tree.nodes[expr].kind == kind::ARRAY_NODE && !bracketed(node, tree.range(expr)) => {
+                                Fix::Bracket(rs, tree.nodes[expr].start, tree.nodes[expr].end)
+                            }
                             Some(expr) => Fix::Remove(rs, tree.nodes[expr].start),
                             None => Fix::None,
                         }
@@ -283,6 +308,10 @@ impl Cop for UselessAssignment {
         for (s, e, msg, fix) in offenses {
             cx.add_fix(s, e, msg, |c| match &fix {
                 Fix::None => {}
+                Fix::Bracket(s, v, e) => {
+                    c.replace(*s, *v, "[");
+                    c.insert_after(*e, *e, "]");
+                }
                 Fix::Remove(s, e) => c.remove(*s, *e),
                 Fix::Replace(s, e, t) => c.replace(*s, *e, t),
             });
