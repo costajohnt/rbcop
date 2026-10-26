@@ -187,6 +187,13 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   where RuboCop offers its edit. The server's stderr log carries the same lines, but an error while
   handling a request is logged as `[server] Error <message>` without RuboCop's exception class for
   rbcop's own errors and without the backtrace line; as in RuboCop such a request gets no response.
+- `--mcp` (#293) answers as RuboCop's MCP server does on the `mcp` gem 0.25.0 (the newest version
+  `~> 0.6`, the requirement RuboCop's load error names), line for line (tests/mcp, recorded with
+  `scripts/mcp.sh`): the same `rubocop_inspection` and `rubocop_autocorrection` tools, schemas,
+  results and JSON-RPC errors. RuboCop serves only with that gem installed, and otherwise prints
+  ``Error: Unable to load `mcp` gem. ...``; rbcop has no gem dependency and always serves. Newer
+  `mcp` gems (1.x) may answer the protocol methods differently; the tool results are RuboCop's own.
+  The tools write files where the client asks, as RuboCop's do.
 
 ## Open gaps
 
@@ -198,8 +205,11 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   `else` returns `nil`); likewise Lint/Void misses `1` in `begin; 1; else; 2; end` (#608).
 - `0.. ..3` at TargetRubyVersion 2.6 (the parser gem's `(0..)..3`): rbcop accepts it, but cops see
   Prism's `0..(..3)`; only Layout/SpaceInsideRangeLiteral skips the inner beginless range (#609).
-- `--lsp` runs only the cops rbcop implements: plugin cops it does not implement are not run
-  (`RBCOP_FALLBACK` has no effect there) and the skipped-cops notice is not printed. A buffer with
+- `--lsp` and `--mcp` run only the cops rbcop implements: plugin cops it does not implement are
+  not run (the RuboCop fallback never runs there, `RBCOP_FALLBACK=1` or not) and the skipped-cops
+  notice is not printed. `--mcp` reads a file that is not UTF-8 lossily, and an I/O error other
+  than the ones RuboCop turns into a tool error is reported in Errno's words but not always with
+  Ruby's exact message; `Kernel#Integer` cursors such as `0x1` are refused. A buffer with
   an encoding magic comment is inspected as UTF-8 text, as RuboCop inspects it, but a corrected one
   is reread through the magic comment as `-a` rereads files. A request the reader cannot parse
   ends the server with status 2, as in RuboCop, with rbcop's wording of the error.
@@ -308,7 +318,6 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   `rbcop: not writing the --profile report: <reason>` to stderr instead of the `generated at` line.
 - Command-line options rbcop refuses (`rbcop: --NAME is not supported by rbcop yet`, exit 2):
   - `--changed [REVISION]`: needs RuboCop's git diff of changed files.
-  - `--mcp`: a long-running protocol server on stdio.
 - The server options (#293): rbcop runs in process and never starts a server, so none is ever
   running. They are taken out of the arguments and checked as RuboCop::Server::CLI does (same
   `cannot be specified together` / `cannot be combined with` errors, exit 2); then `--server-status`

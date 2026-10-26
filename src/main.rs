@@ -15,6 +15,8 @@ use std::{env, fs, thread};
 mod cache;
 mod fallback;
 mod lsp;
+mod mcp;
+mod serve;
 
 // musl's malloc is a bottleneck for the worker threads; glibc and macOS keep the system allocator.
 #[cfg(target_env = "musl")]
@@ -72,7 +74,7 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("cache", Some('C'), Arg::Required, Use::Handle),
     ("cache-root", None, Arg::Required, Use::Handle),
     ("lsp", None, Arg::None, Use::Handle),
-    ("mcp", None, Arg::None, Use::Unsupported),
+    ("mcp", None, Arg::None, Use::Handle),
     ("[no-]server", None, Arg::None, Use::Handle),
     ("restart-server", None, Arg::None, Use::Ignore),
     ("start-server", None, Arg::None, Use::Ignore),
@@ -198,8 +200,9 @@ struct Cli {
     report_unused_todo: bool,
     version: bool,
     verbose_version: bool,
-    /// `--lsp`
+    /// `--lsp`, `--mcp`
     lsp: bool,
+    mcp: bool,
     /// EXITING_OPTIONS seen, in order (for "Incompatible cli options").
     exiting: Vec<&'static str>,
     /// `-d/--debug`
@@ -706,6 +709,10 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
         "lsp" => {
             cli.lsp = true;
             cli.exiting.push("lsp");
+        }
+        "mcp" => {
+            cli.mcp = true;
+            cli.exiting.push("mcp");
         }
         "verbose-version" => {
             cli.verbose_version = true;
@@ -1697,6 +1704,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     }
     if cli.lsp {
         return lsp::serve(store, pwd_config);
+    }
+    if cli.mcp {
+        return mcp::serve(store, pwd_config);
     }
     // CLI#validate_options_vs_config
     if cli.parallel == Some(true) && !pwd_config.all_cops().truthy("UseCache") {

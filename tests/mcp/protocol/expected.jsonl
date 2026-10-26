@@ -1,0 +1,50 @@
+{"jsonrpc":"2.0","id":0,"result":{}}
+{"jsonrpc":"2.0","id":1,"error":{"code":-32602,"message":"Invalid params","data":"Invalid params"}}
+{"jsonrpc":"2.0","id":2,"error":{"code":-32602,"message":"Invalid params","data":"Missing or invalid protocolVersion"}}
+{"jsonrpc":"2.0","id":3,"error":{"code":-32602,"message":"Invalid params","data":"Missing or invalid capabilities"}}
+{"jsonrpc":"2.0","id":4,"error":{"code":-32602,"message":"Invalid params","data":"Missing or invalid clientInfo"}}
+{"jsonrpc":"2.0","id":5,"error":{"code":-32602,"message":"Invalid params","data":"Missing or invalid clientInfo"}}
+{"jsonrpc":"2.0","id":6,"result":{"protocolVersion":"2025-11-25","capabilities":{"tools":{"listChanged":true},"prompts":{"listChanged":true},"resources":{"listChanged":true},"logging":{}},"serverInfo":{"name":"rubocop_mcp_server","version":"1.91.0"}}}
+{"jsonrpc":"2.0","id":7,"error":{"code":-32600,"message":"Invalid Request","data":"Invalid Request: Server already initialized"}}
+{"jsonrpc":"2.0","id":8,"error":{"code":-32601,"message":"Method not found","data":"notifications/initialized"}}
+{"jsonrpc":"2.0","id":9,"error":{"code":-32601,"message":"Method not found","data":"nope"}}
+{"jsonrpc":"2.0","id":null,"error":{"code":-32700,"message":"Parse error","data":"Invalid JSON"}}
+{"jsonrpc":"2.0","id":null,"error":{"code":-32700,"message":"Parse error","data":"Invalid JSON"}}
+{"jsonrpc":"2.0","id":null,"error":{"code":-32700,"message":"Parse error","data":"Invalid JSON"}}
+{"jsonrpc":"2.0","id":10,"error":{"code":-32600,"message":"Invalid Request","data":"JSON-RPC version must be 2.0"}}
+{"jsonrpc":"2.0","id":11,"error":{"code":-32600,"message":"Invalid Request","data":"JSON-RPC version must be 2.0"}}
+{"jsonrpc":"2.0","id":null,"error":{"code":-32600,"message":"Invalid Request","data":"Request ID must match validation pattern, or be an integer or null"}}
+{"jsonrpc":"2.0","id":null,"error":{"code":-32600,"message":"Invalid Request","data":"Request ID must match validation pattern, or be an integer or null"}}
+{"jsonrpc":"2.0","id":"ab-1","result":{}}
+{"jsonrpc":"2.0","id":12,"error":{"code":-32600,"message":"Invalid Request","data":"Method name must be a string and not start with \"rpc.\""}}
+{"jsonrpc":"2.0","id":13,"error":{"code":-32600,"message":"Invalid Request","data":"Method name must be a string and not start with \"rpc.\""}}
+{"jsonrpc":"2.0","id":14,"error":{"code":-32600,"message":"Invalid Request","data":"Method name must be a string and not start with \"rpc.\""}}
+{"jsonrpc":"2.0","id":15,"error":{"code":-32602,"message":"Invalid params","data":"Method parameters must be an array or an object or null"}}
+{"jsonrpc":"2.0","id":16,"result":{}}
+{"jsonrpc":"2.0","id":null,"error":{"code":-32600,"message":"Invalid Request","data":"Request is an empty array"}}
+{"jsonrpc":"2.0","id":null,"error":{"code":-32600,"message":"Invalid Request","data":"Request must be an object"}}
+{"jsonrpc":"2.0","id":17,"result":{}}
+[{"jsonrpc":"2.0","id":18,"result":{}},{"jsonrpc":"2.0","id":19,"error":{"code":-32601,"message":"Method not found","data":"nope"}}]
+{"jsonrpc":"2.0","id":null,"error":{"code":-32600,"message":"Invalid Request","data":"Request must be an array or a hash"}}
+{"jsonrpc":"2.0","id":null,"error":{"code":-32600,"message":"Invalid Request","data":"Request must be an array or a hash"}}
+{"jsonrpc":"2.0","id":null,"error":{"code":-32600,"message":"Invalid Request","data":"Request must be an array or a hash"}}
+{"jsonrpc":"2.0","id":20,"result":{"supportedVersions":["2025-11-25","2025-06-18","2025-03-26","2024-11-05"],"capabilities":{"tools":{"listChanged":true},"prompts":{"listChanged":true},"resources":{"listChanged":true},"logging":{}},"serverInfo":{"name":"rubocop_mcp_server","version":"1.91.0"}}}
+{"jsonrpc":"2.0","id":21,"result":{"tools":[{"name":"rubocop_inspection","description":"Inspect Ruby code for offenses. Provide `source_code` to check inline code or `path` to check files.","inputSchema":{"$schema":"https://json-schema.org/draft/2020-12/schema","properties":{"path":{"type":"string"},"source_code":{"type":"string"}},"type":"object"},"annotations":{"destructiveHint":false,"idempotentHint":true,"openWorldHint":false,"readOnlyHint":true,"title":"RuboCop's inspection"}},{"name":"rubocop_autocorrection","description":"Autocorrect RuboCop offenses in Ruby code. Provide `source_code` to correct inline code or `path` to correct files. Set `safety` to false to include unsafe corrections.","inputSchema":{"$schema":"https://json-schema.org/draft/2020-12/schema","properties":{"path":{"type":"string"},"source_code":{"type":"string"},"safety":{"type":"boolean"}},"required":["safety"],"type":"object"},"annotations":{"destructiveHint":true,"idempotentHint":false,"openWorldHint":false,"readOnlyHint":false,"title":"RuboCop's autocorrection"}}]}}
+{"jsonrpc":"2.0","id":22,"result":{"tools":[{"name":"rubocop_autocorrection","description":"Autocorrect RuboCop offenses in Ruby code. Provide `source_code` to correct inline code or `path` to correct files. Set `safety` to false to include unsafe corrections.","inputSchema":{"$schema":"https://json-schema.org/draft/2020-12/schema","properties":{"path":{"type":"string"},"source_code":{"type":"string"},"safety":{"type":"boolean"}},"required":["safety"],"type":"object"},"annotations":{"destructiveHint":true,"idempotentHint":false,"openWorldHint":false,"readOnlyHint":false,"title":"RuboCop's autocorrection"}}]}}
+{"jsonrpc":"2.0","id":23,"error":{"code":-32602,"message":"Invalid params","data":"Invalid cursor"}}
+{"jsonrpc":"2.0","id":24,"error":{"code":-32602,"message":"Invalid params","data":"Invalid cursor"}}
+{"jsonrpc":"2.0","id":25,"error":{"code":-32602,"message":"Invalid params","data":"Invalid params"}}
+{"jsonrpc":"2.0","id":26,"result":{"prompts":[]}}
+{"jsonrpc":"2.0","id":27,"error":{"code":-32602,"message":"Invalid params","data":"Invalid cursor"}}
+{"jsonrpc":"2.0","id":28,"result":{"resourceTemplates":[]}}
+{"jsonrpc":"2.0","id":29,"error":{"code":-32603,"message":"Internal error","data":"Internal error handling resources/read request"}}
+{"jsonrpc":"2.0","id":30,"result":{"contents":[]}}
+{"jsonrpc":"2.0","id":31,"error":{"code":-32603,"message":"Internal error","data":"Server does not support resources.subscribe (required for resources/subscribe)"}}
+{"jsonrpc":"2.0","id":32,"error":{"code":-32603,"message":"Internal error","data":"Server does not support resources.subscribe (required for resources/unsubscribe)"}}
+{"jsonrpc":"2.0","id":33,"error":{"code":-32603,"message":"Internal error","data":"Prompt not found x"}}
+{"jsonrpc":"2.0","id":34,"error":{"code":-32603,"message":"Internal error","data":"Internal error handling prompts/get request"}}
+{"jsonrpc":"2.0","id":35,"error":{"code":-32603,"message":"Internal error","data":"Server does not support completions (required for completion/complete)"}}
+{"jsonrpc":"2.0","id":36,"error":{"code":-32603,"message":"Internal error","data":"Internal error handling logging/setLevel request"}}
+{"jsonrpc":"2.0","id":37,"error":{"code":-32602,"message":"Invalid params","data":"Invalid log level x"}}
+{"jsonrpc":"2.0","id":38,"result":{}}
+{"jsonrpc":"2.0","id":"last","result":{}}
