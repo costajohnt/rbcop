@@ -1,0 +1,3 @@
+a.rb:1:6: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+b.rb:3:3: C: [Corrected] Style/EmptyMethod: Put empty method definitions on a single line.
+c.rb:1:6: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.

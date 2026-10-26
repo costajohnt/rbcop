@@ -1,0 +1,5 @@
+# RuboCop 1.92.1 spec examples (r2.7) that RuboCop 1.91.0 -A finishes on (#680); 025, 031, 042 and 048 never end there.
+AllCops:
+  TargetRubyVersion: 2.7
+  NewCops: enable
+  SuggestExtensions: false

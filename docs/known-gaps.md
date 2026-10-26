@@ -61,6 +61,15 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   treats `i = ...` as a reassignment and reports the offense without `[Correctable]`. Also reached
   through other cops: Style/ParallelAssignment turning `i, j = i * 2, i * 3` into `i = i * 2`
   (corpus `specs/lint/useless_times/023.rb`, skipped by the autocorrect gates).
+- Lint/UnescapedBracketInRegexp `-a`/`-A` on a `Regexp.new`/`Regexp.compile` string (#680).
+  RuboCop 1.91.0 replaces the source character at the `]`'s offset in the string's value with
+  `\]`. In a double-quoted string (`"`, `%Q`, `%`) `\]` reads back as `]`, and when an escape
+  precedes the `]` the offset lands on another character; either way the next iteration reports more
+  `]`s, the file grows about 1.5 times per iteration and RuboCop never finishes (nor reaches its
+  200-iteration limit). rbcop writes RuboCop 1.92.1's `\\]` in a double-quoted string and withholds
+  a misplaced correction: the offense stays `[Correctable]` at RuboCop's location and the string is
+  left as is. Offenses without `-a`/`-A`, and every correction RuboCop 1.91.0 finishes, are
+  unchanged (`tests/autocorrect/unescaped_bracket_regexp_new`).
 - A file whose AST is nested more than 1,000 levels deep (`runner::MAX_AST_DEPTH`; the deepest
   corpus file is 46) is not inspected: rbcop prints `rbcop: <file>: nested more than 1000 levels
   deep, not inspected.` and counts it as an error (exit 1). RuboCop dies with SystemStackError on

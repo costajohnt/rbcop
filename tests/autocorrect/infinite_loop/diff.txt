@@ -1,0 +1,23 @@
+a.rb:1:6: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+b.rb:3:3: C: [Corrected] Style/EmptyMethod: Put empty method definitions on a single line.
+c.rb:1:6: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+
+--- a/a.rb
++++ b/a.rb
+@@ -1 +1 @@
+-x = 1 
++x = 1
+--- a/b.rb
++++ b/b.rb
+@@ -1,5 +1,4 @@
+ class Foo
+   memoize \
+-  def do_something
+-  end
++  def do_something; end
+ end
+--- a/c.rb
++++ b/c.rb
+@@ -1 +1 @@
+-y = 2 
++y = 2

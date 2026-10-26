@@ -1,0 +1,149 @@
+001.rb:1:5: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+002.rb:1:7: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+003.rb:1:5: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+004.rb:1:5: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+004.rb:1:9: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+011.rb:1:7: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+012.rb:1:5: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+015.rb:1:6: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+017.rb:1:7: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+018.rb:1:7: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+019.rb:1:7: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+019.rb:1:11: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+024.rb:1:16: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+026.rb:1:16: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+027.rb:1:16: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+027.rb:1:20: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+033.rb:1:34: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+035.rb:1:34: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+037.rb:1:37: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+039.rb:1:37: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+041.rb:1:20: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+043.rb:1:20: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+044.rb:1:20: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+044.rb:1:24: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+050.rb:1:42: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+052.rb:1:42: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+054.rb:1:45: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+056.rb:1:45: W: [Corrected] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+
+--- a/001.rb
++++ b/001.rb
+@@ -1 +1 @@
+-/abc]123/
++/abc\]123/
+--- a/002.rb
++++ b/002.rb
+@@ -1 +1 @@
+-/abc\\]123/
++/abc\\\]123/
+--- a/003.rb
++++ b/003.rb
+@@ -1 +1 @@
+-/abc]123/i
++/abc\]123/i
+--- a/004.rb
++++ b/004.rb
+@@ -1 +1 @@
+-/abc]123]/
++/abc\]123\]/
+--- a/011.rb
++++ b/011.rb
+@@ -1 +1 @@
+-/[^]]x]/
++/[^]]x\]/
+--- a/012.rb
++++ b/012.rb
+@@ -1 +1 @@
+-/[a]]/
++/[a]\]/
+--- a/015.rb
++++ b/015.rb
+@@ -1 +1 @@
+-/[\é]]/
++/[\é]\]/
+--- a/017.rb
++++ b/017.rb
+@@ -1 +1 @@
+-%r{abc]123}
++%r{abc\]123}
+--- a/018.rb
++++ b/018.rb
+@@ -1 +1 @@
+-%r{abc]123}i
++%r{abc\]123}i
+--- a/019.rb
++++ b/019.rb
+@@ -1 +1 @@
+-%r{abc]123]}
++%r{abc\]123\]}
+--- a/024.rb
++++ b/024.rb
+@@ -1 +1 @@
+-Regexp.new('abc]123')
++Regexp.new('abc\]123')
+--- a/026.rb
++++ b/026.rb
+@@ -1 +1 @@
+-Regexp.new('abc]123', 'i')
++Regexp.new('abc\]123', 'i')
+--- a/027.rb
++++ b/027.rb
+@@ -1 +1 @@
+-Regexp.new('abc]123]')
++Regexp.new('abc\]123\]')
+--- a/033.rb
++++ b/033.rb
+@@ -1 +1 @@
+-[Regexp.new('+'), Regexp.new('abc]123')]
++[Regexp.new('+'), Regexp.new('abc\]123')]
+--- a/035.rb
++++ b/035.rb
+@@ -1 +1 @@
+-[Regexp.new('*'), Regexp.new('abc]123')]
++[Regexp.new('*'), Regexp.new('abc\]123')]
+--- a/037.rb
++++ b/037.rb
+@@ -1 +1 @@
+-[Regexp.new('{42}'), Regexp.new('abc]123')]
++[Regexp.new('{42}'), Regexp.new('abc\]123')]
+--- a/039.rb
++++ b/039.rb
+@@ -1 +1 @@
+-[Regexp.new('\xff'), Regexp.new('abc]123')]
++[Regexp.new('\xff'), Regexp.new('abc\]123')]
+--- a/041.rb
++++ b/041.rb
+@@ -1 +1 @@
+-Regexp.compile('abc]123')
++Regexp.compile('abc\]123')
+--- a/043.rb
++++ b/043.rb
+@@ -1 +1 @@
+-Regexp.compile('abc]123', 'i')
++Regexp.compile('abc\]123', 'i')
+--- a/044.rb
++++ b/044.rb
+@@ -1 +1 @@
+-Regexp.compile('abc]123]')
++Regexp.compile('abc\]123\]')
+--- a/050.rb
++++ b/050.rb
+@@ -1 +1 @@
+-[Regexp.compile('+'), Regexp.compile('abc]123')]
++[Regexp.compile('+'), Regexp.compile('abc\]123')]
+--- a/052.rb
++++ b/052.rb
+@@ -1 +1 @@
+-[Regexp.compile('*'), Regexp.compile('abc]123')]
++[Regexp.compile('*'), Regexp.compile('abc\]123')]
+--- a/054.rb
++++ b/054.rb
+@@ -1 +1 @@
+-[Regexp.compile('{42}'), Regexp.compile('abc]123')]
++[Regexp.compile('{42}'), Regexp.compile('abc\]123')]
+--- a/056.rb
++++ b/056.rb
+@@ -1 +1 @@
+-[Regexp.compile('\xff'), Regexp.compile('abc]123')]
++[Regexp.compile('\xff'), Regexp.compile('abc\]123')]
