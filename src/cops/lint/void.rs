@@ -382,12 +382,32 @@ fn check_void_expression_nodes(cx: &mut Cx, ctx: &Ctx, expr: &Node) {
 fn report(cx: &mut Cx, ctx: &Ctx, node: &Node, msg: String, correct: bool) {
     let (s, e) = span(node);
     let correct = correct && !ctx.branch_parent && !ctx.in_setter_def;
-    let (rs, re) = range_with_surrounding_space(cx.src.text, s, e, Surrounding { side: Side::Left, ..Default::default() });
+    // void_expression_range (1.92): a heredoc goes with its body and terminator.
+    let removed_end = heredoc_end(node).unwrap_or(e);
+    let (rs, re) =
+        range_with_surrounding_space(cx.src.text, s, removed_end, Surrounding { side: Side::Left, ..Default::default() });
     cx.add_fix(s, e, msg, |c| {
         if correct {
             c.remove(rs, re);
         }
     });
+}
+
+/// End of a heredoc's `loc.heredoc_end` (the terminator, without its newline).
+fn heredoc_end(node: &Node) -> Option<usize> {
+    if !is_heredoc(node) {
+        return None;
+    }
+    let close = match node {
+        Node::StringNode { .. } => node.as_string_node().unwrap().closing_loc(),
+        Node::InterpolatedStringNode { .. } => node.as_interpolated_string_node().unwrap().closing_loc(),
+        Node::XStringNode { .. } => Some(node.as_x_string_node().unwrap().closing_loc()),
+        Node::InterpolatedXStringNode { .. } => Some(node.as_interpolated_x_string_node().unwrap().closing_loc()),
+        _ => None,
+    }?;
+    let text = close.as_slice();
+    let trimmed = text.strip_suffix(b"\n").map_or(text, |t| t.strip_suffix(b"\r").unwrap_or(t));
+    Some(close.start_offset() + trimmed.len())
 }
 
 fn check_var(cx: &mut Cx, ctx: &Ctx, node: &Node) {

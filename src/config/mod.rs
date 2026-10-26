@@ -652,6 +652,11 @@ impl Resolved {
         opts.preview.unwrap_or_else(|| self.all_cops().get("Preview") == Some(&Value::Bool(true)))
     }
 
+    /// Config#preview? with the options this config was resolved with.
+    pub fn preview_enabled(&self) -> bool {
+        self.preview(&self.opts)
+    }
+
     /// Registry#enabled_pending_cop? for a cop whose Config#for_cop `Enabled` is `enabled`.
     pub fn enabled_pending_cop(&self, name: &str, enabled: &Value) -> bool {
         !self.opts.disable_pending_cops
