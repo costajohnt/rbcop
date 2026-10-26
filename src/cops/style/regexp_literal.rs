@@ -137,23 +137,57 @@ impl Cop for RegexpLiteral {
         };
         let before: &[u8] = if open_src == "/" || open_src == "%r/" { b"\\/" } else { b"/" };
         let after = if new_open == "/" || new_open == "%r/" { "\\/" } else { "/" };
-        // node_body(include_begin_nodes: true), indexed from the end of the opening delimiter.
-        let text: Vec<u8> = re.parts.iter().flat_map(|p| src[p.0..p.1].iter().copied()).collect();
-        let base = re.open.1;
+        // correct_inner_slashes: in each `str` child (not inside interpolations).
         let mut edits = Vec::new();
-        let mut i = 0;
-        while i + before.len() <= text.len() {
-            if &text[i..i + before.len()] == before {
-                edits.push((base + i, base + i + before.len()));
+        for &(ps, pe, is_str) in &re.parts {
+            if !is_str {
+                continue;
             }
-            i += 1;
+            let text = &src[ps..pe];
+            let mut i = 0;
+            while i + before.len() <= text.len() {
+                if &text[i..i + before.len()] == before {
+                    edits.push((ps + i, ps + i + before.len(), after.to_string()));
+                }
+                i += 1;
+            }
+        }
+        // correct_escaped_delimiters: `%r!a\!b!` keeps no backslash before its delimiter once
+        // it is between slashes, unless the delimiter keeps its escape in a regexp anyway.
+        let delimiter = open_src.as_bytes().last().copied().unwrap_or(b'/');
+        if !slash && delimiter != b'/' && !b"$*+.?^|()[]{}<>".contains(&delimiter) {
+            let extended = cx.src.text[re.close.0 + 1..re.close.1].contains('x');
+            for &(ps, pe, is_str) in &re.parts {
+                if !is_str {
+                    continue;
+                }
+                let text = &src[ps..pe];
+                let mut i = 0;
+                while let Some(off) = text[i..].iter().position(|&b| b == b'\\') {
+                    let index = i + off;
+                    if text.get(index + 1) == Some(&delimiter) {
+                        // A bare `#` before `{`, `@` or `$` would start an interpolation.
+                        let next = text.get(index + 2).copied();
+                        let replacement = if delimiter == b'#' && matches!(next, Some(b'{' | b'@' | b'$')) {
+                            if extended { "#\\" } else { "\\#" }.to_string()
+                        } else {
+                            (delimiter as char).to_string()
+                        };
+                        edits.push((ps + index, ps + index + 2, replacement));
+                    }
+                    i = index + 2;
+                    if i >= text.len() {
+                        break;
+                    }
+                }
+            }
         }
         let (open, close) = (re.open, (re.close.0, re.close.0 + 1));
         cx.add_fix(loc.start_offset(), loc.end_offset(), message, |c| {
             c.replace(open.0, open.1, &new_open);
             c.replace(close.0, close.1, &new_close);
-            for &(s, e) in &edits {
-                c.replace(s, e, after);
+            for (s, e, r) in &edits {
+                c.replace(*s, *e, r);
             }
         });
     }
@@ -162,12 +196,20 @@ impl Cop for RegexpLiteral {
 impl RegexpLiteral {
     /// allowed_omit_parentheses_with_percent_r_literal?
     fn omit_parentheses_allowed(&self, cx: &Cx, node: &Node, re: &Regexp) -> bool {
-        if !parent_is_call(cx.ancestors, node) {
-            return false;
-        }
+        let Some(call) = parent_call(cx.ancestors, node) else { return false };
         // node.content: the `str` children joined.
         let first = re.parts.iter().find(|p| p.2).map(|p| cx.src.text.as_bytes()[p.0]);
         if matches!(first, Some(b' ' | b'=')) {
+            return true;
+        }
+        // first_argument_of_command? with a body starting with whitespace (`foo %r{\n...}`).
+        let first_argument = send_args(&call).first().is_some_and(|a| a.location().start_offset() == node.location().start_offset());
+        if first_argument
+            && call.closing_loc().is_none_or(|l| l.as_slice() != b")")
+            && !helpers::node_types::is_operator_method(method_name(&call))
+            && call.equal_loc().is_none()
+            && matches!(first, Some(b' ' | b'\t' | b'\n' | b'\r' | b'\x0c' | b'\x0b'))
+        {
             return true;
         }
         cx.config.for_cop("Style/MethodCallWithArgsParentheses").str("EnforcedStyle") == Some("omit_parentheses")
@@ -176,9 +218,9 @@ impl RegexpLiteral {
 
 /// `node.parent&.call_type?` in parser terms: a send/csend parent (not a block it is the body of).
 /// A static regexp receiver of `=~` is a `match_with_lvasgn` in parser.
-fn parent_is_call(ancestors: &[Node], node: &Node) -> bool {
+fn parent_call<'pr>(ancestors: &[Node<'pr>], node: &Node) -> Option<ruby_prism::CallNode<'pr>> {
     if kind::of(node) == kind::MATCH_LAST_LINE_NODE || kind::of(node) == kind::INTERPOLATED_MATCH_LAST_LINE_NODE {
-        return false;
+        return None;
     }
     for i in (0..ancestors.len()).rev() {
         let a = &ancestors[i];
@@ -188,7 +230,7 @@ fn parent_is_call(ancestors: &[Node], node: &Node) -> bool {
         }
         if f == Frame::Call && ancestors.get(i + 1).is_some_and(|n| frame(n) == Frame::Block) {
             // We are inside its block: the parser parent is the block.
-            return false;
+            return None;
         }
         if let Some(call) = a.as_call_node() {
             let loc = node.location();
@@ -196,11 +238,11 @@ fn parent_is_call(ancestors: &[Node], node: &Node) -> bool {
                 .receiver()
                 .is_some_and(|r| r.location().start_offset() == loc.start_offset() && r.location().end_offset() == loc.end_offset());
             if is_receiver && method_name(&call) == "=~" && kind::of(node) == kind::REGULAR_EXPRESSION_NODE {
-                return false;
+                return None;
             }
-            return true;
+            return Some(call);
         }
-        return false;
+        return None;
     }
-    false
+    None
 }

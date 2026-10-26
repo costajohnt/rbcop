@@ -109,6 +109,13 @@ impl Cop for SymbolProc {
                 return;
             }
         }
+        // A pattern accepts a lambda literal, but not `lambda(&:foo)`.
+        if dispatch.lambda_literal && helpers::pattern_matching_help::in_pattern(cx.ancestors, {
+            let l = node.location();
+            (l.start_offset(), l.end_offset())
+        }) {
+            return;
+        }
         let recv_kind = dispatch.receiver.as_ref().map(kind::of);
         if recv_kind == Some(kind::HASH_NODE) && matches!(dispatch.name, "reject" | "select") {
             return;
@@ -137,10 +144,17 @@ impl Cop for SymbolProc {
         }
 
         let (start, end) = (open.start_offset(), close.end_offset());
-        let msg = format!("Pass `&:{method}` as an argument to `{}` instead of a block.", dispatch.name);
         let text = src.text;
         let node_end = node.location().end_offset();
-        cx.add_fix(start, end, msg, |c| {
+        let (range, msg) = if dispatch.lambda_literal {
+            let lambda = &text[block_start..node_end];
+            let original =
+                if lambda.contains('\n') { "a lambda literal with a block".to_string() } else { format!("`{lambda}`") };
+            ((block_start, node_end), format!("Use `lambda(&:{method})` instead of {original}."))
+        } else {
+            ((start, end), format!("Pass `&:{method}` as an argument to `{}` instead of a block.", dispatch.name))
+        };
+        cx.add_fix(range.0, range.1, msg, |c| {
             let left = Surrounding { side: Side::Left, ..Default::default() };
             if let Some(last) = dispatch.args.last() {
                 let mut arg_end = last.location().end_offset();

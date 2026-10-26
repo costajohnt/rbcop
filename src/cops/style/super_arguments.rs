@@ -71,6 +71,11 @@ impl Cop for SuperArguments {
             }
         }
         let Some(def) = def else { return };
+        // Zsuper passes a destructured argument as the original value, while `argument_list`
+        // flattens it into its parts.
+        if def.parameters().is_some_and(|p| parameter_nodes(&p).iter().any(|n| n.as_multi_target_node().is_some())) {
+            return;
+        }
 
         let def_args = def_arguments(&def);
         let super_args = super_arguments(&sup);

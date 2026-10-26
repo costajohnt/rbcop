@@ -1505,9 +1505,8 @@ fn config_values_cops_raise_on_are_cop_errors() {
     }
 }
 
-/// The processed file name is the expanded absolute path: `__FILE__`'s value (Style/StringConcatenation
-/// folds it into the literal) and a cop Warning's `(from file: ...)`, which ExecuteRunner repeats
-/// in its end-of-run `N warnings:` summary, one per raise (two -A iterations here).
+/// The processed file name is the expanded absolute path: a cop Warning's `(from file: ...)`, which
+/// ExecuteRunner repeats in its end-of-run `N warnings:` summary, one per raise (two -A iterations here).
 #[test]
 fn file_name_is_the_absolute_path() {
     let dir = scratch("abspath");
@@ -1516,7 +1515,8 @@ fn file_name_is_the_absolute_path() {
     let only = "Style/StringConcatenation,Style/Copyright";
     let out = rbcop(&dir, &["-A", "--only", only, "--force-default-config", "-f", "e", "sub/../sub/t.rb"]);
     let abs = dir.join("sub/t.rb").display().to_string();
-    assert_eq!(fs::read_to_string(dir.join("sub/t.rb")).unwrap(), format!("x = \"{abs}top\"\n"));
+    // 1.92: Style/StringConcatenation interpolates `__FILE__` as written.
+    assert_eq!(fs::read_to_string(dir.join("sub/t.rb")).unwrap(), "x = \"#{__FILE__}top\"\n");
     let warning =
         format!("Style/Copyright: An AutocorrectNotice must be defined in your RuboCop config (from file: {abs})");
     let err = text(&out.stderr);

@@ -5,6 +5,8 @@ pub const NAME: &str = "Style/RedundantSort";
 pub static COP: RedundantSort = RedundantSort;
 pub struct RedundantSort;
 
+static KEPT_APART_OK: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\A(#|&?\.|[)\]},])").unwrap());
+
 fn has_block(call: &CallNode) -> bool {
     call.block().is_some_and(|b| b.as_block_node().is_some())
 }
@@ -84,9 +86,28 @@ impl Cop for RedundantSort {
         };
         let op = op.map(|l| (l.start_offset(), l.end_offset(), text(&l).to_string()));
         let recv_range = (loc.start_offset(), loc.end_offset());
+        // before_accessor_source: between the receiver and the accessor's dot or selector.
+        let before = &cx.src.text[recv_range.1..accessor_start];
+        let line_break = before.contains('\n');
+        let blank = before.trim().is_empty();
+        // code_after_accessor_kept_apart?: the accessor on a line of its own (after a comment)
+        // followed by more code on that line.
+        if op.is_none() && line_break && !blank {
+            let text = &cx.src.text[end..];
+            let rest = text[..text.find('\n').unwrap_or(text.len())].trim();
+            if !rest.is_empty() && !KEPT_APART_OK.is_match(rest) {
+                return;
+            }
+        }
+        // removable_line_break_before_accessor?
+        let removable = line_break && blank;
         cx.add_fix(sort_sel.start_offset(), end, msg, |c| {
-            c.remove(accessor_start, end);
             c.replace(sort_sel.start_offset(), sort_sel.end_offset(), &suggestion);
+            if removable {
+                c.remove(recv_range.1, end);
+                return;
+            }
+            c.remove(accessor_start, end);
             if let Some((s, e, op)) = &op {
                 c.insert_after(recv_range.0, recv_range.1, &format!(" {op}"));
                 c.remove(*s, *e);
