@@ -1,9 +1,10 @@
 #!/bin/sh
 # Re-record tests/autocorrect/<case>/expected{,.txt} with RuboCop: `rubocop -A` over a copy of input/.
-# usage: tests/autocorrect/record.sh
+# usage: tests/autocorrect/record.sh   (RuboCop from $RUBOCOP, see scripts/rubocop.sh)
 # A case with a rubocop-output/ dir is a deliberate difference (docs/known-gaps.md): RuboCop's result
 # is recorded there (and in rubocop-output.txt) and expected/ is left as rbcop's.
 set -eu
+. "$(dirname "$0")/../../scripts/rubocop.sh"
 here=$(cd "$(dirname "$0")" && pwd)
 for case in "$here"/*/; do
   case=${case%/}
@@ -16,7 +17,7 @@ for case in "$here"/*/; do
   # `all`: no --only (Lint/RedundantCopDisableDirective cannot run under it); config.yml picks the cops.
   only="--only $cops"
   [ "$cops" = all ] && only=
-  (cd "$case/$out" && RBENV_VERSION=4.0.6 rbenv exec rubocop -A -c ../config.yml $only --cache false \
+  (cd "$case/$out" && rubocop -A -c ../config.yml $only --cache false \
     --format emacs . 2>/dev/null | sed "s|^$case/$out/||" > "../$out.txt") || true
   # `rubocop --diff -A` stdout (report, then the diffs) into diff.txt, on a scratch copy of input/:
   # RuboCop 1.91.0 can write a file under --diff (docs/known-gaps.md).
@@ -24,7 +25,7 @@ for case in "$here"/*/; do
   [ "$out" = expected ] && [ ! -f "$case/no-diff" ] || continue
   rm -rf "$case/diff-run"
   cp -R "$case/input" "$case/diff-run"
-  (cd "$case/diff-run" && RBENV_VERSION=4.0.6 rbenv exec rubocop --diff -A -c ../config.yml $only --cache false \
+  (cd "$case/diff-run" && rubocop --diff -A -c ../config.yml $only --cache false \
     --format emacs . 2>/dev/null | sed "s|^$case/diff-run/||" > ../diff.txt) || true
   rm -rf "${case:?}/diff-run"
 done

@@ -318,7 +318,7 @@ fn verbose_version_lists_plugins() {
         fs::write(dir.join(".rubocop.yml"), config).unwrap();
         let out = text(&rbcop(&dir, &["-V"]).stdout);
         let (first, rest) = out.split_once('\n').unwrap();
-        assert!(first.starts_with("1.91.0 (using "), "{out}");
+        assert!(first.starts_with("1.92.1 (using "), "{out}");
         assert_eq!(rest, *plugins, "{config}");
     }
     // A plugin rbcop does not implement is listed at its installed version.

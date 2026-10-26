@@ -1,5 +1,5 @@
 name: rbcop
-description: Run rbcop, RuboCop 1.91 reimplemented in Rust, from a cached, checksum-verified release binary
+description: Run rbcop, RuboCop 1.92 reimplemented in Rust, from a cached, checksum-verified release binary
 author: John Costa
 branding:
   icon: check-circle
