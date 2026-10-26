@@ -91,10 +91,16 @@ impl Cop for PredicatePrefix {
         let name = String::from_utf8_lossy(def.name().as_slice()).into_owned();
         let sorbet = cx.cfg.bool("UseSorbetSigs").unwrap_or(false);
         let loc = def.name_loc();
-        for prefix in &cx.cfg.array_bare("NamePrefix") {
-            if allowed_method_name(cx, &name, prefix) || (sorbet && !sorbet_sig(cx, node)) {
-                continue;
-            }
+        let offending: Vec<String> = cx
+            .cfg
+            .array_bare("NamePrefix")
+            .into_iter()
+            .filter(|prefix| !(allowed_method_name(cx, &name, prefix) || (sorbet && !sorbet_sig(cx, node))))
+            .collect();
+        if offending.is_empty() || crate::project_index::overrides_inherited_method(cx.ancestors, &def) {
+            return;
+        }
+        for prefix in &offending {
             let msg = message(cx, &name, prefix);
             cx.add(loc.start_offset(), loc.end_offset(), msg);
         }

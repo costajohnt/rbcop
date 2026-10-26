@@ -13,6 +13,7 @@ pub mod helpers;
 pub mod legacy_syntax;
 pub mod node_kind;
 pub mod prelude;
+pub mod project_index;
 pub mod runner;
 pub mod source;
 pub mod syntax;

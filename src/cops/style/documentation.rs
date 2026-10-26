@@ -364,6 +364,9 @@ impl Documentation {
         if body.as_ref().is_some_and(include_statement_only) {
             return None;
         }
+        if documented_elsewhere(cx, node, name) {
+            return None;
+        }
         self.message(cx, node, is_class(node))
     }
 
@@ -381,6 +384,31 @@ impl Documentation {
         let kind = if class { "class" } else { "module" };
         Some(format!("Missing top-level documentation comment for `{kind} {identifier}`."))
     }
+}
+
+/// `documented_elsewhere?`: with the project index, another definition of the class or module (in
+/// another file, or on another line) carries a documentation comment.
+fn documented_elsewhere(cx: &Cx, node: &Node, name: &Node) -> bool {
+    static DIRECTIVE: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(r"\A#\s*(rubocop:|frozen_string_literal:|encoding:|shareable_constant_value:|typed:|-\*-)").unwrap()
+    });
+    let Some(index) = crate::project_index::get() else { return false };
+    let Some(decl) = crate::project_index::resolve_const_node(index, name, cx.ancestors) else { return false };
+    let ix = index.read();
+    if !ix.is_namespace(decl) {
+        return false;
+    }
+    let current = cx.src.absolute_path();
+    let first_line = cx.src.line_of(node.location().start_offset()) as u32;
+    ix.definitions(decl).into_iter().any(|def| {
+        let Some((Some(path), line)) = ix.location(def) else { return false };
+        let other = !crate::project_index::same_file(&path, std::path::Path::new(&current)) || line != first_line;
+        other
+            && ix.comments(def).iter().any(|c| {
+                let text = helpers::ruby_string::strip(c);
+                !text.is_empty() && !DIRECTIVE.is_match(text)
+            })
+    })
 }
 
 fn is_class(node: &Node) -> bool {

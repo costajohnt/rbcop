@@ -6,15 +6,14 @@ pub const NAME: &str = "Lint/DuplicateMethods";
 pub static COP: DuplicateMethods = DuplicateMethods;
 pub struct DuplicateMethods;
 
-// ponytail: `UseProjectIndex` (cross-file duplicates) and `def Const.name` whose constant is not an
-// enclosing class (RuboCop keys those by the defs node's s-expression) are not ported.
-
-/// Per-file state: `@definitions` (key -> (method name line, offense start)) and `@scopes`.
+/// Per-file state: `@definitions` (key -> (method name line, offense start)), `@scopes` and
+/// `@intentionally_redefined`.
 #[derive(Default)]
 struct State {
     definitions: HashMap<String, usize>,
     rescue: HashSet<String>,
     ensure: HashSet<String>,
+    intentional: HashSet<String>,
 }
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
@@ -475,15 +474,18 @@ struct Found {
     method: String,
     key: String,
     handler: Option<PT>,
+    /// Keyed by an anonymous block's scope id (no cross-file check then).
+    scoped: bool,
 }
 
 impl<'pr> Ctx<'_, 'pr> {
     fn found_method(&self, method: String, scope_id: Option<String>) -> Found {
         let mut key = self.method_key(&method);
+        let scoped = scope_id.is_some();
         if let Some(id) = scope_id {
             key = format!("{key}@{id}");
         }
-        Found { method, key, handler: self.handler() }
+        Found { method, key, handler: self.handler(), scoped }
     }
 
     fn found_instance_method(&self, name: &str, src: &crate::source::Source) -> Option<Found> {
@@ -573,6 +575,8 @@ impl Cop for DuplicateMethods {
                     | b"def_instance_delegator"
                     | b"def_delegators"
                     | b"def_instance_delegators"
+                    | b"silence_redefinition_of_method"
+                    | b"redefine_method"
             ) || (cx.config.all_cops().truthy("ActiveSupportExtensionsEnabled")
                 && std::str::from_utf8(m).is_ok_and(|m| cx.cfg.includes_or("DelegatingMethods", m, &["delegate"])));
             if !defines || call.receiver().is_some() || is_csend(&call) {
@@ -612,7 +616,10 @@ impl Cop for DuplicateMethods {
             kind::ALIAS_METHOD_NODE => {
                 let a = node.as_alias_method_node().unwrap();
                 let (Some(name), Some(orig)) = (sym_value(&a.new_name()), sym_value(&a.old_name())) else { return };
-                if name == orig || ctx.inside_if() {
+                if name == orig {
+                    return track_intentional_redefinition(cx, &ctx, &name);
+                }
+                if ctx.inside_if() {
                     return;
                 }
                 found.extend(ctx.found_instance_method(&name, src));
@@ -631,7 +638,10 @@ impl Cop for DuplicateMethods {
                             return;
                         }
                         let (Some(name), Some(orig)) = (sym_value(&args[0]), sym_value(&args[1])) else { return };
-                        if name == orig || ctx.inside_if() {
+                        if name == orig {
+                            return track_intentional_redefinition(cx, &ctx, &name);
+                        }
+                        if ctx.inside_if() {
                             return;
                         }
                         found.extend(ctx.found_instance_method(&name, src));
@@ -687,16 +697,36 @@ impl Cop for DuplicateMethods {
                             found.extend(ctx.found_instance_method(&name, src));
                         }
                     }
+                    // active_support_redefinition_marker: `(send nil? {...} ({sym str} $_) ...)`.
+                    b"silence_redefinition_of_method" | b"redefine_method" => {
+                        let Some(name) = args.first().and_then(str_or_sym_value) else { return };
+                        if cx.config.all_cops().truthy("ActiveSupportExtensionsEnabled") {
+                            track_intentional_redefinition(cx, &ctx, &name);
+                        }
+                        return;
+                    }
                     _ => return,
                 }
             }
         }
         let line_of = |off: usize| src.line_of(off);
         let path = smart_path(cx.src.path);
+        let in_def = ctx.pas.iter().any(|p| matches!(p.t, PT::Def | PT::Defs));
         for f in found {
             let st = cx.state::<State>();
             let Some(&prev) = st.definitions.get(&f.key) else {
                 st.definitions.insert(f.key, loc.start_offset());
+                // check_cross_file_duplicate
+                let check = !f.scoped && f.handler.is_none() && !in_def && !st.intentional.contains(&f.method);
+                if check && let Some((other, line)) = cross_file_prior_definition(cx, &f.method) {
+                    let msg = format!(
+                        "Method `{}` is defined at both {}:{line} and {path}:{}.",
+                        f.method,
+                        index_smart_path(&other),
+                        line_of(loc.start_offset())
+                    );
+                    cx.add(range.0, range.1, msg);
+                }
                 continue;
             };
             let scoped = match f.handler {
@@ -720,6 +750,96 @@ impl Cop for DuplicateMethods {
             cx.add(range.0, range.1, msg);
         }
     }
+}
+
+/// `track_intentional_redefinition`: a self-alias or Active Support marker in a named scope.
+fn track_intentional_redefinition(cx: &mut Cx, ctx: &Ctx, name: &str) {
+    if let Some(scope) = parent_module_name(ctx.anc, &ctx.pas) {
+        cx.state::<State>().intentional.insert(format!("{}{name}", humanize_scope(&scope)));
+    }
+}
+
+/// PathUtil.smart_path of an absolute path: relative when it starts with the working directory.
+fn index_smart_path(path: &str) -> String {
+    let pwd = crate::config::cwd().display().to_string();
+    match path.strip_prefix(pwd.as_str()) {
+        Some(rest) if !rest.is_empty() => rest[1..].to_string(),
+        _ => path.to_string(),
+    }
+}
+
+/// `cross_file_prior_definition`: with the project index, the first definition of the method in
+/// another file (path, line), unless that file aliases it to itself or carries an Active Support
+/// redefinition marker for it.
+fn cross_file_prior_definition(cx: &Cx, method: &str) -> Option<(String, u32)> {
+    use rubydex::model::definitions::Definition;
+    static INDEXABLE: LazyLock<Regex> =
+        LazyLock::new(|| Regex::new(r"\A([A-Z][a-zA-Z0-9_]*(?:::[A-Z][a-zA-Z0-9_]*)*)([#.])([^#.]+)\z").unwrap());
+    let index = crate::project_index::get()?;
+    let m = INDEXABLE.captures(method)?;
+    let (owner, separator, name) = (&m[1], &m[2], &m[3]);
+    let ix = index.read();
+    // indexed_definitions
+    let namespace = if separator == "." {
+        format!("{owner}::<{}>", owner.rsplit("::").next().unwrap_or(owner))
+    } else {
+        owner.to_string()
+    };
+    let defs_of = |n: &str| ix.lookup(&format!("{namespace}#{n}()")).map(|d| ix.definitions(d)).unwrap_or_default();
+    // `/\A\w+=\z/`: Rubydex indexes `attr_writer :foo` under `foo`.
+    let writer = name
+        .strip_suffix('=')
+        .filter(|base| !base.is_empty() && base.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'_'));
+    let defs: Vec<_> = match writer {
+        Some(base) => {
+            let mut v = defs_of(name);
+            v.extend(defs_of(base).into_iter().filter(|&d| {
+                matches!(ix.definition(d), Some(Definition::AttrWriter(_) | Definition::AttrAccessor(_)))
+            }));
+            v
+        }
+        None => {
+            defs_of(name).into_iter().filter(|&d| !matches!(ix.definition(d), Some(Definition::AttrWriter(_)))).collect()
+        }
+    };
+    let patterns: Vec<crate::config::Pattern> = match cx.cfg.get("AllowedCrossFilePaths") {
+        Some(Value::Seq(items)) => items.iter().filter_map(crate::config::Pattern::from).collect(),
+        _ => Vec::new(),
+    };
+    let allowed = |path: &std::path::Path| {
+        !patterns.is_empty() && {
+            let relative = crate::config::relative_path(path, &cx.config.base_dir);
+            let absolute = path.display().to_string();
+            patterns.iter().any(|p| p.matches(&relative) || p.matches(&absolute))
+        }
+    };
+    let others: Vec<_> =
+        ix.in_other_files(&defs, &cx.src.absolute_path()).into_iter().filter(|(_, path, _)| !allowed(path)).collect();
+    let alias = |d| matches!(ix.definition(d), Some(Definition::MethodAlias(_)));
+    // cross_file_self_alias_trick?
+    let alias_paths: Vec<_> = others.iter().filter(|o| alias(o.0)).map(|o| o.1.clone()).collect();
+    if others.is_empty() || others.iter().any(|o| !alias(o.0) && alias_paths.contains(&o.1)) {
+        return None;
+    }
+    // cross_file_redefinition_marker?
+    if cx.config.all_cops().truthy("ActiveSupportExtensionsEnabled") {
+        let escaped = regex::escape(name);
+        let marker = Regex::new(&format!(
+            r#"\b(?:silence_redefinition_of_method|redefine_method)\s*\(?\s*(?::{escaped}|"{escaped}"|'{escaped}')(?:[^A-Za-z0-9_=!?]|\z)"#
+        ))
+        .ok()?;
+        let mut seen = HashSet::new();
+        for (_, path, _) in &others {
+            if seen.insert(path.clone())
+                && let Ok(bytes) = std::fs::read(path)
+                && marker.is_match(&String::from_utf8_lossy(&bytes))
+            {
+                return None;
+            }
+        }
+    }
+    let (_, path, line) = others.into_iter().find(|o| !alias(o.0))?;
+    Some((path.display().to_string(), line))
 }
 
 /// `delegate_args` plus `delegate_prefix`: names `delegate :a, :b, to: :x, prefix: ...` defines.

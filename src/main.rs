@@ -1548,8 +1548,10 @@ fn verbose_version(cfg: &Resolved) -> String {
         "Parser 3.3.12.0".to_string()
     };
     format!(
-        "{RUBOCOP_VERSION} (using {parser}, rubocop-ast 1.50.0, analyzing as Ruby {}, running on ruby 4.0.6) [{}]",
+        "{RUBOCOP_VERSION} (using {parser}, rubocop-ast 1.50.0, analyzing as Ruby {}, running on ruby 4.0.6){} [{}]",
         ruby_version_string(target),
+        // Version.rubydex_indicator: rbcop always has the index (vendor/rubydex).
+        if cfg.all_cops().truthy("UseProjectIndex") { " +Rubydex" } else { "" },
         formatter::ruby_platform()
     )
 }
@@ -1892,14 +1894,17 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     // when that file's turn comes (`-d`).
     print!("{}", rbcop::config::take_debug());
     let mut loading = vec![String::new(); files.len()];
-    // Runner#build_project_index: rbcop has no rubydex, so it is ProjectIndexLoader.warn_unavailable.
-    if pwd_config.all_cops().truthy("UseProjectIndex") {
-        let s = formatter::Paint(global).yellow(
-            "`AllCops/UseProjectIndex` is enabled but the `rubydex` gem is not installed.\nAnalyses that use the \
-             project index will be skipped. Add `gem 'rubydex'` to your Gemfile.\n",
-        );
-        // Kernel#warn adds a newline unless the (painted) text already ends with one.
-        eprintln!("{}", s.strip_suffix('\n').unwrap_or(&s));
+    // Runner#build_project_index: the whole project (the targets found under the pwd config's base
+    // directory, plus these targets), sorted, so cross-file offenses do not depend on which files a
+    // run inspects.
+    if !cli.list_targets && pwd_config.all_cops().truthy("UseProjectIndex") {
+        let root = pwd_config.base_dir.clone();
+        let mut all = targets::find(&mut store, &[root], cli.force_exclusion, cli.only_recognized).unwrap_or_default();
+        all.extend(files.iter().cloned());
+        let mut paths: Vec<String> = all.iter().map(|p| p.to_string_lossy().into_owned()).collect();
+        paths.sort();
+        paths.dedup();
+        rbcop::project_index::install(paths);
     }
 
     // Runner#qualify_option_cop_names runs when the first team mobilizes: after the configs of the
@@ -2086,15 +2091,19 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     let result_cache = use_cache.then(|| cache::root_dir(configured_root.clone())).flatten().and_then(|root| {
         // ResultCache#context_checksum: the options that change offenses, plus what the cops
         // read outside each file's config: rubocop-rails' db/schema.rb (ActiveRecordHelper's
-        // external_dependency_checksum), the working directory and the plugins loaded.
+        // external_dependency_checksum), the working directory, the plugins loaded and, with
+        // AllCops/UseProjectIndex, every indexed file's path, mtime and size (ProjectIndexHelp's
+        // external_dependency_checksum).
         let schema = cwd.ancestors().find_map(|d| fs::read(d.join("db/schema.rb")).ok());
+        let index = rbcop::project_index::get().map(|ix| cache::digest(&[ix.signature().as_bytes()]));
         let context = format!(
-            "{only:?}|{except:?}|{}|{}|{}|{:?}|{}",
+            "{only:?}|{except:?}|{}|{}|{}|{:?}|{}|{}",
             cli.only_guide,
             runner::display_suppressed(),
             cwd.display(),
             store.loaded_plugins(),
-            schema.map(|s| cache::digest(&[&s])).unwrap_or_default()
+            schema.map(|s| cache::digest(&[&s])).unwrap_or_default(),
+            index.unwrap_or_default()
         );
         let all = pwd_config.all_cops();
         cache::Cache::new(

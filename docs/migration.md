@@ -63,7 +63,7 @@ end
 
 - Homebrew: `brew install costajohnt/tap/rbcop`.
 - Release archives: `rbcop-<version>-<target>.tar.gz`, for `aarch64-apple-darwin`, `x86_64-apple-darwin`, `{x86_64,aarch64}-unknown-linux-gnu` (glibc 2.17 or newer) and `{x86_64,aarch64}-unknown-linux-musl` (static). `scripts/dist/install.sh VERSION DIR` downloads the right one, checks it against the SHA-256 pinned in the repository (`packaging/checksums/VERSION.sha256`) and installs `DIR/rbcop`; it refuses an archive that is not listed or does not match.
-- From source: `cargo build --release` (Rust 1.88 or newer).
+- From source: `cargo build --release` (Rust 1.89 or newer).
 
 ## CI
 

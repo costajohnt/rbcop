@@ -55,7 +55,7 @@ pub enum Pattern {
 }
 
 impl Pattern {
-    fn from(v: &Value) -> Option<Pattern> {
+    pub fn from(v: &Value) -> Option<Pattern> {
         match v {
             Value::Regex(r) => ruby_regex(r).map(Pattern::Regex),
             v => {
@@ -334,6 +334,8 @@ pub struct Resolved {
     for_cop_cache: std::sync::OnceLock<HashMap<String, Map>>,
     /// Config#gem_versions_in_target, read on first use.
     gem_versions: std::sync::OnceLock<Option<HashMap<String, String>>>,
+    /// Config#path_sourced_gems_in_target, read on first use.
+    path_gems: std::sync::OnceLock<Vec<String>>,
     /// rubocop-rspec `RSpec: Language` (RuboCop::RSpec::Language.config), read on first use.
     pub rspec_language: std::sync::OnceLock<std::sync::Arc<crate::helpers::rspec::Language>>,
     /// The native plugins loaded (by any config) when this config's first file was inspected:
@@ -383,6 +385,7 @@ impl Resolved {
             opts: opts.clone(),
             for_cop_cache: std::sync::OnceLock::new(),
             gem_versions: std::sync::OnceLock::new(),
+            path_gems: std::sync::OnceLock::new(),
             rspec_language: std::sync::OnceLock::new(),
             team_plugins: std::sync::OnceLock::new(),
             loaded_path: loaded_path.map(Path::to_path_buf),
@@ -442,6 +445,33 @@ impl Resolved {
                 Some(locked_gem_versions(&text))
             })
             .as_ref()
+    }
+
+    /// Config#path_sourced_gems_in_target: the gems of the lockfile's PATH sections (`path:`
+    /// dependencies and a `gemspec` Gemfile's own gem), when it reports any gems at all.
+    pub fn path_sourced_gems_in_target(&self) -> &[String] {
+        self.path_gems.get_or_init(|| {
+            if self.gem_versions_in_target().is_none_or(|g| g.is_empty()) {
+                return Vec::new();
+            }
+            let Some(file) = ["Gemfile.lock", "gems.locked"]
+                .iter()
+                .find_map(|n| self.base_dir.ancestors().map(|d| d.join(n)).find(|f| f.is_file()))
+            else {
+                return Vec::new();
+            };
+            let text = std::fs::read_to_string(file).unwrap_or_default();
+            let mut out = Vec::new();
+            let mut in_path = false;
+            for line in text.lines().map(|l| l.trim_end_matches('\r')) {
+                if !line.starts_with(' ') {
+                    in_path = line == "PATH";
+                } else if in_path && let Some(name) = line.strip_prefix("    ").filter(|r| !r.starts_with(' ')) {
+                    out.extend(name.split(' ').next().map(str::to_string));
+                }
+            }
+            out
+        })
     }
 
     /// Whether the target locks `gem` at a version `>= min` (Base#target_satisfies_all_gem_version_requirements?).

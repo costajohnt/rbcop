@@ -1,0 +1,33 @@
+# Vendored from the rubydex 0.4.1 gem (its rust/rubydex crate; that manifest still says 0.2.6),
+# the release current when RuboCop 1.91.0 shipped. rbcop patches, marked "rbcop patch": no CLI
+# binaries, no Cypher query engine, no jemalloc, no test files.
+[package]
+name = "rubydex"
+version = "0.4.1"
+edition = "2024"
+rust-version = "1.89.0"
+license = "MIT"
+publish = false
+
+[lib]
+crate-type = ["rlib"]
+
+[dependencies]
+ruby-prism = "1.9.0"
+ruby-rbs = "0.3"
+url = "2.5.4"
+xxhash-rust = { version = "0.8.15", features = ["xxh3"] }
+glob = "0.3.2"
+bitflags = "2.9"
+bytecount = "0.6.9"
+libc = "0.2"
+line-index = "0.1.2"
+serde = { version = "1.0", features = ["derive"] }
+crossbeam-deque = "0.8"
+crossbeam-utils = "0.8"
+crossbeam-channel = "0.5"
+toml = "1.1.2"
+
+# rbcop patch: kept so the cfg(feature = "test_utils") gates stay known; nothing enables it.
+[features]
+test_utils = []
