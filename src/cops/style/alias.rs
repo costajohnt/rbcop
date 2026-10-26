@@ -34,12 +34,30 @@ fn scope_type(ancestors: &[Node], own_block: Option<&str>) -> Scope {
     Scope::Lexical
 }
 
-/// Alias#identifier: `:name` for a plain symbol, the source otherwise.
-fn identifier(node: &Node) -> String {
-    match node.as_symbol_node() {
-        Some(s) => format!(":{}", String::from_utf8_lossy(s.unescaped())),
-        None => node_text(node).to_string(),
+/// A symbol's value (`sym_node.value.to_s`).
+fn sym_value(node: &Node) -> Option<String> {
+    node.as_symbol_node().map(|s| String::from_utf8_lossy(s.unescaped()).into_owned())
+}
+
+/// Alias#bareword_symbol?: a symbol that can be written as a bareword.
+fn bareword_symbol(node: &Node) -> bool {
+    let Some(value) = sym_value(node) else { return false };
+    let mut chars = value.chars();
+    let ident = chars.next().is_some_and(|c| c.is_ascii_alphabetic() || c == '_') && {
+        let rest = chars.as_str();
+        let rest = rest.strip_suffix(['?', '!', '=']).unwrap_or(rest);
+        rest.chars().all(|c| c.is_ascii_alphanumeric() || c == '_')
+    };
+    if ident {
+        return true;
     }
+    let src = node_text(node);
+    !src.starts_with(":\"") && !src.starts_with(":'") && !value.starts_with(['@', '$'])
+}
+
+/// Alias#identifier: `:name` for a bareword symbol, the source otherwise.
+fn identifier(node: &Node) -> String {
+    if bareword_symbol(node) { format!(":{}", sym_value(node).unwrap()) } else { node_text(node).to_string() }
 }
 
 impl Cop for Alias {
@@ -72,19 +90,13 @@ impl Cop for Alias {
                 return;
             }
             let bareword = |n: &Node| !node_text(n).starts_with(':') || n.as_interpolated_symbol_node().is_some();
-            if bareword(&new) || bareword(&old) {
+            if ![&new, &old].iter().all(|n| !bareword(n) && bareword_symbol(n)) {
                 return;
             }
-            let msg = format!(
-                "Use `alias {} {}` instead of `alias {} {}`.",
-                &node_text(&new)[1..],
-                &node_text(&old)[1..],
-                node_text(&new),
-                node_text(&old)
-            );
+            let (nt, ot) = (sym_value(&new).unwrap(), sym_value(&old).unwrap());
+            let msg = format!("Use `alias {nt} {ot}` instead of `alias {} {}`.", node_text(&new), node_text(&old));
             let (ns, ne) = (new.location().start_offset(), new.location().end_offset());
             let (os, oe) = (old.location().start_offset(), old.location().end_offset());
-            let (nt, ot) = (node_text(&new)[1..].to_string(), node_text(&old)[1..].to_string());
             cx.add_fix(ns, oe, msg, |c| {
                 c.replace(ns, ne, &nt);
                 c.replace(os, oe, &ot);

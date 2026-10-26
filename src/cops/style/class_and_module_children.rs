@@ -181,7 +181,23 @@ impl Cop for ClassAndModuleChildren {
         }
         let Some(inner) = single_def(&d.body) else { return };
         let b = def(&inner).unwrap();
-        let fix = (style_for(b.class) != "nested" && compactible_namespace(cx, node, &d.ident)).then(|| {
+        // An enclosing definition this cop compacted (ignore_node) is not corrected again.
+        let outer: Vec<(usize, usize)> = cx
+            .ancestors
+            .iter()
+            .filter(|a| a.as_class_node().is_some() || a.as_module_node().is_some())
+            .map(span)
+            .collect();
+        let inside_compacted = {
+            let ignored = cx.state::<Vec<(usize, usize)>>();
+            outer.iter().any(|r| ignored.contains(r))
+        };
+        let compacting =
+            style_for(b.class) != "nested" && compactible_namespace(cx, node, &d.ident) && !inside_compacted;
+        if compacting && cx.block_runs(name.0, name.1) {
+            cx.state::<Vec<(usize, usize)>>().push((start, end));
+        }
+        let fix = compacting.then(|| {
             // compact_replacement, with the comments the associator gives the inner node.
             let mut texts: Vec<&str> = Vec::new();
             let after_line = src.line_of(name.1);
@@ -213,18 +229,31 @@ impl Cop for ClassAndModuleChildren {
             let replacement = joined.join("\n");
             let inner_name = span(&b.ident);
             // remove_end
-            let remove_begin = if src.line_of(inner_name.1) == src.line_of(b.end_kw.0) {
-                inner_name.1
+            let raw = src.text.as_bytes();
+            let remove = if src.line_of(inner_name.1) == src.line_of(b.end_kw.0) {
+                // single_line_end_range: the `end` with the spaces and one `;` before it
+                let mut pos = b.end_kw.0;
+                while pos > 0 && raw[pos - 1] == b' ' {
+                    pos -= 1;
+                }
+                if pos > 0 && raw[pos - 1] == b';' {
+                    pos -= 1;
+                }
+                (pos, b.end_kw.1)
             } else {
-                b.end_kw.0 - leading_spaces(src, is).len()
+                let remove_begin = b.end_kw.0 - leading_spaces(src, is).len();
+                let adjust = if raw.get(remove_begin) == Some(&b';') { 0 } else { 1 };
+                (remove_begin, b.end_kw.1 + adjust)
             };
-            let adjust = if src.text.as_bytes().get(remove_begin) == Some(&b';') { 0 } else { 1 };
-            let remove = (remove_begin, b.end_kw.1 + adjust);
-            // unindent
+            // unindent: only to the left, over the inner definition's body lines
             let tab = |s: &str| s.chars().map(|ch| if ch == '\t' { width } else { 1 }).sum::<i64>();
             let delta = b.body.as_ref().map(|bb| body_range(bb).0).and_then(|first| {
-                let lead = tab(leading_spaces(src, first));
-                if tab(leading_spaces(src, start)) == lead || width - lead == 0 { None } else { Some(width - lead) }
+                let delta = tab(leading_spaces(src, start)) + width - tab(leading_spaces(src, first));
+                let (first_line, last_line) = (src.line_of(inner_name.0) + 1, src.line_of(b.end_kw.0) - 1);
+                (delta < 0 && first_line <= last_line).then(|| {
+                    let line_end = |l: usize| src.line_start(l) + src.lines.get(l - 1).map_or(0, |t| t.len());
+                    (delta, (src.line_start(first_line), line_end(last_line)))
+                })
             });
             ((d.keyword.0, inner_name.1), replacement, remove, delta)
         });
@@ -233,8 +262,9 @@ impl Cop for ClassAndModuleChildren {
             let Some((head, replacement, remove, delta)) = &fix else { return };
             c.replace(head.0, head.1, replacement);
             c.remove(remove.0, remove.1.min(src.text.len()));
-            if let Some(delta) = delta {
-                alignment_corrector::correct(c, src, set, start, end, Some(node), *delta, true);
+            // a range, not a node: every string of the source is taboo
+            if let (Some((delta, (s, e))), Some(root)) = (delta, &src.root) {
+                alignment_corrector::correct(c, src, set, *s, *e, Some(root), *delta, true);
             }
         });
     }
