@@ -503,10 +503,8 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   Rust core), so rbcop behaves as RuboCop does with that gem installed, never as RuboCop without it
   (the "rubydex gem is not installed" warning and file-local fallback). Not supported:
   `AllCops/ProjectIndexIncludesGems` (RuboCop indexes the bundle's gem sources only under
-  Bundler; rbcop indexes the project alone), the index in `--lsp`, `--server` and `--mcp` (they
-  analyse file by file, as without the gem), and the index-aware `on_send` of
-  ArgumentMismatch, DeprecatedReference and NameTypo for index sends assigned in a multiple
-  assignment or by `recv[i] op= v`.
+  Bundler; rbcop indexes the project alone) and the index in `--lsp` and `--mcp` (they
+  analyse file by file, as without the gem).
 - Metrics/CollectionLiteralLength does not count `rescue A, B` exception lists (parser `array`).
   Lint/SymbolConversion does not treat a backslash-newline inside `:"..."` as a continuation.
 - LineLength `SplitStrings: true` break points (string splitting) are not modelled. The unbracketed

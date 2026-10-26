@@ -1,0 +1,4 @@
+AllCops:
+  UseProjectIndex: true
+  NewCops: enable
+  SuggestExtensions: false

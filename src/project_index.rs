@@ -509,13 +509,18 @@ pub fn overrides_inherited_method(ancestors: &[Node], def: &ruby_prism::DefNode)
 }
 
 /// The node kinds that are a parser `send` (or `csend`) the index-aware cops' `on_send` sees: a
-/// call, a call assigned in a multiple assignment and the read of `recv.m op= v`.
+/// call, a call assigned in a multiple assignment (`recv.m, x =`, `recv[i], x =`) and the read of
+/// `recv.m op= v` / `recv[i] op= v`.
 pub const SEND_KINDS: &[usize] = &[
     crate::node_kind::CALL_NODE,
     crate::node_kind::CALL_TARGET_NODE,
     crate::node_kind::CALL_OPERATOR_WRITE_NODE,
     crate::node_kind::CALL_OR_WRITE_NODE,
     crate::node_kind::CALL_AND_WRITE_NODE,
+    crate::node_kind::INDEX_TARGET_NODE,
+    crate::node_kind::INDEX_OPERATOR_WRITE_NODE,
+    crate::node_kind::INDEX_OR_WRITE_NODE,
+    crate::node_kind::INDEX_AND_WRITE_NODE,
 ];
 
 /// A parser `send`: receiver, method name, arguments (no block argument) and selector.
@@ -526,7 +531,6 @@ pub struct Send<'pr> {
     pub selector: Option<(usize, usize)>,
 }
 
-// ponytail: `recv[i], x = ...` and `recv[i] op= v` (index sends) are left out.
 pub fn parser_send<'pr>(node: &Node<'pr>) -> Option<Send<'pr>> {
     let name = |id: ruby_prism::ConstantId| String::from_utf8_lossy(id.as_slice()).into_owned();
     let sel = |l: Option<ruby_prism::Location>| l.map(|l| (l.start_offset(), l.end_offset()));
@@ -545,6 +549,24 @@ pub fn parser_send<'pr>(node: &Node<'pr>) -> Option<Send<'pr>> {
             name: name(c.name()),
             args: Vec::new(),
             selector: Some((l.start_offset(), l.end_offset())),
+        });
+    }
+    // `recv[i], x =` is `send :[]=` and `recv[i] op= v` reads `send :[]`, the selector `[i]`.
+    let index = if let Some(c) = node.as_index_target_node() {
+        Some((Some(c.receiver()), "[]=", c.arguments(), c.opening_loc(), c.closing_loc()))
+    } else if let Some(c) = node.as_index_operator_write_node() {
+        Some((c.receiver(), "[]", c.arguments(), c.opening_loc(), c.closing_loc()))
+    } else if let Some(c) = node.as_index_or_write_node() {
+        Some((c.receiver(), "[]", c.arguments(), c.opening_loc(), c.closing_loc()))
+    } else {
+        node.as_index_and_write_node().map(|c| (c.receiver(), "[]", c.arguments(), c.opening_loc(), c.closing_loc()))
+    };
+    if let Some((receiver, name, args, open, close)) = index {
+        return Some(Send {
+            receiver,
+            name: name.to_string(),
+            args: args.map(|a| a.arguments().iter().collect()).unwrap_or_default(),
+            selector: Some((open.start_offset(), close.end_offset())),
         });
     }
     let (receiver, read, msg) = if let Some(c) = node.as_call_operator_write_node() {
