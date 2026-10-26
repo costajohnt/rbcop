@@ -50,8 +50,8 @@ gate's oracle dirs) and rerun the script with both oracle dirs:
 `only_old` / `only_new` count corpus offenses that disappear or appear for each cop, and the crash
 columns count (cop, file) pairs whose RuboCop errors were fixed or introduced. Rows with corpus
 changes are the ones the gate will catch; rows with only source or notes changes need the spec
-corpus (step 4) and targeted cases to catch. Commit the final `delta.tsv` as
-`docs/upgrade-X.Y.Z.tsv` and work from it.
+corpus (step 4) and targeted cases to catch. Commit the final `delta.tsv` and `delta-lib.txt` as
+`docs/upgrade-X.Y.Z.tsv` and `docs/upgrade-X.Y.Z-lib.tsv` and work from them.
 
 ## 3. Port
 
@@ -110,3 +110,17 @@ hand with the new root before that). The bar is the usual one: `plugins: all cor
 check-cops corpus at diff 0, the cold corpus and `cargo test` green, the corpus2 baseline no worse.
 Then also run `scripts/check-autocorrect-all.sh` with the new release, since -A output moves with
 almost every bug-fix release.
+
+## In progress: 1.91.0 to 1.92.1
+
+Inventory taken 2026-10-25 (`docs/upgrade-1.92.1.tsv`, `docs/upgrade-1.92.1-lib.tsv`, release notes
+of 1.92.0 and 1.92.1: about 440 entries). No new or removed cops; `config/default.yml` changes three
+entries (Style/CollectionQuerying and Style/DisableCopsWithinSourceCodeDirective get
+`VersionChanged: '1.92'`, Style/NegativeArrayIndex becomes `Safe: false`). 178 cop files and 82
+other lib files change. On the nine corpora, 43 cops report differently (2,878 offenses gone, 457
+new, 8 RuboCop crashes fixed); the largest are Style/MissingElse (2,112 gone), Style/HashLookupMethod
+(257 gone), Style/CollectionQuerying, Layout/ClassStructure, Style/SymbolProc,
+Layout/MultilineMethodCallIndentation and Lint/UselessAssignment. Outside cops: `--explain`,
+`--max-offenses-per-cop`, JSON formatter fields for corrections and per-file errors, new MCP tools
+and options, and runner, cache, LSP and target-Ruby lookup changes. Plugin pins are unaffected,
+except that rubocop-capybara 3.1.0 (2026-10-16, `rubocop ~> 1.89`) already supersedes the 3.0.0 pin.
