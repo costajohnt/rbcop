@@ -20,6 +20,12 @@ impl Cop for SpaceAfterNot {
             return;
         }
         let Some(recv) = call.receiver() else { return };
+        // unary_tilde?(receiver): `! ~x` joined would read as `!~`.
+        if recv.as_call_node().is_some_and(|r| {
+            !crate::ast::is_csend(&r) && helpers::node_types::is_unary_operation(&r) && method_name(&r) == "~"
+        }) {
+            return;
+        }
         let (start, end) = send_range(&call);
         let (sel_end, recv_start) = (call.message_loc().unwrap().end_offset(), recv.location().start_offset());
         if recv_start > start + 1 {

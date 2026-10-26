@@ -231,10 +231,19 @@ impl Cop for RescueEnsureAlignment {
         // code sits there (`whitespace.source.strip.empty?`).
         let line_start = src.line_start(kw_line);
         let blank = src.slice(line_start, kw.start_offset()).bytes().all(|b| b.is_ascii_whitespace() || b == 0 || b == 0x0b);
-        let pad = " ".repeat(align_col);
+        // alignment_indentation: under IndentationStyle tabs, reuse the target line's own
+        // indentation, or nothing when the target does not begin its line.
+        let pad = if cx.config.for_cop("Layout/IndentationStyle").str("EnforcedStyle") != Some("tabs") {
+            Some(" ".repeat(align_col))
+        } else if src.begins_its_line(align) {
+            let s = src.line_start(align_line);
+            Some(src.slice(s, align).to_string())
+        } else {
+            None
+        };
         cx.add_fix(kw.start_offset(), kw.end_offset(), msg, |c| {
-            if blank {
-                c.replace(line_start, kw.start_offset(), &pad);
+            if blank && let Some(pad) = &pad {
+                c.replace(line_start, kw.start_offset(), pad);
             }
         });
     }

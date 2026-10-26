@@ -1,4 +1,6 @@
-use crate::helpers::check_single_line_suitability::{suitable_as_single_line_skipping, to_single_line};
+use crate::helpers::check_single_line_suitability::{
+    suitable_as_single_line_skipping, to_single_line, too_long_as_single_line,
+};
 use crate::helpers::reparsed_equivalence::verified_by_reparse_folding;
 use crate::prelude::*;
 use ruby_prism::Visit;
@@ -9,9 +11,18 @@ pub struct RedundantLineBreak;
 
 const MSG: &str = "Redundant line break detected.";
 
-/// Ranges passed to `ignore_node`.
+/// Per-file state (one `cx.state` slot per cop).
 #[derive(Default)]
-struct Ignored(Vec<(usize, usize)>);
+struct State {
+    /// Ranges passed to `ignore_node`.
+    ignored: Vec<(usize, usize)>,
+    /// `@offense_line_ranges`: the joined (first, last) line range of each registered offense.
+    line_ranges: Vec<(usize, usize)>,
+}
+
+fn ignored(cx: &mut Cx, (s, e): (usize, usize)) -> bool {
+    cx.state::<State>().ignored.iter().any(|&(is, ie)| is <= s && ie >= e)
+}
 
 /// `/re/ =~ x` is parser `match_with_lvasgn`, not a send.
 fn match_with_lvasgn(call: &ruby_prism::CallNode) -> bool {
@@ -134,14 +145,13 @@ impl Cop for RedundantLineBreak {
                     return;
                 }
                 let t = Target { node, block_level: false, inner: None };
-                if offense(cx, &t) {
+                if offense(cx, &t) && !ignored(cx, target_range(&t)) {
                     register(cx, &t);
                 }
                 // on_send for the op-assignment's inner send (`&.` ones are csends: also checked).
                 if let Some(inner) = op_assign_send(node) {
                     let t = Target { node, block_level: false, inner: Some(inner) };
-                    let (s, e) = target_range(&t);
-                    if offense(cx, &t) && !cx.state::<Ignored>().0.iter().any(|&(is, ie)| is <= s && ie >= e) {
+                    if offense(cx, &t) && !ignored(cx, target_range(&t)) {
                         register(cx, &t);
                     }
                 }
@@ -206,8 +216,7 @@ fn on_send(cx: &mut Cx, node: &Node, block_level: bool) {
     if !offense(cx, &t) {
         return;
     }
-    let (s, e) = target_range(&t);
-    if cx.state::<Ignored>().0.iter().any(|&(is, ie)| is <= s && ie >= e) {
+    if ignored(cx, target_range(&t)) {
         return;
     }
     register(cx, &t);
@@ -313,6 +322,19 @@ fn not_excluded(cx: &Cx, v: &Blocks, is_block: bool) -> bool {
 
 fn register(cx: &mut Cx, t: &Target) {
     let (s, e) = target_range(t);
+    // joined_line_range: offenses already registered that share a line with this one are
+    // joined onto the same line, so the combined line has to fit.
+    let (first, last) = (cx.src.line_of(s), cx.src.line_of(e));
+    let (mut lo, mut hi) = (first, last);
+    for &(b, en) in &cx.state::<State>().line_ranges {
+        if b <= last && first <= en {
+            lo = lo.min(b);
+            hi = hi.max(en);
+        }
+    }
+    if too_long_as_single_line(cx, lo, hi) {
+        return;
+    }
     let single = to_single_line(cx.src.slice(s, e));
     let single = single.trim_matches(|c: char| c.is_ascii_whitespace() || c == '\0').to_string();
     let Some(program) = cx.ancestors.first() else { return };
@@ -328,5 +350,8 @@ fn register(cx: &mut Cx, t: &Target) {
         return;
     }
     cx.add_fix(s, e, MSG, |c| c.replace(s, e, &single));
-    cx.state::<Ignored>().0.push((s, e));
+    let st = cx.state::<State>();
+    st.ignored.push((s, e));
+    st.line_ranges.retain(|&(b, en)| !(lo <= b && en <= hi));
+    st.line_ranges.push((lo, hi));
 }

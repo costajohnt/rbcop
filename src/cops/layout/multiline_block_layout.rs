@@ -21,7 +21,7 @@ fn arg_string(nodes: Vec<Node>, comma: bool) -> String {
 }
 
 fn block_arg_string(params: &BlockParametersNode) -> String {
-    let comma = helpers::block_args::count_required(params) == 1 && node_text(&params.as_node()).contains(',');
+    let comma = helpers::block_args::count_arguments(params) == 1 && node_text(&params.as_node()).contains(',');
     arg_string(helpers::block_args::children(params), comma)
 }
 

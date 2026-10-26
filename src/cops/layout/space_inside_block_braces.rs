@@ -17,7 +17,7 @@ struct Check<'a> {
 impl Check<'_> {
     /// `enforced`: the offense is about `EnforcedStyle` (not `EnforcedStyleForEmptyBraces`).
     fn offense(&self, cx: &mut Cx, s: isize, e: isize, msg: &str, enforced: bool) {
-        if s > e {
+        if s >= e {
             return;
         }
         let (s, e) = (s as usize, e as usize);
@@ -130,8 +130,12 @@ impl Cop for SpaceInsideBlockBraces {
                 check.offense(cx, le as isize, ds as isize, "Space between { and | detected.", true);
             }
         } else {
+            // space_after_left_brace: not across a line break, not up to a comment.
             let (_, e) = range_with_surrounding_space(src.text, lb, le, Surrounding { side: Side::Right, ..Default::default() });
-            check.space(cx, lb as isize + 1, e as isize, "Space inside { detected.");
+            let comment_at = src.comments.binary_search_by_key(&e, |c| c.start).is_ok();
+            if !src.slice(lb, e).contains(['\n', '\r']) && !comment_at {
+                check.space(cx, lb as isize + 1, e as isize, "Space inside { detected.");
+            }
         }
 
         // check_right_brace
@@ -142,7 +146,13 @@ impl Cop for SpaceInsideBlockBraces {
         }
         let column = src.column(node_start) as isize;
         let right_col = src.column(rb) as isize;
-        if !single_line && (column == right_col || column == last_space_count(inner) as isize) {
+        // aligned_with_opening_brace_line?: `}` starts its line at the `{` line's indentation.
+        let aligned_with_open_line = || {
+            let open_line = src.lines.get(src.line_of(lb) - 1).copied().unwrap_or("");
+            let indent = open_line.chars().take_while(|&c| helpers::ruby_string::is_space(c)).count() as isize;
+            src.begins_its_line(rb) && right_col == indent
+        };
+        if !single_line && (column == right_col || column == last_space_count(inner) as isize || aligned_with_open_line()) {
             return;
         }
         let (ws, _) = range_with_surrounding_space(src.text, rb, re, Surrounding { side: Side::Left, ..Default::default() });
@@ -151,7 +161,9 @@ impl Cop for SpaceInsideBlockBraces {
         if src.slice(ws, re).contains('\n') {
             begin = end - (right_col - column);
         }
-        if inner.ends_with(']') {
+        // closing_bracket_on_own_line?: the last line of `inner` is `\s*]`.
+        let last_line = &inner[inner.rfind('\n').map_or(0, |i| i + 1)..];
+        if last_line.trim_start_matches(|c: char| c.is_ascii() && helpers::parser_tokens::is_ruby_space(c as u8)) == "]" {
             end -= 1;
             begin = end - (last_space_count(inner) as isize - column);
         }
