@@ -47,8 +47,8 @@ impl Cop for MissingElse {
         // 1.92: a body that is a guard clause is left to Style/GuardClause (the two would conflict).
         if ty == "if"
             && helpers::alignment::cop_enabled(cx, "Style/GuardClause")
-            && crate::cops::layout_empty_line_after_guard_clause::if_branch(node)
-                .is_some_and(|b| crate::cops::layout_empty_line_after_guard_clause::guard_clause(cx.src, &b))
+            && helpers::if_node::if_branch(node)
+                .is_some_and(|b| helpers::if_node::guard_clause(cx.src, &b))
         {
             return;
         }

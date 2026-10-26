@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use crate::helpers::if_node::{guard_clause, guard_clause_branch, if_branch};
 use crate::source::Source;
 
 pub const NAME: &str = "Layout/EmptyLineAfterGuardClause";
@@ -9,49 +10,6 @@ const MSG: &str = "Add empty line after guard clause.";
 
 static SIMPLECOV: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"\A#\s*(?::nocov:|simplecov\s*:\s*(?:disable|enable)\b)").unwrap());
-
-/// IfNode#if_branch when it is a single statement (a `begin` is never a guard clause).
-pub(crate) fn if_branch<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
-    let stmts = match kind::of(node) {
-        kind::IF_NODE => node.as_if_node().unwrap().statements(),
-        kind::UNLESS_NODE => node.as_unless_node().unwrap().statements(),
-        _ => None,
-    }?;
-    let body: Vec<Node> = stmts.body().iter().collect();
-    match body.len() {
-        1 => body.into_iter().next(),
-        _ => None,
-    }
-}
-
-/// `{(send nil? {:raise :fail} ...) return break next}`
-fn guard_clause_branch(node: &Node) -> bool {
-    match kind::of(node) {
-        kind::RETURN_NODE | kind::BREAK_NODE | kind::NEXT_NODE => true,
-        kind::CALL_NODE => {
-            let c = node.as_call_node().unwrap();
-            c.receiver().is_none()
-                && matches!(method_name(&c), "raise" | "fail")
-                && c.block().is_none_or(|b| b.as_block_node().is_none())
-        }
-        _ => false,
-    }
-}
-
-/// Node#guard_clause?: the rhs of and/or, matching the pattern and on a single line.
-pub(crate) fn guard_clause(src: &Source, node: &Node) -> bool {
-    let node = match kind::of(node) {
-        kind::AND_NODE => node.as_and_node().unwrap().right(),
-        kind::OR_NODE => node.as_or_node().unwrap().right(),
-        _ => return guard_clause_inner(src, node),
-    };
-    guard_clause_inner(src, &node)
-}
-
-fn guard_clause_inner(src: &Source, node: &Node) -> bool {
-    let loc = node.location();
-    guard_clause_branch(node) && src.line_of(loc.start_offset()) == src.line_of(loc.end_offset())
-}
 
 fn is_heredoc_str(node: &Node) -> bool {
     matches!(
