@@ -1406,6 +1406,38 @@ fn infinite_loop_names_cops_in_name_order() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// Lint/UnescapedBracketInRegexp -A on the 1.92.1 spec examples RuboCop 1.91.0 never finishes (#680,
+/// docs/known-gaps.md): a double-quoted string gets 1.92.1's `\\]`; a `]` after an escape is left
+/// `[Correctable]`, as 1.91.0 reports it without -A.
+#[test]
+fn unescaped_bracket_in_regexp_corrections_converge() {
+    let dir = scratch("unescbracket");
+    let cases = [
+        ("025.rb", "Regexp.new(\"abc]123\")\n", "Regexp.new(\"abc\\\\]123\")\n"),
+        ("031.rb", "Regexp.new(\"a\\\\.b]\")\n", "Regexp.new(\"a\\\\.b]\")\n"),
+        ("042.rb", "Regexp.compile(%Q{abc]123})\n", "Regexp.compile(%Q{abc\\\\]123})\n"),
+        ("048.rb", "Regexp.compile('a\\\\b]')\n", "Regexp.compile('a\\\\b]')\n"),
+    ];
+    for (name, source, _) in cases {
+        fs::write(dir.join(name), source).unwrap();
+    }
+    let out = rbcop(&dir, &["-A", "--only", "Lint/UnescapedBracketInRegexp", "--force-default-config", "-f", "e", "."]);
+    let report = text(&out.stdout).replace(&format!("{}/", dir.canonicalize().unwrap().display()), "");
+    let msg = "Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.";
+    assert_eq!(
+        report,
+        format!(
+            "025.rb:1:16: W: [Corrected] {msg}\n031.rb:1:17: W: [Correctable] {msg}\n\
+             042.rb:1:22: W: [Corrected] {msg}\n048.rb:1:20: W: [Correctable] {msg}\n"
+        )
+    );
+    for (name, _, want) in cases {
+        assert_eq!(fs::read_to_string(dir.join(name)).unwrap(), want, "{name}");
+    }
+    assert_eq!(out.status.code(), Some(1));
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// Option values RuboCop's cops raise on (#114): MinBodyLength / MinBranchesCount not a positive
 /// Integer, SafeNavigationChainLength `Max: 0` (add_offense(nil), also for a csend with a block),
 /// a zero IndentationWidth with tabs (ZeroDivisionError). Each is a cop error at the visited node

@@ -17,8 +17,13 @@ for case in "$here"/*/; do
   # `all`: no --only (Lint/RedundantCopDisableDirective cannot run under it); config.yml picks the cops.
   only="--only $cops"
   [ "$cops" = all ] && only=
+  # A case with a status file records the exit status there (otherwise it must be 1).
+  status=0
   (cd "$case/$out" && rubocop -A -c ../config.yml $only --cache false \
-    --format emacs . 2>/dev/null | sed "s|^$case/$out/||" > "../$out.txt") || true
+    --format emacs . 2>/dev/null > "../$out.raw") || status=$?
+  sed "s|^$case/$out/||" "$case/$out.raw" > "$case/$out.txt"
+  rm -f "$case/$out.raw"
+  [ -f "$case/status" ] && echo "$status" > "$case/status"
   # `rubocop --diff -A` stdout (report, then the diffs) into diff.txt, on a scratch copy of input/:
   # RuboCop 1.91.0 can write a file under --diff (docs/known-gaps.md).
   # A case with a no-diff file has no diff.txt (its --diff output is a deliberate difference).
