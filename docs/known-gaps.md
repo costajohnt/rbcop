@@ -346,8 +346,6 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   directory. rbcop writes the reports only inside the working directory and the command-line paths
   (as for `-a`) and never through a symlink (`tmp` or the report file); otherwise it prints
   `rbcop: not writing the --profile report: <reason>` to stderr instead of the `generated at` line.
-- Command-line options rbcop refuses (`rbcop: --NAME is not supported by rbcop yet`, exit 2):
-  - `--changed [REVISION]`: needs RuboCop's git diff of changed files.
 - The server options (#293): rbcop runs in process and never starts a server, so none is ever
   running. They are taken out of the arguments and checked as RuboCop::Server::CLI does (same
   `cannot be specified together` / `cannot be combined with` errors, exit 2); then `--server-status`

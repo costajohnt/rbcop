@@ -156,3 +156,53 @@ fn hidden_in(file: &Path, base: &Path) -> bool {
     let rel = file.strip_prefix(base).unwrap_or(file).display().to_string();
     rel.starts_with('.') || rel.contains("/.")
 }
+
+/// ChangedFiles#paths (`--changed REVISION`): the files added or modified since `revision` and the
+/// untracked ones, as absolute paths. Deleted files are left out. Errors are RuboCop::Error messages.
+pub fn changed(revision: &str) -> Result<std::collections::HashSet<PathBuf>, String> {
+    let root = git(&["rev-parse", "--show-toplevel"])?;
+    // String#chomp
+    let root = root.strip_suffix(b"\n").map(|r| r.strip_suffix(b"\r").unwrap_or(r)).unwrap_or(&root);
+    let root = Path::new(std::ffi::OsStr::from_bytes(root));
+    // `diff.relative` would make git report paths relative to the current directory.
+    let modified = match git(&["-c", "diff.relative=false", "diff", "--name-only", "--diff-filter=d", "-z", revision]) {
+        Ok(out) => out,
+        // A repository without commits: everything in it is untracked.
+        Err(_) if revision == "HEAD" && !git_ok(&["rev-parse", "--verify", "--quiet", "HEAD"]) => Vec::new(),
+        Err(e) => return Err(e),
+    };
+    let untracked = git(&["ls-files", "--others", "--exclude-standard", "--full-name", "-z"])?;
+    Ok(modified
+        .split(|&b| b == 0)
+        .chain(untracked.split(|&b| b == 0))
+        .filter(|p| !p.is_empty())
+        .map(|p| expand_path(Path::new(std::ffi::OsStr::from_bytes(p)), root))
+        .collect())
+}
+
+/// ChangedFiles#git: git's stdout, or why it failed.
+fn git(args: &[&str]) -> Result<Vec<u8>, String> {
+    let out = git_command(args).output().map_err(|e| match e.kind() {
+        std::io::ErrorKind::NotFound => "--changed requires git to be installed and on your PATH.".to_string(),
+        _ => e.to_string(),
+    })?;
+    if out.status.success() {
+        return Ok(out.stdout);
+    }
+    // String#strip
+    let stderr = String::from_utf8_lossy(&out.stderr);
+    let message = stderr.trim_matches(|c: char| c.is_ascii_whitespace() || c == '\0');
+    let message = if message.is_empty() { "git failed with no output on standard error." } else { message };
+    Err(format!("--changed could not ask git which files changed: {message}"))
+}
+
+fn git_ok(args: &[&str]) -> bool {
+    git_command(args).output().is_ok_and(|o| o.status.success())
+}
+
+/// Open3.capture3: stdout and stderr captured, stdin an empty pipe.
+fn git_command(args: &[&str]) -> std::process::Command {
+    let mut cmd = std::process::Command::new("git");
+    cmd.args(args).stdin(std::process::Stdio::null());
+    cmd
+}
