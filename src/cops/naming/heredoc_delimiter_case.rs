@@ -1,4 +1,5 @@
 use crate::helpers::heredoc;
+use crate::helpers::ruby_string::strip;
 use crate::prelude::*;
 
 pub const NAME: &str = "Naming/HeredocDelimiterCase";
@@ -20,10 +21,17 @@ impl Cop for HeredocDelimiterCase {
         let fix = |s: &str| if upper { s.to_uppercase() } else { s.to_lowercase() };
         let opening = &cx.src.text[os..oe];
         let delim = heredoc::delimiter_string(opening);
-        if delim == fix(delim) {
+        let new_end = fix(delim);
+        if delim == new_end {
             return;
         }
-        let (new_open, new_end) = (fix(opening), fix(delim));
+        // corrected_delimiter_in_body?: a body line that is the corrected delimiter would end the
+        // heredoc early after the fix.
+        let (bs, be) = heredoc::body_range(node).unwrap_or((es, es));
+        if cx.src.text[bs..be].split_inclusive('\n').any(|l| strip(l) == new_end) {
+            return;
+        }
+        let new_open = fix(opening);
         let style = if upper { "uppercase" } else { "lowercase" };
         cx.add_fix(es, ee, format!("Use {style} heredoc delimiters."), |c| {
             c.replace(os, oe, &new_open);
