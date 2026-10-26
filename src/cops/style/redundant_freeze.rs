@@ -110,14 +110,25 @@ fn operation_produces_immutable_object(node: &Node) -> bool {
         "==" | "===" | "!=" | "<=" | ">=" | "<" | ">" => true,
         op @ ("+" | "-" | "*" | "**" | "/" | "%" | "<<") => {
             recv.as_ref().is_some_and(is_number)
-                || (op != "<<"
-                    && is_number(arg)
-                    && !recv.as_ref().is_some_and(|r| {
-                        r.as_array_node().is_some() || (r.as_string_node().is_some() && !is_parser_dstr(r))
-                    }))
+                || (op != "<<" && is_number(arg) && recv.as_ref().is_some_and(numeric_operation))
         }
         _ => false,
     }
+}
+
+/// `numeric_operation?`: a number, a parenthesized one, or arithmetic on them.
+fn numeric_operation(node: &Node) -> bool {
+    if is_number(node) {
+        return true;
+    }
+    if node.as_parentheses_node().is_some() {
+        return paren_child(node).is_some_and(|c| numeric_operation(&c));
+    }
+    let Some(c) = node.as_call_node().filter(|c| !is_csend(c) && c.block().is_none()) else { return false };
+    let args = send_args(&c);
+    matches!(method_name(&c), "+" | "-" | "*" | "**" | "/" | "%")
+        && matches!(args.as_slice(), [a] if numeric_operation(a))
+        && c.receiver().is_some_and(|r| numeric_operation(&r))
 }
 
 impl Cop for RedundantFreeze {
@@ -139,13 +150,10 @@ impl Cop for RedundantFreeze {
             return;
         }
         let (start, end) = send_range(&call);
-        let dot = call.call_operator_loc().map(|l| (l.start_offset(), l.end_offset()));
-        let sel = call.message_loc().map(|l| (l.start_offset(), l.end_offset()));
+        let dot = call.call_operator_loc().map(|l| l.start_offset());
+        let sel = call.message_loc().map(|l| l.end_offset());
         cx.add_fix(start, end, "Do not freeze immutable objects, as freezing them has no effect.", |c| {
-            if let Some((s, e)) = dot {
-                c.remove(s, e);
-            }
-            if let Some((s, e)) = sel {
+            if let (Some(s), Some(e)) = (dot, sel) {
                 c.remove(s, e);
             }
         });

@@ -57,7 +57,7 @@ fn paren_fix(cx: &Cx, idx: usize) -> Option<ParenFix> {
         cx.src,
         (open.start_offset(), open.end_offset()),
         (close.start_offset(), close.end_offset()),
-        last.map(span),
+        last,
         heredoc,
         question,
     ))

@@ -162,7 +162,39 @@ fn require_parentheses(node: &Node) -> bool {
         kind::OR_NODE => node.as_or_node().unwrap().operator_loc().as_slice() == b"or",
         _ => false,
     };
-    modifier || semantic || matches!(kind::of(node), kind::RANGE_NODE | kind::RESCUE_MODIFIER_NODE)
+    modifier || semantic || matches!(kind::of(node), kind::RANGE_NODE | kind::RESCUE_MODIFIER_NODE) || low_precedence_keyword(node)
+}
+
+/// `low_precedence_keyword?`: e.g. `not foo`, `return foo`, and `yield foo`.
+fn low_precedence_keyword(node: &Node) -> bool {
+    // A `return`'s arguments: those of a single parenthesized argument when it is one.
+    let wrapped = |args: Option<ruby_prism::ArgumentsNode>| {
+        let Some(args) = args else { return false };
+        let list: Vec<Node> = args.arguments().iter().collect();
+        match list.as_slice() {
+            [only] => only.as_parentheses_node().is_none_or(|p| p.body().is_some()),
+            l => !l.is_empty(),
+        }
+    };
+    match node {
+        Node::CallNode { .. } => {
+            let c = node.as_call_node().unwrap();
+            !is_csend(&c) && method_name(&c) == "!" && c.message_loc().is_some_and(|m| m.as_slice() == b"not")
+        }
+        Node::ReturnNode { .. } => wrapped(node.as_return_node().unwrap().arguments()),
+        Node::NextNode { .. } => wrapped(node.as_next_node().unwrap().arguments()),
+        Node::BreakNode { .. } => wrapped(node.as_break_node().unwrap().arguments()),
+        Node::YieldNode { .. } => {
+            let y = node.as_yield_node().unwrap();
+            y.arguments().is_some() && y.lparen_loc().is_none()
+        }
+        Node::SuperNode { .. } => {
+            let s = node.as_super_node().unwrap();
+            let has_args = s.arguments().is_some() || s.block().is_some_and(|b| b.as_block_argument_node().is_some());
+            has_args && s.lparen_loc().is_none()
+        }
+        _ => false,
+    }
 }
 
 /// `require_braces?`: an unbraced hash.
@@ -170,10 +202,13 @@ fn require_braces(node: &Node) -> bool {
     node.as_keyword_hash_node().is_some()
 }
 
-fn arithmetic(node: &Node) -> bool {
+/// `binary_operator?`: any binary operator binds tighter than `||`, so the fallback must be
+/// parenthesized as its argument, e.g. `stack << (foo || :new)`.
+fn binary_operator(node: &Node) -> bool {
     node.as_call_node().is_some_and(|c| {
         c.block().is_none_or(|b| b.as_block_node().is_none())
-            && matches!(method_name(&c), "+" | "-" | "*" | "/" | "%" | "**")
+            && helpers::node_types::is_binary_operation(&c)
+            && c.call_operator_loc().is_none_or(|d| d.as_slice() == b"::")
     })
 }
 
@@ -197,77 +232,16 @@ impl Cop for RedundantCondition {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        if is_pattern_guard(node, cx.ancestors) {
+        let Some(p) = self.offense(cx, node, cx.ancestors) else { return };
+        // An enclosing `if` that is itself an offense is corrected instead.
+        let nested = (0..cx.ancestors.len()).any(|i| {
+            matches!(kind::of(&cx.ancestors[i]), kind::IF_NODE | kind::UNLESS_NODE)
+                && self.offense(cx, &cx.ancestors[i], &cx.ancestors[..i]).is_some()
+        });
+        if nested {
             return;
         }
-        let p = if let Some(n) = node.as_if_node() {
-            let kw = n.if_keyword_loc();
-            if kw.as_ref().is_some_and(|k| k.as_slice() == b"elsif") {
-                return;
-            }
-            if kw.is_some() && n.end_keyword_loc().is_none() {
-                return; // modifier
-            }
-            if n.subsequent().is_some_and(|s| s.as_if_node().is_some()) {
-                return; // elsif_conditional?
-            }
-            let else_b = || branch(n.subsequent().and_then(|s| s.as_else_node()).and_then(|e| e.statements()));
-            let then_b = || branch(n.statements());
-            Parts {
-                cond: n.predicate(),
-                raw_if: then_b(),
-                raw_else: else_b(),
-                if_branch: then_b(),
-                else_branch: else_b(),
-                ternary: kw.is_none(),
-                keyword_if: kw.is_some(),
-            }
-        } else {
-            let n = node.as_unless_node().unwrap();
-            if n.end_keyword_loc().is_none() {
-                return;
-            }
-            let then_b = || branch(n.statements());
-            let else_b = || branch(n.else_clause().and_then(|e| e.statements()));
-            Parts {
-                cond: n.predicate(),
-                raw_if: else_b(),
-                raw_else: then_b(),
-                if_branch: then_b(),
-                else_branch: else_b(),
-                ternary: false,
-                keyword_if: false,
-            }
-        };
         let src = cx.src;
-
-        // offense?
-        if let Some(e) = &p.raw_else {
-            if matches!(kind::of(e), kind::IF_NODE | kind::UNLESS_NODE) {
-                return;
-            }
-            if send(e).is_some_and(|c| method_name(&c) == "[]=") {
-                return;
-            }
-        }
-        let synonymous = p.raw_if.as_ref().is_some_and(|i| eq(src, &p.cond, i))
-            || self.true_type_and_else_is_not(cx, &p)
-            || (p.branches_have_assignment()
-                && asgn(p.raw_if.as_ref().unwrap()).is_some_and(|(_, v)| eq(src, &p.cond, &v)))
-            || (p.branches_have_method(src)
-                && send(p.if_branch.as_ref().unwrap()).is_some_and(|c| {
-                    method_name(&c) != "[]" && eq(src, &p.cond, &send_args(&c)[0])
-                }));
-        if !synonymous {
-            return;
-        }
-        let else_ok = p.ternary
-            || p.raw_else.as_ref().is_none_or(|e| {
-                !generic_node(e) || src.line_of(range(e).0) == src.line_of(range(e).1)
-            });
-        if !else_ok {
-            return;
-        }
 
         let message = if p.else_branch.is_none() { REDUNDANT_CONDITION } else { MSG };
         let (node_start, node_end) = range(node);
@@ -319,6 +293,75 @@ impl Cop for RedundantCondition {
 }
 
 impl RedundantCondition {
+    /// `redundant_condition_offense?`: the node's parts when it is an offense.
+    fn offense<'pr>(&self, cx: &Cx, node: &Node<'pr>, ancestors: &[Node]) -> Option<Parts<'pr>> {
+        if is_pattern_guard(node, ancestors) {
+            return None;
+        }
+        let p = if let Some(n) = node.as_if_node() {
+            let kw = n.if_keyword_loc();
+            if kw.as_ref().is_some_and(|k| k.as_slice() == b"elsif") {
+                return None;
+            }
+            if kw.is_some() && n.end_keyword_loc().is_none() {
+                return None; // modifier
+            }
+            if n.subsequent().is_some_and(|s| s.as_if_node().is_some()) {
+                return None; // elsif_conditional?
+            }
+            let else_b = || branch(n.subsequent().and_then(|s| s.as_else_node()).and_then(|e| e.statements()));
+            let then_b = || branch(n.statements());
+            Parts {
+                cond: n.predicate(),
+                raw_if: then_b(),
+                raw_else: else_b(),
+                if_branch: then_b(),
+                else_branch: else_b(),
+                ternary: kw.is_none(),
+                keyword_if: kw.is_some(),
+            }
+        } else {
+            let n = node.as_unless_node()?;
+            n.end_keyword_loc()?;
+            let then_b = || branch(n.statements());
+            let else_b = || branch(n.else_clause().and_then(|e| e.statements()));
+            Parts {
+                cond: n.predicate(),
+                raw_if: else_b(),
+                raw_else: then_b(),
+                if_branch: then_b(),
+                else_branch: else_b(),
+                ternary: false,
+                keyword_if: false,
+            }
+        };
+        let src = cx.src;
+        if let Some(e) = &p.raw_else {
+            if matches!(kind::of(e), kind::IF_NODE | kind::UNLESS_NODE) {
+                return None;
+            }
+            if send(e).is_some_and(|c| method_name(&c) == "[]=") {
+                return None;
+            }
+        }
+        let synonymous = p.raw_if.as_ref().is_some_and(|i| eq(src, &p.cond, i))
+            || self.true_type_and_else_is_not(cx, &p)
+            || (p.branches_have_assignment()
+                && asgn(p.raw_if.as_ref().unwrap()).is_some_and(|(_, v)| eq(src, &p.cond, &v)))
+            || (p.branches_have_method(src)
+                && send(p.if_branch.as_ref().unwrap()).is_some_and(|c| {
+                    method_name(&c) != "[]" && eq(src, &p.cond, &send_args(&c)[0])
+                }));
+        if !synonymous {
+            return None;
+        }
+        let else_ok = p.ternary
+            || p.raw_else.as_ref().is_none_or(|e| {
+                !generic_node(e) || src.line_of(range(e).0) == src.line_of(range(e).1)
+            });
+        else_ok.then_some(p)
+    }
+
     /// `if_branch_is_true_type_and_else_is_not?`
     fn true_type_and_else_is_not(&self, cx: &Cx, p: &Parts) -> bool {
         if !(p.ternary || p.keyword_if) {
@@ -340,8 +383,8 @@ impl RedundantCondition {
         let src = cx.src;
         let raw_if = p.raw_if.as_ref()?;
         let raw_else = p.raw_else.as_ref()?;
-        let arith = arithmetic(raw_if);
         let has_method = p.branches_have_method(src);
+        let arith = has_method && binary_operator(raw_if);
         let if_paren = raw_if.as_call_node().is_some_and(|c| parenthesized(&c));
         let if_source = if has_method && if_paren {
             let s = node_text(raw_if);

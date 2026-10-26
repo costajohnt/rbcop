@@ -65,6 +65,41 @@ fn message_source(message: &Node) -> String {
         kind::STRING_NODE | kind::INTERPOLATED_STRING_NODE | kind::X_STRING_NODE | kind::INTERPOLATED_X_STRING_NODE => {
             src.to_string()
         }
+        _ if require_parentheses(message) => format!("({src}).to_s"),
         _ => format!("{src}.to_s"),
     }
+}
+
+/// `require_parentheses?(message)`
+fn require_parentheses(message: &Node) -> bool {
+    if let Some(c) = message.as_call_node().filter(|c| c.block().is_none_or(|b| b.as_block_node().is_none())) {
+        let name = method_name(&c);
+        let has_args = c.arguments().is_some() || c.block().is_some();
+        let parenthesized = c.opening_loc().is_some_and(|o| o.as_slice() == b"(");
+        return name != "[]" && (helpers::node_types::is_operator_method(name) || (has_args && !parenthesized));
+    }
+    // basic_literal?, variable?, const, self, begin, array
+    !matches!(
+        kind::of(message),
+        kind::STRING_NODE
+            | kind::SOURCE_FILE_NODE
+            | kind::INTEGER_NODE
+            | kind::SOURCE_LINE_NODE
+            | kind::FLOAT_NODE
+            | kind::SYMBOL_NODE
+            | kind::TRUE_NODE
+            | kind::FALSE_NODE
+            | kind::NIL_NODE
+            | kind::INSTANCE_VARIABLE_READ_NODE
+            | kind::GLOBAL_VARIABLE_READ_NODE
+            | kind::CLASS_VARIABLE_READ_NODE
+            | kind::LOCAL_VARIABLE_READ_NODE
+            | kind::IT_LOCAL_VARIABLE_READ_NODE
+            | kind::CONSTANT_READ_NODE
+            | kind::CONSTANT_PATH_NODE
+            | kind::SELF_NODE
+            | kind::PARENTHESES_NODE
+            | kind::BEGIN_NODE
+            | kind::ARRAY_NODE
+    )
 }

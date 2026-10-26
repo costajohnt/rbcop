@@ -85,6 +85,18 @@ fn preferred_argument(content: &str, double: bool) -> String {
     } else {
         '\''
     };
+    if quote == '"' {
+        // `#{`, `#$` and `#@` would start an interpolation in a double-quoted string.
+        let mut escaped = String::with_capacity(arg.len());
+        let mut chars = arg.chars().peekable();
+        while let Some(c) = chars.next() {
+            if c == '#' && chars.peek().is_some_and(|n| matches!(n, '{' | '$' | '@')) {
+                escaped.push('\\');
+            }
+            escaped.push(c);
+        }
+        arg = escaped;
+    }
     format!("{quote}{arg}{quote}")
 }
 
@@ -136,5 +148,6 @@ mod tests {
         assert_eq!(preferred_argument("it's", false), "'it\\'s'");
         assert_eq!(preferred_argument("\"x'", false), "'\"x\\''");
         assert_eq!(preferred_argument("a", true), "\"a\"");
+        assert_eq!(preferred_argument("a#{b", true), "\"a\\#{b\"");
     }
 }

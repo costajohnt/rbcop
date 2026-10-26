@@ -115,7 +115,7 @@ impl Cop for OperatorMethodCall {
                 src,
                 (o.start_offset(), o.end_offset()),
                 (c.start_offset(), c.end_offset()),
-                Some(range(rhs)),
+                Some(rhs),
                 heredoc,
                 None,
             ))
