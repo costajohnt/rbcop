@@ -209,9 +209,11 @@ pub fn to_modifier_form(cx: &Cx, s: &Stmt, parenthesize: bool) -> String {
 }
 
 fn if_body_source(body: &Node) -> String {
+    // unparenthesized_call_with_omitted_value?
     if let Some(c) = body.as_call_node()
         && c.block().is_none_or(|b| b.as_block_node().is_none())
         && method_name(&c) != "[]="
+        && c.closing_loc().is_none_or(|l| l.as_slice() != b")")
         && omitted_value_in_last_hash_arg(&c)
     {
         let start = body.location().start_offset();
@@ -225,7 +227,40 @@ fn if_body_source(body: &Node) -> String {
         let args: Vec<&str> = send_args(&c).iter().map(node_text).collect();
         return format!("{method_source}({})", args.join(", "));
     }
+    if let Some(value) = wrapped_value(body) {
+        let (b, v) = (body.location(), value.location());
+        let text = b.as_slice();
+        let prefix = String::from_utf8_lossy(&text[..v.start_offset() - b.start_offset()]);
+        let suffix = String::from_utf8_lossy(&text[v.end_offset() - b.start_offset()..]);
+        return format!("{prefix}{}{suffix}", if_body_source(&value));
+    }
     node_text(body).to_string()
+}
+
+/// StatementModifier#wrapped_value: the single argument of `return` / `next` / `break`, or the
+/// value of a variable or constant assignment.
+fn wrapped_value<'pr>(body: &Node<'pr>) -> Option<Node<'pr>> {
+    let args = match body {
+        Node::ReturnNode { .. } => body.as_return_node().unwrap().arguments(),
+        Node::NextNode { .. } => body.as_next_node().unwrap().arguments(),
+        Node::BreakNode { .. } => body.as_break_node().unwrap().arguments(),
+        _ => {
+            return match body {
+                Node::LocalVariableWriteNode { .. } => Some(body.as_local_variable_write_node().unwrap().value()),
+                Node::InstanceVariableWriteNode { .. } => Some(body.as_instance_variable_write_node().unwrap().value()),
+                Node::ClassVariableWriteNode { .. } => Some(body.as_class_variable_write_node().unwrap().value()),
+                Node::GlobalVariableWriteNode { .. } => Some(body.as_global_variable_write_node().unwrap().value()),
+                Node::ConstantWriteNode { .. } => Some(body.as_constant_write_node().unwrap().value()),
+                Node::ConstantPathWriteNode { .. } => Some(body.as_constant_path_write_node().unwrap().value()),
+                _ => None,
+            };
+        }
+    };
+    let mut args = args?.arguments().iter();
+    match (args.next(), args.next()) {
+        (Some(a), None) => Some(a),
+        _ => None,
+    }
 }
 
 fn omitted_value_in_last_hash_arg(c: &ruby_prism::CallNode) -> bool {
@@ -271,10 +306,18 @@ pub fn parenthesize(ancestors: &[Node]) -> bool {
     if is_assignment(parent) || matches!(parent, Node::AndNode { .. } | Node::OrNode { .. }) {
         return true;
     }
-    if matches!(parent, Node::ArrayNode { .. } | Node::AssocNode { .. }) {
+    // `parent.type?(:array, :pair, :call, :yield, :super)`
+    if matches!(parent, Node::ArrayNode { .. } | Node::AssocNode { .. } | Node::YieldNode { .. } | Node::SuperNode { .. })
+    {
         return true;
     }
-    parent.as_call_node().is_some_and(|c| !is_csend(&c) && c.block().is_none_or(|b| b.as_block_node().is_none()))
+    // A call owning a block is the parser parent only from its receiver or arguments.
+    if parent.as_call_node().is_some() {
+        return true;
+    }
+    // ternary_branch_or_endless_method_body?
+    parent.as_if_node().is_some_and(|i| i.if_keyword_loc().is_none())
+        || parent.as_def_node().is_some_and(|d| d.equal_loc().is_some())
 }
 
 /// LineLengthHelp#find_excessive_range for URIs, in character columns.

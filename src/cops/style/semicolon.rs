@@ -9,7 +9,9 @@ pub struct Semicolon;
 
 const MSG: &str = "Do not use semicolons to terminate expressions.";
 
-type Pair = ((usize, usize), (usize, usize), Option<usize>);
+/// The arguments of a call: (end of its selector or keyword, first argument start, last argument range).
+type Args = (usize, usize, (usize, usize));
+type Pair = ((usize, usize), Option<Args>);
 
 /// What the corrector and `on_begin` need from the AST, gathered in one pre-order walk.
 #[derive(Default)]
@@ -18,14 +20,14 @@ struct Facts {
     begins: Vec<((usize, usize), Vec<usize>)>,
     /// irange/erange nodes, pre-order.
     ranges: Vec<(usize, usize)>,
-    /// Value-omission pairs: (pair range, hash range, selector end of the hash's parent call).
+    /// Value-omission pairs: (pair range, the arguments of the call the hash is an argument of).
     pairs: Vec<Pair>,
     /// Heredoc openings: (start, end).
     heredocs: Vec<(usize, usize)>,
     /// `{` tokens opening a hash literal (parser tLBRACE, not tLCURLY).
     hash_braces: HashSet<usize>,
-    /// Keyword hash argument start -> selector end of its call.
-    call_sel: HashMap<usize, usize>,
+    /// Keyword hash argument start -> the arguments of its call, super or yield.
+    call_sel: HashMap<usize, Args>,
 }
 
 fn span(node: &Node) -> (usize, usize) {
@@ -66,23 +68,31 @@ impl<'pr> Visit<'pr> for Facts {
 
     fn visit_hash_node(&mut self, node: &ruby_prism::HashNode<'pr>) {
         self.hash_braces.insert(node.opening_loc().start_offset());
-        self.pairs_of(node.elements().iter(), span(&node.as_node()), None);
+        self.pairs_of(node.elements().iter(), None);
         ruby_prism::visit_hash_node(self, node);
     }
 
     fn visit_keyword_hash_node(&mut self, node: &ruby_prism::KeywordHashNode<'pr>) {
-        let sel = self.call_sel.get(&node.location().start_offset()).copied();
-        self.pairs_of(node.elements().iter(), span(&node.as_node()), sel);
+        let args = self.call_sel.get(&node.location().start_offset()).copied();
+        self.pairs_of(node.elements().iter(), args);
         ruby_prism::visit_keyword_hash_node(self, node);
     }
 
     fn visit_call_node(&mut self, node: &ruby_prism::CallNode<'pr>) {
-        if let (Some(sel), Some(args)) = (node.message_loc(), node.arguments()) {
-            for a in args.arguments().iter().filter(|a| a.as_keyword_hash_node().is_some()) {
-                self.call_sel.insert(a.location().start_offset(), sel.end_offset());
-            }
+        if let Some(sel) = node.message_loc() {
+            self.call_args(sel.end_offset(), node.arguments(), node.block());
         }
         ruby_prism::visit_call_node(self, node);
+    }
+
+    fn visit_super_node(&mut self, node: &ruby_prism::SuperNode<'pr>) {
+        self.call_args(node.keyword_loc().end_offset(), node.arguments(), node.block());
+        ruby_prism::visit_super_node(self, node);
+    }
+
+    fn visit_yield_node(&mut self, node: &ruby_prism::YieldNode<'pr>) {
+        self.call_args(node.keyword_loc().end_offset(), node.arguments(), None);
+        ruby_prism::visit_yield_node(self, node);
     }
 
     fn visit_string_node(&mut self, node: &ruby_prism::StringNode<'pr>) {
@@ -108,11 +118,22 @@ impl Facts {
         }
     }
 
-    fn pairs_of<'pr>(&mut self, elements: impl Iterator<Item = Node<'pr>>, hash: (usize, usize), sel: Option<usize>) {
+    fn pairs_of<'pr>(&mut self, elements: impl Iterator<Item = Node<'pr>>, args: Option<Args>) {
         for e in elements {
             if e.as_assoc_node().is_some_and(|a| a.value().as_implicit_node().is_some()) {
-                self.pairs.push((span(&e), hash, sel));
+                self.pairs.push((span(&e), args));
             }
+        }
+    }
+
+    /// Records the arguments of a call, super or yield for its keyword hash arguments.
+    fn call_args(&mut self, sel_end: usize, args: Option<ruby_prism::ArgumentsNode>, block: Option<Node>) {
+        let mut all: Vec<Node> = args.map(|a| a.arguments().iter().collect()).unwrap_or_default();
+        all.extend(block.filter(|b| b.as_block_argument_node().is_some()));
+        let (Some(first), Some(last)) = (all.first(), all.last()) else { return };
+        let a = (sel_end, first.location().start_offset(), span(last));
+        for h in all.iter().filter(|a| a.as_keyword_hash_node().is_some()) {
+            self.call_sel.insert(h.location().start_offset(), a);
         }
     }
 }
@@ -175,25 +196,28 @@ impl Cop for Semicolon {
                 let t = *at(pos).unwrap();
                 let before = *at(if pos == -1 { -2 } else { pos }).unwrap_or(&t);
                 let (s, e) = (t.start, t.start + 1);
-                // The corrector's node: a range to wrap, or a keyword hash (plus the space to remove).
+                // The corrector's node: a range to wrap, or the arguments to parenthesize.
                 let mut wrap: Option<(usize, usize)> = None;
-                let mut space: Option<(usize, usize)> = None;
+                let mut args: Option<Args> = None;
                 let tb = (before.start, before.end);
                 if matches!(before.kind, sys::PM_TOKEN_DOT_DOT | sys::PM_TOKEN_DOT_DOT_DOT) {
                     wrap = facts.ranges.iter().copied().find(|r| overlaps(*r, tb));
-                } else if before.kind == sys::PM_TOKEN_LABEL {
-                    let Some(&(_, hash, sel)) = facts.pairs.iter().find(|p| overlaps(p.0, tb)) else { continue };
-                    // `node.parent.loc.selector` raises when the hash is not a call argument.
-                    let Some(sel) = sel else { continue };
-                    wrap = Some(hash);
-                    space = Some((sel, hash.0));
+                } else if before.kind == sys::PM_TOKEN_LABEL
+                    && let Some(&(_, a)) = facts.pairs.iter().find(|p| overlaps(p.0, tb))
+                {
+                    // `args_begin(call)` raises when the hash is not an argument of a call, super
+                    // or yield. No pair (a keyword parameter, a hash pattern): nothing to wrap.
+                    let Some(a) = a else { continue };
+                    args = Some(a);
                 }
                 cx.add_fix(s, e, MSG, |c| {
-                    if let Some((a, b)) = space {
-                        c.remove(a, b);
-                    }
                     if let Some((a, b)) = wrap {
                         c.wrap(a, b, "(", ")");
+                    }
+                    if let Some((sel, first, last)) = args {
+                        // `args_begin(call).begin.join(first_argument.begin)` becomes `(`.
+                        c.replace(sel, first, "(");
+                        c.insert_after(last.0, last.1, ")");
                     }
                     c.remove(s, e);
                 });

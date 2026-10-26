@@ -70,15 +70,16 @@ fn uncorrectable(src: &Source, part: &Node) -> bool {
     v.0 > usize::from(own)
 }
 
-fn adjust_str_literal(node: &Node, path: &str) -> String {
+fn adjust_str_literal(node: &Node) -> String {
     let src = node_text(node);
-    let value: Vec<u8> = match node.as_string_node() {
-        Some(s) => s.unescaped().to_vec(),
-        None => path.as_bytes().to_vec(),
-    };
-    if src.starts_with('\'') {
+    // file_keyword?: `__FILE__` is interpolated as written.
+    let Some(s) = node.as_string_node() else { return format!("#{{{src}}}") };
+    let value = s.unescaped().to_vec();
+    // single_quoted? / double_quoted?: only a literal with its own opening quote.
+    let quoted = s.opening_loc().is_some();
+    if quoted && src.starts_with('\'') {
         ESCAPE.replace_all(&String::from_utf8_lossy(&value), r"\$1").into_owned()
-    } else if src.starts_with('"') {
+    } else if quoted && src.starts_with('"') {
         src[1..src.len() - 1].to_string()
     } else {
         let s = ruby_string::inspect(&value);
@@ -86,9 +87,9 @@ fn adjust_str_literal(node: &Node, path: &str) -> String {
     }
 }
 
-fn adjust_str(node: &Node, path: &str) -> String {
+fn adjust_str(node: &Node) -> String {
     let children: Vec<Node> = match kind::of(node) {
-        kind::STRING_NODE | kind::SOURCE_FILE_NODE => return adjust_str_literal(node, path),
+        kind::STRING_NODE | kind::SOURCE_FILE_NODE => return adjust_str_literal(node),
         kind::INTERPOLATED_STRING_NODE => node.as_interpolated_string_node().unwrap().parts().iter().collect(),
         kind::EMBEDDED_STATEMENTS_NODE => {
             let e = node.as_embedded_statements_node().unwrap();
@@ -104,13 +105,13 @@ fn adjust_str(node: &Node, path: &str) -> String {
         },
         _ => return format!("#{{{}}}", node_text(node)),
     };
-    children.iter().map(|c| adjust_str(c, path)).collect()
+    children.iter().map(adjust_str).collect()
 }
 
-fn replacement(parts: &[Node], path: &str) -> String {
+fn replacement(parts: &[Node]) -> String {
     let inner: String = parts
         .iter()
-        .map(|p| adjust_str(p, path))
+        .map(adjust_str)
         .map(|s| if s == "\"" { "\\\"".to_string() } else { s })
         .collect();
     format!("\"{inner}\"")
@@ -174,7 +175,7 @@ impl Cop for StringConcatenation {
             above[i].as_call_node().is_some_and(|c| !is_csend(&c) && !owns_block && corrected.contains(&send_range(&c)))
         });
         let edit = !corrected_ancestor && !parts.iter().any(|p| uncorrectable(cx.src, p));
-        let fixed = if edit { replacement(&parts, &cx.src.absolute_path()) } else { String::new() };
+        let fixed = if edit { replacement(&parts) } else { String::new() };
         let done = Cell::new(false);
         cx.add_fix(range.0, range.1, "Prefer string interpolation to string concatenation.", |c| {
             if edit {

@@ -55,7 +55,10 @@ fn range_size(r: &ruby_prism::RangeNode) -> Size {
             Some(n) => int_literal_value(&n),
         }
     };
-    let (Some(low), Some(high)) = (val(r.left()), val(r.right())) else { return Size::Unknown };
+    // An endless range takes the rest of the collection, whatever its size.
+    let (Some(low), Some(high)) = (val(r.left()), r.right().and_then(|h| int_literal_value(&h))) else {
+        return Size::Unknown;
+    };
     if low != 0 || high < 0 {
         return Size::Unknown;
     }

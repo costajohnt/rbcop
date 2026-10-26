@@ -121,9 +121,9 @@ impl Cop for RequireOrder {
                 break;
             }
             let (Some(a), Some(b)) = (&mine, str_value(arguments(&sib).first())) else { break };
+            // The oldest such sibling, not the nearest one.
             if *a < b {
                 found = Some(k);
-                break;
             }
         }
         let Some(k) = found else { return };
@@ -147,12 +147,29 @@ impl Cop for RequireOrder {
             range_by_whole_lines(src.text, start, end, true)
         };
         let range1 = with_comments(k);
-        let range2 = with_comments(pos);
-        let moved = src.slice(range2.0, range2.1).to_string();
+        let mut range2 = with_comments(pos);
+        let mut moved = src.slice(range2.0, range2.1).to_string();
+        // The last line without a newline: move it with the newline before it.
+        if !moved.ends_with('\n') {
+            moved.push('\n');
+            range2.0 = range2.0.saturating_sub(1);
+        }
+        // own_lines?: both statements alone on their lines (a trailing comment allowed).
+        let own_lines = |i: usize| {
+            let l = list[i].location();
+            let (s, e) = (l.start_offset(), l.end_offset());
+            let line_start = src.text[..s].rfind('\n').map_or(0, |p| p + 1);
+            let line_end = src.text[e..].find('\n').map_or(src.text.len(), |p| e + p);
+            let rest = src.text[e..line_end].trim_start();
+            src.text[line_start..s].trim().is_empty() && (rest.is_empty() || rest.starts_with('#'))
+        };
+        let correct = own_lines(k) && own_lines(pos);
         let (start, end) = send_range(&call);
         cx.add_fix(start, end, format!("Sort `{method}` in alphabetical order."), |c| {
-            c.remove(range2.0, range2.1);
-            c.insert_before(range1.0, range1.1, &moved);
+            if correct {
+                c.remove(range2.0, range2.1);
+                c.insert_before(range1.0, range1.0, &moved);
+            }
         });
     }
 }
