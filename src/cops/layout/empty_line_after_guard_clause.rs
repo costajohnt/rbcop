@@ -11,7 +11,7 @@ static SIMPLECOV: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"\A#\s*(?::nocov:|simplecov\s*:\s*(?:disable|enable)\b)").unwrap());
 
 /// IfNode#if_branch when it is a single statement (a `begin` is never a guard clause).
-fn if_branch<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
+pub(crate) fn if_branch<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
     let stmts = match kind::of(node) {
         kind::IF_NODE => node.as_if_node().unwrap().statements(),
         kind::UNLESS_NODE => node.as_unless_node().unwrap().statements(),
@@ -39,7 +39,7 @@ fn guard_clause_branch(node: &Node) -> bool {
 }
 
 /// Node#guard_clause?: the rhs of and/or, matching the pattern and on a single line.
-fn guard_clause(src: &Source, node: &Node) -> bool {
+pub(crate) fn guard_clause(src: &Source, node: &Node) -> bool {
     let node = match kind::of(node) {
         kind::AND_NODE => node.as_and_node().unwrap().right(),
         kind::OR_NODE => node.as_or_node().unwrap().right(),
