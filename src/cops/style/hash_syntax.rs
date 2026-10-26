@@ -152,6 +152,20 @@ fn last_expression(anc: &[Node], i: usize) -> bool {
     !has_right_sibling(anc, a)
 }
 
+/// HashShorthandSyntax::KEYWORDS: a keyword parameter (`def foo(if:)`) can only be passed as an
+/// omitted value, `{ if: }`, since `{ if: if }` is invalid Ruby.
+const KEYWORDS: &[&str] = &[
+    "__ENCODING__", "__FILE__", "__LINE__", "BEGIN", "END", "alias", "and", "begin", "break", "case", "class",
+    "def", "do", "else", "elsif", "end", "ensure", "false", "for", "if", "in", "module", "next", "nil", "not",
+    "or", "redo", "rescue", "retry", "return", "self", "super", "then", "true", "undef", "unless", "until",
+    "when", "while", "yield",
+];
+
+/// keyword_value?: `pair.key.value` is a keyword (only an omitted value can carry one).
+fn keyword_value(p: &Pair, src: &str) -> bool {
+    p.omitted && KEYWORDS.contains(&&src[p.key.0..p.key.1])
+}
+
 struct Ctx<'a> {
     style: Style,
     shorthand: &'a str,
@@ -300,31 +314,6 @@ impl Cop for HashSyntax {
             });
         };
 
-        // on_hash_for_mixed_shorthand
-        if ctx.ruby > 3.0 && matches!(ctx.shorthand, "consistent" | "either_consistent") && !rockets_enforced {
-            let omitted: Vec<&Pair> = pairs.iter().filter(|p| p.omitted).collect();
-            let needed: Vec<&Pair> = pairs.iter().filter(|p| !p.omitted && require_value(p)).collect();
-            let omittable: Vec<&Pair> = pairs.iter().filter(|p| !p.omitted && !require_value(p)).collect();
-            let kinds = [!omitted.is_empty(), !needed.is_empty(), !omittable.is_empty()].iter().filter(|&&b| b).count();
-            if kinds > 1 {
-                if !needed.is_empty() {
-                    for p in omitted {
-                        let k = text(p.key);
-                        shorthand_offense(cx, p, MIX_EXPLICIT, format!("{k}: {k}"));
-                    }
-                } else {
-                    for p in omittable {
-                        shorthand_offense(cx, p, MIX_OMIT, format!("{}:", text(p.key)));
-                    }
-                }
-            } else if needed.is_empty() && !(kinds == 1 && !omittable.is_empty() && ctx.shorthand == "either_consistent") {
-                for p in omittable {
-                    shorthand_offense(cx, p, OMIT, format!("{}:", text(p.key)));
-                }
-            }
-        }
-
-        // Key style.
         let prefer_rockets_non_alnum = cx.cfg.bool("PreferHashRocketsForNonAlnumEndingSymbols") == Some(true);
         let word_symbol_pair = |p: &Pair| {
             if !p.any_sym {
@@ -344,6 +333,40 @@ impl Cop for HashSyntax {
             (k.starts_with('\'') && k.ends_with('\'')) || (k.starts_with('"') && k.ends_with('"'))
         };
         let sym_indices = pairs.iter().all(word_symbol_pair);
+        // hash_rockets_enforced? as HashShorthandSyntax sees it: no_mixed_keys styles that will
+        // turn the keys into hash rockets enforce them too.
+        let shorthand_rockets = rockets_enforced
+            || match style {
+                Style::NoMixedKeys => !sym_indices || pairs[0].rocket,
+                Style::Ruby19NoMixedKeys => !sym_indices,
+                _ => false,
+            };
+
+        // on_hash_for_mixed_shorthand
+        if ctx.ruby > 3.0 && matches!(ctx.shorthand, "consistent" | "either_consistent") && !shorthand_rockets {
+            let omitted: Vec<&Pair> = pairs.iter().filter(|p| p.omitted).collect();
+            let needed: Vec<&Pair> = pairs.iter().filter(|p| !p.omitted && require_value(p)).collect();
+            let omittable: Vec<&Pair> = pairs.iter().filter(|p| !p.omitted && !require_value(p)).collect();
+            let kinds = [!omitted.is_empty(), !needed.is_empty(), !omittable.is_empty()].iter().filter(|&&b| b).count();
+            if kinds > 1 {
+                if !needed.is_empty() {
+                    for p in omitted.into_iter().filter(|p| !keyword_value(p, src.text)) {
+                        let k = text(p.key);
+                        shorthand_offense(cx, p, MIX_EXPLICIT, format!("{k}: {k}"));
+                    }
+                } else {
+                    for p in omittable {
+                        shorthand_offense(cx, p, MIX_OMIT, format!("{}:", text(p.key)));
+                    }
+                }
+            } else if needed.is_empty() && !(kinds == 1 && !omittable.is_empty() && ctx.shorthand == "either_consistent") {
+                for p in omittable {
+                    shorthand_offense(cx, p, OMIT, format!("{}:", text(p.key)));
+                }
+            }
+        }
+
+        // Key style.
         let first_colon = !pairs[0].rocket;
         let (delim_rocket, msg) = if rockets_enforced {
             (false, MSG_HASH_ROCKETS)
@@ -381,6 +404,9 @@ impl Cop for HashSyntax {
                     cx.correct_style_detected();
                     continue;
                 }
+                if keyword_value(p, src.text) {
+                    continue;
+                }
                 if cx.block_runs(p.key.0, p.op.1) {
                     cx.style_detected(alternative);
                 }
@@ -392,7 +418,13 @@ impl Cop for HashSyntax {
                     if p.omitted {
                         k.push_str(key_src);
                     }
-                    let op_r = range_with_surrounding_space(src.text, op.0, op.1, Surrounding::default());
+                    // operator_range: an omitted value keeps the newline after the colon.
+                    let op_r = range_with_surrounding_space(
+                        src.text,
+                        op.0,
+                        op.1,
+                        Surrounding { newlines: !p.omitted, ..Default::default() },
+                    );
                     (k, op_r, None)
                 } else {
                     let r = range_with_surrounding_space(
@@ -422,7 +454,7 @@ impl Cop for HashSyntax {
         }
 
         // on_pair (HashShorthandSyntax)
-        if ctx.ruby > 3.0 && matches!(ctx.shorthand, "always" | "never") && !rockets_enforced {
+        if ctx.ruby > 3.0 && matches!(ctx.shorthand, "always" | "never") && !shorthand_rockets {
             for p in &pairs {
                 let k = text(p.key);
                 if ctx.shorthand == "always" {
@@ -431,7 +463,7 @@ impl Cop for HashSyntax {
                     }
                     cx.no_acceptable_style();
                     shorthand_offense(cx, p, OMIT, format!("{k}:"));
-                } else if p.omitted {
+                } else if p.omitted && !keyword_value(p, src.text) {
                     shorthand_offense(cx, p, EXPLICIT, format!("{k}: {k}"));
                 }
             }

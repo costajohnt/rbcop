@@ -1,3 +1,4 @@
+use crate::helpers::parser_parent::parser_parent;
 use crate::prelude::*;
 use ruby_prism::{CallNode, Visit};
 
@@ -114,13 +115,33 @@ impl InverseMethods {
         let not_start = call.message_loc().map_or(me.0, |l| l.start_offset());
         let mc = send_range(&method_call);
         let remove_end = matches!(method, "==" | "!=" | "=~" | "!~" | "<=" | ">=" | "<" | ">") || in_parens;
+        // keep_parentheses?: `!(a == b) == c` and `!(a == b).foo` keep the parentheses that make
+        // the inverted operator an operand.
+        let node_parens = call.closing_loc().is_some_and(|l| l.as_slice() == b")");
+        let keep = (recv.as_parentheses_node().is_some() || node_parens)
+            && helpers::node_types::is_operator_method(method)
+            && parser_parent(cx.ancestors).and_then(|p| p.as_call_node()).is_some_and(|p| {
+                let name = method_name(&p);
+                let binary = helpers::node_types::is_operator_method(name)
+                    && p.call_operator_loc().is_none()
+                    && name != "[]"
+                    && name != "[]=";
+                binary || p.receiver().is_some_and(|r| range(&r) == me)
+            });
+        let recv_start = recv.location().start_offset();
         let msg = format!("Use `{inverse}` instead of inverting `{method}`.");
         cx.add_fix(me.0, me.1, msg, |c| {
-            c.remove(not_start, mc.0);
-            c.replace(sel.start_offset(), sel.end_offset(), &inverse);
-            if remove_end {
-                c.remove(mc.1, me.1);
+            if !keep {
+                c.remove(not_start, mc.0);
+                if remove_end {
+                    c.remove(mc.1, me.1);
+                }
+            } else if node_parens {
+                c.remove(not_start, call.message_loc().map_or(not_start, |l| l.end_offset()));
+            } else {
+                c.remove(not_start, recv_start);
             }
+            c.replace(sel.start_offset(), sel.end_offset(), &inverse);
         });
     }
 

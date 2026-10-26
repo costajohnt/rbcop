@@ -112,14 +112,15 @@ fn begin_children<'pr>(n: &Node<'pr>) -> Vec<Node<'pr>> {
     }
 }
 
-/// find_containing_collection: an array, a send/csend or (via a pair) a hash holding the node.
+/// find_containing_collection: an array, a send/csend, an `and`/`or` or (via a pair) a hash
+/// holding the node.
 fn find_containing_collection<'a, 'pr>(ancestors: &'a [Node<'pr>]) -> Option<&'a Node<'pr>> {
     let mut i = parser_parent_index(ancestors, ancestors.len())?;
     if is_parser_begin(&ancestors[i]) {
         i = parser_parent_index(ancestors, i)?;
     }
     match &ancestors[i] {
-        Node::ArrayNode { .. } => Some(&ancestors[i]),
+        Node::ArrayNode { .. } | Node::AndNode { .. } | Node::OrNode { .. } => Some(&ancestors[i]),
         Node::CallNode { .. } if ancestors.get(i + 1).is_none_or(|n| n.as_block_node().is_none()) => Some(&ancestors[i]),
         Node::AssocNode { .. } => parser_parent_index(ancestors, i).map(|p| &ancestors[p]),
         _ => None,
@@ -135,6 +136,14 @@ fn collection_children<'pr>(c: &Node<'pr>) -> Vec<Node<'pr>> {
         Node::CallNode { .. } => {
             let call = c.as_call_node().unwrap();
             call.receiver().into_iter().chain(send_args(&call)).collect()
+        }
+        Node::AndNode { .. } => {
+            let n = c.as_and_node().unwrap();
+            vec![n.left(), n.right()]
+        }
+        Node::OrNode { .. } => {
+            let n = c.as_or_node().unwrap();
+            vec![n.left(), n.right()]
         }
         _ => Vec::new(),
     }
@@ -249,7 +258,7 @@ fn defined_argument_is_undefined(cx: &Cx, if_range: (usize, usize), defined: &No
 }
 
 /// The modifier-form autocorrection (MSG_USE_NORMAL): (removals, replacement).
-fn replacement_for_modifier_form(cx: &Cx, s: &Stmt, max: f64) -> (Vec<(usize, usize)>, String) {
+fn replacement_for_modifier_form(cx: &Cx, node: &Node, s: &Stmt, max: f64) -> (Vec<(usize, usize)>, String) {
     let src = cx.src;
     let indent = " ".repeat(src.column(s.range.0));
     let body = s.body.as_ref().unwrap();
@@ -266,52 +275,51 @@ fn replacement_for_modifier_form(cx: &Cx, s: &Stmt, max: f64) -> (Vec<(usize, us
             return (vec![removal], format!("{ctext}\n{indent}{} {kw} {cond}", node_text(body)));
         }
     }
-    let last_arg = body
-        .as_call_node()
-        .filter(|c| !is_csend(c) && c.block().is_none_or(|b| b.as_block_node().is_none()))
-        .and_then(|c| send_args(&c).into_iter().last());
-    if let Some(arg) = last_arg
-        && let Some((_, (end_s, end_e), _)) = heredoc::parts(&arg)
-    {
-        let body_start = heredoc_body_start(&arg).map_or(end_s, |f| src.line_start(src.line_of(f)));
-        let body_src = src.slice(body_start, end_s);
-        let body_src = body_src.strip_suffix('\n').unwrap_or(body_src);
-        let end_src = src.slice(end_s, end_e);
-        let removals = vec![
-            range_by_whole_lines(src.text, body_start, end_s, true),
-            range_by_whole_lines(src.text, end_s, end_e, true),
-        ];
-        let text = format!(
-            "{kw} {cond}\n{indent}  {}\n{indent}  {body_src}\n{indent}  {end_src}\n{indent}end",
-            node_text(body)
-        );
-        return (removals, text);
+    // heredoc_ranges_in(node): every heredoc of the if node moves below the line it is opened on.
+    let ranges = heredoc_ranges_in(src, node);
+    if !ranges.is_empty() {
+        let removals = ranges.iter().map(|&(a, b)| range_by_whole_lines(src.text, a, b, true)).collect();
+        let mut lines = vec![format!("{kw} {cond}")];
+        lines.extend(heredoc_ranges_in(src, &s.condition).into_iter().map(|(a, b)| src.slice(a, b).to_string()));
+        lines.push(format!("{indent}  {}", node_text(body)));
+        lines.extend(heredoc_ranges_in(src, body).into_iter().map(|(a, b)| src.slice(a, b).to_string()));
+        lines.push(format!("{indent}end"));
+        return (removals, lines.join("\n"));
     }
     (Vec::new(), format!("{kw} {cond}\n{indent}  {}\n{indent}end", node_text(body)))
 }
 
-/// Offset of the first body character of a heredoc (None when the body is empty).
-fn heredoc_body_start(node: &Node) -> Option<usize> {
-    let first = match node {
-        Node::StringNode { .. } => {
-            let s = node.as_string_node().unwrap();
-            let c = s.content_loc();
-            if c.start_offset() == c.end_offset() {
-                return None;
-            }
-            c.start_offset()
+/// heredoc_ranges_in: whole-line ranges (final newline excluded) from each heredoc's body to its
+/// terminator, for the heredocs of `node` (itself included) that are not inside another one's.
+fn heredoc_ranges_in(src: &crate::source::Source, node: &Node) -> Vec<(usize, usize)> {
+    #[derive(Default)]
+    struct Heredocs(Vec<(usize, usize)>);
+    impl<'pr> Visit<'pr> for Heredocs {
+        fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
+            self.add(&node);
         }
-        Node::XStringNode { .. } => {
-            let c = node.as_x_string_node().unwrap().content_loc();
-            if c.start_offset() == c.end_offset() {
-                return None;
-            }
-            c.start_offset()
+        fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
+            self.add(&node);
         }
-        Node::InterpolatedStringNode { .. } => node.as_interpolated_string_node().unwrap().parts().iter().next()?.location().start_offset(),
-        _ => node.as_interpolated_x_string_node()?.parts().iter().next()?.location().start_offset(),
-    };
-    Some(first)
+    }
+    impl Heredocs {
+        fn add(&mut self, node: &Node) {
+            if let Some((_, end, _)) = heredoc::parts(node) {
+                let start = heredoc::body_range(node).map_or(end.0, |b| b.0.min(end.0));
+                self.0.push((start, end.1));
+            }
+        }
+    }
+    let mut v = Heredocs::default();
+    v.visit(node);
+    let ranges: Vec<(usize, usize)> =
+        v.0.into_iter().map(|(a, b)| range_by_whole_lines(src.text, a, b, false)).collect();
+    // A heredoc opened in another heredoc's interpolation is moved along with it.
+    ranges
+        .iter()
+        .copied()
+        .filter(|r| !ranges.iter().any(|o| o != r && o.0 <= r.0 && r.1 <= o.1))
+        .collect()
 }
 
 impl Cop for IfUnlessModifier {
@@ -350,11 +358,18 @@ impl Cop for IfUnlessModifier {
         } else {
             return;
         };
+        // modifier_sharing_line_in_logical_operator?
+        if s.modifier_form()
+            && find_containing_collection(cx.ancestors).is_some_and(helpers::parser_parent::is_operator_keyword)
+            && another_modifier_if_on_same_line(cx, &s)
+        {
+            return;
+        }
         let (start, end) = s.range;
         let skip = cx.state::<Ignored>().0.iter().any(|&(a, b)| a <= start && end <= b)
             || another_modifier_if_on_same_line(cx, &s);
         let (removals, replacement) = if s.modifier_form() {
-            replacement_for_modifier_form(cx, &s, sm::max_line_length(cx).unwrap_or(f64::INFINITY))
+            replacement_for_modifier_form(cx, node, &s, sm::max_line_length(cx).unwrap_or(f64::INFINITY))
         } else {
             (Vec::new(), sm::to_modifier_form(cx, &s, parenthesize))
         };
