@@ -575,6 +575,11 @@ const KEYS: &[&str] = &[
 /// The DisabledConfigFormatter `--auto-gen-config` writes `.rubocop_todo.yml` with.
 pub const TODO: &str = "rbcop-todo";
 
+/// FormatterSet#add_formatter: a `-f` key naming a Ruby class (custom_formatter_class).
+pub fn is_class(key: &str) -> bool {
+    key.starts_with(|c: char| c.is_ascii_uppercase()) || key.starts_with("::")
+}
+
 /// FormatterSet#builtin_formatter_class: the formatter name for a `-f` key.
 pub fn resolve(key: &str) -> Result<&'static str, String> {
     // Not a RuboCop formatter: emacs plus each offense's end position, matched by
@@ -582,7 +587,7 @@ pub fn resolve(key: &str) -> Result<&'static str, String> {
     if key == "rbcop-oracle" {
         return Ok("rbcop-oracle");
     }
-    if key.starts_with(|c: char| c.is_ascii_uppercase()) || key.starts_with("::") {
+    if is_class(key) {
         return Err(format!("custom formatter classes are not supported by rbcop: {key}"));
     }
     let m: Vec<&str> = KEYS
