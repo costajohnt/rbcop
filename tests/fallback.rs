@@ -751,6 +751,29 @@ fn fallback_is_the_default() {
     let out = child.wait_with_output().unwrap();
     assert!(text(&out.stdout).contains("publishDiagnostics"), "{}", text(&out.stdout));
     assert!(!text(&out.stderr).contains("rbcop: running"), "{}", text(&out.stderr));
+    // So does the MCP server, for both tools.
+    let logged = fs::read_to_string(bin.join("log")).unwrap();
+    let mcp = "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"rubocop_inspection\",\
+               \"arguments\":{\"path\":\"a.rb\"}}}\n{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"tools/call\",\"params\":\
+               {\"name\":\"rubocop_autocorrection\",\"arguments\":{\"source_code\":\"foo(1)\\n\",\"safety\":true}}}\n";
+    let mut child = common::command(env!("CARGO_BIN_EXE_rbcop"))
+        .env_remove("RBCOP_FALLBACK")
+        .env("HOME", &dir)
+        .env("PATH", &bin)
+        .arg("--mcp")
+        .current_dir(&dir)
+        .stdin(std::process::Stdio::piped())
+        .stdout(std::process::Stdio::piped())
+        .stderr(std::process::Stdio::piped())
+        .spawn()
+        .unwrap();
+    let _ = std::io::Write::write_all(&mut child.stdin.take().unwrap(), mcp.as_bytes());
+    let out = child.wait_with_output().unwrap();
+    assert_eq!(text(&out.stdout).matches("\"isError\":false").count(), 2, "{}", text(&out.stdout));
+    assert!(!text(&out.stderr).contains("rbcop: running"), "{}", text(&out.stderr));
+    assert_eq!(fs::read_to_string(bin.join("log")).unwrap(), logged);
+    let out = run(&[], &["--mcp", "-r", "./no_foo.rb"]);
+    assert_eq!((text(&out.stderr), out.status.code()), (refused.to_string(), Some(2)));
     // Options parse to the end, abbreviated too: `-r` with `--ls` (--lsp) is not handed to RuboCop.
     for args in [&["-r", "./no_foo.rb", "--ls"][..], &["--lsp", "-r", "./no_foo.rb"]] {
         let out = run(&[], args);

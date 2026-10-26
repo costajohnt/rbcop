@@ -40,8 +40,9 @@ pub fn find(
                     files.push(f);
                 }
             }
-        } else if abs.exists() {
-            // TargetFinder#process_explicit_path: included_file? under either option, then
+        } else {
+            // TargetFinder#process_explicit_path (a missing file too: the caller fails reading it):
+            // included_file? under either option, then
             // without_excluded under --force-exclusion. included_file? comes first: for an
             // extensionless file ruby_executable? loads the file's directory config, excluded or not.
             if force_exclusion || only_recognized {
@@ -53,8 +54,6 @@ pub fn find(
                 }
             }
             files.push(abs);
-        } else {
-            return Err(format!("{}: No such file or directory", arg.display()));
         }
     }
     let mut seen = std::collections::HashSet::new();
