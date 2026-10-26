@@ -49,9 +49,19 @@ impl Cop for RedundantDirGlobSort {
         let (Some(sel), Some(dot)) = (call.message_loc(), call.call_operator_loc()) else { return };
         let (s, e) = (sel.start_offset(), sel.end_offset());
         let (ds, de) = (dot.start_offset(), dot.end_offset());
+        // A comment on the lines of `.sort` keeps the space around it; otherwise the space before
+        // the dot goes too (1.92).
+        let (first, last) = (cx.src.line_of(ds), cx.src.line_of(e));
+        let commented = helpers::comments_help::contains_comments(cx, first, last + 1);
+        let opts = helpers::range_help::Surrounding { side: helpers::range_help::Side::Left, ..Default::default() };
+        let (rs, _) = helpers::range_help::range_with_surrounding_space(cx.src.text, ds, e, opts);
         cx.add_fix(s, e, "Remove redundant `sort`.", |c| {
-            c.remove(s, e);
-            c.remove(ds, de);
+            if commented {
+                c.remove(ds, de);
+                c.remove(s, e);
+            } else {
+                c.remove(rs, e);
+            }
         });
     }
 }

@@ -1181,11 +1181,28 @@ impl Variable {
             if Some(ab) == branch {
                 break;
             }
-            if !tree.main_body_of_handler(ab) {
+            if !tree.main_body_of_handler(ab) && !exception_may_reach(tree, ab, node, self.scope) {
                 consumed.push(ab);
             }
         }
     }
+}
+
+/// `exception_may_reach?`: a branch nested in the main body of `begin` can be cut short by an
+/// exception too. An earlier assignment in it is visible to a reference in the `rescue` or
+/// `ensure` clause, or after a `rescue` that handles the exception.
+fn exception_may_reach(tree: &Tree, branch: Branch, reference: usize, scope: ScopeRef) -> bool {
+    let mut ancestor = tree.branch_of(branch.control, scope);
+    while let Some(a) = ancestor {
+        if tree.main_body_of_handler(a)
+            && !tree.covers(a.child, reference)
+            && (tree.t(a.control) == T::Rescue || tree.covers(a.control, reference))
+        {
+            return true;
+        }
+        ancestor = tree.branch_of(a.control, scope);
+    }
+    false
 }
 
 fn in_modifier_conditional(tree: &Tree, assignment: usize, reference: usize) -> bool {

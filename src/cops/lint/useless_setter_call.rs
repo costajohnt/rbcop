@@ -176,6 +176,12 @@ impl Cop for UselessSetterCall {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let def = node.as_def_node().unwrap();
         let Some(body) = def.body() else { return };
+        // void_context? (1.92): `initialize` and setter methods discard the return value anyway.
+        let name = String::from_utf8_lossy(def.name().as_slice());
+        let setter = name.ends_with('=') && !matches!(name.as_ref(), "==" | "===" | "!=" | "<=" | ">=");
+        if (def.receiver().is_none() && name == "initialize") || setter {
+            return;
+        }
         let last = match body.as_statements_node() {
             Some(s) => match s.body().iter().last() {
                 Some(l) => l,

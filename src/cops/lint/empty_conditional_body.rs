@@ -86,7 +86,7 @@ impl Cop for EmptyConditionalBody {
             None => helpers::if_node::parser_end(node),
         };
         let msg = format!("Avoid `{keyword}` branches without a body.");
-        let can_simplify = else_branch && else_kw.as_ref().is_some_and(|k| k.as_slice() == b"else");
+        let can_simplify = keyword != "elsif" && else_branch && else_kw.as_ref().is_some_and(|k| k.as_slice() == b"else");
         if !can_simplify {
             cx.add_fix(start, range_end, msg, |_| {});
             return;
@@ -100,6 +100,9 @@ impl Cop for EmptyConditionalBody {
         };
         let replacement = format!("{inverse} {}", node_text(&predicate));
         let remove = if empty_if_branch(cx.ancestors) && !else_is_if {
+            (start, else_start)
+        } else if cx.src.line_of(predicate.location().end_offset()) == cx.src.line_of(else_start) {
+            // `else` on the condition's line (1.92).
             (start, else_start)
         } else {
             // deletion_range(node start..condition end): through the end of the condition's line.

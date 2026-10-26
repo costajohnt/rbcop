@@ -235,60 +235,122 @@ impl Cop for LiteralInInterpolation {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let e = node.as_embedded_statements_node().unwrap();
-        let Some(last) = e.statements().and_then(|s| s.body().iter().last()) else { return };
         let Some(parent) = cx.parent() else { return };
-        let src = cx.src;
+        let Some(last) = offending(cx, node, parent) else { return };
+        let Some(value) = correctable_value(cx, node, &last, parent) else { return };
         let text = node_text(&last);
-        // special_keyword?
-        let no_begin = last.as_string_node().is_some_and(|s| s.opening_loc().is_none() || is_heredoc(&last));
-        if (parser_str(&last) && (no_begin || last.as_source_file_node().is_some())) || text == "__LINE__" {
-            return;
-        }
-        if prints_as_self(Some(&last), cx.config.target_ruby) != Ok(true) {
-            return;
-        }
-        let l = last.location();
-        let (start, end) = (l.start_offset(), l.end_offset());
-        // Special case for Layout/TrailingWhitespace: a blank string ending a heredoc line.
-        let space = parser_str(&last) && {
-            std::str::from_utf8(&unescaped(&last)).is_ok_and(|s| s.trim_start_matches([' ', '\t', '\n', '\x0b', '\x0c', '\r', '\0']).is_empty())
-        };
-        if space && parent.as_interpolated_string_node().is_some() && is_heredoc(parent) {
-            let line = src.lines[src.line_of(end) - 1];
-            if line.chars().count() == src.column(end) + 1 {
-                return;
-            }
-        }
-        if last.as_array_node().is_some() && is_regexp(parent) {
-            return;
-        }
-        let values = Values { text: src.text };
-        let mut value = values.value(&last, false);
-        let slash_regexp = parent
-            .as_interpolated_regular_expression_node()
-            .is_some_and(|r| r.opening_loc().as_slice() == b"/")
-            || parent.as_interpolated_match_last_line_node().is_some_and(|r| r.opening_loc().as_slice() == b"/");
-        if slash_regexp && value.contains('/') {
-            value = escape_slashes(&value);
-        }
-        // in_array_percent_literal?
-        let n = cx.ancestors.len();
-        let in_percent_array = matches!(kind::of(parent), kind::INTERPOLATED_STRING_NODE | kind::INTERPOLATED_SYMBOL_NODE)
-            && n >= 2
-            && cx.ancestors[n - 2]
-                .as_array_node()
-                .is_some_and(|a| a.opening_loc().is_some_and(|o| o.as_slice().starts_with(b"%")));
-        if in_percent_array && (value.is_empty() || value.contains([' ', '\t', '\n', '\x0b', '\x0c', '\r'])) {
-            return;
-        }
-        let invalid_str =
-            parser_str(&last) && std::str::from_utf8(&unescaped(&last)).is_err();
+        let invalid_str = parser_str(&last) && std::str::from_utf8(&unescaped(&last)).is_err();
         let replacement = if invalid_str { strip_quotes(text).to_string() } else { value };
+        // Each interpolation is checked against the original source, so correcting it in the same
+        // pass as a preceding one that leaves a `#` (or nothing) could join that `#` and a `{`
+        // from this one. It's left for the next iteration instead.
         let b = node.location();
         let (bs, be) = (b.start_offset(), b.end_offset());
-        cx.add_fix(start, end, MSG, |c| c.replace(bs, be, &replacement));
+        let parts = interpolation_parts(parent);
+        let follows = parts
+            .iter()
+            .position(|p| p.location().start_offset() == bs)
+            .and_then(|i| i.checked_sub(1))
+            .map(|i| &parts[i])
+            .filter(|prev| prev.as_embedded_statements_node().is_some())
+            .and_then(|prev| {
+                let prev_last = offending(cx, prev, parent)?;
+                correctable_value(cx, prev, &prev_last, parent)
+            })
+            .is_some_and(|v| v.is_empty() || v.ends_with('#'));
+        let l = last.location();
+        cx.add_fix(l.start_offset(), l.end_offset(), MSG, |c| {
+            if !follows {
+                c.replace(bs, be, &replacement);
+            }
+        });
     }
+}
+
+/// The parts of an interpolated literal (parser dstr/dsym/regexp/xstr children).
+fn interpolation_parts<'pr>(parent: &Node<'pr>) -> Vec<Node<'pr>> {
+    match kind::of(parent) {
+        kind::INTERPOLATED_STRING_NODE => parent.as_interpolated_string_node().unwrap().parts().iter().collect(),
+        kind::INTERPOLATED_SYMBOL_NODE => parent.as_interpolated_symbol_node().unwrap().parts().iter().collect(),
+        kind::INTERPOLATED_REGULAR_EXPRESSION_NODE => parent.as_interpolated_regular_expression_node().unwrap().parts().iter().collect(),
+        kind::INTERPOLATED_MATCH_LAST_LINE_NODE => parent.as_interpolated_match_last_line_node().unwrap().parts().iter().collect(),
+        kind::INTERPOLATED_X_STRING_NODE => parent.as_interpolated_x_string_node().unwrap().parts().iter().collect(),
+        _ => Vec::new(),
+    }
+}
+
+/// `offending?` of the interpolation's final node: that node when it is a literal the cop reports.
+fn offending<'pr>(cx: &Cx, node: &Node<'pr>, parent: &Node) -> Option<Node<'pr>> {
+    let e = node.as_embedded_statements_node()?;
+    let last = e.statements().and_then(|s| s.body().iter().last())?;
+    let src = cx.src;
+    let text = node_text(&last);
+    // special_keyword?
+    let no_begin = last.as_string_node().is_some_and(|s| s.opening_loc().is_none() || is_heredoc(&last));
+    if (parser_str(&last) && (no_begin || last.as_source_file_node().is_some())) || text == "__LINE__" {
+        return None;
+    }
+    if prints_as_self(Some(&last), cx.config.target_ruby) != Ok(true) {
+        return None;
+    }
+    // Special case for Layout/TrailingWhitespace: a blank string ending a heredoc line.
+    // `[[:space:]]` (1.92): Unicode spaces such as U+3000 count, NUL does not.
+    let space = parser_str(&last) && std::str::from_utf8(&unescaped(&last)).is_ok_and(|s| s.chars().all(char::is_whitespace));
+    if space && parent.as_interpolated_string_node().is_some() && is_heredoc(parent) {
+        let be = node.location().end_offset();
+        let line = src.lines[src.line_of(be) - 1];
+        if line.chars().count() == src.column(be) {
+            return None;
+        }
+    }
+    if last.as_array_node().is_some() && is_regexp(parent) {
+        return None;
+    }
+    Some(last)
+}
+
+/// `unescaped_hash_sign?`: ends with a `#` that is not backslash-escaped.
+fn unescaped_hash_sign(text: &str) -> bool {
+    text.strip_suffix('#').is_some_and(|t| (t.len() - t.trim_end_matches('\\').len()) % 2 == 0)
+}
+
+/// `correctable_value`: the replacement text, or None when the interpolation must stay.
+fn correctable_value(cx: &Cx, node: &Node, last: &Node, parent: &Node) -> Option<String> {
+    let src = cx.src;
+    let values = Values { text: src.text };
+    let mut value = values.value(last, false);
+    let slash_regexp = parent
+        .as_interpolated_regular_expression_node()
+        .is_some_and(|r| r.opening_loc().as_slice() == b"/")
+        || parent.as_interpolated_match_last_line_node().is_some_and(|r| r.opening_loc().as_slice() == b"/");
+    if slash_regexp && value.contains('/') {
+        value = escape_slashes(&value);
+    }
+    let b = node.location();
+    let (bs, be) = (b.start_offset(), b.end_offset());
+    let next_char = src.text[be..].chars().next();
+    // starts_interpolation_after_hash_sign?: removing an empty value puts the `#` right before
+    // what follows the interpolation.
+    let following = format!("{value}{}", next_char.map(String::from).unwrap_or_default());
+    if following.starts_with(['{', '@', '$']) && unescaped_hash_sign(&src.text[..bs]) {
+        return None;
+    }
+    // escape_trailing_hash_sign
+    if next_char.is_some_and(|c| matches!(c, '{' | '@' | '$')) && unescaped_hash_sign(&value) {
+        value = format!("{}\\#", value.strip_suffix('#').unwrap());
+    }
+    // %W and %I split the content into words before expansion treating each interpolation as a
+    // word component, so interpolation should not be removed if the expanded value contains a space.
+    let n = cx.ancestors.len();
+    let in_percent_array = matches!(kind::of(parent), kind::INTERPOLATED_STRING_NODE | kind::INTERPOLATED_SYMBOL_NODE)
+        && n >= 2
+        && cx.ancestors[n - 2]
+            .as_array_node()
+            .is_some_and(|a| a.opening_loc().is_some_and(|o| o.as_slice().starts_with(b"%")));
+    if in_percent_array && (value.is_empty() || value.contains([' ', '\t', '\n', '\x0b', '\x0c', '\r'])) {
+        return None;
+    }
+    Some(value)
 }
 
 #[cfg(test)]

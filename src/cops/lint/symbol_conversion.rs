@@ -27,6 +27,14 @@ impl Cop for SymbolConversion {
                         if requires_quotes(key) {
                             continue;
                         }
+                        // `{foo:, ...}` cannot quote its key without a value (1.92).
+                        let omitted = elements(node).iter().filter_map(|e| e.as_assoc_node()).any(|a| {
+                            a.key().location().start_offset() == key.location().start_offset()
+                                && a.value().as_implicit_node().is_some()
+                        });
+                        if omitted {
+                            continue;
+                        }
                         let value = String::from_utf8_lossy(key.as_symbol_node().unwrap().unescaped()).into_owned();
                         let correction = format!("\"{value}\"");
                         if properly_quoted(strict, source(cx, key), &correction) {

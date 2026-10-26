@@ -39,7 +39,8 @@ impl Cop for AmbiguousOperatorPrecedence {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let Some(parent) = helpers::parser_parent::parser_parent(cx.ancestors) else { return };
         let (start, end) = if let Some(call) = node.as_call_node() {
-            if is_csend(&call) || call.opening_loc().is_some() {
+            // `foo.*` is a regular method call, not a binary operator (1.92).
+            if is_csend(&call) || call.opening_loc().is_some() || call.call_operator_loc().is_some() {
                 return;
             }
             let name = method_name(&call);

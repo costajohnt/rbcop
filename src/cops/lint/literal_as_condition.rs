@@ -197,6 +197,46 @@ fn if_range(n: &Node) -> (usize, usize) {
     }
 }
 
+/// `orphans_loop_control_keyword?`: unwrapping a run-once post-loop body would leave a
+/// `break`/`next`/`redo` of it outside any loop (one not nested in a block or loop of its own).
+fn orphans_loop_control_keyword(body: Option<&ruby_prism::StatementsNode>) -> bool {
+    #[derive(Default)]
+    struct V {
+        /// Per open branch node: whether it is a block or loop of its own.
+        stack: Vec<bool>,
+        found: bool,
+    }
+    impl V {
+        fn control(&mut self, node: &Node) {
+            if !self.stack.contains(&true) && matches!(node, Node::BreakNode { .. } | Node::NextNode { .. } | Node::RedoNode { .. }) {
+                self.found = true;
+            }
+        }
+    }
+    impl<'pr> Visit<'pr> for V {
+        fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
+            self.control(&node);
+            let nested = match &node {
+                Node::BlockNode { .. } | Node::LambdaNode { .. } | Node::WhileNode { .. } | Node::UntilNode { .. } | Node::ForNode { .. } => true,
+                // parser's block node also holds the call's receiver and arguments.
+                Node::CallNode { .. } => node.as_call_node().unwrap().block().is_some_and(|b| b.as_block_node().is_some()),
+                _ => false,
+            };
+            self.stack.push(nested);
+        }
+        fn visit_branch_node_leave(&mut self) {
+            self.stack.pop();
+        }
+        fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
+            self.control(&node);
+        }
+    }
+    let Some(body) = body else { return false };
+    let mut v = V::default();
+    v.visit_statements_node(body);
+    v.found
+}
+
 #[derive(Default)]
 struct Ignored(Vec<(usize, usize)>);
 
@@ -288,6 +328,8 @@ impl LiteralAsCondition {
             format!("{}\nend", src(p.else_branch.unwrap()).replacen("elsif", "if", 1))
         } else if p.has_else || p.ternary {
             p.else_branch.map_or(String::new(), |b| src(b).to_string())
+        } else if helpers::value_used::value_used(cx.ancestors, node.location().start_offset()) {
+            "nil".to_string()
         } else {
             String::new()
         };
@@ -337,6 +379,9 @@ impl LiteralAsCondition {
         }
         let replacement = if hit {
             node_text(node).replacen(cond_src, keep, 1)
+        } else if orphans_loop_control_keyword(stmts.as_ref()) {
+            cx.add_fix(cs, ce, m, |_| {});
+            return;
         } else {
             // body.child_nodes.map(&:source).join("\n")
             // ponytail: a kwbegin with rescue/ensure has one `rescue` child in parser; statements used here.
