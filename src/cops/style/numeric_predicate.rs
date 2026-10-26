@@ -50,7 +50,9 @@ impl Cop for NumericPredicate {
             }
             let pred = REPLACEMENTS.iter().find(|(_, o)| *o == op).unwrap().0;
             let src = node_text(&numeric);
-            let parens = numeric.as_call_node().is_some_and(|c| {
+            // A folded `- 1` is a parser `int`, not a send.
+            let parens = helpers::literal_node::folded_numeric(&numeric).is_none()
+                && numeric.as_call_node().is_some_and(|c| {
                 !is_csend(&c)
                     && helpers::node_types::is_operator_method(method_name(&c))
                     && c.opening_loc().is_none_or(|o| o.as_slice() != b"(")
