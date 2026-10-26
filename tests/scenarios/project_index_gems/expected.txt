@@ -1,0 +1,1 @@
+a.rb:4:10: W: Lint/ArgumentMismatch: Wrong number of arguments to `go` (given 2, expected 1).

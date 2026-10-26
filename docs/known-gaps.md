@@ -501,9 +501,13 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   Naming/InclusiveLanguage, Style/ConditionalAssignment, Style/MagicCommentFormat (static).
 - `AllCops/UseProjectIndex` (#295) builds the index with vendor/rubydex (the rubydex 0.4.1 gem's
   Rust core), so rbcop behaves as RuboCop does with that gem installed, never as RuboCop without it
-  (the "rubydex gem is not installed" warning and file-local fallback). Not supported:
-  `AllCops/ProjectIndexIncludesGems` (RuboCop indexes the bundle's gem sources only under
-  Bundler; rbcop indexes the project alone).
+  (the "rubydex gem is not installed" warning and file-local fallback).
+  `AllCops/ProjectIndexIncludesGems` (#675) asks the project's `ruby` for the bundle's gem
+  sources (`Bundler.load.specs`), so it needs `ruby` on PATH; without one rbcop warns
+  `rubydex bundle indexing failed: cannot run ruby: ...` and indexes the project only. Bundler
+  runs in its own process: when a config's `inherit_gem` already made RuboCop call
+  `Bundler.load`, what Bundler prints (`Resolving dependencies...`) appears at index time in rbcop
+  instead of at config load.
 - Metrics/CollectionLiteralLength does not count `rescue A, B` exception lists (parser `array`).
   Lint/SymbolConversion does not treat a backslash-newline inside `:"..."` as a continuation.
 - LineLength `SplitStrings: true` break points (string splitting) are not modelled. The unbracketed

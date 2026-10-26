@@ -1671,8 +1671,9 @@ impl<'a> Badges<'a> {
 }
 
 /// Runner#build_project_index (project_index_files): the whole project (the targets found under
-/// the pwd config's base directory, plus `targets`), sorted, so cross-file offenses do not depend
-/// on which files a run inspects.
+/// the pwd config's base directory, plus `targets`) and, with `AllCops/ProjectIndexIncludesGems`,
+/// the bundle's gem sources, sorted, so cross-file offenses do not depend on which files a run
+/// inspects.
 fn build_project_index(
     store: &mut Store,
     pwd_config: &Resolved,
@@ -1684,6 +1685,16 @@ fn build_project_index(
     let mut all = targets::find(store, &[root], force_exclusion, only_recognized).unwrap_or_default();
     all.extend(targets.iter().cloned());
     let mut paths: Vec<String> = all.iter().map(|p| p.to_string_lossy().into_owned()).collect();
+    if pwd_config.all_cops().truthy("ProjectIndexIncludesGems") {
+        match rbcop::project_index::bundled_gem_source_files(store.cwd()) {
+            Ok(gems) => paths.extend(gems),
+            Err(e) => eprintln!(
+                "{}",
+                formatter::Paint(store.color())
+                    .yellow(&format!("rubydex bundle indexing failed: {e}. Indexing the project only."))
+            ),
+        }
+    }
     paths.sort();
     paths.dedup();
     rbcop::project_index::install(paths);

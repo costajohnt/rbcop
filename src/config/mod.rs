@@ -1112,6 +1112,10 @@ impl Store {
         self.opts.color = on;
     }
 
+    pub fn color(&self) -> bool {
+        self.opts.color
+    }
+
     /// Under `-d`, `print` what RuboCop's config loading prints to stdout.
     fn debug(&mut self, s: &str) {
         if self.opts.debug {

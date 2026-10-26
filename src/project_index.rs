@@ -89,6 +89,61 @@ pub fn install(paths: Vec<String>) {
     });
 }
 
+/// ProjectIndexLoader.bundled_gem_source_files (`AllCops/ProjectIndexIncludesGems`): every bundled
+/// gem's `lib/**/*.rb`, empty outside a bundle. The project's Ruby asks Bundler, so the bundle
+/// resolves as inside RuboCop, and what Bundler prints (`Resolving dependencies...`) reaches
+/// stdout as there. `Bundler.load` is memoized per process, so a rebuilt index (`--lsp`) reuses
+/// the first list. Err: the message RuboCop warns with before indexing the project only.
+// ponytail: the memoized list also skips re-globbing the gem dirs, which do not change in a run.
+pub fn bundled_gem_source_files(cwd: &Path) -> Result<Vec<String>, String> {
+    use std::io::Write;
+    const MARK: &[u8] = b"\0rbcop-bundled-gems\0";
+    const SCRIPT: &str = r##"out = begin
+  require 'bundler'
+  files = if Bundler::SharedHelpers.in_bundle?
+    Bundler.load.specs.flat_map { |spec| Dir.glob(File.join(spec.full_gem_path, 'lib', '**', '*.rb')) }
+  else
+    []
+  end
+  "F" + files.map { |f| "#{f}\0" }.join
+rescue LoadError
+  "F"
+rescue StandardError => e
+  "E#{e.message}"
+end
+$stdout.binmode
+$stdout.print "\0rbcop-bundled-gems\0", out
+"##;
+    static FILES: OnceLock<Vec<String>> = OnceLock::new();
+    if let Some(files) = FILES.get() {
+        return Ok(files.clone());
+    }
+    let _ = std::io::stdout().flush();
+    let out = std::process::Command::new("ruby")
+        .args(["-e", SCRIPT])
+        .current_dir(cwd)
+        .stdin(std::process::Stdio::null())
+        .stderr(std::process::Stdio::inherit())
+        .output()
+        .map_err(|e| format!("cannot run ruby: {e}"))?;
+    let at = out.stdout.windows(MARK.len()).rposition(|w| w == MARK).ok_or("ruby exited without a result")?;
+    let mut stdout = std::io::stdout();
+    let _ = stdout.write_all(&out.stdout[..at]);
+    let _ = stdout.flush();
+    match out.stdout[at + MARK.len()..].split_first() {
+        Some((b'F', list)) => {
+            let files: Vec<String> = list
+                .split(|b| *b == 0)
+                .filter(|f| !f.is_empty())
+                .map(|f| String::from_utf8_lossy(f).into_owned())
+                .collect();
+            Ok(FILES.get_or_init(|| files).clone())
+        }
+        Some((_, message)) => Err(String::from_utf8_lossy(message).into_owned()),
+        None => Err("ruby exited without a result".into()),
+    }
+}
+
 impl ProjectIndex {
     /// What ProjectIndexHelp#external_dependency_checksum covers, for the result cache key.
     pub fn signature(&self) -> String {

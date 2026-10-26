@@ -1,0 +1,5 @@
+AllCops:
+  UseProjectIndex: true
+  ProjectIndexIncludesGems: true
+  NewCops: enable
+  SuggestExtensions: false
