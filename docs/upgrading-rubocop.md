@@ -80,12 +80,14 @@ All with `RUBOCOP="$NEW"`, so nothing records with the old release by accident:
 - `scripts/scenarios.sh`, `scripts/formatters.sh`, `scripts/show-cops.sh`, `scripts/lsp.sh`,
   `scripts/mcp.sh`, `tests/autocorrect/record.sh`, and the `tests/auto_gen` expectations (their
   `.rubocop_todo.yml` header names the version).
-- Gate oracles: `scripts/oracle.sh` for the nine corpora, the corpus2 projects (their own configs,
-  as the existing oracle3 set) and each plugin oracle set (`CONFIG=config/all-cops-<plugin>.yml`),
-  and `scripts/check-cold.sh oracle` for the cold corpus, all into a NEW oracle root. The CI host's
-  `ci-run.sh` points `RBCOP_ORACLE` at one root for every branch, so switching roots is a
-  coordinated change in rbcop-ops made when the upgrade PR merges, not before (open branches still
-  gate against the old root).
+- Gate oracles: `scripts/oracle.sh` for the nine corpora, the corpus2 projects (default
+  `config/all-cops.yml`, as the existing oracle3 set), each plugin oracle set
+  (`CONFIG=config/all-cops-<plugin>.yml`, nine corpora plus the corpus2 projects),
+  `oracle-rspec/mastodon-project.txt` (`CONFIG=$RBCOP_CORPUS/mastodon/.rubocop.yml`) and
+  `scripts/check-cold.sh oracle` for the cold corpus, all into a NEW oracle root with the same
+  layout as the old one. The CI host picks the root from the tree's `RUBOCOP_VERSION` (see
+  "Gate environments" below), so the upgrade branch gates against the new root while every other
+  branch keeps the old one.
 
 Review each re-recorded diff: every change should trace to a row of `delta.tsv`. A change with no
 row is a recording problem (wrong version, locale, plugin version) until shown otherwise.
@@ -104,9 +106,8 @@ In the same change as the ports and recordings:
 
 ## 6. Gate
 
-`scripts/ci.sh` with `RBCOP_ORACLE` at the new oracle root (on the CI host:
-`FRESH=1 rbcop-remote-ci <worktree>` once `ci-run.sh` is switched, or run `ci-run.sh`'s commands by
-hand with the new root before that). The bar is the usual one: `plugins: all corpora match`, every
+`scripts/ci.sh` with `RBCOP_ORACLE` at the new oracle root and `RUBOCOP` at the new release (on
+the CI host: `FRESH=1 rbcop-remote-ci <worktree>`, which does both once the version is bumped). The bar is the usual one: `plugins: all corpora match`, every
 check-cops corpus at diff 0, the cold corpus and `cargo test` green, the corpus2 baseline no worse.
 Then also run `scripts/check-autocorrect-all.sh` with the new release, since -A output moves with
 almost every bug-fix release.
@@ -124,3 +125,33 @@ Layout/MultilineMethodCallIndentation and Lint/UselessAssignment. Outside cops: 
 `--max-offenses-per-cop`, JSON formatter fields for corrections and per-file errors, new MCP tools
 and options, and runner, cache, LSP and target-Ruby lookup changes. Plugin pins are unaffected
 (rubocop-capybara moved to 3.1.0, `rubocop ~> 1.89`, in #673).
+
+### Gate environments for 1.92.1
+
+The integration branch for #299 bumps `RUBOCOP_VERSION` to 1.92.1 first and gates against the new
+release from then on; master and every other branch keep gating against 1.91.0. On the CI host:
+
+- RuboCop 1.92.1 lives in its own gem home, `~/rubocop-1.92.1/gems`, with exactly the gem versions
+  the 1.91.0 set activates (rubocop-ast 1.50.0, parser 3.3.12.0, prism 1.9.0, regexp_parser 2.13.1,
+  unicode-display_width 3.3.0, ...) and the same plugin pins (docs/plugins.md, plus rubocop-i18n
+  3.3.0 for mastodon's own config); every plugin pin accepts 1.92.1. Each gem went in with
+  `gem install --ignore-dependencies -v <version>`, so nothing resolves outside that list. The
+  rbenv 4.0.6 gem set is unchanged and still holds 1.91.0.
+- `~/rubocop-1.92.1/bin/rubocop` is the wrapper: it sets `GEM_HOME`/`GEM_PATH` to that gem home and
+  runs RuboCop on rbenv 4.0.6. Use it as `RUBOCOP=~/rubocop-1.92.1/bin/rubocop` for every recording
+  script (step 4).
+- The 1.92.1 oracle root is `/Users/johncosta/.claude/jobs/89c7fab2/tmp-1.92.1/`, next to the
+  1.91.0 root (`.../tmp/`) and with the same layout: `oracle2` (nine corpora and `cold.txt`),
+  `oracle3` (corpus2 projects), `oracle-performance`, `oracle-rails`, `oracle-minitest`,
+  `oracle-rspec` (with `mastodon-project.txt`). The corpora stay in `.../tmp/` and are shared.
+  `~/rubocop-1.92.1/record-oracles.sh <rbcop tree>` records the whole root with the scripts above
+  and writes `.recorded` last.
+- `ci-run.sh` (rbcop-ops `rbcop-ci/ci-run.sh.ct440`) reads `RUBOCOP_VERSION` from the synced tree's
+  `src/config/mod.rs` and prints it as the first gate line, `target: rubocop X.Y.Z`. For 1.91.0
+  nothing changes. For 1.92.1 it uses the 1.92.1 root and exports `RUBOCOP` (the scripts' live
+  RuboCop), `RBCOP_RUBOCOP` (rbcop's fallback) and `GEM_HOME`/`GEM_PATH` (so `rubocop` on PATH,
+  used by `tests/fallback.rs`, and rbcop's own gem lookups resolve to the 1.92.1 set). Any other
+  version, or a root without `.recorded`, fails the gate before it starts.
+
+When the upgrade merges, 1.92.1 becomes master's target with no further switch; the 1.91.0 entry
+and root can go once no open branch still targets it.
