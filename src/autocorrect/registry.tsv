@@ -23,13 +23,13 @@ Layout/BeginEndAlignment
 Layout/BlockAlignment
 Layout/BlockEndNewline
 Layout/CaseIndentation
-Layout/ClassStructure
+Layout/ClassStructure	Layout/EmptyLines	Layout/EmptyLinesAroundAccessModifier	Layout/EmptyLinesAroundClassBody
 Layout/ClosingHeredocIndentation
 Layout/ClosingParenthesisIndentation
 Layout/CommentIndentation
 Layout/ConditionPosition
 Layout/DefEndAlignment
-Layout/DotPosition	Style/RedundantSelf
+Layout/DotPosition
 Layout/ElseAlignment
 Layout/EmptyComment
 Layout/EmptyLineAfterGuardClause
@@ -49,17 +49,17 @@ Layout/EmptyLinesAroundModuleBody
 Layout/EmptyLines
 Layout/EndAlignment
 Layout/EndOfLine
-Layout/ExtraSpacing	RSpec/AlignLeftLetBrace	RSpec/AlignRightLetBrace
-Layout/FirstArgumentIndentation
+Layout/ExtraSpacing	Layout/RedundantLineBreak	Style/SelfAssignment	RSpec/AlignLeftLetBrace	RSpec/AlignRightLetBrace
+Layout/FirstArgumentIndentation	Layout/ArgumentAlignment	Layout/HashAlignment
 Layout/FirstArrayElementIndentation
 Layout/FirstArrayElementLineBreak
 Layout/FirstHashElementIndentation
 Layout/FirstHashElementLineBreak
-Layout/FirstMethodArgumentLineBreak
-Layout/FirstMethodParameterLineBreak
+Layout/FirstMethodArgumentLineBreak	Style/MethodCallWithArgsParentheses
+Layout/FirstMethodParameterLineBreak	Style/MethodDefParentheses
 Layout/FirstParameterIndentation
 Layout/HashAlignment
-Layout/HeredocArgumentClosingParenthesis	Style/TrailingCommaInArguments
+Layout/HeredocArgumentClosingParenthesis	Layout/MultilineMethodCallBraceLayout	Style/TrailingCommaInArguments
 Layout/HeredocIndentation
 Layout/IndentationConsistency
 Layout/IndentationStyle
@@ -70,23 +70,23 @@ Layout/LeadingEmptyLines
 Layout/LineContinuationLeadingSpace	Style/StringLiterals
 Layout/LineContinuationSpacing
 Layout/LineEndStringConcatenationIndentation
-Layout/LineLength
-Layout/MultilineArrayBraceLayout
+Layout/LineLength	Style/MethodCallWithArgsParentheses	Style/MethodDefParentheses
+Layout/MultilineArrayBraceLayout	Layout/MultilineHashBraceLayout	Layout/MultilineMethodCallBraceLayout	Style/ConcatArrayLiterals
 Layout/MultilineArrayLineBreaks
 Layout/MultilineAssignmentLayout
-Layout/MultilineBlockLayout
-Layout/MultilineHashBraceLayout
+Layout/MultilineBlockLayout	Style/HashEachMethods	Style/ItBlockParameter	Style/Lambda
+Layout/MultilineHashBraceLayout	Layout/MultilineMethodCallBraceLayout	Style/HashAsLastArrayItem	Style/RedundantDoubleSplatHashBraces
 Layout/MultilineHashKeyLineBreaks
 Layout/MultilineMethodArgumentLineBreaks
-Layout/MultilineMethodCallBraceLayout
+Layout/MultilineMethodCallBraceLayout	Style/MethodCallWithArgsParentheses
 Layout/MultilineMethodCallIndentation
-Layout/MultilineMethodDefinitionBraceLayout
+Layout/MultilineMethodDefinitionBraceLayout	Style/MultilineMethodSignature
 Layout/MultilineMethodParameterLineBreaks
 Layout/MultilineOperationIndentation
 Layout/ParameterAlignment
 Layout/RedundantLineBreak
 Layout/RescueEnsureAlignment
-Layout/SingleLineBlockChain	Style/MapToHash
+Layout/SingleLineBlockChain	Style/FloatDivision	Style/MapToHash	Style/NilComparison	Style/RedundantSort
 Layout/SpaceAfterColon
 Layout/SpaceAfterComma
 Layout/SpaceAfterMethodName
@@ -97,7 +97,7 @@ Layout/SpaceAroundEqualsInParameterDefault
 Layout/SpaceAroundKeyword
 Layout/SpaceAroundMethodCallOperator
 Layout/SpaceAroundOperators	Style/SelfAssignment
-Layout/SpaceBeforeBlockBraces	Style/SymbolProc
+Layout/SpaceBeforeBlockBraces	Style/BlockDelimiters	Style/SymbolProc
 Layout/SpaceBeforeBrackets
 Layout/SpaceBeforeComma
 Layout/SpaceBeforeComment
@@ -117,7 +117,7 @@ Layout/TrailingEmptyLines
 Layout/TrailingWhitespace
 Lint/AmbiguousAssignment
 Lint/AmbiguousBlockAssociation
-Lint/AmbiguousOperator	Naming/BlockForwarding
+Lint/AmbiguousOperator	Naming/BlockForwarding	Style/ArgumentsForwarding
 Lint/AmbiguousOperatorPrecedence
 Lint/AmbiguousRange
 Lint/AmbiguousRegexpLiteral
@@ -171,7 +171,7 @@ Lint/FloatOutOfRange
 Lint/FormatParameterMismatch
 Lint/HashCompareByIdentity
 Lint/HashNewWithKeywordArgumentsAsDefault
-Lint/HeredocMethodCallPosition
+Lint/HeredocMethodCallPosition	Style/MethodCallWithArgsParentheses
 Lint/IdentityComparison
 Lint/ImplicitStringConcatenation
 Lint/IncompatibleIoSelectWithFiberScheduler
@@ -288,7 +288,7 @@ Metrics/PerceivedComplexity
 Migration/DepartmentName
 Naming/AccessorMethodName
 Naming/AsciiIdentifiers
-Naming/BlockForwarding	Lint/AmbiguousOperator	Style/ArgumentsForwarding	Style/ExplicitBlockArgument	Style/MethodDefParentheses	Performance/BlockGivenWithExplicitBlock
+Naming/BlockForwarding	Lint/AmbiguousOperator	Style/ArgumentsForwarding	Style/EndlessMethod	Style/ExplicitBlockArgument	Style/MethodDefParentheses	Performance/BlockGivenWithExplicitBlock
 Naming/BlockParameterName
 Naming/ClassAndModuleCamelCase
 Naming/ConstantName
@@ -312,12 +312,12 @@ Security/JSONLoad
 Security/MarshalLoad
 Security/Open
 Security/YAMLLoad
-Style/AccessModifierDeclarations
+Style/AccessModifierDeclarations	Style/EndlessMethod	Style/SingleLineMethods
 Style/AccessorGrouping
 Style/Alias
 Style/AmbiguousEndlessMethodDefinition
-Style/AndOr
-Style/ArgumentsForwarding	Naming/BlockForwarding	Style/MethodDefParentheses
+Style/AndOr	Style/MethodCallWithArgsParentheses	Style/ReturnNil	Style/ReturnNilInPredicateMethodDefinition
+Style/ArgumentsForwarding	Naming/BlockForwarding	Style/EndlessMethod	Style/MethodDefParentheses
 Style/ArrayCoercion
 Style/ArrayFirstLast
 Style/ArrayIntersect
@@ -331,11 +331,11 @@ Style/BeginBlock
 Style/BisectedAttrAccessor
 Style/BitwisePredicate
 Style/BlockComments
-Style/BlockDelimiters	Style/RedundantBegin
+Style/BlockDelimiters	Layout/SpaceBeforeBlockBraces	Style/MethodCallWithArgsParentheses	Style/RedundantBegin
 Style/CaseEquality
-Style/CaseLikeIf
+Style/CaseLikeIf	Style/IfInsideElse
 Style/CharacterLiteral
-Style/ClassAndModuleChildren
+Style/ClassAndModuleChildren	Style/StructInheritance
 Style/ClassCheck
 Style/ClassEqualityComparison
 Style/ClassMethods
@@ -347,14 +347,14 @@ Style/CollectionQuerying
 Style/ColonMethodCall	Style/RedundantSelf
 Style/ColonMethodDefinition
 Style/CombinableDefined
-Style/CombinableLoops
+Style/CombinableLoops	Layout/BlockEndNewline	Layout/RedundantLineBreak
 Style/CommandLiteral
 Style/CommentAnnotation
 Style/CommentedKeyword
 Style/ComparableBetween
 Style/ComparableClamp
-Style/ConcatArrayLiterals
-Style/ConditionalAssignment
+Style/ConcatArrayLiterals	Style/MethodCallWithArgsParentheses	Style/TrailingCommaInArguments
+Style/ConditionalAssignment	Style/MethodCallWithArgsParentheses
 Style/ConstantVisibility
 Style/Copyright
 Style/DataInheritance
@@ -380,7 +380,7 @@ Style/EmptyLambdaParameter
 Style/EmptyLiteral
 Style/EmptyMethod
 Style/EmptyStringInsideInterpolation
-Style/EndlessMethod
+Style/EndlessMethod	Style/GuardClause	Style/MethodCallWithArgsParentheses	Style/MethodDefParentheses	Style/RaiseArgs
 Style/Encoding
 Style/EndBlock
 Style/EnvHome
@@ -388,7 +388,7 @@ Style/EvalWithLocation
 Style/EvenOdd
 Style/ExactRegexpMatch
 Style/ExpandPathArguments
-Style/ExplicitBlockArgument	Lint/UnusedMethodArgument
+Style/ExplicitBlockArgument	Lint/UnusedMethodArgument	Style/LambdaCall	Style/TrailingCommaInArguments
 Style/ExponentialNotation
 Style/FetchEnvVar
 Style/FileEmpty
@@ -398,28 +398,28 @@ Style/FileRead
 Style/FileTouch
 Style/FileWrite
 Style/FloatDivision
-Style/For
+Style/For	Style/RedundantBegin	Style/ItBlockParameter
 Style/FormatString
 Style/FormatStringToken
 Style/FrozenStringLiteralComment
 Style/GlobalStdStream
 Style/GlobalVars
 Style/GuardClause	Style/MissingElse
-Style/HashAsLastArrayItem
-Style/HashConversion
+Style/HashAsLastArrayItem	Style/TrailingCommaInArrayLiteral
+Style/HashConversion	Style/MethodCallWithArgsParentheses
 Style/HashEachMethods
 Style/HashExcept
 Style/HashFetchChain
 Style/HashLikeCase
 Style/HashLookupMethod
 Style/HashSlice
-Style/HashSyntax
+Style/HashSyntax	Style/MethodCallWithArgsParentheses	Style/SuperWithArgsParentheses
 Style/HashTransformKeys
 Style/HashTransformValues
 Style/IdenticalConditionalBranches
 Style/IfInsideElse
 Style/IfUnlessModifier	Style/Next	Style/SoleNestedConditional
-Style/IfUnlessModifierOfIfUnless
+Style/IfUnlessModifierOfIfUnless	Style/SoleNestedConditional
 Style/IfWithBooleanLiteralBranches
 Style/IfWithSemicolon
 Style/ImplicitRuntimeError
@@ -431,7 +431,7 @@ Style/InlineComment
 Style/InvertibleUnlessCondition
 Style/IpAddresses
 Style/ItAssignment
-Style/ItBlockParameter
+Style/ItBlockParameter	Style/Lambda	Style/StabbyLambdaParentheses
 Style/KeywordArgumentsMerging
 Style/KeywordParametersOrder
 Style/Lambda	Style/SymbolProc
@@ -443,7 +443,7 @@ Style/MapJoin
 Style/MapToHash	Layout/SingleLineBlockChain
 Style/MapToSet
 Style/MethodCallWithoutArgsParentheses
-Style/MethodCallWithArgsParentheses	Style/NestedParenthesizedCalls	Style/RescueModifier	Style/TrailingCommaInArguments	Rails/EagerEvaluationLogMessage
+Style/MethodCallWithArgsParentheses	Style/NestedParenthesizedCalls	Style/RedundantParentheses	Style/RescueModifier	Style/TernaryParentheses	Style/TrailingCommaInArguments	Rails/EagerEvaluationLogMessage
 Style/MinMaxComparison
 Style/ModuleMemberExistenceCheck
 Style/MultilineInPatternThen
@@ -457,7 +457,7 @@ Style/RedundantArrayFlatten
 Style/RedundantAssignment
 Style/RedundantConstantBase
 Style/RedundantCurrentDirectoryInPath
-Style/RedundantDoubleSplatHashBraces
+Style/RedundantDoubleSplatHashBraces	Style/TrailingCommaInHashLiteral
 Style/RedundantEach
 Style/RedundantFetchBlock
 Style/RedundantFileExtensionInRequire
@@ -465,7 +465,7 @@ Style/RedundantFilterChain
 Style/RedundantFormat
 Style/RedundantHeredocDelimiterQuotes
 Style/RedundantInitialize
-Style/RedundantInterpolationUnfreeze
+Style/RedundantInterpolationUnfreeze	Layout/MultilineMethodCallBraceLayout
 Style/RedundantLineContinuation
 Style/RedundantMinMaxBy
 Style/RedundantRegexpArgument
@@ -496,7 +496,7 @@ Style/MultilineMemoization
 Style/MultilineTernaryOperator
 Style/MultilineWhenThen
 Style/MultipleComparison
-Style/MutableConstant
+Style/MutableConstant	Style/HashAsLastArrayItem	Style/TrailingCommaInArrayLiteral	Style/TrailingCommaInHashLiteral
 Style/NegatedIf
 Style/NegatedIfElseCondition	Style/InverseMethods	Style/Not
 Style/NegatedUnless
@@ -543,7 +543,7 @@ Style/RedundantInterpolation	Style/LineEndConcatenation
 Style/RedundantParentheses
 Style/RedundantPercentQ
 Style/RedundantRegexpCharacterClass
-Style/RedundantRegexpEscape
+Style/RedundantRegexpEscape	Style/RegexpLiteral
 Style/RedundantReturn
 Style/RedundantSelf	Style/ColonMethodCall	Layout/DotPosition	Rails/SafeNavigation
 Style/RedundantSort
