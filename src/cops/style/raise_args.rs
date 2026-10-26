@@ -23,7 +23,21 @@ impl Cop for RaiseArgs {
             return;
         }
         let args = send_args(&call);
-        let parens = parser_parent(cx.ancestors).is_some_and(|p| is_operator_keyword(p) || is_ternary(p));
+        // requires_parens?(node.parent)
+        let parens = parser_parent(cx.ancestors).is_some_and(|p| {
+            is_operator_keyword(p)
+                || is_ternary(p)
+                || matches!(kind::of(p), kind::CALL_NODE | kind::SUPER_NODE | kind::YIELD_NODE | kind::ARRAY_NODE | kind::ASSOC_NODE)
+                || p.as_def_node().is_some_and(|d| d.equal_loc().is_some())
+        });
+        // inside_corrected_raise?: an ancestor send is a raise this cop already corrected.
+        let inside_corrected = {
+            let ancestors = cx.ancestors;
+            let ignored = &cx.state::<Ignored>().0;
+            ancestors.iter().any(|a| {
+                a.as_call_node().is_some_and(|c| !is_csend(&c) && ignored.contains(&send_range(&c)))
+            })
+        };
         let (s, e) = send_range(&call);
         let wrap = |arguments: String| {
             if parens { format!("{method}({arguments})") } else { format!("{method} {arguments}") }
@@ -43,9 +57,12 @@ impl Cop for RaiseArgs {
             let msg = format!("Provide an exception object as an argument to `{method}`.");
             if cx.block_runs(s, e) {
                 cx.opposite_style_detected();
+                if !inside_corrected && fix.is_some() {
+                    cx.state::<Ignored>().0.push((s, e));
+                }
             }
             return cx.add_fix(s, e, msg, |c| {
-                if let Some(fix) = &fix {
+                if let Some(fix) = fix.as_ref().filter(|_| !inside_corrected) {
                     c.replace(s, e, fix);
                 }
             });
@@ -73,10 +90,21 @@ impl Cop for RaiseArgs {
         let msg = format!("Provide an exception class and message as arguments to `{method}`.");
         if cx.block_runs(s, e) {
             cx.opposite_style_detected();
+            if !inside_corrected {
+                cx.state::<Ignored>().0.push((s, e));
+            }
         }
-        cx.add_fix(s, e, msg, |c| c.replace(s, e, &fix));
+        cx.add_fix(s, e, msg, |c| {
+            if !inside_corrected {
+                c.replace(s, e, &fix);
+            }
+        });
     }
 }
+
+/// `ignore_node`d (corrected) raise calls.
+#[derive(Default)]
+struct Ignored(Vec<(usize, usize)>);
 
 fn is_hash(node: &Node) -> bool {
     matches!(kind::of(node), kind::HASH_NODE | kind::KEYWORD_HASH_NODE)

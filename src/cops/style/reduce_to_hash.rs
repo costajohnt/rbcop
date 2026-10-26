@@ -117,6 +117,43 @@ fn scan(n: &Node, acc: &[u8]) -> (bool, bool) {
     (s.uses_acc, s.nested)
 }
 
+/// `command_call?`: a call, `super` or `yield` with unparenthesized arguments (a block's send
+/// included), not an operator or setter.
+fn command_call(n: &Node) -> bool {
+    match n {
+        Node::CallNode { .. } => {
+            let c = n.as_call_node().unwrap();
+            let has_args = c.arguments().is_some() || c.block().is_some_and(|b| b.as_block_argument_node().is_some());
+            has_args
+                && c.opening_loc().is_none_or(|o| o.as_slice() != b"(")
+                && !helpers::node_types::is_operator_method(method_name(&c))
+                && c.equal_loc().is_none()
+        }
+        Node::SuperNode { .. } => {
+            let s = n.as_super_node().unwrap();
+            let has_args = s.arguments().is_some() || s.block().is_some_and(|b| b.as_block_argument_node().is_some());
+            has_args && s.lparen_loc().is_none()
+        }
+        Node::YieldNode { .. } => {
+            let y = n.as_yield_node().unwrap();
+            y.arguments().is_some() && y.lparen_loc().is_none()
+        }
+        _ => false,
+    }
+}
+
+/// `element_source`
+fn element_source(n: &Node) -> String {
+    let src = node_text(n);
+    if command_call(n) || helpers::node_types::is_assignment(n) || n.as_rescue_modifier_node().is_some() {
+        return format!("({src})");
+    }
+    if n.as_array_node().is_some_and(|a| a.opening_loc().is_none()) {
+        return format!("[{src}]");
+    }
+    src.to_string()
+}
+
 impl Cop for ReduceToHash {
     fn correctable(&self) -> bool {
         true
@@ -142,7 +179,7 @@ impl Cop for ReduceToHash {
         let block = call.block().unwrap().as_block_node().unwrap();
         let name = method_name(&call);
         let adjust = |n: &Node| {
-            let s = node_text(n);
+            let s = element_source(n);
             if m.numbered && name != "each_with_object" { s.replace("_2", "_1") } else { s.to_string() }
         };
         let body = format!("[{}, {}]", adjust(&m.key), adjust(&m.value));

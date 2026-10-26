@@ -1,5 +1,5 @@
-use crate::helpers::node_types::is_operator_method;
-use crate::helpers::parser_parent::{is_operator_keyword, parser_parent};
+use crate::helpers::node_types::{is_assignment, is_operator_method};
+use crate::helpers::parser_parent::{is_logical_operator, is_operator_keyword, is_ternary, parser_parent};
 use crate::prelude::*;
 use ruby_prism::Location;
 
@@ -71,31 +71,74 @@ fn modifier<'pr>(node: &Node<'pr>) -> Option<Modifier<'pr>> {
     Some(Modifier { keyword: n.keyword_loc(), condition: n.predicate(), is_if: false })
 }
 
-fn new_expression(inner: &Modifier, outer: &Modifier) -> String {
-    let outer_kw = text(&outer.keyword);
-    let operator = if outer_kw == "if" { "&&" } else { "||" };
-    let mut lh = node_text(&outer.condition).to_string();
-    if kind::of(&outer.condition) == kind::OR_NODE && operator == "&&" {
-        lh = format!("({lh})");
+/// `low_precedence?`: operands that bind differently next to `&&`/`||`, or do not parse there.
+fn low_precedence(n: &Node) -> bool {
+    if is_operator_keyword(n) {
+        return !is_logical_operator(n);
     }
-    let condition = &inner.condition;
-    let negated = outer_kw != text(&inner.keyword);
+    if is_ternary(n) || is_assignment(n) {
+        return true;
+    }
+    match n {
+        Node::CallNode { .. } => {
+            let c = n.as_call_node().unwrap();
+            if c.block().is_some_and(|b| b.as_block_node().is_some()) {
+                return false;
+            }
+            if !is_csend(&c) {
+                // `[send prefix_not?]`
+                return method_name(&c) == "!" && c.message_loc().is_some_and(|m| m.as_slice() == b"not");
+            }
+            let has_args = c.arguments().is_some() || c.block().is_some();
+            has_args && c.opening_loc().is_none() && !is_operator_method(method_name(&c))
+        }
+        Node::YieldNode { .. } => {
+            let y = n.as_yield_node().unwrap();
+            y.arguments().is_some() && y.lparen_loc().is_none()
+        }
+        Node::SuperNode { .. } => {
+            let s = n.as_super_node().unwrap();
+            let has_args = s.arguments().is_some() || s.block().is_some_and(|b| b.as_block_argument_node().is_some());
+            has_args && s.lparen_loc().is_none() && s.block().is_none_or(|b| b.as_block_node().is_none())
+        }
+        _ => false,
+    }
+}
+
+/// `operand_source`: a send with arguments gets parenthesized arguments.
+fn operand_source(condition: &Node) -> String {
     let send = condition
         .as_call_node()
         .filter(|c| !is_csend(c) && !c.block().is_some_and(|b| b.as_block_node().is_some()));
-    let mut rh = match send.filter(|c| !send_args(c).is_empty() && !is_operator_method(method_name(c))) {
+    match send.filter(|c| !send_args(c).is_empty() && !is_operator_method(method_name(c))) {
         Some(c) => {
             let recv = c.receiver().map_or(String::new(), |r| format!("{}.", node_text(&r)));
             let args: Vec<_> = send_args(&c).iter().map(|a| node_text(a)).collect();
             format!("{recv}{}({})", method_name(&c), args.join(", "))
         }
         None => node_text(condition).to_string(),
-    };
+    }
+}
+
+fn new_expression(inner: &Modifier, outer: &Modifier) -> String {
+    let outer_kw = text(&outer.keyword);
+    let operator = if outer_kw == "if" { "&&" } else { "||" };
+    let mut lh = operand_source(&outer.condition);
+    if (kind::of(&outer.condition) == kind::OR_NODE && operator == "&&") || low_precedence(&outer.condition) {
+        lh = format!("({lh})");
+    }
+    let condition = &inner.condition;
+    let negated = outer_kw != text(&inner.keyword);
+    let mut rh = operand_source(condition);
     let comparison = condition.as_call_node().is_some_and(|c| {
         !c.block().is_some_and(|b| b.as_block_node().is_some())
             && matches!(method_name(&c), "==" | "===" | "!=" | "<=" | ">=" | ">" | "<")
     });
-    if (negated && is_operator_keyword(condition)) || kind::of(condition) == kind::OR_NODE || comparison {
+    if (negated && is_operator_keyword(condition))
+        || kind::of(condition) == kind::OR_NODE
+        || low_precedence(condition)
+        || comparison
+    {
         rh = format!("({rh})");
     }
     if negated {
