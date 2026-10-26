@@ -14,10 +14,6 @@ fn rng(n: &Node) -> R {
     (l.start_offset(), l.end_offset())
 }
 
-fn is_if_type(n: &Node) -> bool {
-    n.as_if_node().is_some() || n.as_unless_node().is_some()
-}
-
 /// rubocop-ast `else_branch` of an if / unless / ternary (a single `else` statement is the node itself).
 fn else_branch<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
     let stmts = if let Some(i) = node.as_if_node() {
@@ -44,35 +40,23 @@ fn predicate_and_keyword<'pr>(n: &Node<'pr>) -> Option<(Node<'pr>, usize)> {
     Some((u.predicate(), u.keyword_loc().start_offset()))
 }
 
-/// `branch_conditions`: the condition and keyword offset of each if-type link of the else chain.
+/// `branch_conditions`: the condition and keyword offset of the `if` and each `elsif`.
 fn branch_conditions<'pr>(node: &Node<'pr>) -> Vec<(Node<'pr>, usize)> {
-    let mut out = Vec::new();
-    let mut n = predicate_and_keyword(node);
+    let mut out: Vec<_> = predicate_and_keyword(node).into_iter().collect();
     let mut next = else_branch(node);
-    while let Some(pk) = n {
-        out.push(pk);
-        let Some(e) = next else { break };
-        if !is_if_type(&e) || helpers::parser_parent::is_ternary(&e) {
+    while let Some(e) = next {
+        let Some(i) = e.as_if_node().filter(|i| i.if_keyword_loc().is_some_and(|k| k.as_slice() == b"elsif")) else {
             break;
-        }
-        n = predicate_and_keyword(&e);
+        };
+        out.push((i.predicate(), i.if_keyword_loc().unwrap().start_offset()));
         next = else_branch(&e);
     }
     out
 }
 
-/// `if_conditional_branches(node).size`.
+/// `if_conditional_branches(node).size` (MinBranchesCount): the `if` and its `elsif`s.
 fn branch_count(node: &Node) -> usize {
-    let mut count = 1;
-    let mut cur = else_branch(node);
-    while let Some(e) = cur {
-        if !is_if_type(&e) {
-            break;
-        }
-        count += 1;
-        cur = else_branch(&e);
-    }
-    count
+    branch_conditions(node).len()
 }
 
 /// Parenthesised first statement (`node.children.first` of a `begin`).

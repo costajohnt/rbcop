@@ -37,23 +37,42 @@ impl Cop for CollectionQuerying {
             },
             _ => return,
         };
-        let replacement = match (name, arg) {
-            ("positive?", None) | (">", Some(0)) | ("!=", Some(0)) => "any?",
-            ("zero?", None) | ("==", Some(0)) => "none?",
-            ("==", Some(1)) => "one?",
-            (">", Some(1)) => "many?",
+        let block_given = count.block().is_some();
+        let replacement = match (name, arg, block_given) {
+            ("positive?", None, true) | (">", Some(0), true) | ("!=", Some(0), true) => "any?",
+            ("zero?", None, true) | ("==", Some(0), true) => "none?",
+            ("==", Some(1), true) => "one?",
+            (">", Some(1), true) => "many?",
+            ("positive?", None, false) | (">", Some(0), false) | ("!=", Some(0), false) => "!empty?",
+            ("zero?", None, false) | ("==", Some(0), false) => "empty?",
             _ => return,
         };
         if replacement == "many?" && !cx.config.all_cops().truthy("ActiveSupportExtensionsEnabled") {
             return;
         }
+        let negated = replacement.starts_with('!');
+        // receiver_of_call?: `!x.empty?.foo` would negate the whole chain.
+        let start = node.location().start_offset();
+        if negated
+            && cx.parent().and_then(|p| p.as_call_node()).is_some_and(|p| {
+                p.call_operator_loc().is_some() && p.receiver().is_some_and(|r| r.location().start_offset() == start)
+            })
+        {
+            return;
+        }
         let (_, end) = send_range(&call);
         let (cs, ce) = (count_sel.start_offset(), count_sel.end_offset());
+        let (count_start, count_end) = (count.location().start_offset(), count.location().end_offset());
         let from = call.call_operator_loc().or(call.message_loc()).map_or(end, |l| l.start_offset());
         let left = Surrounding { side: Side::Left, ..Default::default() };
         let (rs, re) = range_with_surrounding_space(cx.src.text, from, end, left);
         cx.add_fix(cs, end, format!("Use `{replacement}` instead."), |c| {
-            c.replace(cs, ce, replacement);
+            if negated {
+                c.insert_before(count_start, count_end, "!");
+                c.replace(cs, ce, "empty?");
+            } else {
+                c.replace(cs, ce, replacement);
+            }
             c.remove(rs, re);
         });
     }

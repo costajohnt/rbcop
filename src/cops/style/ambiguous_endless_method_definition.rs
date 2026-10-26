@@ -25,7 +25,7 @@ impl Cop for AmbiguousEndlessMethodDefinition {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let def = node.as_def_node().unwrap();
-        if def.receiver().is_some() || def.equal_loc().is_none() {
+        if def.equal_loc().is_none() {
             return;
         }
         let Some(op) = parser_parent(cx.ancestors) else { return };
@@ -72,10 +72,14 @@ impl Cop for AmbiguousEndlessMethodDefinition {
             }
             _ => String::new(),
         };
+        let recv = match (def.receiver(), def.operator_loc()) {
+            (Some(r), Some(op)) => format!("{}{}", node_text(&r), text(&op)),
+            _ => String::new(),
+        };
         let indent = " ".repeat(cx.src.column(start));
         let width = helpers::alignment::configured_indentation_width(cx).max(0) as usize;
         let replacement = format!(
-            "def {}{args}\n{indent}{}{}\n{indent}end",
+            "def {recv}{}{args}\n{indent}{}{}\n{indent}end",
             text(&def.name_loc()),
             " ".repeat(width),
             node_text(&body)

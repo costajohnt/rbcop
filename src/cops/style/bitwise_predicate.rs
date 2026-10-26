@@ -22,12 +22,18 @@ impl Cop for BitwisePredicate {
             return;
         }
         let Some(recv) = call.receiver() else { return };
-        let Some(paren) = recv.as_parentheses_node() else { return };
-        // `(begin (send _ :& _))`
-        let Some(stmts) = paren.body().and_then(|b| b.as_statements_node()) else { return };
-        let list: Vec<Node> = stmts.body().iter().collect();
-        let [bit] = list.as_slice() else { return };
-        let Some(bit) = bit.as_call_node() else { return };
+        // `{(begin (send _ :& _)) (send _ :& _)}`
+        let parenthesized = recv.as_parentheses_node().is_some();
+        let bit = if let Some(paren) = recv.as_parentheses_node() {
+            let Some(stmts) = paren.body().and_then(|b| b.as_statements_node()) else { return };
+            let list: Vec<Node> = stmts.body().iter().collect();
+            let [bit] = list.as_slice() else { return };
+            let Some(bit) = bit.as_call_node() else { return };
+            bit
+        } else {
+            let Some(bit) = recv.as_call_node() else { return };
+            bit
+        };
         if is_csend(&bit) || method_name(&bit) != "&" || bit.block().is_some() {
             return;
         }
@@ -46,7 +52,7 @@ impl Cop for BitwisePredicate {
             || (name == "!=" && int(0))
         {
             "anybits?"
-        } else if name == "==" && args.len() == 1 && {
+        } else if name == "==" && parenthesized && args.len() == 1 && {
             let flags = range(&args[0]);
             helpers::node_equality::same(src, range(rhs), flags)
                 || helpers::node_equality::same(src, range(&lhs), flags)
