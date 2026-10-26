@@ -51,7 +51,9 @@ fn autocorrect_matches_rubocop() {
             let actual = fs::read(work.join(e.file_name())).unwrap();
             assert_eq!(actual, fs::read(e.path()).unwrap(), "{case}: {:?}", e.file_name());
         }
-        assert_eq!(out.status.code(), Some(1), "{case}: uncorrected offenses remain");
+        // 1 (uncorrected offenses remain) unless the case records RuboCop's status (`<case>/status`).
+        let status = fs::read_to_string(dir.join("status")).map_or(1, |s| s.trim().parse().unwrap());
+        assert_eq!(out.status.code(), Some(status), "{case}: status");
         fs::remove_dir_all(&work).unwrap();
     }
 }

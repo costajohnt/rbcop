@@ -1,0 +1,6 @@
+a.rb:1:6: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+b.rb:3:3: C: [Corrected] Style/EmptyMethod: Put empty method definitions on a single line.
+b.rb:3:19: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+b.rb:3:20: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+b.rb:3:21: W: [Corrected] Layout/DefEndAlignment: `end` at 3, 20 is not aligned with `memoize \   def` at 2, 2.
+c.rb:1:6: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
