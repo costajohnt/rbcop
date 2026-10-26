@@ -101,7 +101,7 @@ impl Cop for ParenthesesAroundCondition {
         {
             return;
         }
-        if modifier_op(first) {
+        if modifier_op(first) || first.as_multi_write_node().is_some() {
             return;
         }
         // parens_allowed?
@@ -125,7 +125,7 @@ impl Cop for ParenthesesAroundCondition {
         }
         let article = if keyword == "while" { "a" } else { "an" };
         let msg = format!("Don't use parentheses around the condition of {article} `{keyword}`.");
-        let last = children.last().map(span);
+        let last = children.last();
         let heredoc = children.last().filter(|n| is_heredoc(n)).map(span);
         let (o, c) = (parens.opening_loc(), parens.closing_loc());
         let fix = parentheses_corrector::plan(

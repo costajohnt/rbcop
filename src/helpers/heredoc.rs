@@ -85,43 +85,6 @@ pub fn delimiter_string(opening: &str) -> &str {
     OPENING_DELIMITER.captures(opening).and_then(|c| c.get(2)).map_or("", |m| m.as_str())
 }
 
-struct DstrBodies<'s, 'a> {
-    src: &'s crate::source::Source<'a>,
-    lines: Vec<usize>,
-}
-
-impl DstrBodies<'_, '_> {
-    fn add(&mut self, first: Option<usize>, closing: Option<Location>) {
-        let Some(c) = closing else { return };
-        let last = self.src.line_of(c.start_offset());
-        let first = first.map_or(last, |f| self.src.line_of(f));
-        self.lines.extend(first..last);
-    }
-}
-
-impl<'pr> Visit<'pr> for DstrBodies<'_, '_> {
-    fn visit_string_node(&mut self, node: &StringNode<'pr>) {
-        let n = node.as_node();
-        if crate::ast::is_heredoc(&n) && crate::ast::is_parser_dstr(&n) {
-            self.add(Some(node.content_loc().start_offset()), node.closing_loc());
-        }
-    }
-    fn visit_interpolated_string_node(&mut self, node: &InterpolatedStringNode<'pr>) {
-        if crate::ast::is_heredoc(&node.as_node()) {
-            self.add(node.parts().iter().next().map(|p| p.location().start_offset()), node.closing_loc());
-        }
-        ruby_prism::visit_interpolated_string_node(self, node);
-    }
-}
-
-/// `node.each_node(:dstr).select(&:heredoc?).flat_map { |n| b = n.loc.heredoc_body; (b.line...b.last_line).to_a }`:
-/// body lines (terminator excluded) of the parser-`dstr` heredocs in a subtree.
-pub fn dstr_body_lines(src: &crate::source::Source, node: &Node) -> Vec<usize> {
-    let mut v = DstrBodies { src, lines: Vec::new() };
-    v.visit(node);
-    v.lines
-}
-
 /// Prism kinds that can be heredocs (parser `on_str` / `on_dstr` / `on_xstr`).
 pub const KINDS: &[usize] = &[
     crate::node_kind::STRING_NODE,

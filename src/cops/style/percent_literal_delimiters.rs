@@ -121,16 +121,27 @@ impl Cop for PercentLiteralDelimiters {
         if contains(&kids, &[&d0, &d1]) {
             return;
         }
-        if matches!(ty, "%w" | "%i") {
-            let used: Vec<String> = match last {
-                '(' => vec!["(".into(), ")".into()],
-                '[' => vec!["[".into(), "]".into()],
-                '{' => vec!["{".into(), "}".into()],
-                '<' => vec!["<".into(), ">".into()],
-                c => vec![c.to_string()],
-            };
-            if contains(&kids, &used.iter().map(String::as_str).collect::<Vec<_>>()) {
-                return;
+        let used: Vec<String> = match last {
+            '(' => vec!["(".into(), ")".into()],
+            '[' => vec!["[".into(), "]".into()],
+            '{' => vec!["{".into(), "}".into()],
+            '<' => vec!["<".into(), ">".into()],
+            c => vec![c.to_string()],
+        };
+        if matches!(ty, "%w" | "%i") && contains(&kids, &used.iter().map(String::as_str).collect::<Vec<_>>()) {
+            return;
+        }
+        // contains_escaped_delimiter?: `body.scan(/\\./m)` finds an escaped delimiter.
+        if matches!(ty, "%q" | "%s" | "%r") {
+            let body = &cx.src.text[open.end_offset()..close.start_offset()];
+            let mut chars = body.chars();
+            while let Some(ch) = chars.next() {
+                if ch == '\\'
+                    && let Some(esc) = chars.next()
+                    && used.iter().any(|u| u.starts_with(esc))
+                {
+                    return;
+                }
             }
         }
         let msg = format!("`{ty}`-literals should be delimited by `{d0}` and `{d1}`.");
