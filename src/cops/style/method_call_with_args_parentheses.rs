@@ -84,7 +84,7 @@ impl Cop for MethodCallWithArgsParentheses {
 
 /// The `omit_parentheses` style (OmitParentheses).
 mod omit {
-    use super::{Dispatch, OPERATOR_METHODS, next_char_end};
+    use super::{Dispatch, OPERATOR_METHODS, args_parenthesized, next_char_end};
     use crate::helpers::parser_parent::parser_parent_index;
     use crate::helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
     use crate::helpers::reparsed_equivalence::verified_by_reparse_with;
@@ -130,6 +130,8 @@ mod omit {
     /// A parser parent of the call: its own block, or a Prism ancestor (index into `cx.ancestors`).
     #[derive(Clone, Copy, PartialEq)]
     enum P {
+        /// The call itself.
+        Call,
         OwnBlock,
         Anc(usize),
     }
@@ -138,6 +140,8 @@ mod omit {
         anc: &'a [Node<'pr>],
         node: &'a Node<'pr>,
         own_block: Option<ruby_prism::BlockNode<'pr>>,
+        /// The send's source range.
+        call_range: (usize, usize),
     }
 
     impl<'pr> Ctx<'_, 'pr> {
@@ -149,12 +153,14 @@ mod omit {
         }
         fn parent_of(&self, p: P) -> Option<P> {
             match p {
+                P::Call => self.parent(),
                 P::OwnBlock => parser_parent_index(self.anc, self.anc.len()).map(P::Anc),
                 P::Anc(i) => parser_parent_index(self.anc, i).map(P::Anc),
             }
         }
         fn node_of(&self, p: P) -> Option<&Node<'pr>> {
             match p {
+                P::Call => Some(self.node),
                 P::OwnBlock => None,
                 P::Anc(i) => Some(&self.anc[i]),
             }
@@ -164,13 +170,27 @@ mod omit {
                 || self.node_of(p).is_some_and(|n| matches!(kind::of(n), kind::BLOCK_NODE | kind::LAMBDA_NODE))
         }
         /// `node.parent&.any_block_type? ? node.parent.parent : node.parent`
-        fn parent_skipping_block(&self) -> Option<P> {
-            let p = self.parent()?;
+        fn parent_skipping_block(&self, x: P) -> Option<P> {
+            let p = self.parent_of(x)?;
             if self.is_block(p) { self.parent_of(p) } else { Some(p) }
+        }
+        fn is_assignment(&self, p: P) -> bool {
+            self.node_of(p).is_some_and(is_assignment)
+        }
+        /// `assigned_before?(node, target)`: `node` is an assignment whose operator comes before
+        /// `target` starts.
+        fn assigned_before(&self, node: P, target: P) -> bool {
+            let Some(n) = self.node_of(node).filter(|n| is_assignment(n)) else { return false };
+            let op = match n.as_call_node() {
+                Some(c) => c.equal_loc().map(|l| l.start_offset()),
+                None => assignment_parts(n).map(|(op, _)| op.start_offset()),
+            };
+            op.is_some_and(|op| op < self.range_of(target).0)
         }
         /// Parser source range of a parent.
         fn range_of(&self, p: P) -> (usize, usize) {
             match p {
+                P::Call => self.call_range,
                 P::OwnBlock => span(self.node),
                 P::Anc(i) => {
                     let n = &self.anc[i];
@@ -321,7 +341,7 @@ mod omit {
         let (Some(open), Some(close)) = (d.open, d.close) else { return };
         let anc = cx.ancestors;
         let own_block = d.call.as_ref().and_then(|c| c.block()).and_then(|b| b.as_block_node());
-        let ctx = Ctx { anc, node, own_block };
+        let ctx = Ctx { anc, node, own_block, call_range: d.range };
         // inside_endless_method_def?
         if !d.args.is_empty() && anc.iter().any(|a| a.as_def_node().is_some_and(|f| f.equal_loc().is_some())) {
             return;
@@ -351,22 +371,45 @@ mod omit {
         if cx.cfg.bool("AllowParenthesesInStringInterpolation").unwrap_or(false) && inside_string_interpolation(anc) {
             return;
         }
-        let Some(sel) = d.selector else { return };
         let src = cx.src;
         let text = src.text;
-        let args_parenthesized =
-            d.args.len() == 1 && d.args[0].as_parentheses_node().is_some_and(|p| p.opening_loc().as_slice() == b"(");
-        let args_begin = (sel.1, next_char_end(text.as_bytes(), sel.1, if args_parenthesized { 2 } else { 1 }));
-        // parentheses_at_the_end_of_multiline_call?
+        // code_after_closing_parenthesis_on_its_own_line? (1.92)
+        if let Some(last) = d.args.last()
+            && src.line_of(last.location().end_offset()) != src.line_of(close.0)
+        {
+            let rest = rest_of_line(text, close.1);
+            if !rest.is_empty() && !rest.starts_with('#') {
+                return;
+            }
+        }
+        // comment_before_first_argument? (1.92)
+        if let Some(first) = d.args.first() {
+            let lines = src.line_of(open.0)..src.line_of(first.location().start_offset());
+            if src.comments.iter().any(|c| lines.contains(&src.line_of(c.start))) {
+                return;
+            }
+        }
+        let args_parenthesized = args_parenthesized(d);
+        if args_parenthesized {
+            return;
+        }
+        let Some(sel) = d.selector else { return };
+        let args_begin = (sel.1, next_char_end(text.as_bytes(), sel.1, 1));
+        // parentheses_at_the_end_of_multiline_call? (1.92: nothing after the `(` on its line)
         let multiline = src.line_of(d.range.0) != src.line_of(d.range.1);
-        let open_line = src.lines.get(src.line_of(open.0) - 1).copied().unwrap_or("");
-        let (args_begin, replacement) = if multiline && open_line.trim_end().ends_with('(') {
+        let (args_begin, replacement) = if multiline && rest_of_line(text, open.1).is_empty() {
             let opts = Surrounding { side: Side::Right, newlines: false, ..Default::default() };
             (range_with_surrounding_space(text, args_begin.0, args_begin.1, opts), " \\")
         } else {
             (args_begin, " ")
         };
         cx.state::<State>().0.push(Pending { open, close, args_begin, replacement });
+    }
+
+    /// `source_line[(column + 1)..].strip` after the character ending at `pos`.
+    fn rest_of_line(text: &str, pos: usize) -> &str {
+        let end = text[pos..].find('\n').map_or(text.len(), |i| pos + i);
+        text[pos..end].trim_matches(|c: char| c.is_ascii_whitespace() || c == '\0' || c == '\x0b')
     }
 
     fn require_parentheses_for_hash_value_omission(cx: &Cx, ctx: &Ctx, d: &Dispatch) -> bool {
@@ -438,6 +481,7 @@ mod omit {
     fn single_line(cx: &Cx, ctx: &Ctx, p: P) -> bool {
         let src = cx.src;
         let block = match p {
+            P::Call => None,
             P::OwnBlock => ctx.own_block.as_ref().map(|b| (b.opening_loc().start_offset(), b.closing_loc().start_offset())),
             P::Anc(i) => match &ctx.anc[i] {
                 Node::BlockNode { .. } => {
@@ -458,13 +502,7 @@ mod omit {
     fn legitimate_call_with_parentheses(cx: &Cx, ctx: &Ctx, d: &Dispatch) -> bool {
         let parent = ctx.parent();
         let parent_node = parent.and_then(|p| ctx.node_of(p));
-        let skip_block = ctx.parent_skipping_block().and_then(|p| ctx.node_of(p));
-        // call_in_literals?
-        if let Some(p) = skip_block
-            && (matches!(kind::of(p), kind::ASSOC_NODE | kind::ARRAY_NODE | kind::RANGE_NODE)
-                || is_splat(p)
-                || is_ternary(p))
-        {
+        if call_in_literals(ctx, P::Call) {
             return true;
         }
         if parent_node.is_some_and(|p| kind::of(p) == kind::WHEN_NODE) {
@@ -473,17 +511,7 @@ mod omit {
         if call_with_ambiguous_arguments(ctx, d) {
             return true;
         }
-        // call_in_logical_operators?
-        if let Some(p) = skip_block
-            && (logical_operator(p)
-                || p.as_call_node().is_some_and(|c| !is_csend(&c) && call_args(&c).iter().any(logical_operator)))
-        {
-            return true;
-        }
-        // call_in_optional_arguments?
-        if parent_node
-            .is_some_and(|p| matches!(kind::of(p), kind::OPTIONAL_PARAMETER_NODE | kind::OPTIONAL_KEYWORD_PARAMETER_NODE))
-        {
+        if call_in_logical_operators(ctx, P::Call) || call_in_optional_arguments(ctx, P::Call) {
             return true;
         }
         // call_in_single_line_inheritance?
@@ -510,21 +538,113 @@ mod omit {
         {
             return true;
         }
-        // forwards_anonymous_rest_arguments?
-        if let Some(last) = d.args.last() {
-            if last.as_splat_node().is_some_and(|s| s.expression().is_none()) {
+        if command_assignment_in_expression(ctx) {
+            return true;
+        }
+        // forwards_anonymous_rest_arguments? (1.92: any argument)
+        let forwards = |a: &Node| {
+            if a.as_splat_node().is_some_and(|s| s.expression().is_none()) {
                 return true;
             }
-            let elements: Vec<Node> = match last {
-                Node::HashNode { .. } => last.as_hash_node().unwrap().elements().iter().collect(),
-                Node::KeywordHashNode { .. } => last.as_keyword_hash_node().unwrap().elements().iter().collect(),
+            let elements: Vec<Node> = match a {
+                Node::HashNode { .. } => a.as_hash_node().unwrap().elements().iter().collect(),
+                Node::KeywordHashNode { .. } => a.as_keyword_hash_node().unwrap().elements().iter().collect(),
                 _ => Vec::new(),
             };
-            if elements.iter().any(|e| e.as_assoc_splat_node().is_some_and(|s| s.value().is_none())) {
+            elements.iter().any(|e| e.as_assoc_splat_node().is_some_and(|s| s.value().is_none()))
+        };
+        if d.args.iter().any(forwards) {
+            return true;
+        }
+        // trailing_comma? (1.92)
+        if let (Some(last), Some(close)) = (d.args.last(), d.close) {
+            let from = last.location().end_offset();
+            if cx.src.tokens().iter().any(|t| t.kind == sys::PM_TOKEN_COMMA && t.start >= from && t.end <= close.0) {
                 return true;
             }
         }
         false
+    }
+
+    /// `call_in_literals?(x)`
+    fn call_in_literals(ctx: &Ctx, x: P) -> bool {
+        ctx.parent_skipping_block(x).and_then(|p| ctx.node_of(p)).is_some_and(|p| {
+            matches!(kind::of(p), kind::ASSOC_NODE | kind::ARRAY_NODE | kind::RANGE_NODE) || is_splat(p) || is_ternary(p)
+        })
+    }
+
+    /// `call_in_logical_operators?(x)`
+    fn call_in_logical_operators(ctx: &Ctx, x: P) -> bool {
+        let Some(p) = ctx.parent_skipping_block(x) else { return false };
+        if command_assignment_before_keyword_operator(ctx, p) {
+            return true;
+        }
+        ctx.node_of(p).is_some_and(|p| {
+            logical_operator(p)
+                || p.as_call_node().is_some_and(|c| !is_csend(&c) && call_args(&c).iter().any(logical_operator))
+        })
+    }
+
+    /// `call_in_optional_arguments?(x)`
+    fn call_in_optional_arguments(ctx: &Ctx, x: P) -> bool {
+        ctx.parent_of(x)
+            .and_then(|p| ctx.kind_of(p))
+            .is_some_and(|k| matches!(k, kind::OPTIONAL_PARAMETER_NODE | kind::OPTIONAL_KEYWORD_PARAMETER_NODE))
+    }
+
+    /// `call_as_argument_or_chain?(x)` (an op-assign's target holds a parser `send`).
+    fn call_as_argument_or_chain(ctx: &Ctx, x: P) -> bool {
+        let Some(p) = ctx.parent_of(x) else { return false };
+        let Some(pn) = ctx.node_of(p) else { return false };
+        (is_call_super_yield(pn) || in_write_target(pn, ctx.range_of(x))) && !ctx.assigned_before(p, x)
+    }
+
+    /// `command_assignment_before_keyword_operator?(p)` (1.92): an assignment chain that is an
+    /// operand of `and` / `or`.
+    fn command_assignment_before_keyword_operator(ctx: &Ctx, p: P) -> bool {
+        if !ctx.is_assignment(p) {
+            return false;
+        }
+        let mut p = p;
+        while let Some(pp) = ctx.parent_of(p).filter(|&pp| ctx.is_assignment(pp)) {
+            p = pp;
+        }
+        ctx.parent_of(p).and_then(|o| ctx.node_of(o)).is_some_and(|o| match o {
+            Node::AndNode { .. } => o.as_and_node().unwrap().operator_loc().as_slice() == b"and",
+            Node::OrNode { .. } => o.as_or_node().unwrap().operator_loc().as_slice() == b"or",
+            _ => false,
+        })
+    }
+
+    /// `command_assignment_in_expression?` (1.92): the call is the value of an assignment (chain)
+    /// that is itself used where a command call needs parentheses.
+    fn command_assignment_in_expression(ctx: &Ctx) -> bool {
+        let value = match ctx.parent() {
+            Some(p) if ctx.is_block(p) || ctx.kind_of(p) == Some(kind::RESCUE_MODIFIER_NODE) => p,
+            _ => P::Call,
+        };
+        let assignment = outermost_assignment(ctx, value);
+        if assignment == value {
+            return false;
+        }
+        call_in_literals(ctx, assignment)
+            || call_in_logical_operators(ctx, assignment)
+            || call_in_optional_arguments(ctx, assignment)
+            || call_as_argument_or_chain(ctx, assignment)
+            || ctx.parent_of(assignment).and_then(|p| ctx.kind_of(p)).is_some_and(|k| {
+                matches!(
+                    k,
+                    kind::MULTI_WRITE_NODE | kind::RETURN_NODE | kind::NEXT_NODE | kind::BREAK_NODE | kind::DEFINED_NODE
+                )
+            })
+    }
+
+    fn outermost_assignment(ctx: &Ctx, value: P) -> P {
+        let Some(p) = ctx.parent_of(value) else { return value };
+        if !ctx.is_assignment(p) || ctx.kind_of(p) == Some(kind::MULTI_WRITE_NODE) || !ctx.assigned_before(p, value) {
+            return value;
+        }
+        outermost_assignment(ctx, p)
     }
 
     /// `allowed_chained_call_with_parentheses?` after the config check: the first descendant (the
@@ -564,15 +684,8 @@ mod omit {
             return true;
         }
         let parent_node = parent.and_then(|p| ctx.node_of(p));
-        // call_as_argument_or_chain? (an op-assign's target holds a parser `send`)
-        if let Some(p) = parent_node
-            && (is_call_super_yield(p) || in_write_target(p, d.range))
-        {
-            let assigned_before =
-                p.as_call_node().and_then(|c| c.equal_loc()).is_some_and(|op| op.start_offset() < d.range.0);
-            if !assigned_before {
-                return true;
-            }
+        if call_as_argument_or_chain(ctx, P::Call) {
+            return true;
         }
         // call_in_match_pattern?
         if parent_node.is_some_and(|p| matches!(kind::of(p), kind::MATCH_PREDICATE_NODE | kind::MATCH_REQUIRED_NODE)) {
@@ -620,8 +733,7 @@ fn require_parentheses(cx: &mut Cx, node: &Node, d: &Dispatch) {
     let Some(sel) = d.selector else { return };
     let src = cx.src.text.as_bytes();
     // args_begin: `selector.end.resize(1 or 2)`; one parenthesized argument keeps its `)`.
-    let args_parenthesized = d.args.len() == 1
-        && d.args[0].as_parentheses_node().is_some_and(|p| p.opening_loc().as_slice() == b"(");
+    let args_parenthesized = args_parenthesized(d);
     let begin_end = next_char_end(src, sel.1, if args_parenthesized { 2 } else { 1 });
     let (start, end) = d.range;
     cx.add_fix(start, end, "Use parentheses for method calls with arguments.", |c| {
@@ -630,6 +742,48 @@ fn require_parentheses(cx: &mut Cx, node: &Node, d: &Dispatch) {
             c.insert_after(end, end, ")");
         }
     });
+}
+
+/// `args_parenthesized?`: the one argument is a parenthesized expression whose parentheses can
+/// double as the call's (1.92: not `(a and b)`, `(a if b)`, `(not a)`, `(a rescue b)`, `(a; b)`,
+/// a multiple assignment or a one-line pattern match).
+fn args_parenthesized(d: &Dispatch) -> bool {
+    let [arg] = d.args.as_slice() else { return false };
+    let Some(p) = arg.as_parentheses_node().filter(|p| p.opening_loc().as_slice() == b"(") else { return false };
+    let Some(body) = p.body() else { return false };
+    let only = match body.as_statements_node() {
+        Some(st) => {
+            let mut it = st.body().iter();
+            match (it.next(), it.next()) {
+                (Some(n), None) => n,
+                _ => return false,
+            }
+        }
+        None => body,
+    };
+    mergeable_parentheses(&only)
+}
+
+fn mergeable_parentheses(node: &Node) -> bool {
+    match node {
+        Node::AndNode { .. } => node.as_and_node().unwrap().operator_loc().as_slice() == b"&&",
+        Node::OrNode { .. } => node.as_or_node().unwrap().operator_loc().as_slice() == b"||",
+        // modifier_form?: no `end` (a ternary is not a modifier).
+        Node::IfNode { .. } => {
+            let i = node.as_if_node().unwrap();
+            i.if_keyword_loc().is_none() || i.end_keyword_loc().is_some()
+        }
+        Node::UnlessNode { .. } => node.as_unless_node().unwrap().end_keyword_loc().is_some(),
+        Node::WhileNode { .. } => node.as_while_node().unwrap().closing_loc().is_some(),
+        Node::UntilNode { .. } => node.as_until_node().unwrap().closing_loc().is_some(),
+        // `keyword?` on a send: `not x`.
+        Node::CallNode { .. } => !node.as_call_node().unwrap().message_loc().is_some_and(|m| m.as_slice() == b"not"),
+        Node::RescueModifierNode { .. }
+        | Node::MultiWriteNode { .. }
+        | Node::MatchRequiredNode { .. }
+        | Node::MatchPredicateNode { .. } => false,
+        _ => true,
+    }
 }
 
 /// Byte offset `n` characters after `pos`.

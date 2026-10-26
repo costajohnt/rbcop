@@ -24,6 +24,10 @@ impl Cop for LambdaCall {
         if cx.src.comments.iter().any(|c| s <= c.start && c.end <= e) {
             return;
         }
+        // 1.92: the rewrite would drop heredoc bodies in the arguments too.
+        if send_args(&call).iter().any(|a| helpers::heredoc::first_heredoc_end(a).is_some()) {
+            return;
+        }
         let implicit = call.message_loc().is_none();
         let explicit_style = cx.cfg.str("EnforcedStyle") != Some("braces");
         if explicit_style != implicit {

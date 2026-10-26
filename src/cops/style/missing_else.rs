@@ -44,6 +44,14 @@ impl Cop for MissingElse {
         if has_else {
             return;
         }
+        // 1.92: a body that is a guard clause is left to Style/GuardClause (the two would conflict).
+        if ty == "if"
+            && helpers::alignment::cop_enabled(cx, "Style/GuardClause")
+            && helpers::if_node::if_branch(node)
+                .is_some_and(|b| helpers::if_node::guard_clause(cx.src, &b))
+        {
+            return;
+        }
         let empty_else = cx.config.for_cop("Style/EmptyElse");
         let empty_else_style = empty_else.str("EnforcedStyle");
         let msg = match empty_else_style {
