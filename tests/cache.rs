@@ -169,3 +169,27 @@ fn stdin_and_cache_false_never_touch_the_cache() {
     );
     let _ = fs::remove_dir_all(&dir);
 }
+
+#[test]
+fn project_index_change_invalidates() {
+    // With AllCops/UseProjectIndex, a file's offenses depend on the other files (#295): editing
+    // b.rb must invalidate a.rb's cached report (ProjectIndexHelp#external_dependency_checksum).
+    let dir = project("index");
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "AllCops:\n  UseProjectIndex: true\n  NewCops: enable\n  SuggestExtensions: false\n",
+    )
+    .unwrap();
+    let base =
+        |n: u8| format!("# frozen_string_literal: true\n\n# Doc.\nclass Base\n  def get_name\n    {n}\n  end\nend\n");
+    fs::write(dir.join("a.rb"), base(1)).unwrap();
+    fs::write(dir.join("b.rb"), "# frozen_string_literal: true\n\nX = 1\n").unwrap();
+    let args = ["--only", "Lint/DuplicateMethods", "-f", "emacs", "a.rb"];
+    assert_eq!(rbcop(&dir, &args).status.code(), Some(0));
+    fs::write(dir.join("b.rb"), base(2)).unwrap();
+    let warm = rbcop(&dir, &args);
+    assert_same(&rbcop(&dir, &[&["--cache", "false"][..], &args].concat()), &warm, "index");
+    let out = String::from_utf8_lossy(&warm.stdout);
+    assert!(out.contains("Method `Base#get_name` is defined at both b.rb:5 and a.rb:5."), "{out}");
+    let _ = fs::remove_dir_all(&dir);
+}

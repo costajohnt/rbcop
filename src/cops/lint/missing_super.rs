@@ -89,8 +89,25 @@ fn stateful_parent(ancestors: &[Node], allowed: &dyn Fn(&Node) -> bool) -> bool 
         }
     }
     // No block anywhere above: the nearest class.
-    match ancestors.iter().rev().find_map(|a| a.as_class_node()) {
-        Some(class) => class.superclass().is_some_and(|s| !allowed(&s)),
-        None => false,
+    let Some(i) = ancestors.iter().rposition(|a| a.as_class_node().is_some()) else { return false };
+    let class = ancestors[i].as_class_node().unwrap();
+    class.superclass().is_some_and(|s| !allowed(&s)) && !index_verified_stateless_ancestry(&ancestors[..=i])
+}
+
+/// `index_verified_stateless_ancestry?`: with the project index, the class' whole ancestry
+/// resolves (extends aside) and no inherited ancestor defines `initialize`.
+fn index_verified_stateless_ancestry(ancestors: &[Node]) -> bool {
+    let Some(index) = crate::project_index::get() else { return false };
+    let (class, outer) = ancestors.split_last().unwrap();
+    let Some(id) = crate::project_index::identifier(class) else { return false };
+    let Some(decl) = crate::project_index::resolve_const_node(index, &id, outer) else { return false };
+    let ix = index.read();
+    if !ix.is_class(decl) {
+        return false;
     }
+    let name = ix.name(decl);
+    if ix.ancestors(decl).into_iter().any(|a| ix.name(a) != name && ix.member(a, "initialize()").is_some()) {
+        return false;
+    }
+    ix.fully_resolved_ancestry(decl, true)
 }

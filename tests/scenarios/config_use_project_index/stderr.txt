@@ -1,2 +1,0 @@
-`AllCops/UseProjectIndex` is enabled but the `rubydex` gem is not installed.
-Analyses that use the project index will be skipped. Add `gem 'rubydex'` to your Gemfile.

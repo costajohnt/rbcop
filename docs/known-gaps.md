@@ -499,11 +499,14 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   regex crate's), Naming/PredicatePrefix (RuboCop interpolates NamePrefix unescaped too, behind the
   same `start_with?` check), Style/NumericLiterals (AllowedPatterns are already `ruby_regex`),
   Naming/InclusiveLanguage, Style/ConditionalAssignment, Style/MagicCommentFormat (static).
-- `AllCops/UseProjectIndex` (Rubydex, off by default) is not supported: Lint/DuplicateMethods
-  cross-file checks and Naming/AccessorMethodName / PredicatePrefix `overrides_inherited_method?`
-  are skipped; Lint/ArgumentMismatch, DeprecatedReference, NameTypo and SuperArgumentMismatch
-  (index-only) never report, and Lint/ConstantReassignment's cross-file message is skipped. This
-  matches RuboCop with the default config.
+- `AllCops/UseProjectIndex` (#295) builds the index with vendor/rubydex (the rubydex 0.4.1 gem's
+  Rust core), so rbcop behaves as RuboCop does with that gem installed, never as RuboCop without it
+  (the "rubydex gem is not installed" warning and file-local fallback). Not supported:
+  `AllCops/ProjectIndexIncludesGems` (RuboCop indexes the bundle's gem sources only under
+  Bundler; rbcop indexes the project alone), the index in `--lsp`, `--server` and `--mcp` (they
+  analyse file by file, as without the gem), and the index-aware `on_send` of
+  ArgumentMismatch, DeprecatedReference and NameTypo for index sends assigned in a multiple
+  assignment or by `recv[i] op= v`.
 - Metrics/CollectionLiteralLength does not count `rescue A, B` exception lists (parser `array`).
   Lint/SymbolConversion does not treat a backslash-newline inside `:"..."` as a continuation.
 - LineLength `SplitStrings: true` break points (string splitting) are not modelled. The unbracketed

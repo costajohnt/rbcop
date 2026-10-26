@@ -38,3 +38,19 @@ pub fn parser_parent_index(ancestors: &[Node], i: usize) -> Option<usize> {
     let p = parser_parent(&ancestors[..end])?;
     (0..end).rev().find(|&k| std::ptr::eq(&ancestors[k], p))
 }
+
+/// `node.parent&.defined_module`: the parent is a class/module (name, superclass or single body
+/// statement), or the casgn `Foo::Bar = Class.new` / `Module.new` (call or block) whose scope we are.
+pub fn defines_module(ancestors: &[Node]) -> bool {
+    let n = ancestors.len();
+    if n >= 2
+        && kind::of(&ancestors[n - 1]) == kind::CONSTANT_PATH_NODE
+        && let Some(w) = ancestors[n - 2].as_constant_path_write_node()
+    {
+        return w.value().as_call_node().is_some_and(|c| {
+            c.name().as_slice() == b"new"
+                && c.receiver().is_some_and(|r| is_top_const(&r, "Class") || is_top_const(&r, "Module"))
+        });
+    }
+    parser_parent(ancestors).is_some_and(|p| matches!(p, Node::ClassNode { .. } | Node::ModuleNode { .. }))
+}

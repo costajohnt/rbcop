@@ -62,7 +62,7 @@ impl Cop for StaticClass {
                     !is_csend(&c) && method_name(&c) == "extend" && c.block().is_none_or(|b| b.as_block_node().is_none())
                 })
         });
-        if !convertible {
+        if !convertible || subclassed_in_project(cx, &class) {
             return;
         }
         let kw = class.class_keyword_loc();
@@ -98,4 +98,15 @@ fn sclass_convertible(node: &Node) -> bool {
         visibility(&elems, i, node) == "public"
             && (elems[i].as_def_node().is_some_and(|d| d.receiver().is_none()) || equals_asgn(&elems[i]))
     })
+}
+
+/// `subclassed_in_project?`: with the project index, a class elsewhere inherits from this one.
+fn subclassed_in_project(cx: &Cx, class: &ruby_prism::ClassNode) -> bool {
+    let Some(index) = crate::project_index::get() else { return false };
+    let Some(decl) = crate::project_index::resolve_const_node(index, &class.constant_path(), cx.ancestors) else {
+        return false;
+    };
+    let ix = index.read();
+    let name = ix.name(decl);
+    ix.is_class(decl) && ix.descendants(decl).into_iter().any(|d| ix.name(d) != name)
 }
