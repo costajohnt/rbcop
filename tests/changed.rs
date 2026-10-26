@@ -7,12 +7,14 @@ use std::fs;
 use std::path::Path;
 use std::process::Command;
 
+/// Git with only the configuration the test writes (`gitconfig` under the test's directory).
 fn git(dir: &Path, args: &[&str]) {
+    let config = dir.ancestors().find(|d| d.join("gitconfig").is_file()).unwrap().join("gitconfig");
     let ok = Command::new("git")
-        .args(["-c", "user.name=t", "-c", "user.email=t@t", "-c", "init.defaultBranch=main"])
-        .args(["-c", "commit.gpgsign=false"])
         .args(args)
         .current_dir(dir)
+        .env("GIT_CONFIG_GLOBAL", config)
+        .env("GIT_CONFIG_NOSYSTEM", "1")
         .env_remove("GIT_DIR")
         .env_remove("GIT_WORK_TREE")
         .env_remove("GIT_INDEX_FILE")
@@ -71,6 +73,13 @@ fn changed_matches_rubocop() {
     let _ = fs::remove_dir_all(&top);
     let repo = top.join("repo");
     fs::create_dir_all(&repo).unwrap();
+    write(
+        &top,
+        &[(
+            "gitconfig",
+            "[user]\n\tname = t\n\temail = t@example.invalid\n[init]\n\tdefaultBranch = main\n[commit]\n\tgpgsign = false\n",
+        )],
+    );
     write(
         &repo,
         &[
@@ -154,5 +163,53 @@ fn changed_matches_rubocop() {
             ("unborn", &["--changed=main", "-L"], "", &unborn_main, 2),
         ],
     );
+    let _ = fs::remove_dir_all(&top);
+}
+
+/// Deliberate difference (docs/known-gaps.md): RuboCop hands a revision starting with `-` to
+/// `git diff` as an option (`--output=FILE` writes FILE); rbcop makes git read it as a revision,
+/// from the command line or the `.rubocop` arguments file alike.
+#[test]
+fn changed_revision_is_never_a_git_option() {
+    let top = std::env::temp_dir().join(format!("rbcop-changed-dash-{}", std::process::id()));
+    let _ = fs::remove_dir_all(&top);
+    let repo = top.join("repo");
+    write(&top, &[("gitconfig", "[user]\n\tname = t\n\temail = t@example.invalid\n[commit]\n\tgpgsign = false\n")]);
+    write(&repo, &[(".rubocop.yml", CONFIG), ("a.rb", "x = 1\n")]);
+    git(&repo, &["init", "-q", "."]);
+    git(&repo, &["add", "-A"]);
+    git(&repo, &["commit", "-qm", "one"]);
+    write(&repo, &[("a.rb", "x = 2\n")]);
+    let written = repo.join("written.txt");
+    let absolute = format!("--changed=--output={}", written.display());
+    for (args, options_file) in [
+        (vec!["--changed=--output=written.txt", "-L"], None),
+        (vec![absolute.as_str(), "-L"], None),
+        (vec!["--changed=-p", "-L"], None),
+        (vec!["-L"], Some("--changed=--output=written.txt\n")),
+    ] {
+        match options_file {
+            Some(text) => fs::write(repo.join(".rubocop"), text).unwrap(),
+            None => {
+                let _ = fs::remove_file(repo.join(".rubocop"));
+            }
+        }
+        let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
+            .args(["--cache", "false"])
+            .args(&args)
+            .current_dir(&repo)
+            .env("PWD", &repo)
+            .env("GIT_CEILING_DIRECTORIES", &top)
+            .env_remove("GIT_DIR")
+            .env_remove("GIT_WORK_TREE")
+            .env_remove("GIT_INDEX_FILE")
+            .output()
+            .unwrap();
+        let stderr = String::from_utf8_lossy(&out.stderr);
+        assert_eq!(out.status.code(), Some(2), "{args:?} {options_file:?}: {stderr}");
+        assert!(out.stdout.is_empty(), "{args:?} {options_file:?}");
+        assert!(stderr.starts_with("Error: --changed could not ask git which files changed: "), "{stderr}");
+        assert!(!written.exists(), "{args:?} {options_file:?}: git wrote {}", written.display());
+    }
     let _ = fs::remove_dir_all(&top);
 }

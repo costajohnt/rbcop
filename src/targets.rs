@@ -165,7 +165,12 @@ pub fn changed(revision: &str) -> Result<std::collections::HashSet<PathBuf>, Str
     let root = root.strip_suffix(b"\n").map(|r| r.strip_suffix(b"\r").unwrap_or(r)).unwrap_or(&root);
     let root = Path::new(std::ffi::OsStr::from_bytes(root));
     // `diff.relative` would make git report paths relative to the current directory.
-    let modified = match git(&["-c", "diff.relative=false", "diff", "--name-only", "--diff-filter=d", "-z", revision]) {
+    // Deliberate difference: `--end-of-options` keeps a revision such as `--output=FILE` from
+    // being read as a git option (RuboCop 1.91.0 passes it through, and git writes FILE). Git's
+    // messages for every other revision are unchanged; a trailing `--` would reword them.
+    let diff =
+        ["-c", "diff.relative=false", "diff", "--name-only", "--diff-filter=d", "-z", "--end-of-options", revision];
+    let modified = match git(&diff) {
         Ok(out) => out,
         // A repository without commits: everything in it is untracked.
         Err(_) if revision == "HEAD" && !git_ok(&["rev-parse", "--verify", "--quiet", "HEAD"]) => Vec::new(),

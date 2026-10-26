@@ -346,6 +346,12 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   directory. rbcop writes the reports only inside the working directory and the command-line paths
   (as for `-a`) and never through a symlink (`tmp` or the report file); otherwise it prints
   `rbcop: not writing the --profile report: <reason>` to stderr instead of the `generated at` line.
+- `--changed=REVISION` with a revision that starts with `-`: RuboCop passes it to `git diff` as an
+  option, so `--changed=--output=FILE` makes git write FILE and RuboCop then inspects nothing
+  (exit 0). rbcop passes `--end-of-options` first, so git reads it as a revision and the run fails
+  with git's message (`Error: --changed could not ask git which files changed: fatal: option
+  '--output=FILE' must come before non-option arguments`, exit 2). Every other revision gets the
+  same output as from RuboCop.
 - The server options (#293): rbcop runs in process and never starts a server, so none is ever
   running. They are taken out of the arguments and checked as RuboCop::Server::CLI does (same
   `cannot be specified together` / `cannot be combined with` errors, exit 2); then `--server-status`
