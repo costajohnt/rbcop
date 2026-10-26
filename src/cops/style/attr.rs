@@ -83,7 +83,7 @@ impl Cop for Attr {
         } else {
             "attr_reader"
         };
-        let remove = args.get(1).filter(|s| bool_node(s)).map(|_| (args[0].location().end_offset(), send_range(&call).1));
+        let remove = args.get(1).filter(|s| bool_node(s)).map(|s| (args[0].location().end_offset(), s.location().end_offset()));
         let sel = call.message_loc().unwrap();
         let (s, e) = (sel.start_offset(), sel.end_offset());
         cx.add_fix(s, e, format!("Do not use `attr`. Use `{replacement}` instead."), |c| {

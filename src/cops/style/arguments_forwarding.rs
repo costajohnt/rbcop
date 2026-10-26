@@ -38,7 +38,7 @@ enum Arg<'pr> {
     /// `(splat (lvar name))`, or `forwarded_restarg` with no name
     Splat(Option<&'pr [u8]>),
     /// `hash`: element count, `(kwsplat (lvar name))` elements, and `(hash (forwarded_kwrestarg))`
-    Hash { count: usize, kwsplats: Vec<(&'pr [u8], Range)>, anon_only: bool },
+    Hash { count: usize, kwsplats: Vec<(&'pr [u8], Range)>, anon_only: bool, anon: bool },
     /// `(block_pass (lvar name))` or `(block_pass nil)`
     BlockPass(Option<&'pr [u8]>),
     Other,
@@ -50,16 +50,16 @@ struct Send<'pr> {
     args: Vec<(Arg<'pr>, Range)>,
     paren: Paren,
     plain_send: bool,
+    /// the send owns a literal `{}`/`do` block (`block_literal?`)
+    block_literal: bool,
 }
 
 /// What add_parens_if_missing does for a send.
 enum Paren {
-    /// parenthesized, or a `[]` send: nothing
+    /// parenthesized, or an operator (no dot) or setter call: nothing
     Skip,
     /// Util#add_parentheses on the node
     Plan,
-    /// an index target (`a[x], b = ...`, send `[]=`): the selector is `[x]`
-    Index { selector_end: usize },
 }
 
 fn lvar_name<'pr>(n: Option<Node<'pr>>) -> Option<Option<&'pr [u8]>> {
@@ -98,7 +98,7 @@ fn classify_arg<'pr>(n: Node<'pr>) -> Arg<'pr> {
                     }
                 }
             }
-            Arg::Hash { count: elems.len(), kwsplats, anon_only: elems.len() == 1 && anon == 1 }
+            Arg::Hash { count: elems.len(), kwsplats, anon_only: elems.len() == 1 && anon == 1, anon: anon > 0 }
         }
         _ => Arg::Other,
     }
@@ -126,20 +126,19 @@ impl<'pr> Sends<'pr> {
         let (paren, plain_send) = match &node {
             Node::CallNode { .. } => {
                 let c = node.as_call_node().unwrap();
-                // parentheses?: `loc.end` is `)`
-                let p = c.closing_loc().is_some_and(|l| l.as_slice() == b")") || c.name().as_slice() == b"[]";
+                // parentheses?: `loc.end` is `)`; operator_or_setter_call?
+                let p = c.closing_loc().is_some_and(|l| l.as_slice() == b")")
+                    || c.is_attribute_write()
+                    || (helpers::node_types::is_operator_method(method_name(&c)) && c.call_operator_loc().is_none());
                 (skip(p), !is_csend(&c))
             }
             Node::SuperNode { .. } => (skip(node.as_super_node().unwrap().rparen_loc().is_some()), false),
             Node::YieldNode { .. } => (skip(node.as_yield_node().unwrap().rparen_loc().is_some()), false),
-            Node::IndexTargetNode { .. } => {
-                let t = node.as_index_target_node().unwrap();
-                (Paren::Index { selector_end: t.closing_loc().end_offset() }, true)
-            }
-            // the `[]` send inside op_asgn / or_asgn / and_asgn
+            // a `[]=` index target (an operator call) or the `[]` send inside op_asgn / or_asgn / and_asgn
             _ => (Paren::Skip, true),
         };
-        self.found.push(Send { node, in_block, args, paren, plain_send });
+        let block_literal = matches!(node, Node::CallNode { .. } | Node::SuperNode { .. }) && block_like(&node);
+        self.found.push(Send { node, in_block, args, paren, plain_send, block_literal });
     }
 
     fn nest(&mut self, node: &Node, f: impl FnOnce(&mut Self)) {
@@ -275,7 +274,8 @@ fn classify(d: &DefInfo, s: &Send, refs: &HashSet<&[u8]>, ruby: f64, allow_only_
         if ruby >= 3.2 && !(rest.is_some() && kwrest.is_some()) {
             return false;
         }
-        let offensive_block = if d.block.is_some() { block.is_some() } else { !allow_only_rest };
+        let offensive_block =
+            !s.block_literal && if d.block.is_some() { block.is_some() } else { !allow_only_rest };
         if !offensive_block {
             return false;
         }
@@ -388,21 +388,19 @@ impl Cop for ArgumentsForwarding {
         }
 
         let text = cx.src.text;
-        let params_paren = |cx: &Cx| -> Option<Option<parens::ParenFix>> {
+        // A paren plan with the node it parenthesizes (add_parens_if_missing adds them once per node).
+        type Plan = Option<Option<(Range, parens::ParenFix)>>;
+        let params_paren = |cx: &Cx| -> Plan {
             // add_parens_if_missing(node.arguments): None = RuboCop would raise.
             if def.lparen_loc().is_some() {
                 return Some(None);
             }
-            params.as_ref().map(|p| parens::plan(&p.as_node(), cx.src.text))
+            params.as_ref().map(|p| parens::plan(&p.as_node(), cx.src.text).map(|f| (range(&p.as_node()), f)))
         };
-        let send_paren = |s: &Send| -> Option<Option<parens::ParenFix>> {
+        let send_paren = |s: &Send| -> Plan {
             match s.paren {
                 Paren::Skip => Some(None),
-                Paren::Plan => parens::plan(&s.node, text).map(Some),
-                Paren::Index { selector_end } => {
-                    let char_len = text[selector_end..].chars().next().map_or(0, char::len_utf8);
-                    Some(Some(parens::ParenFix::Args { selector_end, char_len, end: selector_end }))
-                }
+                Paren::Plan => parens::plan(&s.node, text).map(|f| Some((range(&s.node), f))),
             }
         };
         let explicit_block_name =
@@ -410,8 +408,9 @@ impl Cop for ArgumentsForwarding {
         let allow_in_block = |arg: Option<Range>, s: &Send| arg.is_some() && (ruby >= 3.4 || !s.in_block);
 
         // register_forward_*_offense: (range, message, paren plan if added, replacement)
-        let report = |cx: &mut Cx, r: Range, msg: &str, paren: Option<Option<parens::ParenFix>>, with: &str| {
+        let report = |cx: &mut Cx, r: Range, msg: &str, paren: Plan, with: &str| {
             let Some(paren) = paren else { return false };
+            let paren = paren.filter(|(key, _)| cx.state::<HashSet<Range>>().insert(*key)).map(|(_, f)| f);
             let (start, end) = r;
             cx.add_fix(start, end, msg, |c| {
                 if let Some(p) = &paren {
@@ -422,7 +421,7 @@ impl Cop for ArgumentsForwarding {
             true
         };
         // false where RuboCop raises inside the corrector, which ends on_def
-        let block_offense = |cx: &mut Cx, add_parens: bool, paren: Option<Option<parens::ParenFix>>, arg: Option<Range>| {
+        let block_offense = |cx: &mut Cx, add_parens: bool, paren: Plan, arg: Option<Range>| {
             let Some(r) = arg else { return true };
             if ruby <= 3.0 || &text[r.0..r.1] == "&" || explicit_block_name {
                 return true;
@@ -430,7 +429,12 @@ impl Cop for ArgumentsForwarding {
             report(cx, r, BLOCK_MSG, if add_parens { paren } else { Some(None) }, "&")
         };
 
-        if classes.iter().all(|c| c.class != Class::RestOrKwrest) {
+        // anonymous_forwarding_elsewhere?: an unclassified send passing `*` or `**` on.
+        let elsewhere = sends.iter().enumerate().any(|(i, s)| {
+            classes.iter().all(|c| c.send != i)
+                && s.args.iter().any(|(a, _)| matches!(a, Arg::Splat(None) | Arg::Hash { anon: true, .. }))
+        });
+        if classes.iter().all(|c| c.class != Class::RestOrKwrest) && !elsewhere {
             // add_forward_all_offenses
             for c in &classes {
                 let s = &sends[c.send];
@@ -468,7 +472,7 @@ impl Cop for ArgumentsForwarding {
         for c in &classes {
             let s = &sends[c.send];
             let add_parens = c.rest.is_none();
-            let maybe = |p: Option<Option<parens::ParenFix>>| if add_parens { p } else { Some(None) };
+            let maybe = |p: Plan| if add_parens { p } else { Some(None) };
             let ok = (!allow_in_block(c.rest, s)
                 || (d.rest.is_none_or(|f| report(cx, f.range, ARGS_MSG, params_paren(cx), "*"))
                     && report(cx, c.rest.unwrap(), ARGS_MSG, send_paren(s), "*")))
