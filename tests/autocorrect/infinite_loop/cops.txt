@@ -1,0 +1,1 @@
+Layout/DefEndAlignment,Layout/TrailingWhitespace,Style/EmptyMethod,Style/Semicolon

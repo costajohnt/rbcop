@@ -106,9 +106,21 @@ impl Cop for UnescapedBracketInRegexp {
         let Some(open) = text.opening_loc().filter(|o| !o.as_slice().starts_with(b"<<")) else { return };
         let value = String::from_utf8_lossy(text.unescaped()).into_owned();
         let Some(parsed) = parse(&value, false) else { return };
+        let from = open.end_offset();
+        // RuboCop 1.92.1's escaped_bracket: a string that unescapes reads `\]` back as `]`.
+        let fix = if matches!(open.as_slice(), b"'" | [b'%', b'q', _]) { "\\]" } else { "\\\\]" };
         for pos in offenses(&parsed) {
-            let k = value[..pos].chars().count();
-            report(cx, advance_chars(src, open.end_offset(), k));
+            let start = advance_chars(src, from, value[..pos].chars().count());
+            // RuboCop 1.91.0 corrects the source at the `]`'s offset in the value, the right place
+            // only when no escape precedes it, and always with `\]`. In a double-quoted string, or
+            // at the wrong place, that reports the `]` again with more of them and -A never ends
+            // (#680): rbcop writes 1.92.1's `\\]` there and withholds a misplaced correction
+            // (docs/known-gaps.md).
+            if src.as_bytes()[from..start] != value.as_bytes()[..pos] || !src[start..].starts_with(']') {
+                cx.add_withheld_fix(start, advance_chars(src, start, 1), MSG);
+                continue;
+            }
+            cx.add_fix(start, start + 1, MSG, |c| c.replace(start, start + 1, fix));
         }
     }
 }

@@ -1,0 +1,4 @@
+# RuboCop gives up on b.rb (Infinite loop detected) and corrects the files around it (#680).
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
