@@ -25,5 +25,7 @@ pub fn command(program: impl AsRef<OsStr>) -> Command {
         cmd.env_remove(var);
     }
     cmd.env("HOME", "/nonexistent-rbcop-test-home");
+    // The RuboCop fallback runs by default when a RuboCop is found; tests opt in (tests/fallback.rs).
+    cmd.env("RBCOP_FALLBACK", "0");
     cmd
 }

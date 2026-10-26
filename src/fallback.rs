@@ -1,6 +1,6 @@
 //! Cops rbcop cannot run (plugin cops it does not implement, cops from `require:`d Ruby files):
-//! a one-line notice on stderr, or with RBCOP_FALLBACK=1 a RuboCop subprocess that runs exactly
-//! those cops, whose offenses are merged into rbcop's report.
+//! a RuboCop subprocess that runs exactly those cops, whose offenses are merged into rbcop's report,
+//! when a RuboCop is found (`rubocop`); else, or under RBCOP_FALLBACK=0, a notice on stderr.
 
 use rbcop::autocorrect::Mode;
 use rbcop::config::{Options, Resolved};
@@ -9,6 +9,7 @@ use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::sync::Arc;
+use std::sync::atomic::{AtomicBool, Ordering::Relaxed};
 
 const FORMATTER: &str = include_str!("fallback_formatter.rb");
 
@@ -16,9 +17,102 @@ const FORMATTER: &str = include_str!("fallback_formatter.rb");
 /// on the singleton class outlives RuboCop's own `def self.read_as_arguments`).
 const PRELOAD: &str = "module RuboCop\n  class ArgumentsFile\n    singleton_class.prepend(Module.new { def read_as_arguments = [] })\n  end\nend\n";
 
-/// RBCOP_FALLBACK=1 asks for the RuboCop subprocess.
-pub fn enabled() -> bool {
-    std::env::var_os("RBCOP_FALLBACK").is_some_and(|v| v == "1")
+/// The RuboCop command the fallback runs, or None when it does not run. RBCOP_FALLBACK=0 turns it
+/// off; otherwise `RBCOP_RUBOCOP` when set, else `bundle exec rubocop` when the bundle locks the
+/// rubocop gem, else `rubocop` when it is on PATH. RBCOP_FALLBACK=1 runs `rubocop` even when none
+/// was found (and fails if it cannot start). Called only once something needs RuboCop, so a project
+/// that needs nothing never looks. In an editor or server context (`editor_context`) only
+/// RBCOP_FALLBACK=1 runs it.
+pub fn rubocop() -> Option<String> {
+    let mode = std::env::var("RBCOP_FALLBACK").unwrap_or_default();
+    if mode == "0" || (mode != "1" && EDITOR.load(Relaxed)) {
+        return None;
+    }
+    if let Some(cmd) = std::env::var("RBCOP_RUBOCOP").ok().filter(|v| !v.trim().is_empty()) {
+        return Some(cmd);
+    }
+    if bundle_has_rubocop() && on_path("bundle") {
+        return Some("bundle exec rubocop".into());
+    }
+    (mode == "1" || on_path("rubocop")).then(|| "rubocop".into())
+}
+
+static EDITOR: AtomicBool = AtomicBool::new(false);
+static ANNOUNCED: AtomicBool = AtomicBool::new(false);
+
+/// The run comes from an editor or a server (`editor_context` in src/main.rs): no RuboCop unless
+/// RBCOP_FALLBACK=1.
+pub fn editor_context() {
+    EDITOR.store(true, Relaxed);
+}
+
+/// Once per run, unless RBCOP_FALLBACK=1 asked for it: which RuboCop runs the project's Ruby.
+pub fn announce(program: &str, what: &str) {
+    if std::env::var_os("RBCOP_FALLBACK").is_none_or(|v| v != "1") && !ANNOUNCED.swap(true, Relaxed) {
+        eprintln!("rbcop: running {program} for {what}; set RBCOP_FALLBACK=0 to never run Ruby");
+    }
+}
+
+/// The notice's second line when no RuboCop was found; None under RBCOP_FALLBACK=0 or in an editor.
+pub fn missing() -> Option<&'static str> {
+    (std::env::var_os("RBCOP_FALLBACK").is_none_or(|v| v != "0") && !EDITOR.load(Relaxed)).then_some(
+        "rbcop: RuboCop runs them when one is found: add the rubocop gem to the bundle, put rubocop on PATH, or \
+         set RBCOP_RUBOCOP",
+    )
+}
+
+/// Bundler's Gemfile lookup (BUNDLE_GEMFILE, else Gemfile or gems.rb in the working directory or a
+/// parent), and whether its lockfile has the rubocop gem among its specs.
+fn bundle_has_rubocop() -> bool {
+    let gemfile = match std::env::var_os("BUNDLE_GEMFILE").filter(|v| !v.is_empty()) {
+        Some(g) => Some(PathBuf::from(g)),
+        None => std::env::current_dir()
+            .ok()
+            .and_then(|cwd| cwd.ancestors().flat_map(|d| [d.join("Gemfile"), d.join("gems.rb")]).find(|p| p.is_file())),
+    };
+    let Some(gemfile) = gemfile else { return false };
+    let lock = if gemfile.file_name().is_some_and(|n| n == "gems.rb") {
+        gemfile.with_file_name("gems.locked")
+    } else {
+        PathBuf::from(format!("{}.lock", gemfile.display()))
+    };
+    std::fs::read_to_string(lock).is_ok_and(|t| t.lines().any(|l| l.starts_with("    rubocop (")))
+}
+
+fn on_path(name: &str) -> bool {
+    std::env::var_os("PATH").is_some_and(|p| {
+        std::env::split_paths(&p).any(|d| {
+            let f = d.join(name);
+            #[cfg(unix)]
+            {
+                use std::os::unix::fs::PermissionsExt;
+                f.metadata().is_ok_and(|m| m.is_file() && m.permissions().mode() & 0o111 != 0)
+            }
+            #[cfg(not(unix))]
+            f.is_file()
+        })
+    })
+}
+
+/// Hands the whole run to RuboCop, for Ruby code rbcop cannot load (`-r`/`--require`, `--plugin`,
+/// a custom formatter class): the same arguments, standard streams and exit status.
+pub fn delegate(program: &str, args: &[String]) -> u8 {
+    let mut words = program.split_whitespace();
+    let Some(bin) = words.next() else { return 2 };
+    let mut cmd = Command::new(bin);
+    cmd.args(words).args(args);
+    #[cfg(unix)]
+    let e = {
+        use std::os::unix::process::CommandExt;
+        cmd.exec()
+    };
+    #[cfg(not(unix))]
+    let e = match cmd.status() {
+        Ok(s) => return s.code().map_or(2, |c| c as u8),
+        Err(e) => e,
+    };
+    eprintln!("rbcop: cannot run {program}: {e}");
+    2
 }
 
 /// Registered cops (Registry.global, a plugin's cops with or without a default.yml entry) enabled
@@ -48,6 +142,14 @@ pub fn unimplemented<'c>(
 
 /// `rbcop: not running 3 cops it does not implement (Rails: 2, RSpec: 1); set RBCOP_FALLBACK=1 ...`
 pub fn notice(skipped: &BTreeSet<String>, required_code: bool, copless_plugins: &[&str]) -> String {
+    format!(
+        "rbcop: not running {}; set RBCOP_FALLBACK=1 to run them with RuboCop",
+        what(skipped, required_code, copless_plugins)
+    )
+}
+
+/// `3 cops it does not implement (Rails: 2, RSpec: 1) or cops from Ruby code the config requires`
+pub fn what(skipped: &BTreeSet<String>, required_code: bool, copless_plugins: &[&str]) -> String {
     let mut parts = Vec::new();
     if !skipped.is_empty() {
         let mut depts: BTreeMap<&str, usize> = BTreeMap::new();
@@ -65,12 +167,16 @@ pub fn notice(skipped: &BTreeSet<String>, required_code: bool, copless_plugins: 
         let s = if copless_plugins.len() == 1 { "" } else { "s" };
         parts.push(format!("the Ruby code of plugin{s} {}", copless_plugins.join(", ")));
     }
-    format!("rbcop: not running {}; set RBCOP_FALLBACK=1 to run them with RuboCop", parts.join(" or "))
+    parts.join(" or ")
 }
 
 /// What the RuboCop subprocess needs from the command line.
 #[derive(Clone, Copy)]
 pub struct Child<'a> {
+    /// The RuboCop command (`rubocop()`).
+    pub program: &'a str,
+    /// What it runs, for `announce` (`what()`).
+    pub what: &'a str,
     pub opts: &'a Options,
     pub except: &'a [String],
     pub only_guide: bool,
@@ -78,7 +184,7 @@ pub struct Child<'a> {
     pub autocorrect: Option<Mode>,
 }
 
-/// Runs RuboCop (`RBCOP_RUBOCOP`, default `rubocop`) on `files` with every cop rbcop implements
+/// Runs RuboCop (`c.program`) on `files` with every cop rbcop implements
 /// excluded, and returns its offenses by file. With `implemented` empty RuboCop runs every cop,
 /// Lint/Syntax included: the files rbcop leaves wholly to it (Store::copless_plugin_file). Under -a/-A RuboCop corrects (and writes) first, so
 /// rbcop then inspects the result; its offenses refer to the source before correction.
@@ -92,7 +198,8 @@ pub fn run(
     if files.is_empty() {
         return Ok(out);
     }
-    let program = std::env::var("RBCOP_RUBOCOP").unwrap_or_else(|_| "rubocop".into());
+    let program = c.program;
+    announce(program, c.what);
     let mut words = program.split_whitespace();
     let Some(bin) = words.next() else { return Err("rbcop: RBCOP_RUBOCOP is empty".into()) };
     // A fresh directory (create_dir fails if it exists) so nothing else in the temp dir can choose
@@ -131,7 +238,11 @@ pub fn run(
         .chain(c.except.iter().map(String::as_str))
         .collect();
     let mut cmd = Command::new(bin);
+    // The offenses go to a file: what cops print themselves (rubocop-require_tools' notes) reaches
+    // stdout as it would from RuboCop.
+    let report = dir.0.join("offenses");
     cmd.args(words).args(["--cache", "false", "--require"]).arg(&fmt).args(["--format", "RbcopFallbackFormatter"]);
+    cmd.arg("--out").arg(&report);
     if !except.is_empty() {
         cmd.args(["--except", &except.join(",")]);
     }
@@ -145,8 +256,7 @@ pub fn run(
         .env_remove("RUBOCOP_OPTS")
         .env("RUBYOPT", rubyopt)
         .env("RBCOP_REGISTRY", rbcop::helpers::cop_registry::REGISTRY.join(","))
-        .stdin(Stdio::null())
-        .stderr(Stdio::inherit());
+        .stdin(Stdio::null());
     let o = c.opts;
     if let Some(cfg) = &o.config_file {
         cmd.arg("--config").arg(cfg);
@@ -191,15 +301,22 @@ pub fn run(
     } else {
         HashMap::new()
     };
-    let result = cmd.output();
+    let status = cmd.status();
+    let report = std::fs::read(&report).unwrap_or_default();
     drop(dir);
-    let result = result.map_err(|e| format!("rbcop: RBCOP_FALLBACK: cannot run {program}: {e}"))?;
+    let status = status.map_err(|e| format!("rbcop: RBCOP_FALLBACK: cannot run {program}: {e}"))?;
     // 0: no offenses, 1: offenses; anything else is RuboCop failing (its stderr was passed through).
-    if !matches!(result.status.code(), Some(0 | 1)) {
-        return Err(format!("rbcop: RBCOP_FALLBACK: {program} failed ({})", result.status));
-    }
+    // The formatter's last line tells a run from a wrapper failing with 1 (an rbenv shim with the
+    // project's Ruby missing, `bundle exec` outside an installed bundle).
+    let report = String::from_utf8_lossy(&report);
+    let body = report.strip_suffix("rbcop-fallback-done\n");
+    let (true, Some(body)) = (matches!(status.code(), Some(0 | 1)), body) else {
+        return Err(format!(
+            "rbcop: RBCOP_FALLBACK: {program} failed ({status}); set RBCOP_FALLBACK=0 to skip the cops rbcop cannot run"
+        ));
+    };
     let mut names: HashMap<String, &'static str> = HashMap::new();
-    for line in String::from_utf8_lossy(&result.stdout).lines() {
+    for line in body.lines() {
         let f: Vec<&str> = line.split('\t').collect();
         let [path, start, end, severity, correctable, corrected, global, cop, message, disabled, justification] = f[..]
         else {
