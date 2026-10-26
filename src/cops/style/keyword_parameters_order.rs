@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use helpers::range_help::{range_with_surrounding_space, Surrounding};
+use helpers::range_help::{range_with_surrounding_space, Side, Surrounding};
 
 pub const NAME: &str = "Style/KeywordParametersOrder";
 pub static COP: KeywordParametersOrder = KeywordParametersOrder;
@@ -70,7 +70,11 @@ impl Cop for KeywordParametersOrder {
         let removals: Vec<(usize, usize)> = kwargs
             .iter()
             .map(|&(a, b)| {
-                let (s, e) = range_with_surrounding_space(src.text, a, b, Surrounding::default());
+                // 1.92: all whitespace (newlines included) on the left, then spaces on the right.
+                let left = Surrounding { side: Side::Left, whitespace: true, ..Default::default() };
+                let (s, _) = range_with_surrounding_space(src.text, a, b, left);
+                let right = Surrounding { side: Side::Right, ..Default::default() };
+                let (s, e) = range_with_surrounding_space(src.text, s, b, right);
                 let bytes = src.text.as_bytes();
                 let mut s = s;
                 while s > 0 && bytes[s - 1] == b',' {
