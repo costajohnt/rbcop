@@ -14,6 +14,27 @@ Style/EmptyStringInsideInterpolation:
 ==> 001.rb 28 <==
 "#{'foo' unless condition}"
 
-==> 002.rb 28 <==
+==> 002.rb 42 <==
+"#{do_something 'foo', bar if condition}"
+
+==> 003.rb 45 <==
+"#{obj.do_something 'foo' unless condition}"
+
+==> 004.rb 30 <==
+"#{yield 'foo' if condition}"
+
+==> 005.rb 28 <==
+"#{foo + bar if condition}"
+
+==> 006.rb 37 <==
+"#{"foo#{'bar' if inner}" if outer}"
+
+==> 007.rb 45 <==
+"#{"foo#{'bar' unless inner}" unless outer}"
+
+==> 008.rb 41 <==
+"#{'foo' if "#{'bar' if inner}".empty?}"
+
+==> 009.rb 28 <==
 "#{condition ? 'foo' : ''}"
 

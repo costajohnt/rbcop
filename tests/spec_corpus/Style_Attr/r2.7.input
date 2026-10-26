@@ -53,6 +53,12 @@ attr :name, false
 ==> 009.rb 17 <==
 attr :name, true
 
-==> 010.rb 16 <==
+==> 010.rb 18 <==
+attr(:name, true)
+
+==> 011.rb 19 <==
+attr(:name, false)
+
+==> 012.rb 16 <==
 attr :foo, :bar
 

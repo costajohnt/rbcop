@@ -134,33 +134,54 @@ if a = b then a = b else a = b end
 ==> 043.rb 47 <==
 if a ? b : c then a ? b : c else a ? b : c end
 
-==> 044.rb 42 <==
+==> 044.rb 38 <==
+if a&.b c then a&.b c else a&.b c end
+
+==> 045.rb 100 <==
+if cond then begin foo end while bar else baz end
+if cond then baz else begin foo end until bar end
+
+==> 046.rb 71 <==
+x = if cond then 1 else 2 end.to_s
+y = if cond then 1 else 2 end&.to_s
+
+==> 047.rb 78 <==
+x = if cond then Foo else Bar end::Baz
+if cond then Foo else Bar end::Baz = 1
+
+==> 048.rb 41 <==
+Foo::Baz = if cond then foo else bar end
+
+==> 049.rb 46 <==
+x = if cond then foo else bar end ? baz : qux
+
+==> 050.rb 42 <==
 if check 1 then run 2 else dont_run 3 end
 
-==> 045.rb 39 <==
+==> 051.rb 39 <==
 if a(0) then puts(1) else yield(2) end
 
-==> 046.rb 35 <==
+==> 052.rb 35 <==
 if 0 + 0 then 1 + 1 else 2 + 2 end
 
-==> 047.rb 30 <==
+==> 053.rb 30 <==
 if true then break else 7 end
 
-==> 048.rb 29 <==
+==> 054.rb 29 <==
 if true then self else 7 end
 
-==> 049.rb 30 <==
+==> 055.rb 30 <==
 if true then raise else 7 end
 
-==> 050.rb 82 <==
+==> 056.rb 82 <==
 map { |line| if line.match(/^ *#/) || line.strip.empty? then next else line end }
 
-==> 051.rb 45 <==
+==> 057.rb 45 <==
 if cond1 then run elsif cond2 then maybe end
 
-==> 052.rb 55 <==
+==> 058.rb 55 <==
 if cond1 then run elsif cond2 then maybe else dont end
 
-==> 053.rb 80 <==
+==> 059.rb 80 <==
 if cond1 then run elsif cond2 then maybe elsif cond3 then perhaps else dont end
 

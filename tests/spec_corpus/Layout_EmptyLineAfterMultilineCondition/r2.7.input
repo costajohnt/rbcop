@@ -41,10 +41,51 @@ def m
                 condition
 end
 
-==> 006.rb 26 <==
+==> 006.rb 91 <==
+def m
+  do_something if multiline &&
+                  condition
+rescue
+  handle_error
+end
+
+==> 007.rb 97 <==
+begin
+  do_something while multiline &&
+                     condition
+rescue
+  handle_error
+end
+
+==> 008.rb 96 <==
+def m
+  do_something if multiline &&
+                  condition
+ensure
+  do_something_else
+end
+
+==> 009.rb 91 <==
+do_something if multiline &&
+                condition; do_something_else
+do_another_thing
+
+==> 010.rb 97 <==
+do_something while multiline &&
+                   condition; do_something_else
+do_another_thing
+
+==> 011.rb 96 <==
+begin
+  do_something
+end while multiline &&
+      condition; do_something_else
+do_another_thing
+
+==> 012.rb 26 <==
 do_something if condition
 
-==> 007.rb 84 <==
+==> 013.rb 84 <==
 if condition
   do_something
 elsif multiline &&
@@ -52,7 +93,7 @@ elsif multiline &&
   do_something_else
 end
 
-==> 008.rb 85 <==
+==> 014.rb 85 <==
 if condition
   do_something
 elsif multiline &&
@@ -61,38 +102,38 @@ elsif multiline &&
   do_something_else
 end
 
-==> 009.rb 51 <==
+==> 015.rb 51 <==
 while multiline &&
    condition
   do_something
 end
 
-==> 010.rb 51 <==
+==> 016.rb 51 <==
 until multiline &&
    condition
   do_something
 end
 
-==> 011.rb 52 <==
+==> 017.rb 52 <==
 while multiline &&
    condition
 
   do_something
 end
 
-==> 012.rb 36 <==
+==> 018.rb 36 <==
 while singleline
   do_something
 end
 
-==> 013.rb 78 <==
+==> 019.rb 78 <==
 begin
   do_something
 end while multiline &&
       condition
 do_something_else
 
-==> 014.rb 79 <==
+==> 020.rb 79 <==
 begin
   do_something
 end while multiline &&
@@ -100,7 +141,7 @@ end while multiline &&
 
 do_something_else
 
-==> 015.rb 78 <==
+==> 021.rb 78 <==
 def m
   begin
     do_something
@@ -108,14 +149,25 @@ def m
         condition
 end
 
-==> 016.rb 44 <==
+==> 022.rb 79 <==
+do_something while multiline &&
+                   condition
+do_something_else
+
+==> 023.rb 75 <==
+def m
+  do_something while multiline &&
+                     condition
+end
+
+==> 024.rb 44 <==
 case x
 when foo,
     bar
   do_something
 end
 
-==> 017.rb 45 <==
+==> 025.rb 45 <==
 case x
 when foo,
     bar
@@ -123,13 +175,36 @@ when foo,
   do_something
 end
 
-==> 018.rb 40 <==
+==> 026.rb 47 <==
+case x
+when foo,
+    bar then do_something
+end
+
+==> 027.rb 39 <==
+if foo &&
+   bar then do_something
+end
+
+==> 028.rb 43 <==
+while foo &&
+      bar do do_something
+end
+
+==> 029.rb 71 <==
+begin
+  do_something
+rescue FooError,
+  BarError then handle_error
+end
+
+==> 030.rb 40 <==
 case x
 when foo, bar
   do_something
 end
 
-==> 019.rb 68 <==
+==> 031.rb 68 <==
 begin
   do_something
 rescue FooError,
@@ -137,7 +212,7 @@ rescue FooError,
   handle_error
 end
 
-==> 020.rb 69 <==
+==> 032.rb 69 <==
 begin
   do_something
 rescue FooError,
@@ -146,7 +221,7 @@ rescue FooError,
   handle_error
 end
 
-==> 021.rb 56 <==
+==> 033.rb 56 <==
 begin
   do_something
 rescue FooError

@@ -1,16 +1,24 @@
-==> offenses exit=1 410 <==
+==> offenses exit=1 734 <==
 000.rb:1:43: W: [Correctable] Lint/RedundantDirGlobSort: Remove redundant `sort`.
 001.rb:1:45: W: [Correctable] Lint/RedundantDirGlobSort: Remove redundant `sort`.
 002.rb:1:22: W: [Correctable] Lint/RedundantDirGlobSort: Remove redundant `sort`.
-003.rb:1:22: W: [Correctable] Lint/RedundantDirGlobSort: Remove redundant `sort`.
-009.rb:1:27: W: [Correctable] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+003.rb:3:4: W: [Correctable] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+004.rb:3:4: W: [Correctable] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+005.rb:2:3: W: [Correctable] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+006.rb:2:3: W: [Correctable] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+007.rb:1:22: W: [Correctable] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+013.rb:1:27: W: [Correctable] Lint/RedundantDirGlobSort: Remove redundant `sort`.
 
-==> autocorrect exit=0 400 <==
+==> autocorrect exit=0 716 <==
 000.rb:1:43: W: [Corrected] Lint/RedundantDirGlobSort: Remove redundant `sort`.
 001.rb:1:45: W: [Corrected] Lint/RedundantDirGlobSort: Remove redundant `sort`.
 002.rb:1:22: W: [Corrected] Lint/RedundantDirGlobSort: Remove redundant `sort`.
-003.rb:1:22: W: [Corrected] Lint/RedundantDirGlobSort: Remove redundant `sort`.
-009.rb:1:27: W: [Corrected] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+003.rb:3:4: W: [Corrected] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+004.rb:3:4: W: [Corrected] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+005.rb:2:3: W: [Corrected] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+006.rb:2:3: W: [Corrected] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+007.rb:1:22: W: [Corrected] Lint/RedundantDirGlobSort: Remove redundant `sort`.
+013.rb:1:27: W: [Corrected] Lint/RedundantDirGlobSort: Remove redundant `sort`.
 
 ==> corrected/000.rb 66 <==
 Dir.glob(Rails.root.join('test', '*.rb')).each(&method(:require))
@@ -23,8 +31,30 @@ Dir['./lib/**/*.rb'].each do |file|
 end
 
 ==> corrected/003.rb 45 <==
+Dir
+  .glob(pattern)
+  .each do |file|
+  end
+
+==> corrected/004.rb 55 <==
+Dir
+  .glob(pattern) # comment
+  .each do |file|
+  end
+
+==> corrected/005.rb 55 <==
+Dir.glob(pattern) # comment
+  .
+  each { |file| file }
+
+==> corrected/006.rb 42 <==
+Dir.glob(pattern).
+  each do |file|
+  end
+
+==> corrected/007.rb 45 <==
 Dir['./lib/**/*.rb'].each(&method(:require))
 
-==> corrected/009.rb 26 <==
+==> corrected/013.rb 26 <==
 Dir.glob('./lib/**/*.rb')
 

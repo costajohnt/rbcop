@@ -365,39 +365,59 @@ def foo *args, **kwargs
   bar *args, **kwargs
 end
 
-==> 060.rb 38 <==
+==> 060.rb 53 <==
+def foo *args, &block
+  bar(&block)
+  baz(*args)
+end
+
+==> 061.rb 38 <==
 def foo(*, **, &)
   bar(*, **, &)
 end
 
-==> 061.rb 44 <==
+==> 062.rb 75 <==
+def foo(*, **, &)
+  if x
+    bar(*, **, &)
+  else
+    bar(*, **)
+  end
+end
+
+==> 063.rb 42 <==
+def foo(*, **, &)
+  bar(*, **, &).baz
+end
+
+==> 064.rb 44 <==
 def foo(m, *, **, &)
   bar(m, *, **, &)
 end
 
-==> 062.rb 47 <==
+==> 065.rb 47 <==
 def foo(m, *, **, &)
   bar(self, *, **, &)
 end
 
-==> 063.rb 30 <==
+==> 066.rb 30 <==
 def foo(*, &)
   bar(*, &)
 end
 
-==> 064.rb 32 <==
+==> 067.rb 32 <==
 def foo(*, **)
   bar(*, **)
 end
 
-==> 065.rb 74 <==
+==> 068.rb 74 <==
 def foo(*args, &block)
   do_something do
     bar(*args, &block)
   end
 end
 
-==> 066.rb 86 <==
+==> 069.rb 86 <==
 def foo(*args, &block)
   do_something do
     bar(*args, &block)
@@ -405,14 +425,14 @@ def foo(*args, &block)
   end
 end
 
-==> 067.rb 80 <==
+==> 070.rb 80 <==
 def foo(**kwargs, &block)
   do_something do
     bar(**kwargs, &block)
   end
 end
 
-==> 068.rb 92 <==
+==> 071.rb 92 <==
 def foo(**kwargs, &block)
   do_something do
     bar(**kwargs, &block)
@@ -420,61 +440,61 @@ def foo(**kwargs, &block)
   end
 end
 
-==> 069.rb 78 <==
+==> 072.rb 78 <==
 def foo(*args, **kwargs)
   block_method do
     bar(*args, **kwargs)
   end
 end
 
-==> 070.rb 52 <==
+==> 073.rb 52 <==
 def foo(*args, &block)
   obj.bar(*args, &block)
 end
 
-==> 071.rb 49 <==
+==> 074.rb 49 <==
 def foo(*args, &block)
   bar.(*args, &block)
 end
 
-==> 072.rb 40 <==
+==> 075.rb 40 <==
 def foo(*args, &block)
   bar(*args)
 end
 
-==> 073.rb 28 <==
+==> 076.rb 28 <==
 def foo(...)
   bar(...)
 end
 
-==> 074.rb 33 <==
+==> 077.rb 33 <==
 def foo(arg)
   bar(argument)
 end
 
-==> 075.rb 53 <==
+==> 078.rb 53 <==
 def foo(*args, &block)
   bar(*arguments, &block)
 end
 
-==> 076.rb 59 <==
+==> 079.rb 59 <==
 def foo(**kwargs, &block)
   bar(**kwarguments, &block)
 end
 
-==> 077.rb 61 <==
+==> 080.rb 61 <==
 def foo(*args, &block)
   var = args
   foo(*args, &block)
 end
 
-==> 078.rb 55 <==
+==> 081.rb 55 <==
 def foo(*args, &block)
   args
   foo(*args, &block)
 end
 
-==> 079.rb 27 <==
+==> 082.rb 27 <==
 def foo(*args, &block)
 end
 

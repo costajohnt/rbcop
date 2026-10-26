@@ -1,0 +1,9 @@
+==> offenses exit=1 115 <==
+000.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+
+==> autocorrect exit=0 113 <==
+000.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+
+==> corrected/000.rb 17 <==
+top.test((a; b))
+

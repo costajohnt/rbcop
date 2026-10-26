@@ -22,42 +22,127 @@ ensure
   cleanup
 end
 
-==> 002.rb 54 <==
+==> 002.rb 56 <==
+foo.select do |x|
+  x.bar?
+end.each do |n|
+  puts n
+end
+
+==> 003.rb 51 <==
+foo.select { |x| x.bar? }.each do |n|
+  puts n
+end
+
+==> 004.rb 54 <==
 def func
   for n in [1, 2, 3] do
     puts n
   end
 end
 
-==> 003.rb 54 <==
+==> 005.rb 54 <==
 def func
   [1, 2, 3].each do |n|
     puts n
   end
 end
 
-==> 004.rb 53 <==
+==> 006.rb 53 <==
 def func
   [1, 2, 3].each do
     something
   end
 end
 
-==> 005.rb 60 <==
+==> 007.rb 60 <==
 def func
   [[1, 2]].each do |a, b|
     puts a + b
   end
 end
 
-==> 006.rb 51 <==
+==> 008.rb 31 <==
+foo.each do |(x)|
+  bar(x)
+end
+
+==> 009.rb 37 <==
+foo.each do |x, (y)|
+  bar(x, y)
+end
+
+==> 010.rb 32 <==
+foo.each do |(*x)|
+  bar(x)
+end
+
+==> 011.rb 30 <==
+foo.each do |x,|
+  bar(x)
+end
+
+==> 012.rb 33 <==
+foo.each do |x = 1|
+  bar(x)
+end
+
+==> 013.rb 36 <==
+foo.each do |x, y:|
+  bar(x, y)
+end
+
+==> 014.rb 37 <==
+foo.each do |x, **y|
+  bar(x, y)
+end
+
+==> 015.rb 36 <==
+foo.each do |x, &y|
+  bar(x, y)
+end
+
+==> 016.rb 32 <==
+foo.each do |x; y|
+  bar(x)
+end
+
+==> 017.rb 30 <==
+foo.each do |*x|
+  bar(x)
+end
+
+==> 018.rb 36 <==
+foo.each do |*x, y|
+  bar(x, y)
+end
+
+==> 019.rb 19 <==
+c.each { |d|
+  e
+}
+
+==> 020.rb 16 <==
+c.each {d
+  f }
+
+==> 021.rb 16 <==
+c.each { d
+  f}
+
+==> 022.rb 15 <==
+c.each {
+  e
+}
+
+==> 023.rb 51 <==
 def func
   [1, 2, 3].each do
     puts _1
   end
 end
 
-==> 007.rb 95 <==
+==> 024.rb 95 <==
 def func
   for n in [1, 2, 3] do
     puts n
@@ -67,12 +152,12 @@ def func
   end
 end
 
-==> 008.rb 25 <==
+==> 025.rb 25 <==
 each do |n|
   puts n
 end
 
-==> 009.rb 105 <==
+==> 026.rb 105 <==
 for n in [1, 2, 3] do
   puts n
 end
@@ -83,14 +168,14 @@ end
   puts n
 end
 
-==> 010.rb 71 <==
+==> 027.rb 71 <==
 def func
   {a: 1, b: 2, c: 3}.each do |(a, b)|
     puts a, b
   end
 end
 
-==> 011.rb 45 <==
+==> 028.rb 45 <==
 def func
   [1, 2, 3].each { |n| puts n }
 end

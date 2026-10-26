@@ -159,34 +159,55 @@ CONST = FOO % BAR
 ==> 054.rb 19 <==
 CONST = FOO ** BAR
 
-==> 055.rb 75 <==
+==> 055.rb 19 <==
+CONST = FOO && BAR
+
+==> 056.rb 19 <==
+CONST = FOO || BAR
+
+==> 057.rb 24 <==
+CONST = foo ? bar : baz
+
+==> 058.rb 75 <==
 FOO = [1].freeze
 BAR = [2].freeze
 BAZ = [3].freeze
 CONST = FOO + BAR + BAZ
 
-==> 056.rb 28 <==
+==> 059.rb 20 <==
+CONST = foo.bar baz
+
+==> 060.rb 21 <==
+CONST = foo.bar(baz)
+
+==> 061.rb 21 <==
+CONST = foo&.bar baz
+
+==> 062.rb 23 <==
+CONST = (foo == 'bar')
+
+==> 063.rb 28 <==
 CONST = ENV['foo'] || 'foo'
 
-==> 057.rb 30 <==
+==> 064.rb 30 <==
 CONST = ::ENV['foo'] || 'foo'
 
-==> 058.rb 16 <==
+==> 065.rb 16 <==
 CONST = FOO + 2
 
-==> 059.rb 14 <==
+==> 066.rb 14 <==
 CONST = 1 + 2
 
-==> 060.rb 18 <==
+==> 067.rb 18 <==
 CONST = FOO + 2.1
 
-==> 061.rb 18 <==
+==> 068.rb 18 <==
 CONST = 1.2 + 2.1
 
-==> 062.rb 19 <==
+==> 069.rb 19 <==
 CONST = FOO == BAR
 
-==> 063.rb 164 <==
+==> 070.rb 164 <==
 CONST = 'foo'.count
 CONST = 'foo'.count('f')
 CONST = [1, 2, 3].count { |n| n > 2 }
@@ -194,50 +215,59 @@ CONST = [1, 2, 3].count(2) { |n| n > 2 }
 CONST = 'foo'.length
 CONST = 'foo'.size
 
-==> 064.rb 20 <==
+==> 071.rb 20 <==
 CONST = FOO + 'bar'
 
-==> 065.rb 30 <==
+==> 072.rb 30 <==
 CONST = 'foo' + 'bar' + 'baz'
 
-==> 066.rb 15 <==
+==> 073.rb 15 <==
 XXX = YYY, ZZZ
 
-==> 067.rb 18 <==
+==> 074.rb 18 <==
 XXX = %w(YYY ZZZ)
 
-==> 068.rb 31 <==
+==> 075.rb 31 <==
 FOO = <<-HERE
   SOMETHING
 HERE
 
-==> 069.rb 15 <==
+==> 076.rb 18 <==
+FOO = BAR = 'baz'
+
+==> 077.rb 15 <==
+FOO = bar = []
+
+==> 078.rb 17 <==
+FOO = (bar = [])
+
+==> 079.rb 15 <==
 CONST = "#{a}"
 
-==> 070.rb 17 <==
+==> 080.rb 17 <==
 CONST ||= "#{a}"
 
-==> 071.rb 44 <==
+==> 081.rb 44 <==
 # frozen_string_literal: true
 CONST = "#{a}"
-==> 072.rb 46 <==
+==> 082.rb 46 <==
 # frozen_string_literal: true
 CONST ||= "#{a}"
-==> 073.rb 63 <==
+==> 083.rb 63 <==
 # frozen_string_literal: true
 CONST = <<~HERE
   foo
   bar
 HERE
 
-==> 074.rb 65 <==
+==> 084.rb 65 <==
 # frozen_string_literal: true
 CONST ||= <<~HERE
   foo
   bar
 HERE
 
-==> 075.rb 85 <==
+==> 085.rb 85 <==
 # frozen_string_literal: true
 
 CONST = <<~HERE
@@ -245,16 +275,16 @@ CONST = <<~HERE
   bar
 HERE
 
-==> 076.rb 59 <==
+==> 086.rb 59 <==
 # frozen_string_literal: true
 
 CONST = 'foo'         'bar'
 
-==> 077.rb 46 <==
+==> 087.rb 46 <==
 # frozen_string_literal: false
 CONST = "#{a}"
 
-==> 078.rb 48 <==
+==> 088.rb 48 <==
 # frozen_string_literal: false
 CONST ||= "#{a}"
 

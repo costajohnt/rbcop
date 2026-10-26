@@ -1,9 +1,19 @@
-==> offenses exit=1 115 <==
+==> offenses exit=1 355 <==
 000.rb:1:13: C: [Correctable] Style/RedundantRegexpArgument: Use string `"f"` as argument instead of regexp `/f/`.
+001.rb:1:13: C: [Correctable] Style/RedundantRegexpArgument: Use string `"\#{"` as argument instead of regexp `/\#\{/`.
+002.rb:1:13: C: [Correctable] Style/RedundantRegexpArgument: Use string `"\#$"` as argument instead of regexp `/\#\$/`.
 
-==> autocorrect exit=0 113 <==
+==> autocorrect exit=0 349 <==
 000.rb:1:13: C: [Corrected] Style/RedundantRegexpArgument: Use string `"f"` as argument instead of regexp `/f/`.
+001.rb:1:13: C: [Corrected] Style/RedundantRegexpArgument: Use string `"\#{"` as argument instead of regexp `/\#\{/`.
+002.rb:1:13: C: [Corrected] Style/RedundantRegexpArgument: Use string `"\#$"` as argument instead of regexp `/\#\$/`.
 
 ==> corrected/000.rb 17 <==
 'foo'.split("f")
+
+==> corrected/001.rb 19 <==
+'foo'.split("\#{")
+
+==> corrected/002.rb 19 <==
+'foo'.split("\#$")
 

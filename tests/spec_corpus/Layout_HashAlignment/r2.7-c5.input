@@ -24,3 +24,34 @@ f(aaaa:
 f("aaaa" => foo,
   "b" => 2)
 
+==> 003.rb 72 <==
+f(
+  'short'                   => a,
+  'considerably_longer_key' => b
+)
+
+==> 004.rb 46 <==
+f(
+  short: a,
+  considerably_longer_key: b
+)
+
+==> 005.rb 106 <==
+f(
+  'short'                   => a,
+  'tiny'                    => b,
+  'considerably_longer_key' => c
+)
+
+==> 006.rb 30 <==
+f(
+  'a' =>  1,
+  'bb' => 2
+)
+
+==> 007.rb 22 <==
+f(
+  a:  1,
+  bb: 2
+)
+

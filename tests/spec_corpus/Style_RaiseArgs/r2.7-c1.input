@@ -23,14 +23,32 @@ bar && raise(Ex.new('error'))
 ==> 004.rb 30 <==
 bar || raise(Ex.new('error'))
 
-==> 005.rb 60 <==
+==> 005.rb 32 <==
+foo bar, raise(Ex.new('error'))
+
+==> 006.rb 27 <==
+raise(Ex.new('error')).foo
+
+==> 007.rb 25 <==
+[raise(Ex.new('error'))]
+
+==> 008.rb 32 <==
+{ foo: raise(Ex.new('error')) }
+
+==> 009.rb 34 <==
+super bar, raise(Ex.new('error'))
+
+==> 010.rb 34 <==
+yield bar, raise(Ex.new('error'))
+
+==> 011.rb 60 <==
 if a
   raise RuntimeError, msg
 else
   raise Ex.new(msg)
 end
 
-==> 006.rb 99 <==
+==> 012.rb 99 <==
 if a
   raise RuntimeError, msg
 elsif b
@@ -39,29 +57,32 @@ else
   raise ArgumentError.new(msg)
 end
 
-==> 007.rb 68 <==
+==> 013.rb 68 <==
 def do_something
   klass = RuntimeError
   raise klass.new('hi')
 end
 
-==> 008.rb 35 <==
+==> 014.rb 35 <==
 raise MyCustomError.new(a1, a2, a3)
-==> 009.rb 34 <==
+==> 015.rb 34 <==
 raise MyKwArgError.new(a: 1, b: 2)
-==> 010.rb 30 <==
+==> 016.rb 30 <==
 raise MyCustomError.new(*args)
-==> 011.rb 45 <==
+==> 017.rb 45 <==
 def foo(...) raise MyCustomError.new(...) end
-==> 012.rb 29 <==
+==> 018.rb 29 <==
 raise Ex.new(entity), message
-==> 013.rb 31 <==
+==> 019.rb 31 <==
 raise RuntimeError, msg, caller
-==> 014.rb 23 <==
+==> 020.rb 23 <==
 raise RuntimeError, msg
-==> 015.rb 22 <==
+==> 021.rb 51 <==
+raise Foo.new("#{fetch { raise Bar.new('bad') }}")
+
+==> 022.rb 22 <==
 raise error_class, msg
-==> 016.rb 9 <==
+==> 023.rb 9 <==
 raise msg
-==> 017.rb 9 <==
+==> 024.rb 9 <==
 raise new

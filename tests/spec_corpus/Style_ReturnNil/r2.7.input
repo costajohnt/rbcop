@@ -16,6 +16,26 @@ loop do
   return if x
 end
 
-==> 003.rb 7 <==
-return
+==> 003.rb 28 <==
+def foo
+  bar || return
+end
+
+==> 004.rb 37 <==
+def foo
+  x = bar ? return : baz
+end
+
+==> 005.rb 28 <==
+def foo
+  bar or return
+end
+
+==> 006.rb 21 <==
+def foo
+  return
+end
+
+==> 007.rb 14 <==
+return if foo
 

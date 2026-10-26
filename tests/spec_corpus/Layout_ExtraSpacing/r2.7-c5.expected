@@ -1,47 +1,53 @@
-==> offenses exit=1 2218 <==
-007.rb:2:4: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-007.rb:3:5: C: Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-007.rb:6:19: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-007.rb:7:5: C: Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-008.rb:3:5: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-008.rb:6:19: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-008.rb:7:5: C: Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-009.rb:2:9: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-009.rb:3:11: C: Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+==> offenses exit=1 2318 <==
+008.rb:2:7: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+009.rb:2:4: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+009.rb:3:5: C: Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
 009.rb:6:19: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
 009.rb:7:5: C: Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-010.rb:2:4: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-010.rb:3:7: C: Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-010.rb:6:31: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-010.rb:7:8: C: Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-011.rb:4:27: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-011.rb:5:12: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-011.rb:8:42: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-011.rb:12:48: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-011.rb:16:58: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-011.rb:18:22: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-013.rb:2:19: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-014.rb:2:19: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+010.rb:3:5: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+010.rb:6:19: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+010.rb:7:5: C: Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+011.rb:2:9: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+011.rb:3:11: C: Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+011.rb:6:19: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+011.rb:7:5: C: Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+012.rb:2:4: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+012.rb:3:7: C: Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+012.rb:6:31: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+012.rb:7:8: C: Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+013.rb:4:27: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+013.rb:5:12: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+013.rb:8:42: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+013.rb:12:48: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+013.rb:16:58: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+013.rb:18:22: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+015.rb:2:19: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+016.rb:2:19: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
 
-==> autocorrect exit=0 1583 <==
-007.rb:2:4: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-007.rb:6:19: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-008.rb:3:5: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-008.rb:6:19: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-009.rb:2:9: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+==> autocorrect exit=0 1681 <==
+008.rb:2:7: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+009.rb:2:4: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
 009.rb:6:19: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-010.rb:2:4: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-010.rb:6:31: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-011.rb:4:27: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-011.rb:5:12: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-011.rb:8:42: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-011.rb:12:48: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-011.rb:16:58: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-011.rb:18:22: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-013.rb:2:19: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
-014.rb:2:19: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+010.rb:3:5: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+010.rb:6:19: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+011.rb:2:9: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+011.rb:6:19: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+012.rb:2:4: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+012.rb:6:31: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+013.rb:4:27: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+013.rb:5:12: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+013.rb:8:42: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+013.rb:12:48: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+013.rb:16:58: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+013.rb:18:22: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+015.rb:2:19: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+016.rb:2:19: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
 
-==> corrected/007.rb 55 <==
+==> corrected/008.rb 48 <==
+transitions = self
+found       = target != name
+
+==> corrected/009.rb 55 <==
 a   = 1
 bb  = 2
 ccc = 3
@@ -50,7 +56,7 @@ abcde = 1
 a     = 2
 abc   = 3
 
-==> corrected/008.rb 61 <==
+==> corrected/010.rb 61 <==
 a    += 1
 bb    = 2
 ccc <<= 3
@@ -59,7 +65,7 @@ abcde = 1
 a    *= 2
 abc ||= 3
 
-==> corrected/009.rb 82 <==
+==> corrected/011.rb 82 <==
 a[1]      = 1
 bb[2,3]   = 2
 ccc[:key] = 3
@@ -68,7 +74,7 @@ abcde[0] = 1
 a        = 2
 abc     += 3
 
-==> corrected/010.rb 97 <==
+==> corrected/012.rb 97 <==
 a.attr = 1
 bb   &&= 2
 ccc.s  = 3
@@ -77,7 +83,7 @@ abcde.blah       = 1
 a.attribute_name = 2
 abc[1]           = 3
 
-==> corrected/011.rb 698 <==
+==> corrected/013.rb 698 <==
 def batch
   @areas   = params[:param].map {
                var_1      = 123_456
@@ -100,11 +106,11 @@ def batch
   render json: @areas
 end
 
-==> corrected/013.rb 57 <==
+==> corrected/015.rb 57 <==
 e, f              = val.split('=')
 opt.ssh_config[e] = f
 
-==> corrected/014.rb 57 <==
+==> corrected/016.rb 57 <==
 xy              &&= val.split('=')
 opt.ssh_config[e] = f
 

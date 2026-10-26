@@ -1,58 +1,105 @@
-==> offenses exit=1 1524 <==
-000.rb:2:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-001.rb:2:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-002.rb:4:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-003.rb:2:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-014.rb:3:5: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-015.rb:5:5: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-016.rb:6:7: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-018.rb:2:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-019.rb:2:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-021.rb:3:5: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-022.rb:5:5: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-023.rb:6:7: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+==> offenses exit=1 2163 <==
+000.rb:2:16: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+001.rb:2:16: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+002.rb:2:15: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+003.rb:2:21: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+004.rb:3:5: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+005.rb:2:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+006.rb:2:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+007.rb:4:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+008.rb:2:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+019.rb:3:5: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+020.rb:5:5: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+021.rb:6:7: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+023.rb:2:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+024.rb:2:3: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+026.rb:3:5: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+027.rb:5:5: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+028.rb:6:7: C: [Correctable] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
 
-==> autocorrect exit=0 1500 <==
-000.rb:2:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-001.rb:2:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-002.rb:4:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-003.rb:2:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-014.rb:3:5: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-015.rb:5:5: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-016.rb:6:7: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-018.rb:2:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-019.rb:2:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-021.rb:3:5: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-022.rb:5:5: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
-023.rb:6:7: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+==> autocorrect exit=0 2129 <==
+000.rb:2:16: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+001.rb:2:16: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+002.rb:2:15: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+003.rb:2:21: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+004.rb:3:5: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+005.rb:2:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+006.rb:2:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+007.rb:4:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+008.rb:2:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+019.rb:3:5: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+020.rb:5:5: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+021.rb:6:7: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+023.rb:2:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+024.rb:2:3: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+026.rb:3:5: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+027.rb:5:5: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+028.rb:6:7: C: [Corrected] Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
 
-==> corrected/000.rb 49 <==
+==> corrected/000.rb 51 <==
 def foo?
-  return false if condition
+  condition || (return false)
 
   bar?
 end
 
 ==> corrected/001.rb 49 <==
 def foo?
+  condition or return false
+
+  bar?
+end
+
+==> corrected/002.rb 56 <==
+def foo?
+  condition ? (return false) : baz
+
+  bar?
+end
+
+==> corrected/003.rb 56 <==
+def foo?
+  condition ? baz : (return false)
+
+  bar?
+end
+
+==> corrected/004.rb 59 <==
+def foo?
+  if condition
+    return false
+  end
+
+  bar?
+end
+
+==> corrected/005.rb 49 <==
+def foo?
   return false if condition
 
   bar?
 end
 
-==> corrected/002.rb 49 <==
+==> corrected/006.rb 49 <==
+def foo?
+  return false if condition
+
+  bar?
+end
+
+==> corrected/007.rb 49 <==
 def foo?
   return true if condition
 
   false
 end
 
-==> corrected/003.rb 21 <==
+==> corrected/008.rb 21 <==
 def foo?
   false
 end
 
-==> corrected/014.rb 54 <==
+==> corrected/019.rb 54 <==
 def foo?
   if bar
     false
@@ -61,7 +108,7 @@ def foo?
   end
 end
 
-==> corrected/015.rb 54 <==
+==> corrected/020.rb 54 <==
 def foo?
   if bar
     true
@@ -70,7 +117,7 @@ def foo?
   end
 end
 
-==> corrected/016.rb 79 <==
+==> corrected/021.rb 79 <==
 def foo?
   if bar
     if baz
@@ -81,21 +128,21 @@ def foo?
   end
 end
 
-==> corrected/018.rb 54 <==
+==> corrected/023.rb 54 <==
 def self.foo?
   return false if condition
 
   bar?
 end
 
-==> corrected/019.rb 54 <==
+==> corrected/024.rb 54 <==
 def self.foo?
   return false if condition
 
   bar?
 end
 
-==> corrected/021.rb 59 <==
+==> corrected/026.rb 59 <==
 def self.foo?
   if bar
     false
@@ -104,7 +151,7 @@ def self.foo?
   end
 end
 
-==> corrected/022.rb 59 <==
+==> corrected/027.rb 59 <==
 def self.foo?
   if bar
     true
@@ -113,7 +160,7 @@ def self.foo?
   end
 end
 
-==> corrected/023.rb 84 <==
+==> corrected/028.rb 84 <==
 def self.foo?
   if bar
     if baz

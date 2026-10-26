@@ -1,4 +1,4 @@
-==> offenses exit=1 16503 <==
+==> offenses exit=1 16949 <==
 000.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
 001.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
 004.rb:3:7: W: [Correctable] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
@@ -175,16 +175,21 @@
 240.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
 241.rb:1:7: W: [Correctable] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
 242.rb:3:11: W: [Correctable] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
-243.rb:2:8: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
-244.rb:2:8: W: Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
-245.rb:1:18: W: Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
-246.rb:1:16: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
-247.rb:2:11: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
-248.rb:3:10: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
-249.rb:3:10: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
-250.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `42` appeared as a condition.
+243.rb:2:6: W: [Correctable] Lint/LiteralAsCondition: Literal `true` appeared as a condition.
+244.rb:1:8: W: [Correctable] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+245.rb:4:11: W: Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+246.rb:4:11: W: Lint/LiteralAsCondition: Literal `true` appeared as a condition.
+247.rb:3:11: W: [Correctable] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+248.rb:2:8: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+249.rb:2:8: W: Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+250.rb:1:18: W: Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+251.rb:1:16: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+252.rb:2:11: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+253.rb:3:10: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+254.rb:3:10: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+255.rb:1:4: W: [Correctable] Lint/LiteralAsCondition: Literal `42` appeared as a condition.
 
-==> autocorrect exit=1 16317 <==
+==> autocorrect exit=1 16757 <==
 000.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
 001.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
 004.rb:3:7: W: [Corrected] Lint/LiteralAsCondition: Literal `1` appeared as a condition.
@@ -361,14 +366,19 @@
 240.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
 241.rb:1:7: W: [Corrected] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
 242.rb:3:11: W: [Corrected] Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
-243.rb:2:8: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
-244.rb:2:8: W: Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
-245.rb:1:18: W: Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
-246.rb:1:16: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
-247.rb:2:11: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
-248.rb:3:10: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
-249.rb:3:10: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
-250.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `42` appeared as a condition.
+243.rb:2:6: W: [Corrected] Lint/LiteralAsCondition: Literal `true` appeared as a condition.
+244.rb:1:8: W: [Corrected] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+245.rb:4:11: W: Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+246.rb:4:11: W: Lint/LiteralAsCondition: Literal `true` appeared as a condition.
+247.rb:3:11: W: [Corrected] Lint/LiteralAsCondition: Literal `false` appeared as a condition.
+248.rb:2:8: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+249.rb:2:8: W: Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+250.rb:1:18: W: Lint/LiteralAsCondition: Literal `nil` appeared as a condition.
+251.rb:1:16: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+252.rb:2:11: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+253.rb:3:10: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+254.rb:3:10: W: Lint/LiteralAsCondition: Literal `123` appeared as a condition.
+255.rb:1:4: W: [Corrected] Lint/LiteralAsCondition: Literal `42` appeared as a condition.
 
 ==> corrected/000.rb 4 <==
 top
@@ -910,6 +920,16 @@ begin
   top
 end until false
 
-==> corrected/250.rb 1 <==
+==> corrected/243.rb 16 <==
+foo.bar =
+  nil
+
+==> corrected/244.rb 8 <==
+x = nil
+
+==> corrected/247.rb 35 <==
+items.each { |item| next if item }
+
+==> corrected/255.rb 1 <==
 
 

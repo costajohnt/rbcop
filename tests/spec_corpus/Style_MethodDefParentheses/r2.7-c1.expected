@@ -1,4 +1,4 @@
-==> offenses exit=1 604 <==
+==> offenses exit=1 1034 <==
 000.rb:1:9: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
 002.rb:1:9: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
 003.rb:1:14: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
@@ -6,8 +6,13 @@
 007.rb:1:14: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
 009.rb:1:8: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
 010.rb:1:8: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
+013.rb:1:9: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
+015.rb:1:9: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
+016.rb:1:9: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
+017.rb:1:9: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
+018.rb:1:9: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
 
-==> autocorrect exit=0 590 <==
+==> autocorrect exit=0 1010 <==
 000.rb:1:9: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
 002.rb:1:9: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
 003.rb:1:14: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
@@ -15,6 +20,11 @@
 007.rb:1:14: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
 009.rb:1:8: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
 010.rb:1:8: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
+013.rb:1:9: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
+015.rb:1:9: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
+016.rb:1:9: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
+017.rb:1:9: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
+018.rb:1:9: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
 
 ==> corrected/000.rb 18 <==
 def func a, b
@@ -44,4 +54,22 @@ end
 ==> corrected/010.rb 19 <==
 def foo **opts
 end
+
+==> corrected/013.rb 23 <==
+def func a, (b, c)
+end
+
+==> corrected/015.rb 20 <==
+def func a,
+  b
+end
+
+==> corrected/016.rb 38 <==
+def func a, b; do_something(a, b) end
+
+==> corrected/017.rb 16 <==
+def func a; end
+
+==> corrected/018.rb 33 <==
+def func a; do_something(a); end
 

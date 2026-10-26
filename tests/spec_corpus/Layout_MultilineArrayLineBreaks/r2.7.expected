@@ -1,17 +1,17 @@
 ==> offenses exit=1 251 <==
 002.rb:2:6: C: [Correctable] Layout/MultilineArrayLineBreaks: Each item in a multi-line array must start on a separate line.
-003.rb:2:11: C: [Correctable] Layout/MultilineArrayLineBreaks: Each item in a multi-line array must start on a separate line.
+004.rb:2:11: C: [Correctable] Layout/MultilineArrayLineBreaks: Each item in a multi-line array must start on a separate line.
 
 ==> autocorrect exit=0 247 <==
 002.rb:2:6: C: [Corrected] Layout/MultilineArrayLineBreaks: Each item in a multi-line array must start on a separate line.
-003.rb:2:11: C: [Corrected] Layout/MultilineArrayLineBreaks: Each item in a multi-line array must start on a separate line.
+004.rb:2:11: C: [Corrected] Layout/MultilineArrayLineBreaks: Each item in a multi-line array must start on a separate line.
 
 ==> corrected/002.rb 13 <==
 [1,
   2, 
 4]
 
-==> corrected/003.rb 18 <==
+==> corrected/004.rb 18 <==
 [1,
   [2, 3], 
 4]

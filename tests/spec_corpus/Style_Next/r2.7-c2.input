@@ -13,8 +13,22 @@ Style/Next:
   puts o if o == 1 # comment
 end
 
-==> 001.rb 52 <==
+==> 001.rb 67 <==
+[].each do |o|
+  o.each do |v|
+    puts v if v == 1
+  end if o
+end
+
+==> 002.rb 52 <==
 [].each do |o|
   puts o unless o == 1 # comment
+end
+
+==> 003.rb 75 <==
+[].each do |o|
+  o.each do |v|
+    puts v unless v == 1
+  end unless o
 end
 

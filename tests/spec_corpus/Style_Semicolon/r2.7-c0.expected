@@ -1,4 +1,4 @@
-==> offenses exit=1 2148 <==
+==> offenses exit=1 2336 <==
 000.rb:1:22: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
 001.rb:1:22: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
 002.rb:1:14: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
@@ -22,8 +22,10 @@
 026.rb:1:6: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
 027.rb:1:7: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
 028.rb:1:13: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+029.rb:1:9: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+030.rb:2:6: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
 
-==> autocorrect exit=1 2106 <==
+==> autocorrect exit=1 2290 <==
 000.rb:1:22: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
 001.rb:1:22: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
 002.rb:1:14: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
@@ -47,6 +49,8 @@
 026.rb:1:6: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
 027.rb:1:7: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
 028.rb:1:13: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+029.rb:1:9: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+030.rb:2:6: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
 
 ==> corrected/000.rb 22 <==
 puts "this is a test"
@@ -119,4 +123,15 @@ foo { bar
 ==> corrected/028.rb 26 <==
 m key: value
 do_something
+
+==> corrected/029.rb 17 <==
+def c a:
+  d
+end
+
+==> corrected/030.rb 21 <==
+case h
+in a:
+  d
+end
 

@@ -1,4 +1,4 @@
-==> offenses exit=1 3503 <==
+==> offenses exit=1 4329 <==
 000.rb:3:3: C: [Correctable] Layout/ClassStructure: `module_inclusion` is supposed to appear before `constants`.
 002.rb:3:3: C: [Correctable] Layout/ClassStructure: `module_inclusion` is supposed to appear before `constants`.
 006.rb:4:5: C: [Correctable] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
@@ -11,27 +11,34 @@
 017.rb:5:3: C: [Correctable] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
 018.rb:5:3: C: [Correctable] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
 019.rb:5:3: C: [Correctable] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
-020.rb:6:3: C: [Correctable] Layout/ClassStructure: `public_class_methods` is supposed to appear before `public_methods`.
-021.rb:5:3: C: [Correctable] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
-022.rb:5:3: C: [Correctable] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
-023.rb:4:3: C: [Correctable] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
-023.rb:8:3: C: [Correctable] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
-024.rb:5:3: C: [Correctable] Layout/ClassStructure: `public_class_methods` is supposed to appear before `private_class_methods`.
-026.rb:7:3: C: [Correctable] Layout/ClassStructure: `private_class_methods` is supposed to appear before `private_methods`.
-028.rb:6:3: C: [Correctable] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
-030.rb:3:3: C: [Correctable] Layout/ClassStructure: `module_inclusion` is supposed to appear before `public_methods`.
-030.rb:4:3: C: [Correctable] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
-031.rb:6:3: C: [Correctable] Layout/ClassStructure: `module_inclusion` is supposed to appear before `initializer`.
-031.rb:7:3: C: [Correctable] Layout/ClassStructure: `constants` is supposed to appear before `initializer`.
-032.rb:3:3: C: [Correctable] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
-033.rb:3:3: C: Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
-033.rb:4:3: C: Layout/ClassStructure: `module_inclusion` is supposed to appear before `public_methods`.
-035.rb:3:3: C: [Correctable] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
-036.rb:8:3: C: Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
-038.rb:6:3: C: [Correctable] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
-039.rb:3:3: C: [Correctable] Layout/ClassStructure: `module_inclusion` is supposed to appear before `constants`.
+020.rb:4:3: C: [Correctable] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
+021.rb:4:3: C: [Correctable] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
+022.rb:5:3: C: [Correctable] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
+023.rb:5:3: C: [Correctable] Layout/ClassStructure: `module_inclusion` is supposed to appear before `public_methods`.
+024.rb:6:3: C: [Correctable] Layout/ClassStructure: `public_class_methods` is supposed to appear before `public_methods`.
+025.rb:5:3: C: [Correctable] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
+026.rb:5:3: C: [Correctable] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
+027.rb:4:3: C: [Correctable] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
+027.rb:8:3: C: [Correctable] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
+028.rb:5:3: C: [Correctable] Layout/ClassStructure: `public_class_methods` is supposed to appear before `private_class_methods`.
+030.rb:7:3: C: [Correctable] Layout/ClassStructure: `private_class_methods` is supposed to appear before `private_methods`.
+032.rb:6:3: C: [Correctable] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
+033.rb:9:3: C: [Correctable] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
+035.rb:6:3: C: [Correctable] Layout/ClassStructure: `public_class_methods` is supposed to appear before `private_class_methods`.
+036.rb:9:3: C: [Correctable] Layout/ClassStructure: `public_class_methods` is supposed to appear before `private_class_methods`.
+041.rb:3:3: C: [Correctable] Layout/ClassStructure: `module_inclusion` is supposed to appear before `public_methods`.
+041.rb:4:3: C: [Correctable] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
+042.rb:6:3: C: [Correctable] Layout/ClassStructure: `module_inclusion` is supposed to appear before `initializer`.
+042.rb:7:3: C: [Correctable] Layout/ClassStructure: `constants` is supposed to appear before `initializer`.
+043.rb:3:3: C: [Correctable] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
+044.rb:3:3: C: Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
+044.rb:4:3: C: Layout/ClassStructure: `module_inclusion` is supposed to appear before `public_methods`.
+046.rb:3:3: C: [Correctable] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
+047.rb:8:3: C: Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
+049.rb:6:3: C: [Correctable] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
+050.rb:3:3: C: [Correctable] Layout/ClassStructure: `module_inclusion` is supposed to appear before `constants`.
 
-==> autocorrect exit=1 3645 <==
+==> autocorrect exit=1 4457 <==
 000.rb:3:3: C: [Corrected] Layout/ClassStructure: `module_inclusion` is supposed to appear before `constants`.
 002.rb:3:3: C: [Corrected] Layout/ClassStructure: `module_inclusion` is supposed to appear before `constants`.
 006.rb:4:5: C: [Corrected] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
@@ -45,26 +52,33 @@
 017.rb:5:3: C: [Corrected] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
 018.rb:5:3: C: [Corrected] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
 019.rb:5:3: C: [Corrected] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
-020.rb:6:3: C: [Corrected] Layout/ClassStructure: `public_class_methods` is supposed to appear before `public_methods`.
-021.rb:5:3: C: [Corrected] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
-022.rb:5:3: C: [Corrected] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
-023.rb:4:3: C: [Corrected] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
-023.rb:8:3: C: [Corrected] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
-024.rb:5:3: C: [Corrected] Layout/ClassStructure: `public_class_methods` is supposed to appear before `private_class_methods`.
-026.rb:7:3: C: [Corrected] Layout/ClassStructure: `private_class_methods` is supposed to appear before `private_methods`.
-028.rb:6:3: C: [Corrected] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
-030.rb:3:3: C: [Corrected] Layout/ClassStructure: `module_inclusion` is supposed to appear before `public_methods`.
-030.rb:4:3: C: [Corrected] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
-031.rb:6:3: C: [Corrected] Layout/ClassStructure: `module_inclusion` is supposed to appear before `initializer`.
-031.rb:7:3: C: [Corrected] Layout/ClassStructure: `constants` is supposed to appear before `initializer`.
-032.rb:3:3: C: [Corrected] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
-033.rb:3:3: C: Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
-033.rb:4:3: C: Layout/ClassStructure: `module_inclusion` is supposed to appear before `public_methods`.
-035.rb:3:3: C: [Corrected] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
-035.rb:4:3: C: Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
-036.rb:8:3: C: Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
-038.rb:6:3: C: [Corrected] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
-039.rb:3:3: C: [Corrected] Layout/ClassStructure: `module_inclusion` is supposed to appear before `constants`.
+020.rb:4:3: C: [Corrected] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
+021.rb:4:3: C: [Corrected] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
+022.rb:5:3: C: [Corrected] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
+023.rb:5:3: C: [Corrected] Layout/ClassStructure: `module_inclusion` is supposed to appear before `public_methods`.
+024.rb:6:3: C: [Corrected] Layout/ClassStructure: `public_class_methods` is supposed to appear before `public_methods`.
+025.rb:5:3: C: [Corrected] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
+026.rb:5:3: C: [Corrected] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
+027.rb:4:3: C: [Corrected] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
+027.rb:8:3: C: [Corrected] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
+028.rb:5:3: C: [Corrected] Layout/ClassStructure: `public_class_methods` is supposed to appear before `private_class_methods`.
+030.rb:7:3: C: [Corrected] Layout/ClassStructure: `private_class_methods` is supposed to appear before `private_methods`.
+032.rb:6:3: C: [Corrected] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
+033.rb:9:3: C: [Corrected] Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
+035.rb:6:3: C: [Corrected] Layout/ClassStructure: `public_class_methods` is supposed to appear before `private_class_methods`.
+036.rb:9:3: C: [Corrected] Layout/ClassStructure: `public_class_methods` is supposed to appear before `private_class_methods`.
+041.rb:3:3: C: [Corrected] Layout/ClassStructure: `module_inclusion` is supposed to appear before `public_methods`.
+041.rb:4:3: C: [Corrected] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
+042.rb:6:3: C: [Corrected] Layout/ClassStructure: `module_inclusion` is supposed to appear before `initializer`.
+042.rb:7:3: C: [Corrected] Layout/ClassStructure: `constants` is supposed to appear before `initializer`.
+043.rb:3:3: C: [Corrected] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
+044.rb:3:3: C: Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
+044.rb:4:3: C: Layout/ClassStructure: `module_inclusion` is supposed to appear before `public_methods`.
+046.rb:3:3: C: [Corrected] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
+046.rb:4:3: C: Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
+047.rb:8:3: C: Layout/ClassStructure: `public_methods` is supposed to appear before `private_methods`.
+049.rb:6:3: C: [Corrected] Layout/ClassStructure: `constants` is supposed to appear before `public_methods`.
+050.rb:3:3: C: [Corrected] Layout/ClassStructure: `module_inclusion` is supposed to appear before `constants`.
 
 ==> corrected/000.rb 120 <==
 class GridTask
@@ -128,9 +142,9 @@ class Foo
   CONSTANT = <<~EOS
     str
   EOS
-
   def do_something
   end
+
 end
 
 ==> corrected/018.rb 77 <==
@@ -138,9 +152,9 @@ class Foo
   CONSTANT = <<~EOS
     #{str}
   EOS
-
   def do_something
   end
+
 end
 
 ==> corrected/019.rb 76 <==
@@ -148,12 +162,55 @@ class Foo
   CONSTANT = <<~`EOS`
     str
   EOS
+  def do_something
+  end
 
+end
+
+==> corrected/020.rb 73 <==
+class Foo
+  CONSTANT = <<~EOS
+    str
+  EOS
   def do_something
   end
 end
 
-==> corrected/020.rb 133 <==
+==> corrected/021.rb 103 <==
+class Foo
+  CONSTANT = <<~EOS
+    str
+  EOS
+  def do_something
+  end
+  def do_something_else
+  end
+end
+
+==> corrected/022.rb 112 <==
+class Foo
+  CONSTANT = {
+    foo: <<~EOS,
+      str
+    EOS
+    bar: 1
+  }.freeze
+  def do_something
+  end
+
+end
+
+==> corrected/023.rb 83 <==
+class Foo
+  include Module.new(<<~EOS)
+    str
+  EOS
+  def do_something
+  end
+
+end
+
+==> corrected/024.rb 133 <==
 class Foo
   def self.class_method
     <<~EOS
@@ -166,7 +223,7 @@ class Foo
 
 end
 
-==> corrected/021.rb 60 <==
+==> corrected/025.rb 60 <==
 class A
   public def bar
   end
@@ -175,7 +232,7 @@ class A
 
 end
 
-==> corrected/022.rb 53 <==
+==> corrected/026.rb 53 <==
 class A
   def bar
   end
@@ -184,7 +241,7 @@ class A
 
 end
 
-==> corrected/023.rb 91 <==
+==> corrected/027.rb 91 <==
 class A
   def bar; end
   def qux; end
@@ -195,7 +252,7 @@ class A
 
 end
 
-==> corrected/024.rb 118 <==
+==> corrected/028.rb 118 <==
 class A
   public_class_method def self.do_something
   end
@@ -204,7 +261,7 @@ class A
 
 end
 
-==> corrected/026.rb 104 <==
+==> corrected/030.rb 104 <==
 class A
   private
 
@@ -215,7 +272,7 @@ class A
 
 end
 
-==> corrected/028.rb 60 <==
+==> corrected/032.rb 60 <==
 class A
   def bar
   end
@@ -225,14 +282,50 @@ class A
 
 end
 
-==> corrected/030.rb 62 <==
+==> corrected/033.rb 83 <==
+class A
+  def bar
+  end
+  def foo
+  end
+
+  def baz
+  end
+  private :foo, :baz
+
+end
+
+==> corrected/035.rb 118 <==
+class A
+  def self.do_something
+  end
+  def self.do_internal_work
+  end
+  private_class_method :do_internal_work
+
+end
+
+==> corrected/036.rb 166 <==
+class A
+  def self.do_something
+  end
+  def self.first_internal
+  end
+
+  def self.second_internal
+  end
+  private_class_method :first_internal, :second_internal
+
+end
+
+==> corrected/041.rb 62 <==
 class Foo
   include M
   CONST = 1
   def do_something; end
 end
 
-==> corrected/031.rb 91 <==
+==> corrected/042.rb 91 <==
 class Foo
   include M
   CONST = 1
@@ -242,14 +335,14 @@ class Foo
 
 end
 
-==> corrected/032.rb 63 <==
+==> corrected/043.rb 63 <==
 class Foo
   FIRST = 1
   SECOND = 2
   def do_something; end
 end
 
-==> corrected/035.rb 95 <==
+==> corrected/046.rb 95 <==
 class Foo
   FIRST = 1
   def do_something; end
@@ -257,7 +350,7 @@ class Foo
   SECOND = 2
 end
 
-==> corrected/038.rb 62 <==
+==> corrected/049.rb 62 <==
 class Foo
   CONST = 1
   def do_something; end
@@ -266,7 +359,7 @@ class Foo
 
 end
 
-==> corrected/039.rb 86 <==
+==> corrected/050.rb 86 <==
 class << self
   include AnotherModule
   extend SomeModule

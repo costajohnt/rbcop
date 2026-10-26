@@ -1,3 +1,4 @@
+a.rb: Warning: no department given for AbcSize. Run `rubocop -a --only Migration/DepartmentName` to fix.
 a.rb: Warning: no department given for LineLength. Run `rubocop -a --only Migration/DepartmentName` to fix.
 a.rb: Warning: no department given for AbcSize. Run `rubocop -a --only Migration/DepartmentName` to fix.
 a.rb: Warning: no department given for MethodLength. Run `rubocop -a --only Migration/DepartmentName` to fix.

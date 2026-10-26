@@ -1,18 +1,22 @@
-==> offenses exit=1 1236 <==
+==> offenses exit=1 1648 <==
 001.gemspec:3:3: C: [Correctable] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `rspec` should appear before `rubocop`.
 003.gemspec:6:3: C: [Correctable] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `rspec` should appear before `rubocop`.
 005.gemspec:3:3: C: [Correctable] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `rspec` should appear before `rubocop`.
 007.gemspec:6:3: C: [Correctable] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `rspec` should appear before `rubocop`.
 009.gemspec:3:3: C: [Correctable] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `rspec` should appear before `rubocop`.
 011.gemspec:6:3: C: [Correctable] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `rspec` should appear before `rubocop`.
+015.gemspec:4:5: C: [Correctable] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `rspec` should appear before `rubocop`.
+015.gemspec:7:5: C: [Correctable] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `rspec` should appear before `rubocop`.
 
-==> autocorrect exit=0 1224 <==
+==> autocorrect exit=0 1632 <==
 001.gemspec:3:3: C: [Corrected] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `rspec` should appear before `rubocop`.
 003.gemspec:6:3: C: [Corrected] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `rspec` should appear before `rubocop`.
 005.gemspec:3:3: C: [Corrected] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `rspec` should appear before `rubocop`.
 007.gemspec:6:3: C: [Corrected] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `rspec` should appear before `rubocop`.
 009.gemspec:3:3: C: [Corrected] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `rspec` should appear before `rubocop`.
 011.gemspec:6:3: C: [Corrected] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `rspec` should appear before `rubocop`.
+015.gemspec:4:5: C: [Corrected] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `rspec` should appear before `rubocop`.
+015.gemspec:7:5: C: [Corrected] Gemspec/OrderedDependencies: Dependencies should be sorted in an alphabetical order within their section of the gemspec. Dependency `rspec` should appear before `rubocop`.
 
 ==> corrected/001.gemspec 99 <==
 Gem::Specification.new do |spec|
@@ -57,5 +61,16 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec'
   # For code quality
   spec.add_development_dependency 'rubocop'
+end
+
+==> corrected/015.gemspec 272 <==
+Gem::Specification.new do |spec|
+  if spec.respond_to?(:specification_version)
+    spec.add_dependency('rspec', '>= 3.0')
+    spec.add_dependency('rubocop', '>= 1.0')
+  else
+    spec.add_dependency('rspec', '>= 3.0')
+    spec.add_dependency('rubocop', '>= 1.0')
+  end
 end
 

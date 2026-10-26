@@ -381,21 +381,28 @@ begin
   foo
 end unless condition
 
-==> 048.rb 43 <==
+==> 048.rb 46 <==
+foo if begin begin
+  bar
+rescue
+  nil
+end end
+
+==> 049.rb 43 <==
 unless condition
   begin
     foo
   end
 end
 
-==> 049.rb 50 <==
+==> 050.rb 50 <==
 @foo ||= begin
   @bar ||= begin
     baz
   end
 end
 
-==> 050.rb 144 <==
+==> 051.rb 144 <==
 var = do_something do
   begin
     do_something do
@@ -410,7 +417,7 @@ var = do_something do
   end
 end
 
-==> 051.rb 143 <==
+==> 052.rb 143 <==
 var = do_something do
   begin
     do_something do
@@ -422,6 +429,49 @@ var = do_something do
     end
   ensure
     baz
+  end
+end
+
+==> 053.rb 26 <==
+var = begin
+  a and b
+end
+
+==> 054.rb 25 <==
+var = begin
+  a || b
+end
+
+==> 055.rb 37 <==
+var = begin
+  i += 1 until i > 2
+end
+
+==> 056.rb 41 <==
+def foo
+  return begin
+    bar
+  end
+end
+
+==> 057.rb 43 <==
+def foo
+  return begin
+    not a
+  end
+end
+
+==> 058.rb 42 <==
+loop do
+  next begin
+    a or b
+  end
+end
+
+==> 059.rb 43 <==
+loop do
+  break begin
+    a or b
   end
 end
 

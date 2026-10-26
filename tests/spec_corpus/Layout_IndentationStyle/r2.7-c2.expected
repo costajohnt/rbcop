@@ -3,16 +3,16 @@
 001.rb:1:1: C: [Correctable] Layout/IndentationStyle: Space detected in indentation.
 002.rb:1:1: C: [Correctable] Layout/IndentationStyle: Space detected in indentation.
 003.rb:1:1: C: [Correctable] Layout/IndentationStyle: Space detected in indentation.
-010.rb:1:1: C: [Correctable] Layout/IndentationStyle: Space detected in indentation.
 011.rb:1:1: C: [Correctable] Layout/IndentationStyle: Space detected in indentation.
+012.rb:1:1: C: [Correctable] Layout/IndentationStyle: Space detected in indentation.
 
 ==> autocorrect exit=0 498 <==
 000.rb:1:1: C: [Corrected] Layout/IndentationStyle: Space detected in indentation.
 001.rb:1:1: C: [Corrected] Layout/IndentationStyle: Space detected in indentation.
 002.rb:1:1: C: [Corrected] Layout/IndentationStyle: Space detected in indentation.
 003.rb:1:1: C: [Corrected] Layout/IndentationStyle: Space detected in indentation.
-010.rb:1:1: C: [Corrected] Layout/IndentationStyle: Space detected in indentation.
 011.rb:1:1: C: [Corrected] Layout/IndentationStyle: Space detected in indentation.
+012.rb:1:1: C: [Corrected] Layout/IndentationStyle: Space detected in indentation.
 
 ==> corrected/000.rb 7 <==
 	x = 0
@@ -28,9 +28,9 @@
 __END__
   x = 0
 
-==> corrected/010.rb 7 <==
+==> corrected/011.rb 7 <==
 	x = 0
 
-==> corrected/011.rb 11 <==
+==> corrected/012.rb 11 <==
 	(x = "	")
 

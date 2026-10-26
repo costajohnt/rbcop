@@ -1,0 +1,14 @@
+==> .rubocop.yml 173 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Style/MutableConstant:
+  EnforcedStyle: strict
+  Recursive: true
+
+==> 000.rb 32 <==
+CONST = { foo:, bar: 1 }.freeze
+

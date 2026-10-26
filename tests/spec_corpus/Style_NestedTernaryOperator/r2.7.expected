@@ -1,4 +1,4 @@
-==> offenses exit=1 1080 <==
+==> offenses exit=1 2177 <==
 000.rb:1:6: C: [Correctable] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
 001.rb:1:18: C: [Correctable] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
 001.rb:1:48: C: Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
@@ -7,8 +7,16 @@
 005.rb:1:9: C: [Correctable] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
 005.rb:1:17: C: Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
 006.rb:1:7: C: [Correctable] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+007.rb:1:11: C: [Correctable] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+008.rb:1:13: C: [Correctable] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+009.rb:1:10: C: [Correctable] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+010.rb:1:15: C: [Correctable] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+011.rb:1:10: C: [Correctable] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+012.rb:1:14: C: [Correctable] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+013.rb:1:8: C: [Correctable] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+014.rb:1:20: C: Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
 
-==> autocorrect exit=0 954 <==
+==> autocorrect exit=1 2037 <==
 000.rb:1:6: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
 001.rb:1:18: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
 002.rb:1:10: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
@@ -16,6 +24,14 @@
 005.rb:1:9: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
 005.rb:4:9: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
 006.rb:1:7: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+007.rb:1:11: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+008.rb:1:13: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+009.rb:1:10: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+010.rb:1:15: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+011.rb:1:10: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+012.rb:1:14: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+013.rb:1:8: C: [Corrected] Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
+014.rb:1:20: C: Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer `if` or `else` constructs instead.
 
 ==> corrected/000.rb 29 <==
 if a
@@ -66,4 +82,53 @@ if foo
 else
 corge
 end
+
+==> corrected/007.rb 33 <==
+puts (if a
+b ? 1 : 2
+else
+3
+end)
+
+==> corrected/008.rb 35 <==
+return (if a
+b ? 1 : 2
+else
+3
+end)
+
+==> corrected/009.rb 32 <==
+not (if a
+b ? 1 : 2
+else
+3
+end)
+
+==> corrected/010.rb 37 <==
+defined? (if a
+b ? 1 : 2
+else
+3
+end)
+
+==> corrected/011.rb 31 <==
+not(if a
+b ? 1 : 2
+else
+3
+end)
+
+==> corrected/012.rb 34 <==
+puts x, if a
+b ? 1 : 2
+else
+3
+end
+
+==> corrected/013.rb 37 <==
+p(if a
+(b ? 1 : 2) + (c)
+else
+3
+end)
 

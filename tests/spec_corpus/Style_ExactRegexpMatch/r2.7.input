@@ -13,41 +13,71 @@ string =~ /\Astring\z/
 string =~ /\Afoo'bar\z/
 
 ==> 002.rb 24 <==
+/\Astring\z/ === string
+
+==> 003.rb 24 <==
 string === /\Astring\z/
 
-==> 003.rb 27 <==
+==> 004.rb 27 <==
 string.match(/\Astring\z/)
 
-==> 004.rb 28 <==
+==> 005.rb 28 <==
 string&.match(/\Astring\z/)
 
-==> 005.rb 19 <==
+==> 006.rb 19 <==
 match(/\Astring\z/)
-==> 006.rb 28 <==
+==> 007.rb 28 <==
 string.match?(/\Astring\z/)
 
-==> 007.rb 23 <==
+==> 008.rb 23 <==
 string !~ /\Astring\z/
 
-==> 008.rb 39 <==
+==> 009.rb 39 <==
 string =~ /\Astring#{interpolation}\z/
 
-==> 009.rb 20 <==
-string === /\A0+\z/
+==> 010.rb 20 <==
+/\A0+\z/ === string
 
-==> 010.rb 25 <==
+==> 011.rb 25 <==
 string =~ /\Astring.*\z/
 
-==> 011.rb 21 <==
+==> 012.rb 21 <==
 string =~ /^string$/
 
-==> 012.rb 24 <==
+==> 013.rb 24 <==
 string =~ /\Astring\z/i
 
-==> 013.rb 17 <==
+==> 014.rb 17 <==
 string =~ /^\P$/
 
-==> 014.rb 44 <==
+==> 015.rb 44 <==
 string =~ /^\P$/
 string.match(/\Astring\z/)
+
+==> 016.rb 29 <==
+!string.match?(/\Astring\z/)
+
+==> 017.rb 33 <==
+string.match?(/\Astring\z/).to_s
+
+==> 018.rb 37 <==
+result = string.match?(/\Astring\z/)
+
+==> 019.rb 48 <==
+do_something if string =~ /\Astring\z/ && other
+
+==> 020.rb 49 <==
+do_something unless !string&.match(/\Astring\z/)
+
+==> 021.rb 32 <==
+string.match(/\Astring\z/).nil?
+
+==> 022.rb 31 <==
+index = string =~ /\Astring\z/
+
+==> 023.rb 41 <==
+result = string =~ /\Astring\z/ && other
+
+==> 024.rb 38 <==
+result = string&.match?(/\Astring\z/)
 

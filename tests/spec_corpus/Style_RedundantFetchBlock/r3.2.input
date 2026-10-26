@@ -1,0 +1,18 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+
+==> 000.rb 41 <==
+def m(hash, *)
+  hash.fetch(*) { 5 }
+end
+
+==> 001.rb 43 <==
+def m(hash, **)
+  hash.fetch(**) { 5 }
+end
+

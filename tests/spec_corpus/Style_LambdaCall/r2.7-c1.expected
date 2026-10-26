@@ -1,28 +1,28 @@
 ==> offenses exit=1 1089 <==
 000.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x.(a, b)` over `x.call(a, b)`.
 001.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x&.(a, b)` over `x&.call(a, b)`.
-003.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x.(a, b)` over `x.call(a, b)`.
-004.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x&.(a, b)` over `x&.call(a, b)`.
-005.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x.(a, b)` over `x.call(a, b)`.
-005.rb:3:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x.(a, b)` over `x.call(a, b)`.
-006.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x&.(a, b)` over `x&.call(a, b)`.
-006.rb:3:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x&.(a, b)` over `x&.call(a, b)`.
-008.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `a.()` over `a.call`.
-009.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `a.(asdf, x123)` over `a.call asdf, x123`.
-010.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `a&.(asdf, x123)` over `a&.call asdf, x123`.
+004.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x.(a, b)` over `x.call(a, b)`.
+005.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x&.(a, b)` over `x&.call(a, b)`.
+006.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x.(a, b)` over `x.call(a, b)`.
+006.rb:3:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x.(a, b)` over `x.call(a, b)`.
+007.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x&.(a, b)` over `x&.call(a, b)`.
+007.rb:3:1: C: [Correctable] Style/LambdaCall: Prefer the use of `x&.(a, b)` over `x&.call(a, b)`.
+009.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `a.()` over `a.call`.
+010.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `a.(asdf, x123)` over `a.call asdf, x123`.
+011.rb:1:1: C: [Correctable] Style/LambdaCall: Prefer the use of `a&.(asdf, x123)` over `a&.call asdf, x123`.
 
 ==> autocorrect exit=0 1067 <==
 000.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x.(a, b)` over `x.call(a, b)`.
 001.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x&.(a, b)` over `x&.call(a, b)`.
-003.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x.(a, b)` over `x.call(a, b)`.
-004.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x&.(a, b)` over `x&.call(a, b)`.
-005.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x.(a, b)` over `x.call(a, b)`.
-005.rb:3:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x.(a, b)` over `x.call(a, b)`.
-006.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x&.(a, b)` over `x&.call(a, b)`.
-006.rb:3:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x&.(a, b)` over `x&.call(a, b)`.
-008.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `a.()` over `a.call`.
-009.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `a.(asdf, x123)` over `a.call asdf, x123`.
-010.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `a&.(asdf, x123)` over `a&.call asdf, x123`.
+004.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x.(a, b)` over `x.call(a, b)`.
+005.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x&.(a, b)` over `x&.call(a, b)`.
+006.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x.(a, b)` over `x.call(a, b)`.
+006.rb:3:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x.(a, b)` over `x.call(a, b)`.
+007.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x&.(a, b)` over `x&.call(a, b)`.
+007.rb:3:1: C: [Corrected] Style/LambdaCall: Prefer the use of `x&.(a, b)` over `x&.call(a, b)`.
+009.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `a.()` over `a.call`.
+010.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `a.(asdf, x123)` over `a.call asdf, x123`.
+011.rb:1:1: C: [Corrected] Style/LambdaCall: Prefer the use of `a&.(asdf, x123)` over `a&.call asdf, x123`.
 
 ==> corrected/000.rb 9 <==
 x.(a, b)
@@ -30,30 +30,30 @@ x.(a, b)
 ==> corrected/001.rb 10 <==
 x&.(a, b)
 
-==> corrected/003.rb 18 <==
+==> corrected/004.rb 18 <==
 x.(a, b)
 x.(a, b)
 
-==> corrected/004.rb 20 <==
+==> corrected/005.rb 20 <==
 x&.(a, b)
 x&.(a, b)
 
-==> corrected/005.rb 27 <==
+==> corrected/006.rb 27 <==
 x.(a, b)
 x.(a, b)
 x.(a, b)
 
-==> corrected/006.rb 30 <==
+==> corrected/007.rb 30 <==
 x&.(a, b)
 x&.(a, b)
 x&.(a, b)
 
-==> corrected/008.rb 5 <==
+==> corrected/009.rb 5 <==
 a.()
 
-==> corrected/009.rb 15 <==
+==> corrected/010.rb 15 <==
 a.(asdf, x123)
 
-==> corrected/010.rb 16 <==
+==> corrected/011.rb 16 <==
 a&.(asdf, x123)
 

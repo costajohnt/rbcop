@@ -1,9 +1,35 @@
-==> offenses exit=1 114 <==
+==> offenses exit=1 684 <==
 003.rb:1:3: C: [Correctable] Style/StabbyLambdaParentheses: Do not wrap stabby lambda arguments with parentheses.
+004.rb:1:3: C: [Correctable] Style/StabbyLambdaParentheses: Do not wrap stabby lambda arguments with parentheses.
+005.rb:1:3: C: [Correctable] Style/StabbyLambdaParentheses: Do not wrap stabby lambda arguments with parentheses.
+006.rb:1:3: C: [Correctable] Style/StabbyLambdaParentheses: Do not wrap stabby lambda arguments with parentheses.
+007.rb:1:7: C: [Correctable] Style/StabbyLambdaParentheses: Do not wrap stabby lambda arguments with parentheses.
+008.rb:1:7: C: [Correctable] Style/StabbyLambdaParentheses: Do not wrap stabby lambda arguments with parentheses.
 
-==> autocorrect exit=0 112 <==
+==> autocorrect exit=0 672 <==
 003.rb:1:3: C: [Corrected] Style/StabbyLambdaParentheses: Do not wrap stabby lambda arguments with parentheses.
+004.rb:1:3: C: [Corrected] Style/StabbyLambdaParentheses: Do not wrap stabby lambda arguments with parentheses.
+005.rb:1:3: C: [Corrected] Style/StabbyLambdaParentheses: Do not wrap stabby lambda arguments with parentheses.
+006.rb:1:3: C: [Corrected] Style/StabbyLambdaParentheses: Do not wrap stabby lambda arguments with parentheses.
+007.rb:1:7: C: [Corrected] Style/StabbyLambdaParentheses: Do not wrap stabby lambda arguments with parentheses.
+008.rb:1:7: C: [Corrected] Style/StabbyLambdaParentheses: Do not wrap stabby lambda arguments with parentheses.
 
 ==> corrected/003.rb 22 <==
 ->a,b,c { a + b + c }
+
+==> corrected/004.rb 21 <==
+->*a, **kw, &b { a }
+
+==> corrected/005.rb 14 <==
+->a = 1 { a }
+
+==> corrected/006.rb 22 <==
+->a = foo(b: 1) { a }
+
+==> corrected/007.rb 14 <==
+y = ->a { a }
+
+==> corrected/008.rb 19 <==
+y = ->a,
+  b { a }
 

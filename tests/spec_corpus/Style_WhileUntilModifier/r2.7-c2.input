@@ -76,3 +76,13 @@ until foo
   case x; in 42 then a; end
 end
 
+==> 014.rb 30 <==
+while foo
+  begin bar end
+end
+
+==> 015.rb 30 <==
+until foo
+  begin bar end
+end
+

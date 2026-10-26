@@ -1,0 +1,21 @@
+==> .rubocop.yml 168 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+Style/YodaExpression:
+  SupportedOperators:
+  - "*"
+  - "+"
+
+==> 000.rb 84 <==
+def do_something(...)
+  CONST.+(...)
+end
+
+def do_something_else(*)
+  CONST.+(*)
+end
+

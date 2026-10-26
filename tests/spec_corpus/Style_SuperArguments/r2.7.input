@@ -266,17 +266,37 @@ def self.method(a, **kwargs)
   super(a: a, **kwargs)
 end
 
-==> 052.rb 25 <==
+==> 052.rb 37 <==
+def method((a, b))
+  super(a, b)
+end
+
+==> 053.rb 42 <==
+def self.method((a, b))
+  super(a, b)
+end
+
+==> 054.rb 45 <==
+def method(x, (a, *b))
+  super(x, a, *b)
+end
+
+==> 055.rb 50 <==
+def self.method(x, (a, *b))
+  super(x, a, *b)
+end
+
+==> 056.rb 25 <==
 def foo(a)
   super()
 end
 
-==> 053.rb 22 <==
+==> 057.rb 22 <==
 def foo
   super()
 end
 
-==> 054.rb 62 <==
+==> 058.rb 62 <==
 def foo(a)
   def bar(b:)
     super(b: b)
@@ -284,89 +304,89 @@ def foo(a)
   super(a)
 end
 
-==> 055.rb 83 <==
+==> 059.rb 83 <==
 def foo(options, &block)
   options[:key] ||= default
 
   super(options, &block)
 end
 
-==> 056.rb 48 <==
+==> 060.rb 48 <==
 describe 'example' do
   subject { super() }
 end
 
-==> 057.rb 38 <==
+==> 061.rb 38 <==
 def bar(a, b, &blk)
   super(a, b)
 end
 
-==> 058.rb 27 <==
+==> 062.rb 27 <==
 def test
   super { x }
 end
 
-==> 059.rb 30 <==
+==> 063.rb 30 <==
 def test(a)
   super { x }
 end
 
-==> 060.rb 39 <==
+==> 064.rb 39 <==
 def test(a, b)
   super(a, b) { x }
 end
 
-==> 061.rb 39 <==
+==> 065.rb 39 <==
 def test(a, &blk)
   super(a) { x }
 end
 
-==> 062.rb 36 <==
+==> 066.rb 36 <==
 def test(a, b)
   super(a) { x }
 end
 
-==> 063.rb 28 <==
+==> 067.rb 28 <==
 def test
   super { _1 }
 end
 
-==> 064.rb 31 <==
+==> 068.rb 31 <==
 def test(a)
   super { _1 }
 end
 
-==> 065.rb 40 <==
+==> 069.rb 40 <==
 def test(a, b)
   super(a, b) { _1 }
 end
 
-==> 066.rb 40 <==
+==> 070.rb 40 <==
 def test(a, &blk)
   super(a) { _1 }
 end
 
-==> 067.rb 37 <==
+==> 071.rb 37 <==
 def test(a, b)
   super(a) { _1 }
 end
 
-==> 068.rb 30 <==
+==> 072.rb 30 <==
 def foo(a)
   super(a).foo
 end
 
-==> 069.rb 36 <==
+==> 073.rb 36 <==
 def foo(a)
   super(a).foo { x }
 end
 
-==> 070.rb 37 <==
+==> 074.rb 37 <==
 def foo(a)
   super(a).foo { _1 }
 end
 
-==> 071.rb 77 <==
+==> 075.rb 77 <==
 def foo(a)
   Class.new do
     def foo(a, b)
@@ -375,14 +395,14 @@ def foo(a)
   end
 end
 
-==> 072.rb 65 <==
+==> 076.rb 65 <==
 def foo(a)
   delegate_to_define_method do
     super(a)
   end
 end
 
-==> 073.rb 77 <==
+==> 077.rb 77 <==
 def foo(a)
   delegate_to_define_method do
     bar(_1)
@@ -390,7 +410,7 @@ def foo(a)
   end
 end
 
-==> 074.rb 75 <==
+==> 078.rb 75 <==
 def foo(a)
   class << self
     def foo(b)
@@ -399,7 +419,7 @@ def foo(a)
   end
 end
 
-==> 075.rb 138 <==
+==> 079.rb 138 <==
 def test(a)
   define_singleton_method(:test2) do |a|
     super(a)
@@ -409,13 +429,13 @@ def test(a)
   end
 end
 
-==> 076.rb 49 <==
+==> 080.rb 49 <==
 def test(&blk)
   blk = proc {}
   super(&blk)
 end
 
-==> 077.rb 73 <==
+==> 081.rb 73 <==
 def test(&blk)
   if foo
     blk = proc {} if bar
@@ -423,7 +443,7 @@ def test(&blk)
   super(&blk)
 end
 
-==> 078.rb 51 <==
+==> 082.rb 51 <==
 def test(&blk)
   blk ||= proc {}
   super(&blk)

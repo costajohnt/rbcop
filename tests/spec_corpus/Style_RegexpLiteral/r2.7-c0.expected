@@ -1,91 +1,152 @@
-==> offenses exit=1 1464 <==
-001.rb:1:1: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
-004.rb:1:5: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
+==> offenses exit=1 2412 <==
+001.rb:1:6: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
+002.rb:1:1: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
 005.rb:1:5: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
 006.rb:1:5: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
-008.rb:1:5: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
+007.rb:1:5: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
 009.rb:1:5: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
-011.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
+010.rb:1:5: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
 012.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
 013.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
 014.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
-018.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
+015.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
+016.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
+017.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
+018.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
 019.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
+020.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
+021.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
 022.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
-024.rb:1:14: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
-025.rb:1:19: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
-026.rb:1:1: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
-029.rb:1:1: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
+026.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `%r` around regular expression.
+027.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
+030.rb:1:7: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
+032.rb:1:14: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
+033.rb:1:19: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
+034.rb:1:1: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
+037.rb:1:1: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
+040.rb:1:14: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
+041.rb:1:19: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
+042.rb:1:8: C: [Correctable] Style/RegexpLiteral: Use `//` around regular expression.
 
-==> autocorrect exit=0 1430 <==
-001.rb:1:1: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
-004.rb:1:5: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
+==> autocorrect exit=0 2356 <==
+001.rb:1:6: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
+002.rb:1:1: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
 005.rb:1:5: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
 006.rb:1:5: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
-008.rb:1:5: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
+007.rb:1:5: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
 009.rb:1:5: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
-011.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
+010.rb:1:5: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
 012.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
 013.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
 014.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
-018.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
+015.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
+016.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
+017.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
+018.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
 019.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
+020.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
+021.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
 022.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
-024.rb:1:14: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
-025.rb:1:19: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
-026.rb:1:1: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
-029.rb:1:1: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
+026.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `%r` around regular expression.
+027.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
+030.rb:1:7: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
+032.rb:1:14: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
+033.rb:1:19: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
+034.rb:1:1: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
+037.rb:1:1: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
+040.rb:1:14: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
+041.rb:1:19: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
+042.rb:1:8: C: [Corrected] Style/RegexpLiteral: Use `//` around regular expression.
 
-==> corrected/001.rb 5 <==
+==> corrected/001.rb 26 <==
+x =~ /^#{line[/^\s+/]}\s/
+
+==> corrected/002.rb 5 <==
 /ls/
 
-==> corrected/004.rb 15 <==
+==> corrected/005.rb 15 <==
 x = %r{{foo}/}
 
-==> corrected/005.rb 15 <==
+==> corrected/006.rb 15 <==
 x = %r{\{foo/}
 
-==> corrected/006.rb 20 <==
+==> corrected/007.rb 20 <==
 x = %r{/\A#{"{"}\z}
 
-==> corrected/008.rb 10 <==
+==> corrected/009.rb 10 <==
 x = %r{</}
-==> corrected/009.rb 15 <==
+==> corrected/010.rb 15 <==
 x = %r{[abc]]/}
-==> corrected/011.rb 16 <==
+==> corrected/012.rb 16 <==
 foo = %r{home/}
 
-==> corrected/012.rb 15 <==
+==> corrected/013.rb 15 <==
 foo = %r{home/}
-==> corrected/013.rb 33 <==
+==> corrected/014.rb 33 <==
 foo = %r{users/#{user.id}/forms}
 
-==> corrected/014.rb 32 <==
+==> corrected/015.rb 32 <==
 foo = %r{users/#{user.id}/forms}
-==> corrected/018.rb 40 <==
+==> corrected/016.rb 14 <==
+foo = /(?!x)/
+
+==> corrected/017.rb 14 <==
+foo = /a\\!b/
+
+==> corrected/018.rb 14 <==
+foo = /[a-z]/
+
+==> corrected/019.rb 13 <==
+foo = /a#b/x
+
+==> corrected/020.rb 15 <==
+foo = /a\#{b}/
+
+==> corrected/021.rb 16 <==
+foo = /a#\{b}/x
+
+==> corrected/022.rb 13 <==
+foo = /a\{b/
+
+==> corrected/026.rb 40 <==
 foo = %r{
   https?://
   example\.com
 }x
 
-==> corrected/019.rb 10 <==
+==> corrected/027.rb 10 <==
 foo = /a/
 
-==> corrected/022.rb 23 <==
+==> corrected/030.rb 23 <==
 foo = /
   foo
   bar
 /x
 
-==> corrected/024.rb 22 <==
+==> corrected/032.rb 22 <==
 do_something /regexp/
 
-==> corrected/025.rb 27 <==
+==> corrected/033.rb 27 <==
 foo&.do_something /regexp/
 
-==> corrected/026.rb 9 <==
+==> corrected/034.rb 9 <==
 /regexp/
 
-==> corrected/029.rb 10 <==
+==> corrected/037.rb 10 <==
 / regexp/
+
+==> corrected/040.rb 28 <==
+do_something(/
+  regexp
+/x)
+
+==> corrected/041.rb 32 <==
+do_something foo, /
+  regexp
+/x
+
+==> corrected/042.rb 21 <==
+foo =~ /
+  regexp
+/x
 

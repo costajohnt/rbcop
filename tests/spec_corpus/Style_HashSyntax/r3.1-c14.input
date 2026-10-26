@@ -12,3 +12,8 @@ Style/HashSyntax:
 ==> 000.rb 8 <==
 f(a: a)
 
+==> 001.rb 47 <==
+def do_something(if:, bar:)
+  f(if:, bar:)
+end
+

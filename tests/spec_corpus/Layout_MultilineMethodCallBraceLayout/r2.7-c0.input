@@ -34,36 +34,43 @@ foo(<<~EOS, arg
 EOS
 )&.do_something
 
-==> 007.rb 12 <==
+==> 007.rb 30 <==
+foo(
+a, <<~EOM, b)
+  baz
+EOM
+
+
+==> 008.rb 12 <==
 foo(a,
 b
 )
 
 
-==> 008.rb 20 <==
+==> 009.rb 20 <==
 foo(a, # a
 b # b
 )
 
 
-==> 009.rb 11 <==
+==> 010.rb 11 <==
 foo(
 a,
 b)
 
-==> 010.rb 20 <==
+==> 011.rb 20 <==
 foo(a, # a
 b, # b
 )
 
-==> 011.rb 34 <==
+==> 012.rb 34 <==
 super(bar(baz,
   ham # comment
 ))
 
-==> 012.rb 13 <==
+==> 013.rb 13 <==
 foo&.bar(1,2)
-==> 013.rb 17 <==
+==> 014.rb 17 <==
 foo&.bar(
   baz)
 

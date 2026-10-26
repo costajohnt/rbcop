@@ -1,284 +1,355 @@
-==> offenses exit=1 4995 <==
+==> offenses exit=1 6199 <==
 002.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-003.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
+003.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
 004.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
-006.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+005.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
 007.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
 008.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
 009.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
 010.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
 011.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
 012.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-013.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-014.rb:1:8: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-019.rb:1:1: C: [Correctable] Style/RedundantCondition: This condition is not needed.
+013.rb:1:5: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+014.rb:1:5: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+015.rb:1:5: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+016.rb:1:5: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+017.rb:1:5: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+018.rb:1:5: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+019.rb:1:5: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+020.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
 021.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-022.rb:2:3: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-023.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-024.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-025.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-026.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-027.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-028.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+022.rb:1:8: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+027.rb:1:1: C: [Correctable] Style/RedundantCondition: This condition is not needed.
 029.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-030.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+030.rb:2:3: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
 031.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
 032.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
 033.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
 034.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+035.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+036.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+037.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+038.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+039.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+040.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+041.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+042.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
 043.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-051.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-052.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-053.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-054.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-055.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+044.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+045.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+046.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+047.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+048.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
 057.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-058.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-059.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
-060.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
-061.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
-062.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
-071.rb:1:3: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-072.rb:1:3: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-073.rb:1:6: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-074.rb:1:5: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-075.rb:1:4: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-076.rb:1:10: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-077.rb:1:11: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-078.rb:1:30: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-079.rb:1:30: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-080.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-081.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-082.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-083.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-084.rb:1:9: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-085.rb:1:9: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-086.rb:1:9: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-087.rb:1:21: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-088.rb:1:8: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
-089.rb:1:20: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+065.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+066.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+067.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+068.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+069.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+071.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+072.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+073.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
+074.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
+075.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
+076.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
+085.rb:1:3: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+086.rb:1:3: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+087.rb:1:6: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+088.rb:1:5: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+089.rb:1:4: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+090.rb:1:10: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+091.rb:1:11: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+092.rb:1:30: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+093.rb:1:30: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+094.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+095.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
 096.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+097.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+098.rb:1:9: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+099.rb:1:9: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+100.rb:1:9: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+101.rb:1:21: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+102.rb:1:8: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+103.rb:1:20: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
+110.rb:1:1: C: [Correctable] Style/RedundantCondition: Use double pipes `||` instead.
 
-==> autocorrect exit=1 4889 <==
+==> autocorrect exit=1 6150 <==
 002.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-003.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
+003.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+003.rb:1:16: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
 004.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
-006.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+005.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
 007.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
 008.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
 009.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
 010.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
 011.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
 012.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-013.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-014.rb:1:8: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-019.rb:1:1: C: [Corrected] Style/RedundantCondition: This condition is not needed.
+013.rb:1:5: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+014.rb:1:5: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+015.rb:1:5: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+016.rb:1:5: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+017.rb:1:5: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+018.rb:1:5: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+019.rb:1:5: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+020.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
 021.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-022.rb:2:3: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-023.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-024.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-025.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-026.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-027.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-028.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+022.rb:1:8: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+027.rb:1:1: C: [Corrected] Style/RedundantCondition: This condition is not needed.
 029.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-030.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+030.rb:2:3: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
 031.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
 032.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
 033.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
 034.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+035.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+036.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+037.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+038.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+039.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+040.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+041.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+042.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
 043.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-051.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-052.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-053.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-054.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-055.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+044.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+045.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+046.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+047.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+048.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
 057.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-058.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-059.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
-060.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
-061.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
-062.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
-071.rb:1:3: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-072.rb:1:3: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-073.rb:1:6: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-074.rb:1:5: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-075.rb:1:4: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-076.rb:1:10: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-077.rb:1:11: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-078.rb:1:30: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-079.rb:1:30: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-080.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-081.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-082.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-083.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-084.rb:1:9: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-085.rb:1:9: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-086.rb:1:9: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-087.rb:1:21: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-088.rb:1:8: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
-089.rb:1:20: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+065.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+066.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+067.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+068.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+069.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+071.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+072.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+073.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
+074.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
+075.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
+076.rb:1:1: C: Style/RedundantCondition: Use double pipes `||` instead.
+085.rb:1:3: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+086.rb:1:3: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+087.rb:1:6: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+088.rb:1:5: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+089.rb:1:4: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+090.rb:1:10: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+091.rb:1:11: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+092.rb:1:30: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+093.rb:1:30: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+094.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+095.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
 096.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+097.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+098.rb:1:9: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+099.rb:1:9: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+100.rb:1:9: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+101.rb:1:21: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+102.rb:1:8: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+103.rb:1:20: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
+110.rb:1:1: C: [Corrected] Style/RedundantCondition: Use double pipes `||` instead.
 
 ==> corrected/002.rb 7 <==
 b || c
 
-==> corrected/006.rb 18 <==
+==> corrected/003.rb 30 <==
+x = foo.bar || foo.bar || baz
+
+==> corrected/007.rb 18 <==
 b || raise('foo')
 
-==> corrected/007.rb 25 <==
+==> corrected/008.rb 25 <==
 b || ('foo' if $VERBOSE)
 
-==> corrected/008.rb 27 <==
+==> corrected/009.rb 27 <==
 b || (('foo' if $VERBOSE))
 
-==> corrected/009.rb 41 <==
+==> corrected/010.rb 41 <==
 b || do_something(foo, bar, key: :value)
 
-==> corrected/010.rb 11 <==
+==> corrected/011.rb 11 <==
 b || c + d
 
-==> corrected/011.rb 14 <==
+==> corrected/012.rb 14 <==
 b || (c || d)
 
-==> corrected/012.rb 17 <==
+==> corrected/013.rb 20 <==
+x = b || (return 1)
+
+==> corrected/014.rb 18 <==
+x = b || (next 1)
+
+==> corrected/015.rb 19 <==
+x = b || (break 1)
+
+==> corrected/016.rb 19 <==
+x = b || (yield 1)
+
+==> corrected/017.rb 19 <==
+x = b || (super 1)
+
+==> corrected/018.rb 18 <==
+x = b || yield(1)
+
+==> corrected/019.rb 17 <==
+x = b || (not c)
+
+==> corrected/020.rb 17 <==
 b || (c while d)
 
-==> corrected/013.rb 17 <==
+==> corrected/021.rb 17 <==
 b || y(x,
     z)
 
-==> corrected/014.rb 20 <==
+==> corrected/022.rb 20 <==
 ary << (foo || bar)
 
-==> corrected/019.rb 13 <==
+==> corrected/027.rb 13 <==
 do_something
 
-==> corrected/021.rb 14 <==
+==> corrected/029.rb 14 <==
 foo || (1..2)
 
-==> corrected/022.rb 37 <==
+==> corrected/030.rb 37 <==
 def test
   @value = foo || 'bar'
 end
 
-==> corrected/023.rb 21 <==
+==> corrected/031.rb 21 <==
 value = foo || 'bar'
 
-==> corrected/024.rb 22 <==
+==> corrected/032.rb 22 <==
 @value = foo || 'bar'
 
-==> corrected/025.rb 23 <==
+==> corrected/033.rb 23 <==
 @@value = foo || 'bar'
 
-==> corrected/026.rb 22 <==
+==> corrected/034.rb 22 <==
 $value = foo || 'bar'
 
-==> corrected/027.rb 21 <==
+==> corrected/035.rb 21 <==
 CONST = foo || 'bar'
 
-==> corrected/028.rb 24 <==
+==> corrected/036.rb 24 <==
 test.bar = foo || 'baz'
 
-==> corrected/029.rb 24 <==
+==> corrected/037.rb 24 <==
 @value - (foo || 'bar')
 
-==> corrected/030.rb 18 <==
+==> corrected/038.rb 23 <==
+stack << (foo || :new)
+
+==> corrected/039.rb 23 <==
+stack == (foo || :new)
+
+==> corrected/040.rb 22 <==
+stack < (foo || :new)
+
+==> corrected/041.rb 23 <==
+stack =~ (foo || :new)
+
+==> corrected/042.rb 23 <==
+@value.-(foo || 'bar')
+
+==> corrected/043.rb 11 <==
+a + b || c
+
+==> corrected/044.rb 18 <==
 bar foo || (1..2)
 
-==> corrected/031.rb 27 <==
+==> corrected/045.rb 27 <==
 bar foo || { baz => quux }
 
-==> corrected/032.rb 27 <==
+==> corrected/046.rb 27 <==
 bar foo || { baz => quux }
 
-==> corrected/033.rb 19 <==
+==> corrected/047.rb 19 <==
 bar(foo || (1..2))
 
-==> corrected/034.rb 15 <==
+==> corrected/048.rb 15 <==
 bar(foo || {})
 
-==> corrected/043.rb 15 <==
+==> corrected/057.rb 15 <==
 X.find(x || y)
 
-==> corrected/051.rb 13 <==
+==> corrected/065.rb 13 <==
 a.zero? || a
 
-==> corrected/052.rb 14 <==
+==> corrected/066.rb 14 <==
 a&.zero? || a
 
-==> corrected/053.rb 17 <==
+==> corrected/067.rb 17 <==
 foo?(arg) || bar
 
-==> corrected/054.rb 17 <==
+==> corrected/068.rb 17 <==
 foo?(arg) || bar
 
-==> corrected/055.rb 22 <==
+==> corrected/069.rb 22 <==
 obj&.foo?(arg) || bar
 
-==> corrected/057.rb 24 <==
+==> corrected/071.rb 24 <==
 b.nil? || 'hello world'
 
-==> corrected/058.rb 22 <==
+==> corrected/072.rb 22 <==
 c.empty? || [1, 2, 3]
 
-==> corrected/071.rb 31 <==
+==> corrected/085.rb 31 <==
 b || (raise 'foo' if $VERBOSE)
 
-==> corrected/072.rb 7 <==
+==> corrected/086.rb 7 <==
 b || c
 
-==> corrected/073.rb 20 <==
+==> corrected/087.rb 20 <==
 test || Proc.new {}
 
-==> corrected/074.rb 9 <==
+==> corrected/088.rb 9 <==
 b.x || c
 
-==> corrected/075.rb 8 <==
+==> corrected/089.rb 8 <==
 @b || c
 
-==> corrected/076.rb 14 <==
+==> corrected/090.rb 14 <==
 a = b(x) || c
 
-==> corrected/077.rb 19 <==
+==> corrected/091.rb 19 <==
 a = b[:x] || b[:y]
 
-==> corrected/078.rb 55 <==
+==> corrected/092.rb 55 <==
 time_period = updated_during || (2.days.ago..Time.now)
 
-==> corrected/079.rb 56 <==
+==> corrected/093.rb 56 <==
 time_period = updated_during || (2.days.ago...Time.now)
 
-==> corrected/080.rb 17 <==
+==> corrected/094.rb 17 <==
 bar(foo || quux)
 
-==> corrected/081.rb 26 <==
+==> corrected/095.rb 26 <==
 foo(foo).bar(foo || quux)
 
-==> corrected/082.rb 18 <==
+==> corrected/096.rb 18 <==
 a || (b rescue c)
 
-==> corrected/083.rb 15 <==
+==> corrected/097.rb 15 <==
 a || (b and c)
 
-==> corrected/084.rb 13 <==
+==> corrected/098.rb 13 <==
 a.zero? || a
 
-==> corrected/085.rb 13 <==
+==> corrected/099.rb 13 <==
 a.zero? || 5
 
-==> corrected/086.rb 22 <==
+==> corrected/100.rb 22 <==
 a.zero? || 'a string'
 
-==> corrected/087.rb 25 <==
+==> corrected/101.rb 25 <==
 something = a.zero? || a
 
-==> corrected/088.rb 20 <==
+==> corrected/102.rb 20 <==
 b.nil? || [1, 2, 3]
 
-==> corrected/089.rb 24 <==
+==> corrected/103.rb 24 <==
 something = a.nil? || a
 
-==> corrected/096.rb 13 <==
+==> corrected/110.rb 13 <==
 b || y(x, z)
 

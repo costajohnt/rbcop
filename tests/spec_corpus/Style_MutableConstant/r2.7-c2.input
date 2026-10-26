@@ -36,7 +36,13 @@ CONST = [foo, bar]
 ==> 008.rb 37 <==
 CONST = [{ a: 'foo'.freeze, b: [] }]
 
-==> 009.rb 61 <==
+==> 009.rb 23 <==
+CONST = [foo, a => []]
+
+==> 010.rb 30 <==
+CONST = [foo, a => []].freeze
+
+==> 011.rb 61 <==
 # frozen_string_literal: true
 
 CONST = [{ a: [], b: 'foo' }]

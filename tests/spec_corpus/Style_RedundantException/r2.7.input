@@ -90,3 +90,18 @@ raise RuntimeError.new Object.new
 ==> 029.rb 29 <==
 raise RuntimeError, variable
 
+==> 030.rb 26 <==
+raise RuntimeError, 1 + 2
+
+==> 031.rb 31 <==
+raise RuntimeError.new(a || b)
+
+==> 032.rb 36 <==
+raise RuntimeError.new(foo.bar baz)
+
+==> 033.rb 25 <==
+raise RuntimeError, !foo
+
+==> 034.rb 27 <==
+raise RuntimeError, foo[1]
+

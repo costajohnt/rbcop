@@ -1,4 +1,4 @@
-==> offenses exit=1 661 <==
+==> offenses exit=1 793 <==
 000.rb:1:1: C: [Correctable] Style/Not: Use `!` instead of `not`.
 002.rb:1:11: C: [Correctable] Style/Not: Use `!` instead of `not`.
 003.rb:1:1: C: [Correctable] Style/Not: Use `!` instead of `not`.
@@ -9,8 +9,10 @@
 008.rb:1:6: C: [Correctable] Style/Not: Use `!` instead of `not`.
 009.rb:1:6: C: [Correctable] Style/Not: Use `!` instead of `not`.
 010.rb:1:1: C: [Correctable] Style/Not: Use `!` instead of `not`.
+011.rb:1:6: C: [Correctable] Style/Not: Use `!` instead of `not`.
+012.rb:1:1: C: [Correctable] Style/Not: Use `!` instead of `not`.
 
-==> autocorrect exit=0 641 <==
+==> autocorrect exit=0 769 <==
 000.rb:1:1: C: [Corrected] Style/Not: Use `!` instead of `not`.
 002.rb:1:11: C: [Corrected] Style/Not: Use `!` instead of `not`.
 003.rb:1:1: C: [Corrected] Style/Not: Use `!` instead of `not`.
@@ -21,6 +23,8 @@
 008.rb:1:6: C: [Corrected] Style/Not: Use `!` instead of `not`.
 009.rb:1:6: C: [Corrected] Style/Not: Use `!` instead of `not`.
 010.rb:1:1: C: [Corrected] Style/Not: Use `!` instead of `not`.
+011.rb:1:6: C: [Corrected] Style/Not: Use `!` instead of `not`.
+012.rb:1:1: C: [Corrected] Style/Not: Use `!` instead of `not`.
 
 ==> corrected/000.rb 6 <==
 !test
@@ -51,4 +55,10 @@ x if !(a = 5)
 
 ==> corrected/010.rb 10 <==
 !(a || b)
+
+==> corrected/011.rb 12 <==
+x = (!(~a))
+
+==> corrected/012.rb 12 <==
+!(~a).zero?
 

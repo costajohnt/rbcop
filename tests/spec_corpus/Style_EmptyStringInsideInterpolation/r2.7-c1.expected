@@ -1,14 +1,55 @@
-==> offenses exit=1 250 <==
+==> offenses exit=1 1459 <==
 000.rb:1:2: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
 001.rb:1:2: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+002.rb:1:2: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+003.rb:1:2: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+004.rb:1:2: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+005.rb:1:2: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+006.rb:1:2: C: Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+006.rb:1:8: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+007.rb:1:2: C: Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+007.rb:1:8: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+008.rb:1:2: C: Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+008.rb:1:14: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
 
-==> autocorrect exit=0 246 <==
+==> autocorrect exit=0 1477 <==
 000.rb:1:2: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
 001.rb:1:2: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+002.rb:1:2: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+003.rb:1:2: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+004.rb:1:2: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+005.rb:1:2: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+006.rb:1:2: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+006.rb:1:8: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+007.rb:1:2: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+007.rb:1:8: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+008.rb:1:2: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
+008.rb:1:14: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not use trailing conditionals in string interpolation.
 
 ==> corrected/000.rb 28 <==
 "#{condition ? 'foo' : ''}"
 
 ==> corrected/001.rb 28 <==
 "#{condition ? '' : 'foo'}"
+
+==> corrected/002.rb 47 <==
+"#{condition ? do_something('foo', bar) : ''}"
+
+==> corrected/003.rb 46 <==
+"#{condition ? '' : obj.do_something('foo')}"
+
+==> corrected/004.rb 35 <==
+"#{condition ? yield('foo') : ''}"
+
+==> corrected/005.rb 32 <==
+"#{condition ? foo + bar : ''}"
+
+==> corrected/006.rb 45 <==
+"#{outer ? "foo#{inner ? 'bar' : ''}" : ''}"
+
+==> corrected/007.rb 45 <==
+"#{outer ? '' : "foo#{inner ? '' : 'bar'}"}"
+
+==> corrected/008.rb 49 <==
+"#{"#{inner ? 'bar' : ''}".empty? ? 'foo' : ''}"
 

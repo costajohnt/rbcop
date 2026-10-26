@@ -1,0 +1,12 @@
+==> offenses exit=1 93 <==
+000.rb:2:5: C: [Correctable] Layout/CaseIndentation: Indent `when` one step more than `end`.
+
+==> autocorrect exit=0 91 <==
+000.rb:2:5: C: [Corrected] Layout/CaseIndentation: Indent `when` one step more than `end`.
+
+==> corrected/000.rb 31 <==
+	x = case a
+		when b
+			c
+	end
+

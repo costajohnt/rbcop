@@ -20,16 +20,33 @@ account:     account,
 open_price:  1.29,
 close_price: 1.30
 
-==> 002.rb 51 <==
+==> 002.rb 62 <==
+foo << {
+         a: 1
+       } <<
+  {
+    b: 2,
+    c: 3
+  }
+
+==> 003.rb 61 <==
+foo.<<(
+        {
+          b: 2,
+          c: 3
+        }
+)
+
+==> 004.rb 51 <==
 validates :foo,
           bar: 1,
        bazqux: 2
 
-==> 003.rb 22 <==
+==> 005.rb 22 <==
 func(:foo,
      :bar)
 
-==> 004.rb 128 <==
+==> 006.rb 128 <==
 func1(foo: 'foo',
       bar: 'bar',
       baz: 'baz')
@@ -38,12 +55,12 @@ func2(do_something,
       bar: 'bar',
       baz: 'baz')
 
-==> 005.rb 93 <==
+==> 007.rb 93 <==
 func(do_something, foo: 'foo',
                    bar: 'bar',
                    baz: 'baz')
 
-==> 006.rb 50 <==
+==> 008.rb 50 <==
 something
   .method_name(
     a,
@@ -51,7 +68,7 @@ something
     c
   )
 
-==> 007.rb 56 <==
+==> 009.rb 56 <==
 something
   .method_name(
       a,
@@ -59,7 +76,7 @@ something
       c
   )
 
-==> 008.rb 39 <==
+==> 010.rb 39 <==
 something
   .(
     a,
@@ -67,27 +84,27 @@ something
     c
   )
 
-==> 009.rb 47 <==
+==> 011.rb 47 <==
 callable[
       foo,
     bar,
            baz
 ]
 
-==> 010.rb 46 <==
+==> 012.rb 46 <==
 assigned_value = match(
     a,
     b,
     c
 )
 
-==> 011.rb 41 <==
+==> 013.rb 41 <==
 assigned_value = match(a,
     b,
     c
 )
 
-==> 012.rb 55 <==
+==> 014.rb 55 <==
 do_something(
   {
     foo: 'bar',

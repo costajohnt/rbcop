@@ -1,70 +1,105 @@
-==> offenses exit=1 977 <==
-000.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
-001.rb:2:4: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
-002.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
-003.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
-004.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
-005.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
-006.rb:1:4: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
-007.rb:1:4: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
-008.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
-009.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
-010.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `none?` instead.
-011.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `none?` instead.
-012.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `one?` instead.
+==> offenses exit=1 1530 <==
+000.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `!empty?` instead.
+001.rb:2:4: C: [Correctable] Style/CollectionQuerying: Use `!empty?` instead.
+002.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `!empty?` instead.
+003.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `!empty?` instead.
+004.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `empty?` instead.
+005.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `empty?` instead.
+006.rb:1:4: C: [Correctable] Style/CollectionQuerying: Use `!empty?` instead.
+009.rb:1:4: C: [Correctable] Style/CollectionQuerying: Use `!empty?` instead.
+010.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `!empty?` instead.
+011.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
+012.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
+013.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
+014.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
+015.rb:1:4: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
+016.rb:1:4: C: [Correctable] Style/CollectionQuerying: Use `!empty?` instead.
+017.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
+018.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
+019.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `none?` instead.
+020.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `none?` instead.
+021.rb:1:3: C: [Correctable] Style/CollectionQuerying: Use `one?` instead.
 
-==> autocorrect exit=0 951 <==
-000.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `any?` instead.
-001.rb:2:4: C: [Corrected] Style/CollectionQuerying: Use `any?` instead.
-002.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `any?` instead.
-003.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `any?` instead.
-004.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `any?` instead.
-005.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `any?` instead.
-006.rb:1:4: C: [Corrected] Style/CollectionQuerying: Use `any?` instead.
-007.rb:1:4: C: [Corrected] Style/CollectionQuerying: Use `any?` instead.
-008.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `any?` instead.
-009.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `any?` instead.
-010.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `none?` instead.
-011.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `none?` instead.
-012.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `one?` instead.
+==> autocorrect exit=0 1490 <==
+000.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `!empty?` instead.
+001.rb:2:4: C: [Corrected] Style/CollectionQuerying: Use `!empty?` instead.
+002.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `!empty?` instead.
+003.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `!empty?` instead.
+004.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `empty?` instead.
+005.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `empty?` instead.
+006.rb:1:4: C: [Corrected] Style/CollectionQuerying: Use `!empty?` instead.
+009.rb:1:4: C: [Corrected] Style/CollectionQuerying: Use `!empty?` instead.
+010.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `!empty?` instead.
+011.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `any?` instead.
+012.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `any?` instead.
+013.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `any?` instead.
+014.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `any?` instead.
+015.rb:1:4: C: [Corrected] Style/CollectionQuerying: Use `any?` instead.
+016.rb:1:4: C: [Corrected] Style/CollectionQuerying: Use `!empty?` instead.
+017.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `any?` instead.
+018.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `any?` instead.
+019.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `none?` instead.
+020.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `none?` instead.
+021.rb:1:3: C: [Corrected] Style/CollectionQuerying: Use `one?` instead.
 
-==> corrected/000.rb 7 <==
-x.any?
+==> corrected/000.rb 10 <==
+!x.empty?
 
-==> corrected/001.rb 10 <==
-x
-  .any?
+==> corrected/001.rb 13 <==
+!x
+  .empty?
 
-==> corrected/002.rb 15 <==
+==> corrected/002.rb 10 <==
+!x.empty?
+
+==> corrected/003.rb 10 <==
+!x.empty?
+
+==> corrected/004.rb 9 <==
+x.empty?
+
+==> corrected/005.rb 9 <==
+x.empty?
+
+==> corrected/006.rb 17 <==
+(!x.empty?).to_s
+
+==> corrected/009.rb 11 <==
+!!x.empty?
+
+==> corrected/010.rb 17 <==
+!x.empty? | true
+
+==> corrected/011.rb 15 <==
 x.any?(&:foo?)
 
-==> corrected/003.rb 28 <==
+==> corrected/012.rb 28 <==
 x.any? { |item| item.foo? }
 
-==> corrected/004.rb 19 <==
+==> corrected/013.rb 19 <==
 x.any? { _1.foo? }
 
-==> corrected/005.rb 19 <==
+==> corrected/014.rb 19 <==
 x.any? { it.foo? }
 
-==> corrected/006.rb 16 <==
+==> corrected/015.rb 16 <==
 x&.any?(&:foo?)
 
-==> corrected/007.rb 8 <==
-x&.any?
+==> corrected/016.rb 11 <==
+!x&.empty?
 
-==> corrected/008.rb 15 <==
+==> corrected/017.rb 15 <==
 x.any?(&:foo?)
 
-==> corrected/009.rb 15 <==
+==> corrected/018.rb 15 <==
 x.any?(&:foo?)
 
-==> corrected/010.rb 16 <==
+==> corrected/019.rb 16 <==
 x.none?(&:foo?)
 
-==> corrected/011.rb 16 <==
+==> corrected/020.rb 16 <==
 x.none?(&:foo?)
 
-==> corrected/012.rb 15 <==
+==> corrected/021.rb 15 <==
 x.one?(&:foo?)
 

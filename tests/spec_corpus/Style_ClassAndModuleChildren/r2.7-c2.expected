@@ -1,11 +1,38 @@
-==> offenses exit=1 120 <==
+==> offenses exit=1 587 <==
 000.rb:1:8: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+001.rb:1:8: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+001.rb:5:10: C: Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+002.rb:1:8: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+003.rb:1:8: C: [Correctable] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
 
-==> autocorrect exit=0 118 <==
+==> autocorrect exit=0 590 <==
 000.rb:1:8: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+001.rb:1:8: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+001.rb:4:9: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+002.rb:1:8: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
+003.rb:1:8: C: [Corrected] Style/ClassAndModuleChildren: Use compact module/class definition instead of nested style.
 
 ==> corrected/000.rb 25 <==
 module A::B::C
 	body
+end
+
+==> corrected/001.rb 74 <==
+module Foo::Bar
+	do_something
+
+	module Baz::Qux
+		def quux
+		end
+	end
+end
+
+==> corrected/002.rb 18 <==
+class A::B; c
+end
+
+==> corrected/003.rb 22 <==
+class A::B; c
+		d
 end
 

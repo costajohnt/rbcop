@@ -1,0 +1,17 @@
+==> offenses exit=1 411 <==
+000.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+001.rb:1:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+001.rb:2:1: C: [Correctable] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+
+==> autocorrect exit=0 405 <==
+000.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+001.rb:1:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+001.rb:2:1: C: [Corrected] Style/OneLineConditional: Favor the ternary operator (`?:`) over single-line `if/then/else/end` constructs.
+
+==> corrected/000.rb 31 <==
+(a in b) ? (a in b) : (a in b)
+
+==> corrected/001.rb 73 <==
+cond ? (a += 1 while a < 3) : (a => b)
+cond ? (a rescue b) : (c until d)
+

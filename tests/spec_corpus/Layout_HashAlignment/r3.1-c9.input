@@ -1,4 +1,4 @@
-==> .rubocop.yml 199 <==
+==> .rubocop.yml 191 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -6,32 +6,16 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 3.1
 Layout/HashAlignment:
-  EnforcedHashRocketStyle: separator
-  EnforcedColonStyle: separator
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
 
-==> 000.rb 78 <==
-hash1 = {
-    a: 0,
-  bbb: 1,
-  ccc:
-}
-hash2 = {
-    'a' => 0,
-  'bbb' => 1
-}
-
-==> 001.rb 46 <==
-hash1 = { a: 0,
-     bb:,
-           ccc: 2 }
-
-==> 002.rb 13 <==
+==> 000.rb 13 <==
 func(a:, bb:)
-==> 003.rb 32 <==
+==> 001.rb 32 <==
 func(a:, bb:,
      ccc:, dddd:)
 
-==> 004.rb 117 <==
+==> 002.rb 117 <==
 render :json => {a:,
                  b:}, :status => 404
 def example
@@ -41,4 +25,15 @@ def example
       e:
     ), f:)
 end
+
+==> 003.rb 78 <==
+hash1 = {
+  'a'   => 0,
+  'bbb' => 1
+}
+hash2 = {
+  a:   0,
+  bbb: 1,
+  ccc:
+}
 

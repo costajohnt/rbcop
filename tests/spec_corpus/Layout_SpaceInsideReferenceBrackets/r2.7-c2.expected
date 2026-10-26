@@ -1,4 +1,4 @@
-==> offenses exit=1 2375 <==
+==> offenses exit=1 2582 <==
 004.rb:1:3: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
 005.rb:1:8: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
 006.rb:1:25: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
@@ -16,13 +16,15 @@
 017.rb:1:23: C: Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
 018.rb:1:8: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
 018.rb:1:28: C: Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
-019.rb:1:3: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
-019.rb:1:15: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
-019.rb:1:19: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
-019.rb:1:23: C: Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
+019.rb:1:5: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
+019.rb:1:15: C: Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
 020.rb:1:3: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
+020.rb:1:15: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
+020.rb:1:19: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
+020.rb:1:23: C: Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
+021.rb:1:3: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
 
-==> autocorrect exit=0 1952 <==
+==> autocorrect exit=0 2060 <==
 004.rb:1:3: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
 005.rb:1:8: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
 006.rb:1:25: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
@@ -37,10 +39,11 @@
 017.rb:1:15: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
 017.rb:1:19: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
 018.rb:1:8: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
-019.rb:1:3: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
-019.rb:1:15: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
-019.rb:1:19: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
+019.rb:1:5: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
 020.rb:1:3: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
+020.rb:1:15: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
+020.rb:1:19: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
+021.rb:1:3: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Do not use space inside reference brackets.
 
 ==> corrected/004.rb 26 <==
 a["foo"] = b["something"]
@@ -78,9 +81,12 @@ a[:key]["foo"][0]
 ==> corrected/018.rb 28 <==
 record[options[:attribute]]
 
-==> corrected/019.rb 18 <==
+==> corrected/019.rb 15 <==
+foo[bar[0][1]]
+
+==> corrected/020.rb 18 <==
 b[:key]["foo"][0]
 
-==> corrected/020.rb 29 <==
+==> corrected/021.rb 29 <==
 j["pop"] = [89, nil, ""    ]
 

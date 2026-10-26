@@ -1,4 +1,4 @@
-==> offenses exit=1 2832 <==
+==> offenses exit=1 3088 <==
 000.rb:1:9: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
 001.rb:1:17: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
 002.rb:1:17: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
@@ -9,20 +9,22 @@
 016.rb:2:5: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
 018.rb:1:14: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
 019.rb:1:15: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-024.rb:4:12: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-025.rb:1:20: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-026.rb:1:20: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-027.rb:1:19: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-028.rb:1:9: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-028.rb:2:10: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-028.rb:3:11: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-030.rb:1:9: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-031.rb:1:17: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-032.rb:1:18: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-033.rb:2:17: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-034.rb:2:16: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+029.rb:1:7: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+030.rb:6:7: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+031.rb:4:12: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+032.rb:1:20: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+033.rb:1:20: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+034.rb:1:19: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+035.rb:1:9: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+035.rb:2:10: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+035.rb:3:11: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+037.rb:1:9: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+038.rb:1:17: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+039.rb:1:18: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+040.rb:2:17: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+041.rb:2:16: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
 
-==> autocorrect exit=0 2788 <==
+==> autocorrect exit=0 3040 <==
 000.rb:1:9: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
 001.rb:1:17: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
 002.rb:1:17: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
@@ -33,18 +35,20 @@
 016.rb:2:5: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
 018.rb:1:14: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
 019.rb:1:15: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-024.rb:4:12: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-025.rb:1:20: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-026.rb:1:20: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-027.rb:1:19: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-028.rb:1:9: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-028.rb:2:10: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-028.rb:3:11: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-030.rb:1:9: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-031.rb:1:17: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-032.rb:1:18: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-033.rb:2:17: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-034.rb:2:16: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+029.rb:1:7: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+030.rb:6:7: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+031.rb:4:12: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+032.rb:1:20: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+033.rb:1:20: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+034.rb:1:19: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+035.rb:1:9: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+035.rb:2:10: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+035.rb:3:11: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+037.rb:1:9: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+038.rb:1:17: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+039.rb:1:18: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+040.rb:2:17: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
+041.rb:2:16: C: [Corrected] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
 
 ==> corrected/000.rb 9 <==
 top.test
@@ -83,40 +87,53 @@ test = x.test
 ==> corrected/019.rb 15 <==
 test = x&.test
 
-==> corrected/024.rb 38 <==
+==> corrected/029.rb 16 <==
+p test
+test = 1
+
+==> corrected/030.rb 43 <==
+def foo
+  test = 1
+end
+
+def bar
+  test
+end
+
+==> corrected/031.rb 38 <==
 A = [1, 2]
 def c; A; end
 
 c[2], x = c
 
-==> corrected/025.rb 20 <==
+==> corrected/032.rb 20 <==
 obj.method ||= func
 
-==> corrected/026.rb 20 <==
+==> corrected/033.rb 20 <==
 obj.method &&= func
 
-==> corrected/027.rb 19 <==
+==> corrected/034.rb 19 <==
 obj.method += func
 
-==> corrected/028.rb 30 <==
+==> corrected/035.rb 30 <==
 Hash.new
 Array.new
 String.new
 
-==> corrected/030.rb 10 <==
+==> corrected/037.rb 10 <==
 _a = c(d)
 
-==> corrected/031.rb 18 <==
+==> corrected/038.rb 18 <==
 _a, _b, _c = d(e)
 
-==> corrected/032.rb 18 <==
+==> corrected/039.rb 18 <==
 _a, _b, _c = d&.e
 
-==> corrected/033.rb 24 <==
+==> corrected/040.rb 24 <==
 h = {}
 h[:a], h[:b] = c
 
-==> corrected/034.rb 23 <==
+==> corrected/041.rb 23 <==
 a = []
 a[0], a[10] = c
 

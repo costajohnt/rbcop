@@ -1,4 +1,4 @@
-==> offenses exit=1 2914 <==
+==> offenses exit=1 4551 <==
 002.rb:1:9: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
 003.rb:1:5: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
 005.rb:2:8: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
@@ -24,8 +24,22 @@
 078.rb:1:9: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
 079.rb:1:4: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
 080.rb:1:4: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+086.rb:1:13: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+091.rb:1:13: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+092.rb:1:13: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+093.rb:1:13: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+094.rb:1:13: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+095.rb:1:7: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+096.rb:1:13: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+096.rb:2:13: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+096.rb:3:13: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+096.rb:4:13: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+096.rb:5:13: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+096.rb:6:13: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+103.rb:1:13: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+103.rb:2:11: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
 
-==> autocorrect exit=0 2864 <==
+==> autocorrect exit=0 4473 <==
 002.rb:1:9: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
 003.rb:1:5: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
 005.rb:2:8: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
@@ -51,6 +65,20 @@
 078.rb:1:9: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
 079.rb:1:4: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
 080.rb:1:4: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+086.rb:1:13: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+091.rb:1:13: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+092.rb:1:13: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+093.rb:1:13: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+094.rb:1:13: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+095.rb:1:7: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+096.rb:1:13: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+096.rb:2:13: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+096.rb:3:13: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+096.rb:4:13: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+096.rb:5:13: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+096.rb:6:13: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+103.rb:1:13: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+103.rb:2:11: C: [Corrected] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
 
 ==> corrected/002.rb 10 <==
 top.test 
@@ -133,4 +161,41 @@ foo \
 foo arg,
   option: true
 
+
+==> corrected/086.rb 39 <==
+do_something \
+  :bar, :baz
+ # comment
+
+==> corrected/091.rb 26 <==
+do_something (bar or baz)
+
+==> corrected/092.rb 24 <==
+do_something (bar), baz
+
+==> corrected/093.rb 49 <==
+do_something :bar, :baz # comment, with a comma
+
+
+==> corrected/094.rb 36 <==
+do_something :bar, # comment
+  :baz
+
+==> corrected/095.rb 29 <==
+if foo bar(
+  baz)
+  qux
+end
+
+==> corrected/096.rb 164 <==
+do_something x = bar(1)
+do_something x += bar(1)
+do_something x ||= bar(1)
+do_something x.y = bar(1)
+do_something x = y = bar(1)
+do_something x = bar(1) rescue nil
+
+==> corrected/103.rb 28 <==
+x = y += bar 1
+a, b = bar 1
 

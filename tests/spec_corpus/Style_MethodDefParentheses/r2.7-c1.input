@@ -54,3 +54,41 @@ end
 def foo(**opts)
 end
 
+==> 011.rb 25 <==
+def func(
+  a,
+  b
+)
+end
+
+==> 012.rb 46 <==
+def func((a, b))
+end
+
+def func((a, b), c)
+end
+
+==> 013.rb 24 <==
+def func(a, (b, c))
+end
+
+==> 014.rb 20 <==
+def func(
+  a
+)
+end
+
+==> 015.rb 21 <==
+def func(a,
+  b)
+end
+
+==> 016.rb 38 <==
+def func(a, b) do_something(a, b) end
+
+==> 017.rb 16 <==
+def func(a) end
+
+==> 018.rb 34 <==
+def func(a); do_something(a); end
+

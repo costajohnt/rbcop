@@ -134,56 +134,60 @@ end
 @dest = []
 src.each { |e| @dest << e }
 
-==> 023.rb 62 <==
+==> 023.rb 27 <==
+foo
+src.each { _1 << bar }
+
+==> 024.rb 62 <==
 dest = []
 StringIO.new('foo:bar').each(':') { |e| dest << e }
 
-==> 024.rb 37 <==
+==> 025.rb 37 <==
 dest = []
 each { |e| dest << e * 2 }
 
-==> 025.rb 42 <==
+==> 026.rb 42 <==
 dest = []
 self.each { |e| dest << e * 2 }
 
-==> 026.rb 51 <==
+==> 027.rb 51 <==
 [
   dest = [],
   src.each { |e| dest << e * 2 },
 ]
 
-==> 027.rb 55 <==
+==> 028.rb 55 <==
 dest = []
 if cond
   src.each { |e| dest << e * 2 }
 end
 
-==> 028.rb 51 <==
+==> 029.rb 51 <==
 dest = []
 dest << 0
 src.each { |e| dest << e * 2 }
 
-==> 029.rb 49 <==
+==> 030.rb 49 <==
 dest = []
 (dest << 1).each { |e| dest << e * 2 }
 
-==> 030.rb 40 <==
+==> 031.rb 40 <==
 dest = []
 src.each { |dest| dest << 1 }
 
-==> 031.rb 45 <==
+==> 032.rb 45 <==
 dest = []
 src.each { |e| dest << dest.size }
 
-==> 032.rb 41 <==
+==> 033.rb 41 <==
 dest = []
 src.each { |e| dest.push(*e) }
 
-==> 033.rb 52 <==
+==> 034.rb 52 <==
 dest = []
 src.each { |e| dest.push(&method(:foo)) }
 
-==> 034.rb 63 <==
+==> 035.rb 63 <==
 def foo(...)
   dest = []
   src.each { |e| dest.push(...) }

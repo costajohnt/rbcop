@@ -1,14 +1,22 @@
-==> offenses exit=1 416 <==
+==> offenses exit=1 832 <==
 000.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body beginning.
 000.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body end.
 003.rb:2:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body beginning.
 003.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body end.
+009.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body beginning.
+009.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body end.
+010.rb:3:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body beginning.
+010.rb:4:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body end.
 
-==> autocorrect exit=0 408 <==
+==> autocorrect exit=0 816 <==
 000.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body beginning.
 000.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body end.
 003.rb:2:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body beginning.
 003.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body end.
+009.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body beginning.
+009.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body end.
+010.rb:3:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body beginning.
+010.rb:4:1: C: [Corrected] Layout/EmptyLinesAroundBlockBody: Empty line missing at block body end.
 
 ==> corrected/000.rb 33 <==
 some_method {
@@ -19,6 +27,22 @@ some_method {
 
 ==> corrected/003.rb 36 <==
 some_method do
+
+  do_something
+
+end
+
+==> corrected/009.rb 26 <==
+foo :bar \
+do
+
+  baz
+
+end
+
+==> corrected/010.rb 47 <==
+foo do |bar,
+        baz|
 
   do_something
 

@@ -1,26 +1,30 @@
-==> offenses exit=1 1260 <==
+==> offenses exit=1 1512 <==
 000.rb:1:9: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
 001.rb:1:9: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
 002.rb:1:9: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
 003.rb:1:1: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
-003.rb:2:9: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
 004.rb:1:1: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
-004.rb:2:9: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
 005.rb:1:1: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
 005.rb:2:9: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
 006.rb:1:1: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+006.rb:2:9: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+007.rb:1:1: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+007.rb:2:9: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+008.rb:1:1: C: [Correctable] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
 
-==> autocorrect exit=0 1240 <==
+==> autocorrect exit=0 1488 <==
 000.rb:1:9: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
 001.rb:1:9: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
 002.rb:1:9: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
 003.rb:1:1: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
-003.rb:2:9: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
 004.rb:1:1: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
-004.rb:2:9: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
 005.rb:1:1: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
 005.rb:2:9: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
 006.rb:1:1: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+006.rb:2:9: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+007.rb:1:1: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+007.rb:2:9: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
+008.rb:1:1: C: [Corrected] Style/DisableCopsWithinSourceCodeDirective: RuboCop disable/enable directives are not permitted.
 
 ==> corrected/000.rb 13 <==
 def foo 
@@ -34,14 +38,17 @@ end
 def foo 
 end
 
-==> corrected/003.rb 14 <==
+==> corrected/003.rb 43 <==
 
-def foo 
+# rubocop:push
+def foo
 end
+# rubocop:pop
 
-==> corrected/004.rb 14 <==
 
-def foo 
+==> corrected/004.rb 13 <==
+
+def foo
 end
 
 ==> corrected/005.rb 14 <==
@@ -49,7 +56,17 @@ end
 def foo 
 end
 
-==> corrected/006.rb 13 <==
+==> corrected/006.rb 14 <==
+
+def foo 
+end
+
+==> corrected/007.rb 14 <==
+
+def foo 
+end
+
+==> corrected/008.rb 13 <==
 
 def foo
 end

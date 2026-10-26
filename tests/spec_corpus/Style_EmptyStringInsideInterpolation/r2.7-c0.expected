@@ -1,4 +1,4 @@
-==> offenses exit=1 1800 <==
+==> offenses exit=1 2628 <==
 003.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
 004.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
 005.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
@@ -14,8 +14,15 @@
 018.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
 019.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
 020.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+021.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+021.rb:1:18: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+022.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+022.rb:1:23: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+023.rb:1:4: C: Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+023.rb:1:7: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+024.rb:1:4: C: [Correctable] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
 
-==> autocorrect exit=0 1770 <==
+==> autocorrect exit=0 2598 <==
 003.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
 004.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
 005.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
@@ -31,6 +38,13 @@
 018.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
 019.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
 020.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+021.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+021.rb:1:18: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+022.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+022.rb:1:23: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+023.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+023.rb:1:7: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
+024.rb:1:4: C: [Corrected] Style/EmptyStringInsideInterpolation: Do not return empty strings in string interpolation.
 
 ==> corrected/003.rb 24 <==
 "#{'foo' if condition}"
@@ -76,4 +90,16 @@
 
 ==> corrected/020.rb 28 <==
 "#{'foo' unless condition}"
+
+==> corrected/021.rb 37 <==
+"#{"foo#{'bar' if inner}" if outer}"
+
+==> corrected/022.rb 45 <==
+"#{"foo#{'bar' unless inner}" unless outer}"
+
+==> corrected/023.rb 41 <==
+"#{'foo' if "#{'bar' if inner}".empty?}"
+
+==> corrected/024.rb 48 <==
+"#{'foo' if "#{inner ? 'bar' : 'baz'}".empty?}"
 

@@ -1,4 +1,4 @@
-==> .rubocop.yml 177 <==
+==> .rubocop.yml 220 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -7,6 +7,8 @@ AllCops:
   TargetRubyVersion: 2.7
 Layout/SpaceAroundBlockParameters:
   EnforcedStyleInsidePipes: space
+Layout/SpaceInsideParens:
+  Enabled: false
 
 ==> 000.rb 10 <==
 {}.each {}

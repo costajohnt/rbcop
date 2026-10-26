@@ -9,57 +9,81 @@ AllCops:
 ==> 000.rb 14 <==
 +"#{foo} bar"
 
-==> 001.rb 16 <==
+==> 001.rb 39 <==
+String.new( # comment
+  "#{foo} bar"
+)
+
+==> 002.rb 39 <==
+String.new(
+  "#{foo} bar" # comment
+)
+
+==> 003.rb 30 <==
+"#{foo} bar" # comment
+  .dup
+
+==> 004.rb 28 <==
+"#{foo # comment
+} bar".dup
+
+==> 005.rb 35 <==
+String.new("#{foo} bar") # comment
+
+==> 006.rb 16 <==
 "#{foo} bar".+@
 
-==> 002.rb 17 <==
+==> 007.rb 17 <==
 "#{foo} bar".dup
 
-==> 003.rb 36 <==
+==> 008.rb 36 <==
 foo(+<<~MSG)
   foo #{bar}
   baz
 MSG
 
-==> 004.rb 9 <==
+==> 009.rb 9 <==
 +"#$var"
 
-==> 005.rb 9 <==
+==> 010.rb 9 <==
 +"#@var"
 
-==> 006.rb 10 <==
+==> 011.rb 10 <==
 +"#@@var"
 
-==> 007.rb 39 <==
+==> 012.rb 39 <==
 foo(<<~MSG.dup)
   foo #{bar}
   baz
 MSG
 
-==> 008.rb 19 <==
+==> 013.rb 19 <==
 String.new("#{1}")
 
-==> 009.rb 38 <==
+==> 014.rb 43 <==
++"#{String.new("#{foo}")} #{"#{bar}".dup}"
+
+==> 015.rb 38 <==
 foo(+<<~'MSG')
   foo #{bar}
   baz
 MSG
 
-==> 010.rb 10 <==
+==> 016.rb 10 <==
 "foo".dup
 
-==> 011.rb 10 <==
+==> 017.rb 10 <==
 local.dup
 
-==> 012.rb 22 <==
+==> 018.rb 22 <==
 "#{foo} bar".dup(baz)
 
-==> 013.rb 13 <==
+==> 019.rb 13 <==
 +'foo' 'bar'
 
-==> 014.rb 4 <==
+==> 020.rb 4 <==
 dup
 
-==> 015.rb 49 <==
+==> 021.rb 49 <==
 String.new("#{1}", encoding: Encoding::US_ASCII)
 

@@ -87,3 +87,27 @@ end
 ==> 019.rb 66 <==
 array.reduce({}) { |hash, elem| hash[elem.id] = elem.name; hash }
 
+==> 020.rb 78 <==
+array.each_with_object({}) { |elem, hash| hash[elem.id] = do_something elem }
+
+==> 021.rb 80 <==
+array.reduce({}) { |hash, elem| hash[obj.do_something elem] = elem.name; hash }
+
+==> 022.rb 71 <==
+array.each_with_object({}) { |elem, hash| hash[elem.id] = yield elem }
+
+==> 023.rb 82 <==
+array.each_with_object({}) { |elem, hash| hash[elem.id] = elem.name, elem.value }
+
+==> 024.rb 66 <==
+array.each_with_object({}) { |elem, hash| hash[elem.id] = *elem }
+
+==> 025.rb 82 <==
+array.each_with_object({}) { |elem, hash| hash[elem.id] = x = do_something elem }
+
+==> 026.rb 90 <==
+array.each_with_object({}) { |elem, hash| hash[elem.id] = do_something(elem) rescue nil }
+
+==> 027.rb 83 <==
+array.each_with_object({}) { |elem, hash| hash[elem.id + 1] = do_something(elem) }
+

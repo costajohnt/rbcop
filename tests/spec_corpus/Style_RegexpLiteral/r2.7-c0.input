@@ -10,95 +10,139 @@ Style/RegexpLiteral:
 
 ==> 000.rb 29 <==
 x =~ /\s{#{x[/\s+/].length}}/
-==> 001.rb 7 <==
+==> 001.rb 28 <==
+x =~ %r{^#{line[/^\s+/]}\s}
+
+==> 002.rb 7 <==
 %r_ls_
 
-==> 002.rb 9 <==
-x = /{\//
 ==> 003.rb 9 <==
+x = /{\//
+==> 004.rb 9 <==
 x = /}\//
-==> 004.rb 14 <==
+==> 005.rb 14 <==
 x = /{foo}\//
 
-==> 005.rb 14 <==
+==> 006.rb 14 <==
 x = /\{foo\//
 
-==> 006.rb 19 <==
+==> 007.rb 19 <==
 x = /\/\A#{"{"}\z/
 
-==> 007.rb 11 <==
+==> 008.rb 11 <==
 x = /\\{\//
-==> 008.rb 9 <==
+==> 009.rb 9 <==
 x = /<\//
-==> 009.rb 14 <==
+==> 010.rb 14 <==
 x = /[abc]]\//
-==> 010.rb 9 <==
+==> 011.rb 9 <==
 foo = /a/
-==> 011.rb 15 <==
+==> 012.rb 15 <==
 foo = /home\//
 
-==> 012.rb 14 <==
+==> 013.rb 14 <==
 foo = /home\//
-==> 013.rb 33 <==
+==> 014.rb 33 <==
 foo = /users\/#{user.id}\/forms/
 
-==> 014.rb 32 <==
+==> 015.rb 32 <==
 foo = /users\/#{user.id}\/forms/
-==> 015.rb 12 <==
+==> 016.rb 17 <==
+foo = %r!(?\!x)!
+
+==> 017.rb 17 <==
+foo = %r!a\\\!b!
+
+==> 018.rb 17 <==
+foo = %r-[a\-z]-
+
+==> 019.rb 16 <==
+foo = %r#a\#b#x
+
+==> 020.rb 17 <==
+foo = %r#a\#{b}#
+
+==> 021.rb 18 <==
+foo = %r#a\#{b}#x
+
+==> 022.rb 15 <==
+foo = %r{a\{b}
+
+==> 023.rb 12 <==
 foo = %r/\//
-==> 016.rb 13 <==
+==> 024.rb 13 <==
 foo = %r/\//
 
-==> 017.rb 23 <==
+==> 025.rb 23 <==
 foo = /
   foo
   bar
 /x
 
-==> 018.rb 40 <==
+==> 026.rb 40 <==
 foo = /
   https?:\/\/
   example\.com
 /x
 
-==> 019.rb 12 <==
+==> 027.rb 12 <==
 foo = %r{a}
 
-==> 020.rb 15 <==
+==> 028.rb 15 <==
 foo = %r{home/}
-==> 021.rb 16 <==
+==> 029.rb 16 <==
 foo = %r{home/}
 
-==> 022.rb 25 <==
+==> 030.rb 25 <==
 foo = %r{
   foo
   bar
 }x
 
-==> 023.rb 40 <==
+==> 031.rb 40 <==
 foo = %r{
   https?://
   example\.com
 }x
 
-==> 024.rb 24 <==
+==> 032.rb 24 <==
 do_something %r/regexp/
 
-==> 025.rb 29 <==
+==> 033.rb 29 <==
 foo&.do_something %r/regexp/
 
-==> 026.rb 11 <==
+==> 034.rb 11 <==
 %r/regexp/
 
-==> 027.rb 25 <==
+==> 035.rb 25 <==
 do_something %r/ regexp/
 
-==> 028.rb 30 <==
+==> 036.rb 30 <==
 foo&.do_something %r/ regexp/
 
-==> 029.rb 12 <==
+==> 037.rb 12 <==
 %r/ regexp/
 
-==> 030.rb 25 <==
+==> 038.rb 25 <==
 do_something %r/=regexp/
+
+==> 039.rb 29 <==
+do_something %r{
+  regexp
+}x
+
+==> 040.rb 30 <==
+do_something(%r{
+  regexp
+}x)
+
+==> 041.rb 34 <==
+do_something foo, %r{
+  regexp
+}x
+
+==> 042.rb 23 <==
+foo =~ %r{
+  regexp
+}x
 

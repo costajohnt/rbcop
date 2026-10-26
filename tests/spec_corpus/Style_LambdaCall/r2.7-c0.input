@@ -8,35 +8,40 @@ AllCops:
 Style/LambdaCall:
   EnforcedStyle: call
 
-==> 000.rb 9 <==
+==> 000.rb 24 <==
+x.(<<~TEXT)
+  text
+TEXT
+
+==> 001.rb 9 <==
 x.(a, b)
 
-==> 001.rb 10 <==
+==> 002.rb 10 <==
 x&.(a, b)
 
-==> 002.rb 13 <==
+==> 003.rb 13 <==
 x.(a, b).(c)
 
-==> 003.rb 15 <==
+==> 004.rb 15 <==
 x&.(a, b)&.(c)
 
-==> 004.rb 5 <==
+==> 005.rb 5 <==
 x.()
 
-==> 005.rb 22 <==
+==> 006.rb 22 <==
 x.call(a, b)
 x.(a, b)
 
-==> 006.rb 24 <==
+==> 007.rb 24 <==
 x&.call(a, b)
 x&.(a, b)
 
-==> 007.rb 31 <==
+==> 008.rb 31 <==
 x.call(a, b)
 x.(a, b)
 x.(a, b)
 
-==> 008.rb 34 <==
+==> 009.rb 34 <==
 x&.call(a, b)
 x&.(a, b)
 x&.(a, b)

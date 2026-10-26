@@ -24,48 +24,102 @@ do_something(Hash[a: b, c: d], 42)
 ==> 005.rb 34 <==
 do_something Hash[a: b, c: d], 42
 
-==> 006.rb 7 <==
+==> 006.rb 22 <==
+foo&.bar Hash[a => b]
+
+==> 007.rb 22 <==
+foo&.bar = Hash[a, b]
+
+==> 008.rb 33 <==
+def foo
+  super Hash[a => b]
+end
+
+==> 009.rb 36 <==
+def foo
+  super x, Hash[a => b]
+end
+
+==> 010.rb 31 <==
+def foo
+  yield Hash[a, b]
+end
+
+==> 011.rb 33 <==
+do_something Hash[a, b].merge(c)
+
+==> 012.rb 31 <==
+do_something Hash[a => b].size
+
+==> 013.rb 34 <==
+do_something Hash[a, b]&.merge(c)
+
+==> 014.rb 41 <==
+do_something Hash[a, b].map { |k, v| k }
+
+==> 015.rb 7 <==
 Hash[]
 
-==> 007.rb 35 <==
+==> 016.rb 35 <==
 do_something Hash[a, b, c, d], arg
 
-==> 008.rb 14 <==
+==> 017.rb 14 <==
 Hash[a, b, c]
 
-==> 009.rb 17 <==
+==> 018.rb 17 <==
 Hash[a.foo :bar]
 
-==> 010.rb 16 <==
+==> 019.rb 16 <==
 Hash[array.zip]
 
-==> 011.rb 18 <==
+==> 020.rb 18 <==
 Hash[array.zip()]
 
-==> 012.rb 13 <==
+==> 021.rb 13 <==
 Hash[a || b]
 
-==> 013.rb 15 <==
+==> 022.rb 15 <==
 Hash[(a || b)]
 
-==> 014.rb 13 <==
+==> 023.rb 13 <==
 Hash[a && b]
 
-==> 015.rb 15 <==
+==> 024.rb 15 <==
 Hash[(a && b)]
 
-==> 016.rb 27 <==
+==> 025.rb 27 <==
 Hash[array.zip([1, 2, 3])]
 
-==> 017.rb 13 <==
+==> 026.rb 13 <==
 Hash[Hash[]]
 
-==> 018.rb 17 <==
+==> 027.rb 17 <==
 Hash[Hash[k, v]]
 
-==> 019.rb 20 <==
+==> 028.rb 20 <==
 Hash[1, Hash[k, v]]
 
-==> 020.rb 12 <==
+==> 029.rb 12 <==
 Hash[].to_h
+
+==> 030.rb 16 <==
+Hash[a, b].size
+
+==> 031.rb 14 <==
+!Hash[a => b]
+
+==> 032.rb 16 <==
+to_h Hash[a, b]
+
+==> 033.rb 16 <==
+foo[Hash[a, b]]
+
+==> 034.rb 23 <==
+foo.bar = Hash[a => b]
+
+==> 035.rb 18 <==
+foo == Hash[a, b]
+
+==> 036.rb 18 <==
+foo.[] Hash[a, b]
 

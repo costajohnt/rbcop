@@ -32,3 +32,25 @@ x =   0
 # rubocop:enable Layout
 # Some other code
 
+==> 004.rb 118 <==
+# rubocop:disable Layout/SpaceAroundOperators
+x =   0
+# rubocop:enable-next Layout/SpaceAroundOperators
+y = 1
+z =   2
+
+==> 005.rb 112 <==
+# rubocop:disable Layout/SpaceAroundOperators
+x =   0
+# rubocop:next +Layout/SpaceAroundOperators
+y = 1
+z =   2
+
+==> 006.rb 163 <==
+# rubocop:disable Layout/SpaceAroundOperators
+x =   0
+# rubocop:enable-next Layout/SpaceAroundOperators
+y = 1
+z =   2
+# rubocop:enable Layout/SpaceAroundOperators
+

@@ -84,30 +84,39 @@ STR
   baz
 TEXT
 
-==> 021.rb 55 <==
+==> 021.rb 16 <==
+__FILE__ + '/c'
+
+==> 022.rb 21 <==
+"__FILE__#{c}" + 'd'
+
+==> 023.rb 55 <==
 email_with_name = "He said " + "\"Arrest that man!\"."
 
-==> 022.rb 55 <==
+==> 024.rb 55 <==
 email_with_name = %(He said ) + %("Arrest that man!".)
 
-==> 023.rb 80 <==
+==> 025.rb 58 <==
+command = %(clone "#{ref}" "#{url}" && ) + %(echo "done")
+
+==> 026.rb 80 <==
 '"' + "foo" + '"'
 '"' + "foo" + "'"
 "'" + "foo" + '"'
 "'" + "foo" + '"' + "bar"
 
-==> 024.rb 14 <==
+==> 027.rb 14 <==
 '"bar"' + foo
 
-==> 025.rb 17 <==
+==> 028.rb 17 <==
 "foo" + '#{bar}'
 
-==> 026.rb 16 <==
+==> 029.rb 16 <==
 "foo" + '#@bar'
 
-==> 027.rb 17 <==
+==> 030.rb 17 <==
 "foo" + '#@@bar'
 
-==> 028.rb 16 <==
+==> 031.rb 16 <==
 "foo" + '#$bar'
 

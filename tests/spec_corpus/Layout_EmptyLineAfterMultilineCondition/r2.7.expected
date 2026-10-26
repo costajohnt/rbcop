@@ -1,22 +1,24 @@
-==> offenses exit=1 898 <==
+==> offenses exit=1 1011 <==
 000.rb:1:4: C: [Correctable] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
 003.rb:1:17: C: [Correctable] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
-007.rb:3:7: C: [Correctable] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
-009.rb:1:7: C: [Correctable] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
-010.rb:1:7: C: [Correctable] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
-013.rb:3:11: C: [Correctable] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
-016.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
-019.rb:3:1: C: [Correctable] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
+013.rb:3:7: C: [Correctable] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
+015.rb:1:7: C: [Correctable] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
+016.rb:1:7: C: [Correctable] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
+019.rb:3:11: C: [Correctable] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
+022.rb:1:20: C: [Correctable] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
+024.rb:2:1: C: [Correctable] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
+031.rb:3:1: C: [Correctable] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
 
-==> autocorrect exit=0 882 <==
+==> autocorrect exit=0 993 <==
 000.rb:1:4: C: [Corrected] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
 003.rb:1:17: C: [Corrected] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
-007.rb:3:7: C: [Corrected] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
-009.rb:1:7: C: [Corrected] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
-010.rb:1:7: C: [Corrected] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
-013.rb:3:11: C: [Corrected] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
-016.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
-019.rb:3:1: C: [Corrected] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
+013.rb:3:7: C: [Corrected] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
+015.rb:1:7: C: [Corrected] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
+016.rb:1:7: C: [Corrected] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
+019.rb:3:11: C: [Corrected] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
+022.rb:1:20: C: [Corrected] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
+024.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
+031.rb:3:1: C: [Corrected] Layout/EmptyLineAfterMultilineCondition: Use empty line after multiline condition.
 
 ==> corrected/000.rb 49 <==
 if multiline &&
@@ -31,7 +33,7 @@ do_something if multiline &&
 
 do_something_else
 
-==> corrected/007.rb 85 <==
+==> corrected/013.rb 85 <==
 if condition
   do_something
 elsif multiline &&
@@ -40,21 +42,21 @@ elsif multiline &&
   do_something_else
 end
 
-==> corrected/009.rb 52 <==
+==> corrected/015.rb 52 <==
 while multiline &&
    condition
 
   do_something
 end
 
-==> corrected/010.rb 52 <==
+==> corrected/016.rb 52 <==
 until multiline &&
    condition
 
   do_something
 end
 
-==> corrected/013.rb 79 <==
+==> corrected/019.rb 79 <==
 begin
   do_something
 end while multiline &&
@@ -62,7 +64,13 @@ end while multiline &&
 
 do_something_else
 
-==> corrected/016.rb 45 <==
+==> corrected/022.rb 80 <==
+do_something while multiline &&
+                   condition
+
+do_something_else
+
+==> corrected/024.rb 45 <==
 case x
 when foo,
     bar
@@ -70,7 +78,7 @@ when foo,
   do_something
 end
 
-==> corrected/019.rb 69 <==
+==> corrected/031.rb 69 <==
 begin
   do_something
 rescue FooError,

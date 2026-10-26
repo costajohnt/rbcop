@@ -1,40 +1,44 @@
-==> offenses exit=1 1596 <==
+==> offenses exit=1 1784 <==
 000.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in a single statement.
 000.rb:3:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in a single statement.
 000.rb:4:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in a single statement.
 002.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in a single statement.
 002.rb:3:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in a single statement.
 002.rb:4:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in a single statement.
-003.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `extend` mixins in a single statement.
-003.rb:3:3: C: [Correctable] Style/MixinGrouping: Put `extend` mixins in a single statement.
-004.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `prepend` mixins in a single statement.
-004.rb:3:3: C: [Correctable] Style/MixinGrouping: Put `prepend` mixins in a single statement.
+003.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in a single statement.
+003.rb:3:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in a single statement.
+004.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `extend` mixins in a single statement.
+004.rb:3:3: C: [Correctable] Style/MixinGrouping: Put `extend` mixins in a single statement.
 005.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `prepend` mixins in a single statement.
 005.rb:3:3: C: [Correctable] Style/MixinGrouping: Put `prepend` mixins in a single statement.
-005.rb:5:3: C: [Correctable] Style/MixinGrouping: Put `prepend` mixins in a single statement.
 006.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `prepend` mixins in a single statement.
+006.rb:3:3: C: [Correctable] Style/MixinGrouping: Put `prepend` mixins in a single statement.
 006.rb:5:3: C: [Correctable] Style/MixinGrouping: Put `prepend` mixins in a single statement.
-007.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in a single statement.
-007.rb:3:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in a single statement.
+007.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `prepend` mixins in a single statement.
+007.rb:5:3: C: [Correctable] Style/MixinGrouping: Put `prepend` mixins in a single statement.
+008.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in a single statement.
+008.rb:3:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in a single statement.
 
-==> autocorrect exit=0 1562 <==
+==> autocorrect exit=0 1746 <==
 000.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in a single statement.
 000.rb:3:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in a single statement.
 000.rb:4:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in a single statement.
 002.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in a single statement.
 002.rb:3:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in a single statement.
 002.rb:4:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in a single statement.
-003.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `extend` mixins in a single statement.
-003.rb:3:3: C: [Corrected] Style/MixinGrouping: Put `extend` mixins in a single statement.
-004.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `prepend` mixins in a single statement.
-004.rb:3:3: C: [Corrected] Style/MixinGrouping: Put `prepend` mixins in a single statement.
+003.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in a single statement.
+003.rb:3:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in a single statement.
+004.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `extend` mixins in a single statement.
+004.rb:3:3: C: [Corrected] Style/MixinGrouping: Put `extend` mixins in a single statement.
 005.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `prepend` mixins in a single statement.
 005.rb:3:3: C: [Corrected] Style/MixinGrouping: Put `prepend` mixins in a single statement.
-005.rb:5:3: C: [Corrected] Style/MixinGrouping: Put `prepend` mixins in a single statement.
 006.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `prepend` mixins in a single statement.
+006.rb:3:3: C: [Corrected] Style/MixinGrouping: Put `prepend` mixins in a single statement.
 006.rb:5:3: C: [Corrected] Style/MixinGrouping: Put `prepend` mixins in a single statement.
-007.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in a single statement.
-007.rb:3:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in a single statement.
+007.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `prepend` mixins in a single statement.
+007.rb:5:3: C: [Corrected] Style/MixinGrouping: Put `prepend` mixins in a single statement.
+008.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in a single statement.
+008.rb:3:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in a single statement.
 
 ==> corrected/000.rb 38 <==
 class Foo
@@ -46,24 +50,31 @@ class Foo
   include Qux, FooBarBaz, FooBar, FooBaz, Bar, Baz
 end
 
-==> corrected/003.rb 32 <==
+==> corrected/003.rb 67 <==
+class Foo
+  include(Module.new do
+    do_something
+  end, Bar)
+end
+
+==> corrected/004.rb 32 <==
 class Foo
   extend Baz, Bar
 end
 
-==> corrected/004.rb 33 <==
+==> corrected/005.rb 33 <==
 class Foo
   prepend Baz, Bar
 end
 
-==> corrected/005.rb 61 <==
+==> corrected/006.rb 61 <==
 class Foo
   prepend Qux, Baz, Bar
   do_something_else
   
 end
 
-==> corrected/006.rb 76 <==
+==> corrected/007.rb 76 <==
 class Foo
   prepend Qux, Bar
   Other.prepend Baz
@@ -71,7 +82,7 @@ class Foo
   
 end
 
-==> corrected/007.rb 46 <==
+==> corrected/008.rb 46 <==
 class Foo
   include Baz, Bar
   extend Baz

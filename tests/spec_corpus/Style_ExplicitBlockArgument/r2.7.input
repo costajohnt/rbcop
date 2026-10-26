@@ -38,7 +38,32 @@ def do_something
   end
 end
 
-==> 006.rb 179 <==
+==> 006.rb 55 <==
+def do_something
+  callable.() { |row| yield row }
+end
+
+==> 007.rb 56 <==
+def do_something
+  array.each() { |row| yield row }
+end
+
+==> 008.rb 49 <==
+def do_something
+  foo[] { |row| yield row }
+end
+
+==> 009.rb 50 <==
+def do_something
+  foo.[] { |row| yield row }
+end
+
+==> 010.rb 37 <==
+def []
+  foo { |row| yield row }
+end
+
+==> 011.rb 179 <==
 def m
   items.something { |i| yield i }
 
@@ -51,22 +76,33 @@ def m
   end
 end
 
-==> 007.rb 20 <==
+==> 012.rb 20 <==
 def m
   yield i
 end
 
-==> 008.rb 30 <==
+==> 013.rb 30 <==
 def m
   3.times { yield }
 end
 
-==> 009.rb 39 <==
+==> 014.rb 68 <==
+def m(scope, block = nil)
+  constraints(scope, block) { yield }
+end
+
+==> 015.rb 46 <==
+def m
+  block = build
+  3.times { yield }
+end
+
+==> 016.rb 39 <==
 def do_something
   super { yield }
 end
 
-==> 010.rb 70 <==
+==> 017.rb 70 <==
 def m
   items.something do |i|
     do_something
@@ -74,47 +110,72 @@ def m
   end
 end
 
-==> 011.rb 53 <==
+==> 018.rb 53 <==
 def m
   items.something { |i, j, k| yield j, k }
 end
 
-==> 012.rb 47 <==
+==> 019.rb 47 <==
 def m
   items.something { |i, j| yield i }
 end
 
-==> 013.rb 33 <==
+==> 020.rb 33 <==
 render("partial") do
   yield
 end
 
-==> 014.rb 38 <==
+==> 021.rb 38 <==
 def my_method()
   foo() { yield }
 end
 
-==> 015.rb 38 <==
+==> 022.rb 38 <==
 def my_method
   super() { yield }
 end
 
-==> 016.rb 40 <==
+==> 023.rb 40 <==
 def my_method(x)
   foo(x) { yield }
 end
 
-==> 017.rb 65 <==
+==> 024.rb 65 <==
 def my_method(x, y = 42, *args, **options)
   super { yield }
 end
 
-==> 018.rb 70 <==
+==> 025.rb 70 <==
 def self.my_method(x, y = 42, *args, **options)
   super { yield }
 end
 
-==> 019.rb 77 <==
+==> 026.rb 49 <==
+def my_method(x, k: 1, j:)
+  super { yield }
+end
+
+==> 027.rb 45 <==
+def my_method(...)
+  bar { |x| yield x }
+end
+
+==> 028.rb 46 <==
+def my_method(x, **nil)
+  super { yield }
+end
+
+==> 029.rb 45 <==
+def my_method(x, &blk)
+  super { yield }
+end
+
+==> 030.rb 44 <==
+def my_method((a, b))
+  super { yield }
+end
+
+==> 031.rb 77 <==
 def foo
   bar { |baz| yield baz }
 end
@@ -123,7 +184,7 @@ def foo
   bar { |baz| yield baz }
 end
 
-==> 020.rb 62 <==
+==> 032.rb 62 <==
 def foo
   def bar.baz
     qux { |quux| yield quux }

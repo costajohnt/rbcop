@@ -1,0 +1,9 @@
+==> offenses exit=1 82 <==
+001.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+
+==> autocorrect exit=0 80 <==
+001.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+
+==> corrected/001.rb 31 <==
+def my_method(a:) = foo(1, a:)
+

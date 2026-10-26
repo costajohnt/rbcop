@@ -1,57 +1,68 @@
-==> offenses exit=1 1140 <==
+==> offenses exit=1 1375 <==
 004.rb:2:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
-005.rb:2:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
-006.rb:3:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
-007.rb:2:1: C: [Correctable] Style/RequireOrder: Sort `require_relative` in alphabetical order.
-008.rb:2:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
-008.rb:3:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
-008.rb:4:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
-018.rb:4:3: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
-020.rb:2:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
-020.rb:3:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+005.rb:3:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+006.rb:2:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+007.rb:3:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+008.rb:2:1: C: [Correctable] Style/RequireOrder: Sort `require_relative` in alphabetical order.
+009.rb:2:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+009.rb:3:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+009.rb:4:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+019.rb:4:3: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
 021.rb:2:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
 021.rb:3:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
-022.rb:5:3: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+022.rb:2:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+022.rb:3:1: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+023.rb:5:3: C: [Correctable] Style/RequireOrder: Sort `require` in alphabetical order.
+025.rb:1:14: C: Style/RequireOrder: Sort `require` in alphabetical order.
+026.rb:2:10: C: Style/RequireOrder: Sort `require` in alphabetical order.
 
-==> autocorrect exit=0 1114 <==
+==> autocorrect exit=1 1347 <==
 004.rb:2:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
-005.rb:2:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
-006.rb:3:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
-007.rb:2:1: C: [Corrected] Style/RequireOrder: Sort `require_relative` in alphabetical order.
-008.rb:2:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
-008.rb:3:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
-008.rb:4:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
-018.rb:4:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
-020.rb:2:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
-020.rb:3:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+005.rb:3:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+006.rb:2:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+007.rb:3:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+008.rb:2:1: C: [Corrected] Style/RequireOrder: Sort `require_relative` in alphabetical order.
+009.rb:2:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+009.rb:3:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+009.rb:4:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+019.rb:4:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
 021.rb:2:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
 021.rb:3:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
-022.rb:5:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+022.rb:2:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+022.rb:3:1: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+023.rb:5:3: C: [Corrected] Style/RequireOrder: Sort `require` in alphabetical order.
+025.rb:1:14: C: Style/RequireOrder: Sort `require` in alphabetical order.
+026.rb:2:10: C: Style/RequireOrder: Sort `require` in alphabetical order.
 
 ==> corrected/004.rb 24 <==
 require 'a'
 require 'b'
 
-==> corrected/005.rb 34 <==
+==> corrected/005.rb 36 <==
+require 'a'
+require 'b'
+require 'c'
+
+==> corrected/006.rb 34 <==
 require 'a'
 require 'b' # comment
 
-==> corrected/006.rb 34 <==
+==> corrected/007.rb 34 <==
 # comment
 require 'a'
 require 'b'
 
-==> corrected/007.rb 42 <==
+==> corrected/008.rb 42 <==
 require_relative 'a'
 require_relative 'b'
 
-==> corrected/008.rb 48 <==
+==> corrected/009.rb 48 <==
 require 'a'
 require 'b'
 require 'c'
 require 'd'
 
-==> corrected/018.rb 63 <==
+==> corrected/019.rb 63 <==
 require 'd'
 if foo
   require 'a'
@@ -59,17 +70,17 @@ if foo
 end
 require 'c'
 
-==> corrected/020.rb 43 <==
+==> corrected/021.rb 43 <==
 require 'a' if foo
 require 'b'
 require 'c'
 
-==> corrected/021.rb 47 <==
+==> corrected/022.rb 47 <==
 require 'a' unless foo
 require 'b'
 require 'c'
 
-==> corrected/022.rb 60 <==
+==> corrected/023.rb 60 <==
 begin
   do_something
 rescue

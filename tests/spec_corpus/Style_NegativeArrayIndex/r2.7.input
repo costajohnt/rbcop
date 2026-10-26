@@ -39,1172 +39,1172 @@ arr[length - 2]
 ==> 010.rb 22 <==
 arr[other.length - 2]
 
-==> 011.rb 24 <==
+==> 011.rb 27 <==
+arr.sort[other.length - 2]
+
+==> 012.rb 35 <==
+arr.reverse[other.sort.length - 1]
+
+==> 013.rb 24 <==
 @arr[@other.length - 2]
 
-==> 012.rb 24 <==
+==> 014.rb 24 <==
 CONST[OTHER.length - 2]
 
-==> 013.rb 41 <==
+==> 015.rb 41 <==
 arr.compact[arr.compact.uniq.length - 2]
 
-==> 014.rb 27 <==
+==> 016.rb 27 <==
 arr[0..(other.length - 2)]
 
-==> 015.rb 25 <==
+==> 017.rb 25 <==
 arr[0, other.length - 2]
 
-==> 016.rb 20 <==
+==> 018.rb 20 <==
 arr[arr.length - 0]
 
-==> 017.rb 20 <==
+==> 019.rb 20 <==
 arr[arr.length - n]
 
-==> 018.rb 26 <==
+==> 020.rb 26 <==
 arr[0, 1, arr.length - 2]
 
-==> 019.rb 25 <==
+==> 021.rb 25 <==
 arr[0..(arr.length - n)]
 
-==> 020.rb 23 <==
+==> 022.rb 23 <==
 arr[0, arr.length - n]
 
-==> 021.rb 27 <==
+==> 023.rb 27 <==
 arr[arr.method.length - 2]
 
-==> 022.rb 25 <==
+==> 024.rb 25 <==
 arr[arr.sort.length - 2]
 
-==> 023.rb 32 <==
+==> 025.rb 32 <==
 arr[0..(arr.method.length - 2)]
 
-==> 024.rb 30 <==
+==> 026.rb 30 <==
 arr[0, arr.method.length - 2]
 
-==> 025.rb 28 <==
+==> 027.rb 28 <==
 arr[arr.reverse.length - 2]
 
-==> 026.rb 32 <==
+==> 028.rb 32 <==
 arr[arr.map(&:to_s).length - 2]
 
-==> 027.rb 28 <==
+==> 029.rb 28 <==
 arr[arr.length - 2] = value
 
-==> 028.rb 36 <==
+==> 030.rb 36 <==
 arr[arr.select(&:even?).length - 2]
 
-==> 029.rb 39 <==
+==> 031.rb 39 <==
 arr[arr.filter_map(&:to_i).length - 2]
 
-==> 030.rb 33 <==
+==> 032.rb 33 <==
 arr[0..(arr.reverse.length - 2)]
 
-==> 031.rb 38 <==
+==> 033.rb 38 <==
 arr[0...(arr.map(&:to_s).length - 2)]
 
-==> 032.rb 31 <==
+==> 034.rb 31 <==
 arr[0, arr.reverse.length - 2]
 
-==> 033.rb 35 <==
+==> 035.rb 35 <==
 arr[0, arr.map(&:to_s).length - 2]
 
-==> 034.rb 35 <==
+==> 036.rb 35 <==
 arr.sort[0, arr.method.length - 2]
 
-==> 035.rb 35 <==
+==> 037.rb 35 <==
 arr[arr.chained.method.length - 2]
 
-==> 036.rb 41 <==
+==> 038.rb 41 <==
 arr[arr.deeply.nested.method.length - 2]
 
-==> 037.rb 20 <==
+==> 039.rb 20 <==
 arr[arr.length + 2]
 
-==> 038.rb 20 <==
+==> 040.rb 20 <==
 arr[2 - arr.length]
 
-==> 039.rb 20 <==
+==> 041.rb 20 <==
 arr[arr.length * 2]
 
-==> 040.rb 20 <==
+==> 042.rb 20 <==
 arr[arr.length / 2]
 
-==> 041.rb 23 <==
+==> 043.rb 23 <==
 arr[0, arr.length - 2]
 
-==> 042.rb 35 <==
+==> 044.rb 35 <==
 arr.map(&:to_s)[0, arr.length - 2]
 
-==> 043.rb 39 <==
+==> 045.rb 39 <==
 arr.select(&:even?)[0, arr.length - 2]
 
-==> 044.rb 42 <==
+==> 046.rb 42 <==
 arr.filter_map(&:to_i)[0, arr.length - 2]
 
-==> 045.rb 23 <==
+==> 047.rb 23 <==
 arr[2, arr.length - 2]
 
-==> 046.rb 23 <==
+==> 048.rb 23 <==
 arr[0, arr.length - 0]
 
-==> 047.rb 25 <==
+==> 049.rb 25 <==
 arr[0..(arr.length - 0)]
 
-==> 048.rb 50 <==
+==> 050.rb 50 <==
 arr.sort.reverse[arr.sort.map(&:to_s).length - 2]
 
-==> 049.rb 35 <==
+==> 051.rb 35 <==
 arr.sort.uniq[arr.sort.length - 2]
 
-==> 050.rb 58 <==
+==> 052.rb 58 <==
 arr.reject(&:nil?).compact[arr.reject(&:nil?).length - 2]
 
-==> 051.rb 41 <==
+==> 053.rb 41 <==
 arr.compact.uniq[arr.compact.length - 2]
 
-==> 052.rb 38 <==
+==> 054.rb 38 <==
 arr.uniq.compact[arr.uniq.length - 2]
 
-==> 053.rb 48 <==
+==> 055.rb 48 <==
 arr.map(&:to_s)[arr.select(&:even?).length - 2]
 
-==> 054.rb 32 <==
+==> 056.rb 32 <==
 arr.sort[arr.method.length - 2]
 
-==> 055.rb 52 <==
+==> 057.rb 52 <==
 arr.select(&:even?)[arr.reject(&:even?).length - 2]
 
-==> 056.rb 60 <==
+==> 058.rb 60 <==
 arr.map(&:to_i).select(&:even?)[arr.map(&:to_i).length - 2]
 
-==> 057.rb 44 <==
+==> 059.rb 44 <==
 arr.map(&:to_s)[arr.map(&:to_i).length - 2]
 
-==> 058.rb 67 <==
+==> 060.rb 67 <==
 arr.select(&:even?).reject(&:nil?)[arr.select(&:even?).length - 2]
 
-==> 059.rb 64 <==
+==> 061.rb 64 <==
 arr.select(&:even?).map(&:to_s)[arr.select(&:even?).length - 2]
 
-==> 060.rb 35 <==
+==> 062.rb 35 <==
 arr.uniq[0..(arr.uniq.length - 2)]
 
-==> 061.rb 36 <==
+==> 063.rb 36 <==
 arr.flatten[arr.flatten.length - 2]
 
-==> 062.rb 38 <==
+==> 064.rb 38 <==
 arr.slice(1)[arr.slice(1).length - 2]
 
-==> 063.rb 36 <==
+==> 065.rb 36 <==
 arr.take(3)[arr.take(3).length - 2]
 
-==> 064.rb 36 <==
+==> 066.rb 36 <==
 arr.drop(2)[arr.drop(2).length - 2]
 
-==> 065.rb 46 <==
+==> 067.rb 46 <==
 arr.sort.flatten[arr.sort.flatten.length - 2]
 
-==> 066.rb 54 <==
+==> 068.rb 54 <==
 arr.reverse.slice(1)[arr.reverse.slice(1).length - 2]
 
-==> 067.rb 52 <==
+==> 069.rb 52 <==
 arr.shuffle.take(3)[arr.shuffle.take(3).length - 2]
 
-==> 068.rb 50 <==
+==> 070.rb 50 <==
 arr.rotate.drop(2)[arr.rotate.drop(2).length - 2]
 
-==> 069.rb 26 <==
+==> 071.rb 26 <==
 arr[rand(arr.length - 2)]
 
-==> 070.rb 24 <==
+==> 072.rb 24 <==
 arr[arr.length - 4..-1]
 
-==> 071.rb 35 <==
+==> 073.rb 35 <==
 arr.map[(0..(arr.map.length - 2))]
 
-==> 072.rb 34 <==
+==> 074.rb 34 <==
 arr.sort[(0..(other.length - 2))]
 
-==> 073.rb 27 <==
+==> 075.rb 27 <==
 arr[(0..(arr.length - 0))]
 
-==> 074.rb 30 <==
+==> 076.rb 30 <==
 arr[(0..(arr.length - (-2)))]
 
-==> 075.rb 27 <==
+==> 077.rb 27 <==
 arr[(0..(arr.length - n))]
 
-==> 076.rb 40 <==
+==> 078.rb 40 <==
 arr.sort[(0..(arr.reverse.length - 2))]
 
-==> 077.rb 24 <==
+==> 079.rb 24 <==
 arr[arr.length - 2 + 1]
 
-==> 078.rb 24 <==
+==> 080.rb 24 <==
 arr[arr.length - 2 - 1]
 
-==> 079.rb 24 <==
+==> 081.rb 24 <==
 arr[arr.length * 2 - 2]
 
-==> 080.rb 26 <==
+==> 082.rb 26 <==
 arr[(arr.length - 2) / 2]
 
-==> 081.rb 23 <==
+==> 083.rb 23 <==
 arr[arr.length(1) - 2]
 
-==> 082.rb 41 <==
+==> 084.rb 41 <==
 arr[arr.select { |x| x > 0 }.length - 2]
 
-==> 083.rb 23 <==
+==> 085.rb 23 <==
 arr[arr[0].length - 2]
 
-==> 084.rb 27 <==
+==> 086.rb 27 <==
 arr[hash[:key].length - 2]
 
-==> 085.rb 22 <==
+==> 087.rb 22 <==
 arr[CONST.length - 2]
 
-==> 086.rb 36 <==
+==> 088.rb 36 <==
 arr[(arr.method..(arr.length - 2))]
 
-==> 087.rb 41 <==
+==> 089.rb 41 <==
 arr[(arr.map(&:to_s)..(arr.length - 2))]
 
-==> 088.rb 53 <==
+==> 090.rb 53 <==
 arr[(arr.select(&:even?).compact..(arr.length - 2))]
 
-==> 089.rb 36 <==
+==> 091.rb 36 <==
 arr.sort[(0..(arr.map.length - 2))]
 
-==> 090.rb 24 <==
+==> 092.rb 24 <==
 CONST[CONST.length - 2]
 
-==> 091.rb 22 <==
+==> 093.rb 22 <==
 @arr[@arr.length - 2]
 
-==> 092.rb 20 <==
+==> 094.rb 20 <==
 arr[arr.length - 2]
 
-==> 093.rb 29 <==
+==> 095.rb 29 <==
 @@arr.sort[@@arr.length - 2]
 
-==> 094.rb 25 <==
+==> 096.rb 25 <==
 arr.sort[arr.length - 2]
 
-==> 095.rb 30 <==
+==> 097.rb 30 <==
 arr.sort[arr.sort.length - 2]
 
-==> 096.rb 33 <==
+==> 098.rb 33 <==
 arr.sort[arr.reverse.length - 2]
 
-==> 097.rb 38 <==
+==> 099.rb 38 <==
 @arr.reverse[@arr.reverse.length - 2]
 
-==> 098.rb 33 <==
+==> 100.rb 33 <==
 arr.reverse[arr.sort.length - 2]
 
-==> 099.rb 33 <==
+==> 101.rb 33 <==
 arr.shuffle[arr.sort.length - 2]
 
-==> 100.rb 35 <==
+==> 102.rb 35 <==
 arr.rotate[arr.reverse.length - 2]
 
-==> 101.rb 35 <==
+==> 103.rb 35 <==
 @arr.reverse[@arr.sort.length - 2]
 
-==> 102.rb 30 <==
+==> 104.rb 30 <==
 @arr.reverse[@arr.length - 2]
 
-==> 103.rb 36 <==
+==> 105.rb 36 <==
 arr.reverse[arr.reverse.length - 2]
 
-==> 104.rb 36 <==
+==> 106.rb 36 <==
 arr.shuffle[arr.shuffle.length - 2]
 
-==> 105.rb 34 <==
+==> 107.rb 34 <==
 arr.rotate[arr.rotate.length - 2]
 
-==> 106.rb 46 <==
+==> 108.rb 46 <==
 arr.sort.reverse[arr.sort.reverse.length - 2]
 
-==> 107.rb 46 <==
+==> 109.rb 46 <==
 arr.sort.shuffle[arr.sort.shuffle.length - 2]
 
-==> 108.rb 50 <==
+==> 110.rb 50 <==
 arr.reverse.rotate[arr.reverse.rotate.length - 2]
 
-==> 109.rb 38 <==
+==> 111.rb 38 <==
 arr.sort.reverse[arr.sort.length - 2]
 
-==> 110.rb 23 <==
+==> 112.rb 23 <==
 arr.[](arr.length - 2)
 
-==> 111.rb 24 <==
+==> 113.rb 24 <==
 arr&.[](arr.length - 2)
 
-==> 112.rb 27 <==
+==> 114.rb 27 <==
 arr[(0..(arr.length - 2))]
 
-==> 113.rb 28 <==
+==> 115.rb 28 <==
 arr[(-5..(arr.length - 2))]
 
-==> 114.rb 28 <==
+==> 116.rb 28 <==
 arr[(1...(arr.length - 2))]
 
-==> 115.rb 29 <==
+==> 117.rb 29 <==
 arr[(0..(arr.length - 100))]
 
-==> 116.rb 28 <==
+==> 118.rb 28 <==
 arr[(0...(arr.length - 2))]
 
-==> 117.rb 27 <==
+==> 119.rb 27 <==
 arr[(2..(arr.length - 2))]
 
-==> 118.rb 28 <==
+==> 120.rb 28 <==
 arr[(2...(arr.length - 2))]
 
-==> 119.rb 27 <==
+==> 121.rb 27 <==
 arr[(n..(arr.length - 2))]
 
-==> 120.rb 34 <==
+==> 122.rb 34 <==
 arr[(arr.sort..(arr.length - 2))]
 
-==> 121.rb 42 <==
+==> 123.rb 42 <==
 arr[(arr.sort.reverse..(arr.length - 2))]
 
-==> 122.rb 31 <==
+==> 124.rb 31 <==
 CONST[(0..(CONST.length - 2))]
 
-==> 123.rb 29 <==
+==> 125.rb 29 <==
 @arr[(0..(@arr.length - 2))]
 
-==> 124.rb 29 <==
+==> 126.rb 29 <==
 $arr[(0..($arr.length - 2))]
 
-==> 125.rb 31 <==
+==> 127.rb 31 <==
 @@arr[(0..(@@arr.length - 2))]
 
-==> 126.rb 43 <==
+==> 128.rb 43 <==
 arr.reverse[(0..(arr.reverse.length - 2))]
 
-==> 127.rb 43 <==
+==> 129.rb 43 <==
 arr.reverse[(2..(arr.reverse.length - 2))]
 
-==> 128.rb 37 <==
+==> 130.rb 37 <==
 arr.sort[(0..(arr.sort.length - 2))]
 
-==> 129.rb 38 <==
+==> 131.rb 38 <==
 arr.sort[(2...(arr.sort.length - 2))]
 
-==> 130.rb 43 <==
+==> 132.rb 43 <==
 arr.shuffle[(0..(arr.shuffle.length - 2))]
 
-==> 131.rb 43 <==
+==> 133.rb 43 <==
 arr.shuffle[(1..(arr.shuffle.length - 2))]
 
-==> 132.rb 41 <==
+==> 134.rb 41 <==
 arr.rotate[(0..(arr.rotate.length - 2))]
 
-==> 133.rb 42 <==
+==> 135.rb 42 <==
 arr.rotate[(3...(arr.rotate.length - 2))]
 
-==> 134.rb 53 <==
+==> 136.rb 53 <==
 arr.sort.reverse[(0..(arr.sort.reverse.length - 2))]
 
-==> 135.rb 25 <==
+==> 137.rb 25 <==
 arr[(0..arr.length - 2)]
 
-==> 136.rb 26 <==
+==> 138.rb 26 <==
 arr[(0...arr.length - 2)]
 
-==> 137.rb 25 <==
+==> 139.rb 25 <==
 arr[(2..arr.length - 2)]
 
-==> 138.rb 35 <==
+==> 140.rb 35 <==
 arr.sort[(0..arr.sort.length - 2)]
 
-==> 139.rb 41 <==
+==> 141.rb 41 <==
 arr.reverse[(0..arr.reverse.length - 2)]
 
-==> 140.rb 39 <==
+==> 142.rb 39 <==
 length = do_something
 self[length - 1]
 
-==> 141.rb 17 <==
+==> 143.rb 17 <==
 self[length - 1]
 
-==> 142.rb 36 <==
+==> 144.rb 36 <==
 arr.uniq[arr.uniq.compact.size - 2]
 
-==> 143.rb 46 <==
+==> 145.rb 46 <==
 arr.flatten[arr.flatten.map(&:to_s).size - 2]
 
-==> 144.rb 14 <==
+==> 146.rb 14 <==
 arr[size - 2]
 
-==> 145.rb 20 <==
+==> 147.rb 20 <==
 arr[other.size - 2]
 
-==> 146.rb 22 <==
+==> 148.rb 25 <==
+arr.sort[other.size - 2]
+
+==> 149.rb 33 <==
+arr.reverse[other.sort.size - 1]
+
+==> 150.rb 22 <==
 @arr[@other.size - 2]
 
-==> 147.rb 22 <==
+==> 151.rb 22 <==
 CONST[OTHER.size - 2]
 
-==> 148.rb 39 <==
+==> 152.rb 39 <==
 arr.compact[arr.compact.uniq.size - 2]
 
-==> 149.rb 25 <==
+==> 153.rb 25 <==
 arr[0..(other.size - 2)]
 
-==> 150.rb 23 <==
+==> 154.rb 23 <==
 arr[0, other.size - 2]
 
-==> 151.rb 18 <==
+==> 155.rb 18 <==
 arr[arr.size - 0]
 
-==> 152.rb 18 <==
+==> 156.rb 18 <==
 arr[arr.size - n]
 
-==> 153.rb 24 <==
+==> 157.rb 24 <==
 arr[0, 1, arr.size - 2]
 
-==> 154.rb 23 <==
+==> 158.rb 23 <==
 arr[0..(arr.size - n)]
 
-==> 155.rb 21 <==
+==> 159.rb 21 <==
 arr[0, arr.size - n]
 
-==> 156.rb 25 <==
+==> 160.rb 25 <==
 arr[arr.method.size - 2]
 
-==> 157.rb 23 <==
+==> 161.rb 23 <==
 arr[arr.sort.size - 2]
 
-==> 158.rb 30 <==
+==> 162.rb 30 <==
 arr[0..(arr.method.size - 2)]
 
-==> 159.rb 28 <==
+==> 163.rb 28 <==
 arr[0, arr.method.size - 2]
 
-==> 160.rb 26 <==
+==> 164.rb 26 <==
 arr[arr.reverse.size - 2]
 
-==> 161.rb 30 <==
+==> 165.rb 30 <==
 arr[arr.map(&:to_s).size - 2]
 
-==> 162.rb 26 <==
+==> 166.rb 26 <==
 arr[arr.size - 2] = value
 
-==> 163.rb 34 <==
+==> 167.rb 34 <==
 arr[arr.select(&:even?).size - 2]
 
-==> 164.rb 37 <==
+==> 168.rb 37 <==
 arr[arr.filter_map(&:to_i).size - 2]
 
-==> 165.rb 31 <==
+==> 169.rb 31 <==
 arr[0..(arr.reverse.size - 2)]
 
-==> 166.rb 36 <==
+==> 170.rb 36 <==
 arr[0...(arr.map(&:to_s).size - 2)]
 
-==> 167.rb 29 <==
+==> 171.rb 29 <==
 arr[0, arr.reverse.size - 2]
 
-==> 168.rb 33 <==
+==> 172.rb 33 <==
 arr[0, arr.map(&:to_s).size - 2]
 
-==> 169.rb 33 <==
+==> 173.rb 33 <==
 arr.sort[0, arr.method.size - 2]
 
-==> 170.rb 33 <==
+==> 174.rb 33 <==
 arr[arr.chained.method.size - 2]
 
-==> 171.rb 39 <==
+==> 175.rb 39 <==
 arr[arr.deeply.nested.method.size - 2]
 
-==> 172.rb 18 <==
+==> 176.rb 18 <==
 arr[arr.size + 2]
 
-==> 173.rb 18 <==
+==> 177.rb 18 <==
 arr[2 - arr.size]
 
-==> 174.rb 18 <==
+==> 178.rb 18 <==
 arr[arr.size * 2]
 
-==> 175.rb 18 <==
+==> 179.rb 18 <==
 arr[arr.size / 2]
 
-==> 176.rb 21 <==
+==> 180.rb 21 <==
 arr[0, arr.size - 2]
 
-==> 177.rb 33 <==
+==> 181.rb 33 <==
 arr.map(&:to_s)[0, arr.size - 2]
 
-==> 178.rb 37 <==
+==> 182.rb 37 <==
 arr.select(&:even?)[0, arr.size - 2]
 
-==> 179.rb 40 <==
+==> 183.rb 40 <==
 arr.filter_map(&:to_i)[0, arr.size - 2]
 
-==> 180.rb 21 <==
+==> 184.rb 21 <==
 arr[2, arr.size - 2]
 
-==> 181.rb 21 <==
+==> 185.rb 21 <==
 arr[0, arr.size - 0]
 
-==> 182.rb 23 <==
+==> 186.rb 23 <==
 arr[0..(arr.size - 0)]
 
-==> 183.rb 48 <==
+==> 187.rb 48 <==
 arr.sort.reverse[arr.sort.map(&:to_s).size - 2]
 
-==> 184.rb 33 <==
+==> 188.rb 33 <==
 arr.sort.uniq[arr.sort.size - 2]
 
-==> 185.rb 56 <==
+==> 189.rb 56 <==
 arr.reject(&:nil?).compact[arr.reject(&:nil?).size - 2]
 
-==> 186.rb 39 <==
+==> 190.rb 39 <==
 arr.compact.uniq[arr.compact.size - 2]
 
-==> 187.rb 36 <==
+==> 191.rb 36 <==
 arr.uniq.compact[arr.uniq.size - 2]
 
-==> 188.rb 46 <==
+==> 192.rb 46 <==
 arr.map(&:to_s)[arr.select(&:even?).size - 2]
 
-==> 189.rb 30 <==
+==> 193.rb 30 <==
 arr.sort[arr.method.size - 2]
 
-==> 190.rb 50 <==
+==> 194.rb 50 <==
 arr.select(&:even?)[arr.reject(&:even?).size - 2]
 
-==> 191.rb 58 <==
+==> 195.rb 58 <==
 arr.map(&:to_i).select(&:even?)[arr.map(&:to_i).size - 2]
 
-==> 192.rb 42 <==
+==> 196.rb 42 <==
 arr.map(&:to_s)[arr.map(&:to_i).size - 2]
 
-==> 193.rb 65 <==
+==> 197.rb 65 <==
 arr.select(&:even?).reject(&:nil?)[arr.select(&:even?).size - 2]
 
-==> 194.rb 62 <==
+==> 198.rb 62 <==
 arr.select(&:even?).map(&:to_s)[arr.select(&:even?).size - 2]
 
-==> 195.rb 33 <==
+==> 199.rb 33 <==
 arr.uniq[0..(arr.uniq.size - 2)]
 
-==> 196.rb 34 <==
+==> 200.rb 34 <==
 arr.flatten[arr.flatten.size - 2]
 
-==> 197.rb 36 <==
+==> 201.rb 36 <==
 arr.slice(1)[arr.slice(1).size - 2]
 
-==> 198.rb 34 <==
+==> 202.rb 34 <==
 arr.take(3)[arr.take(3).size - 2]
 
-==> 199.rb 34 <==
+==> 203.rb 34 <==
 arr.drop(2)[arr.drop(2).size - 2]
 
-==> 200.rb 44 <==
+==> 204.rb 44 <==
 arr.sort.flatten[arr.sort.flatten.size - 2]
 
-==> 201.rb 52 <==
+==> 205.rb 52 <==
 arr.reverse.slice(1)[arr.reverse.slice(1).size - 2]
 
-==> 202.rb 50 <==
+==> 206.rb 50 <==
 arr.shuffle.take(3)[arr.shuffle.take(3).size - 2]
 
-==> 203.rb 48 <==
+==> 207.rb 48 <==
 arr.rotate.drop(2)[arr.rotate.drop(2).size - 2]
 
-==> 204.rb 24 <==
+==> 208.rb 24 <==
 arr[rand(arr.size - 2)]
 
-==> 205.rb 22 <==
+==> 209.rb 22 <==
 arr[arr.size - 4..-1]
 
-==> 206.rb 33 <==
+==> 210.rb 33 <==
 arr.map[(0..(arr.map.size - 2))]
 
-==> 207.rb 32 <==
+==> 211.rb 32 <==
 arr.sort[(0..(other.size - 2))]
 
-==> 208.rb 25 <==
+==> 212.rb 25 <==
 arr[(0..(arr.size - 0))]
 
-==> 209.rb 28 <==
+==> 213.rb 28 <==
 arr[(0..(arr.size - (-2)))]
 
-==> 210.rb 25 <==
+==> 214.rb 25 <==
 arr[(0..(arr.size - n))]
 
-==> 211.rb 38 <==
+==> 215.rb 38 <==
 arr.sort[(0..(arr.reverse.size - 2))]
 
-==> 212.rb 22 <==
+==> 216.rb 22 <==
 arr[arr.size - 2 + 1]
 
-==> 213.rb 22 <==
+==> 217.rb 22 <==
 arr[arr.size - 2 - 1]
 
-==> 214.rb 22 <==
+==> 218.rb 22 <==
 arr[arr.size * 2 - 2]
 
-==> 215.rb 24 <==
+==> 219.rb 24 <==
 arr[(arr.size - 2) / 2]
 
-==> 216.rb 21 <==
+==> 220.rb 21 <==
 arr[arr.size(1) - 2]
 
-==> 217.rb 39 <==
+==> 221.rb 39 <==
 arr[arr.select { |x| x > 0 }.size - 2]
 
-==> 218.rb 21 <==
+==> 222.rb 21 <==
 arr[arr[0].size - 2]
 
-==> 219.rb 25 <==
+==> 223.rb 25 <==
 arr[hash[:key].size - 2]
 
-==> 220.rb 20 <==
+==> 224.rb 20 <==
 arr[CONST.size - 2]
 
-==> 221.rb 34 <==
+==> 225.rb 34 <==
 arr[(arr.method..(arr.size - 2))]
 
-==> 222.rb 39 <==
+==> 226.rb 39 <==
 arr[(arr.map(&:to_s)..(arr.size - 2))]
 
-==> 223.rb 51 <==
+==> 227.rb 51 <==
 arr[(arr.select(&:even?).compact..(arr.size - 2))]
 
-==> 224.rb 34 <==
+==> 228.rb 34 <==
 arr.sort[(0..(arr.map.size - 2))]
 
-==> 225.rb 22 <==
+==> 229.rb 22 <==
 CONST[CONST.size - 2]
 
-==> 226.rb 20 <==
+==> 230.rb 20 <==
 @arr[@arr.size - 2]
 
-==> 227.rb 18 <==
+==> 231.rb 18 <==
 arr[arr.size - 2]
 
-==> 228.rb 27 <==
+==> 232.rb 27 <==
 @@arr.sort[@@arr.size - 2]
 
-==> 229.rb 23 <==
+==> 233.rb 23 <==
 arr.sort[arr.size - 2]
 
-==> 230.rb 28 <==
+==> 234.rb 28 <==
 arr.sort[arr.sort.size - 2]
 
-==> 231.rb 31 <==
+==> 235.rb 31 <==
 arr.sort[arr.reverse.size - 2]
 
-==> 232.rb 36 <==
+==> 236.rb 36 <==
 @arr.reverse[@arr.reverse.size - 2]
 
-==> 233.rb 31 <==
+==> 237.rb 31 <==
 arr.reverse[arr.sort.size - 2]
 
-==> 234.rb 31 <==
+==> 238.rb 31 <==
 arr.shuffle[arr.sort.size - 2]
 
-==> 235.rb 33 <==
+==> 239.rb 33 <==
 arr.rotate[arr.reverse.size - 2]
 
-==> 236.rb 33 <==
+==> 240.rb 33 <==
 @arr.reverse[@arr.sort.size - 2]
 
-==> 237.rb 28 <==
+==> 241.rb 28 <==
 @arr.reverse[@arr.size - 2]
 
-==> 238.rb 34 <==
+==> 242.rb 34 <==
 arr.reverse[arr.reverse.size - 2]
 
-==> 239.rb 34 <==
+==> 243.rb 34 <==
 arr.shuffle[arr.shuffle.size - 2]
 
-==> 240.rb 32 <==
+==> 244.rb 32 <==
 arr.rotate[arr.rotate.size - 2]
 
-==> 241.rb 44 <==
+==> 245.rb 44 <==
 arr.sort.reverse[arr.sort.reverse.size - 2]
 
-==> 242.rb 44 <==
+==> 246.rb 44 <==
 arr.sort.shuffle[arr.sort.shuffle.size - 2]
 
-==> 243.rb 48 <==
+==> 247.rb 48 <==
 arr.reverse.rotate[arr.reverse.rotate.size - 2]
 
-==> 244.rb 36 <==
+==> 248.rb 36 <==
 arr.sort.reverse[arr.sort.size - 2]
 
-==> 245.rb 21 <==
+==> 249.rb 21 <==
 arr.[](arr.size - 2)
 
-==> 246.rb 22 <==
+==> 250.rb 22 <==
 arr&.[](arr.size - 2)
 
-==> 247.rb 25 <==
+==> 251.rb 25 <==
 arr[(0..(arr.size - 2))]
 
-==> 248.rb 26 <==
+==> 252.rb 26 <==
 arr[(-5..(arr.size - 2))]
 
-==> 249.rb 26 <==
+==> 253.rb 26 <==
 arr[(1...(arr.size - 2))]
 
-==> 250.rb 27 <==
+==> 254.rb 27 <==
 arr[(0..(arr.size - 100))]
 
-==> 251.rb 26 <==
+==> 255.rb 26 <==
 arr[(0...(arr.size - 2))]
 
-==> 252.rb 25 <==
+==> 256.rb 25 <==
 arr[(2..(arr.size - 2))]
 
-==> 253.rb 26 <==
+==> 257.rb 26 <==
 arr[(2...(arr.size - 2))]
 
-==> 254.rb 25 <==
+==> 258.rb 25 <==
 arr[(n..(arr.size - 2))]
 
-==> 255.rb 32 <==
+==> 259.rb 32 <==
 arr[(arr.sort..(arr.size - 2))]
 
-==> 256.rb 40 <==
+==> 260.rb 40 <==
 arr[(arr.sort.reverse..(arr.size - 2))]
 
-==> 257.rb 29 <==
+==> 261.rb 29 <==
 CONST[(0..(CONST.size - 2))]
 
-==> 258.rb 27 <==
+==> 262.rb 27 <==
 @arr[(0..(@arr.size - 2))]
 
-==> 259.rb 27 <==
+==> 263.rb 27 <==
 $arr[(0..($arr.size - 2))]
 
-==> 260.rb 29 <==
+==> 264.rb 29 <==
 @@arr[(0..(@@arr.size - 2))]
 
-==> 261.rb 41 <==
+==> 265.rb 41 <==
 arr.reverse[(0..(arr.reverse.size - 2))]
 
-==> 262.rb 41 <==
+==> 266.rb 41 <==
 arr.reverse[(2..(arr.reverse.size - 2))]
 
-==> 263.rb 35 <==
+==> 267.rb 35 <==
 arr.sort[(0..(arr.sort.size - 2))]
 
-==> 264.rb 36 <==
+==> 268.rb 36 <==
 arr.sort[(2...(arr.sort.size - 2))]
 
-==> 265.rb 41 <==
+==> 269.rb 41 <==
 arr.shuffle[(0..(arr.shuffle.size - 2))]
 
-==> 266.rb 41 <==
+==> 270.rb 41 <==
 arr.shuffle[(1..(arr.shuffle.size - 2))]
 
-==> 267.rb 39 <==
+==> 271.rb 39 <==
 arr.rotate[(0..(arr.rotate.size - 2))]
 
-==> 268.rb 40 <==
+==> 272.rb 40 <==
 arr.rotate[(3...(arr.rotate.size - 2))]
 
-==> 269.rb 51 <==
+==> 273.rb 51 <==
 arr.sort.reverse[(0..(arr.sort.reverse.size - 2))]
 
-==> 270.rb 23 <==
+==> 274.rb 23 <==
 arr[(0..arr.size - 2)]
 
-==> 271.rb 24 <==
+==> 275.rb 24 <==
 arr[(0...arr.size - 2)]
 
-==> 272.rb 23 <==
+==> 276.rb 23 <==
 arr[(2..arr.size - 2)]
 
-==> 273.rb 33 <==
+==> 277.rb 33 <==
 arr.sort[(0..arr.sort.size - 2)]
 
-==> 274.rb 39 <==
+==> 278.rb 39 <==
 arr.reverse[(0..arr.reverse.size - 2)]
 
-==> 275.rb 35 <==
+==> 279.rb 35 <==
 size = do_something
 self[size - 1]
 
-==> 276.rb 15 <==
+==> 280.rb 15 <==
 self[size - 1]
 
-==> 277.rb 37 <==
+==> 281.rb 37 <==
 arr.uniq[arr.uniq.compact.count - 2]
 
-==> 278.rb 47 <==
+==> 282.rb 47 <==
 arr.flatten[arr.flatten.map(&:to_s).count - 2]
 
-==> 279.rb 15 <==
+==> 283.rb 15 <==
 arr[count - 2]
 
-==> 280.rb 21 <==
+==> 284.rb 21 <==
 arr[other.count - 2]
 
-==> 281.rb 23 <==
+==> 285.rb 26 <==
+arr.sort[other.count - 2]
+
+==> 286.rb 34 <==
+arr.reverse[other.sort.count - 1]
+
+==> 287.rb 23 <==
 @arr[@other.count - 2]
 
-==> 282.rb 23 <==
+==> 288.rb 23 <==
 CONST[OTHER.count - 2]
 
-==> 283.rb 40 <==
+==> 289.rb 40 <==
 arr.compact[arr.compact.uniq.count - 2]
 
-==> 284.rb 26 <==
+==> 290.rb 26 <==
 arr[0..(other.count - 2)]
 
-==> 285.rb 24 <==
+==> 291.rb 24 <==
 arr[0, other.count - 2]
 
-==> 286.rb 19 <==
+==> 292.rb 19 <==
 arr[arr.count - 0]
 
-==> 287.rb 19 <==
+==> 293.rb 19 <==
 arr[arr.count - n]
 
-==> 288.rb 25 <==
+==> 294.rb 25 <==
 arr[0, 1, arr.count - 2]
 
-==> 289.rb 24 <==
+==> 295.rb 24 <==
 arr[0..(arr.count - n)]
 
-==> 290.rb 22 <==
+==> 296.rb 22 <==
 arr[0, arr.count - n]
 
-==> 291.rb 26 <==
+==> 297.rb 26 <==
 arr[arr.method.count - 2]
 
-==> 292.rb 24 <==
+==> 298.rb 24 <==
 arr[arr.sort.count - 2]
 
-==> 293.rb 31 <==
+==> 299.rb 31 <==
 arr[0..(arr.method.count - 2)]
 
-==> 294.rb 29 <==
+==> 300.rb 29 <==
 arr[0, arr.method.count - 2]
 
-==> 295.rb 27 <==
+==> 301.rb 27 <==
 arr[arr.reverse.count - 2]
 
-==> 296.rb 31 <==
+==> 302.rb 31 <==
 arr[arr.map(&:to_s).count - 2]
 
-==> 297.rb 27 <==
+==> 303.rb 27 <==
 arr[arr.count - 2] = value
 
-==> 298.rb 35 <==
+==> 304.rb 35 <==
 arr[arr.select(&:even?).count - 2]
 
-==> 299.rb 38 <==
+==> 305.rb 38 <==
 arr[arr.filter_map(&:to_i).count - 2]
 
-==> 300.rb 32 <==
+==> 306.rb 32 <==
 arr[0..(arr.reverse.count - 2)]
 
-==> 301.rb 37 <==
+==> 307.rb 37 <==
 arr[0...(arr.map(&:to_s).count - 2)]
 
-==> 302.rb 30 <==
+==> 308.rb 30 <==
 arr[0, arr.reverse.count - 2]
 
-==> 303.rb 34 <==
+==> 309.rb 34 <==
 arr[0, arr.map(&:to_s).count - 2]
 
-==> 304.rb 34 <==
+==> 310.rb 34 <==
 arr.sort[0, arr.method.count - 2]
 
-==> 305.rb 34 <==
+==> 311.rb 34 <==
 arr[arr.chained.method.count - 2]
 
-==> 306.rb 40 <==
+==> 312.rb 40 <==
 arr[arr.deeply.nested.method.count - 2]
 
-==> 307.rb 19 <==
+==> 313.rb 19 <==
 arr[arr.count + 2]
 
-==> 308.rb 19 <==
+==> 314.rb 19 <==
 arr[2 - arr.count]
 
-==> 309.rb 19 <==
+==> 315.rb 19 <==
 arr[arr.count * 2]
 
-==> 310.rb 19 <==
+==> 316.rb 19 <==
 arr[arr.count / 2]
 
-==> 311.rb 22 <==
+==> 317.rb 22 <==
 arr[0, arr.count - 2]
 
-==> 312.rb 34 <==
+==> 318.rb 34 <==
 arr.map(&:to_s)[0, arr.count - 2]
 
-==> 313.rb 38 <==
+==> 319.rb 38 <==
 arr.select(&:even?)[0, arr.count - 2]
 
-==> 314.rb 41 <==
+==> 320.rb 41 <==
 arr.filter_map(&:to_i)[0, arr.count - 2]
 
-==> 315.rb 22 <==
+==> 321.rb 22 <==
 arr[2, arr.count - 2]
 
-==> 316.rb 22 <==
+==> 322.rb 22 <==
 arr[0, arr.count - 0]
 
-==> 317.rb 24 <==
+==> 323.rb 24 <==
 arr[0..(arr.count - 0)]
 
-==> 318.rb 49 <==
+==> 324.rb 49 <==
 arr.sort.reverse[arr.sort.map(&:to_s).count - 2]
 
-==> 319.rb 34 <==
+==> 325.rb 34 <==
 arr.sort.uniq[arr.sort.count - 2]
 
-==> 320.rb 57 <==
+==> 326.rb 57 <==
 arr.reject(&:nil?).compact[arr.reject(&:nil?).count - 2]
 
-==> 321.rb 40 <==
+==> 327.rb 40 <==
 arr.compact.uniq[arr.compact.count - 2]
 
-==> 322.rb 37 <==
+==> 328.rb 37 <==
 arr.uniq.compact[arr.uniq.count - 2]
 
-==> 323.rb 47 <==
+==> 329.rb 47 <==
 arr.map(&:to_s)[arr.select(&:even?).count - 2]
 
-==> 324.rb 31 <==
+==> 330.rb 31 <==
 arr.sort[arr.method.count - 2]
 
-==> 325.rb 51 <==
+==> 331.rb 51 <==
 arr.select(&:even?)[arr.reject(&:even?).count - 2]
 
-==> 326.rb 59 <==
+==> 332.rb 59 <==
 arr.map(&:to_i).select(&:even?)[arr.map(&:to_i).count - 2]
 
-==> 327.rb 43 <==
+==> 333.rb 43 <==
 arr.map(&:to_s)[arr.map(&:to_i).count - 2]
 
-==> 328.rb 66 <==
+==> 334.rb 66 <==
 arr.select(&:even?).reject(&:nil?)[arr.select(&:even?).count - 2]
 
-==> 329.rb 63 <==
+==> 335.rb 63 <==
 arr.select(&:even?).map(&:to_s)[arr.select(&:even?).count - 2]
 
-==> 330.rb 34 <==
+==> 336.rb 34 <==
 arr.uniq[0..(arr.uniq.count - 2)]
 
-==> 331.rb 35 <==
+==> 337.rb 35 <==
 arr.flatten[arr.flatten.count - 2]
 
-==> 332.rb 37 <==
+==> 338.rb 37 <==
 arr.slice(1)[arr.slice(1).count - 2]
 
-==> 333.rb 35 <==
+==> 339.rb 35 <==
 arr.take(3)[arr.take(3).count - 2]
 
-==> 334.rb 35 <==
+==> 340.rb 35 <==
 arr.drop(2)[arr.drop(2).count - 2]
 
-==> 335.rb 45 <==
+==> 341.rb 45 <==
 arr.sort.flatten[arr.sort.flatten.count - 2]
 
-==> 336.rb 53 <==
+==> 342.rb 53 <==
 arr.reverse.slice(1)[arr.reverse.slice(1).count - 2]
 
-==> 337.rb 51 <==
+==> 343.rb 51 <==
 arr.shuffle.take(3)[arr.shuffle.take(3).count - 2]
 
-==> 338.rb 49 <==
+==> 344.rb 49 <==
 arr.rotate.drop(2)[arr.rotate.drop(2).count - 2]
 
-==> 339.rb 25 <==
+==> 345.rb 25 <==
 arr[rand(arr.count - 2)]
 
-==> 340.rb 23 <==
+==> 346.rb 23 <==
 arr[arr.count - 4..-1]
 
-==> 341.rb 34 <==
+==> 347.rb 34 <==
 arr.map[(0..(arr.map.count - 2))]
 
-==> 342.rb 33 <==
+==> 348.rb 33 <==
 arr.sort[(0..(other.count - 2))]
 
-==> 343.rb 26 <==
+==> 349.rb 26 <==
 arr[(0..(arr.count - 0))]
 
-==> 344.rb 29 <==
+==> 350.rb 29 <==
 arr[(0..(arr.count - (-2)))]
 
-==> 345.rb 26 <==
+==> 351.rb 26 <==
 arr[(0..(arr.count - n))]
 
-==> 346.rb 39 <==
+==> 352.rb 39 <==
 arr.sort[(0..(arr.reverse.count - 2))]
 
-==> 347.rb 23 <==
+==> 353.rb 23 <==
 arr[arr.count - 2 + 1]
 
-==> 348.rb 23 <==
+==> 354.rb 23 <==
 arr[arr.count - 2 - 1]
 
-==> 349.rb 23 <==
+==> 355.rb 23 <==
 arr[arr.count * 2 - 2]
 
-==> 350.rb 25 <==
+==> 356.rb 25 <==
 arr[(arr.count - 2) / 2]
 
-==> 351.rb 22 <==
+==> 357.rb 22 <==
 arr[arr.count(1) - 2]
 
-==> 352.rb 40 <==
+==> 358.rb 40 <==
 arr[arr.select { |x| x > 0 }.count - 2]
 
-==> 353.rb 22 <==
+==> 359.rb 22 <==
 arr[arr[0].count - 2]
 
-==> 354.rb 26 <==
+==> 360.rb 26 <==
 arr[hash[:key].count - 2]
 
-==> 355.rb 21 <==
+==> 361.rb 21 <==
 arr[CONST.count - 2]
 
-==> 356.rb 35 <==
+==> 362.rb 35 <==
 arr[(arr.method..(arr.count - 2))]
 
-==> 357.rb 40 <==
+==> 363.rb 40 <==
 arr[(arr.map(&:to_s)..(arr.count - 2))]
 
-==> 358.rb 52 <==
+==> 364.rb 52 <==
 arr[(arr.select(&:even?).compact..(arr.count - 2))]
 
-==> 359.rb 35 <==
+==> 365.rb 35 <==
 arr.sort[(0..(arr.map.count - 2))]
 
-==> 360.rb 23 <==
+==> 366.rb 23 <==
 CONST[CONST.count - 2]
 
-==> 361.rb 21 <==
+==> 367.rb 21 <==
 @arr[@arr.count - 2]
 
-==> 362.rb 19 <==
+==> 368.rb 19 <==
 arr[arr.count - 2]
 
-==> 363.rb 28 <==
+==> 369.rb 28 <==
 @@arr.sort[@@arr.count - 2]
 
-==> 364.rb 24 <==
+==> 370.rb 24 <==
 arr.sort[arr.count - 2]
 
-==> 365.rb 29 <==
+==> 371.rb 29 <==
 arr.sort[arr.sort.count - 2]
 
-==> 366.rb 32 <==
+==> 372.rb 32 <==
 arr.sort[arr.reverse.count - 2]
 
-==> 367.rb 37 <==
+==> 373.rb 37 <==
 @arr.reverse[@arr.reverse.count - 2]
 
-==> 368.rb 32 <==
+==> 374.rb 32 <==
 arr.reverse[arr.sort.count - 2]
 
-==> 369.rb 32 <==
+==> 375.rb 32 <==
 arr.shuffle[arr.sort.count - 2]
 
-==> 370.rb 34 <==
+==> 376.rb 34 <==
 arr.rotate[arr.reverse.count - 2]
 
-==> 371.rb 34 <==
+==> 377.rb 34 <==
 @arr.reverse[@arr.sort.count - 2]
 
-==> 372.rb 29 <==
+==> 378.rb 29 <==
 @arr.reverse[@arr.count - 2]
 
-==> 373.rb 35 <==
+==> 379.rb 35 <==
 arr.reverse[arr.reverse.count - 2]
 
-==> 374.rb 35 <==
+==> 380.rb 35 <==
 arr.shuffle[arr.shuffle.count - 2]
 
-==> 375.rb 33 <==
+==> 381.rb 33 <==
 arr.rotate[arr.rotate.count - 2]
 
-==> 376.rb 45 <==
+==> 382.rb 45 <==
 arr.sort.reverse[arr.sort.reverse.count - 2]
 
-==> 377.rb 45 <==
+==> 383.rb 45 <==
 arr.sort.shuffle[arr.sort.shuffle.count - 2]
 
-==> 378.rb 49 <==
+==> 384.rb 49 <==
 arr.reverse.rotate[arr.reverse.rotate.count - 2]
 
-==> 379.rb 37 <==
+==> 385.rb 37 <==
 arr.sort.reverse[arr.sort.count - 2]
 
-==> 380.rb 22 <==
+==> 386.rb 22 <==
 arr.[](arr.count - 2)
 
-==> 381.rb 23 <==
+==> 387.rb 23 <==
 arr&.[](arr.count - 2)
 
-==> 382.rb 26 <==
+==> 388.rb 26 <==
 arr[(0..(arr.count - 2))]
 
-==> 383.rb 27 <==
+==> 389.rb 27 <==
 arr[(-5..(arr.count - 2))]
 
-==> 384.rb 27 <==
+==> 390.rb 27 <==
 arr[(1...(arr.count - 2))]
 
-==> 385.rb 28 <==
+==> 391.rb 28 <==
 arr[(0..(arr.count - 100))]
 
-==> 386.rb 27 <==
+==> 392.rb 27 <==
 arr[(0...(arr.count - 2))]
 
-==> 387.rb 26 <==
+==> 393.rb 26 <==
 arr[(2..(arr.count - 2))]
 
-==> 388.rb 27 <==
+==> 394.rb 27 <==
 arr[(2...(arr.count - 2))]
 
-==> 389.rb 26 <==
+==> 395.rb 26 <==
 arr[(n..(arr.count - 2))]
 
-==> 390.rb 33 <==
+==> 396.rb 33 <==
 arr[(arr.sort..(arr.count - 2))]
 
-==> 391.rb 41 <==
+==> 397.rb 41 <==
 arr[(arr.sort.reverse..(arr.count - 2))]
 
-==> 392.rb 30 <==
+==> 398.rb 30 <==
 CONST[(0..(CONST.count - 2))]
 
-==> 393.rb 28 <==
+==> 399.rb 28 <==
 @arr[(0..(@arr.count - 2))]
-
-==> 394.rb 28 <==
-$arr[(0..($arr.count - 2))]
-
-==> 395.rb 30 <==
-@@arr[(0..(@@arr.count - 2))]
-
-==> 396.rb 42 <==
-arr.reverse[(0..(arr.reverse.count - 2))]
-
-==> 397.rb 42 <==
-arr.reverse[(2..(arr.reverse.count - 2))]
-
-==> 398.rb 36 <==
-arr.sort[(0..(arr.sort.count - 2))]
-
-==> 399.rb 37 <==
-arr.sort[(2...(arr.sort.count - 2))]
 

@@ -1,0 +1,6 @@
+==> offenses exit=1 135 <==
+000.rb:2:3: C: Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+
+==> autocorrect exit=1 135 <==
+000.rb:2:3: C: Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+

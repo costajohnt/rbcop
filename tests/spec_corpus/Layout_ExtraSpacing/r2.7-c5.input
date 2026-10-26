@@ -64,7 +64,17 @@ aaaa = b
 raise if e == f
 g += h
 
-==> 007.rb 69 <==
+==> 007.rb 168 <==
+transitions = self
+if target && target != name && (target_transition = detect { |t| t.name == target })
+  transitions = transitions[index(target_transition) + 1..]
+end
+
+==> 008.rb 42 <==
+transitions = self
+found = target != name
+
+==> 009.rb 69 <==
 a = 1
 bb = 2
 ccc = 3
@@ -73,7 +83,7 @@ abcde        = 1
 a                 = 2
 abc = 3
 
-==> 008.rb 75 <==
+==> 010.rb 75 <==
 a += 1
 bb = 2
 ccc <<= 3
@@ -82,7 +92,7 @@ abcde        = 1
 a                 *= 2
 abc ||= 3
 
-==> 009.rb 87 <==
+==> 011.rb 87 <==
 a[1] = 1
 bb[2,3] = 2
 ccc[:key] = 3
@@ -91,7 +101,7 @@ abcde[0]        = 1
 a                 = 2
 abc += 3
 
-==> 010.rb 98 <==
+==> 012.rb 98 <==
 a.attr = 1
 bb &&= 2
 ccc.s = 3
@@ -100,7 +110,7 @@ abcde.blah        = 1
 a.attribute_name              = 2
 abc[1] = 3
 
-==> 011.rb 699 <==
+==> 013.rb 699 <==
 def batch
   @areas = params[:param].map {
                var_1 = 123_456
@@ -123,16 +133,16 @@ def batch
   render json: @areas
 end
 
-==> 012.rb 36 <==
+==> 014.rb 36 <==
 def method(arg = 1)
   var = arg
 end
 
-==> 013.rb 44 <==
+==> 015.rb 44 <==
 e, f = val.split('=')
 opt.ssh_config[e] = f
 
-==> 014.rb 44 <==
+==> 016.rb 44 <==
 xy &&= val.split('=')
 opt.ssh_config[e] = f
 

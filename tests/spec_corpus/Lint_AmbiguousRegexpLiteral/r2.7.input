@@ -12,48 +12,54 @@ p /pattern/
 ==> 001.rb 17 <==
 p /pattern/, foo
 
-==> 002.rb 25 <==
+==> 002.rb 19 <==
+p /pattern/ => foo
+
+==> 003.rb 32 <==
+p /pattern/.do_something => foo
+
+==> 004.rb 25 <==
 p /pattern/.do_something
 
-==> 003.rb 29 <==
+==> 005.rb 29 <==
 p /pattern/.do_something(42)
 
-==> 004.rb 38 <==
+==> 006.rb 38 <==
 p /pattern/.do_something.do_something
 
-==> 005.rb 76 <==
+==> 007.rb 76 <==
 class MyTest
   test '#foo' do
     assert_match /expected/, actual
   end
 end
 
-==> 006.rb 34 <==
+==> 008.rb 34 <==
 expect('RuboCop').to(match /Cop/)
 
-==> 007.rb 34 <==
+==> 009.rb 34 <==
 expect('RuboCop').to match /Robo/
 
-==> 008.rb 30 <==
+==> 010.rb 30 <==
 p /pattern/, foo do |arg|
 end
 
-==> 009.rb 33 <==
+==> 011.rb 33 <==
 p /pattern/ do
   p /pattern/
 end
 
-==> 010.rb 25 <==
+==> 012.rb 25 <==
 puts line.grep /pattern/
 
-==> 011.rb 12 <==
+==> 013.rb 12 <==
 p(/pattern/)
-==> 012.rb 38 <==
+==> 014.rb 38 <==
 assert(/some pattern/ =~ some_string)
 
-==> 013.rb 38 <==
+==> 015.rb 38 <==
 assert(/some pattern/) =~ some_string
 
-==> 014.rb 37 <==
+==> 016.rb 37 <==
 assert /some pattern/ =~ some_string
 

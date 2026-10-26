@@ -1299,46 +1299,73 @@ begin
   top
 end until nil
 
-==> 243.rb 41 <==
+==> 243.rb 26 <==
+foo.bar =
+  if true
+  end
+
+==> 244.rb 23 <==
+x = if false
+  foo
+end
+
+==> 245.rb 42 <==
+begin
+  redo if foo
+  break
+end while nil
+
+==> 246.rb 41 <==
+begin
+  next if foo
+  bar
+end until true
+
+==> 247.rb 59 <==
+begin
+  items.each { |item| next if item }
+end while false
+
+==> 248.rb 41 <==
 def foo
   puts 123 && return if bar?
 end
 
-==> 244.rb 41 <==
+==> 249.rb 41 <==
 def foo
   puts nil || return if bar?
 end
 
-==> 245.rb 51 <==
+==> 250.rb 51 <==
 def clone(opts = nil || (return self))
   super
 end
 
-==> 246.rb 54 <==
+==> 251.rb 54 <==
 def foo(opts = 123 && (foo; return self))
   super
 end
 
-==> 247.rb 36 <==
+==> 252.rb 36 <==
 def foo
   baz? if 123 && return
 end
 
-==> 248.rb 57 <==
+==> 253.rb 57 <==
 def foo
   bar do
     puts 123 && break if baz?
   end
 end
 
-==> 249.rb 56 <==
+==> 254.rb 56 <==
 def foo
   bar do
     puts 123 && next if baz?
   end
 end
 
-==> 250.rb 10 <==
+==> 255.rb 10 <==
 if 42
 end
 

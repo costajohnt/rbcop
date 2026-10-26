@@ -28,84 +28,89 @@ require 'c'
 require 'b'
 require 'a'
 
-==> 005.rb 34 <==
-require 'b' # comment
+==> 005.rb 36 <==
+require 'b'
+require 'c'
 require 'a'
 
 ==> 006.rb 34 <==
+require 'b' # comment
+require 'a'
+
+==> 007.rb 34 <==
 require 'b'
 # comment
 require 'a'
 
-==> 007.rb 42 <==
+==> 008.rb 42 <==
 require_relative 'b'
 require_relative 'a'
 
-==> 008.rb 48 <==
+==> 009.rb 48 <==
 require 'd'
 require 'a'
 require 'b'
 require 'c'
 
-==> 009.rb 33 <==
+==> 010.rb 33 <==
 require 'b'
 require_relative 'a'
 
-==> 010.rb 45 <==
+==> 011.rb 45 <==
 require 'c'
 require_relative 'b'
 require 'a'
 
-==> 011.rb 22 <==
+==> 012.rb 22 <==
 do_something(require)
 
-==> 012.rb 50 <==
+==> 013.rb 50 <==
 require 'e'
 Bundler.require(:default)
 require 'c'
 
-==> 013.rb 40 <==
+==> 014.rb 40 <==
 require 'c'
 Bundler.require
 require 'a'
 
-==> 014.rb 34 <==
+==> 015.rb 34 <==
 require 'a'
 begin
 end
 require 'b'
 
-==> 015.rb 49 <==
+==> 016.rb 49 <==
 require 'c'
 if foo
   require 'a'
 end
 require 'b'
 
-==> 016.rb 53 <==
+==> 017.rb 53 <==
 require 'c'
 unless foo
   require 'a'
 end
 require 'b'
 
-==> 017.rb 63 <==
-require 'd'
-if foo
-  require 'a'
-  require 'b'
-end
-require 'c'
-
 ==> 018.rb 63 <==
 require 'd'
 if foo
+  require 'a'
+  require 'b'
+end
+require 'c'
+
+==> 019.rb 63 <==
+require 'd'
+if foo
   require 'b'
   require 'a'
 end
 require 'c'
 
-==> 019.rb 66 <==
+==> 020.rb 66 <==
 require 'c'
 if foo
   if bar
@@ -114,17 +119,17 @@ if foo
 end
 require 'b'
 
-==> 020.rb 43 <==
+==> 021.rb 43 <==
 require 'c'
 require 'a' if foo
 require 'b'
 
-==> 021.rb 47 <==
+==> 022.rb 47 <==
 require 'c'
 require 'a' unless foo
 require 'b'
 
-==> 022.rb 60 <==
+==> 023.rb 60 <==
 begin
   do_something
 rescue
@@ -132,10 +137,17 @@ rescue
   require 'a'
 end
 
-==> 023.rb 46 <==
+==> 024.rb 46 <==
 begin
   do_something
 rescue
   require 'a'
 end
+
+==> 025.rb 25 <==
+require 'b'; require 'a'
+
+==> 026.rb 44 <==
+foo -> { require 'b'
+         require 'a' }
 

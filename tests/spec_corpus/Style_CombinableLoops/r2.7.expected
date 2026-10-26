@@ -1,38 +1,91 @@
-==> offenses exit=1 1476 <==
+==> offenses exit=1 3916 <==
 000.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
 000.rb:5:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
 000.rb:8:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
 001.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
 002.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
 002.rb:3:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
-003.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
-004.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
-004.rb:3:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
-005.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
-006.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
-007.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
-007.rb:5:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
-007.rb:8:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+003.rb:4:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+004.rb:4:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+004.rb:5:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+005.rb:4:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+006.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+007.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+008.rb:6:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+009.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+009.rb:3:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+010.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+011.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+012.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+013.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
 014.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
-020.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+014.rb:5:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+015.rb:4:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+015.rb:5:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+016.rb:5:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+017.rb:4:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+018.rb:5:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+019.rb:5:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+020.rb:5:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+021.rb:4:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+021.rb:7:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+022.rb:3:6: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+023.rb:4:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+024.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+025.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+026.rb:6:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+027.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+027.rb:5:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+027.rb:8:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+034.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+035.rb:5:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+036.rb:4:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+037.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+043.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
 
-==> autocorrect exit=1 1448 <==
+==> autocorrect exit=1 3768 <==
 000.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
 000.rb:5:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
 000.rb:8:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
 001.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
 002.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
 002.rb:3:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
-003.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
-004.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
-004.rb:3:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
-005.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
-006.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
-007.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
-007.rb:5:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
-007.rb:8:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+003.rb:4:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+004.rb:4:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+005.rb:4:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+006.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+007.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+008.rb:6:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+009.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+009.rb:3:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+010.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+011.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+012.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+013.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
 014.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
-020.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+014.rb:5:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+015.rb:4:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+015.rb:5:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+016.rb:5:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+017.rb:4:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+018.rb:5:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+019.rb:5:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+020.rb:5:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+021.rb:4:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+021.rb:7:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+022.rb:3:6: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+023.rb:4:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+024.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+025.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+026.rb:6:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+027.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+027.rb:5:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+027.rb:8:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+034.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+035.rb:5:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+036.rb:4:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+037.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
+043.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
 
 ==> corrected/000.rb 231 <==
 items.each { |item| do_something(item)
@@ -54,20 +107,114 @@ items.each { |item| foo(item)
 bar(item)
 baz(item) }
 
-==> corrected/004.rb 39 <==
+==> corrected/003.rb 83 <==
+items.each do |item|
+  foo(item)
+bar(item)  end
+items.reject! { |item| baz(item) }
+
+==> corrected/004.rb 74 <==
+items.each do |item|
+  foo(item)
+bar(item)  end
+items.each { |x| baz(x) }
+
+==> corrected/005.rb 70 <==
+items.each do |item|
+  foo(item)
+bar(item)  end
+items.each { |item| }
+
+==> corrected/009.rb 39 <==
 items.each { foo(_1)
 bar(_1)
 baz(_1) }
 
-==> corrected/005.rb 72 <==
+==> corrected/012.rb 72 <==
 items.each do |item| do_something(item)
 do_something_else item, arg end
 
-==> corrected/006.rb 70 <==
+==> corrected/013.rb 70 <==
 items.each { |item| do_something(item)
 do_something_else(item, arg) }
 
-==> corrected/007.rb 198 <==
+==> corrected/014.rb 52 <==
+items.each { |item| foo(item)
+bar(item)
+baz(item) }
+
+==> corrected/015.rb 58 <==
+items.each do |item|
+  foo(item)
+bar(item)
+baz(item)  end
+
+==> corrected/016.rb 119 <==
+items.each do |item|
+  foo(item)
+end
+items.each { |item| bar(item) # rubocop:disable Style/CombinableLoops
+baz(item) }
+
+==> corrected/017.rb 120 <==
+items.each do |item|
+  foo(item)
+bar(item)  end
+items.each { |item| baz(item) } # rubocop:disable Style/CombinableLoops
+
+==> corrected/018.rb 120 <==
+items.each { |item| foo(item) }
+items.each do |item|
+  bar(item) # rubocop:disable Style/CombinableLoops
+baz(item)  end
+
+==> corrected/019.rb 120 <==
+items.each { |item| foo(item) }
+items.each do |item|
+  bar(item) # rubocop:disable Style/CombinableLoops
+baz(item)  end
+
+==> corrected/020.rb 69 <==
+items.each do |item|
+  foo(item) # important
+  # more
+bar(item)
+ end
+
+==> corrected/021.rb 78 <==
+items.each { |item| foo(item) # first
+  # more
+bar(item) # second
+baz(item) }
+
+==> corrected/022.rb 62 <==
+items.each do |item|
+  foo(item) # important
+; bar(item)  end
+
+==> corrected/023.rb 76 <==
+items.each do |item|
+  foo(item)
+# second loop
+  # explain
+  bar(item)
+ end
+
+==> corrected/024.rb 47 <==
+items.each { foo(_1)
+# second loop
+  bar(_1)
+}
+
+==> corrected/026.rb 65 <==
+items.each do |item|
+  foo(<<~EOS)
+    text
+  EOS
+bar(item)
+ end
+
+==> corrected/027.rb 198 <==
 items.each { do_something(_1)
 do_something_else(_1, arg) }
 
@@ -77,7 +224,22 @@ do_something_else(_1, arg) }
 items.reverse_each { do_something(_1)
 do_something_else(_1, arg) }
 
-==> corrected/014.rb 73 <==
+==> corrected/034.rb 73 <==
 for item in items do do_something(item)
 do_something_else(item, arg) end
+
+==> corrected/035.rb 68 <==
+for item in items do
+  foo(item) # important
+  # more
+bar(item)
+end
+
+==> corrected/036.rb 72 <==
+for item in items
+  foo(item)
+# second loop
+  # explain
+  bar(item)
+end
 

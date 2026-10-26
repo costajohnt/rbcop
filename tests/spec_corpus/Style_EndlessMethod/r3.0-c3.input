@@ -11,62 +11,97 @@ Layout/LineLength:
   Enabled: true
   Max: 80
 
-==> 000.rb 20 <==
+==> 000.rb 27 <==
+def my_method
+  x if y
+end
+
+==> 001.rb 32 <==
+def my_method
+  super and x
+end
+
+==> 002.rb 20 <==
 def my_method() = x
 
-==> 001.rb 25 <==
+==> 003.rb 25 <==
 def self.my_method() = x
 
-==> 002.rb 24 <==
+==> 004.rb 24 <==
 def my_method(a, b) = x
 
-==> 003.rb 72 <==
+==> 005.rb 39 <==
+def my_method foo, bar
+  foo + bar
+end
+
+==> 006.rb 72 <==
 def my_method() = x.foo
                    .bar
                    .baz
 
-==> 004.rb 87 <==
+==> 007.rb 87 <==
 def self.my_method() = x.foo
                         .bar
                         .baz
 
-==> 005.rb 92 <==
+==> 008.rb 92 <==
 def self::my_method() = x.foo
                           .bar
                           .baz
 
-==> 006.rb 18 <==
+==> 009.rb 18 <==
 def my_method
 end
 
-==> 007.rb 34 <==
+==> 010.rb 34 <==
 def my_method
   x.foo
   x.bar
 end
 
-==> 008.rb 47 <==
+==> 011.rb 47 <==
 def my_method
   begin
     foo && bar
   end
 end
 
-==> 009.rb 51 <==
+==> 012.rb 36 <==
+def my_method
+  foo, bar = 1, 2
+end
+
+==> 013.rb 32 <==
+def my_method
+  @foo = 1, 2
+end
+
+==> 014.rb 32 <==
+def my_method
+  @foo = *bar
+end
+
+==> 015.rb 28 <==
+def my_method
+  foo = 1
+end
+
+==> 016.rb 51 <==
 def my_method
   <<~HEREDOC
     hello
   HEREDOC
 end
 
-==> 010.rb 56 <==
+==> 017.rb 56 <==
 def my_method
   puts <<~HEREDOC
     hello
   HEREDOC
 end
 
-==> 011.rb 57 <==
+==> 018.rb 57 <==
 def my_method
   <<~HEREDOC
     foo
@@ -74,34 +109,54 @@ def my_method
   HEREDOC
 end
 
-==> 012.rb 55 <==
+==> 019.rb 62 <==
+def my_method
+  puts <<~HEREDOC
+    foo
+    bar
+  HEREDOC
+end
+
+==> 020.rb 60 <==
+def my_method
+  puts <<~`HEREDOC`
+    command
+  HEREDOC
+end
+
+==> 021.rb 38 <==
+def my_method
+  puts("#{foo}bar")
+end
+
+==> 022.rb 55 <==
 def my_method
   <<~`HEREDOC`
     command
   HEREDOC
 end
 
-==> 013.rb 22 <==
+==> 023.rb 22 <==
 def my_method
   x
 end
 
-==> 014.rb 30 <==
+==> 024.rb 30 <==
 private def my_method
   x
 end
 
-==> 015.rb 34 <==
+==> 025.rb 34 <==
 def my_method=(arg)
   arg.foo
 end
 
-==> 016.rb 93 <==
+==> 026.rb 93 <==
 def my_method
   'this_string_ends_at_column_75_________________________________________'
 end
 
-==> 017.rb 124 <==
+==> 027.rb 124 <==
 module A
   module B
     def my_method
@@ -110,23 +165,65 @@ module A
   end
 end
 
-==> 018.rb 82 <==
+==> 028.rb 82 <==
 def my_method
   'this_string_puts_the_endless_form_just_over_the_limit______'
 end
 
-==> 019.rb 93 <==
+==> 029.rb 87 <==
+	def my_method
+	  'this_string_puts_the_endless_form_over_the_limit_____________'
+	end
+
+==> 030.rb 86 <==
+	def my_method
+	  'this_string_keeps_the_endless_form_within_the_limit_________'
+	end
+
+==> 031.rb 98 <==
+def my_method
+  'this_string_is_short'
+end # this_trailing_comment_pushes_the_line_past_the_limit
+
+==> 032.rb 93 <==
 private def my_method
   'this_string_ends_at_column_75_________________________________'
 end
 
-==> 020.rb 28 <==
+==> 033.rb 28 <==
 def my_method(a, b)
   x
 end
 
-==> 021.rb 84 <==
+==> 034.rb 84 <==
 def my_method(a, b) = x.foo
                        .bar
                        .baz
+
+==> 035.rb 32 <==
+def my_method # comment
+  x
+end
+
+==> 036.rb 34 <==
+def my_method
+  # comment
+  x
+end
+
+==> 037.rb 32 <==
+def my_method
+  x # comment
+end
+
+==> 038.rb 34 <==
+def my_method
+  x
+  # comment
+end
+
+==> 039.rb 32 <==
+def my_method
+  x
+end # comment
 

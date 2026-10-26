@@ -1,4 +1,4 @@
-==> .rubocop.yml 144 <==
+==> .rubocop.yml 137 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -6,10 +6,12 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 2.7
 Layout/LineLength:
-  Enabled: false
+  Max: 30
 
-==> 000.rb 22 <==
-def foo(bar
-    )
+==> 000.rb 66 <==
+class Foo
+  private def bar(baz,
+                  qux)
+  end
 end
 

@@ -1,4 +1,4 @@
-==> offenses exit=1 996 <==
+==> offenses exit=1 1185 <==
 000.rb:1:1: C: [Correctable] Style/RaiseArgs: Provide an exception object as an argument to `raise`.
 001.rb:1:1: C: [Correctable] Style/RaiseArgs: Provide an exception object as an argument to `raise`.
 002.rb:1:1: C: [Correctable] Style/RaiseArgs: Provide an exception object as an argument to `raise`.
@@ -9,8 +9,10 @@
 007.rb:2:3: C: [Correctable] Style/RaiseArgs: Provide an exception object as an argument to `raise`.
 007.rb:6:3: C: [Correctable] Style/RaiseArgs: Provide an exception object as an argument to `raise`.
 008.rb:1:1: C: Style/RaiseArgs: Provide an exception object as an argument to `raise`.
+012.rb:1:1: C: [Correctable] Style/RaiseArgs: Provide an exception object as an argument to `raise`.
+012.rb:1:23: C: Style/RaiseArgs: Provide an exception object as an argument to `raise`.
 
-==> autocorrect exit=1 978 <==
+==> autocorrect exit=1 1177 <==
 000.rb:1:1: C: [Corrected] Style/RaiseArgs: Provide an exception object as an argument to `raise`.
 001.rb:1:1: C: [Corrected] Style/RaiseArgs: Provide an exception object as an argument to `raise`.
 002.rb:1:1: C: [Corrected] Style/RaiseArgs: Provide an exception object as an argument to `raise`.
@@ -21,6 +23,8 @@
 007.rb:2:3: C: [Corrected] Style/RaiseArgs: Provide an exception object as an argument to `raise`.
 007.rb:6:3: C: [Corrected] Style/RaiseArgs: Provide an exception object as an argument to `raise`.
 008.rb:1:1: C: Style/RaiseArgs: Provide an exception object as an argument to `raise`.
+012.rb:1:1: C: [Corrected] Style/RaiseArgs: Provide an exception object as an argument to `raise`.
+012.rb:1:26: C: [Corrected] Style/RaiseArgs: Provide an exception object as an argument to `raise`.
 
 ==> corrected/000.rb 28 <==
 raise RuntimeError.new(msg)
@@ -55,4 +59,7 @@ elsif b
 else
   raise ArgumentError.new(msg)
 end
+
+==> corrected/012.rb 51 <==
+raise Foo.new("#{fetch { raise Bar.new('bad') }}")
 

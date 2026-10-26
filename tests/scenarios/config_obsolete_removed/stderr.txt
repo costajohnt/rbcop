@@ -6,7 +6,7 @@ The `Layout/SpaceAfterControlKeyword` cop has been removed. Please use `Layout/S
 (obsolete configuration found in .rubocop.yml, please update it)
 The `Lint/UselessComparison` cop has been removed since it has been superseded by `Lint/BinaryOperatorWithIdenticalOperands`. Please use `Lint/BinaryOperatorWithIdenticalOperands` instead.
 (obsolete configuration found in .rubocop.yml, please update it)
-The `Style/BracesAroundHashParameters` cop has been removed. Please use  and/or  instead.
+The `Style/BracesAroundHashParameters` cop has been removed.
 (obsolete configuration found in .rubocop.yml, please update it)
 The `Style/TrailingComma` cop has been removed. Please use `Style/TrailingCommaInArguments`, `Style/TrailingCommaInArrayLiteral` and/or `Style/TrailingCommaInHashLiteral` instead.
 (obsolete configuration found in .rubocop.yml, please update it)

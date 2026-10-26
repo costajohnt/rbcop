@@ -1,4 +1,4 @@
-==> offenses exit=1 4343 <==
+==> offenses exit=1 4442 <==
 005.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
 006.rb:3:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
 007.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
@@ -40,8 +40,9 @@
 081.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
 082.rb:3:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
 083.rb:2:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+089.rb:3:1: C: [Correctable] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
 
-==> autocorrect exit=0 5134 <==
+==> autocorrect exit=0 5328 <==
 005.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
 006.rb:3:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
 007.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
@@ -92,6 +93,8 @@
 081.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
 082.rb:3:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
 083.rb:2:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+089.rb:3:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
+089.rb:4:1: C: [Corrected] Layout/HeredocIndentation: Use 2 spaces for indentation in a heredoc.
 
 ==> corrected/005.rb 27 <==
 <<~RUBY2
@@ -361,4 +364,14 @@ RUBY2
     
               bar
             RUBY2
+
+==> corrected/089.rb 64 <==
+def foo
+  <<~A
+    #{y ? <<~B : ""}
+      b
+    B
+    a
+  A
+end
 

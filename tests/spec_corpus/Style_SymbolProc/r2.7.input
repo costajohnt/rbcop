@@ -36,109 +36,133 @@ Proc.new { |x| x.method }
   arg.do_something
 end
 
-==> 011.rb 22 <==
+==> 011.rb 24 <==
+lambda { |x| x.method }
+
+==> 012.rb 22 <==
 proc { |x| x.method }
 
-==> 012.rb 26 <==
+==> 013.rb 26 <==
 Proc.new { |x| x.method }
 
-==> 013.rb 28 <==
+==> 014.rb 28 <==
 ::Proc.new { |x| x.method }
 
-==> 014.rb 22 <==
+==> 015.rb 47 <==
+case value
+in ->(x) { x.positive? } then 1
+end
+
+==> 016.rb 49 <==
+case value
+in ->(x) do
+  x.positive?
+end
+  1
+end
+
+==> 017.rb 56 <==
+case value
+in [Integer, -> { _1.positive? }] then 1
+end
+
+==> 018.rb 31 <==
+value in ->(x) { x.positive? }
+
+==> 019.rb 22 <==
 something { x.method }
-==> 015.rb 17 <==
+==> 020.rb 17 <==
 something { |x| }
-==> 016.rb 42 <==
+==> 021.rb 42 <==
 something { |x| x.method; something_else }
-==> 017.rb 26 <==
+==> 022.rb 26 <==
 something { |x| y.method }
-==> 018.rb 25 <==
+==> 023.rb 25 <==
 something { |&x| x.call }
-==> 019.rb 26 <==
+==> 024.rb 26 <==
 something { |*x| x.first }
-==> 020.rb 26 <==
+==> 025.rb 26 <==
 something { |x,| x.first }
-==> 021.rb 25 <==
+==> 026.rb 25 <==
 something { |_x| y.call }
-==> 022.rb 36 <==
+==> 027.rb 36 <==
 y = Y.new
 something { |_x| y.call }
 
-==> 023.rb 30 <==
+==> 028.rb 30 <==
 method(one, 2) { |x| x.test }
 
-==> 024.rb 49 <==
+==> 029.rb 49 <==
 coll.map { |s| s.upcase }.map { |s| s.downcase }
 
-==> 025.rb 31 <==
+==> 030.rb 31 <==
 coll.map(   ) { |s| s.upcase }
 
-==> 026.rb 36 <==
+==> 031.rb 36 <==
 [1, 2, 3].reject {|item| item.foo }
 
-==> 027.rb 36 <==
+==> 032.rb 36 <==
 {foo: 42}.reject {|item| item.foo }
 
-==> 028.rb 36 <==
+==> 033.rb 36 <==
 [1, 2, 3].select {|item| item.foo }
 
-==> 029.rb 36 <==
+==> 034.rb 36 <==
 {foo: 42}.select {|item| item.foo }
 
-==> 030.rb 33 <==
+==> 035.rb 33 <==
 {foo: 42}.min {|item| item.foo }
 
-==> 031.rb 33 <==
+==> 036.rb 33 <==
 [1, 2, 3].min {|item| item.foo }
 
-==> 032.rb 33 <==
+==> 037.rb 33 <==
 {foo: 42}.max {|item| item.foo }
 
-==> 033.rb 33 <==
+==> 038.rb 33 <==
 [1, 2, 3].max {|item| item.foo }
 
-==> 034.rb 21 <==
+==> 039.rb 21 <==
 super { |x| x.test }
 
-==> 035.rb 64 <==
+==> 040.rb 64 <==
 mail(
   to: 'foo',
   subject: 'bar',
 ) { |format| format.text }
 
-==> 036.rb 28 <==
+==> 041.rb 28 <==
 [1, 2, 3].reject { _1.foo }
 
-==> 037.rb 31 <==
+==> 042.rb 31 <==
 do_something.reject { _1.foo }
 
-==> 038.rb 28 <==
+==> 043.rb 28 <==
 {foo: 42}.reject { _1.foo }
 
-==> 039.rb 28 <==
+==> 044.rb 28 <==
 [1, 2, 3].select { _1.foo }
 
-==> 040.rb 31 <==
+==> 045.rb 31 <==
 do_something.select { _1.foo }
 
-==> 041.rb 28 <==
+==> 046.rb 28 <==
 {foo: 42}.select { _1.foo }
 
-==> 042.rb 25 <==
+==> 047.rb 25 <==
 {foo: 42}.min { _1.foo }
 
-==> 043.rb 25 <==
+==> 048.rb 25 <==
 [1, 2, 3].min { _1.foo }
 
-==> 044.rb 25 <==
+==> 049.rb 25 <==
 {foo: 42}.max { _1.foo }
 
-==> 045.rb 25 <==
+==> 050.rb 25 <==
 [1, 2, 3].max { _1.foo }
 
-==> 046.rb 21 <==
+==> 051.rb 21 <==
 something { _1.foo }
 
-==> 047.rb 21 <==
+==> 052.rb 21 <==
 something { _1 + _2 }

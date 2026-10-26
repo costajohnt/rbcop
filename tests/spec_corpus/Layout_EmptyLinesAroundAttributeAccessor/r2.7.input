@@ -72,9 +72,14 @@ attr_accessor :foo
 def do_something
 end
 
-==> 010.rb 18 <==
+==> 010.rb 47 <==
+attr_accessor :foo; def do_something
+  foo
+end
+
+==> 011.rb 18 <==
 attr_accessor :foo
-==> 011.rb 75 <==
+==> 012.rb 75 <==
 attr_accessor :foo
 attr_reader :bar
 attr_writer :baz
@@ -82,7 +87,7 @@ attr_writer :baz
 def do_something
 end
 
-==> 012.rb 85 <==
+==> 013.rb 85 <==
 attr_accessor :foo
 attr_reader :bar
 attr_writer :baz
@@ -91,17 +96,17 @@ attr_writer :baz
 def do_something
 end
 
-==> 013.rb 35 <==
+==> 014.rb 35 <==
 class Foo
   attr_accessor :foo
 end
 
-==> 014.rb 25 <==
+==> 015.rb 25 <==
 class Foo
   attr.foo
 end
 
-==> 015.rb 56 <==
+==> 016.rb 56 <==
 if condition
   attr_reader :foo
 else

@@ -1,4 +1,4 @@
-==> offenses exit=1 26454 <==
+==> offenses exit=1 27099 <==
 003.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
 003.rb:1:16: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
 003.rb:2:7: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
@@ -221,32 +221,38 @@
 059.rb:1:16: C: [Correctable] Style/ArgumentsForwarding: Use anonymous keyword arguments forwarding (`**`).
 059.rb:2:7: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
 059.rb:2:14: C: [Correctable] Style/ArgumentsForwarding: Use anonymous keyword arguments forwarding (`**`).
-060.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
-060.rb:2:7: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
-061.rb:1:12: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
-061.rb:2:10: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
-062.rb:1:12: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
-062.rb:2:13: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
-070.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
-070.rb:1:16: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-070.rb:2:11: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
-070.rb:2:18: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-071.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
-071.rb:1:16: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-071.rb:2:8: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
-071.rb:2:15: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-072.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
-072.rb:2:7: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
-075.rb:1:16: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-075.rb:2:19: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-076.rb:1:19: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-076.rb:2:22: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-077.rb:1:16: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-077.rb:3:14: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+060.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+060.rb:1:16: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+060.rb:2:7: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+060.rb:3:7: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+061.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+061.rb:2:7: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+063.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+063.rb:2:7: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+064.rb:1:12: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+064.rb:2:10: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+065.rb:1:12: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+065.rb:2:13: C: [Correctable] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+073.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+073.rb:1:16: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+073.rb:2:11: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+073.rb:2:18: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+074.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+074.rb:1:16: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+074.rb:2:8: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+074.rb:2:15: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+075.rb:1:9: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+075.rb:2:7: C: [Correctable] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
 078.rb:1:16: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-078.rb:3:14: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+078.rb:2:19: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+079.rb:1:19: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+079.rb:2:22: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+080.rb:1:16: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+080.rb:3:14: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+081.rb:1:16: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+081.rb:3:14: C: [Correctable] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
 
-==> autocorrect exit=0 25962 <==
+==> autocorrect exit=0 26595 <==
 003.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
 003.rb:1:16: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
 003.rb:2:7: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
@@ -469,30 +475,36 @@
 059.rb:1:16: C: [Corrected] Style/ArgumentsForwarding: Use anonymous keyword arguments forwarding (`**`).
 059.rb:2:7: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
 059.rb:2:14: C: [Corrected] Style/ArgumentsForwarding: Use anonymous keyword arguments forwarding (`**`).
-060.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
-060.rb:2:7: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
-061.rb:1:12: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
-061.rb:2:10: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
-062.rb:1:12: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
-062.rb:2:13: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
-070.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
-070.rb:1:16: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-070.rb:2:11: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
-070.rb:2:18: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-071.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
-071.rb:1:16: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-071.rb:2:8: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
-071.rb:2:15: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-072.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
-072.rb:2:7: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
-075.rb:1:16: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-075.rb:2:19: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-076.rb:1:19: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-076.rb:2:22: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-077.rb:1:16: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-077.rb:3:14: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+060.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+060.rb:1:16: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+060.rb:2:7: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+060.rb:3:7: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+061.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+061.rb:2:7: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+063.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+063.rb:2:7: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+064.rb:1:12: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+064.rb:2:10: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+065.rb:1:12: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+065.rb:2:13: C: [Corrected] Style/ArgumentsForwarding: Use shorthand syntax `...` for arguments forwarding.
+073.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+073.rb:1:16: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+073.rb:2:11: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+073.rb:2:18: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+074.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+074.rb:1:16: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+074.rb:2:8: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+074.rb:2:15: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+075.rb:1:9: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
+075.rb:2:7: C: [Corrected] Style/ArgumentsForwarding: Use anonymous positional arguments forwarding (`*`).
 078.rb:1:16: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
-078.rb:3:14: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+078.rb:2:19: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+079.rb:1:19: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+079.rb:2:22: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+080.rb:1:16: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+080.rb:3:14: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+081.rb:1:16: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
+081.rb:3:14: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (`&`).
 
 ==> corrected/003.rb 30 <==
 def foo(*, &)
@@ -818,53 +830,64 @@ def foo(*, **)
   bar(*, **)
 end
 
-==> corrected/060.rb 28 <==
+==> corrected/060.rb 36 <==
+def foo(*, &)
+  bar(&)
+  baz(*)
+end
+
+==> corrected/061.rb 28 <==
 def foo(...)
   bar(...)
 end
 
-==> corrected/061.rb 34 <==
+==> corrected/063.rb 32 <==
+def foo(...)
+  bar(...).baz
+end
+
+==> corrected/064.rb 34 <==
 def foo(m, ...)
   bar(m, ...)
 end
 
-==> corrected/062.rb 37 <==
+==> corrected/065.rb 37 <==
 def foo(m, ...)
   bar(self, ...)
 end
 
-==> corrected/070.rb 34 <==
+==> corrected/073.rb 34 <==
 def foo(*, &)
   obj.bar(*, &)
 end
 
-==> corrected/071.rb 31 <==
+==> corrected/074.rb 31 <==
 def foo(*, &)
   bar.(*, &)
 end
 
-==> corrected/072.rb 32 <==
+==> corrected/075.rb 32 <==
 def foo(*, &block)
   bar(*)
 end
 
-==> corrected/075.rb 43 <==
+==> corrected/078.rb 43 <==
 def foo(*args, &)
   bar(*arguments, &)
 end
 
-==> corrected/076.rb 49 <==
+==> corrected/079.rb 49 <==
 def foo(**kwargs, &)
   bar(**kwarguments, &)
 end
 
-==> corrected/077.rb 51 <==
+==> corrected/080.rb 51 <==
 def foo(*args, &)
   var = args
   foo(*args, &)
 end
 
-==> corrected/078.rb 45 <==
+==> corrected/081.rb 45 <==
 def foo(*args, &)
   args
   foo(*args, &)

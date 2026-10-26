@@ -1,4 +1,4 @@
-==> offenses exit=1 1687 <==
+==> offenses exit=1 1885 <==
 009.rb:1:15: W: [Correctable] Lint/SafeNavigationConsistency: Use `.` instead of unnecessary `&.`.
 011.rb:1:16: W: [Correctable] Lint/SafeNavigationConsistency: Use `.` instead of unnecessary `&.`.
 012.rb:1:16: W: [Correctable] Lint/SafeNavigationConsistency: Use `&.` for consistency with safe navigation.
@@ -16,8 +16,10 @@
 037.rb:1:16: W: [Correctable] Lint/SafeNavigationConsistency: Use `.` instead of unnecessary `&.`.
 039.rb:1:26: W: [Correctable] Lint/SafeNavigationConsistency: Use `.` instead of unnecessary `&.`.
 042.rb:1:16: W: [Correctable] Lint/SafeNavigationConsistency: Use `.` instead of unnecessary `&.`.
+045.rb:1:22: W: [Correctable] Lint/SafeNavigationConsistency: Use `.` instead of unnecessary `&.`.
+046.rb:1:29: W: [Correctable] Lint/SafeNavigationConsistency: Use `.` instead of unnecessary `&.`.
 
-==> autocorrect exit=1 1661 <==
+==> autocorrect exit=1 1855 <==
 009.rb:1:15: W: [Corrected] Lint/SafeNavigationConsistency: Use `.` instead of unnecessary `&.`.
 011.rb:1:16: W: [Corrected] Lint/SafeNavigationConsistency: Use `.` instead of unnecessary `&.`.
 012.rb:1:16: W: [Corrected] Lint/SafeNavigationConsistency: Use `&.` for consistency with safe navigation.
@@ -35,6 +37,8 @@
 037.rb:1:16: W: [Corrected] Lint/SafeNavigationConsistency: Use `.` instead of unnecessary `&.`.
 039.rb:1:26: W: [Corrected] Lint/SafeNavigationConsistency: Use `.` instead of unnecessary `&.`.
 042.rb:1:16: W: [Corrected] Lint/SafeNavigationConsistency: Use `.` instead of unnecessary `&.`.
+045.rb:1:22: W: [Corrected] Lint/SafeNavigationConsistency: Use `.` instead of unnecessary `&.`.
+046.rb:1:29: W: [Corrected] Lint/SafeNavigationConsistency: Use `.` instead of unnecessary `&.`.
 
 ==> corrected/009.rb 19 <==
 foo.bar && foo.baz
@@ -76,4 +80,10 @@ foo.bar && foo.baz || foo.qux
 
 ==> corrected/042.rb 31 <==
 foo&.bar && foo.baz || foo.qux
+
+==> corrected/045.rb 26 <==
+foo.bar && baz || foo.qux
+
+==> corrected/046.rb 34 <==
+bar || foo.baz && qux || foo.quux
 

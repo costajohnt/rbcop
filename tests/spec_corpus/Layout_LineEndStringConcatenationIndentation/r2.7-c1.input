@@ -107,55 +107,67 @@ TEXT
 puts 'a' \
   'b'
 
-==> 014.rb 16 <==
+==> 014.rb 34 <==
+x = 'a' \
+  'b' \
+'c' \
+'d' \
+'e'
+
+==> 015.rb 27 <==
+puts 'a' \
+    'b' \
+  'c'
+
+==> 016.rb 16 <==
 X = "a" \
   'b'
 
-==> 015.rb 19 <==
+==> 017.rb 19 <==
 X = "a" \
      'b'
 
-==> 016.rb 17 <==
-$x = "a" \
-  'b'
-
-==> 017.rb 21 <==
-$x = "a" \
-      'b'
-
 ==> 018.rb 17 <==
-@x = "a" \
+$x = "a" \
   'b'
 
 ==> 019.rb 21 <==
+$x = "a" \
+      'b'
+
+==> 020.rb 17 <==
+@x = "a" \
+  'b'
+
+==> 021.rb 21 <==
 @x = "a" \
       'b'
 
-==> 020.rb 16 <==
+==> 022.rb 16 <==
 x = "a" \
   'b'
 
-==> 021.rb 19 <==
+==> 023.rb 19 <==
 x = "a" \
      'b'
 
-==> 022.rb 17 <==
+==> 024.rb 17 <==
 x += "a" \
   'b'
 
-==> 023.rb 21 <==
+==> 025.rb 21 <==
 x += "a" \
       'b'
 
-==> 024.rb 18 <==
+==> 026.rb 18 <==
 x ||= "a" \
   'b'
 
-==> 025.rb 23 <==
+==> 027.rb 23 <==
 x ||= "a" \
        'b'
 
-==> 026.rb 437 <==
+==> 028.rb 437 <==
 MESSAGES = { KeyAlignment => 'Align the keys of a hash literal if ' \
                              'they span more than one line.',
              SeparatorAlignment => 'Align the separators of a hash ' \
@@ -163,17 +175,17 @@ MESSAGES = { KeyAlignment => 'Align the keys of a hash literal if ' \
              TableAlignment => 'Align the keys and values of a hash ' \
                                'literal if they span more than one line.' }.freeze
 
-==> 027.rb 33 <==
+==> 029.rb 33 <==
 puts %Q(a) \
      'b' \
      'c'
 
-==> 028.rb 34 <==
+==> 030.rb 34 <==
 puts 'a' \
   "#{b}" \
      "#{c}"
 
-==> 029.rb 16 <==
+==> 031.rb 16 <==
 puts 'a' \
  'b'
 

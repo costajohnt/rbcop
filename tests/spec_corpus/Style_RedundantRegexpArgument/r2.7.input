@@ -108,35 +108,38 @@ str.gsub(/\\"/)
 ==> 033.rb 30 <==
 "foo\nbar\nbaz\n".split(/\n/)
 
-==> 034.rb 38 <==
+==> 034.rb 26 <==
+'foo'.gsub(/\\\#\{/, 'x')
+
+==> 035.rb 38 <==
 "foo\n\nbar\n\nbaz\n\n".split(/\n\n/)
 
-==> 035.rb 34 <==
+==> 036.rb 34 <==
 "foo\nbar\nbaz\n".split(/\u3000/)
 
-==> 036.rb 27 <==
+==> 037.rb 27 <==
 "foo\\\.bar".split(/\\\./)
 
-==> 037.rb 37 <==
+==> 038.rb 37 <==
 "foo\nbar\nbaz\n".split(/foo\n\.\n/)
 
-==> 038.rb 30 <==
+==> 039.rb 30 <==
 'foo         bar'.split(/  /)
 
-==> 039.rb 22 <==
+==> 040.rb 22 <==
 'a,b,c'.insert(2, 'a')
-==> 040.rb 14 <==
+==> 041.rb 14 <==
 hash[/regexp/]
-==> 041.rb 22 <==
+==> 042.rb 22 <==
 hash[/regexp/] = value
-==> 042.rb 18 <==
+==> 043.rb 18 <==
 'a,b,c'.split(',')
-==> 043.rb 19 <==
+==> 044.rb 19 <==
 'a,b,c'.split(/,+/)
-==> 044.rb 29 <==
-'fooSplitbar'.split(/split/i)
 ==> 045.rb 29 <==
-'fooSplitbar'.split(/split/x)
+'fooSplitbar'.split(/split/i)
 ==> 046.rb 29 <==
+'fooSplitbar'.split(/split/x)
+==> 047.rb 29 <==
 'foo         bar'.split(/ /)
 

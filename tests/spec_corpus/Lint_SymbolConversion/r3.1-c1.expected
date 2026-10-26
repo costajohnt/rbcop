@@ -1,0 +1,9 @@
+==> offenses exit=1 123 <==
+000.rb:1:24: W: [Correctable] Lint/SymbolConversion: Symbol hash key should be quoted for consistency; use `"c":` instead.
+
+==> autocorrect exit=0 121 <==
+000.rb:1:24: W: [Corrected] Lint/SymbolConversion: Symbol hash key should be quoted for consistency; use `"c":` instead.
+
+==> corrected/000.rb 37 <==
+do_something('a-b': 1, "c": 2, foo:)
+

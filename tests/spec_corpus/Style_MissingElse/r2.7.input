@@ -47,3 +47,12 @@ if cond_1; 1; elsif cond_2; 2; elsif cond_3; 3; end
 case v; when a; foo; when b; bar; end
 ==> 017.rb 16 <==
 if cond; foo end
+==> 018.rb 24 <==
+if a; raise 'boom'; end
+
+==> 019.rb 26 <==
+unless a; return foo; end
+
+==> 020.rb 15 <==
+if a; foo; end
+

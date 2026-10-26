@@ -20,6 +20,11 @@ something
 !something
 ==> 004.rb 13 <==
 not something
-==> 005.rb 10 <==
+==> 005.rb 12 <==
+! ~something
+==> 006.rb 21 <==
+! (~something).zero?
+
+==> 007.rb 10 <==
 ! (model)
 

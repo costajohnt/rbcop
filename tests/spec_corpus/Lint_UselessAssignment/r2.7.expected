@@ -1,4 +1,4 @@
-==> offenses exit=1 8143 <==
+==> offenses exit=1 9553 <==
 004.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
 005.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
 006.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
@@ -14,74 +14,89 @@
 019.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `node`.
 021.rb:1:8: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `j`.
 023.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-024.rb:1:1: W: Lint/UselessAssignment: Useless assignment to variable - `foo`. Use `||` instead of `||=`.
-025.rb:2:3: W: Lint/UselessAssignment: Useless assignment to variable - `bar`. Use `&&` instead of `&&=`.
-026.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-026.rb:4:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-027.rb:4:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-028.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-032.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-033.rb:1:16: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`. Use `+` instead of `+=`.
-034.rb:3:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-038.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-044.rb:5:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-045.rb:6:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-046.rb:3:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-047.rb:3:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-055.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-056.rb:3:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-057.rb:6:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-058.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-059.rb:6:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-060.rb:6:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-063.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-065.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-071.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-074.rb:3:10: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-076.rb:3:3: W: Lint/UselessAssignment: Useless assignment to variable - `foo`. Use `||` instead of `||=`.
-077.rb:3:3: W: Lint/UselessAssignment: Useless assignment to variable - `foo`.
-078.rb:2:8: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `bar`. Use `_` or `_bar` as a variable name to indicate that it won't be used.
-079.rb:2:15: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `c`.
-081.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-082.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-083.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-084.rb:2:3: W: Lint/UselessAssignment: Useless assignment to variable - `foo`.
-084.rb:2:12: W: Lint/UselessAssignment: Useless assignment to variable - `bar`.
-086.rb:2:14: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `baz`. Use `_` or `_baz` as a variable name to indicate that it won't be used.
-087.rb:2:20: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `qux`. Use `_` or `_qux` as a variable name to indicate that it won't be used.
-088.rb:2:16: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `baz`. Use `_` or `_baz` as a variable name to indicate that it won't be used.
-089.rb:2:10: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `bar`. Use `_` or `_bar` as a variable name to indicate that it won't be used.
-090.rb:2:9: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `bar`. Use `_` or `_bar` as a variable name to indicate that it won't be used.
-093.rb:3:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-098.rb:6:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-099.rb:6:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-100.rb:6:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-103.rb:3:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-103.rb:5:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-103.rb:7:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-103.rb:9:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-104.rb:3:22: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `error`.
-105.rb:3:11: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `error`.
-107.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-108.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-109.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-110.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-114.rb:3:9: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `qux`. Use `-` instead of `-=`.
-116.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+024.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+025.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+026.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+027.rb:1:1: W: Lint/UselessAssignment: Useless assignment to variable - `foo`. Use `||` instead of `||=`.
+028.rb:2:3: W: Lint/UselessAssignment: Useless assignment to variable - `bar`. Use `&&` instead of `&&=`.
+029.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+029.rb:4:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+030.rb:4:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+031.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+035.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+036.rb:1:16: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`. Use `+` instead of `+=`.
+037.rb:3:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+041.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+042.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+042.rb:3:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+042.rb:5:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+043.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `prev`.
+043.rb:2:25: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `prev`.
+044.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `value`.
+044.rb:2:17: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `value`.
+045.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `prev`.
+045.rb:2:18: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `prev`.
+055.rb:5:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+056.rb:6:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+057.rb:3:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+058.rb:3:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+066.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+067.rb:3:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+068.rb:6:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+069.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+070.rb:6:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+071.rb:6:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+074.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+076.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+082.rb:2:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+085.rb:3:10: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+087.rb:3:3: W: Lint/UselessAssignment: Useless assignment to variable - `foo`. Use `||` instead of `||=`.
+088.rb:3:3: W: Lint/UselessAssignment: Useless assignment to variable - `foo`.
+089.rb:2:8: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `bar`. Use `_` or `_bar` as a variable name to indicate that it won't be used.
+090.rb:2:15: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `c`.
+092.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+093.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+094.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+095.rb:2:3: W: Lint/UselessAssignment: Useless assignment to variable - `foo`.
+095.rb:2:12: W: Lint/UselessAssignment: Useless assignment to variable - `bar`.
+097.rb:2:14: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `baz`. Use `_` or `_baz` as a variable name to indicate that it won't be used.
+098.rb:2:20: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `qux`. Use `_` or `_qux` as a variable name to indicate that it won't be used.
+099.rb:2:16: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `baz`. Use `_` or `_baz` as a variable name to indicate that it won't be used.
+100.rb:2:10: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `bar`. Use `_` or `_bar` as a variable name to indicate that it won't be used.
+101.rb:2:9: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `bar`. Use `_` or `_bar` as a variable name to indicate that it won't be used.
+104.rb:3:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+114.rb:4:7: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `status`.
+115.rb:6:9: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `status`.
+116.rb:6:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+117.rb:6:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+118.rb:6:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+121.rb:3:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+121.rb:5:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+121.rb:7:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+121.rb:9:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+122.rb:3:22: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `error`.
+123.rb:3:11: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `error`.
+125.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+126.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
 127.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-129.rb:1:13: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-131.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-131.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `bar`.
-135.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`. Did you mean `environment`?
-136.rb:4:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`. Did you mean `environment`?
-137.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`.
-138.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`.
-139.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`.
-140.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`.
-142.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-143.rb:3:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+128.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+132.rb:3:9: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `qux`. Use `-` instead of `-=`.
+134.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+145.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+147.rb:1:13: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+149.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+149.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `bar`.
+153.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`. Did you mean `environment`?
+154.rb:4:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`. Did you mean `environment`?
+155.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`.
+156.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`.
+157.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`.
+158.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`.
+160.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+161.rb:3:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+172.rb:4:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
 
-==> autocorrect exit=1 8175 <==
+==> autocorrect exit=1 9555 <==
 004.rb:3:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `a`.
 005.rb:1:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `a`.
 006.rb:1:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `a`.
@@ -97,74 +112,89 @@
 019.rb:1:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `node`.
 021.rb:1:8: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `j`.
 023.rb:1:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-024.rb:1:1: W: Lint/UselessAssignment: Useless assignment to variable - `foo`. Use `||` instead of `||=`.
-025.rb:2:3: W: Lint/UselessAssignment: Useless assignment to variable - `bar`. Use `&&` instead of `&&=`.
-026.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-026.rb:4:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-027.rb:4:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-028.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-032.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-033.rb:1:16: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`. Use `+` instead of `+=`.
-034.rb:3:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-038.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-044.rb:5:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-045.rb:6:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-046.rb:3:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-047.rb:3:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-055.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-056.rb:3:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-057.rb:6:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-058.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-059.rb:6:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-060.rb:6:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-063.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-065.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-071.rb:2:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-074.rb:3:10: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-076.rb:3:3: W: Lint/UselessAssignment: Useless assignment to variable - `foo`. Use `||` instead of `||=`.
-077.rb:3:3: W: Lint/UselessAssignment: Useless assignment to variable - `foo`.
-078.rb:2:8: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `bar`. Use `_` or `_bar` as a variable name to indicate that it won't be used.
-079.rb:2:15: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `c`.
-081.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `bar`.
-081.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-082.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-083.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-083.rb:2:4: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `bar`.
-084.rb:2:3: W: Lint/UselessAssignment: Useless assignment to variable - `foo`.
-084.rb:2:12: W: Lint/UselessAssignment: Useless assignment to variable - `bar`.
-086.rb:2:14: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `baz`. Use `_` or `_baz` as a variable name to indicate that it won't be used.
-087.rb:2:20: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `qux`. Use `_` or `_qux` as a variable name to indicate that it won't be used.
-088.rb:2:16: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `baz`. Use `_` or `_baz` as a variable name to indicate that it won't be used.
-089.rb:2:10: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `bar`. Use `_` or `_bar` as a variable name to indicate that it won't be used.
-090.rb:2:9: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `bar`. Use `_` or `_bar` as a variable name to indicate that it won't be used.
-093.rb:3:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-098.rb:6:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-099.rb:6:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-100.rb:6:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-103.rb:3:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-103.rb:5:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-103.rb:7:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-103.rb:9:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-104.rb:3:22: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `error`.
-105.rb:3:11: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `error`.
-107.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-108.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-109.rb:1:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-110.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-114.rb:3:9: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `qux`. Use `-` instead of `-=`.
-116.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+024.rb:1:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+025.rb:1:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+026.rb:1:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+027.rb:1:1: W: Lint/UselessAssignment: Useless assignment to variable - `foo`. Use `||` instead of `||=`.
+028.rb:2:3: W: Lint/UselessAssignment: Useless assignment to variable - `bar`. Use `&&` instead of `&&=`.
+029.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+029.rb:4:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+030.rb:4:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+031.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+035.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+036.rb:1:16: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`. Use `+` instead of `+=`.
+037.rb:3:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+041.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+042.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+042.rb:3:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+042.rb:5:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+043.rb:1:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `prev`.
+043.rb:2:25: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `prev`.
+044.rb:1:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `value`.
+044.rb:2:17: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `value`.
+045.rb:1:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `prev`.
+045.rb:2:18: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `prev`.
+055.rb:5:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+056.rb:6:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+057.rb:3:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+058.rb:3:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+066.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+067.rb:3:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+068.rb:6:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+069.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+070.rb:6:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+071.rb:6:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+074.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+076.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+082.rb:2:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+085.rb:3:10: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+087.rb:3:3: W: Lint/UselessAssignment: Useless assignment to variable - `foo`. Use `||` instead of `||=`.
+088.rb:3:3: W: Lint/UselessAssignment: Useless assignment to variable - `foo`.
+089.rb:2:8: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `bar`. Use `_` or `_bar` as a variable name to indicate that it won't be used.
+090.rb:2:15: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `c`.
+092.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `bar`.
+092.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+093.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+094.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+094.rb:2:4: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `bar`.
+095.rb:2:3: W: Lint/UselessAssignment: Useless assignment to variable - `foo`.
+095.rb:2:12: W: Lint/UselessAssignment: Useless assignment to variable - `bar`.
+097.rb:2:14: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `baz`. Use `_` or `_baz` as a variable name to indicate that it won't be used.
+098.rb:2:20: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `qux`. Use `_` or `_qux` as a variable name to indicate that it won't be used.
+099.rb:2:16: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `baz`. Use `_` or `_baz` as a variable name to indicate that it won't be used.
+100.rb:2:10: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `bar`. Use `_` or `_bar` as a variable name to indicate that it won't be used.
+101.rb:2:9: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `bar`. Use `_` or `_bar` as a variable name to indicate that it won't be used.
+104.rb:3:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+114.rb:4:7: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `status`.
+115.rb:6:9: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `status`.
+116.rb:6:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+117.rb:6:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+118.rb:6:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+121.rb:3:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+121.rb:5:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+121.rb:7:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+121.rb:9:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+122.rb:3:22: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `error`.
+123.rb:3:11: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `error`.
+125.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+126.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
 127.rb:1:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-129.rb:1:13: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-131.rb:1:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-131.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `bar`.
-135.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`. Did you mean `environment`?
-136.rb:4:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`. Did you mean `environment`?
-137.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`.
-138.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`.
-139.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`.
-140.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`.
-142.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
-143.rb:3:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+128.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+132.rb:3:9: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `qux`. Use `-` instead of `-=`.
+134.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+145.rb:1:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+147.rb:1:13: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+149.rb:1:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+149.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `bar`.
+153.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`. Did you mean `environment`?
+154.rb:4:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`. Did you mean `environment`?
+155.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`.
+156.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`.
+157.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`.
+158.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `enviromnent`.
+160.rb:2:3: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+161.rb:3:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`.
+172.rb:4:5: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `x`.
 
 ==> corrected/004.rb 38 <==
 a = 0
@@ -288,7 +318,17 @@ end
 bar = 2
 puts bar
 
-==> corrected/026.rb 49 <==
+==> corrected/024.rb 13 <==
+[1,
+      2]
+
+==> corrected/025.rb 7 <==
+[*bar]
+
+==> corrected/026.rb 7 <==
+[1, 2]
+
+==> corrected/029.rb 49 <==
 def some_method
   1
   bar = 2
@@ -296,45 +336,68 @@ def some_method
   puts bar
 end
 
-==> corrected/027.rb 45 <==
+==> corrected/030.rb 45 <==
 def some_method
   foo = 1
   puts foo
   3
 end
 
-==> corrected/028.rb 45 <==
+==> corrected/031.rb 45 <==
 def some_method
   1
   foo = 3
   puts foo
 end
 
-==> corrected/032.rb 28 <==
+==> corrected/035.rb 28 <==
 1.times do |i; foo|
   2
 end
 
-==> corrected/033.rb 26 <==
+==> corrected/036.rb 26 <==
 do_something { foo + _1 }
 
-==> corrected/034.rb 45 <==
+==> corrected/037.rb 45 <==
 def some_method
   while true
     1
   end
 end
 
-==> corrected/038.rb 58 <==
+==> corrected/041.rb 71 <==
 def some_method
   1
   foo = 2
   bar {
     foo = 3
+    puts foo
   }
 end
 
-==> corrected/044.rb 70 <==
+==> corrected/042.rb 46 <==
+def some_method
+  1
+  2
+  bar {
+    3
+  }
+end
+
+==> corrected/043.rb 35 <==
+nil
+[1, 2, 3].each { |item| item }
+
+==> corrected/044.rb 38 <==
+nil
+callback = -> { 1 }
+callback.call
+
+==> corrected/045.rb 26 <==
+nil
+[1, 2, 3].each { _1 }
+
+==> corrected/055.rb 70 <==
 while true
   def some_method
     foo = 1
@@ -343,7 +406,7 @@ while true
   end
 end
 
-==> corrected/045.rb 70 <==
+==> corrected/056.rb 70 <==
 foo = 1
 
 while foo < 100
@@ -353,14 +416,14 @@ while foo < 100
   end
 end
 
-==> corrected/046.rb 48 <==
+==> corrected/057.rb 48 <==
 def some_method(flag)
   if flag
     1
   end
 end
 
-==> corrected/047.rb 67 <==
+==> corrected/058.rb 67 <==
 def some_method(flag)
   if flag
     1
@@ -370,7 +433,7 @@ def some_method(flag)
   foo
 end
 
-==> corrected/055.rb 72 <==
+==> corrected/066.rb 72 <==
 def some_method(flag)
   1
 
@@ -380,7 +443,7 @@ def some_method(flag)
   end
 end
 
-==> corrected/056.rb 80 <==
+==> corrected/067.rb 80 <==
 def some_method(flag)
   if flag
     2
@@ -390,7 +453,7 @@ def some_method(flag)
   end
 end
 
-==> corrected/057.rb 92 <==
+==> corrected/068.rb 92 <==
 def some_method(flag)
   foo = 1
 
@@ -402,14 +465,14 @@ def some_method(flag)
   end
 end
 
-==> corrected/058.rb 32 <==
+==> corrected/069.rb 32 <==
 if flag
   1
 else
   puts foo
 end
 
-==> corrected/059.rb 112 <==
+==> corrected/070.rb 112 <==
 def some_method(flag_a, flag_b)
   foo = 1
 
@@ -421,7 +484,7 @@ def some_method(flag_a, flag_b)
   end
 end
 
-==> corrected/060.rb 139 <==
+==> corrected/071.rb 139 <==
 def some_method(flag_a, flag_b)
   foo = 1
 
@@ -436,87 +499,87 @@ def some_method(flag_a, flag_b)
   end
 end
 
-==> corrected/063.rb 41 <==
+==> corrected/074.rb 41 <==
 def some_method(flag)
   1 unless foo
 end
 
-==> corrected/065.rb 91 <==
+==> corrected/076.rb 91 <==
 def some_method
   1
   (foo = do_something_returns_object_or_nil) && do_something
   foo
 end
 
-==> corrected/071.rb 35 <==
+==> corrected/082.rb 35 <==
 foo = [1, 2]
 foo.map { |i| i + 1 }
 
-==> corrected/074.rb 47 <==
+==> corrected/085.rb 47 <==
 def some_method
   foo = 1
   foo += 2
   foo
 end
 
-==> corrected/078.rb 55 <==
+==> corrected/089.rb 55 <==
 def some_method
   foo, _ = do_something
   puts foo
 end
 
-==> corrected/079.rb 46 <==
+==> corrected/090.rb 46 <==
 def some_method
   a, b = func(3)
   [a, b]
 end
 
-==> corrected/081.rb 35 <==
+==> corrected/092.rb 35 <==
 def some_method
   do_something
 end
 
-==> corrected/082.rb 35 <==
+==> corrected/093.rb 35 <==
 def some_method
   do_something
 end
 
-==> corrected/083.rb 36 <==
+==> corrected/094.rb 36 <==
 def some_method
   -do_something
 end
 
-==> corrected/086.rb 67 <==
+==> corrected/097.rb 67 <==
 def some_method
   foo, (bar, _) = do_something
   puts foo, bar
 end
 
-==> corrected/087.rb 79 <==
+==> corrected/098.rb 79 <==
 def some_method
   foo, (bar, (baz, _)) = do_something
   puts foo, bar, baz
 end
 
-==> corrected/088.rb 68 <==
+==> corrected/099.rb 68 <==
 def some_method
   (foo, bar), *_ = do_something
   puts foo, bar
 end
 
-==> corrected/089.rb 68 <==
+==> corrected/100.rb 68 <==
 def some_method
   foo, (*_, baz) = do_something
   puts foo, baz
 end
 
-==> corrected/090.rb 56 <==
+==> corrected/101.rb 56 <==
 def some_method
   foo, *_ = do_something
   puts foo
 end
 
-==> corrected/093.rb 53 <==
+==> corrected/104.rb 53 <==
 begin
   do_something
   true
@@ -524,7 +587,38 @@ rescue
   do_anything
 end
 
-==> corrected/098.rb 75 <==
+==> corrected/114.rb 186 <==
+def some_method(flag)
+  begin
+    if flag
+      :connected
+      fetch_sometimes_fails!
+      status = :fetched
+    end
+    puts status
+  rescue StandardError
+    do_something
+  end
+end
+
+==> corrected/115.rb 255 <==
+def some_method(items, flag)
+  begin
+    items.each do
+      status = :initial
+      if flag
+        :connected
+        fetch_sometimes_fails!
+        status = :fetched
+      end
+      puts status
+    end
+  rescue StandardError
+    do_something
+  end
+end
+
+==> corrected/116.rb 75 <==
 foo = false
 
 begin
@@ -536,7 +630,7 @@ end
 
 puts foo
 
-==> corrected/099.rb 96 <==
+==> corrected/117.rb 96 <==
 foo = false
 
 begin
@@ -550,7 +644,7 @@ end
 
 puts foo
 
-==> corrected/100.rb 83 <==
+==> corrected/118.rb 83 <==
 begin
   do_something
 rescue
@@ -562,7 +656,7 @@ end
 
 puts foo
 
-==> corrected/103.rb 165 <==
+==> corrected/121.rb 165 <==
 begin
   do_something
   :in_begin
@@ -578,7 +672,7 @@ end
 
 puts foo
 
-==> corrected/104.rb 81 <==
+==> corrected/122.rb 81 <==
 begin
   do_something
 rescue FirstError
@@ -586,40 +680,40 @@ rescue SecondError
   p error # => nil
 end
 
-==> corrected/105.rb 32 <==
+==> corrected/123.rb 32 <==
 begin
   do_something
 rescue
 end
 
-==> corrected/107.rb 37 <==
+==> corrected/125.rb 37 <==
 def some_method(bar)
   1
   super
 end
 
-==> corrected/108.rb 47 <==
+==> corrected/126.rb 47 <==
 def some_method(foo, bar)
   1
   super(bar)
 end
 
-==> corrected/109.rb 18 <==
+==> corrected/127.rb 18 <==
 /(?:w+)/ =~ 'FOO'
 
-==> corrected/110.rb 41 <==
+==> corrected/128.rb 41 <==
 def some_method
   /(?:\w+)/ =~ 'FOO'
 end
 
-==> corrected/114.rb 66 <==
+==> corrected/132.rb 66 <==
 def some_method
   foo in { bar: bar }
   baz { qux - 1 }
   foo
 end
 
-==> corrected/116.rb 62 <==
+==> corrected/134.rb 62 <==
 def some_method
   1
   1.times do |foo|
@@ -627,26 +721,26 @@ def some_method
   end
 end
 
-==> corrected/127.rb 2 <==
+==> corrected/145.rb 2 <==
 1
 
-==> corrected/129.rb 22 <==
+==> corrected/147.rb 22 <==
 some_method(1) do
 end
 
-==> corrected/131.rb 37 <==
+==> corrected/149.rb 37 <==
 do_something {
   do_something_else
 }
 
-==> corrected/135.rb 61 <==
+==> corrected/153.rb 61 <==
 def some_method
   {}
   another_symbol
   puts environment
 end
 
-==> corrected/136.rb 81 <==
+==> corrected/154.rb 81 <==
 def some_method
   environment = nil
   another_symbol
@@ -654,28 +748,28 @@ def some_method
   puts environment
 end
 
-==> corrected/137.rb 58 <==
+==> corrected/155.rb 58 <==
 def some_method
   {}
   another_symbol
   puts envelope
 end
 
-==> corrected/138.rb 66 <==
+==> corrected/156.rb 66 <==
 def some_method
   {}
   another_symbol
   puts self.environment
 end
 
-==> corrected/139.rb 64 <==
+==> corrected/157.rb 64 <==
 def some_method
   {}
   another_symbol
   puts environment(1)
 end
 
-==> corrected/140.rb 84 <==
+==> corrected/158.rb 84 <==
 class SomeClass
   {}
 
@@ -684,19 +778,28 @@ class SomeClass
   end
 end
 
-==> corrected/142.rb 32 <==
+==> corrected/160.rb 32 <==
 while
   1
   foo = 1
   p foo
 end
 
-==> corrected/143.rb 44 <==
+==> corrected/161.rb 44 <==
 while
   (
     1
     foo = 1
   )
   p foo
+end
+
+==> corrected/172.rb 57 <==
+x = 0
+while x < 10
+  def helper
+    1
+  end
+  x += 1
 end
 

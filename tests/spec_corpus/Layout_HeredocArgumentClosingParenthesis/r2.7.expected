@@ -1,164 +1,164 @@
 ==> offenses exit=1 8422 <==
-034.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-035.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-036.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-037.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-038.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-039.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-040.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-041.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 042.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 043.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-044.rb:6:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-045.rb:6:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+044.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+045.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 046.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 047.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 048.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 049.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-050.rb:5:3: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-051.rb:5:3: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-052.rb:7:3: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-053.rb:7:3: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-054.rb:4:21: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-055.rb:4:21: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-056.rb:6:9: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-057.rb:7:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-058.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-059.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-060.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-061.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-062.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-063.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-064.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-065.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+050.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+051.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+052.rb:6:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+053.rb:6:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+054.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+055.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+056.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+057.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+058.rb:5:3: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+059.rb:5:3: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+060.rb:7:3: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+061.rb:7:3: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+062.rb:4:21: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+063.rb:4:21: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+064.rb:6:9: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+065.rb:7:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 066.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 067.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-068.rb:6:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-069.rb:6:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+068.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+069.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 070.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 071.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-072.rb:5:3: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-073.rb:5:3: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-074.rb:7:3: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-075.rb:7:3: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-076.rb:4:21: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-077.rb:4:21: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-078.rb:6:9: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-079.rb:7:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+072.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+073.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+074.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+075.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+076.rb:6:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+077.rb:6:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+078.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+079.rb:4:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+080.rb:5:3: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+081.rb:5:3: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+082.rb:7:3: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+083.rb:7:3: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+084.rb:4:21: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+085.rb:4:21: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+086.rb:6:9: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+087.rb:7:1: C: [Correctable] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 
 ==> autocorrect exit=1 9054 <==
-034.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-035.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-036.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-037.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-038.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-039.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-040.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-041.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 042.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 043.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-044.rb:6:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-045.rb:6:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+044.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+045.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 046.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 047.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 048.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 049.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-050.rb:5:3: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-050.rb:6:6: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-050.rb:7:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-051.rb:5:3: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-052.rb:7:3: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-053.rb:7:3: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-054.rb:4:21: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-055.rb:4:21: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-056.rb:6:9: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-057.rb:7:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-058.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-059.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-060.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-061.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-062.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-063.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-064.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-065.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+050.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+051.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+052.rb:6:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+053.rb:6:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+054.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+055.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+056.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+057.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+058.rb:5:3: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+058.rb:6:6: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+058.rb:7:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+059.rb:5:3: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+060.rb:7:3: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+061.rb:7:3: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+062.rb:4:21: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+063.rb:4:21: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+064.rb:6:9: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+065.rb:7:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 066.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 067.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-068.rb:6:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-069.rb:6:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+068.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+069.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 070.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 071.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-072.rb:5:3: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-072.rb:6:6: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-072.rb:7:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-073.rb:5:3: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-074.rb:7:3: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-075.rb:7:3: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-076.rb:4:21: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-077.rb:4:21: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-078.rb:6:9: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-079.rb:7:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
-
-==> corrected/034.rb 26 <==
-foo.bar(<<-SQL)
-  foo
-SQL
-
-==> corrected/035.rb 31 <==
-foo.bar(<<~SQL)
-  foo
-SQL
-.baz
-
-==> corrected/036.rb 32 <==
-foo.bar(<<~SQL)
-  foo
-SQL
-&.baz
-
-==> corrected/037.rb 31 <==
-foo.bar(<<~SQL)
-  foo
-SQL
-.baz
-
-==> corrected/038.rb 31 <==
-foo.bar(foo: <<-SQL)
-  foo
-SQL
-
-==> corrected/039.rb 31 <==
-foo(foo.bar(<<-SQL))
-  foo
-SQL
-
-==> corrected/040.rb 26 <==
-foo.bar(<<~SQL)
-  foo
-SQL
-
-==> corrected/041.rb 26 <==
-foo.bar(<<-SQL)
-  foo
-SQL
+072.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+073.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+074.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+075.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+076.rb:6:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+077.rb:6:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+078.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+079.rb:4:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+080.rb:5:3: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+080.rb:6:6: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+080.rb:7:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+081.rb:5:3: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+082.rb:7:3: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+083.rb:7:3: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+084.rb:4:21: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+085.rb:4:21: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+086.rb:6:9: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
+087.rb:7:1: C: [Corrected] Layout/HeredocArgumentClosingParenthesis: Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.
 
 ==> corrected/042.rb 26 <==
 foo.bar(<<-SQL)
   foo
 SQL
 
-==> corrected/043.rb 27 <==
+==> corrected/043.rb 31 <==
+foo.bar(<<~SQL)
+  foo
+SQL
+.baz
+
+==> corrected/044.rb 32 <==
+foo.bar(<<~SQL)
+  foo
+SQL
+&.baz
+
+==> corrected/045.rb 31 <==
+foo.bar(<<~SQL)
+  foo
+SQL
+.baz
+
+==> corrected/046.rb 31 <==
+foo.bar(foo: <<-SQL)
+  foo
+SQL
+
+==> corrected/047.rb 31 <==
+foo(foo.bar(<<-SQL))
+  foo
+SQL
+
+==> corrected/048.rb 26 <==
+foo.bar(<<~SQL)
+  foo
+SQL
+
+==> corrected/049.rb 26 <==
+foo.bar(<<-SQL)
+  foo
+SQL
+
+==> corrected/050.rb 26 <==
+foo.bar(<<-SQL)
+  foo
+SQL
+
+==> corrected/051.rb 27 <==
 foo.bar(<<-SQL)
   foo,
 SQL
 
-==> corrected/044.rb 48 <==
+==> corrected/052.rb 48 <==
 foo.bar(<<-SQL, <<-NOSQL)
   foo
 SQL
   bar
 NOSQL
 
-==> corrected/045.rb 68 <==
+==> corrected/053.rb 68 <==
 foo.bar(<<-SQL, <<-NOSQL)
   foo
 SQL
@@ -166,27 +166,27 @@ SQL
 NOSQL
 .baz(123).quux(456)
 
-==> corrected/046.rb 31 <==
+==> corrected/054.rb 31 <==
 foo.bar(<<-SQL, 123)
   foo
 SQL
 
-==> corrected/047.rb 31 <==
+==> corrected/055.rb 31 <==
 foo.bar(123, <<-SQL)
   foo
 SQL
 
-==> corrected/048.rb 31 <==
+==> corrected/056.rb 31 <==
 Foo.new(123, <<-SQL)
   foo
 SQL
 
-==> corrected/049.rb 37 <==
+==> corrected/057.rb 37 <==
 raise Foo.new(123, <<-SQL)
   foo
 SQL
 
-==> corrected/050.rb 57 <==
+==> corrected/058.rb 57 <==
 bar(
   foo.bar(123, <<-SQL),
     foo
@@ -194,7 +194,7 @@ bar(
   456,
   789)
 
-==> corrected/051.rb 56 <==
+==> corrected/059.rb 56 <==
 [
   foo.bar(123, <<-SQL),
     foo
@@ -203,7 +203,7 @@ bar(
   789,
 ]
 
-==> corrected/052.rb 92 <==
+==> corrected/060.rb 92 <==
 [
   foo.bar(123, <<-SQL, 456, 789, <<-NOSQL),
     foo
@@ -214,7 +214,7 @@ bar(
   789,
 ]
 
-==> corrected/053.rb 112 <==
+==> corrected/061.rb 112 <==
 [
   foo(foo(foo.bar(123, <<-SQL, 456, 789, <<-NOSQL), 456), 400),
     foo
@@ -225,24 +225,24 @@ bar(
   789,
 ]
 
-==> corrected/054.rb 39 <==
+==> corrected/062.rb 39 <==
 query.order(foo.bar(<<-SQL))
   foo
 SQL
 
-==> corrected/055.rb 39 <==
+==> corrected/063.rb 39 <==
 query.order(foo.bar(<<-SQL))
   foo
 SQL
 
-==> corrected/056.rb 60 <==
+==> corrected/064.rb 60 <==
 query.joins({
   foo: []
 }).order(foo.bar(<<-SQL))
   bar
 SQL
 
-==> corrected/057.rb 51 <==
+==> corrected/065.rb 51 <==
 foo.bar(
   <<-SQL, <<-NOSQL)
   foo
@@ -250,67 +250,67 @@ SQL
   bar
 NOSQL
 
-==> corrected/058.rb 27 <==
-foo&.bar(<<-SQL)
-  foo
-SQL
-
-==> corrected/059.rb 32 <==
-foo&.bar(<<~SQL)
-  foo
-SQL
-.baz
-
-==> corrected/060.rb 33 <==
-foo&.bar(<<~SQL)
-  foo
-SQL
-&.baz
-
-==> corrected/061.rb 32 <==
-foo&.bar(<<~SQL)
-  foo
-SQL
-.baz
-
-==> corrected/062.rb 32 <==
-foo&.bar(foo: <<-SQL)
-  foo
-SQL
-
-==> corrected/063.rb 32 <==
-foo(foo&.bar(<<-SQL))
-  foo
-SQL
-
-==> corrected/064.rb 27 <==
-foo&.bar(<<~SQL)
-  foo
-SQL
-
-==> corrected/065.rb 27 <==
-foo&.bar(<<-SQL)
-  foo
-SQL
-
 ==> corrected/066.rb 27 <==
 foo&.bar(<<-SQL)
   foo
 SQL
 
-==> corrected/067.rb 28 <==
+==> corrected/067.rb 32 <==
+foo&.bar(<<~SQL)
+  foo
+SQL
+.baz
+
+==> corrected/068.rb 33 <==
+foo&.bar(<<~SQL)
+  foo
+SQL
+&.baz
+
+==> corrected/069.rb 32 <==
+foo&.bar(<<~SQL)
+  foo
+SQL
+.baz
+
+==> corrected/070.rb 32 <==
+foo&.bar(foo: <<-SQL)
+  foo
+SQL
+
+==> corrected/071.rb 32 <==
+foo(foo&.bar(<<-SQL))
+  foo
+SQL
+
+==> corrected/072.rb 27 <==
+foo&.bar(<<~SQL)
+  foo
+SQL
+
+==> corrected/073.rb 27 <==
+foo&.bar(<<-SQL)
+  foo
+SQL
+
+==> corrected/074.rb 27 <==
+foo&.bar(<<-SQL)
+  foo
+SQL
+
+==> corrected/075.rb 28 <==
 foo&.bar(<<-SQL)
   foo,
 SQL
 
-==> corrected/068.rb 49 <==
+==> corrected/076.rb 49 <==
 foo&.bar(<<-SQL, <<-NOSQL)
   foo
 SQL
   bar
 NOSQL
 
-==> corrected/069.rb 69 <==
+==> corrected/077.rb 69 <==
 foo&.bar(<<-SQL, <<-NOSQL)
   foo
 SQL
@@ -318,17 +318,17 @@ SQL
 NOSQL
 .baz(123).quux(456)
 
-==> corrected/070.rb 32 <==
+==> corrected/078.rb 32 <==
 foo&.bar(<<-SQL, 123)
   foo
 SQL
 
-==> corrected/071.rb 32 <==
+==> corrected/079.rb 32 <==
 foo&.bar(123, <<-SQL)
   foo
 SQL
 
-==> corrected/072.rb 58 <==
+==> corrected/080.rb 58 <==
 bar(
   foo&.bar(123, <<-SQL),
     foo
@@ -336,7 +336,7 @@ bar(
   456,
   789)
 
-==> corrected/073.rb 57 <==
+==> corrected/081.rb 57 <==
 [
   foo&.bar(123, <<-SQL),
     foo
@@ -345,7 +345,7 @@ bar(
   789,
 ]
 
-==> corrected/074.rb 93 <==
+==> corrected/082.rb 93 <==
 [
   foo&.bar(123, <<-SQL, 456, 789, <<-NOSQL),
     foo
@@ -356,7 +356,7 @@ bar(
   789,
 ]
 
-==> corrected/075.rb 113 <==
+==> corrected/083.rb 113 <==
 [
   foo(foo(foo&.bar(123, <<-SQL, 456, 789, <<-NOSQL), 456), 400),
     foo
@@ -367,24 +367,24 @@ bar(
   789,
 ]
 
-==> corrected/076.rb 40 <==
+==> corrected/084.rb 40 <==
 query.order(foo&.bar(<<-SQL))
   foo
 SQL
 
-==> corrected/077.rb 40 <==
+==> corrected/085.rb 40 <==
 query.order(foo&.bar(<<-SQL))
   foo
 SQL
 
-==> corrected/078.rb 61 <==
+==> corrected/086.rb 61 <==
 query.joins({
   foo: []
 }).order(foo&.bar(<<-SQL))
   bar
 SQL
 
-==> corrected/079.rb 52 <==
+==> corrected/087.rb 52 <==
 foo&.bar(
   <<-SQL, <<-NOSQL)
   foo

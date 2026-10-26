@@ -1,16 +1,22 @@
-==> offenses exit=1 880 <==
+==> offenses exit=1 1408 <==
 000.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
 001.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
 001.rb:5:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
-002.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+002.rb:2:3: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
 003.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+004.rb:2:3: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+005.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+006.rb:1:1: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
 
-==> autocorrect exit=0 870 <==
+==> autocorrect exit=0 1392 <==
 000.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
 001.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
 001.rb:5:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
-002.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+002.rb:2:3: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
 003.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+004.rb:2:3: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+005.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
+006.rb:1:1: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
 
 ==> corrected/000.rb 34 <==
 obj[:key] = { foo: } if condition
@@ -20,9 +26,22 @@ obj.do_something(foo:) if condition
 
 obj&.do_something(foo:) if condition
 
-==> corrected/002.rb 25 <==
+==> corrected/002.rb 71 <==
+def do_something(foo)
+  return obj.do_something(foo:) if condition
+end
+
+==> corrected/003.rb 42 <==
+bar = obj.do_something(foo:) if condition
+
+==> corrected/004.rb 78 <==
+def do_something(foo)
+  return obj.do_something( bar, foo: ) if condition
+end
+
+==> corrected/005.rb 25 <==
 obj.(attr:) if condition
 
-==> corrected/003.rb 26 <==
+==> corrected/006.rb 26 <==
 obj&.(attr:) if condition
 

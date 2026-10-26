@@ -1,0 +1,22 @@
+==> .rubocop.yml 141 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Style/For:
+  EnforcedStyle: each
+
+==> 000.rb 36 <==
+for _ in [1, 2, 3] do
+  puts it
+end
+
+==> 001.rb 51 <==
+[[9]].each do
+  for x in [1]
+    p it, x
+  end
+end
+

@@ -47,3 +47,18 @@ hash.fetch(:key) { |k| "missing-#{k}" }
 ==> 013.rb 35 <==
 Rails.cache.fetch(:key) { :value }
 
+==> 014.rb 24 <==
+hash.fetch(*args) { 5 }
+
+==> 015.rb 25 <==
+hash&.fetch(*args) { 5 }
+
+==> 016.rb 28 <==
+hash.fetch(**options) { 5 }
+
+==> 017.rb 30 <==
+hash.fetch(key: :value) { 5 }
+
+==> 018.rb 34 <==
+hash.fetch({ key: :value }) { 5 }
+

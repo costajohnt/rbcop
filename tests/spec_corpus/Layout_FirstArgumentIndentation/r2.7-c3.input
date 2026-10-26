@@ -202,17 +202,30 @@ instance_variable_set(
       .ids,
 )
 
-==> 031.rb 36 <==
+==> 031.rb 55 <==
+foo.bar(
+  baz(:qux).quux(
+corge,
+    grault).garply
+)
+
+==> 032.rb 33 <==
+foo(bar, baz.qux(
+quux,
+corge
+))
+
+==> 033.rb 36 <==
 run :foo, defaults.merge(
   bar: 3)
 
-==> 032.rb 88 <==
+==> 034.rb 88 <==
 run :foo, Diagnostic.where(
               'limit >= 10',
             )
             .ids
 
-==> 033.rb 145 <==
+==> 035.rb 145 <==
 sequences = CourseSequence
   .includes(
       course_sequence_memberships: {
@@ -221,7 +234,7 @@ sequences = CourseSequence
     )
   .joins(:courses)
 
-==> 034.rb 137 <==
+==> 036.rb 137 <==
 sequences = CourseSequence
   .includes(
     course_sequence_memberships: {

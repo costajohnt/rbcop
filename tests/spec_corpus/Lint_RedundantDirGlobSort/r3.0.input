@@ -16,40 +16,65 @@ Dir.glob(Rails.root.join('test', '*.rb')).sort.each(&method(:require))
 Dir['./lib/**/*.rb'].sort.each do |file|
 end
 
-==> 003.rb 50 <==
+==> 003.rb 53 <==
+Dir
+  .glob(pattern)
+  .sort
+  .each do |file|
+  end
+
+==> 004.rb 63 <==
+Dir
+  .glob(pattern) # comment
+  .sort
+  .each do |file|
+  end
+
+==> 005.rb 60 <==
+Dir.glob(pattern). # comment
+  sort.
+  each { |file| file }
+
+==> 006.rb 50 <==
+Dir.glob(pattern).
+  sort.
+  each do |file|
+  end
+
+==> 007.rb 50 <==
 Dir['./lib/**/*.rb'].sort.each(&method(:require))
 
-==> 004.rb 67 <==
+==> 008.rb 67 <==
 Dir.glob(Rails.root.join('test', '*.rb'), sort: false).each do
 end
 
-==> 005.rb 64 <==
+==> 009.rb 64 <==
 Dir.glob('./b/*.txt', './a/*.txt').sort.each(&method(:require))
 
-==> 006.rb 45 <==
+==> 010.rb 45 <==
 Dir.glob(*path).sort.each(&method(:require))
 
-==> 007.rb 59 <==
+==> 011.rb 59 <==
 Dir['./b/*.txt', './a/*.txt'].sort.each(&method(:require))
 
-==> 008.rb 40 <==
+==> 012.rb 40 <==
 Dir[*path].sort.each(&method(:require))
 
-==> 009.rb 31 <==
+==> 013.rb 31 <==
 Dir.glob('./lib/**/*.rb').sort
 
-==> 010.rb 24 <==
+==> 014.rb 24 <==
 sort { |a, b| a <=> b }
 
-==> 011.rb 74 <==
+==> 015.rb 74 <==
 Dir.glob('./lib/**/*.rb').sort { |a, b| b <=> a }.each(&method(:require))
 
-==> 012.rb 69 <==
+==> 016.rb 69 <==
 Dir.glob('./lib/**/*.rb').sort { _2 <=> _1 }.each(&method(:require))
 
-==> 013.rb 68 <==
+==> 017.rb 68 <==
 Dir.glob('./lib/**/*.rb').sort(&comparator).each(&method(:require))
 
-==> 014.rb 16 <==
+==> 018.rb 16 <==
 collection.sort
 

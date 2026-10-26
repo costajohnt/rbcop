@@ -1,0 +1,27 @@
+==> .rubocop.yml 223 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/HashAlignment:
+  EnforcedHashRocketStyle:
+  - key
+  - separator
+  EnforcedColonStyle:
+  - key
+  - separator
+
+==> 000.rb 55 <==
+{
+  'short' => a,
+    'considerably_longer_key' => b
+}
+
+==> 001.rb 53 <==
+{
+  'short' => a,
+  'considerably_longer_key' => b
+}
+

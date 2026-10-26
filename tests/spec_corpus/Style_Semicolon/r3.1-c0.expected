@@ -1,12 +1,24 @@
-==> offenses exit=1 284 <==
+==> offenses exit=1 854 <==
 000.rb:1:15: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
 001.rb:1:8: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
 002.rb:1:12: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+003.rb:1:10: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+004.rb:1:25: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+005.rb:1:15: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+006.rb:1:13: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+007.rb:2:13: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
+008.rb:2:13: C: [Correctable] Style/Semicolon: Do not use semicolons to terminate expressions.
 
-==> autocorrect exit=0 278 <==
+==> autocorrect exit=0 836 <==
 000.rb:1:15: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
 001.rb:1:8: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
 002.rb:1:12: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+003.rb:1:10: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+004.rb:1:25: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+005.rb:1:15: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+006.rb:1:13: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+007.rb:2:13: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
+008.rb:2:13: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
 
 ==> corrected/000.rb 29 <==
 m(key1:, key2:)
@@ -19,4 +31,30 @@ do_something
 ==> corrected/002.rb 26 <==
 obj&.m(key:)
 do_something
+
+==> corrected/003.rb 24 <==
+m(1, key:)
+do_something
+
+==> corrected/004.rb 39 <==
+obj.m(1, 2, key1:, key2:)
+do_something
+
+==> corrected/005.rb 29 <==
+obj&.m(1, key:)
+do_something
+
+==> corrected/006.rb 28 <==
+m("str", key:)
+do_something
+
+==> corrected/007.rb 31 <==
+def foo(key)
+  yield(key:)
+end
+
+==> corrected/008.rb 31 <==
+def foo(key)
+  super(key:)
+end
 

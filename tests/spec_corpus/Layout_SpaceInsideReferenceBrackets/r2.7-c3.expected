@@ -1,4 +1,4 @@
-==> offenses exit=1 1613 <==
+==> offenses exit=1 1806 <==
 003.rb:1:2: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
 004.rb:1:9: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
 005.rb:1:28: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
@@ -15,8 +15,10 @@
 016.rb:1:8: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
 016.rb:1:16: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
 016.rb:1:18: C: Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+017.rb:1:4: C: [Correctable] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+017.rb:1:18: C: Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
 
-==> autocorrect exit=0 1319 <==
+==> autocorrect exit=0 1420 <==
 003.rb:1:2: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
 004.rb:1:9: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
 005.rb:1:28: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
@@ -30,6 +32,7 @@
 016.rb:1:2: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
 016.rb:1:8: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
 016.rb:1:16: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
+017.rb:1:4: C: [Corrected] Layout/SpaceInsideReferenceBrackets: Use space inside reference brackets.
 
 ==> corrected/003.rb 30 <==
 a[ "foo" ] = b[ "something" ]
@@ -63,4 +66,7 @@ b[ 89 ]
 
 ==> corrected/016.rb 24 <==
 a[ :key ][ "foo" ][ 0 ]
+
+==> corrected/017.rb 21 <==
+foo[ bar[ 0 ][ 1 ] ]
 

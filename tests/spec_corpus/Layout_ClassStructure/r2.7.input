@@ -254,7 +254,50 @@ class Foo
   EOS
 end
 
-==> 020.rb 133 <==
+==> 020.rb 73 <==
+class Foo
+  def do_something
+  end
+  CONSTANT = <<~EOS
+    str
+  EOS
+end
+
+==> 021.rb 103 <==
+class Foo
+  def do_something
+  end
+  CONSTANT = <<~EOS
+    str
+  EOS
+  def do_something_else
+  end
+end
+
+==> 022.rb 112 <==
+class Foo
+  def do_something
+  end
+
+  CONSTANT = {
+    foo: <<~EOS,
+      str
+    EOS
+    bar: 1
+  }.freeze
+end
+
+==> 023.rb 83 <==
+class Foo
+  def do_something
+  end
+
+  include Module.new(<<~EOS)
+    str
+  EOS
+end
+
+==> 024.rb 133 <==
 class Foo
   def instance_method
     'instance method'
@@ -267,7 +310,7 @@ class Foo
   end
 end
 
-==> 021.rb 60 <==
+==> 025.rb 60 <==
 class A
   private def foo
   end
@@ -276,7 +319,7 @@ class A
   end
 end
 
-==> 022.rb 53 <==
+==> 026.rb 53 <==
 class A
   private def foo
   end
@@ -285,7 +328,7 @@ class A
   end
 end
 
-==> 023.rb 91 <==
+==> 027.rb 91 <==
 class A
   private def foo; end
 
@@ -296,7 +339,7 @@ class A
   def qux; end
 end
 
-==> 024.rb 118 <==
+==> 028.rb 118 <==
 class A
   private_class_method def self.do_internal_work
   end
@@ -305,7 +348,7 @@ class A
   end
 end
 
-==> 025.rb 118 <==
+==> 029.rb 118 <==
 class A
   public_class_method def self.do_something
   end
@@ -314,7 +357,7 @@ class A
   end
 end
 
-==> 026.rb 104 <==
+==> 030.rb 104 <==
 class A
   private
 
@@ -325,7 +368,7 @@ class A
   end
 end
 
-==> 027.rb 104 <==
+==> 031.rb 104 <==
 class A
   private
 
@@ -336,7 +379,7 @@ class A
   end
 end
 
-==> 028.rb 60 <==
+==> 032.rb 60 <==
 class A
   def foo
   end
@@ -346,7 +389,85 @@ class A
   end
 end
 
-==> 029.rb 68 <==
+==> 033.rb 83 <==
+class A
+  def foo
+  end
+
+  def baz
+  end
+  private :foo, :baz
+
+  def bar
+  end
+end
+
+==> 034.rb 66 <==
+class A
+  def bar
+  end
+
+  def foo
+  end
+  private :foo, :baz
+end
+
+==> 035.rb 118 <==
+class A
+  def self.do_internal_work
+  end
+  private_class_method :do_internal_work
+
+  def self.do_something
+  end
+end
+
+==> 036.rb 166 <==
+class A
+  def self.first_internal
+  end
+
+  def self.second_internal
+  end
+  private_class_method :first_internal, :second_internal
+
+  def self.do_something
+  end
+end
+
+==> 037.rb 118 <==
+class A
+  def self.do_something
+  end
+
+  def self.do_internal_work
+  end
+  private_class_method :do_internal_work
+end
+
+==> 038.rb 143 <==
+class A
+  def self.do_something
+  end
+  private_class_method :do_something
+  public_class_method :do_something
+
+  def do_other_thing
+  end
+end
+
+==> 039.rb 82 <==
+class A
+  private
+
+  def self.still_public
+  end
+
+  def instance_method
+  end
+end
+
+==> 040.rb 68 <==
 class A
   private
 
@@ -356,14 +477,14 @@ class A
   end
 end
 
-==> 030.rb 62 <==
+==> 041.rb 62 <==
 class Foo
   def do_something; end
   include M
   CONST = 1
 end
 
-==> 031.rb 91 <==
+==> 042.rb 91 <==
 class Foo
   def self.do_something; end
 
@@ -373,28 +494,28 @@ class Foo
   CONST = 1
 end
 
-==> 032.rb 63 <==
+==> 043.rb 63 <==
 class Foo
   def do_something; end
   FIRST = 1
   SECOND = 2
 end
 
-==> 033.rb 74 <==
+==> 044.rb 74 <==
 class Foo
   def do_something; end
   CONST = [*foo].freeze
   include M
 end
 
-==> 034.rb 81 <==
+==> 045.rb 81 <==
 class Foo
   validates :name
   CONST = do_something.freeze
   attr_reader :foo
 end
 
-==> 035.rb 95 <==
+==> 046.rb 95 <==
 class Foo
   def do_something; end
   FIRST = 1
@@ -402,7 +523,7 @@ class Foo
   SECOND = 2
 end
 
-==> 036.rb 88 <==
+==> 047.rb 88 <==
 class Foo
   private
 
@@ -413,7 +534,7 @@ class Foo
   def do_something; end
 end
 
-==> 037.rb 83 <==
+==> 048.rb 83 <==
 class Foo
   private
 
@@ -424,7 +545,7 @@ class Foo
   attr_reader :foo
 end
 
-==> 038.rb 62 <==
+==> 049.rb 62 <==
 class Foo
   def do_something; end
 
@@ -433,14 +554,14 @@ class Foo
   CONST = 1
 end
 
-==> 039.rb 86 <==
+==> 050.rb 86 <==
 class << self
   CONST = 'wrong place'
   include AnotherModule
   extend SomeModule
 end
 
-==> 040.rb 59 <==
+==> 051.rb 59 <==
 class Foo
   attr_accessor :foo
   CONST = 'wrong place'

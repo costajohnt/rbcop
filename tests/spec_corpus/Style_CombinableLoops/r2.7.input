@@ -26,24 +26,165 @@ items.each { |item| foo(item) }
 items.each { |item| bar(item) }
 items.each { |item| baz(item) }
 
-==> 003.rb 58 <==
+==> 003.rb 104 <==
+items.each do |item|
+  foo(item)
+end
+items.each { |item| bar(item) }
+items.reject! { |item| baz(item) }
+
+==> 004.rb 95 <==
+items.each do |item|
+  foo(item)
+end
+items.each { |item| bar(item) }
+items.each { |x| baz(x) }
+
+==> 005.rb 91 <==
+items.each do |item|
+  foo(item)
+end
+items.each { |item| bar(item) }
+items.each { |item| }
+
+==> 006.rb 58 <==
 items.each { |item| foo(item) }
 items.each { |x| bar(x) }
 
-==> 004.rb 69 <==
+==> 007.rb 96 <==
+items.each { |item| foo(item) }
+items.each do |item|
+  bar(item)
+rescue StandardError
+  baz
+end
+
+==> 008.rb 82 <==
+items.each do |item|
+  foo(item)
+ensure
+  baz
+end
+items.each { |item| bar(item) }
+
+==> 009.rb 69 <==
 items.each { foo(_1) }
 items.each { bar(_1) }
 items.each { baz(_1) }
 
-==> 005.rb 93 <==
+==> 010.rb 50 <==
+items.each { foo(_1) }
+items.each { bar(_1, _2) }
+
+==> 011.rb 55 <==
+items.each { foo(_1) }
+items.each { |item| bar(item) }
+
+==> 012.rb 93 <==
 items.each do |item| do_something(item) end
 items.each { |item| do_something_else item, arg}
 
-==> 006.rb 95 <==
+==> 013.rb 95 <==
 items.each { |item| do_something(item) }
 items.each do |item| do_something_else(item, arg) end
 
-==> 007.rb 262 <==
+==> 014.rb 101 <==
+items.each { |item| foo(item) }
+items.each do |item|
+  bar(item)
+end
+items.each { |item| baz(item) }
+
+==> 015.rb 101 <==
+items.each do |item|
+  foo(item)
+end
+items.each { |item| bar(item) }
+items.each { |item| baz(item) }
+
+==> 016.rb 141 <==
+items.each do |item|
+  foo(item)
+end
+items.each { |item| bar(item) } # rubocop:disable Style/CombinableLoops
+items.each { |item| baz(item) }
+
+==> 017.rb 141 <==
+items.each do |item|
+  foo(item)
+end
+items.each { |item| bar(item) }
+items.each { |item| baz(item) } # rubocop:disable Style/CombinableLoops
+
+==> 018.rb 141 <==
+items.each { |item| foo(item) }
+items.each do |item|
+  bar(item)
+end # rubocop:disable Style/CombinableLoops
+items.each { |item| baz(item) }
+
+==> 019.rb 141 <==
+items.each { |item| foo(item) }
+items.each do |item|
+  bar(item) # rubocop:disable Style/CombinableLoops
+end
+items.each { |item| baz(item) }
+
+==> 020.rb 95 <==
+items.each do |item|
+  foo(item) # important
+  # more
+end
+items.each do |item|
+  bar(item)
+end
+
+==> 021.rb 127 <==
+items.each { |item| foo(item) # first
+  # more
+}
+items.each do |item|
+  bar(item) # second
+end
+items.each { |item| baz(item) }
+
+==> 022.rb 82 <==
+items.each do |item|
+  foo(item) # important
+end; items.each { |item| bar(item) }
+
+==> 023.rb 100 <==
+items.each do |item|
+  foo(item)
+end
+items.each do |item| # second loop
+  # explain
+  bar(item)
+end
+
+==> 024.rb 62 <==
+items.each { foo(_1) }
+items.each { # second loop
+  bar(_1)
+}
+
+==> 025.rb 120 <==
+items.each { |item| foo(item) }
+items.each do |item| # rubocop:disable Lint/ShadowingOuterLocalVariable
+  bar(item)
+end
+
+==> 026.rb 91 <==
+items.each do |item|
+  foo(<<~EOS)
+    text
+  EOS
+end
+items.each do |item|
+  bar(item)
+end
+
+==> 027.rb 262 <==
 items.each { do_something(_1) }
 items.each { do_something_else(_1, arg) }
 
@@ -53,70 +194,94 @@ items.each_with_index { do_something_else(_1, arg) }
 items.reverse_each { do_something(_1) }
 items.reverse_each { do_something_else(_1, arg) }
 
-==> 008.rb 104 <==
+==> 028.rb 104 <==
 items.each { |item| do_something(item) }
 
 some_code
 
 items.each { |item| do_something_else(item, arg) }
 
-==> 009.rb 79 <==
+==> 029.rb 79 <==
 items.each { |item| do_something(item) }
 bars.each { |bar| do_something(bar) }
 
-==> 010.rb 90 <==
+==> 030.rb 90 <==
 items.reverse_each { |item| do_something(item) }
 items.each { |item| do_something(item) }
 
-==> 011.rb 118 <==
+==> 031.rb 118 <==
 if condition
   items.each { |item| do_something(item) }
 else
   items.each { |item| do_something_else(item, arg) }
 end
 
-==> 012.rb 92 <==
+==> 032.rb 92 <==
 each_slice(2) { |slice| do_something(slice) }
 each_slice(3) { |slice| do_something(slice) }
 
-==> 013.rb 92 <==
+==> 033.rb 92 <==
 foo(:bar)&.each { |item| do_something(item) }
 foo(:baz)&.each { |item| do_something(item) }
 
-==> 014.rb 98 <==
+==> 034.rb 98 <==
 for item in items do do_something(item) end
 for item in items do do_something_else(item, arg) end
 
-==> 015.rb 110 <==
+==> 035.rb 95 <==
+for item in items do
+  foo(item) # important
+  # more
+end
+for item in items do
+  bar(item)
+end
+
+==> 036.rb 94 <==
+for item in items
+  foo(item)
+end
+for item in items # second loop
+  # explain
+  bar(item)
+end
+
+==> 037.rb 100 <==
+for item in items do foo(item) end
+for item in items do # rubocop:disable Lint/Void
+  bar(item)
+end
+
+==> 038.rb 110 <==
 for item in items do do_something(item) end
 
 some_code
 
 for item in items do do_something_else(item, arg) end
 
-==> 016.rb 85 <==
+==> 039.rb 85 <==
 for item in items do do_something(item) end
 for foo in foos do do_something(foo) end
 
-==> 017.rb 124 <==
+==> 040.rb 124 <==
 if condition
   for item in items do do_something(item) end
 else
   for item in items do do_something_else(item, arg) end
 end
 
-==> 018.rb 28 <==
+==> 041.rb 28 <==
 items.each {}
 items.each {}
 
-==> 019.rb 65 <==
+==> 042.rb 65 <==
 for item in items
   do_something(item)
 end
 for item in items
 end
 
-==> 020.rb 95 <==
+==> 043.rb 95 <==
 for item in items do do_something(item) end
 for other in items do do_something_else(other) end
 

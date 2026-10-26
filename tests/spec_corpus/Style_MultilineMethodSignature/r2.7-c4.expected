@@ -1,10 +1,12 @@
-==> offenses exit=1 97 <==
-000.rb:1:1: C: [Correctable] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+==> offenses exit=1 98 <==
+000.rb:2:11: C: [Correctable] Style/MultilineMethodSignature: Avoid multi-line method signatures.
 
-==> autocorrect exit=0 95 <==
-000.rb:1:1: C: [Corrected] Style/MultilineMethodSignature: Avoid multi-line method signatures.
+==> autocorrect exit=0 96 <==
+000.rb:2:11: C: [Corrected] Style/MultilineMethodSignature: Avoid multi-line method signatures.
 
-==> corrected/000.rb 17 <==
-def foo(bar)
+==> corrected/000.rb 48 <==
+class Foo
+  private def bar(baz, qux)
+  end
 end
 

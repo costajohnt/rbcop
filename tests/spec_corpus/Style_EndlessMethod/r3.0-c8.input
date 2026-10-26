@@ -1,0 +1,114 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Style/EndlessMethod:
+  EnforcedStyle: require_always
+
+==> 000.rb 31 <==
+def foo
+  @foo ||= bar baz
+end
+
+==> 001.rb 35 <==
+def foo
+  foo = @foo = bar baz
+end
+
+==> 002.rb 40 <==
+def foo
+  @foo = bar baz rescue nil
+end
+
+==> 003.rb 31 <==
+def foo
+  @foo = yield baz
+end
+
+==> 004.rb 32 <==
+def foo
+  obj.foo = bar baz
+end
+
+==> 005.rb 37 <==
+def foo
+  @foo = bar baz { qux }
+end
+
+==> 006.rb 40 <==
+def foo(x)
+  bar x do
+    baz
+  end
+end
+
+==> 007.rb 44 <==
+def foo(x)
+  bar x do
+    baz
+  end.qux
+end
+
+==> 008.rb 37 <==
+private def foo(x)
+  bar :baz, x
+end
+
+==> 009.rb 43 <==
+private def foo
+  bar do
+    baz
+  end
+end
+
+==> 010.rb 51 <==
+private def foo
+  obj.bar do
+    baz
+  end.qux
+end
+
+==> 011.rb 44 <==
+private(def foo
+  bar do
+    baz
+  end
+end)
+
+==> 012.rb 34 <==
+private def foo
+  bar { baz }
+end
+
+==> 013.rb 42 <==
+private def foo
+  -> do
+    baz
+  end
+end
+
+==> 014.rb 36 <==
+def foo
+  !obj.do_something bar
+end
+
+==> 015.rb 37 <==
+def foo
+  !obj.do_something(bar)
+end
+
+==> 016.rb 32 <==
+def foo
+  @foo ||= bar(baz)
+end
+
+==> 017.rb 41 <==
+def foo(x)
+  bar(x) do
+    baz
+  end
+end
+

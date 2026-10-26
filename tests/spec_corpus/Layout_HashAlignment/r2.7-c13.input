@@ -1,4 +1,4 @@
-==> .rubocop.yml 158 <==
+==> .rubocop.yml 193 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -6,24 +6,26 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 2.7
 Layout/HashAlignment:
-  EnforcedColonStyle: table
+  EnforcedHashRocketStyle: key
+  EnforcedColonStyle: separator
 
-==> 000.rb 20 <==
-foo ab: 1,
-    c: 2
+==> 000.rb 70 <==
+hash1 = {
+  a:   0,
+  bbb: 1
+}
+hash2 = {
+    'a' => 0,
+  'bbb' => 1
+}
 
-==> 001.rb 14 <==
-foo({**rest})
-
-==> 002.rb 28 <==
-foo ab: 1,
-    c: 2, **rest
-
-==> 003.rb 27 <==
-foo a: 1,
-    b: 2, **rest
-
-==> 004.rb 23 <==
-foo a: 1,
-      **rest
+==> 001.rb 68 <==
+hash1 = {
+    a: 0,
+  bbb: 1
+}
+hash2 = {
+  'a' => 0,
+  'bbb' => 1
+}
 

@@ -444,3 +444,31 @@ def test
   end
 end
 
+==> 064.rb 33 <==
+	begin
+		foo
+  rescue
+		bar
+	end
+
+==> 065.rb 35 <==
+	def foo
+		bar
+		ensure
+		baz
+	end
+
+==> 066.rb 32 <==
+	begin
+		foo
+	rescue
+		bar
+	end
+
+==> 067.rb 39 <==
+	x = [begin
+		foo
+  rescue
+		bar
+	end]
+

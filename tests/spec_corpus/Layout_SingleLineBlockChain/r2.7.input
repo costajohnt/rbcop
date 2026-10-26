@@ -34,3 +34,13 @@ example.select do |item|
   item.cond?
 end.join('-')
 
+==> 008.rb 61 <==
+<<~TEXT.each_line.map { |line| line.strip }.join
+  text
+TEXT
+
+==> 009.rb 54 <==
+example.map { |item| item.name }.join(<<~SEP)
+  ,
+SEP
+

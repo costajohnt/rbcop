@@ -19,47 +19,67 @@ obj&.method(<<~EOS) rescue handle
   str
 EOS
 
-==> 003.rb 44 <==
+==> 003.rb 41 <==
+foo(bar(<<~EOS)) rescue handle
+  str
+EOS
+
+==> 004.rb 41 <==
+x = <<~EOS.strip rescue handle
+  str
+EOS
+
+==> 005.rb 31 <==
+<<~EOS rescue handle
+  str
+EOS
+
+==> 006.rb 36 <==
+raise rescue puts(<<~EOS)
+  str
+EOS
+
+==> 007.rb 44 <==
 method(<<~EOS, var) rescue handle
   str
 EOS
 
-==> 004.rb 63 <==
+==> 008.rb 63 <==
 method(<<~EOS1, <<~EOS2) rescue handle
   str1
 EOS1
   str2
 EOS2
 
-==> 005.rb 23 <==
+==> 009.rb 23 <==
 a, b = 1, 2 rescue nil
 
-==> 006.rb 33 <==
+==> 010.rb 33 <==
 method1 or method2 rescue handle
 
-==> 007.rb 63 <==
+==> 011.rb 63 <==
 begin
   test rescue modifier_handle
 rescue
   normal_handle
 end
 
-==> 008.rb 35 <==
+==> 012.rb 35 <==
 def a_method
   test rescue nil
 end
 
-==> 009.rb 17 <==
+==> 013.rb 17 <==
 (foo rescue nil)
 
-==> 010.rb 33 <==
+==> 014.rb 33 <==
 begin
   test
 rescue
   handle
 end
 
-==> 011.rb 50 <==
+==> 015.rb 50 <==
 begin
   test
 rescue
@@ -68,7 +88,7 @@ ensure
   cleanup
 end
 
-==> 012.rb 81 <==
+==> 016.rb 81 <==
 begin
   begin
     test
@@ -79,39 +99,42 @@ rescue
   handle_outer
 end
 
-==> 013.rb 43 <==
+==> 017.rb 43 <==
 def some_method
   test
 rescue
   handle
 end
 
-==> 014.rb 73 <==
+==> 018.rb 73 <==
 def some_method
   test rescue modifier_handle
 rescue
   normal_handle
 end
 
-==> 015.rb 48 <==
+==> 019.rb 48 <==
 def self.some_method
   test
 rescue
   handle
 end
 
-==> 016.rb 78 <==
+==> 020.rb 78 <==
 def self.some_method
   test rescue modifier_handle
 rescue
   normal_handle
 end
 
-==> 017.rb 22 <==
+==> 021.rb 22 <==
 foo || bar rescue bar
 
-==> 018.rb 23 <==
+==> 022.rb 23 <==
 blah rescue 1 rescue 2
 
-==> 019/foo.rb 14 <==
+==> 023.rb 28 <==
+foo rescue (bar rescue baz)
+
+==> 024/foo.rb 14 <==
 foo rescue bar

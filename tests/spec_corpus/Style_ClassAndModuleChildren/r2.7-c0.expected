@@ -1,4 +1,4 @@
-==> offenses exit=1 1210 <==
+==> offenses exit=1 1331 <==
 000.rb:1:7: C: [Correctable] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
 001.rb:4:7: C: [Correctable] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
 002.rb:4:7: C: [Correctable] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
@@ -8,9 +8,10 @@
 006.rb:1:8: C: [Correctable] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
 007.rb:2:7: C: [Correctable] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
 014.rb:1:7: C: [Correctable] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
-018.rb:4:9: C: [Correctable] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
+018.rb:2:7: C: [Correctable] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
+019.rb:4:9: C: [Correctable] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
 
-==> autocorrect exit=0 1190 <==
+==> autocorrect exit=0 1309 <==
 000.rb:1:7: C: [Corrected] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
 001.rb:4:7: C: [Corrected] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
 002.rb:4:7: C: [Corrected] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
@@ -20,7 +21,8 @@
 006.rb:1:8: C: [Corrected] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
 007.rb:2:7: C: [Corrected] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
 014.rb:1:7: C: [Corrected] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
-018.rb:4:9: C: [Corrected] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
+018.rb:2:7: C: [Corrected] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
+019.rb:4:9: C: [Corrected] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
 
 ==> corrected/000.rb 43 <==
 module FooClass
@@ -87,7 +89,14 @@ module ::FooClass
   end
 end
 
-==> corrected/018.rb 91 <==
+==> corrected/018.rb 47 <==
+X =
+module FooClass
+  class BarClass
+  end
+end
+
+==> corrected/019.rb 91 <==
 module Wrap
   class Other
   end

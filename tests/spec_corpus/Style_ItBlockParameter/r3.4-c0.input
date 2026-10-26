@@ -38,3 +38,7 @@ block { do_something(_1, _2) }
 ==> 007.rb 27 <==
 block { do_something(_2) }
 
+==> 008.rb 45 <==
+it = do_something
+block { do_something(_1) }
+

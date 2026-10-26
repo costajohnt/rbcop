@@ -1,4 +1,4 @@
-==> offenses exit=1 2001 <==
+==> offenses exit=1 2700 <==
 012.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
 014.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
 015.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
@@ -18,12 +18,20 @@
 029.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
 030.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
 031.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
-036.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
-036.rb:4:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
-044.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
-045.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+032.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+037.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+037.rb:4:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+038.rb:1:3: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+046.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+047.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+062.rb:1:1: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+063.rb:1:2: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+063.rb:2:10: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+064.rb:1:2: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+064.rb:2:11: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
+064.rb:3:20: C: [Correctable] Layout/RedundantLineBreak: Redundant line break detected.
 
-==> autocorrect exit=0 1955 <==
+==> autocorrect exit=0 2638 <==
 012.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
 014.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
 015.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
@@ -43,10 +51,18 @@
 029.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
 030.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
 031.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
-036.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
-036.rb:4:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
-044.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
-045.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+032.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+037.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+037.rb:4:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+038.rb:1:3: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+046.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+047.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+062.rb:1:1: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+063.rb:1:2: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+063.rb:2:10: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+064.rb:1:2: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+064.rb:2:11: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
+064.rb:3:20: C: [Corrected] Layout/RedundantLineBreak: Redundant line break detected.
 
 ==> corrected/012.rb 18 <==
 my_method(1) [:a]
@@ -106,23 +122,38 @@ b = m(4 + 5 + 6)
 long_variable_name = m(7 + 8 + 9)
 
 ==> corrected/029.rb 19 <==
+a = b ||= { x: 1 }
+
+==> corrected/030.rb 19 <==
 foo(' .x').bar.baz
 
-==> corrected/030.rb 21 <==
+==> corrected/031.rb 21 <==
 foo(x, y, z).bar.baz
 
-==> corrected/031.rb 24 <==
+==> corrected/032.rb 24 <==
 foo('........').bar.baz
 
-==> corrected/036.rb 70 <==
+==> corrected/037.rb 70 <==
 my_method(11111, 22222, "abcxyz")
 my_method(111111 + 222222 + 333333)
 
-==> corrected/044.rb 90 <==
+==> corrected/038.rb 31 <==
+		foo('aaaaaaaaaaabbbbbbbbbb')
+
+==> corrected/046.rb 90 <==
 context 'when the configuration includes an unsafe cop that is 123456789012345678' do
 end
 
-==> corrected/045.rb 87 <==
+==> corrected/047.rb 87 <==
 context 'when the configuration includes an unsafe cop that is 123456789012345' do
 end
+
+==> corrected/062.rb 37 <==
+do_something(foo(a, b) => bar(c, d))
+
+==> corrected/063.rb 23 <==
+[foo(a, b), bar(c, d)]
+
+==> corrected/064.rb 37 <==
+[fooo(a, b), baar(c, d), baaz(e, f)]
 

@@ -23,74 +23,92 @@ def foo = (true and bar)
 ==> 004.rb 23 <==
 def foo = true and bar
 
-==> 005.rb 19 <==
+==> 005.rb 28 <==
+def self.foo = true and bar
+
+==> 006.rb 19 <==
 def foo
 end or bar
 
-==> 006.rb 24 <==
+==> 007.rb 24 <==
 def foo = (true or bar)
 
-==> 007.rb 24 <==
+==> 008.rb 24 <==
 (def foo = true) or bar
 
-==> 008.rb 22 <==
+==> 009.rb 22 <==
 def foo = true or bar
 
-==> 009.rb 19 <==
+==> 010.rb 27 <==
+def self.foo = true or bar
+
+==> 011.rb 19 <==
 def foo
 end if bar
 
-==> 010.rb 24 <==
+==> 012.rb 24 <==
 def foo = (true if bar)
 
-==> 011.rb 24 <==
+==> 013.rb 24 <==
 (def foo = true) if bar
 
-==> 012.rb 22 <==
+==> 014.rb 22 <==
 def foo = true if bar
 
-==> 013.rb 23 <==
+==> 015.rb 27 <==
+def self.foo = true if bar
+
+==> 016.rb 23 <==
 def foo
 end unless bar
 
-==> 014.rb 28 <==
+==> 017.rb 28 <==
 def foo = (true unless bar)
 
-==> 015.rb 28 <==
+==> 018.rb 28 <==
 (def foo = true) unless bar
 
-==> 016.rb 26 <==
+==> 019.rb 26 <==
 def foo = true unless bar
 
-==> 017.rb 22 <==
-def foo
-end while bar
-
-==> 018.rb 27 <==
-def foo = (true while bar)
-
-==> 019.rb 27 <==
-(def foo = true) while bar
-
-==> 020.rb 25 <==
-def foo = true while bar
+==> 020.rb 31 <==
+def self.foo = true unless bar
 
 ==> 021.rb 22 <==
 def foo
-end until bar
+end while bar
 
 ==> 022.rb 27 <==
-def foo = (true until bar)
+def foo = (true while bar)
 
 ==> 023.rb 27 <==
-(def foo = true) until bar
+(def foo = true) while bar
 
 ==> 024.rb 25 <==
-def foo = true until bar
+def foo = true while bar
 
-==> 025.rb 22 <==
-def foo = true && bar
+==> 025.rb 30 <==
+def self.foo = true while bar
 
 ==> 026.rb 22 <==
+def foo
+end until bar
+
+==> 027.rb 27 <==
+def foo = (true until bar)
+
+==> 028.rb 27 <==
+(def foo = true) until bar
+
+==> 029.rb 25 <==
+def foo = true until bar
+
+==> 030.rb 30 <==
+def self.foo = true until bar
+
+==> 031.rb 22 <==
+def foo = true && bar
+
+==> 032.rb 22 <==
 def foo = true || bar
 

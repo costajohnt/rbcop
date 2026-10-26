@@ -1,55 +1,75 @@
-==> offenses exit=1 1200 <==
+==> offenses exit=1 1866 <==
 000.rb:1:1: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
-001.rb:1:14: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
-002.rb:1:14: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
-003.rb:1:5: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
-004.rb:1:1: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+004.rb:2:8: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
 005.rb:1:1: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
-006.rb:1:1: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
-007.rb:1:12: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
-008.rb:1:1: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+006.rb:1:14: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+007.rb:1:14: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+008.rb:1:5: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+009.rb:1:1: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+010.rb:1:1: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+011.rb:1:1: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+012.rb:1:12: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+013.rb:1:1: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+014.rb:1:1: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+014.rb:1:5: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+014.rb:1:38: C: [Correctable] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
 
-==> autocorrect exit=0 1182 <==
+==> autocorrect exit=0 1838 <==
 000.rb:1:1: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
-001.rb:1:14: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
-002.rb:1:14: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
-003.rb:1:5: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
-004.rb:1:1: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+004.rb:2:8: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
 005.rb:1:1: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
-006.rb:1:1: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
-007.rb:1:12: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
-008.rb:1:1: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+006.rb:1:14: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+007.rb:1:14: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+008.rb:1:5: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+009.rb:1:1: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+010.rb:1:1: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+011.rb:1:1: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+012.rb:1:12: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+013.rb:1:1: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+014.rb:1:1: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+014.rb:1:5: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
+014.rb:1:38: C: [Corrected] Style/RedundantInterpolationUnfreeze: Don't unfreeze interpolated strings as they are already unfrozen.
 
 ==> corrected/000.rb 13 <==
 "#{foo} bar"
 
-==> corrected/001.rb 13 <==
+==> corrected/004.rb 24 <==
+"#{foo # comment
+} bar"
+
+==> corrected/005.rb 23 <==
+"#{foo} bar" # comment
+
+==> corrected/006.rb 13 <==
 "#{foo} bar"
 
-==> corrected/002.rb 13 <==
+==> corrected/007.rb 13 <==
 "#{foo} bar"
 
-==> corrected/003.rb 35 <==
+==> corrected/008.rb 35 <==
 foo(<<~MSG)
   foo #{bar}
   baz
 MSG
 
-==> corrected/004.rb 8 <==
+==> corrected/009.rb 8 <==
 "#$var"
 
-==> corrected/005.rb 8 <==
+==> corrected/010.rb 8 <==
 "#@var"
 
-==> corrected/006.rb 9 <==
+==> corrected/011.rb 9 <==
 "#@@var"
 
-==> corrected/007.rb 35 <==
+==> corrected/012.rb 35 <==
 foo(<<~MSG)
   foo #{bar}
   baz
 MSG
 
-==> corrected/008.rb 7 <==
+==> corrected/013.rb 7 <==
 "#{1}"
+
+==> corrected/014.rb 26 <==
+"#{"#{foo}"} #{"#{bar}"}"
 

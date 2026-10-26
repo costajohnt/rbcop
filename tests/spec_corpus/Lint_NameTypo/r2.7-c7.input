@@ -1,0 +1,14 @@
+==> .rubocop.yml 159 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Lint/NameTypo:
+  AllowedNames:
+  - generate_sumary
+
+==> 000.rb 23 <==
+Report.generate_sumary
+

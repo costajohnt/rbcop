@@ -50,70 +50,78 @@ puts 1
 puts 1
 
 ==> 011.rb 26 <==
+# encoding: BINARY
+puts 1
+
+==> 012.rb 32 <==
+# -*- coding: binary -*-
+puts 1
+
+==> 013.rb 26 <==
 # encoding: utf-8
 
 puts 1
 
-==> 012.rb 55 <==
+==> 014.rb 55 <==
 # encoding: utf-8
 # frozen_string_literal: true
 puts 1
 
-==> 013.rb 56 <==
+==> 015.rb 56 <==
 # encoding: utf-8
 # frozen_string_literal: false
 puts 1
 
-==> 014.rb 45 <==
+==> 016.rb 45 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 puts 1
 
-==> 015.rb 46 <==
+==> 017.rb 46 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 
 puts 1
 
-==> 016.rb 75 <==
+==> 018.rb 75 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 # frozen_string_literal: true
 puts 1
 
-==> 017.rb 77 <==
+==> 019.rb 77 <==
 #!/usr/bin/env ruby
 
 # encoding: utf-8
 
 # frozen_string_literal: true
-puts 1
-
-==> 018.rb 76 <==
-#!/usr/bin/env ruby
-# encoding: utf-8
-# frozen_string_literal: false
-puts 1
-
-==> 019.rb 75 <==
-#!/usr/bin/env ruby
-# frozen_string_literal: true
-# encoding: utf-8
 puts 1
 
 ==> 020.rb 76 <==
 #!/usr/bin/env ruby
+# encoding: utf-8
+# frozen_string_literal: false
+puts 1
+
+==> 021.rb 75 <==
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+# encoding: utf-8
+puts 1
+
+==> 022.rb 76 <==
+#!/usr/bin/env ruby
 # frozen_string_literal: false
 # encoding: utf-8
 puts 1
 
-==> 021.rb 100 <==
+==> 023.rb 100 <==
 #!/usr/bin/env ruby
 # -*- encoding: UTF-8; frozen_string_literal: true -*-
 # encoding: utf-8
 puts 1
 
-==> 022.rb 104 <==
+==> 024.rb 104 <==
 #!/usr/bin/env ruby
 # encoding: utf-8
 #
@@ -121,37 +129,37 @@ puts 1
 # frozen_string_literal: false
 puts 1
 
-==> 023.rb 56 <==
+==> 025.rb 56 <==
 # encoding: utf-8
 
 puts 1
 # frozen_string_literal: true
 
-==> 024.rb 8 <==
+==> 026.rb 8 <==
 
-puts 1
-
-==> 025.rb 37 <==
-# frozen_string_literal: TRUE
-puts 1
-
-==> 026.rb 38 <==
-# frozen_string_literal: FALSE
 puts 1
 
 ==> 027.rb 37 <==
-# frozen_string_literal: True
+# frozen_string_literal: TRUE
 puts 1
 
 ==> 028.rb 38 <==
-# frozen_string_literal: False
+# frozen_string_literal: FALSE
 puts 1
 
 ==> 029.rb 37 <==
-# frozen_string_literal: truE
+# frozen_string_literal: True
 puts 1
 
 ==> 030.rb 38 <==
+# frozen_string_literal: False
+puts 1
+
+==> 031.rb 37 <==
+# frozen_string_literal: truE
+puts 1
+
+==> 032.rb 38 <==
 # frozen_string_literal: falsE
 puts 1
 

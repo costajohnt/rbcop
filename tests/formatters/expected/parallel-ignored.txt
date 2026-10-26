@@ -1,1 +1,0 @@
--P/--parallel is being ignored because it is not compatible with -F/--fail-fast, --cache false.

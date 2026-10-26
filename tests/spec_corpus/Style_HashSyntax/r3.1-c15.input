@@ -1,4 +1,4 @@
-==> .rubocop.yml 223 <==
+==> .rubocop.yml 191 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -6,10 +6,23 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 3.1
 Style/HashSyntax:
-  EnforcedStyle: ruby19
+  EnforcedStyle: no_mixed_keys
   EnforcedShorthandSyntax: always
-  UseHashRocketsWithSymbolValues: true
 
-==> 000.rb 17 <==
-f(a: :sym, b: b)
+==> 000.rb 16 <==
+f(k => 1, b: b)
+
+==> 001.rb 17 <==
+f(:a => a, b: b)
+
+==> 002.rb 56 <==
+def do_something(if:, bar:)
+  f(:a => a, if:, bar:)
+end
+
+==> 003.rb 16 <==
+f(a: a, k => 1)
+
+==> 004.rb 17 <==
+f(a: a, :b => b)
 

@@ -1,4 +1,4 @@
-==> offenses exit=1 1230 <==
+==> offenses exit=1 1476 <==
 000.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
 001.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
 002.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
@@ -14,8 +14,11 @@
 032.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
 035.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
 036.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+037.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+038.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+039.rb:1:1: C: [Correctable] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
 
-==> autocorrect exit=0 1200 <==
+==> autocorrect exit=0 1440 <==
 000.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
 001.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
 002.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
@@ -31,6 +34,9 @@
 032.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
 035.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
 036.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+037.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+038.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
+039.rb:1:1: C: [Corrected] Style/CaseLikeIf: Convert `if-elsif` to `case-when`.
 
 ==> corrected/000.rb 53 <==
 case x
@@ -134,5 +140,39 @@ end
 case foo
 when /(?<name>.*)/
 when 123
+end
+
+==> corrected/037.rb 73 <==
+case x
+when 1
+  :one
+when 2
+  :two
+else
+  if x == 3
+    :three
+  end
+end
+
+==> corrected/038.rb 63 <==
+case x
+when 1
+  :one
+when 2
+  :two
+else
+  :three if x == 3
+end
+
+==> corrected/039.rb 77 <==
+case x
+when 1
+  :one
+when 2
+  :two
+else
+  unless x == 3
+    :three
+  end
 end
 

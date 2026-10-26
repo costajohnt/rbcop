@@ -1,4 +1,4 @@
-==> offenses exit=1 10276 <==
+==> offenses exit=1 10823 <==
 000.rb:2:3: C: [Correctable] Style/GuardClause: Use a guard clause (`return unless something`) instead of wrapping the code inside a conditional expression.
 000.rb:8:3: C: [Correctable] Style/GuardClause: Use a guard clause (`return if something`) instead of wrapping the code inside a conditional expression.
 001.rb:3:3: C: [Correctable] Style/GuardClause: Use a guard clause (`return unless something`) instead of wrapping the code inside a conditional expression.
@@ -44,27 +44,30 @@
 040.rb:2:3: C: [Correctable] Style/GuardClause: Use a guard clause (`raise <<~`MESSAGE` unless condition`) instead of wrapping the code inside a conditional expression.
 041.rb:2:3: C: [Correctable] Style/GuardClause: Use a guard clause (`raise <<~MESSAGE unless condition`) instead of wrapping the code inside a conditional expression.
 042.rb:2:3: C: [Correctable] Style/GuardClause: Use a guard clause (`raise obj&.do_something(<<~MESSAGE) unless condition`) instead of wrapping the code inside a conditional expression.
-043.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`raise e unless condition`) instead of wrapping the code inside a conditional expression.
-045.rb:2:3: C: [Correctable] Style/GuardClause: Use a guard clause (`unless something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line; return; end`) instead of wrapping the code inside a conditional expression.
-045.rb:3:5: C: [Correctable] Style/GuardClause: Use a guard clause (`return unless something_else`) instead of wrapping the code inside a conditional expression.
-046.rb:2:3: C: [Correctable] Style/GuardClause: Use a guard clause (`unless something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line; return; end`) instead of wrapping the code inside a conditional expression.
-047.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`unless foo?; raise 'very long and detailed description of the error that makes it too long to fit on one line'; end`) instead of wrapping the code inside a conditional expression.
-048.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`return if something`) instead of wrapping the code inside a conditional expression.
-049.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`return unless something`) instead of wrapping the code inside a conditional expression.
-055.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`return if something`) instead of wrapping the code inside a conditional expression.
-056.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`next if something`) instead of wrapping the code inside a conditional expression.
-057.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`next unless something`) instead of wrapping the code inside a conditional expression.
-063.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`next if something`) instead of wrapping the code inside a conditional expression.
-064.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`break if something`) instead of wrapping the code inside a conditional expression.
-065.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`break unless something`) instead of wrapping the code inside a conditional expression.
-071.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`break if something`) instead of wrapping the code inside a conditional expression.
-072.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`raise "error" if something`) instead of wrapping the code inside a conditional expression.
-073.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`raise "error" unless something`) instead of wrapping the code inside a conditional expression.
-079.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`raise "error" if something`) instead of wrapping the code inside a conditional expression.
-080.rb:3:5: C: [Correctable] Style/GuardClause: Use a guard clause (`return unless something`) instead of wrapping the code inside a conditional expression.
-081.rb:3:5: C: [Correctable] Style/GuardClause: Use a guard clause (`return unless something && something_else`) instead of wrapping the code inside a conditional expression.
+043.rb:2:3: C: [Correctable] Style/GuardClause: Use a guard clause (`raise 'oops' if condition`) instead of wrapping the code inside a conditional expression.
+044.rb:2:3: C: [Correctable] Style/GuardClause: Use a guard clause (`raise 'oops' unless condition`) instead of wrapping the code inside a conditional expression.
+045.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`raise e unless condition`) instead of wrapping the code inside a conditional expression.
+047.rb:2:3: C: [Correctable] Style/GuardClause: Use a guard clause (`unless something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line; return; end`) instead of wrapping the code inside a conditional expression.
+047.rb:3:5: C: [Correctable] Style/GuardClause: Use a guard clause (`return unless something_else`) instead of wrapping the code inside a conditional expression.
+048.rb:2:3: C: [Correctable] Style/GuardClause: Use a guard clause (`unless something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line; return; end`) instead of wrapping the code inside a conditional expression.
+049.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`unless foo?; raise 'very long and detailed description of the error that makes it too long to fit on one line'; end`) instead of wrapping the code inside a conditional expression.
+050.rb:2:3: C: [Correctable] Style/GuardClause: Use a guard clause (`if something_that_makes_the_guard_clause_too_long_to_fit_on_one_line; raise <<~MESSAGE; end`) instead of wrapping the code inside a conditional expression.
+051.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`return if something`) instead of wrapping the code inside a conditional expression.
+052.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`return unless something`) instead of wrapping the code inside a conditional expression.
+058.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`return if something`) instead of wrapping the code inside a conditional expression.
+059.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`next if something`) instead of wrapping the code inside a conditional expression.
+060.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`next unless something`) instead of wrapping the code inside a conditional expression.
+066.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`next if something`) instead of wrapping the code inside a conditional expression.
+067.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`break if something`) instead of wrapping the code inside a conditional expression.
+068.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`break unless something`) instead of wrapping the code inside a conditional expression.
+074.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`break if something`) instead of wrapping the code inside a conditional expression.
+075.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`raise "error" if something`) instead of wrapping the code inside a conditional expression.
+076.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`raise "error" unless something`) instead of wrapping the code inside a conditional expression.
+082.rb:1:1: C: [Correctable] Style/GuardClause: Use a guard clause (`raise "error" if something`) instead of wrapping the code inside a conditional expression.
+083.rb:3:5: C: [Correctable] Style/GuardClause: Use a guard clause (`return unless something`) instead of wrapping the code inside a conditional expression.
+084.rb:3:5: C: [Correctable] Style/GuardClause: Use a guard clause (`return unless something && something_else`) instead of wrapping the code inside a conditional expression.
 
-==> autocorrect exit=1 10156 <==
+==> autocorrect exit=1 10697 <==
 000.rb:2:3: C: [Corrected] Style/GuardClause: Use a guard clause (`return unless something`) instead of wrapping the code inside a conditional expression.
 000.rb:8:3: C: [Corrected] Style/GuardClause: Use a guard clause (`return if something`) instead of wrapping the code inside a conditional expression.
 001.rb:3:3: C: [Corrected] Style/GuardClause: Use a guard clause (`return unless something`) instead of wrapping the code inside a conditional expression.
@@ -110,25 +113,28 @@
 040.rb:2:3: C: [Corrected] Style/GuardClause: Use a guard clause (`raise <<~`MESSAGE` unless condition`) instead of wrapping the code inside a conditional expression.
 041.rb:2:3: C: [Corrected] Style/GuardClause: Use a guard clause (`raise <<~MESSAGE unless condition`) instead of wrapping the code inside a conditional expression.
 042.rb:2:3: C: [Corrected] Style/GuardClause: Use a guard clause (`raise obj&.do_something(<<~MESSAGE) unless condition`) instead of wrapping the code inside a conditional expression.
-043.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`raise e unless condition`) instead of wrapping the code inside a conditional expression.
-045.rb:2:3: C: [Corrected] Style/GuardClause: Use a guard clause (`unless something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line; return; end`) instead of wrapping the code inside a conditional expression.
-045.rb:3:5: C: [Corrected] Style/GuardClause: Use a guard clause (`return unless something_else`) instead of wrapping the code inside a conditional expression.
-046.rb:2:3: C: [Corrected] Style/GuardClause: Use a guard clause (`unless something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line; return; end`) instead of wrapping the code inside a conditional expression.
-047.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`unless foo?; raise 'very long and detailed description of the error that makes it too long to fit on one line'; end`) instead of wrapping the code inside a conditional expression.
-048.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`return if something`) instead of wrapping the code inside a conditional expression.
-049.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`return unless something`) instead of wrapping the code inside a conditional expression.
-055.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`return if something`) instead of wrapping the code inside a conditional expression.
-056.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`next if something`) instead of wrapping the code inside a conditional expression.
-057.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`next unless something`) instead of wrapping the code inside a conditional expression.
-063.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`next if something`) instead of wrapping the code inside a conditional expression.
-064.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`break if something`) instead of wrapping the code inside a conditional expression.
-065.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`break unless something`) instead of wrapping the code inside a conditional expression.
-071.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`break if something`) instead of wrapping the code inside a conditional expression.
-072.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`raise "error" if something`) instead of wrapping the code inside a conditional expression.
-073.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`raise "error" unless something`) instead of wrapping the code inside a conditional expression.
-079.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`raise "error" if something`) instead of wrapping the code inside a conditional expression.
-080.rb:3:5: C: [Corrected] Style/GuardClause: Use a guard clause (`return unless something`) instead of wrapping the code inside a conditional expression.
-081.rb:3:5: C: [Corrected] Style/GuardClause: Use a guard clause (`return unless something && something_else`) instead of wrapping the code inside a conditional expression.
+043.rb:2:3: C: [Corrected] Style/GuardClause: Use a guard clause (`raise 'oops' if condition`) instead of wrapping the code inside a conditional expression.
+044.rb:2:3: C: [Corrected] Style/GuardClause: Use a guard clause (`raise 'oops' unless condition`) instead of wrapping the code inside a conditional expression.
+045.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`raise e unless condition`) instead of wrapping the code inside a conditional expression.
+047.rb:2:3: C: [Corrected] Style/GuardClause: Use a guard clause (`unless something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line; return; end`) instead of wrapping the code inside a conditional expression.
+047.rb:3:5: C: [Corrected] Style/GuardClause: Use a guard clause (`return unless something_else`) instead of wrapping the code inside a conditional expression.
+048.rb:2:3: C: [Corrected] Style/GuardClause: Use a guard clause (`unless something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line; return; end`) instead of wrapping the code inside a conditional expression.
+049.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`unless foo?; raise 'very long and detailed description of the error that makes it too long to fit on one line'; end`) instead of wrapping the code inside a conditional expression.
+050.rb:2:3: C: [Corrected] Style/GuardClause: Use a guard clause (`if something_that_makes_the_guard_clause_too_long_to_fit_on_one_line; raise <<~MESSAGE; end`) instead of wrapping the code inside a conditional expression.
+051.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`return if something`) instead of wrapping the code inside a conditional expression.
+052.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`return unless something`) instead of wrapping the code inside a conditional expression.
+058.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`return if something`) instead of wrapping the code inside a conditional expression.
+059.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`next if something`) instead of wrapping the code inside a conditional expression.
+060.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`next unless something`) instead of wrapping the code inside a conditional expression.
+066.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`next if something`) instead of wrapping the code inside a conditional expression.
+067.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`break if something`) instead of wrapping the code inside a conditional expression.
+068.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`break unless something`) instead of wrapping the code inside a conditional expression.
+074.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`break if something`) instead of wrapping the code inside a conditional expression.
+075.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`raise "error" if something`) instead of wrapping the code inside a conditional expression.
+076.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`raise "error" unless something`) instead of wrapping the code inside a conditional expression.
+082.rb:1:1: C: [Corrected] Style/GuardClause: Use a guard clause (`raise "error" if something`) instead of wrapping the code inside a conditional expression.
+083.rb:3:5: C: [Corrected] Style/GuardClause: Use a guard clause (`return unless something`) instead of wrapping the code inside a conditional expression.
+084.rb:3:5: C: [Corrected] Style/GuardClause: Use a guard clause (`return unless something && something_else`) instead of wrapping the code inside a conditional expression.
 
 ==> corrected/000.rb 99 <==
 def func
@@ -416,14 +422,36 @@ def func
 do_something
 end
 
-==> corrected/043.rb 45 <==
+==> corrected/043.rb 98 <==
+def func
+  raise 'oops' if condition
+    
+  
+    do_something(<<~TEXT)
+      text
+    TEXT
+  
+end
+
+==> corrected/044.rb 102 <==
+def func
+  raise 'oops' unless condition
+    do_something(<<~TEXT)
+      text
+    TEXT
+  
+    
+  
+end
+
+==> corrected/045.rb 45 <==
 raise e unless condition
   do_something
 
   
 
 
-==> corrected/045.rb 166 <==
+==> corrected/047.rb 166 <==
 def test
   unless something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line
   return
@@ -434,7 +462,7 @@ end
   
 end
 
-==> corrected/046.rb 140 <==
+==> corrected/048.rb 140 <==
 def test
   unless something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line
   return
@@ -444,7 +472,7 @@ end
   
 end
 
-==> corrected/047.rb 121 <==
+==> corrected/049.rb 121 <==
 unless foo?
   raise 'very long and detailed description of the error that makes it too long to fit on one line'
 end
@@ -452,21 +480,31 @@ end
   
 
 
-==> corrected/048.rb 40 <==
+==> corrected/050.rb 135 <==
+def test
+  if something_that_makes_the_guard_clause_too_long_to_fit_on_one_line
+  raise <<~MESSAGE
+      oops
+    MESSAGE
+end
+work
+end
+
+==> corrected/051.rb 40 <==
 return if something
   
 
   puts "hello"
 
 
-==> corrected/049.rb 43 <==
+==> corrected/052.rb 43 <==
 return unless something
  puts "hello"
 
   
 
 
-==> corrected/055.rb 66 <==
+==> corrected/058.rb 66 <==
 return if something
   
 
@@ -474,21 +512,21 @@ return if something
        "blah blah blah"
 
 
-==> corrected/056.rb 38 <==
+==> corrected/059.rb 38 <==
 next if something
   
 
   puts "hello"
 
 
-==> corrected/057.rb 41 <==
+==> corrected/060.rb 41 <==
 next unless something
  puts "hello"
 
   
 
 
-==> corrected/063.rb 64 <==
+==> corrected/066.rb 64 <==
 next if something
   
 
@@ -496,21 +534,21 @@ next if something
        "blah blah blah"
 
 
-==> corrected/064.rb 39 <==
+==> corrected/067.rb 39 <==
 break if something
   
 
   puts "hello"
 
 
-==> corrected/065.rb 42 <==
+==> corrected/068.rb 42 <==
 break unless something
  puts "hello"
 
   
 
 
-==> corrected/071.rb 65 <==
+==> corrected/074.rb 65 <==
 break if something
   
 
@@ -518,21 +556,21 @@ break if something
        "blah blah blah"
 
 
-==> corrected/072.rb 47 <==
+==> corrected/075.rb 47 <==
 raise "error" if something
   
 
   puts "hello"
 
 
-==> corrected/073.rb 50 <==
+==> corrected/076.rb 50 <==
 raise "error" unless something
  puts "hello"
 
   
 
 
-==> corrected/079.rb 73 <==
+==> corrected/082.rb 73 <==
 raise "error" if something
   
 
@@ -540,7 +578,7 @@ raise "error" if something
        "blah blah blah"
 
 
-==> corrected/080.rb 80 <==
+==> corrected/083.rb 80 <==
 module CopTest
   def test
     return unless something
@@ -549,7 +587,7 @@ module CopTest
   end
 end
 
-==> corrected/081.rb 103 <==
+==> corrected/084.rb 103 <==
 module CopTest
   def self.test
     return unless something && something_else

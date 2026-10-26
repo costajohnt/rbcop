@@ -35,3 +35,8 @@ foo
 bar
 # rubocop:pop
 
+==> 005.rb 81 <==
+# rubocop:disable Metrics/MethodLength
+foo
+# rubocop:enable Metrics/MethodLength
+

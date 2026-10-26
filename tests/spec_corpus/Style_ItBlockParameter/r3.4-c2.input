@@ -17,28 +17,88 @@ block do
   bar(_1)
 end
 
-==> 002.rb 34 <==
+==> 002.rb 52 <==
+it = do_something
 block { |arg| do_something(arg) }
 
-==> 003.rb 41 <==
+==> 003.rb 45 <==
+it = do_something
+block { do_something(_1) }
+
+==> 004.rb 57 <==
+block { |arg| it = do_something; do_something(arg, it) }
+
+==> 005.rb 45 <==
+def foo(it)
+  block { do_something(_1) }
+end
+
+==> 006.rb 42 <==
+outer { |it| block { do_something(_1) } }
+
+==> 007.rb 45 <==
+block { do_something(_1) }
+it = do_something
+
+==> 008.rb 60 <==
+def foo
+  it = do_something
+end
+
+block { do_something(_1) }
+
+==> 009.rb 37 <==
+block { |arg| other { |x, y| arg } }
+
+==> 010.rb 30 <==
+block { |arg| other { arg } }
+
+==> 011.rb 52 <==
+block { |arg| use(arg); other { |x| log(arg, x) } }
+
+==> 012.rb 36 <==
+block { |arg| arg.other { |x| x } }
+
+==> 013.rb 35 <==
+block { |arg| other { _1 + arg } }
+
+==> 014.rb 34 <==
+block { |arg| do_something(arg) }
+
+==> 015.rb 41 <==
 block do |arg|
   foo(arg)
   bar(arg)
 end
 
-==> 004.rb 27 <==
+==> 016.rb 27 <==
 block { do_something(it) }
 
-==> 005.rb 31 <==
+==> 017.rb 31 <==
 block { do_something(_1, _2) }
 
-==> 006.rb 27 <==
+==> 018.rb 27 <==
 block { do_something(_2) }
 
-==> 007.rb 44 <==
+==> 019.rb 44 <==
 block { |foo, bar| do_something(foo, bar) }
 
-==> 008.rb 17 <==
+==> 020.rb 17 <==
 block do |_|
 end
+
+==> 021.rb 44 <==
+block { |arg| arg = arg.do_something; arg }
+
+==> 022.rb 30 <==
+block { |arg| arg += 1; arg }
+
+==> 023.rb 42 <==
+block { |arg| /(?<arg>foo)/ =~ arg; arg }
+
+==> 024.rb 39 <==
+block { |arg| arg => {key: arg}; arg }
+
+==> 025.rb 48 <==
+block { |arg| other = arg.do_something; other }
 

@@ -116,91 +116,137 @@ foo(
             .join_sources)
 )
 
-==> 018.rb 63 <==
+==> 018.rb 62 <==
+{
+  key: -> do
+    client
+      .beta
+      .messages
+  end
+}
+
+==> 019.rb 78 <==
+{
+  key: proc { |request|
+    request
+      .params
+      .fetch(:page)
+  }
+}
+
+==> 020.rb 85 <==
+{
+  key: begin
+    settings
+      .fetch(:connection)
+      .fetch(:retries)
+  end
+}
+
+==> 021.rb 82 <==
+{
+  key: if condition
+    client
+      .beta
+  else
+    other
+      .beta
+  end
+}
+
+==> 022.rb 56 <==
+{
+  key: while condition
+    client
+      .beta
+  end
+}
+
+==> 023.rb 63 <==
 expect { Foo.new }.
   to change { Bar.count }.
   from(1).to(2)
 
-==> 019.rb 5 <==
+==> 024.rb 5 <==
 a.
 b
 
-==> 020.rb 16 <==
+==> 025.rb 16 <==
 a.
    b
 c.
    d
 
-==> 021.rb 14 <==
+==> 026.rb 14 <==
 a.
   b.
     c
 
-==> 022.rb 11 <==
+==> 027.rb 11 <==
 [
  a.
  b
 ]
 
-==> 023.rb 67 <==
+==> 028.rb 67 <==
 expect { Foo.new }.
   to change { Bar.count }.
       from(1).to(2)
 
-==> 024.rb 11 <==
+==> 029.rb 11 <==
 a
  .(args)
 
-==> 025.rb 6 <==
+==> 030.rb 6 <==
 a
  .b
 
-==> 026.rb 6 <==
+==> 031.rb 6 <==
 a&.
 b
 
-==> 027.rb 18 <==
+==> 032.rb 18 <==
 a&.
    b
 c&.
    d
 
-==> 028.rb 16 <==
+==> 033.rb 16 <==
 a&.
   b&.
     c
 
-==> 029.rb 12 <==
+==> 034.rb 12 <==
 [
  a&.
  b
 ]
 
-==> 030.rb 70 <==
+==> 035.rb 70 <==
 expect { Foo.new }&.
   to change { Bar.count }&.
       from(1)&.to(2)
 
-==> 031.rb 12 <==
+==> 036.rb 12 <==
 a
  &.(args)
 
-==> 032.rb 7 <==
+==> 037.rb 7 <==
 a
  &.b
 
-==> 033.rb 36 <==
+==> 038.rb 36 <==
 a&.(b)
   .c(
     d do
     end.f
   )
 
-==> 034.rb 26 <==
+==> 039.rb 26 <==
 MyClass.
 foo&.bar = 'baz'
 
-==> 035.rb 205 <==
+==> 040.rb 205 <==
 def run
   (date_columns + candidate_columns).uniq
                                     .select { |column_name|
@@ -211,26 +257,34 @@ def run
     }
 end
 
-==> 036.rb 25 <==
+==> 041.rb 44 <==
+{
+  key: -> do
+    client
+    .beta
+  end
+}
+
+==> 042.rb 25 <==
 def foo
   !0
   .nil?
 end
 
-==> 037.rb 34 <==
+==> 043.rb 34 <==
 {
   key: Foo.bar
           .baz
 }
 
-==> 038.rb 49 <==
+==> 044.rb 49 <==
 {
   key: Foo.bar
           .baz
           .qux
 }
 
-==> 039.rb 57 <==
+==> 045.rb 57 <==
 {
   outer: {
     inner: Foo.bar
@@ -238,79 +292,79 @@ end
   }
 }
 
-==> 040.rb 45 <==
+==> 046.rb 45 <==
 method_call(
   key: Foo.bar
           .baz
 )
 
-==> 041.rb 49 <==
+==> 047.rb 49 <==
 method(key: value.foo.bar
                  .baz)
 
-==> 042.rb 42 <==
+==> 048.rb 42 <==
 {
   key: value.foo.bar
             .baz
 }
 
-==> 043.rb 52 <==
+==> 049.rb 52 <==
 method(key: value&.foo&.bar
                  &.baz)
 
-==> 044.rb 46 <==
+==> 050.rb 46 <==
 method(key: value.foo.bar
               .baz)
 
-==> 045.rb 49 <==
+==> 051.rb 49 <==
 method(key: value.foo.bar.
                  baz)
 
-==> 046.rb 31 <==
+==> 052.rb 31 <==
 {
   key: Foo.bar
        .baz
 }
 
-==> 047.rb 106 <==
+==> 053.rb 106 <==
 @foo = Foo
        .where(id: Bar.select(:id)
          .joins(:bar)
          .where.not(bar: { id: 123 }))
 
-==> 048.rb 70 <==
+==> 054.rb 70 <==
 @foo = Foo
        &.where(id: Bar.select(:id)
          &.joins(:bar))
 
-==> 049.rb 68 <==
+==> 055.rb 68 <==
 @foo = Foo.
        where(id: Bar.select(:id)
          .joins(:bar))
 
-==> 050.rb 94 <==
+==> 056.rb 94 <==
 Foo
   .where(id: Bar.select(:id)
     .joins(:bar),
          name: Car.find(:name)
     .strip)
 
-==> 051.rb 53 <==
+==> 057.rb 53 <==
 Foo
   .where({id: Bar.select(:id)
     .joins(:bar)})
 
-==> 052.rb 67 <==
+==> 058.rb 67 <==
 Foo
   .where(id: Bar.select(:id)
     .joins(:bar))
   .order(:name)
 
-==> 053.rb 68 <==
+==> 059.rb 68 <==
 Foo.where(id: Bar.select(:id)
                         .joins(:bar))
 
-==> 054.rb 173 <==
+==> 060.rb 173 <==
 timeseries.push(
   {
     value: timeseries_snapshots.pluck(:membership_gross_value)
@@ -319,14 +373,14 @@ timeseries.push(
   },
 )
 
-==> 055.rb 163 <==
+==> 061.rb 163 <==
 {
   alpha_beta_count: @handler.retrieve_all_by(alpha: alpha)
                             .authorized.count,
   beta_count: @handler.retrieve_all.authorized.count
 }
 
-==> 056.rb 169 <==
+==> 062.rb 169 <==
 filter :season, apply: lambda { |records, values, _options|
   return records if values.blank?
 
@@ -334,13 +388,13 @@ filter :season, apply: lambda { |records, values, _options|
          .where(matches: { season_id: values })
 }
 
-==> 057.rb 44 <==
+==> 063.rb 44 <==
 {
   key: Foo.bar { |x| x }
           .baz
 }
 
-==> 058.rb 52 <==
+==> 064.rb 52 <==
 {
   key: Foo.bar do |x|
     x
@@ -348,7 +402,7 @@ filter :season, apply: lambda { |records, values, _options|
      .qux
 }
 
-==> 059.rb 55 <==
+==> 065.rb 55 <==
 {
   key: Foo.bar do |x|
     x
@@ -356,83 +410,83 @@ filter :season, apply: lambda { |records, values, _options|
         .qux
 }
 
-==> 060.rb 29 <==
+==> 066.rb 29 <==
 User.all.first
     .age.to_s
 
-==> 061.rb 96 <==
+==> 067.rb 96 <==
 authorize scope.includes(:user)
                .where(name: 'Bob')
                .order(:name)
 
-==> 062.rb 60 <==
+==> 068.rb 60 <==
 do_something obj.foo(key: value)
                 &.bar(arg)
 
-==> 063.rb 88 <==
+==> 069.rb 88 <==
 File.read('data.yml')
     .then { YAML.safe_load _1 }
     .transform_values(&:downcase)
 
-==> 064.rb 117 <==
+==> 070.rb 117 <==
 user = authorize scope.includes(:user)
                       .where(name: 'Bob')
                       .order(:name)
 
-==> 065.rb 41 <==
+==> 071.rb 41 <==
 age = User.all.first
           .age.to_s
 
-==> 066.rb 45 <==
+==> 072.rb 45 <==
 foo = '123'.a
            .b[1]
            .c
 
-==> 067.rb 51 <==
+==> 073.rb 51 <==
 foo = '123'[1].a
               .b
               .c
 
-==> 068.rb 10 <==
+==> 074.rb 10 <==
 a[1][2][3]
-==> 069.rb 104 <==
+==> 075.rb 104 <==
 @comment_lines ||=
   src.comments
      .select { |c| begins_its_line?(c) }
      .map { |c| c.loc.line }
 
-==> 070.rb 43 <==
+==> 076.rb 43 <==
 hash[key] { 10 / 0 }
   .fmap { |x| x * 3 }
 
-==> 071.rb 85 <==
+==> 077.rb 85 <==
 a_class.new(severity, location, 'message', 'CopName')
        .severity
        .level
 
-==> 072.rb 16 <==
+==> 078.rb 16 <==
 User.a
   .b
  .c
 
-==> 073.rb 22 <==
+==> 079.rb 22 <==
 a do
   b.c
     .d
 end
 
-==> 074.rb 254 <==
+==> 080.rb 254 <==
 expect { post :action, params: params, format: :json }.to change { Foo.bar }.by(0)
                                                       .and change { Baz.quux }.by(0)
                                                       .and raise_error(StandardError)
 
-==> 075.rb 36 <==
+==> 081.rb 36 <==
 1 + a
     .b
     .c + d.
          e
 
-==> 076.rb 160 <==
+==> 082.rb 160 <==
 def investigate(processed_source)
   @modifier = processed_source
               .tokens
@@ -440,7 +494,7 @@ def investigate(processed_source)
               .map(&:pos)
 end
 
-==> 077.rb 218 <==
+==> 083.rb 218 <==
 KeyMap = Hash.new do |map, key|
   value = if key.respond_to?(:to_str)
     key
@@ -452,206 +506,206 @@ KeyMap = Hash.new do |map, key|
   keymap_mutex.synchronize { map[key] = value }
 end
 
-==> 078.rb 83 <==
+==> 084.rb 83 <==
 expect { custom_formatter_class('NonExistentClass') }
   .to raise_error(NameError)
 
-==> 079.rb 11 <==
+==> 085.rb 11 <==
 a
   .b
  .c
 
-==> 080.rb 20 <==
+==> 086.rb 20 <==
 a.
   b + c
       .d
 
-==> 081.rb 27 <==
+==> 087.rb 27 <==
 if a.
    b
   something
 end
 
-==> 082.rb 93 <==
+==> 088.rb 93 <==
 @dependencies ||= begin
   DEFAULT_DEPRUBYENCIES
     .reject { |e| e }
     .map { |e| e }
 end
 
-==> 083.rb 28 <==
+==> 089.rb 28 <==
 if a.
     b
   something
 end
 
-==> 084.rb 89 <==
+==> 090.rb 89 <==
 flash[:error] = 'Here is a string ' \
                 'That spans' <<
   'multiple lines'
 
-==> 085.rb 89 <==
+==> 091.rb 89 <==
 flash[:error] = 'Here is a string ' +
                 'That spans' <<
   'multiple lines'
 
-==> 086.rb 80 <==
+==> 092.rb 80 <==
 flash[:error] = here_is_a_string.
                 that_spans.
    multiple_lines
 
-==> 087.rb 28 <==
+==> 093.rb 28 <==
 unless a
 .b
   something
 end
 
-==> 088.rb 31 <==
+==> 094.rb 31 <==
 while a.
     b
   something
 end
 
-==> 089.rb 31 <==
+==> 095.rb 31 <==
 until a.
     b
   something
 end
 
-==> 090.rb 33 <==
+==> 096.rb 33 <==
 def a
   return b.
          c
 end
 
-==> 091.rb 34 <==
+==> 097.rb 34 <==
 a = b do
   c.d = e.
         f
 end
 
-==> 092.rb 112 <==
+==> 098.rb 112 <==
 formatted_int = int_part
                 .to_s
                 .reverse
                 .gsub(/...(?=.)/, '&_')
 
-==> 093.rb 45 <==
+==> 099.rb 45 <==
 do_something.foo do
 end.bar
             .baz
 
-==> 094.rb 36 <==
+==> 100.rb 36 <==
 do_something.foo do
 end.bar
    .baz
 
-==> 095.rb 46 <==
+==> 101.rb 46 <==
 do_something.foo do
   bar(_1)
 end.baz
    .qux
 
-==> 096.rb 38 <==
+==> 102.rb 38 <==
 do_something.foo do
 end&.bar
    &.baz
 
-==> 097.rb 79 <==
+==> 103.rb 79 <==
 users
   .dup.sort_by { _1.name.lower }
   .page(params[:page])
   .per(PER_PAGE)
 
-==> 098.rb 65 <==
+==> 104.rb 65 <==
 users
   &.dup&.sort_by { _1.name.lower }
   &.page(params[:page])
 
-==> 099.rb 74 <==
+==> 105.rb 74 <==
 users
   .dup.sort_by { _1.name }
   .select { |u| u.active? }
   .map(&:id)
 
-==> 100.rb 54 <==
+==> 106.rb 54 <==
 users
   .dup.compact.sort_by { _1.name }
   .first(10)
 
-==> 101.rb 70 <==
+==> 107.rb 70 <==
 obj
   .foo { _1.a }.bar { _1.b }
   .each do |x|
   do_something(x)
 end
 
-==> 102.rb 43 <==
+==> 108.rb 43 <==
 obj
   .foo { _1.a }.bar { _1.b }
   .baz(x)
 
-==> 103.rb 73 <==
+==> 109.rb 73 <==
 obj
   &.foo { _1.a }&.bar { _1.b }
   &.each do |x|
   do_something(x)
 end
 
-==> 104.rb 76 <==
+==> 110.rb 76 <==
 obj
   .foo { _1.a }.bar { _1.b }
     .each do |x|
     do_something(x)
   end
 
-==> 105.rb 43 <==
+==> 111.rb 43 <==
 (0..foo).bar { baz }
         .qux { quux }
 
-==> 106.rb 34 <==
+==> 112.rb 34 <==
 (0..foo).bar { baz }
         .qux
 
-==> 107.rb 35 <==
+==> 113.rb 35 <==
 (0..foo).bar
         .qux { quux }
 
-==> 108.rb 44 <==
+==> 114.rb 44 <==
 (0..foo).bar { baz }
         &.qux { quux }
 
-==> 109.rb 37 <==
+==> 115.rb 37 <==
 (0..foo).bar { baz }
   .qux { quux }
 
-==> 110.rb 28 <==
+==> 116.rb 28 <==
 (0..foo).bar { baz }
   .qux
 
-==> 111.rb 29 <==
+==> 117.rb 29 <==
 (0..foo).bar
   .qux { quux }
 
-==> 112.rb 12 <==
+==> 118.rb 12 <==
 a = b.c.
  d
 
-==> 113.rb 13 <==
+==> 119.rb 13 <==
 A = b
     .c
 
-==> 114.rb 14 <==
+==> 120.rb 14 <==
 a +=
   b
   .c
 
-==> 115.rb 27 <==
+==> 121.rb 27 <==
 bar = Foo
   .a
       .b(c)
 
-==> 116.rb 136 <==
+==> 122.rb 136 <==
 def foo
   bar(
     key: VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName
@@ -659,7 +713,7 @@ def foo
   )
 end
 
-==> 117.rb 151 <==
+==> 123.rb 151 <==
 def foo
   bar(
     key: VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName
@@ -667,7 +721,7 @@ def foo
   )
 end
 
-==> 118.rb 230 <==
+==> 124.rb 230 <==
 parsed_params = refusal_advice_params.merge(
   actions: refusal_advice_params.fetch(:actions).
               each_pair do |_, suggestions|
@@ -675,7 +729,7 @@ parsed_params = refusal_advice_params.merge(
               end
 ).to_h
 
-==> 119.rb 437 <==
+==> 125.rb 437 <==
 def payload
   {
     type: 'action',
@@ -692,7 +746,7 @@ def payload
   }.deep_symbolize_keys
 end
 
-==> 120.rb 182 <==
+==> 126.rb 182 <==
 add_to_git_repo(
   initial_repo,
   "about.json" =>
@@ -702,12 +756,12 @@ add_to_git_repo(
       .to_json,
 )
 
-==> 121.rb 21 <==
+==> 127.rb 21 <==
 (a +
  b).foo
    .bar
 
-==> 122.rb 157 <==
+==> 128.rb 157 <==
 def targets_for(path)
   fullpath = fullpath_for(path)
   [
@@ -717,11 +771,11 @@ def targets_for(path)
     .delete_if { |entry| dot_directory?(entry) }
 end
 
-==> 123.rb 41 <==
+==> 129.rb 41 <==
 { a: 1, b: 2 }.keys
               .first
 
-==> 124.rb 29 <==
+==> 130.rb 29 <==
 { a: 1, b: 2 }.keys
   .first
 

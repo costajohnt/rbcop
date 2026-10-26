@@ -1,4 +1,4 @@
-==> .rubocop.yml 180 <==
+==> .rubocop.yml 220 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -6,20 +6,11 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 2.7
 Style/NumericPredicate:
-  EnforcedStyle: comparison
+  EnforcedStyle: predicate
   AutoCorrect: true
+Style/BitwisePredicate:
+  Enabled: false
 
-==> 000.rb 13 <==
-number.zero?
-
-==> 001.rb 14 <==
-!number.zero?
-
-==> 002.rb 15 <==
-number.nonzero?
-==> 003.rb 17 <==
-number.positive?
-
-==> 004.rb 17 <==
-number.negative?
+==> 000.rb 23 <==
+stat.mode & 0o077 == 0
 

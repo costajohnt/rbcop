@@ -1,0 +1,9 @@
+==> offenses exit=1 122 <==
+000.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `(stat.mode & 0o077).zero?` instead of `stat.mode & 0o077 == 0`.
+
+==> autocorrect exit=0 120 <==
+000.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `(stat.mode & 0o077).zero?` instead of `stat.mode & 0o077 == 0`.
+
+==> corrected/000.rb 26 <==
+(stat.mode & 0o077).zero?
+

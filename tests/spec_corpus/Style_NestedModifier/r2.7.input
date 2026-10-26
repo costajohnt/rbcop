@@ -33,18 +33,49 @@ a unless [1, 2].include? a if a
 ==> 008.rb 29 <==
 something if a unless c || d
 
-==> 009.rb 23 <==
-something if a while b
+==> 009.rb 30 <==
+something if b unless c and d
 
-==> 010.rb 23 <==
-something while a if b
+==> 010.rb 28 <==
+something if b unless not c
 
-==> 011.rb 23 <==
-something if a until b
+==> 011.rb 24 <==
+something if not b if d
 
-==> 012.rb 23 <==
-something until a if b
+==> 012.rb 28 <==
+something unless not b if d
 
 ==> 013.rb 40 <==
+def foo
+  something if yield 1 if c
+end
+
+==> 014.rb 40 <==
+def foo
+  something if c if super 1
+end
+
+==> 015.rb 24 <==
+something if c if foo 1
+
+==> 016.rb 27 <==
+something if a&.foo 1 if c
+
+==> 017.rb 28 <==
+something if b if a ? c : d
+
+==> 018.rb 23 <==
+something if a while b
+
+==> 019.rb 23 <==
+something while a if b
+
+==> 020.rb 23 <==
+something if a until b
+
+==> 021.rb 23 <==
+something until a if b
+
+==> 022.rb 40 <==
 something until a while b unless c if d
 

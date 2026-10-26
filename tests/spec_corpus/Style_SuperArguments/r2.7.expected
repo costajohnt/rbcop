@@ -29,17 +29,17 @@
 027.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
 028.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
 029.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
-053.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
-054.rb:3:5: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
-054.rb:5:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
-055.rb:4:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
-060.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
-061.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when all positional and keyword arguments are forwarded.
-065.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
-066.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when all positional and keyword arguments are forwarded.
-068.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+057.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+058.rb:3:5: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+058.rb:5:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+059.rb:4:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+064.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+065.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when all positional and keyword arguments are forwarded.
 069.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
-070.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+070.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when all positional and keyword arguments are forwarded.
+072.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+073.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+074.rb:2:3: C: [Correctable] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
 
 ==> autocorrect exit=0 5337 <==
 000.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
@@ -72,17 +72,17 @@
 027.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
 028.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
 029.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
-053.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
-054.rb:3:5: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
-054.rb:5:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
-055.rb:4:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
-060.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
-061.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when all positional and keyword arguments are forwarded.
-065.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
-066.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when all positional and keyword arguments are forwarded.
-068.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+057.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+058.rb:3:5: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+058.rb:5:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+059.rb:4:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+064.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+065.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when all positional and keyword arguments are forwarded.
 069.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
-070.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+070.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when all positional and keyword arguments are forwarded.
+072.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+073.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
+074.rb:2:3: C: [Corrected] Style/SuperArguments: Call `super` without arguments and parentheses when the signature is identical.
 
 ==> corrected/000.rb 25 <==
 def method()
@@ -234,12 +234,12 @@ def self.method(a, ...)
   super
 end
 
-==> corrected/053.rb 20 <==
+==> corrected/057.rb 20 <==
 def foo
   super
 end
 
-==> corrected/054.rb 53 <==
+==> corrected/058.rb 53 <==
 def foo(a)
   def bar(b:)
     super
@@ -247,44 +247,44 @@ def foo(a)
   super
 end
 
-==> corrected/055.rb 66 <==
+==> corrected/059.rb 66 <==
 def foo(options, &block)
   options[:key] ||= default
 
   super
 end
 
-==> corrected/060.rb 33 <==
+==> corrected/064.rb 33 <==
 def test(a, b)
   super { x }
 end
 
-==> corrected/061.rb 36 <==
+==> corrected/065.rb 36 <==
 def test(a, &blk)
   super { x }
 end
 
-==> corrected/065.rb 34 <==
+==> corrected/069.rb 34 <==
 def test(a, b)
   super { _1 }
 end
 
-==> corrected/066.rb 37 <==
+==> corrected/070.rb 37 <==
 def test(a, &blk)
   super { _1 }
 end
 
-==> corrected/068.rb 27 <==
+==> corrected/072.rb 27 <==
 def foo(a)
   super.foo
 end
 
-==> corrected/069.rb 33 <==
+==> corrected/073.rb 33 <==
 def foo(a)
   super.foo { x }
 end
 
-==> corrected/070.rb 34 <==
+==> corrected/074.rb 34 <==
 def foo(a)
   super.foo { _1 }
 end

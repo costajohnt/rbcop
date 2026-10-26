@@ -19,3 +19,29 @@ module A
 	end
 end
 
+==> 001.rb 109 <==
+module Foo
+	module Bar
+		do_something
+
+		module Baz
+			module Qux
+				def quux
+				end
+			end
+		end
+	end
+end
+
+==> 002.rb 32 <==
+module A
+   class B; c; end
+end
+
+==> 003.rb 41 <==
+module A
+   class B; c
+     d
+   end
+end
+

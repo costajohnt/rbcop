@@ -6,11 +6,13 @@ a.rb:10:1: W: Security/Eval: The use of `eval` is a serious security risk.
 
 --- a/a.rb
 +++ b/a.rb
-@@ -3,8 +3,8 @@
+@@ -2,9 +2,9 @@
+ 
  x = "a" # rubocop:disable Style/StringLiterals -- because reasons
  y = "b" # rubocop:todo Style/StringLiterals
- # rubocop:disable Style/StringLiterals, Layout/SpaceAroundOperators
+-# rubocop:disable Style/StringLiterals, Layout/SpaceAroundOperators
 -z  =  "c"
++# rubocop:disable Style/StringLiterals
 +z = "c"
  # rubocop:enable all
 -w = "d"

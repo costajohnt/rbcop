@@ -1,0 +1,19 @@
+==> .rubocop.yml 279 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Max: 40
+  AllowedPatterns:
+  AutoCorrect: true
+  SplitStrings: true
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: true
+  EnforcedStyle: no_space
+
+==> 000.rb 57 <==
+do_something(foooooooooooooo) if bar == [[1, 2], [3, 4]]
+

@@ -1,4 +1,4 @@
-==> offenses exit=1 6164 <==
+==> offenses exit=1 6813 <==
 000.rb:2:3: W: [Correctable] Layout/EndAlignment: `end` at 2, 2 is not aligned with `class` at 1, 0.
 001.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `module` at 1, 0.
 002.rb:2:3: W: [Correctable] Layout/EndAlignment: `end` at 2, 2 is not aligned with `class` at 1, 0.
@@ -20,46 +20,52 @@
 035.rb:5:12: W: [Correctable] Layout/EndAlignment: `end` at 5, 11 is not aligned with `variable - if` at 1, 0.
 036.rb:3:13: W: [Correctable] Layout/EndAlignment: `end` at 3, 12 is not aligned with `variable + (if` at 1, 0.
 037.rb:3:13: W: [Correctable] Layout/EndAlignment: `end` at 3, 12 is not aligned with `variable + ((if` at 1, 0.
-038.rb:7:1: W: [Correctable] Layout/EndAlignment: `end` at 7, 0 is not aligned with `case` at 2, 2.
-041.rb:3:14: W: [Correctable] Layout/EndAlignment: `end` at 3, 13 is not aligned with `do_something case` at 1, 0.
-042.rb:7:1: W: [Correctable] Layout/EndAlignment: `end` at 7, 0 is not aligned with `case` at 2, 2.
-044.rb:2:6: W: [Correctable] Layout/EndAlignment: `end` at 2, 5 is not aligned with `test case` at 1, 0.
-046.rb:2:6: W: [Correctable] Layout/EndAlignment: `end` at 2, 5 is not aligned with `test case` at 1, 0.
-059.rb:3:7: W: [Correctable] Layout/EndAlignment: `end` at 3, 6 is not aligned with `var = if` at 1, 0.
-061.rb:3:7: W: [Correctable] Layout/EndAlignment: `end` at 3, 6 is not aligned with `var = if` at 1, 0.
-062.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = if` at 1, 0.
-063.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = unless` at 1, 0.
-064.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = while` at 1, 0.
-065.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = until` at 1, 0.
-066.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << if` at 1, 0.
-067.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << unless` at 1, 0.
-068.rb:2:10: W: [Correctable] Layout/EndAlignment: `end` at 2, 9 is not aligned with `var[x] = while` at 1, 0.
-069.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << until` at 1, 0.
-070.rb:3:1: W: [Correctable] Layout/EndAlignment: `end` at 3, 0 is not aligned with `if` at 2, 2.
-071.rb:3:2: W: [Correctable] Layout/EndAlignment: `end` at 3, 1 is not aligned with `unless` at 2, 2.
-072.rb:4:4: W: [Correctable] Layout/EndAlignment: `end` at 4, 3 is not aligned with `while` at 3, 2.
-073.rb:4:5: W: [Correctable] Layout/EndAlignment: `end` at 4, 4 is not aligned with `until` at 2, 2.
-074.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = until` at 1, 0.
-085.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = case` at 1, 0.
-086.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `@var = if` at 1, 0.
-087.rb:2:9: W: [Correctable] Layout/EndAlignment: `end` at 2, 8 is not aligned with `@@var = if` at 1, 0.
-088.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `$var = if` at 1, 0.
-089.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `CNST = if` at 1, 0.
-090.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `a, b = if` at 1, 0.
-091.rb:2:9: W: [Correctable] Layout/EndAlignment: `end` at 2, 8 is not aligned with `var ||= if` at 1, 0.
-092.rb:2:9: W: [Correctable] Layout/EndAlignment: `end` at 2, 8 is not aligned with `var &&= if` at 1, 0.
-093.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var += if` at 1, 0.
-094.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `h[k] = if` at 1, 0.
-095.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << case` at 1, 0.
-096.rb:2:9: W: [Correctable] Layout/EndAlignment: `end` at 2, 8 is not aligned with `@var << if` at 1, 0.
-097.rb:2:10: W: [Correctable] Layout/EndAlignment: `end` at 2, 9 is not aligned with `@@var << if` at 1, 0.
-098.rb:2:9: W: [Correctable] Layout/EndAlignment: `end` at 2, 8 is not aligned with `$var << if` at 1, 0.
-099.rb:2:9: W: [Correctable] Layout/EndAlignment: `end` at 2, 8 is not aligned with `CNST << if` at 1, 0.
-100.rb:2:9: W: [Correctable] Layout/EndAlignment: `end` at 2, 8 is not aligned with `h[k] << if` at 1, 0.
-101.rb:2:10: W: [Correctable] Layout/EndAlignment: `end` at 2, 9 is not aligned with `h.k = if` at 1, 0.
-102.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = case` at 1, 0.
+038.rb:3:13: W: [Correctable] Layout/EndAlignment: `end` at 3, 12 is not aligned with `variable = (if` at 1, 0.
+039.rb:4:3: W: [Correctable] Layout/EndAlignment: `end` at 4, 2 is not aligned with `case` at 1, 20.
+040.rb:3:1: W: [Correctable] Layout/EndAlignment: `end` at 3, 0 is not aligned with `foo(if` at 1, 11.
+041.rb:3:11: W: [Correctable] Layout/EndAlignment: `end` at 3, 10 is not aligned with `foo(bar, (if` at 1, 0.
+042.rb:3:11: W: [Correctable] Layout/EndAlignment: `end` at 3, 10 is not aligned with `foo(bar, (if` at 1, 0.
+043.rb:3:18: W: [Correctable] Layout/EndAlignment: `end` at 3, 17 is not aligned with `bar.baz(qux, if` at 1, 4.
+044.rb:7:1: W: [Correctable] Layout/EndAlignment: `end` at 7, 0 is not aligned with `case` at 2, 2.
+047.rb:3:14: W: [Correctable] Layout/EndAlignment: `end` at 3, 13 is not aligned with `do_something case` at 1, 0.
+048.rb:7:1: W: [Correctable] Layout/EndAlignment: `end` at 7, 0 is not aligned with `case` at 2, 2.
+050.rb:2:6: W: [Correctable] Layout/EndAlignment: `end` at 2, 5 is not aligned with `test case` at 1, 0.
+052.rb:2:6: W: [Correctable] Layout/EndAlignment: `end` at 2, 5 is not aligned with `test case` at 1, 0.
+065.rb:3:7: W: [Correctable] Layout/EndAlignment: `end` at 3, 6 is not aligned with `var = if` at 1, 0.
+067.rb:3:7: W: [Correctable] Layout/EndAlignment: `end` at 3, 6 is not aligned with `var = if` at 1, 0.
+068.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = if` at 1, 0.
+069.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = unless` at 1, 0.
+070.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = while` at 1, 0.
+071.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = until` at 1, 0.
+072.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << if` at 1, 0.
+073.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << unless` at 1, 0.
+074.rb:2:10: W: [Correctable] Layout/EndAlignment: `end` at 2, 9 is not aligned with `var[x] = while` at 1, 0.
+075.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << until` at 1, 0.
+076.rb:3:1: W: [Correctable] Layout/EndAlignment: `end` at 3, 0 is not aligned with `if` at 2, 2.
+077.rb:3:2: W: [Correctable] Layout/EndAlignment: `end` at 3, 1 is not aligned with `unless` at 2, 2.
+078.rb:4:4: W: [Correctable] Layout/EndAlignment: `end` at 4, 3 is not aligned with `while` at 3, 2.
+079.rb:4:5: W: [Correctable] Layout/EndAlignment: `end` at 4, 4 is not aligned with `until` at 2, 2.
+080.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = until` at 1, 0.
+091.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = case` at 1, 0.
+092.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `@var = if` at 1, 0.
+093.rb:2:9: W: [Correctable] Layout/EndAlignment: `end` at 2, 8 is not aligned with `@@var = if` at 1, 0.
+094.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `$var = if` at 1, 0.
+095.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `CNST = if` at 1, 0.
+096.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `a, b = if` at 1, 0.
+097.rb:2:9: W: [Correctable] Layout/EndAlignment: `end` at 2, 8 is not aligned with `var ||= if` at 1, 0.
+098.rb:2:9: W: [Correctable] Layout/EndAlignment: `end` at 2, 8 is not aligned with `var &&= if` at 1, 0.
+099.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var += if` at 1, 0.
+100.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `h[k] = if` at 1, 0.
+101.rb:2:8: W: [Correctable] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << case` at 1, 0.
+102.rb:2:9: W: [Correctable] Layout/EndAlignment: `end` at 2, 8 is not aligned with `@var << if` at 1, 0.
+103.rb:2:10: W: [Correctable] Layout/EndAlignment: `end` at 2, 9 is not aligned with `@@var << if` at 1, 0.
+104.rb:2:9: W: [Correctable] Layout/EndAlignment: `end` at 2, 8 is not aligned with `$var << if` at 1, 0.
+105.rb:2:9: W: [Correctable] Layout/EndAlignment: `end` at 2, 8 is not aligned with `CNST << if` at 1, 0.
+106.rb:2:9: W: [Correctable] Layout/EndAlignment: `end` at 2, 8 is not aligned with `h[k] << if` at 1, 0.
+107.rb:2:10: W: [Correctable] Layout/EndAlignment: `end` at 2, 9 is not aligned with `h.k = if` at 1, 0.
+108.rb:2:7: W: [Correctable] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = case` at 1, 0.
 
-==> autocorrect exit=0 6046 <==
+==> autocorrect exit=0 6683 <==
 000.rb:2:3: W: [Corrected] Layout/EndAlignment: `end` at 2, 2 is not aligned with `class` at 1, 0.
 001.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `module` at 1, 0.
 002.rb:2:3: W: [Corrected] Layout/EndAlignment: `end` at 2, 2 is not aligned with `class` at 1, 0.
@@ -81,44 +87,50 @@
 035.rb:5:12: W: [Corrected] Layout/EndAlignment: `end` at 5, 11 is not aligned with `variable - if` at 1, 0.
 036.rb:3:13: W: [Corrected] Layout/EndAlignment: `end` at 3, 12 is not aligned with `variable + (if` at 1, 0.
 037.rb:3:13: W: [Corrected] Layout/EndAlignment: `end` at 3, 12 is not aligned with `variable + ((if` at 1, 0.
-038.rb:7:1: W: [Corrected] Layout/EndAlignment: `end` at 7, 0 is not aligned with `case` at 2, 2.
-041.rb:3:14: W: [Corrected] Layout/EndAlignment: `end` at 3, 13 is not aligned with `do_something case` at 1, 0.
-042.rb:7:1: W: [Corrected] Layout/EndAlignment: `end` at 7, 0 is not aligned with `case` at 2, 2.
-044.rb:2:6: W: [Corrected] Layout/EndAlignment: `end` at 2, 5 is not aligned with `test case` at 1, 0.
-046.rb:2:6: W: [Corrected] Layout/EndAlignment: `end` at 2, 5 is not aligned with `test case` at 1, 0.
-059.rb:3:7: W: [Corrected] Layout/EndAlignment: `end` at 3, 6 is not aligned with `var = if` at 1, 0.
-061.rb:3:7: W: [Corrected] Layout/EndAlignment: `end` at 3, 6 is not aligned with `var = if` at 1, 0.
-062.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = if` at 1, 0.
-063.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = unless` at 1, 0.
-064.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = while` at 1, 0.
-065.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = until` at 1, 0.
-066.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << if` at 1, 0.
-067.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << unless` at 1, 0.
-068.rb:2:10: W: [Corrected] Layout/EndAlignment: `end` at 2, 9 is not aligned with `var[x] = while` at 1, 0.
-069.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << until` at 1, 0.
-070.rb:3:1: W: [Corrected] Layout/EndAlignment: `end` at 3, 0 is not aligned with `if` at 2, 2.
-071.rb:3:2: W: [Corrected] Layout/EndAlignment: `end` at 3, 1 is not aligned with `unless` at 2, 2.
-072.rb:4:4: W: [Corrected] Layout/EndAlignment: `end` at 4, 3 is not aligned with `while` at 3, 2.
-073.rb:4:5: W: [Corrected] Layout/EndAlignment: `end` at 4, 4 is not aligned with `until` at 2, 2.
-074.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = until` at 1, 0.
-085.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = case` at 1, 0.
-086.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `@var = if` at 1, 0.
-087.rb:2:9: W: [Corrected] Layout/EndAlignment: `end` at 2, 8 is not aligned with `@@var = if` at 1, 0.
-088.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `$var = if` at 1, 0.
-089.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `CNST = if` at 1, 0.
-090.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `a, b = if` at 1, 0.
-091.rb:2:9: W: [Corrected] Layout/EndAlignment: `end` at 2, 8 is not aligned with `var ||= if` at 1, 0.
-092.rb:2:9: W: [Corrected] Layout/EndAlignment: `end` at 2, 8 is not aligned with `var &&= if` at 1, 0.
-093.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var += if` at 1, 0.
-094.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `h[k] = if` at 1, 0.
-095.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << case` at 1, 0.
-096.rb:2:9: W: [Corrected] Layout/EndAlignment: `end` at 2, 8 is not aligned with `@var << if` at 1, 0.
-097.rb:2:10: W: [Corrected] Layout/EndAlignment: `end` at 2, 9 is not aligned with `@@var << if` at 1, 0.
-098.rb:2:9: W: [Corrected] Layout/EndAlignment: `end` at 2, 8 is not aligned with `$var << if` at 1, 0.
-099.rb:2:9: W: [Corrected] Layout/EndAlignment: `end` at 2, 8 is not aligned with `CNST << if` at 1, 0.
-100.rb:2:9: W: [Corrected] Layout/EndAlignment: `end` at 2, 8 is not aligned with `h[k] << if` at 1, 0.
-101.rb:2:10: W: [Corrected] Layout/EndAlignment: `end` at 2, 9 is not aligned with `h.k = if` at 1, 0.
-102.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = case` at 1, 0.
+038.rb:3:13: W: [Corrected] Layout/EndAlignment: `end` at 3, 12 is not aligned with `variable = (if` at 1, 0.
+039.rb:4:3: W: [Corrected] Layout/EndAlignment: `end` at 4, 2 is not aligned with `case` at 1, 20.
+040.rb:3:1: W: [Corrected] Layout/EndAlignment: `end` at 3, 0 is not aligned with `foo(if` at 1, 11.
+041.rb:3:11: W: [Corrected] Layout/EndAlignment: `end` at 3, 10 is not aligned with `foo(bar, (if` at 1, 0.
+042.rb:3:11: W: [Corrected] Layout/EndAlignment: `end` at 3, 10 is not aligned with `foo(bar, (if` at 1, 0.
+043.rb:3:18: W: [Corrected] Layout/EndAlignment: `end` at 3, 17 is not aligned with `bar.baz(qux, if` at 1, 4.
+044.rb:7:1: W: [Corrected] Layout/EndAlignment: `end` at 7, 0 is not aligned with `case` at 2, 2.
+047.rb:3:14: W: [Corrected] Layout/EndAlignment: `end` at 3, 13 is not aligned with `do_something case` at 1, 0.
+048.rb:7:1: W: [Corrected] Layout/EndAlignment: `end` at 7, 0 is not aligned with `case` at 2, 2.
+050.rb:2:6: W: [Corrected] Layout/EndAlignment: `end` at 2, 5 is not aligned with `test case` at 1, 0.
+052.rb:2:6: W: [Corrected] Layout/EndAlignment: `end` at 2, 5 is not aligned with `test case` at 1, 0.
+065.rb:3:7: W: [Corrected] Layout/EndAlignment: `end` at 3, 6 is not aligned with `var = if` at 1, 0.
+067.rb:3:7: W: [Corrected] Layout/EndAlignment: `end` at 3, 6 is not aligned with `var = if` at 1, 0.
+068.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = if` at 1, 0.
+069.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = unless` at 1, 0.
+070.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = while` at 1, 0.
+071.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = until` at 1, 0.
+072.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << if` at 1, 0.
+073.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << unless` at 1, 0.
+074.rb:2:10: W: [Corrected] Layout/EndAlignment: `end` at 2, 9 is not aligned with `var[x] = while` at 1, 0.
+075.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << until` at 1, 0.
+076.rb:3:1: W: [Corrected] Layout/EndAlignment: `end` at 3, 0 is not aligned with `if` at 2, 2.
+077.rb:3:2: W: [Corrected] Layout/EndAlignment: `end` at 3, 1 is not aligned with `unless` at 2, 2.
+078.rb:4:4: W: [Corrected] Layout/EndAlignment: `end` at 4, 3 is not aligned with `while` at 3, 2.
+079.rb:4:5: W: [Corrected] Layout/EndAlignment: `end` at 4, 4 is not aligned with `until` at 2, 2.
+080.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = until` at 1, 0.
+091.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = case` at 1, 0.
+092.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `@var = if` at 1, 0.
+093.rb:2:9: W: [Corrected] Layout/EndAlignment: `end` at 2, 8 is not aligned with `@@var = if` at 1, 0.
+094.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `$var = if` at 1, 0.
+095.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `CNST = if` at 1, 0.
+096.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `a, b = if` at 1, 0.
+097.rb:2:9: W: [Corrected] Layout/EndAlignment: `end` at 2, 8 is not aligned with `var ||= if` at 1, 0.
+098.rb:2:9: W: [Corrected] Layout/EndAlignment: `end` at 2, 8 is not aligned with `var &&= if` at 1, 0.
+099.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var += if` at 1, 0.
+100.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `h[k] = if` at 1, 0.
+101.rb:2:8: W: [Corrected] Layout/EndAlignment: `end` at 2, 7 is not aligned with `var << case` at 1, 0.
+102.rb:2:9: W: [Corrected] Layout/EndAlignment: `end` at 2, 8 is not aligned with `@var << if` at 1, 0.
+103.rb:2:10: W: [Corrected] Layout/EndAlignment: `end` at 2, 9 is not aligned with `@@var << if` at 1, 0.
+104.rb:2:9: W: [Corrected] Layout/EndAlignment: `end` at 2, 8 is not aligned with `$var << if` at 1, 0.
+105.rb:2:9: W: [Corrected] Layout/EndAlignment: `end` at 2, 8 is not aligned with `CNST << if` at 1, 0.
+106.rb:2:9: W: [Corrected] Layout/EndAlignment: `end` at 2, 8 is not aligned with `h[k] << if` at 1, 0.
+107.rb:2:10: W: [Corrected] Layout/EndAlignment: `end` at 2, 9 is not aligned with `h.k = if` at 1, 0.
+108.rb:2:7: W: [Corrected] Layout/EndAlignment: `end` at 2, 6 is not aligned with `var = case` at 1, 0.
 
 ==> corrected/000.rb 15 <==
 class Test
@@ -213,7 +225,38 @@ variable + ((if bar
               baz
 end))
 
-==> corrected/038.rb 72 <==
+==> corrected/038.rb 50 <==
+variable = (if bar
+              baz
+end) + other
+
+==> corrected/039.rb 102 <==
+variable = other || case a
+                    when b
+                      c
+                    end
+
+==> corrected/040.rb 44 <==
+variable = foo(if bar
+  baz
+           end)
+
+==> corrected/041.rb 39 <==
+foo(bar, (if baz
+            qux
+end))
+
+==> corrected/042.rb 44 <==
+foo(bar, (if baz
+            qux
+end).to_s)
+
+==> corrected/043.rb 59 <==
+foo bar.baz(qux, if quux
+                   corge
+    end)
+
+==> corrected/044.rb 72 <==
 format(
   case condition
   when foo
@@ -223,12 +266,12 @@ format(
   end, qux
 )
 
-==> corrected/041.rb 67 <==
+==> corrected/047.rb 67 <==
 do_something case condition
              when expr
 end.method_call
 
-==> corrected/042.rb 68 <==
+==> corrected/048.rb 68 <==
 format(
   case pattern
   in foo
@@ -238,151 +281,151 @@ format(
   end, qux
 )
 
-==> corrected/044.rb 23 <==
+==> corrected/050.rb 23 <==
 test case a when b
 end
 
-==> corrected/046.rb 22 <==
+==> corrected/052.rb 22 <==
 test case a; in b
 end
 
-==> corrected/059.rb 36 <==
+==> corrected/065.rb 36 <==
 var = if test
         foo
 end || ""
 
-==> corrected/061.rb 36 <==
+==> corrected/067.rb 36 <==
 var = if test
         foo
 end && ""
 
-==> corrected/062.rb 18 <==
+==> corrected/068.rb 18 <==
 var = if test
 end
 
-==> corrected/063.rb 22 <==
+==> corrected/069.rb 22 <==
 var = unless test
 end
 
-==> corrected/064.rb 21 <==
+==> corrected/070.rb 21 <==
 var = while test
 end
 
-==> corrected/065.rb 21 <==
+==> corrected/071.rb 21 <==
 var = until test
 end
 
-==> corrected/066.rb 19 <==
+==> corrected/072.rb 19 <==
 var << if test
 end
 
-==> corrected/067.rb 23 <==
+==> corrected/073.rb 23 <==
 var << unless test
 end
 
-==> corrected/068.rb 24 <==
+==> corrected/074.rb 24 <==
 var[x] = while test
 end
 
-==> corrected/069.rb 22 <==
+==> corrected/075.rb 22 <==
 var << until test
 end
 
-==> corrected/070.rb 22 <==
+==> corrected/076.rb 22 <==
 var =
   if test
   end
 
-==> corrected/071.rb 26 <==
+==> corrected/077.rb 26 <==
 var =
   unless test
   end
 
-==> corrected/072.rb 37 <==
+==> corrected/078.rb 37 <==
 var =
   # comment
   while test
   end
 
-==> corrected/073.rb 42 <==
+==> corrected/079.rb 42 <==
 var =
   until test
     do_something
   end
 
-==> corrected/074.rb 23 <==
+==> corrected/080.rb 23 <==
 var = until test
 end.j
 
-==> corrected/085.rb 24 <==
+==> corrected/091.rb 24 <==
 var = case a when b
 end
 
-==> corrected/086.rb 19 <==
+==> corrected/092.rb 19 <==
 @var = if test
 end
 
-==> corrected/087.rb 20 <==
+==> corrected/093.rb 20 <==
 @@var = if test
 end
 
-==> corrected/088.rb 19 <==
+==> corrected/094.rb 19 <==
 $var = if test
 end
 
-==> corrected/089.rb 19 <==
+==> corrected/095.rb 19 <==
 CNST = if test
 end
 
-==> corrected/090.rb 19 <==
+==> corrected/096.rb 19 <==
 a, b = if test
 end
 
-==> corrected/091.rb 20 <==
+==> corrected/097.rb 20 <==
 var ||= if test
 end
 
-==> corrected/092.rb 20 <==
+==> corrected/098.rb 20 <==
 var &&= if test
 end
 
-==> corrected/093.rb 19 <==
+==> corrected/099.rb 19 <==
 var += if test
 end
 
-==> corrected/094.rb 19 <==
+==> corrected/100.rb 19 <==
 h[k] = if test
 end
 
-==> corrected/095.rb 25 <==
+==> corrected/101.rb 25 <==
 var << case a when b
 end
 
-==> corrected/096.rb 20 <==
+==> corrected/102.rb 20 <==
 @var << if test
 end
 
-==> corrected/097.rb 21 <==
+==> corrected/103.rb 21 <==
 @@var << if test
 end
 
-==> corrected/098.rb 20 <==
+==> corrected/104.rb 20 <==
 $var << if test
 end
 
-==> corrected/099.rb 20 <==
+==> corrected/105.rb 20 <==
 CNST << if test
 end
 
-==> corrected/100.rb 20 <==
+==> corrected/106.rb 20 <==
 h[k] << if test
 end
 
-==> corrected/101.rb 18 <==
+==> corrected/107.rb 18 <==
 h.k = if test
 end
 
-==> corrected/102.rb 23 <==
+==> corrected/108.rb 23 <==
 var = case a; in b
 end
 

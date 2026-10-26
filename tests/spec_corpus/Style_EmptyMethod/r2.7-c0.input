@@ -31,41 +31,47 @@ def foo(arg
 
 ==> 005.rb 12 <==
 def foo; end
-==> 006.rb 18 <==
+==> 006.rb 37 <==
+def foo(bar, baz = {
+  qux: 1
+})
+end
+
+==> 007.rb 18 <==
 def foo
   bar
 end
 
-==> 007.rb 17 <==
+==> 008.rb 17 <==
 def foo; bar; end
-==> 008.rb 20 <==
+==> 009.rb 20 <==
 def foo
   # bar
 end
 
-==> 009.rb 17 <==
+==> 010.rb 17 <==
 def self.foo
 end
 
-==> 010.rb 27 <==
+==> 011.rb 27 <==
 def self.foo(bar, baz)
 end
 
-==> 011.rb 18 <==
+==> 012.rb 18 <==
 def self.foo
 
 end
 
-==> 012.rb 17 <==
+==> 013.rb 17 <==
 def self.foo; end
-==> 013.rb 23 <==
+==> 014.rb 23 <==
 def self.foo
   bar
 end
 
-==> 014.rb 22 <==
+==> 015.rb 22 <==
 def self.foo; bar; end
-==> 015.rb 25 <==
+==> 016.rb 25 <==
 def self.foo
   # bar
 end

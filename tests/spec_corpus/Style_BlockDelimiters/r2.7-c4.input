@@ -17,110 +17,136 @@ puts [1, 2, 3].map { |n|
   n * n
 }
 
-==> 001.rb 38 <==
+==> 001.rb 33 <==
+for d in aa { |c| c } do
+  f
+end
+
+==> 002.rb 35 <==
+for d in aa { |c|
+  c
+} do
+  f
+end
+
+==> 003.rb 54 <==
+def foo
+  yield [1, 2, 3].map { |n|
+    n * n
+  }
+end
+
+==> 004.rb 54 <==
+def foo
+  super [1, 2, 3].map { |n|
+    n * n
+  }
+end
+
+==> 005.rb 38 <==
 puts [1, 2, 3].map { |n|
   n * n
 }, 1
 
-==> 002.rb 42 <==
+==> 006.rb 42 <==
 puts [0] + [1,2,3].map { |n|
   n * n
 }, 1
 
-==> 003.rb 42 <==
+==> 007.rb 42 <==
 puts [1,2,3].map { |n|
   n * n
 } + [0], 1
 
-==> 004.rb 70 <==
+==> 008.rb 70 <==
 'Some text: %s' %
   %w[foo bar].map { |v|
     v.upcase
   }.join(', ')
 
-==> 005.rb 123 <==
+==> 009.rb 123 <==
 foo :bar, baz: 'Some text: %s' %
                %w[foo bar].map { |v|
                 v.upcase
                }.join(', ')
 
-==> 006.rb 36 <==
+==> 010.rb 36 <==
 puts [1, 2, 3].map {
   _1 * _1
 }, 1
 
-==> 007.rb 40 <==
+==> 011.rb 40 <==
 puts [0] + [1,2,3].map {
   _1 * _1
 }, 1
 
-==> 008.rb 40 <==
+==> 012.rb 40 <==
 puts [1,2,3].map {
   _1 * _1
 } + [0], 1
 
-==> 009.rb 55 <==
+==> 013.rb 55 <==
 foo %
   %w[bar baz].map {
     _1.upcase
   }.join(', ')
 
-==> 010.rb 120 <==
+==> 014.rb 120 <==
 foo :bar, baz: 'Some text: %s' %
                %w[foo bar].map {
                 _1.upcase
                }.join(', ')
 
-==> 011.rb 16 <==
+==> 015.rb 16 <==
 each do |x| end
 
-==> 012.rb 12 <==
+==> 016.rb 12 <==
 each { |x| }
-==> 013.rb 16 <==
+==> 017.rb 16 <==
 each do |x|
 end
 
-==> 014.rb 32 <==
+==> 018.rb 32 <==
 s.subspec 'Subspec' do |sp| end
 
-==> 015.rb 28 <==
+==> 019.rb 28 <==
 each do |x|
 end.map(&:to_s)
 
-==> 016.rb 29 <==
+==> 020.rb 29 <==
 foo.bar = baz.map do |x|
 end
 
-==> 017.rb 28 <==
+==> 021.rb 28 <==
 foo = proc do
   puts 42
 end
 
-==> 018.rb 35 <==
+==> 022.rb 35 <==
 foo = test_method do
   puts 42
 end
 
-==> 019.rb 13 <==
+==> 023.rb 13 <==
 each { |x|
 }
 
-==> 020.rb 26 <==
+==> 024.rb 26 <==
 foo.bar = baz.map { |x|
 }
 
-==> 021.rb 27 <==
+==> 025.rb 27 <==
 each { |x|
 }.map(&:to_sym)
 
-==> 022.rb 71 <==
+==> 026.rb 71 <==
 map do |a|
   do_something
 rescue StandardError => e
   puts 'oh no'
 end
 
-==> 023.rb 52 <==
+==> 027.rb 52 <==
 map do |a|
   do_something
 ensure

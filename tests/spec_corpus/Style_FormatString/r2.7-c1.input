@@ -41,20 +41,44 @@ puts "%s" % a.to_sym
 ==> 010.rb 14 <==
 puts "%f" % a
 
-==> 011.rb 11 <==
+==> 011.rb 25 <==
+puts "%s and %s" % @pair
+
+==> 012.rb 26 <==
+puts "%s and %s" % @@pair
+
+==> 013.rb 25 <==
+puts "%s and %s" % $pair
+
+==> 014.rb 24 <==
+puts "%s and %s" % PAIR
+
+==> 015.rb 29 <==
+puts "%s and %s" % Foo::PAIR
+
+==> 016.rb 26 <==
+puts "%s and %s" % (pair)
+
+==> 017.rb 29 <==
+puts "%s and %s" % pair&.foo
+
+==> 018.rb 20 <==
+puts "%s" % a&.to_s
+
+==> 019.rb 11 <==
 puts 10 % 4
-==> 012.rb 10 <==
+==> 020.rb 10 <==
 puts x % Y
-==> 013.rb 33 <==
+==> 021.rb 33 <==
 puts "#{x * 5} %d #{@test}" % 10
 
-==> 014.rb 25 <==
+==> 022.rb 25 <==
 sprintf(something, a, b)
 
-==> 015.rb 22 <==
+==> 023.rb 22 <==
 sprintf('%020d', 123)
 
-==> 016.rb 30 <==
+==> 024.rb 30 <==
 a = something()
 puts "%d" % a
 

@@ -1,4 +1,4 @@
-==> offenses exit=1 2005 <==
+==> offenses exit=1 2500 <==
 000.rb:1:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
 001.rb:1:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
 002.rb:1:1: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
@@ -11,12 +11,16 @@
 009.rb:1:8: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use single-line instead.
 010.rb:1:14: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use single-line instead.
 011.rb:1:19: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use single-line instead.
-013.rb:2:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
-014.rb:1:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
-014.rb:5:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
-014.rb:9:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
+012.rb:2:9: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use single-line instead.
+013.rb:2:9: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use single-line instead.
+014.rb:1:10: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use single-line instead.
+015.rb:1:10: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
+017.rb:2:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
+018.rb:1:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
+018.rb:5:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
+018.rb:9:5: C: [Correctable] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
 
-==> autocorrect exit=0 1987 <==
+==> autocorrect exit=0 2474 <==
 000.rb:1:5: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
 001.rb:1:5: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
 002.rb:1:1: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
@@ -29,10 +33,14 @@
 009.rb:1:8: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use single-line instead.
 010.rb:1:14: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use single-line instead.
 011.rb:1:19: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use single-line instead.
-013.rb:2:5: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
-014.rb:1:5: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
-014.rb:5:5: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
-014.rb:9:5: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
+012.rb:2:9: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use single-line instead.
+013.rb:2:9: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use single-line instead.
+014.rb:1:10: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use single-line instead.
+015.rb:1:10: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
+017.rb:2:5: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
+018.rb:1:5: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
+018.rb:5:5: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
+018.rb:9:5: C: [Corrected] Style/MultilineTernaryOperator: Avoid multi-line ternary operators, use `if` or `unless` instead.
 
 ==> corrected/000.rb 29 <==
 a = if cond
@@ -109,7 +117,27 @@ do_something cond ? foo : bar
 ==> corrected/011.rb 35 <==
 obj&.do_something cond ? foo : bar
 
-==> corrected/013.rb 65 <==
+==> corrected/012.rb 37 <==
+def foo
+  yield cond ? foo : bar
+end
+
+==> corrected/013.rb 37 <==
+def foo
+  super cond ? foo : bar
+end
+
+==> corrected/014.rb 26 <==
+defined? cond ? foo : bar
+
+==> corrected/015.rb 39 <==
+defined?(if cond
+  foo
+else
+  bar
+end)
+
+==> corrected/017.rb 65 <==
 # comment a
 a = if cond
   b
@@ -118,7 +146,7 @@ else
 end # comment b
 # comment c
 
-==> corrected/014.rb 133 <==
+==> corrected/018.rb 133 <==
 # comment a
 # comment b
 a = if cond

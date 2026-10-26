@@ -1,0 +1,20 @@
+==> .rubocop.yml 205 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/IndentationConsistency:
+  EnforcedStyle: normal
+Layout/IndentationWidth:
+  Enabled: false
+
+==> 000.rb 86 <==
+module Foo
+extend self # rubocop:disable Layout/IndentationWidth
+
+  def bar
+  end
+end
+

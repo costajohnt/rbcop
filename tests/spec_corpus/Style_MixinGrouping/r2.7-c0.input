@@ -21,32 +21,39 @@ class Foo
   include Qux
 end
 
-==> 003.rb 24 <==
+==> 003.rb 67 <==
+class Foo
+  include(Bar, Module.new do
+    do_something
+  end)
+end
+
+==> 004.rb 24 <==
 class Foo
   include
 end
 
-==> 004.rb 32 <==
+==> 005.rb 32 <==
 class Foo
   extend Bar, Qux
 end
 
-==> 005.rb 23 <==
+==> 006.rb 23 <==
 class Foo
   extend
 end
 
-==> 006.rb 33 <==
+==> 007.rb 33 <==
 class Foo
   prepend Bar, Qux
 end
 
-==> 007.rb 24 <==
+==> 008.rb 24 <==
 class Foo
   prepend
 end
 
-==> 008.rb 46 <==
+==> 009.rb 46 <==
 class Foo
   include Bar, Baz
   extend Qux

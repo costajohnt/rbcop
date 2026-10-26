@@ -1,3 +1,14 @@
 a.rb:5:33: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Performance/Detect`.
 a.rb:8:7: W: Lint/CopDirectiveSyntax: Unknown cop name `Performance/Bogus` (did you mean `Performance/Count`?).
-a.rb:8:7: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Performance/Bogus` (did you mean `Performance/Count`?).
+
+--- a/a.rb
++++ b/a.rb
+@@ -2,7 +2,7 @@
+ 
+ x = [1, 2].select { |y| y > 1 }.first # rubocop:disable Performance/Detect
+ puts x
+-w = [1, 2].detect { |y| y > 1 } # rubocop:disable Performance/Detect
++w = [1, 2].detect { |y| y > 1 }
+ puts w
+ foo # rubocop:disable Custom/NoFoo
+ z = 1 # rubocop:disable Performance/Bogus

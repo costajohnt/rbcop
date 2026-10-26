@@ -1,4 +1,4 @@
-==> offenses exit=1 905 <==
+==> offenses exit=1 1036 <==
 000.rb:1:6: C: [Correctable] Style/RedundantFetchBlock: Use `fetch(:key, 5)` instead of `fetch(:key) { 5 }`.
 001.rb:1:7: C: [Correctable] Style/RedundantFetchBlock: Use `fetch(:key, 5)` instead of `fetch(:key) { 5 }`.
 002.rb:1:6: C: [Correctable] Style/RedundantFetchBlock: Use `fetch(:key, 2.5)` instead of `fetch(:key) { 2.5 }`.
@@ -7,8 +7,9 @@
 005.rb:1:6: C: [Correctable] Style/RedundantFetchBlock: Use `fetch(:key, 1i)` instead of `fetch(:key) { 1i }`.
 006.rb:1:6: C: [Correctable] Style/RedundantFetchBlock: Use `fetch(:key, nil)` instead of `fetch(:key) {}`.
 008.rb:2:6: C: [Correctable] Style/RedundantFetchBlock: Use `fetch(:key, 'value')` instead of `fetch(:key) { 'value' }`.
+018.rb:1:6: C: [Correctable] Style/RedundantFetchBlock: Use `fetch({ key: :value }, 5)` instead of `fetch({ key: :value }) { 5 }`.
 
-==> autocorrect exit=0 889 <==
+==> autocorrect exit=0 1018 <==
 000.rb:1:6: C: [Corrected] Style/RedundantFetchBlock: Use `fetch(:key, 5)` instead of `fetch(:key) { 5 }`.
 001.rb:1:7: C: [Corrected] Style/RedundantFetchBlock: Use `fetch(:key, 5)` instead of `fetch(:key) { 5 }`.
 002.rb:1:6: C: [Corrected] Style/RedundantFetchBlock: Use `fetch(:key, 2.5)` instead of `fetch(:key) { 2.5 }`.
@@ -17,6 +18,7 @@
 005.rb:1:6: C: [Corrected] Style/RedundantFetchBlock: Use `fetch(:key, 1i)` instead of `fetch(:key) { 1i }`.
 006.rb:1:6: C: [Corrected] Style/RedundantFetchBlock: Use `fetch(:key, nil)` instead of `fetch(:key) {}`.
 008.rb:2:6: C: [Corrected] Style/RedundantFetchBlock: Use `fetch(:key, 'value')` instead of `fetch(:key) { 'value' }`.
+018.rb:1:6: C: [Corrected] Style/RedundantFetchBlock: Use `fetch({ key: :value }, 5)` instead of `fetch({ key: :value }) { 5 }`.
 
 ==> corrected/000.rb 20 <==
 hash.fetch(:key, 5)
@@ -42,4 +44,7 @@ hash.fetch(:key, nil)
 ==> corrected/008.rb 56 <==
 # frozen_string_literal: true
 hash.fetch(:key, 'value')
+
+==> corrected/018.rb 31 <==
+hash.fetch({ key: :value }, 5)
 

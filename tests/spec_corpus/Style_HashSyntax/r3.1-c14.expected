@@ -1,9 +1,16 @@
-==> offenses exit=1 72 <==
+==> offenses exit=1 145 <==
 000.rb:1:3: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
+001.rb:2:10: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
 
-==> autocorrect exit=0 70 <==
+==> autocorrect exit=0 141 <==
 000.rb:1:3: C: [Corrected] Style/HashSyntax: Use hash rockets syntax.
+001.rb:2:10: C: [Corrected] Style/HashSyntax: Use hash rockets syntax.
 
 ==> corrected/000.rb 11 <==
 f(:a => a)
+
+==> corrected/001.rb 54 <==
+def do_something(if:, bar:)
+  f(if:, :bar => bar)
+end
 

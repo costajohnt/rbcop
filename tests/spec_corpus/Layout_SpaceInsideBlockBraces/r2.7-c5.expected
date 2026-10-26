@@ -1,12 +1,15 @@
-==> offenses exit=1 262 <==
+==> offenses exit=1 347 <==
 000.rb:1:7: C: [Correctable] Layout/SpaceInsideBlockBraces: Space between { and | detected.
 003.rb:3:1: C: [Correctable] Layout/SpaceInsideBlockBraces: Space inside } detected.
-005.rb:3:1: C: [Correctable] Layout/SpaceInsideBlockBraces: Space inside } detected.
+007.rb:3:4: C: [Correctable] Layout/SpaceInsideBlockBraces: Space inside } detected.
+008.rb:3:1: C: [Correctable] Layout/SpaceInsideBlockBraces: Space inside } detected.
 
-==> autocorrect exit=0 256 <==
+==> autocorrect exit=0 422 <==
 000.rb:1:7: C: [Corrected] Layout/SpaceInsideBlockBraces: Space between { and | detected.
 003.rb:3:1: C: [Corrected] Layout/SpaceInsideBlockBraces: Space inside } detected.
-005.rb:3:1: C: [Corrected] Layout/SpaceInsideBlockBraces: Space inside } detected.
+007.rb:3:1: C: [Corrected] Layout/SpaceInsideBlockBraces: Space inside } detected.
+007.rb:3:4: C: [Corrected] Layout/SpaceInsideBlockBraces: Space inside } detected.
+008.rb:3:1: C: [Corrected] Layout/SpaceInsideBlockBraces: Space inside } detected.
 
 ==> corrected/000.rb 16 <==
 each {|x| puts}
@@ -16,7 +19,12 @@ items.map {|item|
   item.do_something
 }
 
-==> corrected/005.rb 16 <==
+==> corrected/007.rb 14 <==
+foo {[
+  1
+]}
+
+==> corrected/008.rb 16 <==
 foo {[
   bar
 ]}

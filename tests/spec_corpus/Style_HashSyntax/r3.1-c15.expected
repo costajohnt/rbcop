@@ -1,11 +1,34 @@
-==> offenses exit=1 145 <==
-000.rb:1:3: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
-000.rb:1:12: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
+==> offenses exit=1 481 <==
+000.rb:1:11: C: [Correctable] Style/HashSyntax: Don't mix styles in the same hash.
+001.rb:1:12: C: [Correctable] Style/HashSyntax: Don't mix styles in the same hash.
+002.rb:2:19: C: [Correctable] Style/HashSyntax: Don't mix styles in the same hash.
+003.rb:1:3: C: [Correctable] Style/HashSyntax: Don't mix styles in the same hash.
+004.rb:1:6: C: [Correctable] Style/HashSyntax: Omit the hash value.
+004.rb:1:9: C: [Correctable] Style/HashSyntax: Don't mix styles in the same hash.
 
-==> autocorrect exit=0 141 <==
-000.rb:1:3: C: [Corrected] Style/HashSyntax: Use hash rockets syntax.
-000.rb:1:12: C: [Corrected] Style/HashSyntax: Use hash rockets syntax.
+==> autocorrect exit=0 536 <==
+000.rb:1:11: C: [Corrected] Style/HashSyntax: Don't mix styles in the same hash.
+001.rb:1:12: C: [Corrected] Style/HashSyntax: Don't mix styles in the same hash.
+002.rb:2:19: C: [Corrected] Style/HashSyntax: Don't mix styles in the same hash.
+003.rb:1:3: C: [Corrected] Style/HashSyntax: Don't mix styles in the same hash.
+004.rb:1:6: C: [Corrected] Style/HashSyntax: Omit the hash value.
+004.rb:1:9: C: [Corrected] Style/HashSyntax: Don't mix styles in the same hash.
+004.rb:1:10: C: [Corrected] Style/HashSyntax: Omit the hash value.
 
-==> corrected/000.rb 23 <==
-f(:a => :sym, :b => b)
+==> corrected/000.rb 19 <==
+f(k => 1, :b => b)
+
+==> corrected/001.rb 20 <==
+f(:a => a, :b => b)
+
+==> corrected/002.rb 63 <==
+def do_something(if:, bar:)
+  f(:a => a, if:, :bar => bar)
+end
+
+==> corrected/003.rb 19 <==
+f(:a => a, k => 1)
+
+==> corrected/004.rb 10 <==
+f(a:, b:)
 

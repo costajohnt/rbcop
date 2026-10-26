@@ -1,45 +1,61 @@
-==> offenses exit=1 656 <==
-002.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
-002.rb:2:3: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
-014.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
-015.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
-016.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
-017.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
-018.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
-021.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+==> offenses exit=1 902 <==
+008.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+008.rb:2:3: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+009.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+010.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+025.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+026.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+027.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+028.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+029.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+032.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+033.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
 
-==> autocorrect exit=0 640 <==
-002.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
-002.rb:2:3: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
-014.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
-015.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
-016.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
-017.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
-018.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
-021.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+==> autocorrect exit=0 880 <==
+008.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+008.rb:2:3: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+009.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+010.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+025.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+026.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+027.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+028.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+029.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+032.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+033.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
 
-==> corrected/002.rb 18 <==
+==> corrected/008.rb 18 <==
 def a = def b = 1
 
-==> corrected/014.rb 18 <==
+==> corrected/009.rb 36 <==
+def my_method(foo, bar) = foo + bar
+
+==> corrected/010.rb 30 <==
+def self.my_method(foo) = foo
+
+==> corrected/025.rb 18 <==
 def my_method = x
 
-==> corrected/015.rb 23 <==
+==> corrected/026.rb 23 <==
 def self.my_method = x
 
-==> corrected/016.rb 24 <==
+==> corrected/027.rb 24 <==
 def self::my_method = x
 
-==> corrected/017.rb 24 <==
+==> corrected/028.rb 24 <==
 def my_method(a, b) = x
 
-==> corrected/018.rb 38 <==
+==> corrected/029.rb 38 <==
 def my_method = x.foo
    .bar
    .baz
 
-==> corrected/021.rb 44 <==
+==> corrected/032.rb 44 <==
 def my_method(a, b) = x.foo
    .bar
    .baz
+
+==> corrected/033.rb 36 <==
+def my_method = x( # comment
+    1)
 

@@ -1,4 +1,4 @@
-==> .rubocop.yml 195 <==
+==> .rubocop.yml 162 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -6,13 +6,17 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 3.1
 Layout/HashAlignment:
-  EnforcedHashRocketStyle: table
   EnforcedColonStyle: separator
 
-==> 000.rb 32 <==
+==> 000.rb 21 <==
 f(
-  a: "x",
-  bbbbb:,
-  c: 1
+  aa:,
+  b: nil
+)
+
+==> 001.rb 23 <==
+f(
+  aaa: nil,
+  bb:
 )
 

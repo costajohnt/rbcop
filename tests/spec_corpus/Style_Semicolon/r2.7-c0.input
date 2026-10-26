@@ -116,7 +116,18 @@ foo {
 m key: value;
 do_something
 
-==> 029.rb 43 <==
+==> 029.rb 18 <==
+def c a:;
+  d
+end
+
+==> 030.rb 22 <==
+case h
+in a:;
+  d
+end
+
+==> 031.rb 43 <==
 def foo
   bar = baz if qux rescue quux
 end

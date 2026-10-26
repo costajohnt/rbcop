@@ -1,16 +1,18 @@
-==> offenses exit=1 548 <==
+==> offenses exit=1 657 <==
 001.rb:4:1: C: [Correctable] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `.each do` at 2, 2.
 003.rb:5:13: C: [Correctable] Layout/BlockAlignment: `end` at 5, 12 is not aligned with `.brackets(lft: foo,` at 2, 2.
 007.rb:5:7: C: [Correctable] Layout/BlockAlignment: `end` at 5, 6 is not aligned with `key: value do |x|` at 3, 2.
 009.rb:4:1: C: [Correctable] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `bar do` at 2, 2.
 011.rb:4:1: C: [Correctable] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `bar do` at 2, 2.
+012.rb:4:2: C: [Correctable] Layout/BlockAlignment: `end` at 4, 1 is not aligned with `.map do |v|` at 2, 2.
 
-==> autocorrect exit=0 538 <==
+==> autocorrect exit=0 645 <==
 001.rb:4:1: C: [Corrected] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `.each do` at 2, 2.
 003.rb:5:13: C: [Corrected] Layout/BlockAlignment: `end` at 5, 12 is not aligned with `.brackets(lft: foo,` at 2, 2.
 007.rb:5:7: C: [Corrected] Layout/BlockAlignment: `end` at 5, 6 is not aligned with `key: value do |x|` at 3, 2.
 009.rb:4:1: C: [Corrected] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `bar do` at 2, 2.
 011.rb:4:1: C: [Corrected] Layout/BlockAlignment: `end` at 4, 0 is not aligned with `bar do` at 2, 2.
+012.rb:4:2: C: [Corrected] Layout/BlockAlignment: `end` at 4, 1 is not aligned with `.map do |v|` at 2, 2.
 
 ==> corrected/001.rb 33 <==
 foo.bar
@@ -45,4 +47,10 @@ def self.foo
     baz
   end
 end
+
+==> corrected/012.rb 33 <==
+	x = foo
+		.map do |v|
+		v
+	 end
 

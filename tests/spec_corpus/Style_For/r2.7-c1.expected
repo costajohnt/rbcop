@@ -1,52 +1,111 @@
-==> offenses exit=1 528 <==
-003.rb:2:3: C: [Correctable] Style/For: Prefer `for` over `each`.
-004.rb:2:3: C: [Correctable] Style/For: Prefer `for` over `each`.
+==> offenses exit=1 1122 <==
+003.rb:1:1: C: [Correctable] Style/For: Prefer `for` over `each`.
 005.rb:2:3: C: [Correctable] Style/For: Prefer `for` over `each`.
 006.rb:2:3: C: [Correctable] Style/For: Prefer `for` over `each`.
-007.rb:5:3: C: [Correctable] Style/For: Prefer `for` over `each`.
-009.rb:4:1: C: [Correctable] Style/For: Prefer `for` over `each`.
-009.rb:7:1: C: [Correctable] Style/For: Prefer `for` over `each`.
-010.rb:2:3: C: [Correctable] Style/For: Prefer `for` over `each`.
+007.rb:2:3: C: [Correctable] Style/For: Prefer `for` over `each`.
+008.rb:1:1: C: [Correctable] Style/For: Prefer `for` over `each`.
+009.rb:1:1: C: [Correctable] Style/For: Prefer `for` over `each`.
+010.rb:1:1: C: [Correctable] Style/For: Prefer `for` over `each`.
+011.rb:1:1: C: [Correctable] Style/For: Prefer `for` over `each`.
+018.rb:1:1: C: [Correctable] Style/For: Prefer `for` over `each`.
+019.rb:1:1: C: [Correctable] Style/For: Prefer `for` over `each`.
+020.rb:1:1: C: [Correctable] Style/For: Prefer `for` over `each`.
+021.rb:1:1: C: [Correctable] Style/For: Prefer `for` over `each`.
+022.rb:1:1: C: [Correctable] Style/For: Prefer `for` over `each`.
+024.rb:5:3: C: [Correctable] Style/For: Prefer `for` over `each`.
+026.rb:4:1: C: [Correctable] Style/For: Prefer `for` over `each`.
+026.rb:7:1: C: [Correctable] Style/For: Prefer `for` over `each`.
+027.rb:2:3: C: [Correctable] Style/For: Prefer `for` over `each`.
 
-==> autocorrect exit=0 512 <==
-003.rb:2:3: C: [Corrected] Style/For: Prefer `for` over `each`.
-004.rb:2:3: C: [Corrected] Style/For: Prefer `for` over `each`.
+==> autocorrect exit=0 1088 <==
+003.rb:1:1: C: [Corrected] Style/For: Prefer `for` over `each`.
 005.rb:2:3: C: [Corrected] Style/For: Prefer `for` over `each`.
 006.rb:2:3: C: [Corrected] Style/For: Prefer `for` over `each`.
-007.rb:5:3: C: [Corrected] Style/For: Prefer `for` over `each`.
-009.rb:4:1: C: [Corrected] Style/For: Prefer `for` over `each`.
-009.rb:7:1: C: [Corrected] Style/For: Prefer `for` over `each`.
-010.rb:2:3: C: [Corrected] Style/For: Prefer `for` over `each`.
+007.rb:2:3: C: [Corrected] Style/For: Prefer `for` over `each`.
+008.rb:1:1: C: [Corrected] Style/For: Prefer `for` over `each`.
+009.rb:1:1: C: [Corrected] Style/For: Prefer `for` over `each`.
+010.rb:1:1: C: [Corrected] Style/For: Prefer `for` over `each`.
+011.rb:1:1: C: [Corrected] Style/For: Prefer `for` over `each`.
+018.rb:1:1: C: [Corrected] Style/For: Prefer `for` over `each`.
+019.rb:1:1: C: [Corrected] Style/For: Prefer `for` over `each`.
+020.rb:1:1: C: [Corrected] Style/For: Prefer `for` over `each`.
+021.rb:1:1: C: [Corrected] Style/For: Prefer `for` over `each`.
+022.rb:1:1: C: [Corrected] Style/For: Prefer `for` over `each`.
+024.rb:5:3: C: [Corrected] Style/For: Prefer `for` over `each`.
+026.rb:4:1: C: [Corrected] Style/For: Prefer `for` over `each`.
+026.rb:7:1: C: [Corrected] Style/For: Prefer `for` over `each`.
+027.rb:2:3: C: [Corrected] Style/For: Prefer `for` over `each`.
 
-==> corrected/003.rb 54 <==
+==> corrected/003.rb 51 <==
+for n in foo.select { |x| x.bar? } do
+  puts n
+end
+
+==> corrected/005.rb 54 <==
 def func
   for n in [1, 2, 3] do
     puts n
   end
 end
 
-==> corrected/004.rb 57 <==
+==> corrected/006.rb 57 <==
 def func
   for _ in [1, 2, 3] do
     something
   end
 end
 
-==> corrected/005.rb 60 <==
+==> corrected/007.rb 60 <==
 def func
   for a, b in [[1, 2]] do
     puts a + b
   end
 end
 
-==> corrected/006.rb 55 <==
-def func
-  for _ in [1, 2, 3] do
-    puts _1
-  end
+==> corrected/008.rb 32 <==
+for (x,) in foo do
+  bar(x)
 end
 
-==> corrected/007.rb 95 <==
+==> corrected/009.rb 38 <==
+for x, (y,) in foo do
+  bar(x, y)
+end
+
+==> corrected/010.rb 32 <==
+for (*x) in foo do
+  bar(x)
+end
+
+==> corrected/011.rb 30 <==
+for x, in foo do
+  bar(x)
+end
+
+==> corrected/018.rb 36 <==
+for *x, y in foo do
+  bar(x, y)
+end
+
+==> corrected/019.rb 22 <==
+for d in c do
+  e
+end
+
+==> corrected/020.rb 24 <==
+for _ in c do d
+  f end
+
+==> corrected/021.rb 24 <==
+for _ in c do d
+  f end
+
+==> corrected/022.rb 22 <==
+for _ in c do
+  e
+end
+
+==> corrected/024.rb 95 <==
 def func
   for n in [1, 2, 3] do
     puts n
@@ -56,7 +115,7 @@ def func
   end
 end
 
-==> corrected/009.rb 105 <==
+==> corrected/026.rb 105 <==
 for n in [1, 2, 3] do
   puts n
 end
@@ -67,7 +126,7 @@ for n in [1, 2, 3] do
   puts n
 end
 
-==> corrected/010.rb 71 <==
+==> corrected/027.rb 71 <==
 def func
   for (a, b) in {a: 1, b: 2, c: 3} do
     puts a, b

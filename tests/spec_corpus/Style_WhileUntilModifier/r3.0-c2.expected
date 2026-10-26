@@ -1,0 +1,9 @@
+==> offenses exit=1 117 <==
+000.rb:1:11: C: [Correctable] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+
+==> autocorrect exit=0 115 <==
+000.rb:1:11: C: [Corrected] Style/WhileUntilModifier: Favor modifier `while` usage when having a single-line body.
+
+==> corrected/000.rb 26 <==
+def foo = (baz while bar)
+

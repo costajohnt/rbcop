@@ -289,3 +289,96 @@ ruby&.===(better)
 ==> 083.rb 41 <==
 execute(query) in {elapsed:, sql_count:}
 
+==> 084.rb 56 <==
+Foo = Struct.new(
+  :bar, :baz
+) do
+  def qux
+  end
+end
+
+==> 085.rb 36 <==
+do_something(
+  :bar, :baz
+) if qux
+
+==> 086.rb 39 <==
+do_something(
+  :bar, :baz
+) # comment
+
+==> 087.rb 38 <==
+do_something( # comment
+  :bar, :baz)
+
+==> 088.rb 41 <==
+do_something(
+  # comment
+  :bar, :baz
+)
+
+==> 089.rb 32 <==
+do_something(
+  :bar,
+  :baz,
+)
+
+==> 090.rb 50 <==
+do_something((bar))
+obj.do_something((bar + baz))
+
+==> 091.rb 27 <==
+do_something((bar or baz))
+
+==> 092.rb 25 <==
+do_something((bar), baz)
+
+==> 093.rb 50 <==
+do_something(:bar, :baz # comment, with a comma
+)
+
+==> 094.rb 37 <==
+do_something(:bar, # comment
+  :baz)
+
+==> 095.rb 30 <==
+if foo(bar(
+  baz))
+  qux
+end
+
+==> 096.rb 170 <==
+do_something(x = bar(1))
+do_something(x += bar(1))
+do_something(x ||= bar(1))
+do_something(x.y = bar(1))
+do_something(x = y = bar(1))
+do_something(x = bar(1) rescue nil)
+
+==> 097.rb 32 <==
+do_something(x = bar(1) do
+end)
+
+==> 098.rb 33 <==
+[x = bar(1)]
+{ key: x = bar(1) }
+
+==> 099.rb 47 <==
+foo && x = bar(1)
+not x = bar(1)
+1..x = bar(1)
+
+==> 100.rb 30 <==
+def foo(arg = x = bar(1))
+end
+
+==> 101.rb 18 <==
+return x = bar(1)
+
+==> 102.rb 18 <==
+a, b = x = bar(1)
+
+==> 103.rb 30 <==
+x = y += bar(1)
+a, b = bar(1)
+

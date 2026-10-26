@@ -1,0 +1,11 @@
+==> offenses exit=1 149 <==
+000.rb:2:3: C: [Correctable] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+
+==> autocorrect exit=0 147 <==
+000.rb:2:3: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over `yield`.
+
+==> corrected/000.rb 56 <==
+def my_method(*, **, &block)
+  super(*, **, &block)
+end
+

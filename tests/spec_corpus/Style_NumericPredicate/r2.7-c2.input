@@ -1,4 +1,4 @@
-==> .rubocop.yml 208 <==
+==> .rubocop.yml 219 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -7,12 +7,9 @@ AllCops:
   TargetRubyVersion: 2.7
 Style/NumericPredicate:
   EnforcedStyle: predicate
-  AllowedMethods:
-  - "=="
-  AllowedPatterns: []
+  AutoCorrect: true
+Style/BitwisePredicate:
+  Enabled: true
 
-==> 000.rb 34 <==
-if number == 0
-  puts 'hello'
-end
-
+==> 000.rb 22 <==
+stat.mode & 0o077 == 0

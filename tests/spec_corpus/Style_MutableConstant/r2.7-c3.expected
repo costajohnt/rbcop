@@ -1,14 +1,19 @@
-==> offenses exit=1 197 <==
+==> offenses exit=1 295 <==
 000.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
 001.rb:1:10: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+003.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
 
-==> autocorrect exit=0 193 <==
+==> autocorrect exit=0 289 <==
 000.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
 001.rb:1:10: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+003.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
 
 ==> corrected/000.rb 41 <==
 CONST = [{ a: [].freeze }.freeze].freeze
 
 ==> corrected/001.rb 38 <==
 CONST = [Something.new.freeze].freeze
+
+==> corrected/003.rb 25 <==
+CONST = [1, *foo].freeze
 

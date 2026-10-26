@@ -459,6 +459,8 @@ Rails/RootPathnameMethods: # new in 2.16
   Enabled: true
 Rails/RootPublicPath: # new in 2.15
   Enabled: true
+Rails/SelectMap: # new in 2.21
+  Enabled: true
 Rails/ShortI18n: # new in 2.7
   Enabled: true
 Rails/SquishedSQLHeredocs: # new in 2.8

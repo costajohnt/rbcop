@@ -1,0 +1,32 @@
+==> offenses exit=1 465 <==
+000.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `private` should be inlined in method definitions.
+002.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `protected` should be inlined in method definitions.
+004.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `public` should be inlined in method definitions.
+006.rb:2:3: C: [Correctable] Style/AccessModifierDeclarations: `module_function` should be inlined in method definitions.
+
+==> autocorrect exit=0 457 <==
+000.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `private` should be inlined in method definitions.
+002.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `protected` should be inlined in method definitions.
+004.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `public` should be inlined in method definitions.
+006.rb:2:3: C: [Corrected] Style/AccessModifierDeclarations: `module_function` should be inlined in method definitions.
+
+==> corrected/000.rb 53 <==
+class Test
+  private def foo = raise Error, self
+end
+
+==> corrected/002.rb 55 <==
+class Test
+  protected def foo = raise Error, self
+end
+
+==> corrected/004.rb 52 <==
+class Test
+  public def foo = raise Error, self
+end
+
+==> corrected/006.rb 61 <==
+class Test
+  module_function def foo = raise Error, self
+end
+

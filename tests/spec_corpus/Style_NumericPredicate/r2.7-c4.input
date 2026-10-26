@@ -1,4 +1,4 @@
-==> .rubocop.yml 236 <==
+==> .rubocop.yml 208 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -7,33 +7,12 @@ AllCops:
   TargetRubyVersion: 2.7
 Style/NumericPredicate:
   EnforcedStyle: predicate
-  AutoCorrect: true
   AllowedMethods:
-  - where
-  AllowedPatterns:
-  - order
+  - "=="
+  AllowedPatterns: []
 
-==> 000.rb 26 <==
-where(Sequel[:number] > 0)
-==> 001.rb 26 <==
-where(Sequel[:number] < 0)
-==> 002.rb 26 <==
-order(Sequel[:number] > 0)
-==> 003.rb 26 <==
-order(Sequel[:number] < 0)
-==> 004.rb 16 <==
-where { _1 > 0 }
-==> 005.rb 27 <==
-where { table[number] > 0 }
-==> 006.rb 27 <==
-where { table[number] < 0 }
-==> 007.rb 27 <==
-order { table[number] > 0 }
-==> 008.rb 27 <==
-order { table[number] < 0 }
-==> 009.rb 23 <==
-exclude { number > 0 }
-
-==> 010.rb 23 <==
-exclude { number < 0 }
+==> 000.rb 34 <==
+if number == 0
+  puts 'hello'
+end
 

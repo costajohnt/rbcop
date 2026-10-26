@@ -40,3 +40,16 @@ x + y
 ==> 009.rb 12 <==
 1 + CONST.*
 
+==> 010.rb 14 <==
+CONST.+(*ary)
+
+==> 011.rb 16 <==
+CONST.+(&block)
+
+==> 012.rb 39 <==
+CONST.+(key: value)
+CONST.+(**options)
+
+==> 013.rb 24 <==
+CONST.+({ key: value })
+

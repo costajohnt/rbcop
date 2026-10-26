@@ -1,4 +1,4 @@
-==> .rubocop.yml 176 <==
+==> .rubocop.yml 217 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -6,25 +6,11 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 2.7
 Style/DisableCopsWithinSourceCodeDirective:
-  AllowWithReason: true
+  AllowedCops:
+  - Lint/Void
+  DisallowedCops:
+  - Security/Eval
 
-==> 000.rb 68 <==
-# rubocop:disable-next Metrics/AbcSize -- legacy method
-def foo
-end
-
-==> 001.rb 52 <==
-x = 0 # rubocop:disable Layout/SpaceAroundOperators
-
-==> 002.rb 85 <==
-x = 0 # rubocop:disable Layout/SpaceAroundOperators -- aligning with the table below
-
-==> 003.rb 117 <==
-# rubocop:disable Metrics/AbcSize -- legacy method, tracked in JIRA-123
-def foo
-end
-# rubocop:enable Metrics/AbcSize
-
-==> 004.rb 49 <==
-x = 0 # rubocop:todo Layout/SpaceAroundOperators
+==> 000.rb 47 <==
+foo # rubocop:disable Lint/Void, Security/Eval
 

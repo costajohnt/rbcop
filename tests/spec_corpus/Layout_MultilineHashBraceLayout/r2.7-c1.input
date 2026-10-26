@@ -44,3 +44,10 @@ b
 b, # b
 }
 
+==> 005.rb 44 <==
+foo = {
+  bar: {
+    baz: 1 # comment
+  }
+}
+

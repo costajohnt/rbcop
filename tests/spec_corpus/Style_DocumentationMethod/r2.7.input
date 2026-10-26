@@ -144,7 +144,19 @@ class Foo
   private def bar; end
 end
 
-==> 022.rb 63 <==
+==> 022.rb 98 <==
+class Foo
+  def bar
+    puts 'baz'
+  end
+
+  def baz
+    puts 'bar'
+  end
+  private :bar, :baz
+end
+
+==> 023.rb 63 <==
 class Foo
   # Documentation
   def bar
@@ -152,13 +164,13 @@ class Foo
   end
 end
 
-==> 023.rb 47 <==
+==> 024.rb 47 <==
 class Foo
   # Documentation
   def bar; end
 end
 
-==> 024.rb 64 <==
+==> 025.rb 64 <==
 class Foo
   # FIXME: offense
   def bar
@@ -166,7 +178,7 @@ class Foo
   end
 end
 
-==> 025.rb 75 <==
+==> 026.rb 75 <==
 class Foo
   # rubocop:disable Style/For
   def bar
@@ -174,7 +186,7 @@ class Foo
   end
 end
 
-==> 026.rb 88 <==
+==> 027.rb 88 <==
 class Foo
   def bar
     puts 'baz'
@@ -187,7 +199,7 @@ class Foo
   end
 end
 
-==> 027.rb 106 <==
+==> 028.rb 106 <==
 class Foo
   # Documentation
   def bar
@@ -201,19 +213,19 @@ class Foo
   end
 end
 
-==> 028.rb 46 <==
+==> 029.rb 46 <==
 module Foo
   def bar
     puts 'baz'
   end
 end
 
-==> 029.rb 33 <==
+==> 030.rb 33 <==
 module Foo
   def method; end
 end
 
-==> 030.rb 57 <==
+==> 031.rb 57 <==
 module Foo
   private
 
@@ -222,32 +234,32 @@ module Foo
   end
 end
 
-==> 031.rb 54 <==
+==> 032.rb 54 <==
 module Foo
   private def bar
     puts 'baz'
   end
 end
 
-==> 032.rb 41 <==
+==> 033.rb 41 <==
 module Foo
   private
 
   def bar; end
 end
 
-==> 033.rb 38 <==
+==> 034.rb 38 <==
 module Foo
   private def bar; end
 end
 
-==> 034.rb 47 <==
+==> 035.rb 47 <==
 module Foo
   module_function def bar
   end
 end
 
-==> 035.rb 55 <==
+==> 036.rb 55 <==
 module Foo
   def bar
   end
@@ -255,13 +267,13 @@ module Foo
   module_function :bar
 end
 
-==> 036.rb 46 <==
+==> 037.rb 46 <==
 module Foo
   ruby2_keywords def bar
   end
 end
 
-==> 037.rb 64 <==
+==> 038.rb 64 <==
 module Foo
   # Documentation
   def bar
@@ -269,19 +281,19 @@ module Foo
   end
 end
 
-==> 038.rb 48 <==
+==> 039.rb 48 <==
 module Foo
   # Documentation
   def bar; end
 end
 
-==> 039.rb 64 <==
+==> 040.rb 64 <==
 module Foo
   # Documentation
   module_function def bar; end
 end
 
-==> 040.rb 72 <==
+==> 041.rb 72 <==
 module Foo
   # Documentation
   def bar; end
@@ -289,14 +301,14 @@ module Foo
   module_function :bar
 end
 
-==> 041.rb 64 <==
+==> 042.rb 64 <==
 module Foo
   # Documentation
   ruby2_keywords def bar
   end
 end
 
-==> 042.rb 89 <==
+==> 043.rb 89 <==
 module Foo
   def bar
     puts 'baz'
@@ -309,7 +321,7 @@ module Foo
   end
 end
 
-==> 043.rb 107 <==
+==> 044.rb 107 <==
 module Foo
   # Documentation
   def bar
@@ -323,7 +335,7 @@ module Foo
   end
 end
 
-==> 044.rb 60 <==
+==> 045.rb 60 <==
 class Foo; end
 
 foo = Foo.new
@@ -332,14 +344,14 @@ def foo.bar
   puts 'baz'
 end
 
-==> 045.rb 48 <==
+==> 046.rb 48 <==
 class Foo; end
 
 foo = Foo.new
 
 def foo.bar; end
 
-==> 046.rb 76 <==
+==> 047.rb 76 <==
 class Foo; end
 
 foo = Foo.new
@@ -349,7 +361,7 @@ def foo.bar
   puts 'baz'
 end
 
-==> 047.rb 64 <==
+==> 048.rb 64 <==
 class Foo; end
 
 foo = Foo.new
@@ -357,7 +369,7 @@ foo = Foo.new
 # Documentation
 def foo.bar; end
 
-==> 048.rb 57 <==
+==> 049.rb 57 <==
 class Foo; end
 
 foo = Foo.bar
@@ -366,7 +378,7 @@ private
 
 def foo.bar; end
 
-==> 049.rb 69 <==
+==> 050.rb 69 <==
 class Foo; end
 
 foo = Foo.new
@@ -377,14 +389,14 @@ def foo.bar
   puts 'baz'
 end
 
-==> 050.rb 56 <==
+==> 051.rb 56 <==
 class Foo; end
 
 foo = Foo.new
 
 private def foo.bar; end
 
-==> 051.rb 68 <==
+==> 052.rb 68 <==
 class Foo; end
 
 foo = Foo.new
@@ -393,7 +405,7 @@ private def foo.bar
   puts 'baz'
 end
 
-==> 052.rb 99 <==
+==> 053.rb 99 <==
 class Foo; end
 
 foo = Foo.new
@@ -408,7 +420,7 @@ def foo.baz
   puts 'baz'
 end
 
-==> 053.rb 115 <==
+==> 054.rb 115 <==
 class Foo; end
 
 foo = Foo.new
@@ -424,39 +436,39 @@ def foo.baz
   puts 'baz'
 end
 
-==> 054.rb 54 <==
+==> 055.rb 54 <==
 class Foo
   def method_missing(name, *args)
   end
 end
 
-==> 055.rb 46 <==
+==> 056.rb 46 <==
 module Foo
   module_function def bar; end
 end
 
-==> 056.rb 45 <==
+==> 057.rb 45 <==
 module Foo
   ruby2_keywords def bar; end
 end
 
-==> 057.rb 47 <==
+==> 058.rb 47 <==
 module Foo
   module_function def baz
   end
 end
 
-==> 058.rb 51 <==
+==> 059.rb 51 <==
 module Foo
   ruby2_keywords :baz, def bar; end
 end
 
-==> 059.rb 51 <==
+==> 060.rb 51 <==
 module Foo
   ruby2_keywords :bar, def baz; end
 end
 
-==> 060.rb 52 <==
+==> 061.rb 52 <==
 module Foo
   module_function :bar, def baz; end
 end

@@ -1,0 +1,14 @@
+==> offenses exit=1 95 <==
+000.rb:4:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+
+==> autocorrect exit=0 93 <==
+000.rb:4:3: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+
+==> corrected/000.rb 82 <==
+module Foo
+extend self # rubocop:disable Layout/IndentationWidth
+
+def bar
+end
+end
+

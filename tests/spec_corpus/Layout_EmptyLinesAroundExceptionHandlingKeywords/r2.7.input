@@ -134,7 +134,14 @@ def do_something
 rescue
 else foo end
 
-==> 019.rb 184 <==
+==> 019.rb 34 <==
+do_something do
+  foo
+rescue
+
+end
+
+==> 020.rb 184 <==
 begin
 
   do_something1
@@ -161,7 +168,7 @@ ensure
 
 end
 
-==> 020.rb 186 <==
+==> 021.rb 186 <==
 def foo
 
   do_something1

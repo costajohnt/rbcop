@@ -1,0 +1,11 @@
+==> offenses exit=1 109 <==
+000.rb:2:6: C: [Correctable] Style/SymbolProc: Use `lambda(&:positive?)` instead of `->(x) { x.positive? }`.
+
+==> autocorrect exit=0 107 <==
+000.rb:2:6: C: [Corrected] Style/SymbolProc: Use `lambda(&:positive?)` instead of `->(x) { x.positive? }`.
+
+==> corrected/000.rb 48 <==
+case value
+in ^(lambda(&:positive?)) then 1
+end
+

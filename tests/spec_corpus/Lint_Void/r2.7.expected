@@ -1,4 +1,4 @@
-==> offenses exit=1 12768 <==
+==> offenses exit=1 12926 <==
 000.rb:1:3: W: [Correctable] Lint/Void: Operator `*` used in void context.
 000.rb:2:3: W: [Correctable] Lint/Void: Operator `*` used in void context.
 005.rb:1:4: W: [Correctable] Lint/Void: Operator `*` used in void context.
@@ -134,48 +134,50 @@
 188.rb:1:1: W: Lint/Void: Literal `{}` used in void context.
 189.rb:2:3: W: Lint/Void: Literal `{}` used in void context.
 190.rb:1:13: W: Lint/Void: Literal `{}` used in void context.
-191.rb:1:1: W: [Correctable] Lint/Void: `self` used in void context.
-192.rb:1:1: W: [Correctable] Lint/Void: `defined?(x)` used in void context.
-193.rb:2:3: W: [Correctable] Lint/Void: `-> { bar }` used in void context.
-196.rb:2:3: W: [Correctable] Lint/Void: `lambda { bar }` used in void context.
-199.rb:2:3: W: [Correctable] Lint/Void: `proc { bar }` used in void context.
-202.rb:2:3: W: [Correctable] Lint/Void: `Proc.new { bar }` used in void context.
-214.rb:2:3: W: [Correctable] Lint/Void: Literal `[1, 2]` used in void context.
-215.rb:2:3: W: [Correctable] Lint/Void: Literal `[1, 2, [3]]` used in void context.
-216.rb:2:3: W: [Correctable] Lint/Void: Literal `'foo'.freeze` used in void context.
-217.rb:2:3: W: [Correctable] Lint/Void: Literal `'foo'&.freeze` used in void context.
-219.rb:2:3: W: [Correctable] Lint/Void: Literal `[1, ['foo'.freeze]]` used in void context.
-225.rb:2:3: W: [Correctable] Lint/Void: Literal `{k1: 1, k2: 2}` used in void context.
-226.rb:2:3: W: [Correctable] Lint/Void: Literal `{x: {k1: 1, k2: 2}}` used in void context.
-228.rb:2:3: W: [Correctable] Lint/Void: Literal `{[1, 2] => :foo}` used in void context.
-229.rb:2:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
-230.rb:2:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
-230.rb:3:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
-231.rb:2:3: W: Lint/Void: Literal `42` used in void context.
-232.rb:2:3: W: Lint/Void: Literal `42` used in void context.
-234.rb:2:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
-240.rb:2:3: W: [Correctable] Lint/Void: Variable `_1` used in void context.
-240.rb:3:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
-242.rb:2:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
+191.rb:1:1: W: [Correctable] Lint/Void: Literal `<<~CSS` used in void context.
+192.rb:2:3: W: [Correctable] Lint/Void: Literal `<<-CSS` used in void context.
+193.rb:1:1: W: [Correctable] Lint/Void: `self` used in void context.
+194.rb:1:1: W: [Correctable] Lint/Void: `defined?(x)` used in void context.
+195.rb:2:3: W: [Correctable] Lint/Void: `-> { bar }` used in void context.
+198.rb:2:3: W: [Correctable] Lint/Void: `lambda { bar }` used in void context.
+201.rb:2:3: W: [Correctable] Lint/Void: `proc { bar }` used in void context.
+204.rb:2:3: W: [Correctable] Lint/Void: `Proc.new { bar }` used in void context.
+216.rb:2:3: W: [Correctable] Lint/Void: Literal `[1, 2]` used in void context.
+217.rb:2:3: W: [Correctable] Lint/Void: Literal `[1, 2, [3]]` used in void context.
+218.rb:2:3: W: [Correctable] Lint/Void: Literal `'foo'.freeze` used in void context.
+219.rb:2:3: W: [Correctable] Lint/Void: Literal `'foo'&.freeze` used in void context.
+221.rb:2:3: W: [Correctable] Lint/Void: Literal `[1, ['foo'.freeze]]` used in void context.
+227.rb:2:3: W: [Correctable] Lint/Void: Literal `{k1: 1, k2: 2}` used in void context.
+228.rb:2:3: W: [Correctable] Lint/Void: Literal `{x: {k1: 1, k2: 2}}` used in void context.
+230.rb:2:3: W: [Correctable] Lint/Void: Literal `{[1, 2] => :foo}` used in void context.
+231.rb:2:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
+232.rb:2:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
+232.rb:3:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
+233.rb:2:3: W: Lint/Void: Literal `42` used in void context.
+234.rb:2:3: W: Lint/Void: Literal `42` used in void context.
+236.rb:2:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
+242.rb:2:3: W: [Correctable] Lint/Void: Variable `_1` used in void context.
 242.rb:3:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
-243.rb:2:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
-243.rb:3:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
-244.rb:4:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
-244.rb:5:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
-245.rb:4:3: W: [Correctable] Lint/Void: Literal `[1, 2, [3]]` used in void context.
-246.rb:2:2: W: [Correctable] Lint/Void: Literal `1` used in void context.
-255.rb:2:3: W: [Correctable] Lint/Void: Variable `__ENCODING__` used in void context.
-256.rb:2:13: W: Lint/Void: Literal `2` used in void context.
-257.rb:2:13: W: Lint/Void: Literal `2` used in void context.
-257.rb:3:13: W: Lint/Void: Literal `4` used in void context.
-257.rb:4:6: W: Lint/Void: Literal `5` used in void context.
-258.rb:3:13: W: Lint/Void: Variable `x` used in void context.
-263.rb:2:11: W: Lint/Void: Literal `2` used in void context.
-263.rb:3:11: W: Lint/Void: Literal `3` used in void context.
-263.rb:4:6: W: Lint/Void: Literal `4` used in void context.
-264.rb:3:11: W: Lint/Void: Variable `x` used in void context.
+244.rb:2:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
+244.rb:3:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
+245.rb:2:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
+245.rb:3:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
+246.rb:4:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
+246.rb:5:3: W: [Correctable] Lint/Void: Literal `42` used in void context.
+247.rb:4:3: W: [Correctable] Lint/Void: Literal `[1, 2, [3]]` used in void context.
+248.rb:2:2: W: [Correctable] Lint/Void: Literal `1` used in void context.
+257.rb:2:3: W: [Correctable] Lint/Void: Variable `__ENCODING__` used in void context.
+258.rb:2:13: W: Lint/Void: Literal `2` used in void context.
+259.rb:2:13: W: Lint/Void: Literal `2` used in void context.
+259.rb:3:13: W: Lint/Void: Literal `4` used in void context.
+259.rb:4:6: W: Lint/Void: Literal `5` used in void context.
+260.rb:3:13: W: Lint/Void: Variable `x` used in void context.
+265.rb:2:11: W: Lint/Void: Literal `2` used in void context.
+265.rb:3:11: W: Lint/Void: Literal `3` used in void context.
+265.rb:4:6: W: Lint/Void: Literal `4` used in void context.
+266.rb:3:11: W: Lint/Void: Variable `x` used in void context.
 
-==> autocorrect exit=1 12510 <==
+==> autocorrect exit=1 12664 <==
 000.rb:1:3: W: [Corrected] Lint/Void: Operator `*` used in void context.
 000.rb:2:3: W: [Corrected] Lint/Void: Operator `*` used in void context.
 005.rb:1:4: W: [Corrected] Lint/Void: Operator `*` used in void context.
@@ -311,46 +313,48 @@
 188.rb:1:1: W: Lint/Void: Literal `{}` used in void context.
 189.rb:2:3: W: Lint/Void: Literal `{}` used in void context.
 190.rb:1:13: W: Lint/Void: Literal `{}` used in void context.
-191.rb:1:1: W: [Corrected] Lint/Void: `self` used in void context.
-192.rb:1:1: W: [Corrected] Lint/Void: `defined?(x)` used in void context.
-193.rb:2:3: W: [Corrected] Lint/Void: `-> { bar }` used in void context.
-196.rb:2:3: W: [Corrected] Lint/Void: `lambda { bar }` used in void context.
-199.rb:2:3: W: [Corrected] Lint/Void: `proc { bar }` used in void context.
-202.rb:2:3: W: [Corrected] Lint/Void: `Proc.new { bar }` used in void context.
-214.rb:2:3: W: [Corrected] Lint/Void: Literal `[1, 2]` used in void context.
-215.rb:2:3: W: [Corrected] Lint/Void: Literal `[1, 2, [3]]` used in void context.
-216.rb:2:3: W: [Corrected] Lint/Void: Literal `'foo'.freeze` used in void context.
-217.rb:2:3: W: [Corrected] Lint/Void: Literal `'foo'&.freeze` used in void context.
-219.rb:2:3: W: [Corrected] Lint/Void: Literal `[1, ['foo'.freeze]]` used in void context.
-225.rb:2:3: W: [Corrected] Lint/Void: Literal `{k1: 1, k2: 2}` used in void context.
-226.rb:2:3: W: [Corrected] Lint/Void: Literal `{x: {k1: 1, k2: 2}}` used in void context.
-228.rb:2:3: W: [Corrected] Lint/Void: Literal `{[1, 2] => :foo}` used in void context.
-229.rb:2:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
-230.rb:2:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
-230.rb:3:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
-231.rb:2:3: W: Lint/Void: Literal `42` used in void context.
-232.rb:2:3: W: Lint/Void: Literal `42` used in void context.
-234.rb:2:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
-240.rb:2:3: W: [Corrected] Lint/Void: Variable `_1` used in void context.
-240.rb:3:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
-242.rb:2:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
+191.rb:1:1: W: [Corrected] Lint/Void: Literal `<<~CSS` used in void context.
+192.rb:2:3: W: [Corrected] Lint/Void: Literal `<<-CSS` used in void context.
+193.rb:1:1: W: [Corrected] Lint/Void: `self` used in void context.
+194.rb:1:1: W: [Corrected] Lint/Void: `defined?(x)` used in void context.
+195.rb:2:3: W: [Corrected] Lint/Void: `-> { bar }` used in void context.
+198.rb:2:3: W: [Corrected] Lint/Void: `lambda { bar }` used in void context.
+201.rb:2:3: W: [Corrected] Lint/Void: `proc { bar }` used in void context.
+204.rb:2:3: W: [Corrected] Lint/Void: `Proc.new { bar }` used in void context.
+216.rb:2:3: W: [Corrected] Lint/Void: Literal `[1, 2]` used in void context.
+217.rb:2:3: W: [Corrected] Lint/Void: Literal `[1, 2, [3]]` used in void context.
+218.rb:2:3: W: [Corrected] Lint/Void: Literal `'foo'.freeze` used in void context.
+219.rb:2:3: W: [Corrected] Lint/Void: Literal `'foo'&.freeze` used in void context.
+221.rb:2:3: W: [Corrected] Lint/Void: Literal `[1, ['foo'.freeze]]` used in void context.
+227.rb:2:3: W: [Corrected] Lint/Void: Literal `{k1: 1, k2: 2}` used in void context.
+228.rb:2:3: W: [Corrected] Lint/Void: Literal `{x: {k1: 1, k2: 2}}` used in void context.
+230.rb:2:3: W: [Corrected] Lint/Void: Literal `{[1, 2] => :foo}` used in void context.
+231.rb:2:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
+232.rb:2:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
+232.rb:3:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
+233.rb:2:3: W: Lint/Void: Literal `42` used in void context.
+234.rb:2:3: W: Lint/Void: Literal `42` used in void context.
+236.rb:2:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
+242.rb:2:3: W: [Corrected] Lint/Void: Variable `_1` used in void context.
 242.rb:3:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
-243.rb:2:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
-243.rb:3:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
-244.rb:4:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
-244.rb:5:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
-245.rb:4:3: W: [Corrected] Lint/Void: Literal `[1, 2, [3]]` used in void context.
-246.rb:2:2: W: [Corrected] Lint/Void: Literal `1` used in void context.
-255.rb:2:3: W: [Corrected] Lint/Void: Variable `__ENCODING__` used in void context.
-256.rb:2:13: W: Lint/Void: Literal `2` used in void context.
-257.rb:2:13: W: Lint/Void: Literal `2` used in void context.
-257.rb:3:13: W: Lint/Void: Literal `4` used in void context.
-257.rb:4:6: W: Lint/Void: Literal `5` used in void context.
-258.rb:3:13: W: Lint/Void: Variable `x` used in void context.
-263.rb:2:11: W: Lint/Void: Literal `2` used in void context.
-263.rb:3:11: W: Lint/Void: Literal `3` used in void context.
-263.rb:4:6: W: Lint/Void: Literal `4` used in void context.
-264.rb:3:11: W: Lint/Void: Variable `x` used in void context.
+244.rb:2:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
+244.rb:3:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
+245.rb:2:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
+245.rb:3:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
+246.rb:4:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
+246.rb:5:3: W: [Corrected] Lint/Void: Literal `42` used in void context.
+247.rb:4:3: W: [Corrected] Lint/Void: Literal `[1, 2, [3]]` used in void context.
+248.rb:2:2: W: [Corrected] Lint/Void: Literal `1` used in void context.
+257.rb:2:3: W: [Corrected] Lint/Void: Variable `__ENCODING__` used in void context.
+258.rb:2:13: W: Lint/Void: Literal `2` used in void context.
+259.rb:2:13: W: Lint/Void: Literal `2` used in void context.
+259.rb:3:13: W: Lint/Void: Literal `4` used in void context.
+259.rb:4:6: W: Lint/Void: Literal `5` used in void context.
+260.rb:3:13: W: Lint/Void: Variable `x` used in void context.
+265.rb:2:11: W: Lint/Void: Literal `2` used in void context.
+265.rb:3:11: W: Lint/Void: Literal `3` used in void context.
+265.rb:4:6: W: Lint/Void: Literal `4` used in void context.
+266.rb:3:11: W: Lint/Void: Variable `x` used in void context.
 
 ==> corrected/000.rb 14 <==
 a
@@ -740,41 +744,40 @@ top
 
 top
 
-==> corrected/191.rb 6 <==
-; top
-
-==> corrected/192.rb 5 <==
+==> corrected/191.rb 5 <==
 
 top
 
-==> corrected/193.rb 18 <==
+==> corrected/192.rb 16 <==
+def foo
+  1
+end
+
+==> corrected/193.rb 6 <==
+; top
+
+==> corrected/194.rb 5 <==
+
+top
+
+==> corrected/195.rb 18 <==
 def foo
   top
 end
 
-==> corrected/196.rb 18 <==
+==> corrected/198.rb 18 <==
 def foo
   top
 end
 
-==> corrected/199.rb 18 <==
+==> corrected/201.rb 18 <==
 def foo
   top
 end
 
-==> corrected/202.rb 18 <==
+==> corrected/204.rb 18 <==
 def foo
   top
-end
-
-==> corrected/214.rb 24 <==
-def something
-  baz
-end
-
-==> corrected/215.rb 24 <==
-def something
-  baz
 end
 
 ==> corrected/216.rb 24 <==
@@ -787,17 +790,22 @@ def something
   baz
 end
 
+==> corrected/218.rb 24 <==
+def something
+  baz
+end
+
 ==> corrected/219.rb 24 <==
 def something
   baz
 end
 
-==> corrected/225.rb 24 <==
+==> corrected/221.rb 24 <==
 def something
   baz
 end
 
-==> corrected/226.rb 24 <==
+==> corrected/227.rb 24 <==
 def something
   baz
 end
@@ -807,50 +815,55 @@ def something
   baz
 end
 
-==> corrected/229.rb 23 <==
+==> corrected/230.rb 24 <==
+def something
+  baz
+end
+
+==> corrected/231.rb 23 <==
 def something
   42
 end
 
-==> corrected/230.rb 19 <==
+==> corrected/232.rb 19 <==
 def initialize
 end
 
-==> corrected/234.rb 31 <==
+==> corrected/236.rb 31 <==
 array.each do |_item|
   42
 end
 
-==> corrected/240.rb 15 <==
+==> corrected/242.rb 15 <==
 foo.tap do
 end
 
-==> corrected/242.rb 19 <==
+==> corrected/244.rb 19 <==
 foo.tap do |x|
 end
 
-==> corrected/243.rb 26 <==
+==> corrected/245.rb 26 <==
 for _item in array do
 end
 
-==> corrected/244.rb 25 <==
+==> corrected/246.rb 25 <==
 def foo
 ensure
   bar
 end
 
-==> corrected/245.rb 25 <==
+==> corrected/247.rb 25 <==
 def foo
   bar
 ensure
 end
 
-==> corrected/246.rb 13 <==
+==> corrected/248.rb 13 <==
 begin
  2
 end
 
-==> corrected/255.rb 17 <==
+==> corrected/257.rb 17 <==
 def foo
   42
 end

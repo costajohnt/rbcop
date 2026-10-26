@@ -1,0 +1,11 @@
+==> offenses exit=1 72 <==
+000.rb:2:3: C: [Correctable] Style/HashSyntax: Use hash rockets syntax.
+
+==> autocorrect exit=0 70 <==
+000.rb:2:3: C: [Corrected] Style/HashSyntax: Use hash rockets syntax.
+
+==> corrected/000.rb 18 <==
+cc(
+  :bb => bb
+)
+

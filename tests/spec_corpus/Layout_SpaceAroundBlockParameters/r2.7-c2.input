@@ -1,4 +1,4 @@
-==> .rubocop.yml 245 <==
+==> .rubocop.yml 242 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -9,10 +9,7 @@ Layout/SpaceAroundBlockParameters:
   EnforcedStyleInsidePipes: space
 Layout/SpaceInsideParens:
   Enabled: true
-  EnforcedStyle: no_space
+  EnforcedStyle: space
 
 ==> 000.rb 19 <==
 ->(x, y) { puts x }
-==> 001.rb 26 <==
-{}.each { |x, y| puts x }
-

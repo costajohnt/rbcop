@@ -1,10 +1,12 @@
-==> offenses exit=1 415 <==
-000.rb:4:2: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
-001.rb:2:7: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
-002.rb:3:3: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+==> offenses exit=1 556 <==
+000.rb:2:10: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+001.rb:4:2: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+002.rb:2:7: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+003.rb:3:3: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 
-==> autocorrect exit=1 415 <==
-000.rb:4:2: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
-001.rb:2:7: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
-002.rb:3:3: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+==> autocorrect exit=1 556 <==
+000.rb:2:10: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+001.rb:4:2: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+002.rb:2:7: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+003.rb:3:3: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 

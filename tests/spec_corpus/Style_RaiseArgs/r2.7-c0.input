@@ -51,3 +51,6 @@ raise msg
 raise Ex.new(msg)
 ==> 011.rb 43 <==
 raise MyKwArgError.new(a: 1, b: 2), message
+==> 012.rb 43 <==
+raise Foo, "#{fetch { raise Bar, 'bad' }}"
+

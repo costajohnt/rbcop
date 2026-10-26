@@ -1,4 +1,4 @@
-==> offenses exit=1 8293 <==
+==> offenses exit=1 8477 <==
 000.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
 001.rb:4:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
 002.rb:4:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
@@ -61,36 +61,38 @@
 100.rb:7:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
 100.rb:12:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
 101.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
-103.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
-106.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
-106.rb:5:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-108.rb:4:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
-108.rb:6:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-108.rb:8:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-108.rb:10:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
-108.rb:12:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
-109.rb:4:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-109.rb:6:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+102.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+102.rb:4:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+104.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+107.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+107.rb:5:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+109.rb:4:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+109.rb:6:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+109.rb:8:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+109.rb:10:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+109.rb:12:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
 110.rb:4:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
 110.rb:6:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-113.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-114.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
-118.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
-119.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
-121.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+111.rb:4:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+111.rb:6:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+114.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+115.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+119.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+120.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
 122.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
-124.rb:3:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
-132.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-132.rb:3:4: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+123.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+125.rb:3:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
 133.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-135.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
-136.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
-137.rb:3:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-138.rb:2:2: C: [Correctable] Layout/IndentationWidth: Use 2 (not -5) spaces for indentation.
-139.rb:3:7: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-141.rb:3:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+133.rb:3:4: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+134.rb:2:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+136.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+137.rb:2:1: C: [Correctable] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+138.rb:3:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+139.rb:2:2: C: [Correctable] Layout/IndentationWidth: Use 2 (not -5) spaces for indentation.
+140.rb:3:7: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+142.rb:3:3: C: [Correctable] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
 
-==> autocorrect exit=1 8181 <==
+==> autocorrect exit=1 8361 <==
 000.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
 001.rb:4:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
 002.rb:4:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
@@ -153,35 +155,37 @@
 100.rb:7:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
 100.rb:12:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
 101.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
-103.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
-106.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
-106.rb:5:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-108.rb:4:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
-108.rb:6:5: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-108.rb:8:5: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-108.rb:10:5: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
-108.rb:12:5: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
-109.rb:4:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-109.rb:6:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+102.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+102.rb:4:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+104.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+107.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+107.rb:5:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+109.rb:4:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+109.rb:6:5: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+109.rb:8:5: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+109.rb:10:5: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+109.rb:12:5: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
 110.rb:4:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
 110.rb:6:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-113.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-114.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
-118.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
-118.rb:4:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
-119.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
-121.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+111.rb:4:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+111.rb:6:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+114.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+115.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+119.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
+119.rb:4:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+120.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
 122.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
-124.rb:3:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
-132.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-132.rb:3:5: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+123.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+125.rb:3:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
 133.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-135.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
-136.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
-137.rb:3:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-138.rb:2:2: C: [Corrected] Layout/IndentationWidth: Use 2 (not -5) spaces for indentation.
-139.rb:3:7: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-141.rb:3:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+133.rb:3:5: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+134.rb:2:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+136.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+137.rb:2:1: C: [Corrected] Layout/IndentationWidth: Use 2 (not 3) spaces for indentation.
+138.rb:3:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+139.rb:2:2: C: [Corrected] Layout/IndentationWidth: Use 2 (not -5) spaces for indentation.
+140.rb:3:7: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
+142.rb:3:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
 
 ==> corrected/000.rb 19 <==
 if cond
@@ -527,13 +531,20 @@ class Test
   end
 end
 
-==> corrected/103.rb 33 <==
+==> corrected/102.rb 55 <==
+class Test
+  private def foo
+  end
+  alias bar foo
+end
+
+==> corrected/104.rb 33 <==
 module Test
   def func
   end
 end
 
-==> corrected/106.rb 62 <==
+==> corrected/107.rb 62 <==
 module Test
   def func1
   end
@@ -542,7 +553,7 @@ module Test
   end
 end
 
-==> corrected/108.rb 361 <==
+==> corrected/109.rb 361 <==
 def my_func
   puts 'do something outside block'
   begin
@@ -558,7 +569,7 @@ def my_func
   end
 end
 
-==> corrected/109.rb 160 <==
+==> corrected/110.rb 160 <==
 def my_func
   puts 'do something error prone'
 rescue SomeException
@@ -567,7 +578,7 @@ rescue
   puts 'wrongly indented error handling'
 end
 
-==> corrected/110.rb 169 <==
+==> corrected/111.rb 169 <==
 foo def self.my_func
   puts 'do something error prone'
 rescue SomeException
@@ -576,87 +587,87 @@ rescue
   puts 'wrongly indented error handling'
 end
 
-==> corrected/113.rb 20 <==
+==> corrected/114.rb 20 <==
 a = func do
   b
 end
 
-==> corrected/114.rb 13 <==
+==> corrected/115.rb 13 <==
 func {
   b
 }
 
-==> corrected/118.rb 48 <==
+==> corrected/119.rb 48 <==
 do_something do
   foo
 ensure
   handle_error
 end
 
-==> corrected/119.rb 23 <==
+==> corrected/120.rb 23 <==
 func {
   receiver&.b
 }
 
-==> corrected/121.rb 19 <==
+==> corrected/122.rb 19 <==
 func {
   _1&.foo
 }
 
-==> corrected/122.rb 22 <==
+==> corrected/123.rb 22 <==
 func do
   _1&.foo
 end
 
-==> corrected/124.rb 26 <==
+==> corrected/125.rb 26 <==
 foo
   .bar do |x|
   x
 end
 
-==> corrected/132.rb 56 <==
+==> corrected/133.rb 56 <==
   class A
   	 def test
    		 puts 'hello'
    	end
   end
 
-==> corrected/133.rb 25 <==
+==> corrected/134.rb 25 <==
   if cond
   	 func
   end
 
-==> corrected/135.rb 29 <==
+==> corrected/136.rb 29 <==
 class A
   def test
   end
 end
 
-==> corrected/136.rb 28 <==
+==> corrected/137.rb 28 <==
 def test
 		puts 'hello'
 end
 
-==> corrected/137.rb 47 <==
+==> corrected/138.rb 47 <==
 module Foo
 		module Bar
 			 baz = 1
 		end
 	end
 
-==> corrected/138.rb 27 <==
+==> corrected/139.rb 27 <==
 		a = if b
 	       c
 		end
 
-==> corrected/139.rb 59 <==
+==> corrected/140.rb 59 <==
     class Test
       def foo
      		 bar
       end
     end
 
-==> corrected/141.rb 39 <==
+==> corrected/142.rb 39 <==
 class Test
   def foo
  		 bar

@@ -138,7 +138,13 @@ def f
   end
 end
 
-==> 024.rb 51 <==
+==> 024.rb 32 <==
+foo { |key,
+  bar:, **|
+  baz
+}
+
+==> 025.rb 51 <==
 def f
   X.map do |
     (((a), b), c)
@@ -146,17 +152,17 @@ def f
   end
 end
 
-==> 025.rb 39 <==
+==> 026.rb 39 <==
 test do
 |(x, y)|
   play_with(x, y)
 end
 
-==> 026.rb 12 <==
+==> 027.rb 12 <==
 test { _1
 }
 
-==> 027.rb 15 <==
+==> 028.rb 15 <==
 test do _1
 end
 

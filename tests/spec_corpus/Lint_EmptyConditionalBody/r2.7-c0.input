@@ -32,15 +32,20 @@ class Foo
   end
 end
 
-==> 004.rb 36 <==
+==> 004.rb 38 <==
+if condition; else
+  do_something
+end
+
+==> 005.rb 36 <==
 if condition; else do_something end
 
-==> 005.rb 26 <==
+==> 006.rb 26 <==
 if condition
   # noop
 end
 
-==> 006.rb 61 <==
+==> 007.rb 61 <==
 if condition1
   do_something1
 end
@@ -48,7 +53,7 @@ if condition2
   # noop
 end
 
-==> 007.rb 93 <==
+==> 008.rb 93 <==
 if condition1
   do_something1
 elsif condition2
@@ -57,7 +62,7 @@ elsif condition3
   # noop
 end
 
-==> 008.rb 126 <==
+==> 009.rb 126 <==
 if condition1
   do_something1
 elsif condition2
@@ -68,7 +73,7 @@ elsif condition4
   # noop
 end
 
-==> 009.rb 95 <==
+==> 010.rb 95 <==
 if condition
   do_something1
 elsif other_condition1
@@ -76,54 +81,62 @@ elsif other_condition2
   do_something2
 end
 
-==> 010.rb 78 <==
+==> 011.rb 79 <==
+if condition
+  do_something
+elsif other_condition
+else
+  do_something_else
+end
+
+==> 012.rb 78 <==
 if condition
 elsif other_condition1
 elsif other_condition2
   do_something
 end
 
-==> 011.rb 39 <==
+==> 013.rb 39 <==
 if condition
 elsif other_condition
 end
 
-==> 012.rb 63 <==
+==> 014.rb 63 <==
 if condition
 elsif other_condition1
 elsif other_condition2
 end
 
-==> 013.rb 37 <==
+==> 015.rb 37 <==
 if condition
 else
   do_something
 end
 
-==> 014.rb 41 <==
+==> 016.rb 41 <==
 unless condition
 else
   do_something
 end
 
-==> 015.rb 42 <==
+==> 017.rb 42 <==
 if condition
 else
   do_something if x
 end
 
-==> 016.rb 46 <==
+==> 018.rb 46 <==
 unless condition
 else
   do_something if x
 end
 
-==> 017.rb 26 <==
+==> 019.rb 26 <==
 unless condition
 else
 end
 
-==> 018.rb 98 <==
+==> 020.rb 98 <==
 if condition
 elsif other_condition
   do_something
@@ -131,24 +144,24 @@ elsif another_condition
   do_something_else
 end
 
-==> 019.rb 34 <==
+==> 021.rb 34 <==
 if cond_a
   do_a
 elsif cond_b;end
 
-==> 020.rb 39 <==
+==> 022.rb 39 <==
 if cond_a
   do_a
 elsif cond_b;else;end
 
-==> 021.rb 63 <==
+==> 023.rb 63 <==
 if condition
   do_something
 elsif other_condition
   # noop
 end
 
-==> 022.rb 68 <==
+==> 024.rb 68 <==
 if condition
   do_something
 elsif other_condition
@@ -156,7 +169,7 @@ else
   # noop
 end
 
-==> 023.rb 116 <==
+==> 025.rb 116 <==
 if condition
   do_something
 elsif other_condition # no op, but avoid going into the else
@@ -164,7 +177,7 @@ else
   do_other_things
 end
 
-==> 024.rb 49 <==
+==> 026.rb 49 <==
 if foo
   do_foo
 elsif bar
@@ -172,48 +185,48 @@ elsif bar
 elsif baz
 end
 
-==> 025.rb 21 <==
+==> 027.rb 21 <==
 unless condition
 end
 
-==> 026.rb 30 <==
+==> 028.rb 30 <==
 if condition
 end.do_something
 
-==> 027.rb 31 <==
+==> 029.rb 31 <==
 if condition
 end&.do_something
 
-==> 028.rb 30 <==
+==> 030.rb 30 <==
 unless condition
   # noop
 end
 
-==> 029.rb 29 <==
+==> 031.rb 29 <==
 x = if foo
 elsif bar
   5
 end
 
-==> 030.rb 15 <==
+==> 032.rb 15 <==
 x = if foo
 end
 
-==> 031.rb 16 <==
+==> 033.rb 16 <==
 x || if foo
 end
 
-==> 032.rb 23 <==
+==> 034.rb 23 <==
 if condition
   nil
 end
 
-==> 033.rb 27 <==
+==> 035.rb 27 <==
 unless condition
   nil
 end
 
-==> 034.rb 60 <==
+==> 036.rb 60 <==
 if condition
   do_something
 elsif other_condition

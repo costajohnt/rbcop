@@ -1,13 +1,16 @@
-==> offenses exit=1 630 <==
+==> offenses exit=1 922 <==
 000.rb:1:7: C: [Correctable] Style/Alias: Use `alias ala bala` instead of `alias :ala :bala`.
 002.rb:1:1: C: [Correctable] Style/Alias: Use `alias` instead of `alias_method` at the top level.
 003.rb:2:3: C: [Correctable] Style/Alias: Use `alias` instead of `alias_method` in a class body.
 004.rb:2:3: C: [Correctable] Style/Alias: Use `alias` instead of `alias_method` in a module body.
-013.rb:2:3: C: [Correctable] Style/Alias: Use `alias_method` instead of `alias`.
-014.rb:2:3: C: [Correctable] Style/Alias: Use `alias_method` instead of `alias`.
-015.rb:3:3: C: [Correctable] Style/Alias: Use `alias_method` instead of `alias`.
+014.rb:1:7: C: [Correctable] Style/Alias: Use `alias ala bala` instead of `alias :"ala" :bala`.
+015.rb:1:1: C: [Correctable] Style/Alias: Use `alias` instead of `alias_method` at the top level.
+016.rb:1:1: C: [Correctable] Style/Alias: Use `alias` instead of `alias_method` at the top level.
+017.rb:2:3: C: [Correctable] Style/Alias: Use `alias_method` instead of `alias`.
+018.rb:2:3: C: [Correctable] Style/Alias: Use `alias_method` instead of `alias`.
+019.rb:3:3: C: [Correctable] Style/Alias: Use `alias_method` instead of `alias`.
 
-==> autocorrect exit=0 892 <==
+==> autocorrect exit=0 1270 <==
 000.rb:1:7: C: [Corrected] Style/Alias: Use `alias ala bala` instead of `alias :ala :bala`.
 002.rb:1:1: C: [Corrected] Style/Alias: Use `alias` instead of `alias_method` at the top level.
 002.rb:1:7: C: [Corrected] Style/Alias: Use `alias ala bala` instead of `alias :ala :bala`.
@@ -15,9 +18,13 @@
 003.rb:2:9: C: [Corrected] Style/Alias: Use `alias ala bala` instead of `alias :ala :bala`.
 004.rb:2:3: C: [Corrected] Style/Alias: Use `alias` instead of `alias_method` in a module body.
 004.rb:2:9: C: [Corrected] Style/Alias: Use `alias ala bala` instead of `alias :ala :bala`.
-013.rb:2:3: C: [Corrected] Style/Alias: Use `alias_method` instead of `alias`.
-014.rb:2:3: C: [Corrected] Style/Alias: Use `alias_method` instead of `alias`.
-015.rb:3:3: C: [Corrected] Style/Alias: Use `alias_method` instead of `alias`.
+014.rb:1:7: C: [Corrected] Style/Alias: Use `alias ala bala` instead of `alias :"ala" :bala`.
+015.rb:1:1: C: [Corrected] Style/Alias: Use `alias` instead of `alias_method` at the top level.
+016.rb:1:1: C: [Corrected] Style/Alias: Use `alias` instead of `alias_method` at the top level.
+016.rb:1:7: C: [Corrected] Style/Alias: Use `alias ala bala` instead of `alias :ala :bala`.
+017.rb:2:3: C: [Corrected] Style/Alias: Use `alias_method` instead of `alias`.
+018.rb:2:3: C: [Corrected] Style/Alias: Use `alias_method` instead of `alias`.
+019.rb:3:3: C: [Corrected] Style/Alias: Use `alias_method` instead of `alias`.
 
 ==> corrected/000.rb 15 <==
 alias ala bala
@@ -35,17 +42,26 @@ module M
   alias ala bala
 end
 
-==> corrected/013.rb 48 <==
+==> corrected/014.rb 15 <==
+alias ala bala
+
+==> corrected/015.rb 21 <==
+alias :"@type" :type
+
+==> corrected/016.rb 15 <==
+alias ala bala
+
+==> corrected/017.rb 48 <==
 def some_obj.foo
   alias_method :ala, :bala
 end
 
-==> corrected/014.rb 43 <==
+==> corrected/018.rb 43 <==
 included do
   alias_method :ala, :bala
 end
 
-==> corrected/015.rb 62 <==
+==> corrected/019.rb 62 <==
 included do
   do_something(_1)
   alias_method :ala, :bala

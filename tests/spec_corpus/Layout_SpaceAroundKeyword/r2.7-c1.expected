@@ -1,0 +1,11 @@
+==> offenses exit=1 96 <==
+001.rb:2:3: C: [Correctable] Layout/SpaceAroundKeyword: Space after keyword `super` is missing.
+
+==> autocorrect exit=0 94 <==
+001.rb:2:3: C: [Corrected] Layout/SpaceAroundKeyword: Space after keyword `super` is missing.
+
+==> corrected/001.rb 24 <==
+def each
+  super ""
+end
+

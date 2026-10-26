@@ -1,4 +1,4 @@
-==> offenses exit=1 1013 <==
+==> offenses exit=1 1727 <==
 000.rb:1:25: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
 001.rb:1:30: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
 002.rb:2:9: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
@@ -9,8 +9,15 @@
 007.rb:2:9: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
 010.rb:3:9: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
 011.rb:2:9: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+012.rb:2:21: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+013.rb:2:21: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+014.rb:5:21: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+015.rb:3:21: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+016.rb:2:21: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+017.rb:2:21: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+018.rb:2:21: C: [Correctable] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
 
-==> autocorrect exit=0 993 <==
+==> autocorrect exit=0 1693 <==
 000.rb:1:25: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
 001.rb:1:30: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
 002.rb:2:9: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
@@ -21,6 +28,13 @@
 007.rb:2:9: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
 010.rb:3:9: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
 011.rb:2:9: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+012.rb:2:21: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+013.rb:2:21: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+014.rb:5:21: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+015.rb:3:21: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+016.rb:2:21: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+017.rb:2:21: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
+018.rb:2:21: C: [Corrected] Style/RedundantSelfAssignmentBranch: Remove the self-assignment branch.
 
 ==> corrected/000.rb 23 <==
 foo = bar if condition
@@ -55,4 +69,47 @@ foo = nil if condition
 
 ==> corrected/011.rb 27 <==
 foo = nil unless condition
+
+==> corrected/012.rb 50 <==
+def do_something
+  foo = bar unless condition
+end
+
+==> corrected/013.rb 52 <==
+if other_condition
+  foo = bar unless condition
+end
+
+==> corrected/014.rb 71 <==
+case other
+when 1
+  do_something
+else
+  foo = bar unless condition
+end
+
+==> corrected/015.rb 55 <==
+case other
+in Integer
+  foo = bar unless condition
+end
+
+==> corrected/016.rb 48 <==
+for x in items
+  foo = bar unless condition
+end
+
+==> corrected/017.rb 75 <==
+begin
+  foo = bar unless condition
+rescue StandardError
+  do_something
+end
+
+==> corrected/018.rb 91 <==
+def do_something
+  foo = bar unless condition
+rescue StandardError
+  do_something_else
+end
 
