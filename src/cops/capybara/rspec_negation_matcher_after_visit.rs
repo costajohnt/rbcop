@@ -22,7 +22,7 @@ impl Cop for NegationMatcherAfterVisit {
             return;
         }
         let Some(sibling) = helpers::rspec::right_sibling(cx.ancestors, node) else { return };
-        // (send (send nil? :expect _) {:to NEGATIVE | :not_to POSITIVE})
+        // (send (send nil? :expect _) {:to NEGATIVE | {:not_to :to_not} POSITIVE})
         let Some(runner) = sibling.as_call_node().filter(|c| !is_csend(c) && helpers::rspec::block_of(c).is_none()) else { return };
         let Some(expect) = runner.receiver() else { return };
         if !bare_call(&expect, |n| n == "expect") || send_args(&expect.as_call_node().unwrap()).len() != 1 {
@@ -31,7 +31,7 @@ impl Cop for NegationMatcherAfterVisit {
         let [m] = &send_args(&runner)[..] else { return };
         let ok = match method_name(&runner) {
             "to" => bare_call(m, negative_matcher),
-            "not_to" => bare_call(m, positive_matcher),
+            "not_to" | "to_not" => bare_call(m, positive_matcher),
             _ => false,
         };
         if ok {

@@ -53,14 +53,14 @@ RSpec.describe User do
   it 'finds' do
     find_by_id('plain').click
     find("#it's").click
-    find(:id, "it's").click
-    within "#a\\.b" do
+    find_by_id('it\'s').click
+    within :id, "a.b" do
     end
-    within find_by_id("a\"b") do
+    within :id, "a\"b" do
     end
-    within find_by_id(%q(a.b)) do
+    within :id, %q(a.b) do
     end
-    expect(page).to have_current_path /\/plain\/path/
+    expect(page).to have_current_path /\/plain\/path/, ignore_query: true
     expect(current_path).to match "/a(b"
     expect(current_path).to match "/#{x}/y"
   end

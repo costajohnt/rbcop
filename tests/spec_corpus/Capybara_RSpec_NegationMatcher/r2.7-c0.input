@@ -154,11 +154,20 @@ expect(page).not_to have_content
 ==> 047/047_spec.rb 36 <==
 expect(page).to have_no_content 'a'
 
-==> 048/048_spec.rb 72 <==
+==> 048/048_spec.rb 38 <==
+expect(page).not_to have_element('a')
+
+==> 049/049_spec.rb 33 <==
+expect(page).not_to have_element
+
+==> 050/050_spec.rb 36 <==
+expect(page).to have_no_element 'a'
+
+==> 051/051_spec.rb 72 <==
 expect(page).to_not have_selector 'a'
 expect(page).to_not have_css('a')
 
-==> 049/049_spec.rb 62 <==
+==> 052/052_spec.rb 62 <==
 expect(page).not_to have_text(exact_text: <<~TEXT)
   foo
 TEXT

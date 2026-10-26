@@ -1,18 +1,57 @@
-==> offenses exit=1 518 <==
+==> offenses exit=1 1629 <==
 000/000_spec.rb:1:1: C: [Correctable] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
 000/000_spec.rb:2:1: C: [Correctable] Capybara/RSpec/PredicateMatcher: Prefer using `matches_selector?` over `match_selector` matcher.
 000/000_spec.rb:3:1: C: [Correctable] Capybara/RSpec/PredicateMatcher: Prefer using `matches_style?` over `match_style` matcher.
 000/000_spec.rb:4:1: C: [Correctable] Capybara/RSpec/PredicateMatcher: Prefer using `matches_xpath?` over `match_xpath` matcher.
+001/001_spec.rb:1:1: C: [Correctable] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+002/002_spec.rb:1:1: C: [Correctable] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+003/003_spec.rb:1:1: C: [Correctable] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+004/004_spec.rb:1:1: C: [Correctable] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+005/005_spec.rb:1:1: C: [Correctable] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+006/006_spec.rb:1:1: C: Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+007/007_spec.rb:2:1: C: [Correctable] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+007/007_spec.rb:3:1: C: [Correctable] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+007/007_spec.rb:4:1: C: [Correctable] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
 
-==> autocorrect exit=0 510 <==
+==> autocorrect exit=1 1605 <==
 000/000_spec.rb:1:1: C: [Corrected] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
 000/000_spec.rb:2:1: C: [Corrected] Capybara/RSpec/PredicateMatcher: Prefer using `matches_selector?` over `match_selector` matcher.
 000/000_spec.rb:3:1: C: [Corrected] Capybara/RSpec/PredicateMatcher: Prefer using `matches_style?` over `match_style` matcher.
 000/000_spec.rb:4:1: C: [Corrected] Capybara/RSpec/PredicateMatcher: Prefer using `matches_xpath?` over `match_xpath` matcher.
+001/001_spec.rb:1:1: C: [Corrected] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+002/002_spec.rb:1:1: C: [Corrected] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+003/003_spec.rb:1:1: C: [Corrected] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+004/004_spec.rb:1:1: C: [Corrected] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+005/005_spec.rb:1:1: C: [Corrected] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+006/006_spec.rb:1:1: C: Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+007/007_spec.rb:2:1: C: [Corrected] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+007/007_spec.rb:3:1: C: [Corrected] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
+007/007_spec.rb:4:1: C: [Corrected] Capybara/RSpec/PredicateMatcher: Prefer using `matches_css?` over `match_css` matcher.
 
 ==> corrected/000/000_spec.rb 221 <==
 expect(foo.matches_css?(bar: 'baz')).to be_truthy
 expect(foo.matches_selector?(bar: 'baz')).to be_falsey
 expect(foo.matches_style?(bar: 'baz')).to be_falsey
 expect(foo.matches_xpath?(bar: 'baz', foo: 'bar')).to be_truthy
+
+==> corrected/001/001_spec.rb 59 <==
+expect((foo || bar).matches_css?(bar: 'baz')).to be_truthy
+
+==> corrected/002/002_spec.rb 58 <==
+expect((foo + bar).matches_css?(bar: 'baz')).to be_truthy
+
+==> corrected/003/003_spec.rb 56 <==
+expect((foo bar).matches_css?(bar: 'baz')).to be_truthy
+
+==> corrected/004/004_spec.rb 59 <==
+expect((foo || bar).matches_css?(bar: 'baz')).to be_truthy
+
+==> corrected/005/005_spec.rb 52 <==
+expect('foo'.matches_css?(bar: 'baz')).to be_truthy
+
+==> corrected/007/007_spec.rb 142 <==
+el = page
+expect(el.matches_css?('b')).to be_truthy
+expect(@el.matches_css?('b')).to be_truthy
+expect(Element.matches_css?('b')).to be_truthy
 

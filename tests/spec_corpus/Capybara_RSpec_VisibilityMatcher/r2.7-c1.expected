@@ -1,0 +1,15 @@
+==> offenses exit=1 293 <==
+000/000_spec.rb:1:37: C: Capybara/RSpec/VisibilityMatcher: Use `:visible` instead of `true`.
+000/000_spec.rb:2:31: C: Capybara/RSpec/VisibilityMatcher: Use `:visible` instead of `true`.
+000/000_spec.rb:3:52: C: [Correctable] Capybara/RSpec/VisibilityMatcher: Use `:visible` instead of `true`.
+
+==> autocorrect exit=1 291 <==
+000/000_spec.rb:1:37: C: Capybara/RSpec/VisibilityMatcher: Use `:visible` instead of `true`.
+000/000_spec.rb:2:31: C: Capybara/RSpec/VisibilityMatcher: Use `:visible` instead of `true`.
+000/000_spec.rb:3:52: C: [Corrected] Capybara/RSpec/VisibilityMatcher: Use `:visible` instead of `true`.
+
+==> corrected/000/000_spec.rb 166 <==
+expect(page).to have_selector('.x', visible: true)
+expect(page).to have_selector(visible: true)
+expect(page).to have_selector(:css, '.my_element', visible: :visible)
+

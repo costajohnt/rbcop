@@ -165,13 +165,14 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   FactoryBot/AssociationStyle (implicit style): the association name, keys and factory names are
   plain names.
   FactoryBot/CreateList (block form): the factory name is a plain name.
-  Capybara/SpecificFinders: the id written into `'...'` has no quote; `class:` values are written
-  with `inspect`; an array of other values is withheld.
-  Capybara/RedundantWithinFind: the `find_by_id` string is a `'...'`/`"..."` literal whose value is
-  inert in it (no matching quote, backslash, line break or interpolation).
-  Capybara/RSpec/CurrentPathExpectation: a string turned into a regexp literal is printable ASCII
-  without backslashes, `#` or `()[]{}*+?|` (so the regexp is always valid and its `inspect` is the
-  text with `/` escaped); a backtick string has no backslash, backtick or `#`.
+  Capybara/RSpec/CurrentPathExpectation and Capybara/RSpec/CurrentUrlExpectation: a string turned
+  into a regexp literal (`Regexp.new(text).inspect`) is printable ASCII or tabs, and rbcop's regexp
+  checks (Prism, `helpers::regexp_parser`, `helpers::onigmo_compile`) model all of it. Text they
+  reject is left uncorrected, as RuboCop leaves a string that is not a valid regexp; other text
+  (non-ASCII characters, `\p{...}` names and the other constructs `onigmo_compile` does not model)
+  is withheld. A backtick string (CurrentPathExpectation) has no backslash, backtick or `#`.
+  Capybara/SpecificFinders and Capybara/RedundantWithinFind withhold nothing: since
+  rubocop-capybara 3.1.0 they write escaped `'...'` literals and argument source.
   Fixture: tests/autocorrect/rspec_untrusted_text (RuboCop's output in `rubocop-output/`).
 - The result cache (`src/cache.rs`, #281) follows RuboCop's `AllCops: UseCache`, `--cache`,
   root lookup (`RUBOCOP_CACHE_ROOT`, then `--cache-root`, then `AllCops: CacheRootDirectory`, then
@@ -641,6 +642,3 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
     whose send part the cops' `(block (send nil? #List ...) ...)` patterns ask the nil list of, so
     RuboCop reports a cop error at each lambda for every block cop that asks it; rbcop's block
     cops see calls only and report none there (checked with rubocop-rspec 3.10.2, #575).
-  - Capybara/RSpec/CurrentPathExpectation on `match "<invalid regexp>"` (`match "("`): RuboCop's
-    `Regexp.new` raises and the offense is lost to a cop error; rbcop reports the offense with the
-    correction withheld.

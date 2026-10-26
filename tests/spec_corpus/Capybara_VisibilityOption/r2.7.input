@@ -1,0 +1,120 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 29 <==
+find('.menu', visible: true)
+
+==> 001/001_spec.rb 30 <==
+find('.menu', visible: false)
+
+==> 002/002_spec.rb 49 <==
+find(visible: true)
+find(locator, visible: true)
+
+==> 003/003_spec.rb 122 <==
+click_button('Save', visible: false)
+page.has_css?('.menu', visible: false)
+page.assert_selector('.menu', visible: false)
+
+==> 004/004_spec.rb 34 <==
+within('.menu', visible: true) {}
+
+==> 005/005_spec.rb 44 <==
+page.must_have_css('.menu', visible: false)
+
+==> 006/006_spec.rb 157 <==
+expect(page).to have_css('.menu', visible: false)
+expect(page).to have_no_css('.menu', visible: true)
+expect(page).to have_selector('.menu', visible: false)
+
+==> 007/007_spec.rb 117 <==
+expect(page).to have_all_of_selectors('.a', '.b', visible: false)
+find('.menu').matches_css?('.menu', visible: true)
+
+==> 008/008_spec.rb 114 <==
+page.all('.menus').first.find('.item', visible: true)
+page.find_all('.menus').first.find('.item', visible: false)
+
+==> 009/009_spec.rb 60 <==
+element = find('.row')
+element.find('.item', visible: true)
+
+==> 010/010_spec.rb 118 <==
+row = find('tr')
+rows.each { |row| row.find('.b', visible: true) }
+def check(row)
+  row.find('.c', visible: true)
+end
+
+==> 011/011_spec.rb 83 <==
+row = find('tr')
+rows.each { |row| others.each { row.find('.b', visible: true) } }
+
+==> 012/012_spec.rb 69 <==
+row = find('tr')
+rows.each { |; row| row.find('.b', visible: true) }
+
+==> 013/013_spec.rb 61 <==
+row = find('tr')
+rows.each { row.find('.b', visible: true) }
+
+==> 014/014_spec.rb 51 <==
+el = find('.a')
+el = el.find('.b', visible: false)
+
+==> 015/015_spec.rb 94 <==
+find('.menu', visible: :visible)
+find('.menu', visible: :all)
+find('.menu', visible: :hidden)
+
+==> 016/016_spec.rb 152 <==
+render('.menu', visible: false)
+have_text('Menu', visible: true)
+find('.menu', obscured: false)
+object = Object.new
+object.find('.menu', visible: true)
+
+==> 017/017_spec.rb 38 <==
+find('.menu', visible: true, &filter)
+
+==> 018/018_spec.rb 45 <==
+find('.menu', visible: true, visible: false)
+
+==> 019/019_spec.rb 201 <==
+find('.menu', { visible: true })
+Model.find(visible: true)
+[item].select(visible: false)
+records.find(visible: true)
+connection.select('query', visible: false)
+element.has_css?('.menu', visible: true)
+
+==> 020/020_spec.rb 48 <==
+page&.find('.menu', visible: true) # Keep this.
+
+==> 021/021_spec.rb 36 <==
+(page).find('.menu', visible: true)
+
+==> 022/022_spec.rb 190 <==
+find('.menu', visible: true, filter_set: :custom)
+have_css('.menu', filter_set: :custom, visible: false)
+find('.menu', **options, visible: true)
+find('.menu', visible: true, key => :custom)
+
+==> 023/023_spec.rb 223 <==
+find(:custom, '.menu', visible: true)
+find(selector, '.menu', visible: false)
+have_selector(:custom, visible: true)
+have_ancestor(:custom, '.menu', visible: true)
+assert_all_of_selectors(:custom, '.a', '.b', visible: true)
+
+==> 024/024_spec.rb 69 <==
+find_button(:save, visible: true)
+find(:css, '.menu', visible: true)
+

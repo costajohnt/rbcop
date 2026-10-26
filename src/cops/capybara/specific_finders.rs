@@ -1,10 +1,48 @@
 use crate::prelude::*;
-use helpers::capybara as css;
-use ruby_prism::{CallNode, Visit};
+use helpers::capybara::{self as css, AttrValue};
+use ruby_prism::CallNode;
 
 pub const NAME: &str = "Capybara/SpecificFinders";
 pub static COP: SpecificFinders = SpecificFinders;
 pub struct SpecificFinders;
+
+/// SpecificFinders#ruby_literal of a String: single-quoted with `'` and `\` escaped.
+fn quoted(s: &str) -> String {
+    format!("'{}'", s.replace('\\', "\\\\").replace('\'', "\\'"))
+}
+
+/// SpecificFinders#ruby_literal
+fn ruby_literal(v: &AttrValue) -> String {
+    match v {
+        AttrValue::Str(s) => quoted(s),
+        AttrValue::Nil => "nil".into(),
+        v => v.to_s(),
+    }
+}
+
+/// SpecificFindersHelp.field_selector?: an `input[...]` selector `find_field` can take as options.
+fn field_selector(arg: &str) -> bool {
+    static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\Ainput(?:\[.+\])+\z").unwrap());
+    if !RE.is_match(arg) {
+        return false;
+    }
+    let attrs = css::attributes(arg);
+    let ty = css::attr(&attrs, "type").map(|t| t.to_s().to_lowercase()).unwrap_or_default();
+    if matches!(ty.as_str(), "hidden" | "image" | "submit") {
+        return false;
+    }
+    let keys = || attrs.iter().map(|(k, _)| k.as_deref());
+    if keys().any(|k| matches!(k, Some("checked" | "disabled" | "multiple" | "readonly"))) {
+        return false;
+    }
+    let allowed = css::specific_options("field");
+    css::replaceable_attributes(&attrs) && keys().all(|k| k.is_some_and(|k| allowed.contains(&k)))
+}
+
+/// Pairs as `key: literal` options.
+fn options<'a>(attrs: impl Iterator<Item = &'a (Option<String>, AttrValue)>) -> String {
+    attrs.map(|(k, v)| format!("{}: {}", k.as_deref().unwrap_or(""), ruby_literal(v))).collect::<Vec<_>>().join(", ")
+}
 
 impl Cop for SpecificFinders {
     fn correctable(&self) -> bool {
@@ -16,130 +54,133 @@ impl Cop for SpecificFinders {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        // (send _ :find $(sym {:css :id})? (str $_) ...)
+        // (send _ :find $(sym {:css :id :link :field})? (str $_) ...)
         let call = node.as_call_node().unwrap();
         if is_csend(&call) || method_name(&call) != "find" {
             return;
         }
         let args = send_args(&call);
-        let sym = args
-            .first()
-            .filter(|a| helpers::rspec::is_sym(cx, a) && matches!(helpers::rails::sym_value(a).as_deref(), Some("css" | "id")));
+        let sym = args.first().and_then(|a| css::sym(cx, a)).filter(|s| matches!(s.as_str(), "css" | "id" | "link" | "field"));
         let Some(str) = args.get(usize::from(sym.is_some())).filter(|a| helpers::rspec::is_str(a)) else { return };
         let arg = String::from_utf8_lossy(str.as_string_node().unwrap().unescaped()).into_owned();
+        let has_sym = sym.is_some();
+        match sym.as_deref() {
+            // on_sym_id
+            Some("id") => return register(cx, &call, true, quoted(&arg), Vec::new()),
+            // on_sym_selector
+            Some(s @ ("link" | "field")) => {
+                let replacement = format!("find_{s}");
+                let sel = call.message_loc().unwrap();
+                let (rs, re) = (args[0].location().start_offset(), args[1].location().start_offset());
+                let (s, e) = offense_range(&call);
+                return cx.add_fix(s, e, format!("Prefer `{replacement}` over `find`."), |c| {
+                    c.replace(sel.start_offset(), sel.end_offset(), &replacement);
+                    c.remove(rs, re);
+                });
+            }
+            _ => {}
+        }
         if !css::pseudo_classes(&arg).is_empty() || css::multiple_selectors(&arg) {
             return;
         }
+        let attrs = css::attributes(&arg);
+        if field_selector(&arg) {
+            // on_field
+            let sel = call.message_loc().unwrap();
+            let (fs, fe) = helpers::rspec::node_range(&args[0]);
+            let delete = has_sym.then(|| (fe, args[1].location().end_offset()));
+            let opts = options(attrs.iter());
+            let (s, e) = offense_range(&call);
+            return cx.add_fix(s, e, "Prefer `find_field` over `find`.", |c| {
+                c.replace(sel.start_offset(), sel.end_offset(), "find_field");
+                c.replace(fs, fe, &opts);
+                if let Some((ds, de)) = delete {
+                    c.remove(ds, de);
+                }
+            });
+        }
         if css::is_attribute(&arg) && css::common_attributes(&arg) {
             // on_attr
-            let attrs = css::attributes(&arg);
-            let get = |k: &str| attrs.iter().find(|(a, _)| a.as_deref() == Some(k)).map(|(_, v)| v.clone());
-            if let Some(id) = get("id").filter(css::AttrValue::truthy)
-                && !get("class").is_some_and(|c| c.truthy())
-            {
-                let options: Vec<String> = attrs
-                    .iter()
-                    .filter(|(k, _)| k.as_deref() != Some("id"))
-                    .map(|(k, v)| format!("{}: {}", k.clone().unwrap_or_default(), v.to_s()))
-                    .collect();
-                let id = if options.is_empty() { id.to_s() } else { format!("{}, {}", id.to_s(), options.join(", ")) };
-                register(cx, &call, sym.is_some(), &id, Vec::new(), true);
+            let Some(id) = css::attr(&attrs, "id").filter(|v| **v != AttrValue::Nil) else { return };
+            if css::attr(&attrs, "class").is_some_and(AttrValue::truthy) {
+                return;
             }
+            let id = quoted(&id.to_s().replace('\\', ""));
+            let opts = options(attrs.iter().filter(|(k, _)| k.as_deref() != Some("id")));
+            let replacement = if opts.is_empty() { id } else { format!("{id}, {opts}") };
+            return register(cx, &call, has_sym, replacement, Vec::new());
         }
-        if css::is_id(&arg) && css::attributes(&arg).is_empty() {
-            let id = css::id(&arg).unwrap();
+        if let Some(id) = css::id(&arg) {
+            // on_id
+            if !attrs.is_empty() {
+                return;
+            }
             let classes = css::classes(&arg.replacen(&format!("#{id}"), "", 1));
-            register(cx, &call, sym.is_some(), &format!("'{id}'"), classes, !id.contains('\''));
-        }
-        if sym.is_some_and(|s| helpers::rails::sym_value(s).as_deref() == Some("id")) {
-            register(cx, &call, true, &format!("'{arg}'"), Vec::new(), !arg.contains('\''));
+            register(cx, &call, has_sym, quoted(&id.replace('\\', "")), classes);
         }
     }
 }
 
-/// A class option value's inspected element (`append_options`): a string, symbol or number.
-fn inspect_value(cx: &Cx, v: &Node) -> Option<String> {
-    if helpers::rspec::is_str(v) {
-        return Some(helpers::ruby_string::inspect(v.as_string_node().unwrap().unescaped()));
-    }
-    if helpers::rspec::is_sym(cx, v) {
-        return Some(helpers::ruby_string::symbol_inspect(v.as_symbol_node().unwrap().unescaped()));
-    }
-    if v.as_integer_node().is_some() {
-        return int_literal_value(v).map(|i| i.to_string());
-    }
-    None
+/// offense_range: from the selector to the closing parenthesis (or the end of the send).
+fn offense_range(call: &CallNode) -> (usize, usize) {
+    let start = call.message_loc().unwrap().start_offset();
+    (start, call.closing_loc().map_or(send_range(call).1, |c| c.end_offset()))
 }
 
-/// register_offense: `find_by_id`, the id as the first argument, and the classes as a `class:` option.
-/// `inert`: the id text written between single quotes has no quote of its own (backslashes are
-/// deleted from it); rbcop withholds the correction otherwise.
-fn register(cx: &mut Cx, call: &CallNode, sym: bool, id: &str, classes: Vec<String>, inert: bool) {
-    let sel = call.message_loc().unwrap();
-    let start = sel.start_offset();
-    let end = call.closing_loc().map_or(send_range(call).1, |c| c.end_offset());
+/// register_offense: `find_by_id`, the replacement as the first argument, and the classes as a
+/// `class:` option.
+fn register(cx: &mut Cx, call: &CallNode, sym: bool, replacement: String, mut classes: Vec<String>) {
+    let (start, end) = offense_range(call);
     let msg = "Prefer `find_by_id` over `find`.";
     let args = send_args(call);
-    let id = id.replace('\\', "");
-    if !inert {
-        return cx.add_withheld_fix(start, end, msg);
-    }
-    let mut items: Vec<String> = classes.iter().map(|c| helpers::ruby_string::inspect(c.as_bytes())).collect();
-    // (insert after the first argument?, range, text)
-    let mut class_edit: Option<(bool, usize, usize, String)> = None;
-    if !classes.is_empty() {
-        // class_options: the first `class:` pair in the send (receiver and arguments)
-        struct P<'pr>(Option<Node<'pr>>, f64);
-        impl<'pr> Visit<'pr> for P<'pr> {
-            fn visit_assoc_node(&mut self, n: &ruby_prism::AssocNode<'pr>) {
-                let k = n.key();
-                if self.0.is_none() && k.as_symbol_node().is_some_and(|s| s.unescaped() == b"class") && !is_parser_dsym(&k, self.1) {
-                    self.0 = Some(n.value());
-                }
-                ruby_prism::visit_assoc_node(self, n);
-            }
-        }
-        let mut p = P(None, cx.src.target_ruby);
-        if let Some(r) = call.receiver() {
-            p.visit(&r);
-        }
-        if let Some(a) = call.arguments() {
-            p.visit_arguments_node(&a);
-        }
-        match p.0 {
-            Some(options) => {
-                if helpers::rspec::is_str(&options) {
-                    items.push(inspect_value(cx, &options).unwrap());
-                } else if let Some(a) = options.as_array_node() {
-                    for e in a.elements().iter() {
-                        let Some(i) = inspect_value(cx, &e) else { return cx.add_withheld_fix(start, end, msg) };
-                        items.push(i);
-                    }
-                }
-                let (s, e) = helpers::rspec::node_range(&options);
-                class_edit = Some((false, s, e, format!("[{}]", items.join(", "))));
-            }
-            None => {
-                let value = if classes.len() > 1 { format!("[{}]", items.join(", ")) } else { format!("'{}'", classes[0]) };
-                let (s, e) = helpers::rspec::node_range(&args[0]);
-                class_edit = Some((true, s, e, format!(", class: {value}")));
-            }
-        }
+    // class_option: `(send _ :find ... (hash <(pair (sym :class) $_) ...>))`
+    let class_option = args.last().and_then(|h| helpers::rails::hash_elements(h)).and_then(|pairs| {
+        pairs.into_iter().find_map(|p| {
+            let a = p.as_assoc_node()?;
+            (css::sym(cx, &a.key()).as_deref() == Some("class")).then(|| a.value())
+        })
+    });
+    // autocorrectable_classes?
+    let autocorrectable = classes.is_empty()
+        || class_option.as_ref().is_none_or(|o| {
+            helpers::rspec::is_str(o)
+                || o.as_array_node().is_some_and(|a| a.elements().iter().all(|e| helpers::rspec::is_str(&e)))
+        });
+    if !autocorrectable {
+        return cx.add_fix(start, end, msg, |_| {});
     }
     let (fs, fe) = helpers::rspec::node_range(&args[0]);
-    let delete_end = args.get(1).map(|a| a.location().end_offset());
+    let inspect = |c: &[String]| format!("[{}]", c.iter().map(|s| helpers::ruby_string::inspect(s.as_bytes())).collect::<Vec<_>>().join(", "));
+    // (replace?, range, text)
+    let class_edit = if classes.is_empty() {
+        None
+    } else if let Some(o) = &class_option {
+        // append_options
+        if let Some(s) = o.as_string_node() {
+            classes.push(String::from_utf8_lossy(s.unescaped()).into_owned());
+        } else if let Some(a) = o.as_array_node() {
+            classes.extend(a.elements().iter().map(|e| String::from_utf8_lossy(e.as_string_node().unwrap().unescaped()).into_owned()));
+        }
+        let (s, e) = helpers::rspec::node_range(o);
+        Some((true, s, e, inspect(&classes)))
+    } else {
+        let value = if classes.len() > 1 { inspect(&classes) } else { format!("'{}'", classes[0]) };
+        Some((false, fs, fe, format!(", class: {value}")))
+    };
+    let sel = call.message_loc().unwrap();
+    let delete = sym.then(|| args.get(1).map(|a| (fe, a.location().end_offset()))).flatten();
     cx.add_fix(start, end, msg, |c| {
         c.replace(sel.start_offset(), sel.end_offset(), "find_by_id");
-        c.replace(fs, fe, &id);
-        if let Some((insert, s, e, text)) = &class_edit {
-            if *insert {
-                c.insert_after(*s, *e, text);
-            } else {
+        c.replace(fs, fe, &replacement);
+        if let Some((replace, s, e, text)) = &class_edit {
+            if *replace {
                 c.replace(*s, *e, text);
+            } else {
+                c.insert_after(*s, *e, text);
             }
         }
-        if sym && let Some(de) = delete_end {
-            c.remove(fe, de);
+        if let Some((ds, de)) = delete {
+            c.remove(ds, de);
         }
     });
 }

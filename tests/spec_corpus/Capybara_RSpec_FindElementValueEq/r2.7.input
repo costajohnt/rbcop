@@ -1,0 +1,59 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 298 <==
+expect(find('input').value).to eq('foobar')
+expect(find(:css, 'input').value).to eq('foobar')
+expect(find('textarea').value).to eq('foobar')
+expect(find(:css, 'textarea').value).to eq('foobar')
+expect(page.find('input').value).to eq('foobar')
+expect(page.find(:css, 'input').value).to eq('foobar')
+
+==> 001/001_spec.rb 114 <==
+expect(container.find('input').value).to eq('foobar')
+expect(container.find(:css, 'input').value).to eq('foobar')
+
+==> 002/002_spec.rb 396 <==
+expect(find_field('Email').value).to eq('user@example.com')
+expect(find(:field, 'Email').value).to eq('user@example.com')
+expect(page.find_field('Email').value).to eq('user@example.com')
+expect(page.find(:field, 'Email').value).to eq('user@example.com')
+expect(container.find_field('Email').value).to eq('user@example.com')
+expect(container.find(:field, 'Email').value).to eq('user@example.com')
+
+==> 003/003_spec.rb 66 <==
+expect(find_field(name: 'Email').value).to eq('user@example.com')
+
+==> 004/004_spec.rb 96 <==
+expect(find('input').value).not_to eq('foobar')
+expect(find('input').value).to_not eq('foobar')
+
+==> 005/005_spec.rb 50 <==
+expect(find('input').value).to eq(expected_value)
+
+==> 006/006_spec.rb 125 <==
+expect(find('input').value).to eq(expected_value :foo)
+expect(find_field(field_name :email).value).to eq('user@example.com')
+
+==> 007/007_spec.rb 48 <==
+expect(find('input').value).to eq(data: :value)
+
+==> 008/008_spec.rb 88 <==
+expect(find('input').value).to eq(*values)
+expect(find('input').value).to eq(**options)
+
+==> 009/009_spec.rb 292 <==
+expect(find('input.foo').value).to eq('foobar')
+expect(find('input', visible: false).value).to eq('foobar')
+expect(find_field('Email', disabled: true).value).to eq('foobar')
+expect(find('input').text).to eq('foobar')
+expect(find('input').value).to eql('foobar')
+expect(value).to eq('foobar')
+

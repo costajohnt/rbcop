@@ -16,7 +16,19 @@ expect(page).to have_no_link('bar')
 visit foo_path
 expect(page).not_to have_link('bar')
 
-==> 002/002_spec.rb 81 <==
+==> 002/002_spec.rb 54 <==
+visit foo_path
+expect(page).to have_no_element('div')
+
+==> 003/003_spec.rb 55 <==
+visit foo_path
+expect(page).not_to have_element('div')
+
+==> 004/004_spec.rb 52 <==
+visit foo_path
+expect(page).to_not have_link('bar')
+
+==> 005/005_spec.rb 81 <==
 visit foo_path
 expect(page).to have_css('a')
 expect(page).to have_no_link('bar')

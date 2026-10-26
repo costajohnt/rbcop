@@ -21,6 +21,54 @@ fn send_or_block_send<'pr>(node: &Node<'pr>) -> Option<CallNode<'pr>> {
     (!is_csend(&c)).then_some(c)
 }
 
+/// actual_requires_parentheses?: the predicate appended to `actual` would bind to part of it.
+fn requires_parentheses(cx: &Cx, actual: &Node) -> bool {
+    if actual.as_parentheses_node().is_some() {
+        return false;
+    }
+    if let Some(c) = actual.as_call_node() {
+        if helpers::rspec::block_of(&c).is_some() {
+            // a parser `block`, not a call: unsafe
+            return true;
+        }
+        let name = method_name(&c);
+        return name != "[]"
+            && (helpers::node_types::is_operator_method(name) || !send_args(&c).is_empty() && c.opening_loc().is_none());
+    }
+    // SAFE_RECEIVER_TYPES
+    let safe = match kind::of(actual) {
+        kind::ARRAY_NODE
+        | kind::IMAGINARY_NODE
+        | kind::CONSTANT_READ_NODE
+        | kind::CONSTANT_PATH_NODE
+        | kind::CLASS_VARIABLE_READ_NODE
+        | kind::INTERPOLATED_STRING_NODE
+        | kind::STRING_NODE
+        | kind::SOURCE_FILE_NODE
+        | kind::FALSE_NODE
+        | kind::FLOAT_NODE
+        | kind::GLOBAL_VARIABLE_READ_NODE
+        | kind::HASH_NODE
+        | kind::KEYWORD_HASH_NODE
+        | kind::INTEGER_NODE
+        | kind::SOURCE_LINE_NODE
+        | kind::INSTANCE_VARIABLE_READ_NODE
+        | kind::LOCAL_VARIABLE_READ_NODE
+        | kind::IT_LOCAL_VARIABLE_READ_NODE
+        | kind::NIL_NODE
+        | kind::RATIONAL_NODE
+        | kind::REGULAR_EXPRESSION_NODE
+        | kind::INTERPOLATED_REGULAR_EXPRESSION_NODE
+        | kind::SELF_NODE
+        | kind::TRUE_NODE
+        | kind::X_STRING_NODE
+        | kind::INTERPOLATED_X_STRING_NODE => true,
+        kind::SYMBOL_NODE => !helpers::rspec::is_dsym(cx, actual),
+        _ => false,
+    };
+    !safe
+}
+
 impl Cop for PredicateMatcher {
     fn correctable(&self) -> bool {
         true
@@ -70,16 +118,19 @@ impl Cop for PredicateMatcher {
                 if !(boolthy || (!strict && be_bool)) {
                     return;
                 }
-                // true?: nil (falsy) for eql / equal
+                let new_matcher = format!("match_{}", &pname["matches_".len()..pname.len() - 1]);
+                let msg = format!("Prefer using `{new_matcher}` matcher over `{pname}`.");
+                if helpers::rspec::block_of(&predicate).is_some() {
+                    return cx.add_with(s, e, msg, false);
+                }
+                // true?
                 let result = match mname {
-                    "be" | "eq" => Some(margs[0].as_true_node().is_some()),
+                    "be" | "eq" | "eql" | "equal" => Some(margs[0].as_true_node().is_some()),
                     "be_truthy" | "a_truthy_value" => Some(true),
                     "be_falsey" | "be_falsy" | "a_falsey_value" | "a_falsy_value" => Some(false),
                     _ => None,
                 };
                 let positive = if to == "to" { result == Some(true) } else { result.is_none_or(|r| !r) };
-                let new_matcher = format!("match_{}", &pname["matches_".len()..pname.len() - 1]);
-                let msg = format!("Prefer using `{new_matcher}` matcher over `{pname}`.");
                 let Some(dot) = predicate.call_operator_loc() else { return };
                 let remove = (dot.start_offset(), send_range(&predicate).1);
                 let sel = call.message_loc().unwrap();
@@ -107,6 +158,9 @@ impl Cop for PredicateMatcher {
                 }
                 let predicate = format!("{}?", mname.replacen("match_", "matches_", 1));
                 let msg = format!("Prefer using `{predicate}` over `{mname}` matcher.");
+                if helpers::rspec::block_of(&m).is_some() {
+                    return cx.add_with(s, e, msg, false);
+                }
                 let replacement = match (strict, to == "to") {
                     (true, true) => "be(true)",
                     (true, false) => "be(false)",
@@ -116,10 +170,14 @@ impl Cop for PredicateMatcher {
                 let (ms, me) = send_range(&m);
                 let (as_, ae) = helpers::rspec::node_range(actual);
                 let insert = format!(".{predicate}{}", args_source(src, &m));
+                let wrapped = requires_parentheses(cx, actual).then(|| format!("({}){insert}", &src[as_..ae]));
                 let sel = call.message_loc().unwrap();
                 cx.add_fix(s, e, msg, |c| {
                     c.replace(ms, me, replacement);
-                    c.insert_after(as_, ae, &insert);
+                    match &wrapped {
+                        Some(w) => c.replace(as_, ae, w),
+                        None => c.insert_after(as_, ae, &insert),
+                    }
                     c.replace(sel.start_offset(), sel.end_offset(), "to");
                 });
             }

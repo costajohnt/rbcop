@@ -5,11 +5,15 @@ pub const NAME: &str = "Capybara/SpecificActions";
 pub static COP: SpecificActions = SpecificActions;
 pub struct SpecificActions;
 
-/// `arg.split.last[/^\w+/, 0]`; None when the split is empty (RuboCop raises then).
-fn last_selector(arg: &str) -> Option<Option<String>> {
-    static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\A[A-Za-z0-9_]+").unwrap());
-    let last = arg.split([' ', '\t', '\n', '\x0b', '\x0c', '\r']).rfind(|s| !s.is_empty())?;
-    Some(RE.find(last).map(|m| m.as_str().to_string()))
+/// last_selector: whitespace inside `[...]` attributes dropped, then the last whitespace-separated
+/// part's leading `[\w-]+`.
+fn last_selector(arg: &str) -> Option<String> {
+    static ATTR: LazyLock<Regex> = LazyLock::new(|| Regex::new(r#"\[(?:'[^']*'|"[^"]*"|[^\]])*\]"#).unwrap());
+    static WORD: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\A[A-Za-z0-9_-]+").unwrap());
+    let space = [' ', '\t', '\n', '\x0b', '\x0c', '\r'];
+    let without = ATTR.replace_all(arg, |m: &regex::Captures| m[0].replace(space, ""));
+    let last = without.split(space).rfind(|s| !s.is_empty())?;
+    WORD.find(last).map(|m| m.as_str().to_string())
 }
 
 impl Cop for SpecificActions {
@@ -19,7 +23,7 @@ impl Cop for SpecificActions {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
-        if is_csend(&call) || method_name(&call) != "click" {
+        if is_csend(&call) || method_name(&call) != "click" || !send_args(&call).is_empty() || call.block().is_some() {
             return;
         }
         // click_on_selector: (send _ :find (str $_) ...)
@@ -33,10 +37,7 @@ impl Cop for SpecificActions {
         if arg.contains(['>', ',', '+', '~']) {
             return;
         }
-        let Some(selector) = last_selector(&arg) else {
-            return crate::runner::cop_error(NAME, cx.src, node.location().start_offset());
-        };
-        let Some(selector) = selector else { return };
+        let Some(selector) = last_selector(&arg) else { return };
         let action = match selector.as_str() {
             "button" => "button",
             "a" => "link",

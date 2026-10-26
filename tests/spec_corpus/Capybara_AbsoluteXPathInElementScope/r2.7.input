@@ -1,0 +1,70 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 148 <==
+find('.dialog').find(:xpath, '//button')
+page.find('.dialog').all(:xpath, '//button')
+dialog = page.find('.dialog')
+dialog.find(:xpath, '//button')
+
+==> 001/001_spec.rb 423 <==
+find(:xpath, '//button')
+page.find(:xpath, '//button')
+find('.dialog').find(:xpath, './/button')
+find('.dialog').find(:css, '//button')
+element.find(:xpath, '//button')
+Model.find('.dialog').find(:xpath, '//button')
+session = page
+session.find(:xpath, '//button')
+dialog = page.find('.dialog')
+dialog = page
+dialog.find(:xpath, '//button')
+find('.dialog').find(:xpath, expression)
+find('.dialog').find(:xpath, "//#{kind}")
+
+==> 002/002_spec.rb 293 <==
+RSpec.describe 'dialog' do
+  let(:dialog) { find('.dialog') }
+  let!(:notice) { page.find('.notice') }
+  subject(:panel) { find('.panel') }
+
+  it 'searches inside elements' do
+    dialog.find(:xpath, '//button')
+    notice.find(:xpath, '//button')
+    panel.find(:xpath, '//button')
+  end
+end
+
+==> 003/003_spec.rb 537 <==
+RSpec.describe 'no helper' do
+  it { unknown.find(:xpath, '//button') }
+end
+
+RSpec.describe 'not a named helper' do
+  include SomeModule
+  subject { find('.dialog') }
+  other.let(:dialog) { find('.dialog') }
+  it { dialog.find(:xpath, '//button') }
+end
+
+RSpec.describe 'dialog' do
+  let(:dialog) { find('.dialog') }
+  let(:unknown) { Object.new }
+
+  context 'overridden' do
+    let(:dialog) { Object.new }
+
+    it 'uses the local binding' do
+      dialog.find(:xpath, '//button')
+      unknown.find(:xpath, '//button')
+    end
+  end
+end
+

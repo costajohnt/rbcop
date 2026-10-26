@@ -13,209 +13,229 @@ expect(page).to have_selector('article')
 expect(page).to have_no_selector('body')
 expect(page).to have_css('tbody')
 
-==> 001/001_spec.rb 119 <==
+==> 001/001_spec.rb 211 <==
+expect(page).to have_css('button-group')
+expect(page).to have_css('select-menu')
+expect(page).to have_css('table-row.x')
+expect(page).to have_css('input-widget')
+expect(page).to have_css('a-link[href="/home"]')
+
+==> 002/002_spec.rb 119 <==
 expect(page).to have_no_css('.a')
 expect(page).to have_selector('#button')
 expect(page).to have_no_selector('[table]')
 
-==> 002/002_spec.rb 158 <==
+==> 003/003_spec.rb 158 <==
 expect(page).to have_selector('button')
 expect(page).to have_selector('table')
 expect(page).to have_selector('select')
 expect(page).to have_selector('input')
 
-==> 003/003_spec.rb 43 <==
+==> 004/004_spec.rb 43 <==
 expect(page).to have_no_selector('button')
 
-==> 004/004_spec.rb 35 <==
+==> 005/005_spec.rb 35 <==
 expect(page).to have_css('button')
 
-==> 005/005_spec.rb 38 <==
+==> 006/006_spec.rb 38 <==
 expect(page).to have_no_css('button')
 
-==> 006/006_spec.rb 54 <==
+==> 007/007_spec.rb 54 <==
 expect(page).to have_css('button', exact_text: 'foo')
 
-==> 007/007_spec.rb 91 <==
+==> 008/008_spec.rb 91 <==
 expect(page).to have_css('button.cls')
 expect(page).to have_css('button.cls', text: 'foo')
 
-==> 008/008_spec.rb 89 <==
+==> 009/009_spec.rb 89 <==
 expect(page).to have_css('button#id')
 expect(page).to have_css('button#id', text: 'foo')
 
-==> 009/009_spec.rb 43 <==
+==> 010/010_spec.rb 43 <==
 expect(page).to have_css("button[id=foo]")
 
-==> 010/010_spec.rb 46 <==
+==> 011/011_spec.rb 46 <==
 expect(page).to have_css("button[class=foo]")
 
-==> 011/011_spec.rb 46 <==
+==> 012/012_spec.rb 46 <==
 expect(page).to have_css("button[style=foo]")
 
-==> 012/012_spec.rb 49 <==
+==> 013/013_spec.rb 49 <==
 expect(page).to have_css("button[disabled=foo]")
 
-==> 013/013_spec.rb 45 <==
+==> 014/014_spec.rb 45 <==
 expect(page).to have_css("button[name=foo]")
 
-==> 014/014_spec.rb 46 <==
+==> 015/015_spec.rb 46 <==
 expect(page).to have_css("button[value=foo]")
 
-==> 015/015_spec.rb 46 <==
+==> 016/016_spec.rb 46 <==
 expect(page).to have_css("button[title=foo]")
 
-==> 016/016_spec.rb 45 <==
+==> 017/017_spec.rb 45 <==
 expect(page).to have_css("button[type=foo]")
 
-==> 017/017_spec.rb 102 <==
+==> 018/018_spec.rb 102 <==
 expect(page).to have_css("a")
 expect(page).to have_css("a[id=foo]")
 expect(page).to have_css("a[id]")
 
-==> 018/018_spec.rb 65 <==
+==> 019/019_spec.rb 65 <==
 expect(page).to have_css("a[id=foo][href='http://example.com']")
 
-==> 019/019_spec.rb 145 <==
+==> 020/020_spec.rb 145 <==
 expect(page).to have_css("a[id=foo]", href: 'http://example.com')
 expect(page).to have_css("a[id=foo]", text: 'foo', href: 'http://example.com')
 
-==> 020/020_spec.rb 108 <==
+==> 021/021_spec.rb 108 <==
 expect(page).to have_css("a")
 expect(page).to have_css("a[class=foo]")
 expect(page).to have_css("a[class]")
 
-==> 021/021_spec.rb 68 <==
+==> 022/022_spec.rb 68 <==
 expect(page).to have_css("a[class=foo][href='http://example.com']")
 
-==> 022/022_spec.rb 151 <==
+==> 023/023_spec.rb 151 <==
 expect(page).to have_css("a[class=foo]", href: 'http://example.com')
 expect(page).to have_css("a[class=foo]", text: 'foo', href: 'http://example.com')
 
-==> 023/023_spec.rb 108 <==
+==> 024/024_spec.rb 108 <==
 expect(page).to have_css("a")
 expect(page).to have_css("a[style=foo]")
 expect(page).to have_css("a[style]")
 
-==> 024/024_spec.rb 68 <==
+==> 025/025_spec.rb 68 <==
 expect(page).to have_css("a[style=foo][href='http://example.com']")
 
-==> 025/025_spec.rb 151 <==
+==> 026/026_spec.rb 151 <==
 expect(page).to have_css("a[style=foo]", href: 'http://example.com')
 expect(page).to have_css("a[style=foo]", text: 'foo', href: 'http://example.com')
 
-==> 026/026_spec.rb 104 <==
+==> 027/027_spec.rb 104 <==
 expect(page).to have_css("a")
 expect(page).to have_css("a[alt=foo]")
 expect(page).to have_css("a[alt]")
 
-==> 027/027_spec.rb 66 <==
+==> 028/028_spec.rb 66 <==
 expect(page).to have_css("a[alt=foo][href='http://example.com']")
 
-==> 028/028_spec.rb 147 <==
+==> 029/029_spec.rb 147 <==
 expect(page).to have_css("a[alt=foo]", href: 'http://example.com')
 expect(page).to have_css("a[alt=foo]", text: 'foo', href: 'http://example.com')
 
-==> 029/029_spec.rb 108 <==
+==> 030/030_spec.rb 108 <==
 expect(page).to have_css("a")
 expect(page).to have_css("a[title=foo]")
 expect(page).to have_css("a[title]")
 
-==> 030/030_spec.rb 68 <==
+==> 031/031_spec.rb 68 <==
 expect(page).to have_css("a[title=foo][href='http://example.com']")
 
-==> 031/031_spec.rb 151 <==
+==> 032/032_spec.rb 151 <==
 expect(page).to have_css("a[title=foo]", href: 'http://example.com')
 expect(page).to have_css("a[title=foo]", text: 'foo', href: 'http://example.com')
 
-==> 032/032_spec.rb 114 <==
+==> 033/033_spec.rb 114 <==
 expect(page).to have_css("a")
 expect(page).to have_css("a[download=foo]")
 expect(page).to have_css("a[download]")
 
-==> 033/033_spec.rb 71 <==
+==> 034/034_spec.rb 71 <==
 expect(page).to have_css("a[download=foo][href='http://example.com']")
 
-==> 034/034_spec.rb 157 <==
+==> 035/035_spec.rb 157 <==
 expect(page).to have_css("a[download=foo]", href: 'http://example.com')
 expect(page).to have_css("a[download=foo]", text: 'foo', href: 'http://example.com')
 
-==> 035/035_spec.rb 57 <==
+==> 036/036_spec.rb 57 <==
 expect(page).to have_css("a[href='http://example.com']")
 
-==> 036/036_spec.rb 42 <==
+==> 037/037_spec.rb 42 <==
 expect(page).to have_css("table[id=foo]")
 
-==> 037/037_spec.rb 45 <==
+==> 038/038_spec.rb 45 <==
 expect(page).to have_css("table[class=foo]")
 
-==> 038/038_spec.rb 45 <==
+==> 039/039_spec.rb 45 <==
 expect(page).to have_css("table[style=foo]")
 
-==> 039/039_spec.rb 44 <==
+==> 040/040_spec.rb 44 <==
 expect(page).to have_css("table[cols=foo]")
 
-==> 040/040_spec.rb 44 <==
+==> 041/041_spec.rb 44 <==
 expect(page).to have_css("table[rows=foo]")
 
-==> 041/041_spec.rb 43 <==
+==> 042/042_spec.rb 43 <==
 expect(page).to have_css("select[id=foo]")
 
-==> 042/042_spec.rb 46 <==
+==> 043/043_spec.rb 46 <==
 expect(page).to have_css("select[class=foo]")
 
-==> 043/043_spec.rb 46 <==
+==> 044/044_spec.rb 46 <==
 expect(page).to have_css("select[style=foo]")
 
-==> 044/044_spec.rb 49 <==
+==> 045/045_spec.rb 49 <==
 expect(page).to have_css("select[disabled=foo]")
 
-==> 045/045_spec.rb 45 <==
+==> 046/046_spec.rb 45 <==
 expect(page).to have_css("select[name=foo]")
 
-==> 046/046_spec.rb 52 <==
+==> 047/047_spec.rb 52 <==
 expect(page).to have_css("select[placeholder=foo]")
 
-==> 047/047_spec.rb 49 <==
+==> 048/048_spec.rb 49 <==
 expect(page).to have_css("select[selected=foo]")
 
-==> 048/048_spec.rb 49 <==
+==> 049/049_spec.rb 49 <==
 expect(page).to have_css("select[multiple=foo]")
 
-==> 049/049_spec.rb 42 <==
+==> 050/050_spec.rb 42 <==
 expect(page).to have_css("input[id=foo]")
 
-==> 050/050_spec.rb 45 <==
+==> 051/051_spec.rb 45 <==
 expect(page).to have_css("input[class=foo]")
 
-==> 051/051_spec.rb 45 <==
+==> 052/052_spec.rb 45 <==
 expect(page).to have_css("input[style=foo]")
 
-==> 052/052_spec.rb 47 <==
+==> 053/053_spec.rb 47 <==
 expect(page).to have_css("input[checked=foo]")
 
-==> 053/053_spec.rb 48 <==
+==> 054/054_spec.rb 48 <==
 expect(page).to have_css("input[disabled=foo]")
 
-==> 054/054_spec.rb 44 <==
+==> 055/055_spec.rb 44 <==
 expect(page).to have_css("input[name=foo]")
 
-==> 055/055_spec.rb 51 <==
+==> 056/056_spec.rb 51 <==
 expect(page).to have_css("input[placeholder=foo]")
 
-==> 056/056_spec.rb 81 <==
+==> 057/057_spec.rb 110 <==
+expect(page).to have_no_css('input[placeholder="foo"]')
+expect(page).to have_no_css('input[type="checkbox"]')
+
+==> 058/058_spec.rb 150 <==
+expect(page).to have_css('input[type=submit]')
+expect(page).to have_no_css('input[type="image"]')
+expect(page).to have_selector('input[type=hidden]')
+
+==> 059/059_spec.rb 110 <==
+expect(page).to have_css('input[placeholder="foo" i]')
+expect(page).to have_css('input[placeholder="foo" s]')
+
+==> 060/060_spec.rb 81 <==
 expect(page).to have_css('button[disabled=true][name="foo"]', exact_text: 'foo')
 
-==> 057/057_spec.rb 76 <==
+==> 061/061_spec.rb 76 <==
 expect(page).to have_css('button[name="bar[baz][qux]"]', exact_text: 'foo')
 
-==> 058/058_spec.rb 69 <==
+==> 062/062_spec.rb 69 <==
 expect(page).to have_css('button[disabled=true]', exact_text: 'foo')
 
-==> 059/059_spec.rb 75 <==
+==> 063/063_spec.rb 75 <==
 expect(page).to have_css('button:not([disabled=true])', exact_text: 'bar')
 
-==> 060/060_spec.rb 409 <==
+==> 064/064_spec.rb 409 <==
 expect(page).to have_css('button:not([disabled=true]):enabled')
 expect(page).to have_css('button:not([disabled=false]):disabled')
 expect(page).to have_css('button:not([disabled=true]):not([disabled=true])')
@@ -223,39 +243,39 @@ expect(page).to have_css('input:not([checked=false]):checked')
 expect(page).to have_css('input:not([checked=false]):unchecked')
 expect(page).to have_css('input:not([checked=true]):not([checked=true])')
 
-==> 061/061_spec.rb 63 <==
+==> 065/065_spec.rb 63 <==
 expect(page).to have_css('button:not([name="foo"][disabled])')
 
-==> 062/062_spec.rb 65 <==
+==> 066/066_spec.rb 65 <==
 expect(page).to have_css('button:first-of-type:not([disabled])')
 
-==> 063/063_spec.rb 206 <==
+==> 067/067_spec.rb 206 <==
 expect(page).to have_css('button[disabled]')
 expect(page).to have_css('button[data-disabled]')
 expect(page).to have_css('button[foo=bar]')
 expect(page).to have_css('button[foo-bar=baz]', exact_text: 'foo')
 
-==> 064/064_spec.rb 302 <==
+==> 068/068_spec.rb 302 <==
 expect(page).to have_css('button[disabled=true][foo]')
 expect(page).to have_css('button[foo][disabled=true]')
 expect(page).to have_css('button[foo][disabled=true][bar]')
 expect(page).to have_css('button[disabled=true][foo=bar]')
 expect(page).to have_css('button[disabled=foo][bar]', exact_text: 'foo')
 
-==> 065/065_spec.rb 152 <==
+==> 069/069_spec.rb 152 <==
 expect(page).to have_css('button body')
 expect(page).to have_css('a,h1')
 expect(page).to have_css('table>tr')
 expect(page).to have_css('select+option')
 
-==> 066/066_spec.rb 59 <==
+==> 070/070_spec.rb 59 <==
 expect(page).to have_css(%{a[href="#{foo}"]}, text: "bar")
 
-==> 067/067_spec.rb 145 <==
+==> 071/071_spec.rb 145 <==
 expect(page).to have_css('a', class: 'cls', exact_text: /some regex/)
 expect(page).to have_css('button', exact_text: /some regex/, class: 'cls')
 
-==> 068/068_spec.rb 137 <==
+==> 072/072_spec.rb 137 <==
 expect(page).to have_css('select', class: 'cls', text: /some regex/)
 expect(page).to have_css('table', text: /some regex/, class: 'cls')
 

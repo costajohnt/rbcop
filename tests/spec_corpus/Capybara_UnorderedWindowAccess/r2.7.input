@@ -1,0 +1,30 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 73 <==
+windows.first
+windows.last
+windows[1]
+windows.at(0)
+windows.fetch(index)
+
+==> 001/001_spec.rb 39 <==
+page.windows.last
+page&.windows&.first
+
+==> 002/002_spec.rb 130 <==
+windows.size
+windows.find(&:current?)
+windows.sort_by(&:handle).first
+windows[0..-1]
+windows[..-1]
+other.windows.last
+array.first
+
