@@ -151,9 +151,12 @@ impl Cop for Next {
         let src = cx.src;
         let msg = "Use `next` to skip iteration.";
         if p.end_kw.is_none() && !p.ternary {
-            let body = p.body.as_ref().map_or("", |b| text(&b.location()));
-            let replacement = format!("next {} {cond_src}\n{}{body}", p.inverse, " ".repeat(src.column(start)));
-            return cx.add_fix(start, pred_loc.end_offset(), msg, |c| c.replace(start, end, &replacement));
+            let body_end = p.body.as_ref().map_or(end, |b| b.location().end_offset());
+            let next_code = format!("next {} {cond_src}\n{}", p.inverse, " ".repeat(src.column(start)));
+            return cx.add_fix(start, pred_loc.end_offset(), msg, |c| {
+                c.insert_before(start, end, &next_code);
+                c.remove(body_end, end);
+            });
         }
         // autocorrect_block on a ternary crashes (no loc.begin / loc.end): no offense
         let Some(end_kw) = p.end_kw.as_ref().filter(|_| !p.ternary) else { return };
@@ -166,7 +169,7 @@ impl Cop for Next {
         if rest[..ws].contains(&b'\n') || ws == rest.len() {
             end_begin -= 1;
         }
-        let heredoc = helpers::heredoc::dstr_body_lines(src, &offending);
+        let heredoc = string_content_lines(src, &offending);
         let lines: Vec<usize> = (src.line_of(start) + 1..src.line_of(end_start))
             .filter(|l| !heredoc.contains(l) && !source_line(src, *l).trim_ascii().is_empty())
             .collect();
@@ -197,5 +200,53 @@ fn if_to_owned<'pr>(n: &Node<'pr>) -> Node<'pr> {
     match n.as_if_node() {
         Some(i) => i.as_node(),
         None => n.as_unless_node().unwrap().as_node(),
+    }
+}
+
+/// `string_content_lines`: lines that start inside a string literal or a heredoc body, whose
+/// leading whitespace is part of the string value.
+fn string_content_lines(src: &crate::source::Source, node: &Node) -> Vec<usize> {
+    let mut v = StringContents { src, lines: Vec::new() };
+    ruby_prism::Visit::visit(&mut v, node);
+    v.lines
+}
+
+struct StringContents<'s, 'a> {
+    src: &'s crate::source::Source<'a>,
+    lines: Vec<usize>,
+}
+
+impl StringContents<'_, '_> {
+    fn add(&mut self, node: &Node, open: Option<Location>, close: Option<Location>) {
+        if crate::ast::is_heredoc(node) {
+            if let Some((b, e)) = helpers::heredoc::body_range(node).filter(|(b, e)| b < e) {
+                self.lines.extend(self.src.line_of(b)..self.src.line_of(e));
+            }
+            return;
+        }
+        let (Some(o), Some(c)) = (open, close) else { return };
+        let (b, e) = (o.end_offset(), c.start_offset());
+        if b >= e {
+            return;
+        }
+        let src = self.src;
+        self.lines.extend((src.line_of(b)..=src.line_of(e)).filter(|&l| (b..e).contains(&src.line_start(l))));
+    }
+}
+
+impl<'pr> ruby_prism::Visit<'pr> for StringContents<'_, '_> {
+    fn visit_string_node(&mut self, node: &ruby_prism::StringNode<'pr>) {
+        self.add(&node.as_node(), node.opening_loc(), node.closing_loc());
+    }
+    fn visit_interpolated_string_node(&mut self, node: &ruby_prism::InterpolatedStringNode<'pr>) {
+        self.add(&node.as_node(), node.opening_loc(), node.closing_loc());
+        ruby_prism::visit_interpolated_string_node(self, node);
+    }
+    fn visit_x_string_node(&mut self, node: &ruby_prism::XStringNode<'pr>) {
+        self.add(&node.as_node(), Some(node.opening_loc()), Some(node.closing_loc()));
+    }
+    fn visit_interpolated_x_string_node(&mut self, node: &ruby_prism::InterpolatedXStringNode<'pr>) {
+        self.add(&node.as_node(), Some(node.opening_loc()), Some(node.closing_loc()));
+        ruby_prism::visit_interpolated_x_string_node(self, node);
     }
 }

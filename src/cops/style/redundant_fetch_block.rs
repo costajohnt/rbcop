@@ -23,6 +23,10 @@ impl Cop for RedundantFetchBlock {
         let Some(block) = call.block().and_then(|b| b.as_block_node()) else { return };
         let args = call_args(&call);
         let [key] = args.as_slice() else { return };
+        // unappendable_argument?: a splat (named or anonymous) or an unbraced hash.
+        if matches!(kind::of(key), kind::SPLAT_NODE | kind::KEYWORD_HASH_NODE) {
+            return;
+        }
         // (args): no parameters, `||` allowed; numbered/it parameters make a numblock/itblock.
         match block.parameters() {
             None => {}

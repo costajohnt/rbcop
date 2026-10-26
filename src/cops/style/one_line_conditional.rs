@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::source::Source;
 use helpers::node_types::{is_assignment, is_operator_method};
-use helpers::parser_parent::{is_operator_keyword, parser_parent};
+use helpers::parser_parent::{is_operator_keyword, is_ternary, parser_parent};
 use ruby_prism::StatementsNode;
 use std::cell::Cell;
 
@@ -149,6 +149,7 @@ impl Cop for OneLineConditional {
                             && c.block().is_none_or(|b| b.as_block_node().is_none())
                             && is_operator_method(method_name(&c))
                     })
+                    || binds_tighter_than_ternary(par, start)
             });
             if wrap { format!("({r})") } else { r }
         };
@@ -163,6 +164,19 @@ impl Cop for OneLineConditional {
         if ran.get() {
             cx.state::<Vec<(usize, usize)>>().push((start, end));
         }
+    }
+}
+
+/// `parent_binds_tighter_than_ternary?`: the `if` (starting at `start`) is the parent's receiver,
+/// constant namespace or ternary condition.
+fn binds_tighter_than_ternary(parent: &Node, start: usize) -> bool {
+    let is_node = |n: Option<Node>| n.is_some_and(|n| n.location().start_offset() == start);
+    match parent {
+        Node::CallNode { .. } => is_node(parent.as_call_node().unwrap().receiver()),
+        Node::ConstantPathNode { .. } => is_node(parent.as_constant_path_node().unwrap().parent()),
+        Node::ConstantPathWriteNode { .. } => is_node(parent.as_constant_path_write_node().unwrap().target().parent()),
+        Node::IfNode { .. } => is_ternary(parent) && is_node(Some(parent.as_if_node().unwrap().predicate())),
+        _ => false,
     }
 }
 
@@ -187,14 +201,26 @@ fn expr(src: &Source, b: Option<Branch>) -> String {
 }
 
 fn requires_parentheses(n: &Node) -> bool {
-    if matches!(kind::of(n), kind::AND_NODE | kind::OR_NODE | kind::IF_NODE | kind::UNLESS_NODE) || is_assignment(n) {
+    if matches!(
+        kind::of(n),
+        kind::AND_NODE
+            | kind::OR_NODE
+            | kind::IF_NODE
+            | kind::UNLESS_NODE
+            | kind::RESCUE_MODIFIER_NODE
+            | kind::WHILE_NODE
+            | kind::UNTIL_NODE
+            | kind::MATCH_REQUIRED_NODE
+            | kind::MATCH_PREDICATE_NODE
+    ) || is_assignment(n)
+    {
         return true;
     }
     if let Some(c) = n.as_call_node() {
         let block_literal = c.block().is_some_and(|b| b.as_block_node().is_some());
         let has_args = c.arguments().is_some() || c.block().is_some();
         let parens = c.opening_loc().is_some_and(|o| o.as_slice() == b"(");
-        if !is_csend(&c) && !block_literal && has_args && !parens && !is_operator_method(method_name(&c)) {
+        if !block_literal && has_args && !parens && !is_operator_method(method_name(&c)) {
             return true;
         }
         // keyword_with_changed_precedence?: `not x`

@@ -1,4 +1,4 @@
-use crate::helpers::node_types::{is_assignment, is_binary_operation};
+use crate::helpers::node_types::{is_assignment, is_binary_operation, is_unary_operation};
 use crate::helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
 use crate::prelude::*;
 
@@ -34,7 +34,7 @@ impl Cop for Not {
             Some((sel.start_offset(), sel.end_offset(), op))
         });
         let parens = matches!(kind::of(&child), kind::AND_NODE | kind::OR_NODE | kind::RANGE_NODE | kind::FLIP_FLOP_NODE)
-            || child_call.as_ref().is_some_and(is_binary_operation)
+            || child_call.as_ref().is_some_and(|c| is_binary_operation(c) || (is_unary_operation(c) && method_name(c) == "~"))
             || child.as_if_node().is_some_and(|i| i.if_keyword_loc().is_none())
             || is_assignment(&child);
         let node_end = send_range(&call).1;

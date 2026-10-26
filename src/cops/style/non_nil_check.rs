@@ -1,4 +1,4 @@
-use crate::helpers::node_types::is_binary_operation;
+use crate::helpers::node_types::is_operator_method;
 use crate::helpers::parser_parent::{is_operator_keyword, is_ternary, parser_parent};
 use crate::prelude::*;
 
@@ -121,7 +121,7 @@ fn ignored_last(body: Node<'_>) -> Option<Node<'_>> {
 /// NonNilCheck#operator_expression?
 fn operator_expression(node: &Node) -> bool {
     is_operator_keyword(node)
-        || node.as_call_node().is_some_and(|c| !is_csend(&c) && is_binary_operation(&c))
+        || node.as_call_node().is_some_and(|c| !is_csend(&c) && is_operator_method(method_name(&c)))
         || is_ternary(node)
         || matches!(kind::of(node), kind::RANGE_NODE | kind::FLIP_FLOP_NODE)
         || helpers::node_types::is_assignment(node)
