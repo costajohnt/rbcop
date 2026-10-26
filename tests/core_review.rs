@@ -1371,18 +1371,21 @@ fn cop_errors_print_in_target_order() {
     let _ = fs::remove_dir_all(&dir);
 }
 
-/// A corrector that clobbers (Style/IfInsideElse on a one-line nested if) is a cop error located
-/// at the node the cop was visiting (the outer `if`, 1:0), not at the offense (the inner `if`).
+/// A corrector that clobbers (Style/ClassMethodsDefinitions on a one-line `class << self` body,
+/// specs corpus style/trailing_body_on_class/001.rb) is a cop error located at the node the cop
+/// was visiting (the `sclass`, 2:0), not at the offense (the `def`). Style/IfInsideElse, used here
+/// before, no longer clobbers in 1.92.1.
 #[test]
 fn cop_error_is_located_at_the_visited_node() {
     let dir = scratch("coperror");
     fs::write(dir.join(".rubocop.yml"), "AllCops:\n  NewCops: disable\n  TargetRubyVersion: 2.7\n").unwrap();
-    fs::write(dir.join("t.rb"), "if cond then foo else if cond2; bar else baz end; end\n").unwrap();
-    let out = rbcop(&dir, &["--only", "Style/IfInsideElse", "-f", "e", "t.rb"]);
+    fs::write(dir.join("t.rb"), "x = 1\nclass << self; def bar; end\nend\n").unwrap();
+    let out = rbcop(&dir, &["--only", "Style/ClassMethodsDefinitions", "-f", "e", "t.rb"]);
     let err = text(&out.stderr);
     // Team#process_errors names the file by its absolute path (Dir.pwd is physical).
     let abs = dir.join("t.rb");
-    let want = format!("An error occurred while Style/IfInsideElse cop was inspecting {}:1:0.\n", abs.display());
+    let want =
+        format!("An error occurred while Style/ClassMethodsDefinitions cop was inspecting {}:2:0.\n", abs.display());
     assert!(err.starts_with(&want), "{err}");
     assert_eq!(out.status.code(), Some(1));
     let _ = fs::remove_dir_all(&dir);
