@@ -24,6 +24,7 @@ exit status). `README.md` covers install, usage, parity and speed.
 - `docs/rubocop-config-semantics.md`: config rules `src/config/` follows.
 - `docs/known-gaps.md`: why files are in `scripts/*-skip.txt`.
 - `docs/plugins.md`, `docs/migration.md`, `docs/releasing.md`.
+- `docs/upgrading-rubocop.md`: moving the target to a new RuboCop release (#299).
 
 ## Rules
 - RuboCop is the oracle. When unsure what a cop should do, run RuboCop 1.91.0.
