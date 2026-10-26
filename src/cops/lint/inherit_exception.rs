@@ -43,6 +43,11 @@ impl Cop for InheritException {
         let target = if let Some(class) = node.as_class_node() {
             let Some(parent) = class.superclass() else { return };
             if !exception_const(&parent) {
+                if let Some(via) = inherits_exception_via(cx, &parent) {
+                    let l = parent.location();
+                    let msg = format!("Inherit from `{prefer}` instead of `Exception` (inherited via `{via}`).");
+                    cx.add_with(l.start_offset(), l.end_offset(), msg, false);
+                }
                 return;
             }
             // inherit_exception_class_with_omitted_namespace?
@@ -78,4 +83,26 @@ impl Cop for InheritException {
         let (s, e) = (l.start_offset(), l.end_offset());
         cx.add_fix(s, e, format!("Inherit from `{prefer}` instead of `Exception`."), |c| c.replace(s, e, prefer));
     }
+}
+
+/// `inherits_exception_via`: with the project index, the first ancestor of the parent class whose
+/// own superclass is an unresolved `Exception`.
+fn inherits_exception_via(cx: &Cx, parent: &Node) -> Option<String> {
+    use crate::project_index::ConstRef;
+    let index = crate::project_index::get()?;
+    if parent.as_constant_read_node().is_none() && parent.as_constant_path_node().is_none() {
+        return None;
+    }
+    let decl = crate::project_index::resolve_const_node(index, parent, cx.ancestors)?;
+    let ix = index.read();
+    if !ix.is_class(decl) {
+        return None;
+    }
+    let found = ix.ancestors(decl).into_iter().find(|&a| {
+        ix.is_class(a)
+            && ix.definitions(a).into_iter().any(|d| {
+                matches!(ix.superclass(d), Some(ConstRef::Unresolved(n)) if n.strip_prefix("::").unwrap_or(&n) == "Exception")
+            })
+    })?;
+    Some(ix.name(found).to_string())
 }

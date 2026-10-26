@@ -1,12 +1,10 @@
-use crate::helpers::parser_parent::{is_top_const, parser_parent};
+use crate::helpers::parser_parent::defines_module;
 use crate::prelude::*;
 
 pub const NAME: &str = "Lint/ConstantResolution";
 pub static COP: ConstantResolution = ConstantResolution;
 pub struct ConstantResolution;
 
-// ponytail: with AllCops/UseProjectIndex RuboCop only reports ambiguous resolutions (rubydex);
-// rbcop has no project index, so this is the index-off behaviour (every unqualified constant).
 impl Cop for ConstantResolution {
     fn kinds(&self) -> &'static [usize] {
         &[kind::CONSTANT_READ_NODE]
@@ -28,6 +26,18 @@ impl Cop for ConstantResolution {
         if defines_module(cx.ancestors) {
             return;
         }
+        // With the project index, only constants whose lexical resolution differs from the
+        // top-level one (`ambiguous_resolution?`).
+        if let Some(index) = crate::project_index::get() {
+            let nesting = crate::project_index::lexical_nesting(cx.ancestors, node.location().start_offset());
+            let relative = index.resolve_constant(&name, &nesting);
+            let absolute = index.resolve_constant(&name, &[]);
+            let ix = index.read();
+            let ambiguous = matches!((relative, absolute), (Some(r), Some(a)) if ix.name(r) != ix.name(a));
+            if !ambiguous {
+                return;
+            }
+        }
         let loc = node.location();
         let (start, mut end) = (loc.start_offset(), loc.end_offset());
         // The omitted value of `{ Foo: }` is a parser `const` spanning the bare name; Prism's
@@ -37,20 +47,4 @@ impl Cop for ConstantResolution {
         }
         cx.add(start, end, "Fully qualify this constant to avoid possibly ambiguous resolution.");
     }
-}
-
-/// `node.parent&.defined_module`: the parent is a class/module (name, superclass or single body
-/// statement), or the casgn `Foo::Bar = Class.new` / `Module.new` (call or block) whose scope we are.
-fn defines_module(ancestors: &[Node]) -> bool {
-    let n = ancestors.len();
-    if n >= 2
-        && kind::of(&ancestors[n - 1]) == kind::CONSTANT_PATH_NODE
-        && let Some(w) = ancestors[n - 2].as_constant_path_write_node()
-    {
-        return w.value().as_call_node().is_some_and(|c| {
-            c.name().as_slice() == b"new"
-                && c.receiver().is_some_and(|r| is_top_const(&r, "Class") || is_top_const(&r, "Module"))
-        });
-    }
-    parser_parent(ancestors).is_some_and(|p| matches!(p, Node::ClassNode { .. } | Node::ModuleNode { .. }))
 }

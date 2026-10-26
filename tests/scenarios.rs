@@ -56,11 +56,8 @@ fn config_scenarios_match_rubocop() {
             .output()
             .unwrap();
         let prefix = format!("{}/", project.display());
-        let mut actual: Vec<String> = String::from_utf8(out.stdout)
-            .unwrap()
-            .lines()
-            .map(|l| l.strip_prefix(&prefix).unwrap_or(l).to_string())
-            .collect();
+        let mut actual: Vec<String> =
+            String::from_utf8(out.stdout).unwrap().lines().map(|l| l.replace(&prefix, "")).collect();
         actual.sort();
         let mut expected: Vec<String> = std::fs::read_to_string(dir.join("expected.txt"))
             .unwrap()

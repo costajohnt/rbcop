@@ -5,8 +5,6 @@ pub const NAME: &str = "Lint/ConstantReassignment";
 pub static COP: ConstantReassignment = ConstantReassignment;
 pub struct ConstantReassignment;
 
-// ponytail: the cross-file check needs AllCops/UseProjectIndex (rubydex), which rbcop does not
-// support; without it RuboCop never reports CROSS_FILE_MSG.
 impl Cop for ConstantReassignment {
     fn kinds(&self) -> &'static [usize] {
         &[
@@ -202,15 +200,28 @@ fn on_casgn(cx: &mut Cx, node: &Node) {
         ns.extend(const_names(&path));
         qualified(&ns, &c.name)
     };
+    let mut display: Vec<String> = const_names(&path).collect();
+    display.push(c.name.clone());
+    let display = display.join("::");
+    let loc = node.location();
     if cx.state::<HashSet<String>>().contains(&name) {
-        let mut display: Vec<String> = const_names(&path).collect();
-        display.push(c.name.clone());
-        let msg = format!("Constant `{}` is already assigned in this namespace.", display.join("::"));
-        let loc = node.location();
+        let msg = format!("Constant `{display}` is already assigned in this namespace.");
         cx.add(loc.start_offset(), loc.end_offset(), msg);
         return;
     }
+    // report_cross_file_collision: with the project index, the first definition of the constant
+    // in another file.
+    let prior = crate::project_index::get().and_then(|index| {
+        let ix = index.read();
+        let decl = ix.lookup(name.strip_prefix("::").unwrap_or(&name))?;
+        let (_, path, _) = ix.in_other_files(&ix.definitions(decl), &cx.src.absolute_path()).into_iter().next()?;
+        Some(path)
+    });
     cx.state::<HashSet<String>>().insert(name);
+    if let Some(path) = prior {
+        let msg = format!("Constant `{display}` is already assigned in `{}`.", path.display());
+        cx.add(loc.start_offset(), loc.end_offset(), msg);
+    }
 }
 
 /// `simple_assignment?`: every parser ancestor up to the nearest class/module is a begin, literal,

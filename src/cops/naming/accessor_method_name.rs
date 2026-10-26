@@ -4,7 +4,6 @@ pub const NAME: &str = "Naming/AccessorMethodName";
 pub static COP: AccessorMethodName = AccessorMethodName;
 pub struct AccessorMethodName;
 
-// ponytail: overrides_inherited_method? needs AllCops/UseProjectIndex (default false), not ported.
 impl Cop for AccessorMethodName {
     fn kinds(&self) -> &'static [usize] {
         &[kind::DEF_NODE]
@@ -24,6 +23,9 @@ impl Cop for AccessorMethodName {
         } else {
             return;
         };
+        if crate::project_index::overrides_inherited_method(cx.ancestors, &def) {
+            return;
+        }
         let loc = def.name_loc();
         cx.add(loc.start_offset(), loc.end_offset(), msg);
     }
