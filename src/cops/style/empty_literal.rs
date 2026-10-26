@@ -84,7 +84,7 @@ impl Cop for EmptyLiteral {
             return;
         };
         // A hash literal as the unparenthesized first argument of a send/super is wrapped in
-        // parentheses; only for `Hash.new` does the replaced range cover the other arguments.
+        // parentheses, the replaced range covering the other arguments.
         let mut range = (start, end);
         let mut correction = correction;
         if is_hash {
@@ -111,9 +111,7 @@ impl Cop for EmptyLiteral {
                     .iter()
                     .map(|a| src.slice(a.location().start_offset(), a.location().end_offset()))
                     .collect();
-                if hash_new {
-                    range = (start - 1, args.last().unwrap().location().end_offset());
-                }
+                range = (start - 1, args.last().unwrap().location().end_offset());
                 correction = format!("({})", std::iter::once("{}").chain(rest).collect::<Vec<_>>().join(", "));
             }
         }

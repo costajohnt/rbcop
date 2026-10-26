@@ -41,8 +41,6 @@ fn range(node: &Node) -> (usize, usize) {
 enum Edit {
     Insert(usize, usize, String),
     Replace(usize, usize, String),
-    /// insert_after(node) + optional removal of the parenthesised (empty) arguments.
-    Call(usize, usize, String, Option<(usize, usize)>),
     None,
 }
 
@@ -51,14 +49,47 @@ impl Edit {
         match self {
             Edit::Insert(s, e, t) => c.insert_after(*s, *e, t),
             Edit::Replace(s, e, t) => c.replace(*s, *e, t),
-            Edit::Call(s, e, t, rm) => {
-                c.insert_after(*s, *e, t);
-                if let Some((a, b)) = rm {
-                    c.remove(*a, *b);
-                }
-            }
             Edit::None => {}
         }
+    }
+}
+
+/// `block_name_taken?`: a parser `argument` or `lvasgn` anywhere in the def named `name`.
+struct NameTaken<'a> {
+    name: &'a [u8],
+    found: bool,
+}
+
+impl<'pr> ruby_prism::Visit<'pr> for NameTaken<'_> {
+    fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
+        self.check(&node);
+    }
+    fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
+        self.check(&node);
+    }
+    // A concrete child field: the visitor calls this without entering the node.
+    fn visit_block_parameter_node(&mut self, node: &ruby_prism::BlockParameterNode<'pr>) {
+        self.check(&node.as_node());
+    }
+}
+
+impl NameTaken<'_> {
+    fn check(&mut self, node: &Node) {
+        let name = param_name(node).or_else(|| match node {
+            Node::LocalVariableWriteNode { .. } => Some(node.as_local_variable_write_node().unwrap().name().as_slice()),
+            Node::LocalVariableOrWriteNode { .. } => {
+                Some(node.as_local_variable_or_write_node().unwrap().name().as_slice())
+            }
+            Node::LocalVariableAndWriteNode { .. } => {
+                Some(node.as_local_variable_and_write_node().unwrap().name().as_slice())
+            }
+            Node::LocalVariableOperatorWriteNode { .. } => {
+                Some(node.as_local_variable_operator_write_node().unwrap().name().as_slice())
+            }
+            Node::LocalVariableTargetNode { .. } => Some(node.as_local_variable_target_node().unwrap().name().as_slice()),
+            _ => None,
+        });
+        self.found |= name == Some(self.name);
     }
 }
 
@@ -75,11 +106,22 @@ fn insert_argument(text: &str, last: &Node, name: &str) -> Edit {
     Edit::Insert(s, e, format!("{comma} &{name}"))
 }
 
-/// Parser source of a def argument for zsuper (`optarg` gives just its name).
-fn zsuper_arg(node: &Node) -> String {
-    match node.as_optional_parameter_node() {
-        Some(o) => String::from_utf8_lossy(o.name().as_slice()).into_owned(),
-        None => node_text(node).to_string(),
+/// build_new_arguments_for_zsuper: how a def argument is passed on (None: it is not).
+fn zsuper_arg(node: &Node) -> Option<String> {
+    let name = |n: &[u8]| String::from_utf8_lossy(n).into_owned();
+    match node {
+        Node::RequiredParameterNode { .. } => Some(name(node.as_required_parameter_node().unwrap().name().as_slice())),
+        Node::OptionalParameterNode { .. } => Some(name(node.as_optional_parameter_node().unwrap().name().as_slice())),
+        Node::RequiredKeywordParameterNode { .. } => {
+            let n = name(node.as_required_keyword_parameter_node().unwrap().name().as_slice());
+            Some(format!("{n}: {n}"))
+        }
+        Node::OptionalKeywordParameterNode { .. } => {
+            let n = name(node.as_optional_keyword_parameter_node().unwrap().name().as_slice());
+            Some(format!("{n}: {n}"))
+        }
+        Node::RestParameterNode { .. } | Node::KeywordRestParameterNode { .. } => Some(node_text(node).to_string()),
+        _ => None,
     }
 }
 
@@ -150,11 +192,32 @@ impl Cop for ExplicitBlockArgument {
         };
         let Some(def) = cx.ancestors.iter().rev().find_map(|a| a.as_def_node()) else { return };
         let def_params: Vec<Node> = def.parameters().map(|p| parameter_nodes(&p)).unwrap_or_default();
-        let block_name = match def_params.last().and_then(|l| l.as_block_parameter_node()) {
+        // argument_forwarding?: a block parameter can't be added next to `...`.
+        if def.parameters().and_then(|p| p.keyword_rest()).is_some_and(|k| k.as_forwarding_parameter_node().is_some()) {
+            return;
+        }
+        let def_block_arg = def_params.last().and_then(|l| l.as_block_parameter_node());
+        let block_name = match &def_block_arg {
             Some(b) => b.name().map_or(String::new(), |n| String::from_utf8_lossy(n.as_slice()).into_owned()),
             None => "block".to_string(),
         };
         let text = cx.src.text;
+        let zsuper = holder.as_lambda_node().is_none() && cx.ancestors[n - 3].as_forwarding_super_node().is_some();
+        // can_add_block_argument?
+        let name_taken = def_block_arg.is_none() && {
+            let mut v = NameTaken { name: block_name.as_bytes(), found: false };
+            ruby_prism::Visit::visit(&mut v, &def.as_node());
+            v.found
+        };
+        let forwardable = def_params.iter().all(|a| {
+            let anonymous_rest = a.as_rest_parameter_node().is_some_and(|r| r.name().is_none())
+                || a.as_keyword_rest_parameter_node().is_some_and(|r| r.name().is_none());
+            a.as_multi_target_node().is_none() && !(anonymous_rest && cx.config.target_ruby < 3.2)
+        });
+        if name_taken || (zsuper && !forwardable) {
+            cx.add_fix(block_start, block_end, MSG, |_| {});
+            return;
+        }
 
         // add_block_argument(send_node)
         let send_edit = if holder.as_lambda_node().is_some() {
@@ -168,26 +231,38 @@ impl Cop for ExplicitBlockArgument {
                 }
                 _ => Vec::new(),
             };
+            let index_call = owner.as_call_node().filter(|c| {
+                method_name(c) == "[]" && !is_csend(c) && c.call_operator_loc().is_none() && c.opening_loc().is_some()
+            });
             if let Some(last) = args.last() {
                 insert_argument(text, last, &block_name)
+            } else if let Some(c) = index_call {
+                // index_call?: `foo[] { yield }` takes the block argument inside the brackets.
+                let (o, cl) = (c.opening_loc().unwrap(), c.closing_loc().unwrap());
+                Edit::Replace(o.start_offset(), cl.end_offset(), format!("[&{block_name}]"))
             } else {
                 let start = owner.location().start_offset();
                 let (new_args, parens) = match owner {
                     Node::ForwardingSuperNode { .. } => {
-                        let mut a: Vec<String> = def_params.iter().map(zsuper_arg).collect();
+                        let mut a: Vec<String> = def_params.iter().filter_map(zsuper_arg).collect();
                         a.push(format!("&{block_name}"));
                         (a.join(", "), None)
                     }
                     Node::SuperNode { .. } => {
                         let s = owner.as_super_node().unwrap();
-                        (format!("&{block_name}"), s.lparen_loc().map(|_| s.keyword_loc().end_offset()))
+                        (format!("&{block_name}"), s.lparen_loc().zip(s.rparen_loc()))
                     }
                     _ => {
                         let c = owner.as_call_node().unwrap();
-                        (format!("&{block_name}"), c.opening_loc().and_then(|_| c.message_loc()).map(|m| m.end_offset()))
+                        let parens = c.opening_loc().filter(|o| o.as_slice() == b"(").zip(c.closing_loc());
+                        (format!("&{block_name}"), parens)
                     }
                 };
-                Edit::Call(start, send_end, format!("({new_args})"), parens.map(|p| (p, send_end)))
+                // correct_call_node
+                match parens {
+                    Some((l, r)) => Edit::Replace(l.start_offset(), r.end_offset(), format!("({new_args})")),
+                    None => Edit::Insert(start, send_end, format!("({new_args})")),
+                }
             }
         };
 
