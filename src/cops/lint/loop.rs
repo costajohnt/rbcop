@@ -27,10 +27,22 @@ impl Cop for Loop {
         let Some(body) = stmts.and_then(|s| s.body().iter().next()).and_then(|b| b.as_begin_node()) else { return };
         let (Some(begin_kw), Some(end_kw)) = (body.begin_keyword_loc(), body.end_keyword_loc()) else { return };
         let loc = node.location();
-        let indent = " ".repeat(cx.src.column(loc.start_offset()));
-        let break_line = format!("break {cond_kw} {}\n{indent}", node_text(&pred));
+        let column = helpers::alignment::display_column(cx.src, loc.start_offset());
+        let indent = " ".repeat(column);
+        let mut break_line = format!("break {cond_kw} {}\n{indent}", node_text(&pred));
         let (bs, be) = (begin_kw.start_offset(), begin_kw.end_offset());
         let (es, ee) = (end_kw.start_offset(), end_kw.end_offset());
+        // A single-line `begin ... end` keeps its body and `end` on one line, so the `break` has
+        // to start a line of its own, replacing the space before `end` (1.92).
+        let single_line = cx.src.line_of(bs) == cx.src.line_of(ee);
+        let mut space_start = es;
+        if single_line {
+            let width = helpers::alignment::configured_indentation_width(cx);
+            let inner = " ".repeat((column as i64 + width).max(0) as usize);
+            break_line = format!("\n{inner}{break_line}");
+            let before = cx.src.text[..es].trim_end_matches([' ', '\t']);
+            space_start = before.len();
+        }
         let end = loc.end_offset();
         cx.add_fix(
             kw.start_offset(),
@@ -39,7 +51,11 @@ impl Cop for Loop {
             |c| {
                 c.replace(bs, be, "loop do");
                 c.remove(ee, end);
-                c.insert_before(es, ee, &break_line);
+                if single_line {
+                    c.replace(space_start, es, &break_line);
+                } else {
+                    c.insert_before(es, ee, &break_line);
+                }
             },
         );
     }

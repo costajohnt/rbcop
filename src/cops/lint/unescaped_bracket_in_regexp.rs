@@ -102,24 +102,21 @@ impl Cop for UnescapedBracketInRegexp {
         }
         let args = call_args(&call);
         let Some(text) = args.first().and_then(|a| a.as_string_node()) else { return };
-        // A heredoc or `__FILE__` str has no `loc.begin`: RuboCop raises there.
+        // verbatim_string?: offsets into the string's value only point at the right place in the
+        // source when the string has no escape sequences, so anything else is left alone (a
+        // heredoc, `__FILE__` or `?a` has no `loc.begin`/`loc.end`).
         let Some(open) = text.opening_loc().filter(|o| !o.as_slice().starts_with(b"<<")) else { return };
-        let value = String::from_utf8_lossy(text.unescaped()).into_owned();
-        let Some(parsed) = parse(&value, false) else { return };
+        let Some(close) = text.closing_loc() else { return };
+        if &src.as_bytes()[open.end_offset()..close.start_offset()] != text.unescaped() {
+            return;
+        }
+        let value = &src[open.end_offset()..close.start_offset()];
+        let Some(parsed) = parse(value, false) else { return };
         let from = open.end_offset();
-        // RuboCop 1.92.1's escaped_bracket: a string that unescapes reads `\]` back as `]`.
+        // escaped_bracket: a double-quoted string turns `\]` into `]`, so its backslash needs escaping too.
         let fix = if matches!(open.as_slice(), b"'" | [b'%', b'q', _]) { "\\]" } else { "\\\\]" };
         for pos in offenses(&parsed) {
-            let start = advance_chars(src, from, value[..pos].chars().count());
-            // RuboCop 1.91.0 corrects the source at the `]`'s offset in the value, the right place
-            // only when no escape precedes it, and always with `\]`. In a double-quoted string, or
-            // at the wrong place, that reports the `]` again with more of them and -A never ends
-            // (#680): rbcop writes 1.92.1's `\\]` there and withholds a misplaced correction
-            // (docs/known-gaps.md).
-            if src.as_bytes()[from..start] != value.as_bytes()[..pos] || !src[start..].starts_with(']') {
-                cx.add_withheld_fix(start, advance_chars(src, start, 1), MSG);
-                continue;
-            }
+            let start = from + pos;
             cx.add_fix(start, start + 1, MSG, |c| c.replace(start, start + 1, fix));
         }
     }
