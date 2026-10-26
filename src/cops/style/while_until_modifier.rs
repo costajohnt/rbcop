@@ -23,9 +23,10 @@ impl Cop for WhileUntilModifier {
             return;
         }
         let Some(s) = Stmt::of(node) else { return };
-        // non_eligible_body?: a conditional body, then the base checks.
+        // non_eligible_body?: a conditional or `begin` body, then the base checks.
         let conditional_body = s.body.as_ref().is_some_and(|b| {
-            matches!(
+            b.as_begin_node().is_some_and(|k| k.begin_keyword_loc().is_some())
+                || matches!(
                 b,
                 Node::IfNode { .. }
                     | Node::UnlessNode { .. }

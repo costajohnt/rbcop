@@ -39,7 +39,10 @@ impl Cop for YodaExpression {
         }
         let args = send_args(&call);
         let (Some(lhs), Some(rhs)) = (call.receiver(), args.first()) else { return };
-        if !constant_portion(&lhs) || constant_portion(rhs) {
+        // operand?: not an argument-only node (splat, block pass, forwarded args, unbraced hash).
+        let operand =
+            !matches!(kind::of(rhs), kind::SPLAT_NODE | kind::BLOCK_ARGUMENT_NODE | kind::FORWARDING_ARGUMENTS_NODE | kind::KEYWORD_HASH_NODE);
+        if !constant_portion(&lhs) || constant_portion(rhs) || !operand {
             return;
         }
         // `each_ancestor(:send)`: a call owning the block we are in is not a parser ancestor.

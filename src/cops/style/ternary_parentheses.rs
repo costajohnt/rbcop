@@ -171,20 +171,40 @@ impl Cop for TernaryParentheses {
             }
             None => Fix::Wrap,
         };
+        // correct_parenthesized
+        let unwrap = |corr: &mut Corrector, space: bool, args: Option<((usize, usize), usize)>| {
+            corr.remove(cs, cs + 1);
+            corr.remove(ce - 1, ce);
+            if space {
+                corr.insert_after(ce - 1, ce, " ");
+            }
+            if let Some(((os, oe), last_end)) = args {
+                corr.replace(os, oe, "(");
+                corr.insert_after(last_end, last_end, ")");
+            }
+        };
+        // Whatever binds looser than `?:` (`n += 1`, `a rescue b`, a nested ternary, `yield a`,
+        // several statements, ...) changes meaning without the parentheses: verified by reparsing
+        // (`oversized: :report`, the default: a scope over 64 KiB is not reparsed).
+        let fix = match fix {
+            Fix::Unwrap { space, args } => {
+                let program = cx.ancestors.first().unwrap_or(node);
+                let verified = helpers::reparsed_equivalence::verified_by_reparse_with(
+                    cx.src,
+                    program,
+                    &[(cs, ce)],
+                    |r| r,
+                    |corr, _| unwrap(corr, space, args),
+                    true,
+                );
+                if verified.is_empty() { Fix::None } else { Fix::Unwrap { space, args } }
+            }
+            f => f,
+        };
         cx.add_fix(loc.start_offset(), loc.end_offset(), msg, |corr| match fix {
             Fix::None => {}
             Fix::Wrap => corr.wrap(cs, ce, "(", ")"),
-            Fix::Unwrap { space, args } => {
-                corr.remove(cs, cs + 1);
-                corr.remove(ce - 1, ce);
-                if space {
-                    corr.insert_after(ce - 1, ce, " ");
-                }
-                if let Some(((os, oe), last_end)) = args {
-                    corr.replace(os, oe, "(");
-                    corr.insert_after(last_end, last_end, ")");
-                }
-            }
+            Fix::Unwrap { space, args } => unwrap(corr, space, args),
         });
     }
 }

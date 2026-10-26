@@ -54,3 +54,15 @@ pub fn defines_module(ancestors: &[Node]) -> bool {
     }
     parser_parent(ancestors).is_some_and(|p| matches!(p, Node::ClassNode { .. } | Node::ModuleNode { .. }))
 }
+
+/// rubocop-ast `logical_operator?` on an `and` / `or` node: spelled `&&` / `||`.
+pub fn is_logical_operator(node: &Node) -> bool {
+    let op = node.as_and_node().map(|n| n.operator_loc()).or_else(|| node.as_or_node().map(|n| n.operator_loc()));
+    op.is_some_and(|l| matches!(l.as_slice(), b"&&" | b"||"))
+}
+
+/// `(parent.operator_keyword? && parent.logical_operator?) || (parent.if_type? && parent.ternary?)`:
+/// a `return` there needs parentheses once it takes an argument.
+pub fn return_needs_parentheses(parent: &Node) -> bool {
+    is_logical_operator(parent) || is_ternary(parent)
+}

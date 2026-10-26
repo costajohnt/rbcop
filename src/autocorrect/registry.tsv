@@ -562,7 +562,7 @@ Style/SelectByRegexp
 Style/SelfAssignment	Layout/SpaceAroundOperators
 Style/Semicolon	Style/SingleLineMethods
 Style/Send
-Style/SendWithLiteralMethodName
+Style/SendWithLiteralMethodName	Layout/MultilineMethodArgumentLineBreaks
 Style/SignalException
 Style/SingleArgumentDig
 Style/SingleLineBlockParams
@@ -578,13 +578,13 @@ Style/StringLiterals
 Style/StringLiteralsInInterpolation
 Style/StringMethods
 Style/Strip
-Style/StructInheritance
+Style/StructInheritance	Style/MethodCallWithArgsParentheses
 Style/SuperArguments
 Style/SuperWithArgsParentheses
 Style/SwapValues
 Style/SymbolArray
 Style/SymbolLiteral
-Style/SymbolProc	Layout/SpaceBeforeBlockBraces
+Style/SymbolProc	Layout/SpaceBeforeBlockBraces	Style/TrailingCommaInArguments
 Style/TallyMethod
 Style/TernaryParentheses
 Style/TimeNow

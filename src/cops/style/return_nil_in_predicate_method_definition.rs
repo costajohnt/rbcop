@@ -43,8 +43,24 @@ fn candidate(node: Node) -> Option<Node> {
     }
 }
 
+/// The `return nil` / `return` nodes, and the start offsets of the returns whose parser parent is
+/// a `&&` / `||` operation or a ternary (`requires_parentheses?`).
 #[derive(Default)]
-struct Returns(Vec<(usize, usize)>);
+struct Returns(Vec<(usize, usize)>, Vec<usize>);
+
+impl Returns {
+    fn operands<'pr>(&mut self, parent: &Node<'pr>, children: impl IntoIterator<Item = Option<Node<'pr>>>) {
+        if helpers::parser_parent::return_needs_parentheses(parent) {
+            for c in children.into_iter().flatten() {
+                // A ternary branch is a single statement.
+                let c = c.as_statements_node().and_then(|s| s.body().iter().next()).unwrap_or(c);
+                if c.as_return_node().is_some() {
+                    self.1.push(c.location().start_offset());
+                }
+            }
+        }
+    }
+}
 
 impl<'pr> Visit<'pr> for Returns {
     fn visit_return_node(&mut self, node: &ReturnNode<'pr>) {
@@ -55,6 +71,19 @@ impl<'pr> Visit<'pr> for Returns {
             self.0.push((l.start_offset(), l.end_offset()));
         }
         ruby_prism::visit_return_node(self, node);
+    }
+    fn visit_and_node(&mut self, node: &ruby_prism::AndNode<'pr>) {
+        self.operands(&node.as_node(), [Some(node.left()), Some(node.right())]);
+        ruby_prism::visit_and_node(self, node);
+    }
+    fn visit_or_node(&mut self, node: &ruby_prism::OrNode<'pr>) {
+        self.operands(&node.as_node(), [Some(node.left()), Some(node.right())]);
+        ruby_prism::visit_or_node(self, node);
+    }
+    fn visit_if_node(&mut self, node: &ruby_prism::IfNode<'pr>) {
+        let els = node.subsequent().and_then(|s| s.as_else_node()).and_then(|e| e.statements()).map(|s| s.as_node());
+        self.operands(&node.as_node(), [node.statements().map(|s| s.as_node()), els]);
+        ruby_prism::visit_if_node(self, node);
     }
 }
 
@@ -106,7 +135,8 @@ impl Cop for ReturnNilInPredicateMethodDefinition {
             Parsed::Begin(stmts) => stmts.iter().for_each(|n| v.visit(n)),
         }
         for (s, e) in v.0 {
-            cx.add_fix(s, e, MSG, |c| c.replace(s, e, "return false"));
+            let replacement = if v.1.contains(&s) { "(return false)" } else { "return false" };
+            cx.add_fix(s, e, MSG, |c| c.replace(s, e, replacement));
         }
         // Below 2.6 the statements after a lonely `else` are a `begin` of their own: the last
         // value is that `begin`, never `nil` (#630).

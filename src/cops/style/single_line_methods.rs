@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use helpers::endless_method_body_help as endless_help;
 use helpers::line_break_corrector::{break_line_before, move_comment};
 
 pub const NAME: &str = "Style/SingleLineMethods";
@@ -19,8 +20,14 @@ fn parser_body<'pr>(body: Node<'pr>) -> Node<'pr> {
     body
 }
 
-fn is_begin(n: &Node) -> bool {
-    n.as_statements_node().is_some() || n.as_parentheses_node().is_some()
+/// SingleLineMethods#require_parentheses?: a send with arguments, not arithmetic or a comparison.
+fn require_parentheses(body: &Node) -> bool {
+    let Some(call) = body.as_call_node().filter(|c| !is_csend(c) && c.block().is_none_or(|b| b.as_block_node().is_none()))
+    else {
+        return false;
+    };
+    let name = method_name(&call);
+    !ARITHMETIC.contains(&name) && !send_args(&call).is_empty() && !COMPARISON.contains(&name)
 }
 
 impl Cop for SingleLineMethods {
@@ -45,10 +52,12 @@ impl Cop for SingleLineMethods {
             return;
         }
         let name = std::str::from_utf8(n.name().as_slice()).unwrap_or("");
+        let arg_call = endless_help::argument_receiving_call(cx.ancestors);
         let endless = cx.config.target_ruby >= 3.0
             && helpers::alignment::cop_enabled(cx, "Style/EndlessMethod")
             && cx.config.for_cop("Style/EndlessMethod").str("EnforcedStyle") != Some("disallow")
             && body.as_ref().is_some_and(|b| {
+                // unsupported_endless_method_body?: a basic conditional, return, break or next
                 !matches!(
                     kind::of(b),
                     kind::IF_NODE
@@ -59,8 +68,8 @@ impl Cop for SingleLineMethods {
                         | kind::BREAK_NODE
                         | kind::NEXT_NODE
                 ) && !(name.ends_with('=') && !COMPARISON.contains(&name))
-                    && !is_begin(b)
-                    && !b.as_begin_node().is_some_and(|k| k.begin_keyword_loc().is_some())
+                    // The body gets parenthesized when it becomes endless, so it is no longer a command.
+                    && endless_help::endless_method_body(b, arg_call.as_ref(), cx.config.target_ruby, require_parentheses(b))
             });
         let width = helpers::alignment::configured_indentation_width(cx);
         let keyword_col = src.column(n.def_keyword_loc().start_offset());
@@ -96,7 +105,8 @@ fn endless_source(src: &crate::source::Source, n: &ruby_prism::DefNode, body: &N
     // parser `args` source: includes the parentheses when there are any.
     let arguments = match (n.parameters(), n.lparen_loc(), n.rparen_loc()) {
         (Some(_), Some(l), Some(r)) => src.slice(l.start_offset(), r.end_offset()).to_string(),
-        (Some(p), _, _) => node_text(&p.as_node()).to_string(),
+        // endless_arguments: unparenthesized parameters get parentheses.
+        (Some(p), _, _) => format!("({})", node_text(&p.as_node())),
         _ => "()".to_string(),
     };
     format!("def {receiver}{name}{arguments} = {}", body_source(src, body))

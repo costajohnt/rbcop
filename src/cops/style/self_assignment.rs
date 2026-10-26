@@ -17,6 +17,20 @@ fn same_var(node: &Node, write_kind: usize, name: &[u8]) -> bool {
     }
 }
 
+/// `unparenthesized`: unwrap a parser `begin` while it has exactly one child. None for `()`.
+fn unparenthesized(node: Node) -> Option<Node> {
+    let mut node = node;
+    while let Some(p) = node.as_parentheses_node() {
+        let body = p.body()?;
+        node = match body.as_statements_node() {
+            Some(s) if s.body().len() == 1 => s.body().iter().next()?,
+            Some(_) => break,
+            None => body,
+        };
+    }
+    Some(node)
+}
+
 impl Cop for SelfAssignment {
     fn correctable(&self) -> bool {
         true
@@ -37,6 +51,8 @@ impl Cop for SelfAssignment {
             (w.name(), w.value(), w.operator_loc())
         };
         let name = name.as_slice();
+        let rl = rhs.location();
+        let Some(rhs) = unparenthesized(rhs) else { return };
         // (operator, lhs, rhs) of the right-hand side
         let (op, new_rhs) = if let Some(call) = rhs.as_call_node() {
             if is_csend(&call) || call.block().is_some_and(|b| b.as_block_node().is_some()) {
@@ -49,12 +65,13 @@ impl Cop for SelfAssignment {
             }
             (method.to_string(), node_text(&args[0]))
         } else if let Some(and) = rhs.as_and_node() {
-            if !same_var(&and.left(), k, name) {
+            // `logical_operator?`: `&&` only, not `and`.
+            if !helpers::parser_parent::is_logical_operator(&rhs) || !same_var(&and.left(), k, name) {
                 return;
             }
             (text(&and.operator_loc()).to_string(), node_text(&and.right()))
         } else if let Some(or) = rhs.as_or_node() {
-            if !same_var(&or.left(), k, name) {
+            if !helpers::parser_parent::is_logical_operator(&rhs) || !same_var(&or.left(), k, name) {
                 return;
             }
             (text(&or.operator_loc()).to_string(), node_text(&or.right()))
@@ -62,7 +79,6 @@ impl Cop for SelfAssignment {
             return;
         };
         let loc = node.location();
-        let rl = rhs.location();
         let msg = format!("Use self-assignment shorthand `{op}=`.");
         cx.add_fix(loc.start_offset(), loc.end_offset(), msg, |c| {
             c.insert_before(op_loc.start_offset(), op_loc.end_offset(), &op);
