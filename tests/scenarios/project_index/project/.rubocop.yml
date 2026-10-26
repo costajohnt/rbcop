@@ -1,0 +1,10 @@
+AllCops:
+  UseProjectIndex: true
+  NewCops: enable
+  SuggestExtensions: false
+
+Lint/UnusedPrivateMethod:
+  Enabled: true
+
+Style/StaticClass:
+  Enabled: true

@@ -1,0 +1,28 @@
+lib/base.rb:11:3: W: Lint/DuplicateMethods: Method `Base#get_name` is defined at both lib/extra.rb:4 and lib/base.rb:11.
+lib/base.rb:11:7: C: Naming/AccessorMethodName: Do not prefix reader method names with `get_`.
+lib/base.rb:15:7: C: Naming/PredicatePrefix: Rename `is_ready` to `ready?`.
+lib/child.rb:11:5: W: Lint/SuperArgumentMismatch: Wrong number of arguments to `super` (given 1, expected 0 for `Base#get_name`).
+lib/child.rb:18:7: C: Naming/AccessorMethodName: Do not prefix reader method names with `get_`.
+lib/child.rb:22:3: C: Style/MissingRespondToMissing: When using `method_missing`, define `respond_to_missing?`.
+lib/child.rb:27:10: W: Lint/ArgumentMismatch: Wrong number of arguments to `build` (given 3, expected 1..2).
+lib/child.rb:28:10: W: Lint/NameTypo: Possible typo: `Base` does not respond to `biuld`. Did you mean `build`?
+lib/child.rb:29:5: W: Lint/DeprecatedReference: Method `stale` is deprecated: Use {#fresh} instead.
+lib/child.rb:30:5: W: Lint/DeprecatedReference: Method `older` is deprecated.
+lib/child.rb:31:5: W: Lint/DeprecatedReference: Constant `Base::OLD` is deprecated.
+lib/child.rb:32:11: W: Lint/NameTypo: Possible typo: `LIMTI` is not defined in `Base`. Did you mean `LIMIT`?
+lib/child.rb:3:1: C: Style/Documentation: Missing top-level documentation comment for `class Child`.
+lib/child.rb:6:3: W: Lint/MissingSuper: Call `super` to initialize state of the parent class.
+lib/extra.rb:23:1: C: [Correctable] Style/StaticClass: Prefer modules to classes with only class methods.
+lib/extra.rb:30:18: W: [Correctable] Lint/InheritException: Inherit from `StandardError` instead of `Exception`.
+lib/extra.rb:34:18: W: Lint/InheritException: Inherit from `StandardError` instead of `Exception` (inherited via `AppError`).
+lib/extra.rb:45:7: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+lib/extra.rb:46:7: C: [Correctable] Style/RedundantConstantBase: Remove redundant `::`.
+lib/extra.rb:4:3: W: Lint/DuplicateMethods: Method `Base#get_name` is defined at both lib/base.rb:11 and lib/extra.rb:4.
+lib/extra.rb:4:7: C: Naming/AccessorMethodName: Do not prefix reader method names with `get_`.
+lib/extra.rb:52:7: C: [Correctable] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
+lib/extra.rb:55:7: C: [Correctable] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
+lib/scoped/settings.rb:11:7: W: Lint/ConstantResolution: Fully qualify this constant to avoid possibly ambiguous resolution.
+lib/scoped/settings.rb:3:1: W: Lint/ConstantReassignment: Constant `SETTING` is already assigned in `lib/utils.rb`.
+lib/scoped/settings.rb:6:3: W: Lint/ConstantReassignment: Constant `SETTING_TWO` is already assigned in `lib/utils.rb`.
+lib/utils.rb:10:3: W: Lint/ConstantReassignment: Constant `SETTING_TWO` is already assigned in `lib/scoped/settings.rb`.
+lib/utils.rb:7:1: W: Lint/ConstantReassignment: Constant `SETTING` is already assigned in `lib/scoped/settings.rb`.

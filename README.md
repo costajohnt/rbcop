@@ -15,7 +15,7 @@ The target is byte-identical output: same offenses, ranges, messages, `[Correcta
 ## Build
 
 ```sh
-cargo build --release   # needs Rust 1.88 or newer
+cargo build --release   # needs Rust 1.89 or newer
 ```
 
 The binary is `target/release/rbcop`. The crate is not published to crates.io: it builds against a patched copy of `ruby-prism` in `vendor/ruby-prism`.

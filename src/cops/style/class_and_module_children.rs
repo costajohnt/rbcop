@@ -146,8 +146,11 @@ impl Cop for ClassAndModuleChildren {
                 let i = stmts.iter().position(|x| span(x) == (start, end))?;
                 i.checked_sub(1).map(|j| span(&stmts[j]))
             });
-            let mut keyword = "module";
-            if let (Some(ns_text), Some(_)) = (&ns_text, left) {
+            let indexed = indexed_namespace_keyword(cx, &d.ident);
+            let mut keyword = indexed.unwrap_or("module");
+            if indexed.is_none()
+                && let (Some(ns_text), Some(_)) = (&ns_text, left)
+            {
                 let s = parent.unwrap().as_statements_node().unwrap();
                 let prev = s.body().iter().find(|x| Some(span(x)) == left).unwrap();
                 let mut f = FindClass { target: ns_text, found: false };
@@ -178,7 +181,7 @@ impl Cop for ClassAndModuleChildren {
         }
         let Some(inner) = single_def(&d.body) else { return };
         let b = def(&inner).unwrap();
-        let fix = (style_for(b.class) != "nested").then(|| {
+        let fix = (style_for(b.class) != "nested" && compactible_namespace(cx, node, &d.ident)).then(|| {
             // compact_replacement, with the comments the associator gives the inner node.
             let mut texts: Vec<&str> = Vec::new();
             let after_line = src.line_of(name.1);
@@ -235,4 +238,40 @@ impl Cop for ClassAndModuleChildren {
             }
         });
     }
+}
+
+/// `indexed_namespace_keyword`: with the project index, the keyword of the declaration the
+/// compact name's namespace resolves to.
+fn indexed_namespace_keyword(cx: &Cx, ident: &Node) -> Option<&'static str> {
+    let index = crate::project_index::get()?;
+    let namespace = ident.as_constant_path_node()?.parent()?;
+    let decl = crate::project_index::resolve_const_node(index, &namespace, cx.ancestors)?;
+    let ix = index.read();
+    if ix.is_class(decl) {
+        Some("class")
+    } else if ix.is_module(decl) {
+        Some("module")
+    } else {
+        None
+    }
+}
+
+/// `compactible_namespace?`: without the project index, always; with it, the outer namespace
+/// must also be defined somewhere else (another file, or another line).
+fn compactible_namespace(cx: &Cx, node: &Node, ident: &Node) -> bool {
+    let Some(index) = crate::project_index::get() else { return true };
+    let Some(decl) = crate::project_index::resolve_const_node(index, ident, cx.ancestors) else { return false };
+    let ix = index.read();
+    if !ix.is_namespace(decl) {
+        return false;
+    }
+    let current = cx.src.absolute_path();
+    let first_line = cx.src.line_of(node.location().start_offset()) as u32;
+    ix.definitions(decl).into_iter().any(|def| match ix.location(def) {
+        Some((None, _)) => true,
+        Some((Some(path), line)) => {
+            !crate::project_index::same_file(&path, std::path::Path::new(&current)) || line != first_line
+        }
+        None => false,
+    })
 }

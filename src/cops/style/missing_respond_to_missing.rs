@@ -46,8 +46,6 @@ impl Cop for MissingRespondToMissing {
         &[kind::DEF_NODE]
     }
 
-    // ponytail: AllCops/UseProjectIndex (rubydex) is not supported; without it RuboCop never
-    // looks outside the file.
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let def = node.as_def_node().unwrap();
         if def.name().as_slice() != b"method_missing" {
@@ -68,11 +66,22 @@ impl Cop for MissingRespondToMissing {
         };
         let mut f = Finder { defs: def.receiver().is_some(), depth: if scope.is_some() { -1 } else { 0 }, found: false };
         f.visit(root);
-        if !f.found {
+        if !f.found && !respond_to_missing_elsewhere(anc, &def) {
             let loc = node.location();
             cx.add(loc.start_offset(), loc.end_offset(), MSG);
         }
     }
+}
+
+/// `respond_to_missing_elsewhere?`: with the project index, the class or module (or its singleton
+/// class) defines `respond_to_missing?` in another file or definition.
+fn respond_to_missing_elsewhere(anc: &[Node], def: &ruby_prism::DefNode) -> bool {
+    let Some(index) = crate::project_index::get() else { return false };
+    let Some(decl) = crate::project_index::enclosing_namespace(index, anc) else { return false };
+    let ix = index.read();
+    let singleton = def.receiver().is_some() || anc.iter().rev().find(|a| is_scope(a)).is_some_and(|a| a.as_singleton_class_node().is_some());
+    let scope = if singleton { ix.singleton_of(decl) } else { Some(decl) };
+    scope.and_then(|s| ix.member(s, "respond_to_missing?()")).is_some()
 }
 
 const MSG: &str = "When using `method_missing`, define `respond_to_missing?`.";
