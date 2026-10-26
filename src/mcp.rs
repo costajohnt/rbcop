@@ -4,6 +4,7 @@
 //! on the same LSP::Runtime as `--lsp`. RuboCop needs the gem installed; rbcop always serves.
 
 use crate::serve::{Json, Runtime};
+use rbcop::autocorrect;
 use rbcop::config::{RUBOCOP_VERSION, Resolved, Store, relative_path};
 use rbcop::formatter::json;
 use std::io::{BufRead, Read, Write};
@@ -54,7 +55,8 @@ enum ToolFail {
 
 /// StdioTransport#open: answer each line until stdin ends (or a line is too long).
 pub fn serve(store: Store, pwd_config: Arc<Resolved>) -> Result<u8, String> {
-    let mut server = Server { runtime: Runtime::new(store, pwd_config), initialized: false };
+    let roots = autocorrect::write_roots(store.cwd(), &[]);
+    let mut server = Server { runtime: Runtime::new(store, pwd_config), roots, initialized: false };
     let mut input = std::io::stdin().lock();
     loop {
         let mut line = Vec::new();
@@ -131,6 +133,8 @@ fn errno(e: &std::io::Error, path: &str) -> String {
 
 struct Server {
     runtime: Runtime,
+    /// The working directory, canonical: the only root the tools read and write under.
+    roots: Vec<PathBuf>,
     /// ServerSession#initialized?
     initialized: bool,
 }
@@ -362,8 +366,10 @@ impl Server {
 
     fn run_inspection(&mut self, path: Option<&str>, source: Option<&str>) -> Result<String, ToolFail> {
         if let Some(source) = source {
-            let offenses =
-                self.runtime.offenses(path.unwrap_or("example.rb"), source.to_string()).map_err(ToolFail::Other)?;
+            let path = path.unwrap_or("example.rb");
+            // Only a name here, but its config is looked up next to it: keep that inside too.
+            self.contain(path)?;
+            let offenses = self.runtime.offenses(path, source.to_string()).map_err(ToolFail::Other)?;
             return Ok(format!("[{}]", offenses.join(",")));
         }
         let targets = self.targets(path)?;
@@ -371,7 +377,7 @@ impl Server {
         let mut count = 0;
         for file in &targets {
             let abs = file.display().to_string();
-            let source = read_file(&abs)?;
+            let source = self.read_file(&abs)?;
             let offenses = self.runtime.offenses(&abs, source).map_err(ToolFail::Other)?;
             count += offenses.len();
             if !offenses.is_empty() {
@@ -389,8 +395,9 @@ impl Server {
 
     fn run_autocorrection(&mut self, path: Option<&str>, source: Option<&str>, safe: bool) -> Result<String, ToolFail> {
         if let Some(source) = source {
-            let corrected =
-                self.runtime.format(path.unwrap_or("example.rb"), source.to_string(), safe).map_err(ToolFail::Other)?;
+            let name = path.unwrap_or("example.rb");
+            self.contain(name)?;
+            let corrected = self.runtime.format(name, source.to_string(), safe).map_err(ToolFail::Other)?;
             if let Some(path) = path {
                 self.write_file(path, &corrected)?;
             }
@@ -401,7 +408,7 @@ impl Server {
         let mut count = 0;
         for file in &targets {
             let abs = file.display().to_string();
-            let source = read_file(&abs)?;
+            let source = self.read_file(&abs)?;
             let corrected = self.runtime.format(&abs, source.clone(), safe).map_err(ToolFail::Other)?;
             self.write_file(&abs, &corrected)?;
             let changed = source != corrected;
@@ -414,30 +421,73 @@ impl Server {
         Ok(summary(&files, targets.len(), "corrected_file_count", count))
     }
 
+    /// Where `path` really is (symlinks resolved, a missing tail kept as named), or a tool error
+    /// when that is outside the working directory. RuboCop's tools read and write wherever the
+    /// client points; rbcop's stay inside the project, the root `-a` writes under.
+    fn contain(&self, path: &str) -> Result<PathBuf, ToolFail> {
+        let mut base = self.runtime.cwd.join(path);
+        let mut rest = Vec::new();
+        let real = loop {
+            if let Ok(real) = std::fs::canonicalize(&base) {
+                break Some(real);
+            }
+            // A `..` (or root) that does not resolve is refused rather than guessed at.
+            match base.file_name() {
+                Some(name) if base.ends_with(name) => rest.push(name.to_os_string()),
+                _ => break None,
+            }
+            base.pop();
+        };
+        let real = real.map(|r| rest.iter().rev().fold(r, |p, c| p.join(c)));
+        match real {
+            Some(real) if !autocorrect::outside_roots(&real, &self.roots) => Ok(real),
+            real => Err(ToolFail::Rubo(format!(
+                "{path} resolves to {}, outside the project",
+                real.map_or_else(|| path.to_string(), |r| r.display().to_string())
+            ))),
+        }
+    }
+
     /// TargetFinder#find(path ? [path] : [], :only_recognized_file_types)
     fn targets(&mut self, path: Option<&str>) -> Result<Vec<PathBuf>, ToolFail> {
+        if let Some(path) = path {
+            self.contain(path)?;
+        }
         let args: Vec<PathBuf> = path.map(PathBuf::from).into_iter().collect();
         rbcop::targets::find(&mut self.runtime.store, &args, false, true).map_err(ToolFail::Other)
     }
 
-    /// Server#write_file: `File.write`, its likely errors as RuboCop::Error.
+    /// Server#read_file: the file's text; a missing file is a RuboCop::Error.
+    fn read_file(&self, abs: &str) -> Result<String, ToolFail> {
+        let real = self.contain(abs)?;
+        // ponytail: invalid UTF-8 is read lossily; RuboCop keeps the bytes and reports Lint/Syntax.
+        std::fs::read(real).map(|b| String::from_utf8_lossy(&b).into_owned()).map_err(|e| match e.kind() {
+            std::io::ErrorKind::NotFound => ToolFail::Rubo(format!("No such file or directory: {abs}")),
+            _ => ToolFail::Other(errno(&e, abs)),
+        })
+    }
+
+    /// Server#write_file: `File.write` (which creates a missing file), its likely errors as
+    /// RuboCop::Error; through autocorrect::write_source as `-a` writes, never via a symlink.
     fn write_file(&self, path: &str, content: &str) -> Result<(), ToolFail> {
-        std::fs::write(self.runtime.cwd.join(path), content).map_err(|e| match e.raw_os_error() {
+        let real = self.contain(path)?;
+        let written = (|| {
+            if !real.exists() {
+                use std::os::unix::fs::OpenOptionsExt;
+                // O_EXCL: never an existing file, nor a symlink planted since.
+                std::fs::OpenOptions::new().write(true).create_new(true).custom_flags(libc::O_NOFOLLOW).open(&real)?;
+            }
+            autocorrect::write_source(&real, content, &self.roots)
+        })();
+        written.map_err(|e| match e.raw_os_error() {
             Some(13) => ToolFail::Rubo(format!("Permission denied: {path}")),
             Some(28) => ToolFail::Rubo(format!("No space left on device: {path}")),
             Some(30) => ToolFail::Rubo(format!("Read-only file system: {path}")),
+            // write_source's refusal (a path that moved outside, a symlink below the root).
+            _ if e.kind() == std::io::ErrorKind::PermissionDenied => ToolFail::Rubo(e.to_string()),
             _ => ToolFail::Other(errno(&e, path)),
         })
     }
-}
-
-/// Server#read_file: the file's text; a missing file is a RuboCop::Error.
-fn read_file(abs: &str) -> Result<String, ToolFail> {
-    // ponytail: invalid UTF-8 is read lossily; RuboCop keeps the bytes and reports Lint/Syntax.
-    std::fs::read(abs).map(|b| String::from_utf8_lossy(&b).into_owned()).map_err(|e| match e.kind() {
-        std::io::ErrorKind::NotFound => ToolFail::Rubo(format!("No such file or directory: {abs}")),
-        _ => ToolFail::Other(errno(&e, abs)),
-    })
 }
 
 /// Server#process_files' result.

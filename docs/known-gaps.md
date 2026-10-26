@@ -193,7 +193,11 @@ Tracked so the review phase can close or document each one. "Deliberate" items a
   results and JSON-RPC errors. RuboCop serves only with that gem installed, and otherwise prints
   ``Error: Unable to load `mcp` gem. ...``; rbcop has no gem dependency and always serves. Newer
   `mcp` gems (1.x) may answer the protocol methods differently; the tool results are RuboCop's own.
-  The tools write files where the client asks, as RuboCop's do.
+  Except: RuboCop's tools read and write any path the client names, while rbcop's refuse one that
+  resolves outside the working directory (an absolute path, `..`, or a symlink pointing out,
+  including one met while walking a directory) with the tool error `<path> resolves to <real
+  path>, outside the project`, and write as `-a` does (never through a symlink, a new file created
+  exclusively). An MCP client may be a model following text from the code it reads.
 
 ## Open gaps
 
