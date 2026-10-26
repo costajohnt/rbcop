@@ -19,10 +19,21 @@ fn display(style: &str) -> &str {
 fn format_single_parameter(arg: &Node) -> String {
     if let Some(s) = arg.as_splat_node() {
         // `*` alone (anonymous splat) has no child: RuboCop would crash; keep the source.
-        return s.expression().map_or_else(|| node_text(arg).to_string(), |e| format_single_parameter(&e));
+        // format_splatted_parameter: a splatted hash literal spreads as `hash.to_a`.
+        return s.expression().map_or_else(
+            || node_text(arg).to_string(),
+            |e| {
+                if e.as_hash_node().is_some() {
+                    format!("{}.to_a", node_text(&e))
+                } else {
+                    format_single_parameter(&e)
+                }
+            },
+        );
     }
     let source = node_text(arg);
-    if arg.as_hash_node().is_some() || arg.as_keyword_hash_node().is_some() {
+    // `hash_type? && !braces?`: only a braceless (keyword) hash needs braces added.
+    if arg.as_keyword_hash_node().is_some() {
         return format!("{{ {source} }}");
     }
     let parens = helpers::node_types::is_assignment(arg)
@@ -73,13 +84,16 @@ impl Cop for FormatString {
         }
         let Some(sel) = call.message_loc() else { return };
         let msg = format!("Favor `{}` over `{}`.", display(&style), display(detected));
-        // variable_argument?: (send {str dstr} :% #autocorrectable?)
-        let variable = name == "%"
-            && recv.as_ref().is_some_and(is_str)
-            && args.len() == 1
-            && (args[0].as_local_variable_read_node().is_some()
-                || (plain_send(&args[0]).is_some()
-                    && !AUTOCORRECTABLE_METHODS.contains(&method_name(&args[0].as_call_node().unwrap()))));
+        // variable_argument?: (send {str dstr} :% !#autocorrectable?). Only an argument that is
+        // provably not an array (a literal or a `to_x` call) can be corrected.
+        let autocorrectable = |a: &Node| {
+            helpers::literal_node::literal(a)
+                || a.as_call_node().is_some_and(|c| {
+                    !c.block().is_some_and(|b| b.as_block_node().is_some())
+                        && AUTOCORRECTABLE_METHODS.contains(&method_name(&c))
+                })
+        };
+        let variable = name == "%" && recv.as_ref().is_some_and(is_str) && args.len() == 1 && !autocorrectable(&args[0]);
         let (s, e) = send_range(&call);
         let replacement: Option<String> = if variable {
             None
@@ -108,6 +122,15 @@ impl Cop for FormatString {
         };
         let selector_only = name != "%" && style != "percent";
         let (ss, se) = (sel.start_offset(), sel.end_offset());
+        // within_corrected_range?: a format call inside one corrected earlier is left alone.
+        if variable || !cx.block_runs(ss, se) {
+            return cx.add_fix(ss, se, msg, |_| {});
+        }
+        let corrected: &mut Vec<(usize, usize)> = cx.state();
+        if corrected.iter().any(|&(a, b)| a <= s && e <= b) {
+            return cx.add_fix(ss, se, msg, |_| {});
+        }
+        corrected.push((s, e));
         cx.add_fix(ss, se, msg, |c| {
             if let Some(r) = &replacement {
                 c.replace(s, e, r);

@@ -34,59 +34,26 @@ impl Cop for HashLookupMethod {
     }
 
     fn kinds(&self) -> &'static [usize] {
-        &[
-            kind::CALL_NODE,
-            kind::INDEX_OPERATOR_WRITE_NODE,
-            kind::INDEX_OR_WRITE_NODE,
-            kind::INDEX_AND_WRITE_NODE,
-        ]
+        &[kind::CALL_NODE]
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let fetch_style = cx.cfg.str("EnforcedStyle") == Some("fetch");
-        // (name, receiver, args, selector, dot, send range, csend, block literal)
-        let (name, receiver, args, selector, dot, range, csend, block_literal) = if let Some(call) = node.as_call_node() {
-            let name = method_name(&call);
-            if name != "[]" && name != "fetch" {
-                return;
-            }
-            let span = |l: ruby_prism::Location| (l.start_offset(), l.end_offset());
-            (
-                name,
-                call.receiver(),
-                send_args(&call),
-                call.message_loc().map(span),
-                call.call_operator_loc().map(span),
-                send_range(&call),
-                is_csend(&call),
-                call.block().is_some_and(|b| b.as_block_node().is_some()),
-            )
-        } else {
-            // `a[i] op= v`: parser's op_asgn holds a `send :[]`.
-            if !fetch_style {
-                return;
-            }
-            let parts = match node {
-                Node::IndexOperatorWriteNode { .. } => {
-                    let n = node.as_index_operator_write_node().unwrap();
-                    (n.receiver(), n.arguments(), n.block(), n.opening_loc(), n.closing_loc())
-                }
-                Node::IndexOrWriteNode { .. } => {
-                    let n = node.as_index_or_write_node().unwrap();
-                    (n.receiver(), n.arguments(), n.block(), n.opening_loc(), n.closing_loc())
-                }
-                _ => {
-                    let n = node.as_index_and_write_node().unwrap();
-                    (n.receiver(), n.arguments(), n.block(), n.opening_loc(), n.closing_loc())
-                }
-            };
-            let (receiver, arguments, block, open, close) = parts;
-            let Some(receiver) = receiver else { return };
-            let mut args: Vec<Node> = arguments.map(|a| a.arguments().iter().collect()).unwrap_or_default();
-            args.extend(block.map(|b| b.as_node()));
-            let start = receiver.location().start_offset();
-            ("[]", Some(receiver), args, Some((open.start_offset(), close.end_offset())), None, (start, close.end_offset()), false, false)
-        };
+        let call = node.as_call_node().unwrap();
+        let name = method_name(&call);
+        if name != "[]" && name != "fetch" {
+            return;
+        }
+        // compound_assignment_target?: `a[i] op= v` (parser op_asgn/or_asgn/and_asgn around a
+        // `send :[]`) is a Prism Index*WriteNode, never a CallNode, so it is never visited.
+        let span = |l: ruby_prism::Location| (l.start_offset(), l.end_offset());
+        let receiver = call.receiver();
+        let args = send_args(&call);
+        let selector = call.message_loc().map(span);
+        let dot = call.call_operator_loc().map(span);
+        let range = send_range(&call);
+        let csend = is_csend(&call);
+        let block_literal = call.block().is_some_and(|b| b.as_block_node().is_some());
         if receiver.as_ref().is_some_and(|r| allowed_receiver(cx, r)) {
             return;
         }
@@ -94,11 +61,11 @@ impl Cop for HashLookupMethod {
             return;
         }
         let brackets = !fetch_style
-            && receiver.is_some()
             && name == "fetch"
             && args.len() == 1
             && !block_literal
-            && !csend;
+            && !csend
+            && receiver.as_ref().is_some_and(|r| !exempt_from_brackets(cx, r, dot));
         let fetch = fetch_style && name == "[]" && args.len() == 1;
         if !brackets && !fetch {
             return;
@@ -109,15 +76,23 @@ impl Cop for HashLookupMethod {
         let end = range.1;
         if brackets {
             let Some(sel) = selector else { return };
-            let Some(dot) = dot else { return };
+            let recv_end = receiver.unwrap().location().end_offset();
             cx.add_fix(sel.0, sel.1, "Use `Hash#[]` instead of `Hash#fetch`.", |c| {
-                c.replace(dot.0, end, &format!("[{key}]"));
+                c.replace(recv_end, end, &format!("[{key}]"));
             });
         } else {
-            let from = if csend { dot } else { selector };
-            let Some(from) = from else { return };
-            let text = if csend { format!("&.fetch({key})") } else { format!(".fetch({key})") };
+            let Some(from) = selector else { return };
+            let text = if dot.is_some() { format!("fetch({key})") } else { format!(".fetch({key})") };
             cx.add_fix(range.0, range.1, "Use `Hash#fetch` instead of `Hash#[]`.", |c| c.replace(from.0, end, &text));
         }
     }
+}
+
+/// exempt_from_brackets?: a comment on the lines from the receiver's end to the dot, or
+/// `ENV.fetch` while Style/FetchEnvVar is enabled.
+fn exempt_from_brackets(cx: &Cx, receiver: &Node, dot: Option<(usize, usize)>) -> bool {
+    let Some(dot) = dot else { return false };
+    let (first, last) = (cx.src.line_of(receiver.location().end_offset()), cx.src.line_of(dot.1));
+    helpers::comments_help::contains_comments(cx, first, last + 1)
+        || (helpers::parser_parent::is_top_const(receiver, "ENV") && cx.config.cop_enabled("Style/FetchEnvVar"))
 }

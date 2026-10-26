@@ -6,10 +6,6 @@ pub const NAME: &str = "Style/FrozenStringLiteralComment";
 pub static COP: FrozenStringLiteralComment = FrozenStringLiteralComment;
 pub struct FrozenStringLiteralComment;
 
-/// Style/Encoding::ENCODING_PATTERN (Ruby's `\s` is ASCII-only)
-static ENCODING: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"#.*coding(?-u:\s)?[:=](?-u:\s)?(?:UTF|utf)-8").unwrap());
-
 /// EmacsComment::FORMAT
 static EMACS: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"-\*-(.+)-\*-").unwrap());
 
@@ -37,7 +33,7 @@ fn insert_comment(k: &mut Corrector, src: &Source, first_code: Option<usize>) {
         special = Some(c);
         next = leading.next();
     }
-    if let Some(c) = next.filter(|c| ENCODING.is_match(src.slice(c.start, c.end))) {
+    if let Some(c) = next.filter(|c| helpers::magic_comment::encoding_specified(src.slice(c.start, c.end))) {
         special = Some(c);
     }
     match special {
