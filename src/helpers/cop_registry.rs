@@ -71,7 +71,7 @@ pub const NATIVE_PLUGINS: &[NativePlugin] = &[
     },
     NativePlugin {
         gem: "rubocop-capybara",
-        version: "3.0.0",
+        version: "3.1.0",
         plugin_class: "RuboCop::Capybara::Plugin",
         departments: &["Capybara", "Capybara/RSpec"],
         default_yml: include_str!("../../config/plugins/rubocop-capybara.yml"),

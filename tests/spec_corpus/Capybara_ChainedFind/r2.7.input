@@ -1,0 +1,78 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 31 <==
+page.find('#foo').find('.bar')
+
+==> 001/001_spec.rb 26 <==
+find('#foo').find('.bar')
+
+==> 002/002_spec.rb 66 <==
+find("#row-#{id}").find('.cell')
+find('.row').find(".cell-#{id}")
+
+==> 003/003_spec.rb 68 <==
+element = find('#container')
+element.find('.parent').find('.child')
+
+==> 004/004_spec.rb 63 <==
+items.find { |item| item.active? }.find { |item| item.ready? }
+
+==> 005/005_spec.rb 34 <==
+tree.find('parent').find('child')
+
+==> 006/006_spec.rb 36 <==
+find('#form').find(:button, 'Save')
+
+==> 007/007_spec.rb 37 <==
+find(:button, 'Save').find('.label')
+
+==> 008/008_spec.rb 38 <==
+page.find('.a').find('.b').find('.c')
+
+==> 009/009_spec.rb 44 <==
+page.find('#foo', text: 'baz').find('.bar')
+
+==> 010/010_spec.rb 46 <==
+page.find('#foo').find('.bar', visible: true)
+
+==> 011/011_spec.rb 59 <==
+page.find('#foo', text: 'baz').find('.bar', match: :first)
+
+==> 012/012_spec.rb 48 <==
+page.find('#foo') { |el| el.text }.find('.bar')
+
+==> 013/013_spec.rb 37 <==
+page.find('.foo, .bar').find('.baz')
+
+==> 014/014_spec.rb 32 <==
+page.find('#foo').find('//bar')
+
+==> 015/015_spec.rb 31 <==
+page.find('section').find('a')
+
+==> 016/016_spec.rb 31 <==
+page.find("it's").find('.bar')
+
+==> 017/017_spec.rb 33 <==
+page&.find('#foo')&.find('.bar')
+
+==> 018/018_spec.rb 18 <==
+page.find('#foo')
+
+==> 019/019_spec.rb 23 <==
+page.find('#foo .bar')
+
+==> 020/020_spec.rb 24 <==
+page.find('#foo').click
+
+==> 021/021_spec.rb 34 <==
+other_method('#foo').find('.bar')
+

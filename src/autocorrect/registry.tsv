@@ -592,7 +592,7 @@ Style/TopLevelMethodDefinition
 Style/TrailingBodyOnClass
 Style/TrailingBodyOnMethodDefinition
 Style/TrailingBodyOnModule
-Style/TrailingCommaInArguments	Layout/HeredocArgumentClosingParenthesis	Rails/LinkToBlank	Capybara/RSpec/CurrentPathExpectation
+Style/TrailingCommaInArguments	Layout/HeredocArgumentClosingParenthesis	Rails/LinkToBlank	Capybara/RSpec/CurrentPathExpectation	Capybara/RSpec/CurrentUrlExpectation
 Style/TrailingCommaInArrayLiteral
 Style/TrailingCommaInBlockArgs
 Style/TrailingCommaInHashLiteral
@@ -993,6 +993,8 @@ FactoryBot/IdSequence
 FactoryBot/RedundantFactoryOption
 FactoryBot/SyntaxMethods
 Capybara/RSpec/CurrentPathExpectation	Style/TrailingCommaInArguments
+Capybara/RSpec/CurrentUrlExpectation	Style/TrailingCommaInArguments
+Capybara/RSpec/FindElementValueEq
 Capybara/RSpec/HaveContent
 Capybara/RSpec/HaveSelector
 Capybara/RSpec/MatchStyle
@@ -1001,9 +1003,17 @@ Capybara/RSpec/NegationMatcherAfterVisit
 Capybara/RSpec/PredicateMatcher
 Capybara/RSpec/SpecificMatcher
 Capybara/RSpec/VisibilityMatcher
+Capybara/AbsoluteXPathInElementScope
+Capybara/AlwaysTrueCountQuery
 Capybara/AmbiguousClick
 Capybara/AssertStyle
+Capybara/ChainedFind
 Capybara/FindAllFirst
+Capybara/IgnoredQueryOption
+Capybara/ModalMethodWithoutBlock
+Capybara/NativeAttribute
 Capybara/RedundantWithinFind
 Capybara/SpecificActions
 Capybara/SpecificFinders
+Capybara/UnorderedWindowAccess
+Capybara/VisibilityOption

@@ -13,9 +13,12 @@ Capybara/RSpec/HaveSelector:
 ==> 000/000_spec.rb 36 <==
 expect(foo).to have_selector('bar')
 
-==> 001/001_spec.rb 44 <==
+==> 001/001_spec.rb 39 <==
+expect(foo).to have_no_selector('bar')
+
+==> 002/002_spec.rb 44 <==
 expect(foo).to have_selector(:xpath, 'bar')
 
-==> 002/002_spec.rb 42 <==
+==> 003/003_spec.rb 42 <==
 expect(foo).to have_selector(:css, 'bar')
 

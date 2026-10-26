@@ -8,68 +8,82 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 2.7
 
-==> 000/000_spec.rb 39 <==
+==> 000/000_spec.rb 21 <==
+expect(current_path)
+
+==> 001/001_spec.rb 39 <==
 expect(current_path).to eq "/callback"
 
-==> 001/001_spec.rb 76 <==
+==> 002/002_spec.rb 76 <==
 expect(current_path).to eq "/callback" \
                             "/foo"
 
-==> 002/002_spec.rb 33 <==
+==> 003/003_spec.rb 33 <==
 expect(current_path).to eq `pwd`
 
-==> 003/003_spec.rb 45 <==
+==> 004/004_spec.rb 45 <==
 expect(page.current_path).to eq("/callback")
 
-==> 004/004_spec.rb 41 <==
+==> 005/005_spec.rb 41 <==
 expect(current_path).to eq expected_path
 
-==> 005/005_spec.rb 36 <==
+==> 006/006_spec.rb 36 <==
 expect(current_path).to eq(foo bar)
 
-==> 006/006_spec.rb 41 <==
+==> 007/007_spec.rb 41 <==
 expect(current_path).to eq(foo bar, baz)
 
-==> 007/007_spec.rb 37 <==
+==> 008/008_spec.rb 37 <==
 expect(current_path).to eq(foo(bar))
 
-==> 008/008_spec.rb 41 <==
+==> 009/009_spec.rb 41 <==
 expect(current_path).to eq(foo bar(baz))
 
-==> 009/009_spec.rb 42 <==
+==> 010/010_spec.rb 42 <==
 expect(current_path).to eq(expected_path)
 
-==> 010/010_spec.rb 49 <==
+==> 011/011_spec.rb 49 <==
 expect(current_path).to eq(expected_path(f: :b))
 
-==> 011/011_spec.rb 47 <==
+==> 012/012_spec.rb 47 <==
 expect(page.current_path).to eq(foo(bar).path)
 
-==> 012/012_spec.rb 45 <==
+==> 013/013_spec.rb 45 <==
 expect(current_path).not_to eq expected_path
 
-==> 013/013_spec.rb 45 <==
+==> 014/014_spec.rb 45 <==
 expect(current_path).to_not eq expected_path
 
-==> 014/014_spec.rb 46 <==
+==> 015/015_spec.rb 46 <==
 expect(page.current_path).to match(/regexp/i)
 
-==> 015/015_spec.rb 46 <==
+==> 016/016_spec.rb 46 <==
+expect(current_path).to match(%r{\A/users\z})
+
+==> 017/017_spec.rb 46 <==
 expect(page.current_path).to match("string/")
 
-==> 016/016_spec.rb 89 <==
+==> 018/018_spec.rb 42 <==
+expect(current_path).to match('/users/(')
+
+==> 019/019_spec.rb 139 <==
+expect(current_path).to match('/tags/#{name}')
+expect(current_path).to match('/tags/#@name')
+expect(current_path).to match('/tags/#$name')
+
+==> 020/020_spec.rb 89 <==
 expect(page.current_path).to match("string/" \
                                   "foo/")
 
-==> 017/017_spec.rb 42 <==
+==> 021/021_spec.rb 42 <==
 expect(page.current_path).to match(`pwd`)
 
-==> 018/018_spec.rb 33 <==
+==> 022/022_spec.rb 33 <==
 expect(current_user).to eq(user)
 
-==> 019/019_spec.rb 38 <==
+==> 023/023_spec.rb 38 <==
 current_path = WalkingRoute.last.path
 
-==> 020/020_spec.rb 45 <==
+==> 024/024_spec.rb 45 <==
 expect(page.current_path).to match(variable)
 

@@ -1,0 +1,87 @@
+==> offenses exit=1 2870 <==
+000/000_spec.rb:1:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+000/000_spec.rb:2:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+000/000_spec.rb:3:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+000/000_spec.rb:4:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+000/000_spec.rb:5:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+000/000_spec.rb:6:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+001/001_spec.rb:1:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+001/001_spec.rb:2:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+002/002_spec.rb:1:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+002/002_spec.rb:2:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+002/002_spec.rb:3:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+002/002_spec.rb:4:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+002/002_spec.rb:5:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+002/002_spec.rb:6:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+003/003_spec.rb:1:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+004/004_spec.rb:1:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+004/004_spec.rb:2:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+005/005_spec.rb:1:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+006/006_spec.rb:1:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+006/006_spec.rb:2:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+007/007_spec.rb:1:1: C: [Correctable] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+008/008_spec.rb:1:1: C: Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+008/008_spec.rb:2:1: C: Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+
+==> autocorrect exit=1 2828 <==
+000/000_spec.rb:1:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+000/000_spec.rb:2:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+000/000_spec.rb:3:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+000/000_spec.rb:4:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+000/000_spec.rb:5:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+000/000_spec.rb:6:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+001/001_spec.rb:1:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+001/001_spec.rb:2:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+002/002_spec.rb:1:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+002/002_spec.rb:2:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+002/002_spec.rb:3:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+002/002_spec.rb:4:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+002/002_spec.rb:5:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+002/002_spec.rb:6:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+003/003_spec.rb:1:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+004/004_spec.rb:1:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+004/004_spec.rb:2:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+005/005_spec.rb:1:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+006/006_spec.rb:1:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+006/006_spec.rb:2:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+007/007_spec.rb:1:1: C: [Corrected] Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+008/008_spec.rb:1:1: C: Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+008/008_spec.rb:2:1: C: Capybara/RSpec/FindElementValueEq: Prefer `have_field` over checking `find(...).value`.
+
+==> corrected/000/000_spec.rb 258 <==
+expect(page).to have_field(with: 'foobar')
+expect(page).to have_field(with: 'foobar')
+expect(page).to have_field(with: 'foobar')
+expect(page).to have_field(with: 'foobar')
+expect(page).to have_field(with: 'foobar')
+expect(page).to have_field(with: 'foobar')
+
+==> corrected/001/001_spec.rb 96 <==
+expect(container).to have_field(with: 'foobar')
+expect(container).to have_field(with: 'foobar')
+
+==> corrected/002/002_spec.rb 382 <==
+expect(page).to have_field('Email', with: 'user@example.com')
+expect(page).to have_field('Email', with: 'user@example.com')
+expect(page).to have_field('Email', with: 'user@example.com')
+expect(page).to have_field('Email', with: 'user@example.com')
+expect(container).to have_field('Email', with: 'user@example.com')
+expect(container).to have_field('Email', with: 'user@example.com')
+
+==> corrected/003/003_spec.rb 68 <==
+expect(page).to have_field(name: 'Email', with: 'user@example.com')
+
+==> corrected/004/004_spec.rb 92 <==
+expect(page).to have_no_field(with: 'foobar')
+expect(page).to have_no_field(with: 'foobar')
+
+==> corrected/005/005_spec.rb 49 <==
+expect(page).to have_field(with: expected_value)
+
+==> corrected/006/006_spec.rb 130 <==
+expect(page).to have_field(with: (expected_value :foo))
+expect(page).to have_field((field_name :email), with: 'user@example.com')
+
+==> corrected/007/007_spec.rb 49 <==
+expect(page).to have_field(with: {data: :value})
+

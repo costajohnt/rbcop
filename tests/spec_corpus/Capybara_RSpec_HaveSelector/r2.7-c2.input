@@ -1,0 +1,16 @@
+==> .rubocop.yml 188 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Capybara/RSpec/HaveSelector:
+  DefaultSelector: foo
+
+==> 000/000_spec.rb 75 <==
+expect(foo).to have_selector('bar')
+expect(foo).to have_no_selector('bar')
+

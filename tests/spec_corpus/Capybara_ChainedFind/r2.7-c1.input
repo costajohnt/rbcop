@@ -1,0 +1,15 @@
+==> .rubocop.yml 183 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Capybara/ChainedFind:
+  DefaultSelector: xpath
+
+==> 000/000_spec.rb 31 <==
+page.find('section').find('a')
+

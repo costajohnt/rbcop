@@ -1,4 +1,4 @@
-==> offenses exit=1 2066 <==
+==> offenses exit=1 2175 <==
 000/000_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_selector`.
 003/003_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_css`.
 006/006_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_xpath`.
@@ -15,11 +15,12 @@
 039/039_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_sibling`.
 042/042_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_ancestor`.
 045/045_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_content`.
-048/048_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_selector`.
-048/048_spec.rb:2:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_css`.
-049/049_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_text`.
+048/048_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_element`.
+051/051_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_selector`.
+051/051_spec.rb:2:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_css`.
+052/052_spec.rb:1:14: C: [Correctable] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_text`.
 
-==> autocorrect exit=0 2028 <==
+==> autocorrect exit=0 2135 <==
 000/000_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_selector`.
 003/003_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_css`.
 006/006_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_xpath`.
@@ -36,9 +37,10 @@
 039/039_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_sibling`.
 042/042_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_ancestor`.
 045/045_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_content`.
-048/048_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_selector`.
-048/048_spec.rb:2:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_css`.
-049/049_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_text`.
+048/048_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_element`.
+051/051_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_selector`.
+051/051_spec.rb:2:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_css`.
+052/052_spec.rb:1:14: C: [Corrected] Capybara/RSpec/NegationMatcher: Use `expect(...).to have_no_text`.
 
 ==> corrected/000/000_spec.rb 38 <==
 expect(page).to have_no_selector('a')
@@ -88,11 +90,14 @@ expect(page).to have_no_ancestor('a')
 ==> corrected/045/045_spec.rb 37 <==
 expect(page).to have_no_content('a')
 
-==> corrected/048/048_spec.rb 70 <==
+==> corrected/048/048_spec.rb 37 <==
+expect(page).to have_no_element('a')
+
+==> corrected/051/051_spec.rb 70 <==
 expect(page).to have_no_selector 'a'
 expect(page).to have_no_css('a')
 
-==> corrected/049/049_spec.rb 61 <==
+==> corrected/052/052_spec.rb 61 <==
 expect(page).to have_no_text(exact_text: <<~TEXT)
   foo
 TEXT

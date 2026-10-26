@@ -111,3 +111,9 @@ expect(page).to have_no_content('a')
 ==> 032/032_spec.rb 37 <==
 expect(page).not_to have_content 'a'
 
+==> 033/033_spec.rb 37 <==
+expect(page).to have_no_element('a')
+
+==> 034/034_spec.rb 37 <==
+expect(page).not_to have_element 'a'
+

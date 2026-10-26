@@ -14,48 +14,62 @@ all('a').first
 ==> 001/001_spec.rb 12 <==
 all('a')[0]
 
-==> 002/002_spec.rb 61 <==
+==> 002/002_spec.rb 132 <==
 find('a', match: :first)
 find('a', text: 'b', match: :first)
-
-==> 003/003_spec.rb 71 <==
 page.find('a', match: :first)
 page.find('a', text: 'b', match: :first)
 
-==> 004/004_spec.rb 59 <==
+==> 003/003_spec.rb 128 <==
 all('a', match: :first)
 all('a', text: 'b', match: :first)
-
-==> 005/005_spec.rb 69 <==
 page.all('a', match: :first)
 page.all('a', text: 'b', match: :first)
 
-==> 006/006_spec.rb 23 <==
+==> 004/004_spec.rb 23 <==
 all('a', text: 'b')[0]
 
-==> 007/007_spec.rb 20 <==
+==> 005/005_spec.rb 20 <==
 page.all('a').first
 
-==> 008/008_spec.rb 35 <==
+==> 006/006_spec.rb 35 <==
 find('a')
   .all('div')
     .first
 
-==> 009/009_spec.rb 11 <==
+==> 007/007_spec.rb 11 <==
 first('a')
 
-==> 010/010_spec.rb 21 <==
+==> 008/008_spec.rb 21 <==
 all('a').map(&:text)
 
-==> 011/011_spec.rb 12 <==
+==> 009/009_spec.rb 12 <==
 all('a')[1]
 
-==> 012/012_spec.rb 20 <==
+==> 010/010_spec.rb 20 <==
 all('a', text: 'b')
 
-==> 013/013_spec.rb 17 <==
+==> 011/011_spec.rb 17 <==
 all.first
 all[0]
+
+==> 012/012_spec.rb 43 <==
+all('.x').first&.click
+all('.x')[0]&.click
+
+==> 013/013_spec.rb 204 <==
+if all('.y').first
+  click_button('Continue')
+end
+unless all('.y')[0]
+  click_button('Continue')
+end
+while all('.y').first
+  click_button('Continue')
+end
+until all('.y')[0]
+  click_button('Continue')
+end
 
 ==> 014/014_spec.rb 29 <==
 all('a')[0] || all('div')[0]

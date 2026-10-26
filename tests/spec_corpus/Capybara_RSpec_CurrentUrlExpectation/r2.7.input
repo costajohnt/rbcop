@@ -1,0 +1,46 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 146 <==
+expect(page.current_url).to eq('https://example.com/login')
+expect(page.current_url).to eq(expected_url)
+expect(current_url).to match(%r{/login})
+
+==> 001/001_spec.rb 91 <==
+expect(page.current_url).not_to match(/login/)
+expect(current_url).to_not eq(expected_url)
+
+==> 002/002_spec.rb 90 <==
+expect(page.current_url).to match('login')
+expect(page.current_url).not_to match('admin')
+
+==> 003/003_spec.rb 136 <==
+expect(current_url).to match('/tags/#{name}')
+expect(current_url).to match('/tags/#@name')
+expect(current_url).to match('/tags/#$name')
+
+==> 004/004_spec.rb 276 <==
+expect(page.current_url).to include('/login')
+expect(page.current_url).to start_with('https://')
+expect(page.current_url).to end_with('/login')
+expect(page.current_url).to match(pattern)
+expect(page.current_url).to match(`printf login`)
+expect(page.current_url).to match('[')
+
+==> 005/005_spec.rb 274 <==
+expect(current_url)
+expect(page).to have_current_path('/login')
+expect(page.current_path).to eq('/login')
+expect(object.current_url).to eq('https://example.com/login')
+expect(page.current_url).to be('https://example.com/login')
+expect(page.current_url).to include(variable)
+
+==> 006/006_spec.rb 19 <==
+expect(current_url)

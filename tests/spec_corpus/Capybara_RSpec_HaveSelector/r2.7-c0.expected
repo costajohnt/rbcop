@@ -1,16 +1,22 @@
-==> offenses exit=1 557 <==
+==> offenses exit=1 910 <==
 000/000_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
 001/001_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
 002/002_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_xpath` instead of `have_selector`.
-005/005_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
-006/006_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+003/003_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_no_css` instead of `have_no_selector`.
+004/004_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_no_xpath` instead of `have_no_selector`.
+005/005_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_no_css` instead of `have_no_selector`.
+008/008_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+009/009_spec.rb:1:16: C: [Correctable] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
 
-==> autocorrect exit=0 547 <==
+==> autocorrect exit=0 894 <==
 000/000_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
 001/001_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
 002/002_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_xpath` instead of `have_selector`.
-005/005_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
-006/006_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+003/003_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_no_css` instead of `have_no_selector`.
+004/004_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_no_xpath` instead of `have_no_selector`.
+005/005_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_no_css` instead of `have_no_selector`.
+008/008_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
+009/009_spec.rb:1:16: C: [Corrected] Capybara/RSpec/HaveSelector: Use `have_css` instead of `have_selector`.
 
 ==> corrected/000/000_spec.rb 31 <==
 expect(foo).to have_css('bar')
@@ -21,9 +27,18 @@ expect(foo).to have_css('bar')
 ==> corrected/002/002_spec.rb 33 <==
 expect(foo).to have_xpath('bar')
 
+==> corrected/003/003_spec.rb 49 <==
+expect(foo).to have_no_css('bar', visible: :all)
+
+==> corrected/004/004_spec.rb 36 <==
+expect(foo).to have_no_xpath('bar')
+
 ==> corrected/005/005_spec.rb 34 <==
+expect(foo).to have_no_css('bar')
+
+==> corrected/008/008_spec.rb 34 <==
 expect(foo).to have_css("#{bar}")
 
-==> corrected/006/006_spec.rb 50 <==
+==> corrected/009/009_spec.rb 50 <==
 expect(foo).to have_css("input[name='#{title}']")
 

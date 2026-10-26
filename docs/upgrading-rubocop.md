@@ -122,5 +122,5 @@ new, 8 RuboCop crashes fixed); the largest are Style/MissingElse (2,112 gone), S
 (257 gone), Style/CollectionQuerying, Layout/ClassStructure, Style/SymbolProc,
 Layout/MultilineMethodCallIndentation and Lint/UselessAssignment. Outside cops: `--explain`,
 `--max-offenses-per-cop`, JSON formatter fields for corrections and per-file errors, new MCP tools
-and options, and runner, cache, LSP and target-Ruby lookup changes. Plugin pins are unaffected,
-except that rubocop-capybara 3.1.0 (2026-10-16, `rubocop ~> 1.89`) already supersedes the 3.0.0 pin.
+and options, and runner, cache, LSP and target-Ruby lookup changes. Plugin pins are unaffected
+(rubocop-capybara moved to 3.1.0, `rubocop ~> 1.89`, in #673).

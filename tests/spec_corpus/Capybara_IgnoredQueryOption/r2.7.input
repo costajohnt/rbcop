@@ -1,0 +1,203 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 132 <==
+find('.row', count: 3)
+find_button('Delete', minimum: 2)
+page.find_by_id('row', maximum: 3)
+page&.find_field('Name', between: 1..2)
+
+==> 001/001_spec.rb 178 <==
+find(:css, '.item', exact: true)
+page&.find(:css, '.item', exact: false)
+expect(page).to have_css('.item', exact: true)
+expect(page).to have_selector(:css, '.item', exact: true)
+
+==> 002/002_spec.rb 213 <==
+find('.item', exact: true)
+find(:xpath, './/item', exact: true)
+find(:custom, '.item', exact: true)
+expect(page).to have_xpath('.//item', exact: true)
+expect(page).to have_selector(selector, '.item', exact: true)
+
+==> 003/003_spec.rb 113 <==
+find('.item', text: /foo/, exact_text: true)
+expect(page).to have_css('.item', exact_text: false, text: %r{foo})
+
+==> 004/004_spec.rb 501 <==
+find('.item', text: 'foo', exact_text: true)
+find('.item', text: /foo/, exact_text: 'foo')
+find('.item', exact_text: /foo/)
+find('.item', text: pattern, exact_text: true)
+find(:custom, '.item', text: /foo/, exact_text: true)
+find(:custom, text: /foo/, exact_text: true)
+find(selector, '.item', text: /foo/, exact_text: true)
+expect(page).to have_text('foo', text: /foo/, exact_text: true)
+find('.item', text: /foo/, exact_text: true, **options)
+find('.item', text: /foo/, **options, exact_text: true)
+
+==> 005/005_spec.rb 56 <==
+find('.item', **options, text: /foo/, exact_text: true)
+
+==> 006/006_spec.rb 121 <==
+all(:css, '.item', match: :first)
+first(:button, 'Delete', match: :one)
+page&.find_all(:xpath, './/item', match: :smart)
+
+==> 007/007_spec.rb 208 <==
+all('.item', match: :first)
+all(:custom, '.item', match: :first)
+first(selector, '.item', match: :one)
+find(:css, '.item', match: :one)
+all(:css, '.item', match: strategy)
+all(:css, '.item', match: :invalid)
+
+==> 008/008_spec.rb 90 <==
+all(:css, '.item', match: :first, **options)
+first(:css, '.item', **options, match: :one)
+
+==> 009/009_spec.rb 83 <==
+expect(page).to have_css('.item', count: 3, minimum: 1, maximum: 4, between: 2..4)
+
+==> 010/010_spec.rb 55 <==
+expect(page).to have_text('foo', count: 2, minimum: 1)
+
+==> 011/011_spec.rb 44 <==
+assert_content('foo', count: 2, minimum: 1)
+
+==> 012/012_spec.rb 47 <==
+assert_no_content('foo', count: 2, minimum: 1)
+
+==> 013/013_spec.rb 41 <==
+refute_text('foo', count: 2, minimum: 1)
+
+==> 014/014_spec.rb 44 <==
+refute_content('foo', count: 2, minimum: 1)
+
+==> 015/015_spec.rb 44 <==
+must_have_text('foo', count: 2, minimum: 1)
+
+==> 016/016_spec.rb 44 <==
+wont_have_text('foo', count: 2, minimum: 1)
+
+==> 017/017_spec.rb 47 <==
+must_have_content('foo', count: 2, minimum: 1)
+
+==> 018/018_spec.rb 47 <==
+wont_have_content('foo', count: 2, minimum: 1)
+
+==> 019/019_spec.rb 415 <==
+all('.item', count: 3)
+all('.item', minimum: 1, maximum: 4, between: 2..4)
+all('.item', count: nil, minimum: 1)
+all('.item', count: false, minimum: 1)
+all('.item', count: expected_count, minimum: 1)
+all('.item', count: 3, minimum: 1, **options)
+all('.item', count: 3, **options, minimum: 1)
+all('.item', count: 3, minimum: 1)
+all(:custom, '.item', count: 3, minimum: 1)
+all(selector, '.item', count: 3, minimum: 1)
+
+==> 020/020_spec.rb 41 <==
+all(:css, '.item', count: 3, minimum: 1)
+
+==> 021/021_spec.rb 52 <==
+all(:css, '.item', **options, count: 3, minimum: 1)
+
+==> 022/022_spec.rb 117 <==
+expect(page).to match_css('.item', count: 3, minimum: 1)
+page.matches_selector?(:css, '.item', count: 3, minimum: 1)
+
+==> 023/023_spec.rb 71 <==
+all
+all(:css, '.item', option => true)
+find('.item', exact_text: true)
+
+==> 024/024_spec.rb 190 <==
+find('.row', { count: 3 })
+find(:css, '.item', { exact: true })
+find('.item', { text: /foo/, exact_text: true })
+all(:css, '.item', { match: :first })
+all('.item', { count: 3, minimum: 1 })
+
+==> 025/025_spec.rb 78 <==
+all(:css, '.item',
+    visible: true, # Keep this comment.
+    match: :first)
+
+==> 026/026_spec.rb 100 <==
+all(:css, '.item', exact: true, text: /foo/, exact_text: true, match: :first, count: 3, minimum: 1)
+
+==> 027/027_spec.rb 89 <==
+find_button(:css, exact: true)
+have_text(:css, exact: true)
+have_link(:css, exact: true)
+
+==> 028/028_spec.rb 96 <==
+have_css('.item', count: 2, minimum: record_attempt)
+find(:css, '.item', exact: record_attempt)
+
+==> 029/029_spec.rb 64 <==
+find('.item', text: /foo/, exact_text: 'bar', exact_text: true)
+
+==> 030/030_spec.rb 170 <==
+have_css('.item', filter_set: :custom, count: 2, minimum: 1)
+find(:css, '.item', filter_set: :custom, exact: true)
+all(:css, '.item', filter_set: :custom, match: :first)
+
+==> 031/031_spec.rb 42 <==
+assert_css('.item', exact: true, &filter)
+
+==> 032/032_spec.rb 33 <==
+all(:css, '.item', match: :one,)
+
+==> 033/033_spec.rb 54 <==
+have_css(exact: true,)
+have_css(exact: true, &filter)
+
+==> 034/034_spec.rb 57 <==
+have_css('.item', count: 1, minimum: <<~COUNT)
+  1
+COUNT
+
+==> 035/035_spec.rb 43 <==
+Model.find(count: 1)
+[item].find(count: 1)
+
+==> 036/036_spec.rb 116 <==
+has_ancestor?(:custom, '.item', text: /foo/, exact_text: true)
+have_sibling(:custom, '.item', count: 2, minimum: 1)
+
+==> 037/037_spec.rb 42 <==
+assert_link('Home', count: 2, minimum: 1)
+
+==> 038/038_spec.rb 136 <==
+records.find(count: 1)
+records.first(:css, '.item', match: :first)
+find(:custom, '.item', count: 1)
+find(selector, '.item', minimum: 1)
+
+==> 039/039_spec.rb 160 <==
+have_css('.item', count: 1, minimum: 2, key => nil)
+find('.item', text: /foo/, exact_text: true, key => 'bar')
+find(:css, '.item', exact: true, key => :custom)
+
+==> 040/040_spec.rb 103 <==
+have_css('.item', count: 1, minimum: [MissingConstant])
+have_css('.item', count: 1, between: 1..'two')
+
+==> 041/041_spec.rb 127 <==
+(page).find('.outer') { _1.visible? }.has_css?('.item', exact: true)
+::Capybara.current_session.has_css?('.item', exact: true)
+
+==> 042/042_spec.rb 69 <==
+find('.item', count: 1)
+find('.item', text: /foo/, exact_text: true)
+

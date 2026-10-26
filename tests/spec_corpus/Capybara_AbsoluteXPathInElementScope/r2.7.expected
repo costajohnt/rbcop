@@ -1,0 +1,16 @@
+==> offenses exit=1 672 <==
+000/000_spec.rb:1:30: C: Capybara/AbsoluteXPathInElementScope: Use `.//` for an XPath search within an element.
+000/000_spec.rb:2:34: C: Capybara/AbsoluteXPathInElementScope: Use `.//` for an XPath search within an element.
+000/000_spec.rb:4:21: C: Capybara/AbsoluteXPathInElementScope: Use `.//` for an XPath search within an element.
+002/002_spec.rb:7:25: C: Capybara/AbsoluteXPathInElementScope: Use `.//` for an XPath search within an element.
+002/002_spec.rb:8:25: C: Capybara/AbsoluteXPathInElementScope: Use `.//` for an XPath search within an element.
+002/002_spec.rb:9:24: C: Capybara/AbsoluteXPathInElementScope: Use `.//` for an XPath search within an element.
+
+==> autocorrect exit=1 672 <==
+000/000_spec.rb:1:30: C: Capybara/AbsoluteXPathInElementScope: Use `.//` for an XPath search within an element.
+000/000_spec.rb:2:34: C: Capybara/AbsoluteXPathInElementScope: Use `.//` for an XPath search within an element.
+000/000_spec.rb:4:21: C: Capybara/AbsoluteXPathInElementScope: Use `.//` for an XPath search within an element.
+002/002_spec.rb:7:25: C: Capybara/AbsoluteXPathInElementScope: Use `.//` for an XPath search within an element.
+002/002_spec.rb:8:25: C: Capybara/AbsoluteXPathInElementScope: Use `.//` for an XPath search within an element.
+002/002_spec.rb:9:24: C: Capybara/AbsoluteXPathInElementScope: Use `.//` for an XPath search within an element.
+

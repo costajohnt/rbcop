@@ -1,0 +1,37 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 338 <==
+expect(page).to have_css('.item', minimum: 0)
+page.assert_selector('.item', minimum: 0)
+has_link?('Home', minimum: 0)
+page.must_have_button('Save', minimum: 0)
+expect(page).to have_css('.item', minimum: 0, maximum: nil)
+expect(page).to have_css('.item', minimum: 0, count: nil)
+expect(page).to have_css('.item', minimum: 0, between: nil)
+
+==> 001/001_spec.rb 360 <==
+expect(page).to have_css('.item')
+expect(page).to have_css('.item', minimum: 0, maximum: 2)
+expect(page).to have_css('.item', minimum: 0, count: 1)
+expect(page).to have_css('.item', minimum: 0, between: 0..2)
+expect(page).not_to have_css('.item', minimum: 0)
+expect(page).to have_no_css('.item', minimum: 0)
+all('.item', minimum: 0)
+first('.item', minimum: 0)
+
+==> 002/002_spec.rb 292 <==
+expect(page).to have_css('.item', minimum: limit)
+expect(page).to have_css('.item', minimum: 0, **options)
+expect(page).to have_css('.item', minimum: 0, minimum: 1)
+expect(page).to have_css('.item', { minimum: 0 })
+matcher = have_css('.item', minimum: 0)
+object.has_css?('.item', minimum: 0)
+

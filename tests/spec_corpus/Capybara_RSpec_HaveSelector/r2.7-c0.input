@@ -19,21 +19,33 @@ expect(foo).to have_selector(:css, 'bar')
 ==> 002/002_spec.rb 44 <==
 expect(foo).to have_selector(:xpath, 'bar')
 
-==> 003/003_spec.rb 31 <==
+==> 003/003_spec.rb 60 <==
+expect(foo).to have_no_selector(:css, 'bar', visible: :all)
+
+==> 004/004_spec.rb 47 <==
+expect(foo).to have_no_selector(:xpath, 'bar')
+
+==> 005/005_spec.rb 39 <==
+expect(foo).to have_no_selector('bar')
+
+==> 006/006_spec.rb 31 <==
 expect(foo).to have_css('bar')
 
-==> 004/004_spec.rb 42 <==
+==> 007/007_spec.rb 87 <==
 expect(foo).to have_selector(:foo, 'bar')
+expect(foo).to have_no_selector(:foo, 'bar')
 
-==> 005/005_spec.rb 45 <==
+==> 008/008_spec.rb 45 <==
 expect(foo).to have_selector(:css, "#{bar}")
 
-==> 006/006_spec.rb 55 <==
+==> 009/009_spec.rb 55 <==
 expect(foo).to have_selector("input[name='#{title}']")
 
-==> 007/007_spec.rb 29 <==
+==> 010/010_spec.rb 61 <==
 expect(foo).to have_selector
+expect(foo).to have_no_selector
 
-==> 008/008_spec.rb 35 <==
+==> 011/011_spec.rb 73 <==
 expect(foo).to have_selector(:css)
+expect(foo).to have_no_selector(:css)
 

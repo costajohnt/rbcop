@@ -1,0 +1,90 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 36 <==
+find('.item').native.attribute(:id)
+
+==> 001/001_spec.rb 50 <==
+page.find('.item').native.attribute('aria-label')
+
+==> 002/002_spec.rb 310 <==
+first('.item').native.attribute(:id)
+find('.outer').ancestor('.item').native.attribute(:id)
+find('.outer').sibling('.item').native.attribute(:id)
+find_button('Save').native.attribute(:id)
+find_by_id('item').native.attribute(:id)
+find_field('Name').native.attribute(:id)
+find_link('Home').native.attribute(:id)
+
+==> 003/003_spec.rb 89 <==
+all('.items').first.native.attribute(:id)
+find_all('.items').first.native.attribute(:id)
+
+==> 004/004_spec.rb 54 <==
+element = find('.item')
+element.native.attribute(:id)
+
+==> 005/005_spec.rb 134 <==
+element = find('.item')
+items.each { |element| element.native.attribute(:id) }
+def check(element)
+  element.native.attribute(:id)
+end
+
+==> 006/006_spec.rb 307 <==
+object.native.attribute(:id)
+object = Object.new
+object.native.attribute(:id)
+element = nil
+element.native.attribute(:id)
+records.first.native.attribute(:id)
+records.first(2).native.attribute(:id)
+collection.find { |item| item.active? }.native.attribute(:id)
+element.ancestor('.item').native.attribute(:id)
+
+==> 007/007_spec.rb 45 <==
+native.attribute(:id)
+native&.attribute(:id)
+
+==> 008/008_spec.rb 47 <==
+find('.item').native.attribute(attribute_name)
+
+==> 009/009_spec.rb 37 <==
+(find '.item').native.attribute(:id)
+
+==> 010/010_spec.rb 52 <==
+find('.item') { _1.visible? }.native.attribute(:id)
+
+==> 011/011_spec.rb 44 <==
+page&.find('.item')&.native&.attribute(:id)
+
+==> 012/012_spec.rb 73 <==
+Model.find(1).native.attribute(:id)
+[object].first.native.attribute(:id)
+
+==> 013/013_spec.rb 38 <==
+first('.item').native&.attribute(:id)
+
+==> 014/014_spec.rb 67 <==
+find('.item').native.attribute(
+  # Keep this explanation.
+  :id
+)
+
+==> 015/015_spec.rb 58 <==
+find('.item').native.attribute(
+  <<~ATTR
+    id
+  ATTR
+)
+
+==> 016/016_spec.rb 61 <==
+Capybara.current_session.find('.item').native.attribute(:id)
+

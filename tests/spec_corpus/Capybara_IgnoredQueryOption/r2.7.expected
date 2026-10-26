@@ -1,0 +1,168 @@
+==> offenses exit=1 5057 <==
+000/000_spec.rb:1:14: C: Capybara/IgnoredQueryOption: `count` has no effect when passed to `find`.
+000/000_spec.rb:2:23: C: Capybara/IgnoredQueryOption: `minimum` has no effect when passed to `find_button`.
+000/000_spec.rb:3:24: C: Capybara/IgnoredQueryOption: `maximum` has no effect when passed to `find_by_id`.
+000/000_spec.rb:4:26: C: Capybara/IgnoredQueryOption: `between` has no effect when passed to `find_field`.
+001/001_spec.rb:1:21: C: [Correctable] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+001/001_spec.rb:2:27: C: [Correctable] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+001/001_spec.rb:3:35: C: [Correctable] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+001/001_spec.rb:4:46: C: [Correctable] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+003/003_spec.rb:1:28: C: [Correctable] Capybara/IgnoredQueryOption: `exact_text` has no effect when `text` is a regexp.
+003/003_spec.rb:2:35: C: [Correctable] Capybara/IgnoredQueryOption: `exact_text` has no effect when `text` is a regexp.
+006/006_spec.rb:1:20: C: [Correctable] Capybara/IgnoredQueryOption: `match` has no effect when passed to `all`.
+006/006_spec.rb:2:26: C: [Correctable] Capybara/IgnoredQueryOption: `match` has no effect when passed to `first`.
+006/006_spec.rb:3:35: C: [Correctable] Capybara/IgnoredQueryOption: `match` has no effect when passed to `find_all`.
+009/009_spec.rb:1:45: C: [Correctable] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+009/009_spec.rb:1:57: C: Capybara/IgnoredQueryOption: `maximum` has no effect when `count` is specified.
+009/009_spec.rb:1:69: C: Capybara/IgnoredQueryOption: `between` has no effect when `count` is specified.
+010/010_spec.rb:1:44: C: [Correctable] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+011/011_spec.rb:1:33: C: [Correctable] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+012/012_spec.rb:1:36: C: [Correctable] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+013/013_spec.rb:1:30: C: [Correctable] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+014/014_spec.rb:1:33: C: [Correctable] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+015/015_spec.rb:1:33: C: [Correctable] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+016/016_spec.rb:1:33: C: [Correctable] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+017/017_spec.rb:1:36: C: [Correctable] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+018/018_spec.rb:1:36: C: [Correctable] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+020/020_spec.rb:1:30: C: [Correctable] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+025/025_spec.rb:3:5: C: Capybara/IgnoredQueryOption: `match` has no effect when passed to `all`.
+026/026_spec.rb:1:20: C: [Correctable] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+026/026_spec.rb:1:46: C: Capybara/IgnoredQueryOption: `exact_text` has no effect when `text` is a regexp.
+026/026_spec.rb:1:64: C: Capybara/IgnoredQueryOption: `match` has no effect when passed to `all`.
+026/026_spec.rb:1:89: C: Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+028/028_spec.rb:1:29: C: Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+028/028_spec.rb:2:21: C: Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+029/029_spec.rb:1:47: C: Capybara/IgnoredQueryOption: `exact_text` has no effect when `text` is a regexp.
+031/031_spec.rb:1:21: C: [Correctable] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+032/032_spec.rb:1:20: C: [Correctable] Capybara/IgnoredQueryOption: `match` has no effect when passed to `all`.
+033/033_spec.rb:1:10: C: [Correctable] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+033/033_spec.rb:2:10: C: [Correctable] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+034/034_spec.rb:1:29: C: Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+037/037_spec.rb:1:31: C: [Correctable] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+040/040_spec.rb:1:29: C: Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+040/040_spec.rb:2:29: C: Capybara/IgnoredQueryOption: `between` has no effect when `count` is specified.
+041/041_spec.rb:1:57: C: [Correctable] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+041/041_spec.rb:2:46: C: [Correctable] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+042/042_spec.rb:1:15: C: Capybara/IgnoredQueryOption: `count` has no effect when passed to `find`.
+042/042_spec.rb:2:28: C: [Correctable] Capybara/IgnoredQueryOption: `exact_text` has no effect when `text` is a regexp.
+
+==> autocorrect exit=1 5059 <==
+000/000_spec.rb:1:14: C: Capybara/IgnoredQueryOption: `count` has no effect when passed to `find`.
+000/000_spec.rb:2:23: C: Capybara/IgnoredQueryOption: `minimum` has no effect when passed to `find_button`.
+000/000_spec.rb:3:24: C: Capybara/IgnoredQueryOption: `maximum` has no effect when passed to `find_by_id`.
+000/000_spec.rb:4:26: C: Capybara/IgnoredQueryOption: `between` has no effect when passed to `find_field`.
+001/001_spec.rb:1:21: C: [Corrected] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+001/001_spec.rb:2:27: C: [Corrected] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+001/001_spec.rb:3:35: C: [Corrected] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+001/001_spec.rb:4:46: C: [Corrected] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+003/003_spec.rb:1:28: C: [Corrected] Capybara/IgnoredQueryOption: `exact_text` has no effect when `text` is a regexp.
+003/003_spec.rb:2:35: C: [Corrected] Capybara/IgnoredQueryOption: `exact_text` has no effect when `text` is a regexp.
+006/006_spec.rb:1:20: C: [Corrected] Capybara/IgnoredQueryOption: `match` has no effect when passed to `all`.
+006/006_spec.rb:2:26: C: [Corrected] Capybara/IgnoredQueryOption: `match` has no effect when passed to `first`.
+006/006_spec.rb:3:35: C: [Corrected] Capybara/IgnoredQueryOption: `match` has no effect when passed to `find_all`.
+009/009_spec.rb:1:45: C: [Corrected] Capybara/IgnoredQueryOption: `between` has no effect when `count` is specified.
+009/009_spec.rb:1:45: C: [Corrected] Capybara/IgnoredQueryOption: `maximum` has no effect when `count` is specified.
+009/009_spec.rb:1:45: C: [Corrected] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+010/010_spec.rb:1:44: C: [Corrected] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+011/011_spec.rb:1:33: C: [Corrected] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+012/012_spec.rb:1:36: C: [Corrected] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+013/013_spec.rb:1:30: C: [Corrected] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+014/014_spec.rb:1:33: C: [Corrected] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+015/015_spec.rb:1:33: C: [Corrected] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+016/016_spec.rb:1:33: C: [Corrected] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+017/017_spec.rb:1:36: C: [Corrected] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+018/018_spec.rb:1:36: C: [Corrected] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+020/020_spec.rb:1:30: C: [Corrected] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+025/025_spec.rb:3:5: C: Capybara/IgnoredQueryOption: `match` has no effect when passed to `all`.
+026/026_spec.rb:1:20: C: [Corrected] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+026/026_spec.rb:1:33: C: [Corrected] Capybara/IgnoredQueryOption: `exact_text` has no effect when `text` is a regexp.
+026/026_spec.rb:1:33: C: [Corrected] Capybara/IgnoredQueryOption: `match` has no effect when passed to `all`.
+026/026_spec.rb:1:43: C: [Corrected] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+028/028_spec.rb:1:29: C: Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+028/028_spec.rb:2:21: C: Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+029/029_spec.rb:1:47: C: Capybara/IgnoredQueryOption: `exact_text` has no effect when `text` is a regexp.
+031/031_spec.rb:1:21: C: [Corrected] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+032/032_spec.rb:1:20: C: [Corrected] Capybara/IgnoredQueryOption: `match` has no effect when passed to `all`.
+033/033_spec.rb:1:10: C: [Corrected] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+033/033_spec.rb:2:10: C: [Corrected] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+034/034_spec.rb:1:29: C: Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+037/037_spec.rb:1:31: C: [Corrected] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+040/040_spec.rb:1:29: C: Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+040/040_spec.rb:2:29: C: Capybara/IgnoredQueryOption: `between` has no effect when `count` is specified.
+041/041_spec.rb:1:57: C: [Corrected] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+041/041_spec.rb:2:46: C: [Corrected] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+042/042_spec.rb:1:15: C: Capybara/IgnoredQueryOption: `count` has no effect when passed to `find`.
+042/042_spec.rb:2:28: C: [Corrected] Capybara/IgnoredQueryOption: `exact_text` has no effect when `text` is a regexp.
+
+==> corrected/001/001_spec.rb 125 <==
+find(:css, '.item')
+page&.find(:css, '.item')
+expect(page).to have_css('.item')
+expect(page).to have_selector(:css, '.item')
+
+==> corrected/003/003_spec.rb 76 <==
+find('.item', text: /foo/)
+expect(page).to have_css('.item', text: %r{foo})
+
+==> corrected/006/006_spec.rb 78 <==
+all(:css, '.item')
+first(:button, 'Delete')
+page&.find_all(:xpath, './/item')
+
+==> corrected/009/009_spec.rb 44 <==
+expect(page).to have_css('.item', count: 3)
+
+==> corrected/010/010_spec.rb 43 <==
+expect(page).to have_text('foo', count: 2)
+
+==> corrected/011/011_spec.rb 32 <==
+assert_content('foo', count: 2)
+
+==> corrected/012/012_spec.rb 35 <==
+assert_no_content('foo', count: 2)
+
+==> corrected/013/013_spec.rb 29 <==
+refute_text('foo', count: 2)
+
+==> corrected/014/014_spec.rb 32 <==
+refute_content('foo', count: 2)
+
+==> corrected/015/015_spec.rb 32 <==
+must_have_text('foo', count: 2)
+
+==> corrected/016/016_spec.rb 32 <==
+wont_have_text('foo', count: 2)
+
+==> corrected/017/017_spec.rb 35 <==
+must_have_content('foo', count: 2)
+
+==> corrected/018/018_spec.rb 35 <==
+wont_have_content('foo', count: 2)
+
+==> corrected/020/020_spec.rb 29 <==
+all(:css, '.item', count: 3)
+
+==> corrected/026/026_spec.rb 42 <==
+all(:css, '.item', text: /foo/, count: 3)
+
+==> corrected/031/031_spec.rb 29 <==
+assert_css('.item', &filter)
+
+==> corrected/032/032_spec.rb 20 <==
+all(:css, '.item',)
+
+==> corrected/033/033_spec.rb 29 <==
+have_css()
+have_css(&filter)
+
+==> corrected/037/037_spec.rb 30 <==
+assert_link('Home', count: 2)
+
+==> corrected/041/041_spec.rb 101 <==
+(page).find('.outer') { _1.visible? }.has_css?('.item')
+::Capybara.current_session.has_css?('.item')
+
+==> corrected/042/042_spec.rb 51 <==
+find('.item', count: 1)
+find('.item', text: /foo/)
+

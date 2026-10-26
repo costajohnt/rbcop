@@ -1,58 +1,112 @@
-==> offenses exit=1 2524 <==
+==> offenses exit=1 5083 <==
 000/000_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 001/001_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 002/002_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-003/003_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-004/004_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-005/005_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+003/003_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_field` over `find`.
+003/003_spec.rb:2:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_field` over `find`.
 006/006_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 007/007_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 007/007_spec.rb:2:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 007/007_spec.rb:3:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-007/007_spec.rb:4:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-007/007_spec.rb:5:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 008/008_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 009/009_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 010/010_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 011/011_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 012/012_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 013/013_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+013/013_spec.rb:2:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+013/013_spec.rb:3:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+013/013_spec.rb:4:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+013/013_spec.rb:5:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 014/014_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-014/014_spec.rb:1:18: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-014/014_spec.rb:1:36: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 015/015_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 016/016_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-017/017_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-018/018_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-018/018_spec.rb:2:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+017/017_spec.rb:2:1: C: Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+018/018_spec.rb:1:1: C: Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+018/018_spec.rb:2:1: C: Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+018/018_spec.rb:3:1: C: Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+019/019_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+020/020_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+021/021_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+022/022_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+023/023_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+023/023_spec.rb:1:18: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+023/023_spec.rb:1:36: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+024/024_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+025/025_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+025/025_spec.rb:2:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+026/026_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+027/027_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+028/028_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+028/028_spec.rb:2:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+029/029_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+029/029_spec.rb:2:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+030/030_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+031/031_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+032/032_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+032/032_spec.rb:2:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+044/044_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_link` over `find`.
+045/045_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_link` over `find`.
+045/045_spec.rb:2:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_link` over `find`.
+046/046_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_field` over `find`.
+047/047_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_field` over `find`.
+048/048_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_link` over `find`.
+049/049_spec.rb:1:1: C: [Correctable] Capybara/SpecificFinders: Prefer `find_field` over `find`.
 
-==> autocorrect exit=0 2472 <==
+==> autocorrect exit=1 4985 <==
 000/000_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 001/001_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 002/002_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-003/003_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-004/004_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-005/005_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+003/003_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_field` over `find`.
+003/003_spec.rb:2:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_field` over `find`.
 006/006_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 007/007_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 007/007_spec.rb:2:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 007/007_spec.rb:3:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-007/007_spec.rb:4:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-007/007_spec.rb:5:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 008/008_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 009/009_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 010/010_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 011/011_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 012/012_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 013/013_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+013/013_spec.rb:2:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+013/013_spec.rb:3:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+013/013_spec.rb:4:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+013/013_spec.rb:5:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 014/014_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-014/014_spec.rb:1:18: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-014/014_spec.rb:1:36: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 015/015_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 016/016_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-017/017_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-018/018_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-018/018_spec.rb:2:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+017/017_spec.rb:2:1: C: Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+018/018_spec.rb:1:1: C: Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+018/018_spec.rb:2:1: C: Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+018/018_spec.rb:3:1: C: Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+019/019_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+020/020_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+021/021_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+022/022_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+023/023_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+023/023_spec.rb:1:18: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+023/023_spec.rb:1:36: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+024/024_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+025/025_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+025/025_spec.rb:2:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+026/026_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+027/027_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+028/028_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+028/028_spec.rb:2:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+029/029_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+029/029_spec.rb:2:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+030/030_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+031/031_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+032/032_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+032/032_spec.rb:2:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+044/044_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_link` over `find`.
+045/045_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_link` over `find`.
+045/045_spec.rb:2:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_link` over `find`.
+046/046_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_field` over `find`.
+047/047_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_field` over `find`.
+048/048_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_link` over `find`.
+049/049_spec.rb:1:1: C: [Corrected] Capybara/SpecificFinders: Prefer `find_field` over `find`.
 
 ==> corrected/000/000_spec.rb 22 <==
 find_by_id('some-id')
@@ -63,56 +117,111 @@ find_by_id('some-id')
 ==> corrected/002/002_spec.rb 41 <==
 find_by_id('some-id', class: 'some-cls')
 
-==> corrected/003/003_spec.rb 22 <==
+==> corrected/003/003_spec.rb 61 <==
+find_field(placeholder: 'City')
+find_field(type: 'checkbox')
+
+==> corrected/006/006_spec.rb 22 <==
 find_by_id('some-id')
 
-==> corrected/004/004_spec.rb 41 <==
+==> corrected/007/007_spec.rb 62 <==
+find_by_id('#top')
+find_by_id('ns:foo')
+find_by_id('ns\\foo')
+
+==> corrected/008/008_spec.rb 41 <==
 find_by_id('some-id', class: 'some-cls')
 
-==> corrected/005/005_spec.rb 21 <==
+==> corrected/009/009_spec.rb 21 <==
 find_by_id 'some-id'
 
-==> corrected/006/006_spec.rb 41 <==
+==> corrected/010/010_spec.rb 41 <==
 find_by_id('some-id', class: 'some-cls')
 
-==> corrected/007/007_spec.rb 155 <==
+==> corrected/011/011_spec.rb 22 <==
+find_by_id('some-id')
+
+==> corrected/012/012_spec.rb 50 <==
+find_by_id('some-id', class: 'some-cls.with-dot')
+
+==> corrected/013/013_spec.rb 155 <==
 find_by_id('some-id.some-cls')
 find_by_id('some-id>some-cls')
 find_by_id('some-id,some-cls')
 find_by_id('some-id+some-cls')
 find_by_id('some-id~some-cls')
 
-==> corrected/008/008_spec.rb 56 <==
+==> corrected/014/014_spec.rb 56 <==
 find_by_id('some-id', class: ["some-cls", "other-cls"])
 
-==> corrected/009/009_spec.rb 56 <==
+==> corrected/015/015_spec.rb 56 <==
 find_by_id('some-id', class: ["some-cls", "other-cls"])
 
-==> corrected/010/010_spec.rb 71 <==
+==> corrected/016/016_spec.rb 71 <==
 find_by_id('some-id', class: ["some-cls", "other-cls1", "other-cls2"])
 
-==> corrected/011/011_spec.rb 75 <==
+==> corrected/019/019_spec.rb 75 <==
 find_by_id('some-id', exact_text: 'foo', class: ["some-cls", "other-cls"])
 
-==> corrected/012/012_spec.rb 41 <==
+==> corrected/020/020_spec.rb 72 <==
+find_by_id('some-id', class: 'some-cls', data: { class: 'nested-cls' })
+
+==> corrected/021/021_spec.rb 41 <==
 find_by_id('some-id', exact_text: 'foo')
 
-==> corrected/013/013_spec.rb 40 <==
+==> corrected/022/022_spec.rb 40 <==
 find_by_id 'some-id', exact_text: 'foo'
 
-==> corrected/014/014_spec.rb 70 <==
+==> corrected/023/023_spec.rb 70 <==
 find_by_id('some-id').find_by_id('other-id').find_by_id('another-id')
 
-==> corrected/015/015_spec.rb 22 <==
+==> corrected/024/024_spec.rb 22 <==
 find_by_id('some-id')
 
-==> corrected/016/016_spec.rb 22 <==
+==> corrected/025/025_spec.rb 39 <==
+find_by_id('true')
+find_by_id('false')
+
+==> corrected/026/026_spec.rb 22 <==
 find_by_id('some-id')
 
-==> corrected/017/017_spec.rb 41 <==
+==> corrected/027/027_spec.rb 41 <==
 find_by_id('some-id', class: 'some-cls')
 
-==> corrected/018/018_spec.rb 41 <==
+==> corrected/028/028_spec.rb 120 <==
+find_by_id('some-id', style: 'font-family:\'Inter\'')
+find_by_id('some-id', style: '--target:https://example.test?a=b')
+
+==> corrected/029/029_spec.rb 41 <==
 find_by_id('foo')
 find_by_id('foo[bar]')
+
+==> corrected/030/030_spec.rb 54 <==
+find_by_id('some-id', style: 'font-family:\'Inter\'')
+
+==> corrected/031/031_spec.rb 45 <==
+find_by_id('some-id', style: 'display:none')
+
+==> corrected/032/032_spec.rb 70 <==
+find_by_id('some-id', style: true)
+find_by_id('other-id', style: nil)
+
+==> corrected/044/044_spec.rb 18 <==
+find_link('Home')
+
+==> corrected/045/045_spec.rb 39 <==
+find_link('#top')
+find_link('Sign in')
+
+==> corrected/046/046_spec.rb 19 <==
+find_field('Name')
+
+==> corrected/047/047_spec.rb 25 <==
+find_field('First name')
+
+==> corrected/048/048_spec.rb 40 <==
+find_link('Home', class: 'navbar-link')
+
+==> corrected/049/049_spec.rb 36 <==
+find_field('Email', visible: false)
 

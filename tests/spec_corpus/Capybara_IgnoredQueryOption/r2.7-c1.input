@@ -1,0 +1,23 @@
+==> .rubocop.yml 191 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Capybara/IgnoredQueryOption:
+  DefaultSelector: custom
+
+==> 000/000_spec.rb 189 <==
+find('.item', count: 1)
+find(count: 1)
+find('.item', text: /foo/, exact_text: true)
+have_selector('.item', text: /foo/, exact_text: false)
+all('.item', match: :first, count: 1, minimum: 2)
+
+==> 001/001_spec.rb 72 <==
+find(:css, '.item', exact: true)
+have_text('foo', count: 1, minimum: 2)
+

@@ -1,0 +1,12 @@
+==> offenses exit=1 200 <==
+001/001_spec.rb:1:21: C: [Correctable] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+001/001_spec.rb:2:21: C: [Correctable] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+
+==> autocorrect exit=0 196 <==
+001/001_spec.rb:1:21: C: [Corrected] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+001/001_spec.rb:2:21: C: [Corrected] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+
+==> corrected/001/001_spec.rb 78 <==
+find(:css, '.menu', visible: :visible)
+find_button('Save', visible: :visible)
+

@@ -1,0 +1,17 @@
+==> .rubocop.yml 196 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Capybara/RSpec/VisibilityMatcher:
+  DefaultSelector: custom
+
+==> 000/000_spec.rb 162 <==
+expect(page).to have_selector('.x', visible: true)
+expect(page).to have_selector(visible: true)
+expect(page).to have_selector(:css, '.my_element', visible: true)
+

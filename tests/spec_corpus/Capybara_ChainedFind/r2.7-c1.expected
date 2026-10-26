@@ -1,0 +1,6 @@
+==> offenses exit=1 126 <==
+000/000_spec.rb:1:1: C: Capybara/ChainedFind: Avoid chaining `find` methods. Combine the selectors into a single `find` call.
+
+==> autocorrect exit=1 126 <==
+000/000_spec.rb:1:1: C: Capybara/ChainedFind: Avoid chaining `find` methods. Combine the selectors into a single `find` call.
+

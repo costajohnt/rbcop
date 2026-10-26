@@ -1,0 +1,18 @@
+==> offenses exit=1 840 <==
+000/000_spec.rb:1:35: C: Capybara/AlwaysTrueCountQuery: `minimum: 0` makes this positive query succeed with no matches.
+000/000_spec.rb:2:31: C: Capybara/AlwaysTrueCountQuery: `minimum: 0` makes this positive query succeed with no matches.
+000/000_spec.rb:3:19: C: Capybara/AlwaysTrueCountQuery: `minimum: 0` makes this positive query succeed with no matches.
+000/000_spec.rb:4:31: C: Capybara/AlwaysTrueCountQuery: `minimum: 0` makes this positive query succeed with no matches.
+000/000_spec.rb:5:35: C: Capybara/AlwaysTrueCountQuery: `minimum: 0` makes this positive query succeed with no matches.
+000/000_spec.rb:6:35: C: Capybara/AlwaysTrueCountQuery: `minimum: 0` makes this positive query succeed with no matches.
+000/000_spec.rb:7:35: C: Capybara/AlwaysTrueCountQuery: `minimum: 0` makes this positive query succeed with no matches.
+
+==> autocorrect exit=1 840 <==
+000/000_spec.rb:1:35: C: Capybara/AlwaysTrueCountQuery: `minimum: 0` makes this positive query succeed with no matches.
+000/000_spec.rb:2:31: C: Capybara/AlwaysTrueCountQuery: `minimum: 0` makes this positive query succeed with no matches.
+000/000_spec.rb:3:19: C: Capybara/AlwaysTrueCountQuery: `minimum: 0` makes this positive query succeed with no matches.
+000/000_spec.rb:4:31: C: Capybara/AlwaysTrueCountQuery: `minimum: 0` makes this positive query succeed with no matches.
+000/000_spec.rb:5:35: C: Capybara/AlwaysTrueCountQuery: `minimum: 0` makes this positive query succeed with no matches.
+000/000_spec.rb:6:35: C: Capybara/AlwaysTrueCountQuery: `minimum: 0` makes this positive query succeed with no matches.
+000/000_spec.rb:7:35: C: Capybara/AlwaysTrueCountQuery: `minimum: 0` makes this positive query succeed with no matches.
+

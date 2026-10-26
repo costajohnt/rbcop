@@ -561,6 +561,17 @@ impl Scan {
     }
 }
 
+/// Whether Onigmo compiles `source`: `error` and an unbalanced `)` (which Prism reports in a
+/// literal) make it false; None when the scanner does not model something in it.
+pub fn compiles(source: &str) -> Option<bool> {
+    let mut s = Scan { c: source.chars().collect(), i: 0, ..Scan::default() };
+    match s.alternation(false) {
+        Err(Stop::Unknown) => None,
+        Err(Stop::Error(_)) => Some(false),
+        Ok(()) => Some(s.i >= s.c.len() && error(source).is_none()),
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::error;
