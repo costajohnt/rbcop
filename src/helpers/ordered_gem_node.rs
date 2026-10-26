@@ -78,13 +78,11 @@ fn first_line(cx: &Cx, d: &Declaration) -> usize {
 }
 
 /// OrderedGemNode: report `current` if it directly follows `previous` and sorts before it.
-/// `msg` gets (current name, previous name). The fix moves `current` above `swap_with` (the cop's
-/// `previous_declaration(current)`, normally `previous`).
+/// `msg` gets (current name, previous name). The fix moves `current` above `previous`.
 pub fn check_pair(
     cx: &mut Cx,
     previous: &Declaration,
     current: &Declaration,
-    swap_with: &Declaration,
     msg: fn(&str, &str) -> String,
 ) {
     if cx.src.line_of(previous.end) + 1 != first_line(cx, current) {
@@ -95,7 +93,7 @@ pub fn check_pair(
     }
     // OrderedGemCorrector.correct
     let cur = declaration_with_comment(cx, current);
-    let prev = declaration_with_comment(cx, swap_with);
+    let prev = declaration_with_comment(cx, previous);
     let text = cx.src.text;
     cx.add_fix(current.start, current.end, msg(&current.name, &previous.name), |c| {
         if text[cur.0..cur.1].ends_with('\n') {
