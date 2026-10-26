@@ -55,28 +55,111 @@ fn masgn_or_block(node: &Node) -> bool {
     each_branch(node, &mut |b| b.single().is_some_and(|n| n.as_multi_write_node().is_some() || is_block(&n)))
 }
 
-/// build_expression; None where RuboCop would raise (no selector).
-fn build_expression(src: &Source, b: &Body) -> Option<String> {
-    let Some(n) = b.single() else { return Some(source(src, b).to_string()) };
-    let text = node_text(&n).to_string();
-    let Some(c) = n.as_call_node() else { return Some(text) };
+/// require_argument_parentheses?: a call (not an arithmetic operation, `[]` or `[]=`) with
+/// unparenthesized arguments.
+fn require_argument_parentheses(n: &Node) -> bool {
+    let Some(c) = n.as_call_node() else { return false };
     if c.block().is_some_and(|b| b.as_block_node().is_some()) {
-        return Some(text);
+        return false;
     }
     let name = method_name(&c);
+    let has_args = c.arguments().is_some() || c.block().is_some();
     let parens = c.opening_loc().is_some_and(|o| o.as_slice() == b"(");
-    let first_arg = c
+    !matches!(name, "+" | "-" | "*" | "/" | "%" | "**" | "[]" | "[]=") && !parens && has_args
+}
+
+/// build_expression; None where RuboCop would raise (no selector).
+fn build_expression(src: &Source, n: &Node) -> Option<String> {
+    let text = node_text(n).to_string();
+    if !require_argument_parentheses(n) {
+        return Some(text);
+    }
+    let c = n.as_call_node().unwrap();
+    let first = c
         .arguments()
         .and_then(|a| a.arguments().iter().next())
         .map(|a| a.location().start_offset())
-        .or_else(|| c.block().map(|b| b.location().start_offset()));
-    if matches!(name, "+" | "-" | "*" | "/" | "%" | "**") || parens || name == "[]" || name == "[]=" {
-        return Some(text);
-    }
-    let Some(first) = first_arg else { return Some(text) };
+        .or_else(|| c.block().map(|b| b.location().start_offset()))?;
     let sel_end = c.message_loc()?.end_offset();
     let (s, e) = (n.location().start_offset(), n.location().end_offset());
     Some(format!("{}({})", src.slice(s, sel_end), src.slice(first, e)))
+}
+
+/// `(send x :!)` with its selector spelled `sel` (`!` for prefix_bang?, `not` for prefix_not?).
+fn negation(n: &Node, sel: &[u8]) -> bool {
+    n.as_call_node().is_some_and(|c| {
+        c.receiver().is_some() && method_name(&c) == "!" && c.message_loc().is_some_and(|m| m.as_slice() == sel)
+    })
+}
+
+/// lower_precedence_than_ternary?: expressions that bind looser than `?:` (or cannot appear
+/// unparenthesized inside it).
+fn lower_precedence_than_ternary(n: &Node) -> bool {
+    if matches!(
+        n,
+        Node::AndNode { .. }
+            | Node::OrNode { .. }
+            | Node::IfNode { .. }
+            | Node::UnlessNode { .. }
+            | Node::RescueModifierNode { .. }
+            | Node::MatchPredicateNode { .. }
+            | Node::MatchRequiredNode { .. }
+            | Node::WhileNode { .. }
+            | Node::UntilNode { .. }
+    ) {
+        return true;
+    }
+    if negation(n, b"not") {
+        return true;
+    }
+    // prefix_bang_on_command?: `!foo a` leaves `foo`'s arguments unparenthesized at the end.
+    if negation(n, b"!") {
+        let r = n.as_call_node().unwrap().receiver().unwrap();
+        return require_argument_parentheses(&r) || lower_precedence_than_ternary(&r);
+    }
+    match n {
+        Node::YieldNode { .. } => {
+            let y = n.as_yield_node().unwrap();
+            y.arguments().is_some() && y.rparen_loc().is_none()
+        }
+        Node::SuperNode { .. } => {
+            let s = n.as_super_node().unwrap();
+            let args = s.arguments().is_some() || s.block().is_some_and(|b| b.as_block_argument_node().is_some());
+            args && s.rparen_loc().is_none()
+        }
+        Node::DefinedNode { .. } => n.as_defined_node().unwrap().rparen_loc().is_none(),
+        _ => false,
+    }
+}
+
+fn ternary_operand(src: &Source, n: &Node) -> Option<String> {
+    if lower_precedence_than_ternary(n) { Some(format!("({})", node_text(n))) } else { build_expression(src, n) }
+}
+
+fn branch_operand(src: &Source, b: &Body) -> Option<String> {
+    match b.single() {
+        Some(n) => ternary_operand(src, &n),
+        None => Some(source(src, b).to_string()),
+    }
+}
+
+/// operand_of_parent?: the ternary is an operand of an `and`/`or` or of a call (its receiver,
+/// or an argument of an operator method other than `[]`/`[]=`), so it needs parentheses.
+fn operand_of_parent(parent: Option<&Node>, node: &Node) -> bool {
+    let Some(parent) = parent else { return false };
+    if helpers::parser_parent::is_operator_keyword(parent) {
+        return true;
+    }
+    let Some(call) = parent.as_call_node() else { return false };
+    if negation(parent, b"not") {
+        return false;
+    }
+    let start = node.location().start_offset();
+    if call.receiver().is_some_and(|r| r.location().start_offset() == start) {
+        return true;
+    }
+    let name = method_name(&call);
+    helpers::node_types::is_operator_method(name) && name != "[]" && name != "[]="
 }
 
 fn opt_source<'s>(src: &Source<'s>, b: &Option<Body>) -> &'s str {
@@ -94,7 +177,7 @@ fn build_else_branch(src: &Source, second: &Node) -> String {
     result
 }
 
-fn replacement(src: &Source, node: &Node) -> Option<String> {
+fn replacement(src: &Source, node: &Node, parent: Option<&Node>) -> Option<String> {
     let (cond, if_branch, els) = parts(node);
     if let Some(e) = else_if(&els) {
         let mut tail = build_else_branch(src, &e);
@@ -102,18 +185,19 @@ fn replacement(src: &Source, node: &Node) -> Option<String> {
         return Some(format!("if {}\n  {}\n{tail}\nend", node_text(&cond), opt_source(src, &if_branch)));
     }
     let then_code = match &if_branch {
-        Some(b) => build_expression(src, b)?,
+        Some(b) => branch_operand(src, b)?,
         None => "nil".to_string(),
     };
     let else_code = match &els {
-        Some(Else::Body(Some(b))) => build_expression(src, b)?,
+        Some(Else::Body(Some(b))) => branch_operand(src, b)?,
         _ => "nil".to_string(),
     };
     let (then_code, else_code) =
         if node.as_unless_node().is_some() { (else_code, then_code) } else { (then_code, else_code) };
-    let c = node_text(&cond);
-    let c = if assignment_parts(&cond).is_some() { format!("({c})") } else { c.to_string() };
-    Some(format!("{c} ? {then_code} : {else_code}"))
+    // ternary_condition: an assignment would capture the whole ternary.
+    let c = if assignment_parts(&cond).is_some() { format!("({})", node_text(&cond)) } else { ternary_operand(src, &cond)? };
+    let ternary = format!("{c} ? {then_code} : {else_code}");
+    Some(if operand_of_parent(parent, node) { format!("({ternary})") } else { ternary })
 }
 
 impl Cop for IfWithSemicolon {
@@ -129,7 +213,8 @@ impl Cop for IfWithSemicolon {
         if is_pattern_guard(node, cx.ancestors) || normal_keyword(node).is_none() || is_elsif(node) {
             return;
         }
-        if parser_parent(cx.ancestors).is_some_and(|p| p.as_if_node().is_some() || p.as_unless_node().is_some()) {
+        let parent = parser_parent(cx.ancestors);
+        if parent.is_some_and(|p| p.as_if_node().is_some() || p.as_unless_node().is_some()) {
             return;
         }
         let (start, end) = (node.location().start_offset(), node.location().end_offset());
@@ -155,7 +240,7 @@ impl Cop for IfWithSemicolon {
         };
         let keyword = if node.as_unless_node().is_some() { "unless" } else { "if" };
         let msg = format!("Do not use `{keyword} {};` - {template}.", node_text(&cond));
-        let fix = if newline || masgn { Some(None) } else { replacement(src, node).map(Some) };
+        let fix = if newline || masgn { Some(None) } else { replacement(src, node, parent).map(Some) };
         // A raising corrector loses the offense and skips ignore_node.
         let Some(fix) = fix else { return };
         cx.state::<Vec<(usize, usize)>>().push((start, end));

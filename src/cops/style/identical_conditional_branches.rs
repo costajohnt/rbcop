@@ -305,7 +305,7 @@ impl Cop for IdenticalConditionalBranches {
                 let (s, en) = range(e);
                 let expr_src = &src.text[s..en];
                 let msg = format!("Move `{expr_src}` out of the conditional.");
-                let lines = helpers::whole_lines::range_by_whole_lines(src.text, s, en, true);
+                let lines = removal_range(src.text, s, en);
                 let inserted = &inserted;
                 let parent = parent.as_ref();
                 cx.add_fix(s, en, msg, |c| {
@@ -383,4 +383,37 @@ impl Cop for IdenticalConditionalBranches {
 
 fn is_assignment_node(node: &Node) -> bool {
     helpers::node_types::is_assignment(node)
+}
+
+/// removal_range: the expression's whole lines when it is alone on them, else the expression with
+/// a `;` separator after (or before) it, else with the spaces after it.
+fn removal_range(text: &str, s: usize, e: usize) -> (usize, usize) {
+    let lines = helpers::whole_lines::range_by_whole_lines(text, s, e, true);
+    let ruby_space = [' ', '\t', '\n', '\x0b', '\x0c', '\r', '\0'];
+    if text[lines.0..lines.1].trim_matches(ruby_space) == &text[s..e] {
+        return lines;
+    }
+    let blank = |c: u8| c == b' ' || c == b'\t';
+    let after = &text.as_bytes()[e..];
+    let a = after.iter().take_while(|&&c| blank(c)).count();
+    if after.get(a) == Some(&b';') {
+        let b = after[a + 1..].iter().take_while(|&&c| blank(c)).count();
+        return (s, e + a + 1 + b);
+    }
+    let before = &text.as_bytes()[..s];
+    let a = before.iter().rev().take_while(|&&c| blank(c)).count();
+    if before.len() > a && before[before.len() - a - 1] == b';' {
+        let b = before[..before.len() - a - 1].iter().rev().take_while(|&&c| blank(c)).count();
+        return (s - a - 1 - b, e);
+    }
+    helpers::range_help::range_with_surrounding_space(
+        text,
+        s,
+        e,
+        helpers::range_help::Surrounding {
+            side: helpers::range_help::Side::Right,
+            newlines: false,
+            ..Default::default()
+        },
+    )
 }

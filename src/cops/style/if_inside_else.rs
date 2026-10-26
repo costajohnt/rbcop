@@ -53,10 +53,11 @@ impl Cop for IfInsideElse {
         let me = (node.location().start_offset(), helpers::if_node::parser_end(node));
         let ignored = cx.state::<Vec<(usize, usize)>>().iter().any(|&(a, b)| a <= me.0 && me.1 <= b);
         let src = cx.src;
-        let edits = if ignored { Vec::new() } else { autocorrect(src, &inner, &inner_node, (else_kw.start_offset(), else_kw.end_offset())) };
+        let skip = ignored || shares_lines_with_other_code(src, &inner);
+        let edits = if skip { Vec::new() } else { autocorrect(src, &inner, &inner_node, (else_kw.start_offset(), else_kw.end_offset())) };
         let ran = Cell::new(false);
         cx.add_fix(kw.start_offset(), kw.end_offset(), "Convert `if` nested inside `else` to `elsif`.", |c| {
-            if ignored {
+            if skip {
                 return;
             }
             ran.set(true);
@@ -124,27 +125,7 @@ fn autocorrect(src: &Source, inner: &IfNode, inner_node: &Node, else_kw: (usize,
     }
     let kw = inner.if_keyword_loc().unwrap();
     let (ks, ke) = (kw.start_offset(), ce);
-    if let Some((bs, mut be)) = if_branch {
-        // range_with_comments(if_branch): parser's Associator gives a single statement its leading
-        // comments, and a decorating comment when no descendant ends on its last line first; a
-        // `begin` (2+ statements) gets none.
-        let stmts: Vec<Node> = inner.statements().unwrap().body().iter().collect();
-        let mut start = bs;
-        if let [only] = stmts.as_slice() {
-            let cond_line = src.line_of(ce);
-            start = helpers::comment_association::leading(src, bs, ce, Some(cond_line))
-                .iter()
-                .map(|c| c.start)
-                .min()
-                .map_or(bs, |s| s.min(bs));
-            let last_line = src.line_of(be);
-            let mut v = EndsOnLine { src, line: last_line, found: false, depth: 0 };
-            v.visit(only);
-            if !v.found
-                && let Some(c) = src.comments.iter().find(|c| c.start >= be && src.line_of(c.start) == last_line) {
-                    be = c.end;
-                }
-        }
+    if let Some((start, be)) = branch_with_comments(src, inner) {
         edits.push(Edit::Replace(ks, ke, text[start..be].to_string()));
         let (ls, le) = range_by_whole_lines(text, start, be, true);
         edits.push(Edit::Remove(ls, le));
@@ -157,6 +138,56 @@ fn autocorrect(src: &Source, inner: &IfNode, inner_node: &Node, else_kw: (usize,
     let (es, ee) = range_by_whole_lines(text, end.start_offset(), end.end_offset(), true);
     edits.push(Edit::Remove(es, ee));
     edits
+}
+
+/// range_with_comments(if_branch): parser's Associator gives a single statement its leading
+/// comments, and a decorating comment when no descendant ends on its last line first; a `begin`
+/// (2+ statements) gets none.
+fn branch_with_comments(src: &Source, inner: &IfNode) -> Option<(usize, usize)> {
+    let stmts_node = inner.statements()?;
+    let (bs, mut be) = range(&stmts_node.as_node());
+    let stmts: Vec<Node> = stmts_node.body().iter().collect();
+    let mut start = bs;
+    if let [only] = stmts.as_slice() {
+        let ce = inner.predicate().location().end_offset();
+        let cond_line = src.line_of(ce);
+        start = helpers::comment_association::leading(src, bs, ce, Some(cond_line))
+            .iter()
+            .map(|c| c.start)
+            .min()
+            .map_or(bs, |s| s.min(bs));
+        let last_line = src.line_of(be);
+        let mut v = EndsOnLine { src, line: last_line, found: false, depth: 0 };
+        v.visit(only);
+        if !v.found
+            && let Some(c) = src.comments.iter().find(|c| c.start >= be && src.line_of(c.start) == last_line)
+        {
+            be = c.end;
+        }
+    }
+    Some((start, be))
+}
+
+/// shares_lines_with_other_code?: the `elsif` correction moves and removes whole lines, so it
+/// is skipped when the nested `if` condition, its `if` branch or its `end` shares a line with
+/// other code (or a modifier `if` does not begin its line).
+fn shares_lines_with_other_code(src: &Source, inner: &IfNode) -> bool {
+    if inner.then_keyword_loc().is_some_and(|t| t.as_slice() == b"then") {
+        return false;
+    }
+    let start = inner.as_node().location().start_offset();
+    let Some(end) = inner.end_keyword_loc() else { return !src.begins_its_line(start) };
+    let kw = inner.if_keyword_loc().unwrap().start_offset();
+    let mut ranges = vec![(kw, inner.predicate().location().end_offset()), (end.start_offset(), end.end_offset())];
+    ranges.extend(branch_with_comments(src, inner));
+    ranges.iter().any(|&(s, e)| !src.begins_its_line(s) || !ends_its_line(src, e))
+}
+
+/// ends_its_line?: only whitespace, or a comment, follows `off` on its line.
+fn ends_its_line(src: &Source, off: usize) -> bool {
+    let rest = &src.text[off..];
+    let rest = rest[..rest.find('\n').unwrap_or(rest.len())].trim_start_matches([' ', '\t', '\r', '\x0b', '\x0c']);
+    rest.is_empty() || rest.starts_with('#')
 }
 
 /// IfThenCorrector#replacement with `indentation: 0`.
