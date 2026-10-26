@@ -5,7 +5,7 @@ to RuboCop (offenses, ranges, messages, `[Correctable]`, autocorrect, formatters
 exit status). `README.md` covers install, usage, parity and speed.
 
 ## Build / gates
-- `cargo build --release` (Rust 1.88+). Binary: `target/release/rbcop`.
+- `cargo build --release` (Rust 1.89+). Binary: `target/release/rbcop`.
 - Builds against the patched `vendor/ruby-prism`; the crate is not on crates.io.
 - `scripts/ci.sh` is the gate: `cargo fmt --check`,
   `cargo clippy --release --all-targets -- -D warnings`, `cargo build --release`,

@@ -4,8 +4,8 @@ version = "0.1.2"
 description = "RuboCop reimplemented in Rust, aiming for byte-identical output"
 repository = "https://github.com/costajohnt/rbcop"
 readme = "README.md"
-# let chains (`if let ... && let ...`) need 1.88.
-rust-version = "1.88"
+# let chains (`if let ... && let ...`) need 1.88; vendor/rubydex needs 1.89.
+rust-version = "1.89"
 # Not publishable: the [patch] below points at vendor/ruby-prism, which `cargo package` drops.
 publish = false
 edition = "2024"
@@ -17,6 +17,9 @@ fancy-regex = "0.14.0"
 regex = "1.13.1"
 ruby-prism = "1.9.0"
 ruby-prism-sys = "1.9.0"
+# AllCops/UseProjectIndex (#295): RuboCop builds its project index with the rubydex gem;
+# vendor/rubydex is that gem's Rust core, so the index resolves exactly as RuboCop's does.
+rubydex = { path = "vendor/rubydex" }
 
 # musl's allocator serializes rbcop's worker threads (several times slower than glibc's).
 [target.'cfg(target_env = "musl")'.dependencies]
