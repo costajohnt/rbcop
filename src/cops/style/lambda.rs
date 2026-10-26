@@ -9,11 +9,13 @@ fn span(l: &Location) -> (usize, usize) {
     (l.start_offset(), l.end_offset())
 }
 
-/// Parser `args` children as source: regular arguments, then `; shadow` ones.
-fn lambda_arg_string(bp: &BlockParametersNode) -> String {
-    let mut regular: Vec<&str> = Vec::new();
+/// Parser `args` children as source: regular arguments, then `; shadow` ones. With
+/// `parenthesize_defaults` (LambdaLiteralToMethodCorrector#argument_source, 1.92), a default value
+/// that is an operator expression is parenthesized, since `|x = a || b|` would not parse.
+fn lambda_arg_string(bp: &BlockParametersNode, parenthesize_defaults: bool) -> String {
+    let mut regular: Vec<String> = Vec::new();
     if let Some(p) = bp.parameters() {
-        regular = parameter_nodes(&p).iter().map(node_text).collect();
+        regular = parameter_nodes(&p).iter().map(|a| argument_source(a, parenthesize_defaults)).collect();
     }
     let shadow: Vec<&str> = bp.locals().iter().map(|l| node_text(&l)).collect();
     let mut s = regular.join(", ");
@@ -21,6 +23,42 @@ fn lambda_arg_string(bp: &BlockParametersNode) -> String {
         s.push_str(&format!("; {}", shadow.join(", ")));
     }
     s
+}
+
+fn argument_source(arg: &Node, parenthesize_defaults: bool) -> String {
+    let value = match (arg.as_optional_parameter_node(), arg.as_optional_keyword_parameter_node()) {
+        (Some(o), _) => o.value(),
+        (_, Some(k)) => k.value(),
+        _ => return node_text(arg).to_string(),
+    };
+    if !parenthesize_defaults || !operator_expression(&value) {
+        return node_text(arg).to_string();
+    }
+    let start = arg.location().start_offset();
+    let name = &arg.location().as_slice()[..value.location().start_offset() - start];
+    format!("{}({})", String::from_utf8_lossy(name), node_text(&value))
+}
+
+/// `operator_expression?`: a range, `if`, `and`/`or`, or an operator method call other than `[]`.
+fn operator_expression(node: &Node) -> bool {
+    if matches!(
+        node,
+        Node::RangeNode { .. } | Node::IfNode { .. } | Node::UnlessNode { .. } | Node::AndNode { .. } | Node::OrNode { .. }
+    ) {
+        return true;
+    }
+    let Some(c) = node.as_call_node().filter(|c| c.block().is_none_or(|b| b.as_block_node().is_none())) else {
+        return false;
+    };
+    let name = method_name(&c);
+    name != "[]" && helpers::node_types::is_operator_method(name)
+}
+
+/// `rescue_or_ensure_clause?` on a lambda body: an implicit begin with `rescue` (not a modifier)
+/// or `ensure`.
+fn rescue_or_ensure_clause(body: Option<Node>) -> bool {
+    body.and_then(|b| b.as_begin_node())
+        .is_some_and(|b| b.begin_keyword_loc().is_none() && (b.rescue_clause().is_some() || b.ensure_clause().is_some()))
 }
 
 /// Parser `args` is empty (no parameters and no shadow args).
@@ -64,7 +102,20 @@ impl Cop for Lambda {
             let params = block.parameters().and_then(|p| p.as_block_parameters_node());
             let args = params.as_ref().filter(|bp| !args_empty(bp)).map(|bp| {
                 let closing = bp.closing_loc().map_or(bp.location().end_offset(), |c| c.end_offset());
-                (format!("({})", lambda_arg_string(bp)), block.opening_loc().end_offset(), closing)
+                let mut arg_str = lambda_arg_string(bp, false);
+                // 1.92: follow Layout/SpaceInsideParens and Layout/SpaceInLambdaLiteral.
+                if helpers::alignment::enabled_cop_str(cx, "Layout/SpaceInsideParens", "EnforcedStyle")
+                    .is_some_and(|s| s == "space" || s == "compact")
+                {
+                    arg_str = format!(" {arg_str} ");
+                }
+                arg_str = format!("({arg_str})");
+                if helpers::alignment::enabled_cop_str(cx, "Layout/SpaceInLambdaLiteral", "EnforcedStyle").as_deref()
+                    == Some("require_space")
+                {
+                    arg_str = format!(" {arg_str}");
+                }
+                (arg_str, block.opening_loc().end_offset(), closing)
             });
             cx.add_fix(s, e, msg, |c| {
                 c.replace(s, e, "->");
@@ -86,6 +137,16 @@ impl Cop for Lambda {
         if !offending {
             return;
         }
+        // uncorrectable_lambda_literal? (1.92): no offense in a pattern, nor for a do-end body with
+        // rescue/ensure that would need `{ }` delimiters.
+        if helpers::pattern_matching_help::in_pattern(cx.ancestors, span(&node.location())) {
+            return;
+        }
+        let braces = l.opening_loc().as_slice() == b"{";
+        let unparenthesized_arg = arg_to_unparenthesized_call(node, cx.ancestors);
+        if rescue_or_ensure_clause(l.body()) && !braces && unparenthesized_arg {
+            return;
+        }
         let msg = format!("Use the `lambda` method for {} lambdas.", modifier(style, multiline));
         let sel = span(&l.operator_loc());
         let params = l.parameters();
@@ -97,17 +158,16 @@ impl Cop for Lambda {
         let args_open = bp.as_ref().and_then(|b| b.opening_loc()).map(|o| o.start_offset());
         let args_close = bp.as_ref().and_then(|b| b.closing_loc()).map(|o| o.end_offset());
         let parenthesized = bp.as_ref().and_then(|b| b.opening_loc()).is_some_and(|o| o.as_slice() == b"(");
-        let arg_str = bp.as_ref().map(lambda_arg_string).unwrap_or_default();
-        let braces = l.opening_loc().as_slice() == b"{";
-        let unparenthesized_arg = arg_to_unparenthesized_call(node, cx.ancestors);
+        let arg_str = bp.as_ref().map(|b| lambda_arg_string(b, true)).unwrap_or_default();
         let bytes = src.text.as_bytes();
         let separating_space = bytes.get(open.0 + 2).is_some_and(|&c| helpers::parser_tokens::is_ruby_space(c));
         cx.add_fix(sel.0, sel.1, msg, |c| {
             // remove_unparenthesized_whitespace
             if let (false, false, Some((as_, ae))) = (empty, parenthesized, args_loc) {
                 c.remove_preceding(as_, ae, as_ - sel.1);
+                // 1.92: the whitespace before the body collapses to one space.
                 if open.0 > ae + 1 {
-                    c.remove_preceding(open.0, open.1, open.0 - ae - 1);
+                    c.replace(ae, open.0, " ");
                 }
             }
             if block_type {
