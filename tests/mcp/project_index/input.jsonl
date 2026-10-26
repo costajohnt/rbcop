@@ -1,0 +1,4 @@
+{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"t","version":"1"}}}
+{"jsonrpc":"2.0","method":"notifications/initialized"}
+{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"path":"b.rb"}}}
+{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"# frozen_string_literal: true\n\nFoo[] += 1\n","path":"c.rb"}}}

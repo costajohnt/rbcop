@@ -187,7 +187,8 @@ impl Server {
                     log("Configuration file changed; restart required");
                     stop(|| {});
                 }
-                // ponytail: otherwise RuboCop drops its project index; rbcop keeps none.
+                // A watched source file changed on disk: the next run rebuilds the index.
+                self.runtime.reset_project_index();
             }
             "workspace/executeCommand" => {
                 let command = dig(&["command"]).map_or(String::new(), Json::string);
@@ -221,7 +222,9 @@ impl Server {
                     json(&uri)
                 ));
             }
-            "textDocument/willSave" | "textDocument/didSave" | "$/cancelRequest" | "$/setTrace" => {}
+            // The buffer is now on disk: the next run rebuilds the index.
+            "textDocument/didSave" => self.runtime.reset_project_index(),
+            "textDocument/willSave" | "$/cancelRequest" | "$/setTrace" => {}
             // Routes#for finds these public methods too.
             "method_missing" => {
                 if request.get("id").is_some() {

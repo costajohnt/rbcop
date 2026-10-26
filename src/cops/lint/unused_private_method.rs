@@ -69,7 +69,7 @@ impl Cop for UnusedPrivateMethod {
         let Some(ns) = project_index::enclosing_namespace(index, anc) else { return };
         let member = format!("{name}()");
         // Before the read guard below: it takes one of its own the first time.
-        let referenced = index.method_reference_names().contains(&name);
+        let referenced = index.method_referenced(&name);
         {
             let ix = index.read();
             let Some(decl) = ix.member(ns, &member) else { return };

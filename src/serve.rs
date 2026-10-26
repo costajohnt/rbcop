@@ -21,6 +21,9 @@ pub struct Runtime {
     pub only: Vec<String>,
     /// The `--only` each config's cops were first mobilized with, by config.
     mobilized: HashMap<usize, Vec<String>>,
+    /// StdinRunner's @project_index_built: the index is built from disk at the first run and
+    /// reused until `reset_project_index`.
+    index_built: bool,
 }
 
 /// What a run returns: the report and, when autocorrecting, the corrected source.
@@ -38,7 +41,12 @@ impl Runtime {
     pub fn new(store: Store, pwd_config: Arc<Resolved>) -> Runtime {
         rbcop::helpers::lsp::start_serving();
         let cwd = store.cwd().to_path_buf();
-        Runtime { store, cwd, pwd_config, only: Vec::new(), mobilized: HashMap::new() }
+        Runtime { store, cwd, pwd_config, only: Vec::new(), mobilized: HashMap::new(), index_built: false }
+    }
+
+    /// Runtime#reset_project_index: a file changed on disk, so the next run rebuilds the index.
+    pub fn reset_project_index(&mut self) {
+        self.index_built = false;
     }
 
     /// Runtime#offenses: `text` inspected as `path`, each offense an LSP diagnostic.
@@ -63,7 +71,14 @@ impl Runtime {
             literals: None,
             cfg: self.pwd_config.clone(),
         };
-        if self.store.for_dir(&self.cwd)?.file_to_exclude(&abs) {
+        let excluded = self.store.for_dir(&self.cwd)?.file_to_exclude(&abs);
+        // Runner#run builds the index from the targets (none when excluded) before inspecting.
+        if !self.index_built && self.pwd_config.all_cops().truthy("UseProjectIndex") {
+            let targets = if excluded { Vec::new() } else { vec![abs.clone()] };
+            crate::build_project_index(&mut self.store, &self.pwd_config, &targets, true, false);
+        }
+        self.index_built = true;
+        if excluded {
             return Ok(skipped(text));
         }
         let cfg = self.store.for_file(&abs)?;

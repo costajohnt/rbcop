@@ -27,11 +27,14 @@ pub struct ProjectIndex {
     /// `Graph#resolve_constant` results: resolving adds (then untracks) names, so it takes the
     /// write lock; memoized because DeprecatedReference resolves every constant of every file.
     resolved: Mutex<HashMap<ResolveKey, Option<DeclarationId>>>,
-    method_references: OnceLock<HashSet<String>>,
+    /// `Graph#method_references` names, `()` dropped (UnusedPrivateMethod#compute_referenced_names).
+    method_references: RwLock<HashSet<String>>,
     /// ProjectIndexHelp#project_index_signature: `path:mtime:size` of every indexed document.
-    signature: String,
+    signature: RwLock<String>,
 }
 
+/// One index for the process. `--lsp` and `--mcp` rebuild it in place, between requests, so no
+/// cop holds a view of the old graph and `get` stays a plain load.
 static INDEX: OnceLock<ProjectIndex> = OnceLock::new();
 
 /// `Cop::Base#project_index`: None unless the run enabled `AllCops/UseProjectIndex`.
@@ -40,7 +43,8 @@ pub fn get() -> Option<&'static ProjectIndex> {
 }
 
 /// ProjectIndexLoader.build_index: index `paths` (rubydex skips anything but .rb/.rake/.rbs/.ru
-/// and files that are not UTF-8), then resolve. Installed for the rest of the process.
+/// and files that are not UTF-8), then resolve. Installed for the rest of the process, replacing
+/// any index built before.
 pub fn install(paths: Vec<String>) {
     let mut graph = Graph::new();
     let (files, _) = rubydex::listing::collect_file_paths(paths, &graph.excluded_patterns());
@@ -63,19 +67,32 @@ pub fn install(paths: Vec<String>) {
         })
         .collect();
     lines.sort();
-    let index = ProjectIndex {
+    let method_references: HashSet<String> = graph
+        .method_references()
+        .values()
+        .filter_map(|r| graph.strings().get(r.str()))
+        .map(|s| s.as_str().strip_suffix("()").unwrap_or(s.as_str()).to_string())
+        .collect();
+    let signature = lines.join("\n");
+    if let Some(index) = INDEX.get() {
+        *index.graph.write().unwrap_or_else(|e| e.into_inner()) = graph;
+        index.resolved.lock().unwrap_or_else(|e| e.into_inner()).clear();
+        *index.method_references.write().unwrap_or_else(|e| e.into_inner()) = method_references;
+        *index.signature.write().unwrap_or_else(|e| e.into_inner()) = signature;
+        return;
+    }
+    let _ = INDEX.set(ProjectIndex {
         graph: RwLock::new(graph),
         resolved: Mutex::default(),
-        method_references: OnceLock::new(),
-        signature: lines.join("\n"),
-    };
-    let _ = INDEX.set(index);
+        method_references: RwLock::new(method_references),
+        signature: RwLock::new(signature),
+    });
 }
 
 impl ProjectIndex {
     /// What ProjectIndexHelp#external_dependency_checksum covers, for the result cache key.
-    pub fn signature(&self) -> &str {
-        &self.signature
+    pub fn signature(&self) -> String {
+        self.signature.read().unwrap_or_else(|e| e.into_inner()).clone()
     }
 
     pub fn read(&self) -> Ix<'_> {
@@ -96,16 +113,9 @@ impl ProjectIndex {
         found
     }
 
-    /// `Graph#method_references` names, `()` dropped (UnusedPrivateMethod#compute_referenced_names).
-    pub fn method_reference_names(&self) -> &HashSet<String> {
-        self.method_references.get_or_init(|| {
-            let ix = self.read();
-            ix.g.method_references()
-                .values()
-                .filter_map(|r| ix.g.strings().get(r.str()))
-                .map(|s| s.as_str().strip_suffix("()").unwrap_or(s.as_str()).to_string())
-                .collect()
-        })
+    /// `name` is among `Graph#method_references` (UnusedPrivateMethod#compute_referenced_names).
+    pub fn method_referenced(&self, name: &str) -> bool {
+        self.method_references.read().unwrap_or_else(|e| e.into_inner()).contains(name)
     }
 }
 
