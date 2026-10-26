@@ -229,7 +229,14 @@ impl Cop for DoubleNegation {
         }
         let Some(sel) = call.message_loc().filter(|s| s.as_slice() == b"!") else { return };
         let inner = call.receiver().and_then(|r| r.as_call_node());
-        if !inner.is_some_and(|i| method_name(&i) == "!" && !is_csend(&i)) {
+        let negation = |n: &ruby_prism::CallNode| method_name(n) == "!" && !is_csend(n);
+        let Some(inner) = inner.filter(negation) else { return };
+        // part_of_longer_negation?
+        let here = (node.location().start_offset(), node.location().end_offset());
+        let parent_negates = cx.ancestors.last().and_then(|p| p.as_call_node()).is_some_and(|p| {
+            negation(&p) && p.receiver().is_some_and(|r| (r.location().start_offset(), r.location().end_offset()) == here)
+        });
+        if parent_negates || inner.receiver().and_then(|r| r.as_call_node()).is_some_and(|r| negation(&r)) {
             return;
         }
         let src = cx.src;

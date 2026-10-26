@@ -42,12 +42,11 @@ fn regexp_last_match(node: Option<Node>) -> bool {
     const_ok && args.len() == 1 && helpers::literal_node::folded_kind(&args[0]) == kind::INTEGER_NODE
 }
 
-/// (dot, selector) ranges of a `x.to_f` call.
-fn to_f_parts(node: &Node) -> ((usize, usize), (usize, usize)) {
+/// The receiver end and the selector start and end of a `x.to_f` call.
+fn to_f_parts(node: &Node) -> (usize, usize, usize) {
     let c = node.as_call_node().unwrap();
-    let d = c.call_operator_loc().unwrap();
     let s = c.message_loc().unwrap();
-    ((d.start_offset(), d.end_offset()), (s.start_offset(), s.end_offset()))
+    (c.receiver().unwrap().location().end_offset(), s.start_offset(), s.end_offset())
 }
 
 impl Cop for FloatDivision {
@@ -83,6 +82,21 @@ impl Cop for FloatDivision {
         if !hit {
             return;
         }
+        // comment_before_to_f?: a comment on the lines between the receiver and a `to_f` the
+        // correction removes (`contains_comment?` is line based).
+        let losing: Vec<(&Node, bool)> = match style {
+            "left_coerce" | "single_coerce" => vec![(arg, to_f_method(arg))],
+            "right_coerce" => vec![(&recv, l)],
+            _ => vec![(&recv, l), (arg, to_f_method(arg))],
+        };
+        if losing.iter().any(|&(n, is_to_f)| {
+            is_to_f && {
+                let (a, b, _) = to_f_parts(n);
+                helpers::comments_help::contains_comments(cx, cx.src.line_of(a), cx.src.line_of(b) + 1)
+            }
+        }) {
+            return;
+        }
         let rl = recv.location();
         let al = arg.location();
         let (recv_range, arg_range) = ((rl.start_offset(), rl.end_offset()), (al.start_offset(), al.end_offset()));
@@ -100,10 +114,10 @@ impl Cop for FloatDivision {
                     c.insert_after(range.0, range.1, ".to_f");
                 }
             };
-            let remove = |c: &mut Corrector, parts: Option<((usize, usize), (usize, usize))>| {
-                if let Some((d, sel)) = parts {
-                    c.remove(d.0, d.1);
-                    c.remove(sel.0, sel.1);
+            // remove_to_f_method: everything from the receiver's end through `to_f`.
+            let remove = |c: &mut Corrector, parts: Option<(usize, usize, usize)>| {
+                if let Some((a, _, b)) = parts {
+                    c.remove(a, b);
                 }
             };
             match style {
