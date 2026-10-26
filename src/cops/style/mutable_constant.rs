@@ -1,7 +1,7 @@
 use crate::cop::Corrector;
 use crate::helpers::frozen_string_literal as fsl;
 use crate::helpers::magic_comment::shareable_constant_value;
-use crate::helpers::parser_parent::is_top_const;
+use crate::helpers::parser_parent::{is_ternary, is_top_const};
 use crate::prelude::*;
 
 pub const NAME: &str = "Style/MutableConstant";
@@ -34,6 +34,7 @@ fn ast_mutable_literal(node: &Node) -> bool {
             | Node::InterpolatedXStringNode { .. }
             | Node::ArrayNode { .. }
             | Node::HashNode { .. }
+            | Node::KeywordHashNode { .. }
     ) || is_range_or_regexp(node)
 }
 
@@ -148,13 +149,36 @@ impl Ctx<'_, '_, '_> {
 
     fn check(&self, node: &Node, strict: bool) -> bool {
         if strict {
-            if self.frozen_regexp_or_range(node) || ast_immutable_literal(node) || operation_produces_immutable_object(node) {
-                return false;
-            }
-        } else if !(self.mutable_literal(node) || (self.cx.config.target_ruby <= 2.7 && range_in_parens(node))) {
+            return self.strict_check(node);
+        }
+        if !(self.mutable_literal(node) || (self.cx.config.target_ruby <= 2.7 && range_in_parens(node))) {
             return false;
         }
         !fsl::frozen_string_literal(self.cx, node) && !self.shareable(node)
+    }
+
+    fn strict_check(&self, node: &Node) -> bool {
+        !(is_assignment(node)
+            || self.frozen_regexp_or_range(node)
+            || ast_immutable_literal(node)
+            || operation_produces_immutable_object(node)
+            || fsl::frozen_string_literal(self.cx, node)
+            || self.shareable(node)
+            || self.parenthesized_immutable_value(node))
+    }
+
+    /// `(begin x)` around a value strict mode accepts (1.92).
+    fn parenthesized_immutable_value(&self, node: &Node) -> bool {
+        let Some(body) = node.as_parentheses_node().and_then(|p| p.body()) else { return false };
+        let inner = match body.as_statements_node() {
+            Some(s) => {
+                let mut v = s.body().iter();
+                let (Some(only), None) = (v.next(), v.next()) else { return false };
+                only
+            }
+            None => body,
+        };
+        !is_assignment(&inner) && !self.strict_check(&inner)
     }
 
     fn explicitly_frozen_literal<'pr>(&self, node: &Node<'pr>) -> Option<Node<'pr>> {
@@ -196,7 +220,14 @@ impl Ctx<'_, '_, '_> {
             if a.opening_loc().is_none() {
                 edits.push(Edit::Wrap(s, e, "[", "]"));
             }
-        } else if node.as_range_node().is_some() || send(node).is_some_and(|c| c.call_operator_loc().is_none()) {
+        } else if node.as_implicit_node().is_some() {
+            // `{ a: }`: expand the omitted value (1.92). Prism's implicit value spans the `a:` pair.
+            let key = node_text(node).trim_end_matches(':');
+            edits.push(Edit::Replace(s, e, format!("{key}: {key}.freeze")));
+            return;
+        } else if node.as_keyword_hash_node().is_some() {
+            edits.push(Edit::Wrap(s, e, "{ ", " }"));
+        } else if requires_parentheses(node) {
             edits.push(Edit::Wrap(s, e, "(", ")"));
         }
         edits.push(Edit::InsertAfter(s, e, ".freeze".into()));
@@ -232,17 +263,27 @@ fn apply(c: &mut Corrector, edits: &[Edit]) {
     }
 }
 
+/// `requires_parentheses?` (1.92): ranges, `and`/`or`, ternaries and calls without a dot or
+/// with unparenthesized arguments.
+fn requires_parentheses(node: &Node) -> bool {
+    if node.as_range_node().is_some() || node.as_and_node().is_some() || node.as_or_node().is_some() || is_ternary(node) {
+        return true;
+    }
+    let Some(c) = node.as_call_node().filter(|c| c.block().is_none_or(|b| b.as_block_node().is_none())) else { return false };
+    c.call_operator_loc().is_none() || (!send_args(&c).is_empty() && c.opening_loc().is_none())
+}
+
 /// literal_children: array elements (not %w/%i), hash pair keys and values.
 fn literal_children<'pr>(node: &Node<'pr>) -> Vec<Node<'pr>> {
     if let Some(a) = node.as_array_node() {
         if a.opening_loc().is_some_and(|o| o.as_slice().starts_with(b"%")) {
             return Vec::new();
         }
-        return a.elements().iter().collect();
+        return a.elements().iter().filter(|e| e.as_splat_node().is_none()).collect();
     }
-    if let Some(h) = node.as_hash_node() {
-        return h
-            .elements()
+    let elements = node.as_hash_node().map(|h| h.elements()).or_else(|| node.as_keyword_hash_node().map(|h| h.elements()));
+    if let Some(elements) = elements {
+        return elements
             .iter()
             .filter_map(|e| e.as_assoc_node())
             .flat_map(|p| [p.key(), p.value()])
@@ -281,8 +322,10 @@ impl Cop for MutableConstant {
             .map(|n| {
                 let mut edits = Vec::new();
                 ctx.autocorrect(n, &mut edits);
+                // parser's omitted value is the bare key (`a` of `a:`).
                 let l = n.location();
-                ((l.start_offset(), l.end_offset()), edits)
+                let trim = usize::from(n.as_implicit_node().is_some());
+                ((l.start_offset(), l.end_offset() - trim), edits)
             })
             .collect();
         for ((s, e), edits) in fixes {

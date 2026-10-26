@@ -34,6 +34,10 @@ impl Cop for MultilineInPatternThen {
         if src.line_of(ploc.start_offset()) != src.line_of(ploc.end_offset()) {
             return;
         }
+        // 1.92: `then` is required after an endless range (`in 1.. then`).
+        if crate::cops::style_multiline_when_then::ends_with_endless_range(src, &pattern) {
+            return;
+        }
         if let Some(body) = in_node.statements()
             && src.line_of(node.location().start_offset()) == src.line_of(body.location().start_offset()) {
                 return;

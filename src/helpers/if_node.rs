@@ -1,5 +1,8 @@
 //! Parser-gem shapes of `if` nodes that Prism represents differently.
 
+use crate::ast::method_name;
+use crate::node_kind as kind;
+use crate::source::Source;
 use ruby_prism::Node;
 
 /// End of parser's `if` range: `end`, or for an `elsif` (no `end` in parser) its last part
@@ -178,4 +181,47 @@ pub fn cond<'pr>(node: &Node<'pr>) -> Option<Cond<'pr>> {
         has_end: end && keyword != "elsif",
         has_else: els.is_some(),
     })
+}
+
+/// IfNode#if_branch when it is a single statement (a `begin` is never a guard clause).
+pub fn if_branch<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
+    let stmts = match kind::of(node) {
+        kind::IF_NODE => node.as_if_node().unwrap().statements(),
+        kind::UNLESS_NODE => node.as_unless_node().unwrap().statements(),
+        _ => None,
+    }?;
+    let body: Vec<Node> = stmts.body().iter().collect();
+    match body.len() {
+        1 => body.into_iter().next(),
+        _ => None,
+    }
+}
+
+/// `{(send nil? {:raise :fail} ...) return break next}`
+pub fn guard_clause_branch(node: &Node) -> bool {
+    match kind::of(node) {
+        kind::RETURN_NODE | kind::BREAK_NODE | kind::NEXT_NODE => true,
+        kind::CALL_NODE => {
+            let c = node.as_call_node().unwrap();
+            c.receiver().is_none()
+                && matches!(method_name(&c), "raise" | "fail")
+                && c.block().is_none_or(|b| b.as_block_node().is_none())
+        }
+        _ => false,
+    }
+}
+
+/// Node#guard_clause?: the rhs of and/or, matching the pattern and on a single line.
+pub fn guard_clause(src: &Source, node: &Node) -> bool {
+    let node = match kind::of(node) {
+        kind::AND_NODE => node.as_and_node().unwrap().right(),
+        kind::OR_NODE => node.as_or_node().unwrap().right(),
+        _ => return guard_clause_inner(src, node),
+    };
+    guard_clause_inner(src, &node)
+}
+
+fn guard_clause_inner(src: &Source, node: &Node) -> bool {
+    let loc = node.location();
+    guard_clause_branch(node) && src.line_of(loc.start_offset()) == src.line_of(loc.end_offset())
 }
