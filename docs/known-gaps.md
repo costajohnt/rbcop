@@ -26,6 +26,10 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   inherit from a URL do this; to avoid it, inherit from local files.
 - **Gem lookups**: `inherit_gem`, and `plugins:`/`require:` of gems, ask `ruby -e` with RubyGems
   where a gem lives. That runs RubyGems, not project code, and only when the config names gems.
+- **`AllCops/ProjectIndexIncludesGems`** (#675): with `UseProjectIndex` and this option both set,
+  rbcop runs the project's `ruby` with `Bundler.load.specs` to find the bundled gems' sources. That
+  evaluates the project's Gemfile, also under `--lsp`, `--mcp` and the server options, as RuboCop
+  does. `RBCOP_FALLBACK=0` does not stop it. To avoid it, leave the option off (the default).
 
 ## Deliberate differences from RuboCop
 
