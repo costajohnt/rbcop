@@ -1,0 +1,92 @@
+==> offenses exit=1 2263 <==
+000/000_spec.rb:1:15: C: [Correctable] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+001/001_spec.rb:1:15: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:1:6: C: [Correctable] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+002/002_spec.rb:2:15: C: [Correctable] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+003/003_spec.rb:1:22: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:2:24: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:3:31: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+004/004_spec.rb:1:17: C: [Correctable] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+005/005_spec.rb:1:29: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+007/007_spec.rb:1:51: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+007/007_spec.rb:2:37: C: [Correctable] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+008/008_spec.rb:1:40: C: [Correctable] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+008/008_spec.rb:2:45: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+009/009_spec.rb:2:23: C: [Correctable] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+013/013_spec.rb:2:28: C: [Correctable] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+014/014_spec.rb:2:20: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+017/017_spec.rb:1:15: C: [Correctable] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+018/018_spec.rb:1:15: C: [Correctable] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+018/018_spec.rb:1:30: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+020/020_spec.rb:1:21: C: [Correctable] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+021/021_spec.rb:1:22: C: [Correctable] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+024/024_spec.rb:1:20: C: [Correctable] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+024/024_spec.rb:2:21: C: [Correctable] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+
+==> autocorrect exit=1 2235 <==
+000/000_spec.rb:1:15: C: [Corrected] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+001/001_spec.rb:1:15: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+002/002_spec.rb:1:6: C: [Corrected] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+002/002_spec.rb:2:15: C: [Corrected] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+003/003_spec.rb:1:22: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:2:24: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+003/003_spec.rb:3:31: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+004/004_spec.rb:1:17: C: [Corrected] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+005/005_spec.rb:1:29: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+007/007_spec.rb:1:51: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+007/007_spec.rb:2:37: C: [Corrected] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+008/008_spec.rb:1:40: C: [Corrected] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+008/008_spec.rb:2:45: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+009/009_spec.rb:2:23: C: [Corrected] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+013/013_spec.rb:2:28: C: [Corrected] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+014/014_spec.rb:2:20: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+017/017_spec.rb:1:15: C: [Corrected] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+018/018_spec.rb:1:15: C: [Corrected] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+018/018_spec.rb:1:34: C: Capybara/VisibilityOption: Use `:all` or `:hidden` instead of `false`.
+020/020_spec.rb:1:21: C: [Corrected] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+021/021_spec.rb:1:22: C: [Corrected] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+024/024_spec.rb:1:20: C: [Corrected] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+024/024_spec.rb:2:21: C: [Corrected] Capybara/VisibilityOption: Use `:visible` instead of `true`.
+
+==> corrected/000/000_spec.rb 33 <==
+find('.menu', visible: :visible)
+
+==> corrected/002/002_spec.rb 57 <==
+find(visible: :visible)
+find(locator, visible: :visible)
+
+==> corrected/004/004_spec.rb 38 <==
+within('.menu', visible: :visible) {}
+
+==> corrected/007/007_spec.rb 121 <==
+expect(page).to have_all_of_selectors('.a', '.b', visible: false)
+find('.menu').matches_css?('.menu', visible: :visible)
+
+==> corrected/008/008_spec.rb 118 <==
+page.all('.menus').first.find('.item', visible: :visible)
+page.find_all('.menus').first.find('.item', visible: false)
+
+==> corrected/009/009_spec.rb 64 <==
+element = find('.row')
+element.find('.item', visible: :visible)
+
+==> corrected/013/013_spec.rb 65 <==
+row = find('tr')
+rows.each { row.find('.b', visible: :visible) }
+
+==> corrected/017/017_spec.rb 42 <==
+find('.menu', visible: :visible, &filter)
+
+==> corrected/018/018_spec.rb 49 <==
+find('.menu', visible: :visible, visible: false)
+
+==> corrected/020/020_spec.rb 52 <==
+page&.find('.menu', visible: :visible) # Keep this.
+
+==> corrected/021/021_spec.rb 40 <==
+(page).find('.menu', visible: :visible)
+
+==> corrected/024/024_spec.rb 77 <==
+find_button(:save, visible: :visible)
+find(:css, '.menu', visible: :visible)
+

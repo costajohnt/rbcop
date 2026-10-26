@@ -1,0 +1,53 @@
+==> .rubocop.yml 136 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000_spec.rb 89 <==
+accept_alert
+accept_confirm
+accept_prompt(with: 'answer')
+dismiss_confirm
+dismiss_prompt
+
+==> 001/001_spec.rb 42 <==
+page.accept_confirm
+page&.dismiss_confirm
+
+==> 002/002_spec.rb 93 <==
+accept_confirm do
+  click_button 'Delete'
+end
+page.dismiss_confirm { click_button 'Cancel' }
+
+==> 003/003_spec.rb 46 <==
+accept_prompt(with: 'answer', &trigger_modal)
+
+==> 004/004_spec.rb 86 <==
+def trigger(...)
+  page.accept_confirm(...)
+  page&.dismiss_prompt('Answer', ...)
+end
+
+==> 005/005_spec.rb 69 <==
+def trigger(*args, **options)
+  accept_confirm(*args, **options)
+end
+
+==> 006/006_spec.rb 23 <==
+tap { accept_confirm }
+
+==> 007/007_spec.rb 81 <==
+def trigger(&)
+  accept_confirm(&)
+  page&.dismiss_prompt(with: 'answer', &)
+end
+
+==> 008/008_spec.rb 32 <==
+page&.accept_prompt { puts _1 }
+

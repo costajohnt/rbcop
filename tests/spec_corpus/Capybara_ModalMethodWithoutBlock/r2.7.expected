@@ -1,0 +1,28 @@
+==> offenses exit=1 1298 <==
+000/000_spec.rb:1:1: C: Capybara/ModalMethodWithoutBlock: Call `accept_alert` with a block.
+000/000_spec.rb:2:1: C: Capybara/ModalMethodWithoutBlock: Call `accept_confirm` with a block.
+000/000_spec.rb:3:1: C: Capybara/ModalMethodWithoutBlock: Call `accept_prompt` with a block.
+000/000_spec.rb:4:1: C: Capybara/ModalMethodWithoutBlock: Call `dismiss_confirm` with a block.
+000/000_spec.rb:5:1: C: Capybara/ModalMethodWithoutBlock: Call `dismiss_prompt` with a block.
+001/001_spec.rb:1:1: C: Capybara/ModalMethodWithoutBlock: Call `accept_confirm` with a block.
+001/001_spec.rb:2:1: C: Capybara/ModalMethodWithoutBlock: Call `dismiss_confirm` with a block.
+005/005_spec.rb:2:3: C: Capybara/ModalMethodWithoutBlock: Call `accept_confirm` with a block.
+006/006_spec.rb:1:7: C: Capybara/ModalMethodWithoutBlock: Call `accept_confirm` with a block.
+007/007_spec.rb:1:14: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+007/007_spec.rb:2:19: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+007/007_spec.rb:3:41: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+
+==> autocorrect exit=1 1298 <==
+000/000_spec.rb:1:1: C: Capybara/ModalMethodWithoutBlock: Call `accept_alert` with a block.
+000/000_spec.rb:2:1: C: Capybara/ModalMethodWithoutBlock: Call `accept_confirm` with a block.
+000/000_spec.rb:3:1: C: Capybara/ModalMethodWithoutBlock: Call `accept_prompt` with a block.
+000/000_spec.rb:4:1: C: Capybara/ModalMethodWithoutBlock: Call `dismiss_confirm` with a block.
+000/000_spec.rb:5:1: C: Capybara/ModalMethodWithoutBlock: Call `dismiss_prompt` with a block.
+001/001_spec.rb:1:1: C: Capybara/ModalMethodWithoutBlock: Call `accept_confirm` with a block.
+001/001_spec.rb:2:1: C: Capybara/ModalMethodWithoutBlock: Call `dismiss_confirm` with a block.
+005/005_spec.rb:2:3: C: Capybara/ModalMethodWithoutBlock: Call `accept_confirm` with a block.
+006/006_spec.rb:1:7: C: Capybara/ModalMethodWithoutBlock: Call `accept_confirm` with a block.
+007/007_spec.rb:1:14: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+007/007_spec.rb:2:19: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+007/007_spec.rb:3:41: F: Lint/Syntax: unexpected token tRPAREN (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+

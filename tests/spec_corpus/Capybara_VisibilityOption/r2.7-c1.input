@@ -1,0 +1,22 @@
+==> .rubocop.yml 189 <==
+---
+plugins:
+- rubocop-capybara
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Capybara/VisibilityOption:
+  DefaultSelector: custom
+
+==> 000/000_spec.rb 138 <==
+find('.menu', visible: true)
+find(visible: false)
+have_selector('.menu', visible: false)
+have_all_of_selectors('.a', '.b', visible: true)
+
+==> 001/001_spec.rb 70 <==
+find(:css, '.menu', visible: true)
+find_button('Save', visible: true)
+

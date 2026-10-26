@@ -302,7 +302,7 @@ fn verbose_version_lists_plugins() {
             "plugins:\n  - rubocop-rspec\n  - rubocop-performance\n  - rubocop-rails\n  - rubocop-minitest\n  - \
              rubocop-capybara\n  - rubocop-factory_bot\n  - rubocop-rspec_rails\n",
             "  - rubocop-rspec 3.10.2\n  - rubocop-performance 1.27.0\n  - rubocop-rails 2.38.0\n  - rubocop-minitest \
-             0.41.0\n  - rubocop-capybara 3.0.0\n  - rubocop-factory_bot 2.28.0\n  - rubocop-rspec_rails 2.33.0\n",
+             0.41.0\n  - rubocop-capybara 3.1.0\n  - rubocop-factory_bot 2.28.0\n  - rubocop-rspec_rails 2.33.0\n",
         ),
         // A plugin-capable `require:` loads as a plugin but is listed as a feature: sorted.
         (

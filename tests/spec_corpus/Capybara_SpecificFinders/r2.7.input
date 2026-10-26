@@ -17,93 +17,189 @@ find(:css, '#some-id')
 ==> 002/002_spec.rb 42 <==
 find(:css, '#some-id', class: 'some-cls')
 
-==> 003/003_spec.rb 21 <==
+==> 003/003_spec.rb 71 <==
+find('input[placeholder="City"]')
+find(:css, 'input[type="checkbox"]')
+
+==> 004/004_spec.rb 88 <==
+find('input[type=submit]')
+find(:css, 'input[type="image"]')
+find('input[type=hidden]')
+
+==> 005/005_spec.rb 180 <==
+find('input[disabled=false]')
+find('input[disabled="false"]')
+find('input[disabled=true]')
+find('input[checked=false]')
+find('input[readonly=false]')
+find('input[multiple=false]')
+
+==> 006/006_spec.rb 21 <==
 find(:id, 'some-id')
 
-==> 004/004_spec.rb 40 <==
+==> 007/007_spec.rb 59 <==
+find(:id, '#top')
+find(:id, 'ns:foo')
+find(:id, 'ns\\foo')
+
+==> 008/008_spec.rb 40 <==
 find(:id, 'some-id', class: 'some-cls')
 
-==> 005/005_spec.rb 16 <==
+==> 009/009_spec.rb 16 <==
 find "#some-id"
 
-==> 006/006_spec.rb 26 <==
+==> 010/010_spec.rb 26 <==
 find('#some-id.some-cls')
 
-==> 007/007_spec.rb 135 <==
+==> 011/011_spec.rb 18 <==
+find('#some-id.')
+
+==> 012/012_spec.rb 36 <==
+find('#some-id.some-cls\.with-dot')
+
+==> 013/013_spec.rb 135 <==
 find('#some-id\.some-cls')
 find('#some-id\>some-cls')
 find('#some-id\,some-cls')
 find('#some-id\+some-cls')
 find('#some-id\~some-cls')
 
-==> 008/008_spec.rb 36 <==
+==> 014/014_spec.rb 36 <==
 find('#some-id.some-cls.other-cls')
 
-==> 009/009_spec.rb 46 <==
+==> 015/015_spec.rb 46 <==
 find('#some-id.some-cls', class: 'other-cls')
 
-==> 010/010_spec.rb 63 <==
+==> 016/016_spec.rb 63 <==
 find('#some-id.some-cls', class: ['other-cls1', 'other-cls2'])
 
-==> 011/011_spec.rb 65 <==
+==> 017/017_spec.rb 52 <==
+var = candidate
+find('#foo.bar', class: ['a', var])
+
+==> 018/018_spec.rb 92 <==
+find('#foo.bar', class: var)
+find('#foo.bar', class: :sym)
+find('#foo.bar', class: "a#{b}")
+
+==> 019/019_spec.rb 65 <==
 find('#some-id.some-cls', exact_text: 'foo', class: 'other-cls')
 
-==> 012/012_spec.rb 36 <==
+==> 020/020_spec.rb 57 <==
+find('#some-id.some-cls', data: { class: 'nested-cls' })
+
+==> 021/021_spec.rb 36 <==
 find('#some-id', exact_text: 'foo')
 
-==> 013/013_spec.rb 35 <==
+==> 022/022_spec.rb 35 <==
 find '#some-id', exact_text: 'foo'
 
-==> 014/014_spec.rb 55 <==
+==> 023/023_spec.rb 55 <==
 find('#some-id').find('#other-id').find('#another-id')
 
-==> 015/015_spec.rb 21 <==
+==> 024/024_spec.rb 21 <==
 find('[id=some-id]')
 
-==> 016/016_spec.rb 27 <==
+==> 025/025_spec.rb 37 <==
+find('[id=true]')
+find('[id=false]')
+
+==> 026/026_spec.rb 27 <==
 find(:css, '[id=some-id]')
 
-==> 017/017_spec.rb 46 <==
+==> 027/027_spec.rb 46 <==
 find(:css, '[id=some-id]', class: 'some-cls')
 
-==> 018/018_spec.rb 43 <==
+==> 028/028_spec.rb 116 <==
+find('[id=some-id][style="font-family:\'Inter\'"]')
+find('[id=some-id][style="--target:https://example.test?a=b"]')
+
+==> 029/029_spec.rb 43 <==
 find('[id="foo"]')
 find('[id="foo[bar]"]')
 
-==> 019/019_spec.rb 72 <==
+==> 030/030_spec.rb 52 <==
+find('[id=some-id][style="font-family:\'Inter\'"]')
+
+==> 031/031_spec.rb 41 <==
+find('[id=some-id][style=display:none]')
+
+==> 032/032_spec.rb 62 <==
+find('[id=some-id][style=true]')
+find('[id=other-id][style]')
+
+==> 033/033_spec.rb 72 <==
 find('[id]')
 find('[disabled=true]')
 find('[class=some-cls][disabled]')
 
-==> 020/020_spec.rb 84 <==
+==> 034/034_spec.rb 179 <==
+find('input[placeholder]')
+find('input.some-cls[placeholder="City"]')
+find('textarea[placeholder="City"]')
+find('input[placeholder="City" i]')
+find('input[placeholder="City" s]')
+
+==> 035/035_spec.rb 84 <==
 find('[class=some-cls][id=some-id]')
 find('[id=some-id][disabled][class=some-cls]')
 
-==> 021/021_spec.rb 19 <==
+==> 036/036_spec.rb 19 <==
 find('h1#some-id')
 
-==> 022/022_spec.rb 23 <==
+==> 037/037_spec.rb 23 <==
 find('h1[id=some-id]')
 
-==> 023/023_spec.rb 35 <==
+==> 038/038_spec.rb 35 <==
 find('a.some-id')
 find('.some-id')
 
-==> 024/024_spec.rb 22 <==
+==> 039/039_spec.rb 22 <==
 find_by_id('some-id')
 
-==> 025/025_spec.rb 86 <==
+==> 040/040_spec.rb 86 <==
 find('#some-id body')
 find('#some-id>h1')
 find('#some-id,h2')
 find('#some-id+option')
 
-==> 026/026_spec.rb 52 <==
+==> 041/041_spec.rb 108 <==
+find('#some-id#other-id')
+find('#some-id\#other-id')
+find("#some-id'quote")
+find('#some-id\000026other-id')
+
+==> 042/042_spec.rb 52 <==
 find('#foo[hidden]')
 find('#foo[class="some-cls"]')
 
-==> 027/027_spec.rb 84 <==
+==> 043/043_spec.rb 84 <==
 find('#foo:enabled')
 find('#foo:not(:disabled)')
 find('#foo:is(:enabled,:checked)')
+
+==> 044/044_spec.rb 20 <==
+find(:link, 'Home')
+
+==> 045/045_spec.rb 43 <==
+find(:link, '#top')
+find(:link, 'Sign in')
+
+==> 046/046_spec.rb 21 <==
+find(:field, 'Name')
+
+==> 047/047_spec.rb 27 <==
+find(:field, 'First name')
+
+==> 048/048_spec.rb 42 <==
+find(:link, 'Home', class: 'navbar-link')
+
+==> 049/049_spec.rb 38 <==
+find(:field, 'Email', visible: false)
+
+==> 050/050_spec.rb 18 <==
+find_link('Home')
+
+==> 051/051_spec.rb 19 <==
+find_field('Name')
 

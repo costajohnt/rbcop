@@ -1,4 +1,4 @@
-# Available cops (743) + config for <project>: 
+# Available cops (753) + config for <project>: 
 # Department 'Bundler' (7):
 Bundler/DuplicatedGem:
   Description: Checks for duplicate gem entries in Gemfile.
@@ -89,7 +89,19 @@ Bundler/OrderedGems:
   - "**/Gemfile"
   - "**/gems.rb"
 
-# Department 'Capybara' (6):
+# Department 'Capybara' (14):
+Capybara/AbsoluteXPathInElementScope:
+  Description: Checks for absolute XPath searches on Capybara elements.
+  Enabled: pending
+  VersionAdded: '3.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-capybara/RuboCop/Cop/Capybara/AbsoluteXPathInElementScope
+
+Capybara/AlwaysTrueCountQuery:
+  Description: Checks for positive queries that succeed when there are no matches.
+  Enabled: pending
+  VersionAdded: '3.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-capybara/RuboCop/Cop/Capybara/AlwaysTrueCountQuery
+
 Capybara/AmbiguousClick:
   Description: Specify the exact target to click on.
   Enabled: false
@@ -105,6 +117,14 @@ Capybara/AssertStyle:
   Reference: https://www.rubydoc.info/gems/rubocop-capybara/RuboCop/Cop/Capybara/AssertStyle
 
 # Supports --autocorrect
+Capybara/ChainedFind:
+  Description: Avoid chaining `find` methods and combine selectors.
+  Enabled: pending
+  DefaultSelector: css
+  VersionAdded: '3.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-capybara/RuboCop/Cop/Capybara/ChainedFind
+
+# Supports --autocorrect
 Capybara/FindAllFirst:
   Description: Enforces use of `first` instead of `all` with `first` or `[0]`.
   Enabled: true
@@ -112,6 +132,28 @@ Capybara/FindAllFirst:
   VersionAdded: '2.22'
   VersionChanged: '3.0'
   Reference: https://www.rubydoc.info/gems/rubocop-capybara/RuboCop/Cop/Capybara/FindAllFirst
+
+# Supports --autocorrect
+Capybara/IgnoredQueryOption:
+  Description: Checks for query options that have no effect in Capybara.
+  Enabled: pending
+  DefaultSelector: css
+  VersionAdded: '3.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-capybara/RuboCop/Cop/Capybara/IgnoredQueryOption
+
+Capybara/ModalMethodWithoutBlock:
+  Description: Checks that modal handling methods are called with a block.
+  Enabled: pending
+  VersionAdded: '3.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-capybara/RuboCop/Cop/Capybara/ModalMethodWithoutBlock
+
+# Supports --autocorrect
+Capybara/NativeAttribute:
+  Description: Enforces use of `Element#[]` instead of `native.attribute`.
+  Enabled: pending
+  SafeAutoCorrect: false
+  VersionAdded: '3.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-capybara/RuboCop/Cop/Capybara/NativeAttribute
 
 # Supports --autocorrect
 Capybara/RedundantWithinFind:
@@ -136,7 +178,21 @@ Capybara/SpecificFinders:
   VersionChanged: '3.0'
   Reference: https://www.rubydoc.info/gems/rubocop-capybara/RuboCop/Cop/Capybara/SpecificFinders
 
-# Department 'Capybara/RSpec' (9):
+Capybara/UnorderedWindowAccess:
+  Description: Checks positional access to Capybara windows, whose order is undefined.
+  Enabled: pending
+  VersionAdded: '3.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-capybara/RuboCop/Cop/Capybara/UnorderedWindowAccess
+
+# Supports --autocorrect
+Capybara/VisibilityOption:
+  Description: Checks for boolean values passed to Capybara's `visible` option.
+  Enabled: pending
+  DefaultSelector: css
+  VersionAdded: '3.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-capybara/RuboCop/Cop/Capybara/VisibilityOption
+
+# Department 'Capybara/RSpec' (11):
 # Supports --autocorrect
 Capybara/RSpec/CurrentPathExpectation:
   Description: Checks that no expectations are set on Capybara's `current_path`.
@@ -144,6 +200,22 @@ Capybara/RSpec/CurrentPathExpectation:
   VersionAdded: '1.18'
   VersionChanged: '3.0'
   Reference: https://www.rubydoc.info/gems/rubocop-capybara/RuboCop/Cop/Capybara/RSpec/CurrentPathExpectation
+
+# Supports --autocorrect
+Capybara/RSpec/CurrentUrlExpectation:
+  Description: Checks expectations on `current_url` that bypass Capybara's waiting.
+  Enabled: pending
+  SafeAutoCorrect: false
+  VersionAdded: '3.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-capybara/RuboCop/Cop/Capybara/RSpec/CurrentUrlExpectation
+
+# Supports --autocorrect
+Capybara/RSpec/FindElementValueEq:
+  Description: Checks for expectations on the value of an element found by Capybara.
+  Enabled: pending
+  SafeAutoCorrect: false
+  VersionAdded: '3.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-capybara/RuboCop/Cop/Capybara/RSpec/FindElementValueEq
 
 # Supports --autocorrect
 Capybara/RSpec/HaveContent:
@@ -155,7 +227,7 @@ Capybara/RSpec/HaveContent:
 
 # Supports --autocorrect
 Capybara/RSpec/HaveSelector:
-  Description: Use `have_css` or `have_xpath` instead of `have_selector`.
+  Description: Use CSS or XPath matchers instead of generic selector matchers.
   Enabled: true
   DefaultSelector: css
   VersionAdded: '2.19'
@@ -210,11 +282,14 @@ Capybara/RSpec/SpecificMatcher:
   VersionChanged: '3.0'
   Reference: https://www.rubydoc.info/gems/rubocop-capybara/RuboCop/Cop/Capybara/RSpec/SpecificMatcher
 
+# Supports --autocorrect
 Capybara/RSpec/VisibilityMatcher:
-  Description: Checks for boolean visibility in Capybara finders.
+  Description: Checks for boolean visibility in Capybara RSpec matchers.
   Enabled: true
+  SafeAutoCorrect: false
+  DefaultSelector: css
   VersionAdded: '1.39'
-  VersionChanged: '3.0'
+  VersionChanged: "<<next>>"
   Reference: https://www.rubydoc.info/gems/rubocop-capybara/RuboCop/Cop/Capybara/RSpec/VisibilityMatcher
 
 # Department 'Gemspec' (10):

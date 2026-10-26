@@ -1,0 +1,80 @@
+==> offenses exit=1 2404 <==
+000/000_spec.rb:1:1: C: [Correctable] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+001/001_spec.rb:1:1: C: [Correctable] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+002/002_spec.rb:1:1: C: [Correctable] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+002/002_spec.rb:2:1: C: [Correctable] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+002/002_spec.rb:3:1: C: [Correctable] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+002/002_spec.rb:4:1: C: [Correctable] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+002/002_spec.rb:5:1: C: [Correctable] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+002/002_spec.rb:6:1: C: [Correctable] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+002/002_spec.rb:7:1: C: [Correctable] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+003/003_spec.rb:1:1: C: [Correctable] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+003/003_spec.rb:2:1: C: [Correctable] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+004/004_spec.rb:2:1: C: [Correctable] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+009/009_spec.rb:1:1: C: [Correctable] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+010/010_spec.rb:1:1: C: [Correctable] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+011/011_spec.rb:1:1: C: [Correctable] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+013/013_spec.rb:1:1: C: [Correctable] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+014/014_spec.rb:1:1: C: Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+015/015_spec.rb:1:1: C: Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+016/016_spec.rb:1:1: C: [Correctable] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+
+==> autocorrect exit=1 2370 <==
+000/000_spec.rb:1:1: C: [Corrected] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+001/001_spec.rb:1:1: C: [Corrected] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+002/002_spec.rb:1:1: C: [Corrected] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+002/002_spec.rb:2:1: C: [Corrected] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+002/002_spec.rb:3:1: C: [Corrected] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+002/002_spec.rb:4:1: C: [Corrected] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+002/002_spec.rb:5:1: C: [Corrected] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+002/002_spec.rb:6:1: C: [Corrected] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+002/002_spec.rb:7:1: C: [Corrected] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+003/003_spec.rb:1:1: C: [Corrected] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+003/003_spec.rb:2:1: C: [Corrected] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+004/004_spec.rb:2:1: C: [Corrected] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+009/009_spec.rb:1:1: C: [Corrected] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+010/010_spec.rb:1:1: C: [Corrected] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+011/011_spec.rb:1:1: C: [Corrected] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+013/013_spec.rb:1:1: C: [Corrected] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+014/014_spec.rb:1:1: C: Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+015/015_spec.rb:1:1: C: Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+016/016_spec.rb:1:1: C: [Corrected] Capybara/NativeAttribute: Use `Element#[]` instead of driver-specific `native.attribute`.
+
+==> corrected/000/000_spec.rb 19 <==
+find('.item')[:id]
+
+==> corrected/001/001_spec.rb 33 <==
+page.find('.item')['aria-label']
+
+==> corrected/002/002_spec.rb 191 <==
+first('.item')[:id]
+find('.outer').ancestor('.item')[:id]
+find('.outer').sibling('.item')[:id]
+find_button('Save')[:id]
+find_by_id('item')[:id]
+find_field('Name')[:id]
+find_link('Home')[:id]
+
+==> corrected/003/003_spec.rb 55 <==
+all('.items').first[:id]
+find_all('.items').first[:id]
+
+==> corrected/004/004_spec.rb 37 <==
+element = find('.item')
+element[:id]
+
+==> corrected/009/009_spec.rb 20 <==
+(find '.item')[:id]
+
+==> corrected/010/010_spec.rb 35 <==
+find('.item') { _1.visible? }[:id]
+
+==> corrected/011/011_spec.rb 29 <==
+page&.find('.item')&.[](:id)
+
+==> corrected/013/013_spec.rb 20 <==
+first('.item')[:id]
+
+==> corrected/016/016_spec.rb 44 <==
+Capybara.current_session.find('.item')[:id]
+

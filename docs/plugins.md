@@ -12,7 +12,7 @@ running the pinned plugin version below.
 | rubocop-rspec | 3.10.2 | RSpec | all 115 | #285 |
 | rubocop-rspec_rails | 2.33.0 | RSpecRails | all 10 | #285 |
 | rubocop-factory_bot | 2.28.0 | FactoryBot | all 11 | #285 |
-| rubocop-capybara | 3.0.0 | Capybara, Capybara/RSpec | all 15 | #285 |
+| rubocop-capybara | 3.1.0 | Capybara, Capybara/RSpec | all 25 | #285, #673 |
 
 Each version is the newest release that supports RuboCop 1.91.0 (rubocop-performance 1.27.0
 requires `rubocop >= 1.89.0, < 2.0`, released 2026-08-16; rubocop-rails 2.38.0 requires
@@ -20,8 +20,8 @@ requires `rubocop >= 1.89.0, < 2.0`, released 2026-08-16; rubocop-rails 2.38.0 r
 rubocop-minitest 0.41.0 requires `rubocop >= 1.89.0, < 2.0`, released 2026-10-02;
 rubocop-rspec 3.10.2 requires `rubocop ~> 1.86, >= 1.86.2`; rubocop-rspec_rails 2.33.0 requires
 `rubocop ~> 1.89` and `rubocop-rspec ~> 3.5`, released 2026-10-07; rubocop-factory_bot 2.28.0
-requires `rubocop ~> 1.72, >= 1.72.1`; rubocop-capybara 3.0.0 requires `rubocop ~> 1.81`, released
-2026-06-22). The gem's `config/default.yml` is vendored
+requires `rubocop ~> 1.72, >= 1.72.1`; rubocop-capybara 3.1.0 requires `rubocop ~> 1.89`, released
+2026-10-16). The gem's `config/default.yml` is vendored
 as `config/plugins/<gem>.yml` (MIT, `config/plugins/LICENSE-<gem>`), so the gem need not be
 installed; a different installed version is ignored.
 

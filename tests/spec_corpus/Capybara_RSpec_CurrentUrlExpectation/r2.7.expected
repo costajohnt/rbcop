@@ -1,0 +1,49 @@
+==> offenses exit=1 1970 <==
+000/000_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+000/000_spec.rb:2:1: C: [Correctable] Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+000/000_spec.rb:3:1: C: [Correctable] Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+001/001_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+001/001_spec.rb:2:1: C: [Correctable] Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+002/002_spec.rb:1:1: C: [Correctable] Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+002/002_spec.rb:2:1: C: [Correctable] Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+003/003_spec.rb:1:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+003/003_spec.rb:2:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+003/003_spec.rb:3:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+004/004_spec.rb:1:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+004/004_spec.rb:2:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+004/004_spec.rb:3:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+004/004_spec.rb:4:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+004/004_spec.rb:5:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+004/004_spec.rb:6:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+
+==> autocorrect exit=1 1956 <==
+000/000_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+000/000_spec.rb:2:1: C: [Corrected] Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+000/000_spec.rb:3:1: C: [Corrected] Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+001/001_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+001/001_spec.rb:2:1: C: [Corrected] Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+002/002_spec.rb:1:1: C: [Corrected] Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+002/002_spec.rb:2:1: C: [Corrected] Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+003/003_spec.rb:1:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+003/003_spec.rb:2:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+003/003_spec.rb:3:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+004/004_spec.rb:1:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+004/004_spec.rb:2:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+004/004_spec.rb:3:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+004/004_spec.rb:4:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+004/004_spec.rb:5:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+004/004_spec.rb:6:1: C: Capybara/RSpec/CurrentUrlExpectation: Use `have_current_path` on `page` to wait for the URL.
+
+==> corrected/000/000_spec.rb 168 <==
+expect(page).to have_current_path('https://example.com/login')
+expect(page).to have_current_path(expected_url)
+expect(page).to have_current_path(%r{/login}, url: true)
+
+==> corrected/001/001_spec.rb 108 <==
+expect(page).to have_no_current_path(/login/, url: true)
+expect(page).to have_no_current_path(expected_url)
+
+==> corrected/002/002_spec.rb 111 <==
+expect(page).to have_current_path(/login/, url: true)
+expect(page).to have_no_current_path(/admin/, url: true)
+

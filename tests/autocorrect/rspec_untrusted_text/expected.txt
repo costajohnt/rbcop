@@ -27,9 +27,9 @@ untrusted_spec.rb:40:19: C: [Corrected] RSpec/SharedExamples: Prefer 'plain' ove
 untrusted_spec.rb:45:21: C: [Corrected] RSpec/VerifiedDoubleReference: Use a constant class reference for verified doubles. String references are not verifying unless the class is loaded.
 untrusted_spec.rb:50:5: C: [Corrected] FactoryBot/CreateList: Prefer create_list.
 untrusted_spec.rb:55:5: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
-untrusted_spec.rb:56:5: C: [Correctable] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
+untrusted_spec.rb:57:5: C: [Corrected] Capybara/SpecificFinders: Prefer `find_by_id` over `find`.
 untrusted_spec.rb:58:12: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
-untrusted_spec.rb:59:12: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
-untrusted_spec.rb:61:12: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+untrusted_spec.rb:60:12: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+untrusted_spec.rb:62:12: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
 untrusted_spec.rb:64:5: C: [Corrected] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
-untrusted_spec.rb:65:5: C: [Correctable] Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`
+untrusted_spec.rb:65:5: C: Capybara/RSpec/CurrentPathExpectation: Do not set an RSpec expectation on `current_path` in Capybara feature specs - instead, use the `have_current_path` matcher on `page`

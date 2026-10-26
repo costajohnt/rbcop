@@ -20,8 +20,8 @@ impl Cop for SpecificMatcher {
         }
         let Some(first) = send_args(&call).into_iter().next().filter(helpers::rspec::is_str) else { return };
         let arg = String::from_utf8_lossy(first.as_string_node().unwrap().unescaped()).into_owned();
-        // arg[/^\w+/, 0]: `^` is any line start
-        static WORD: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^[A-Za-z0-9_]+").unwrap());
+        // arg[/^[\w-]+/, 0]: `^` is any line start
+        static WORD: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^[A-Za-z0-9_-]+").unwrap());
         let matcher = match WORD.find(&arg).map(|m| m.as_str()) {
             Some("button") => "button",
             Some("a") => "link",
@@ -30,7 +30,16 @@ impl Cop for SpecificMatcher {
             Some("input") => "field",
             _ => return,
         };
-        if css::multiple_selectors(&arg) || !css::replaceable_attributes(&css::attributes(&arg)) {
+        if css::multiple_selectors(&arg) {
+            return;
+        }
+        let attrs = css::attributes(&arg);
+        if matcher == "field"
+            && matches!(css::attr(&attrs, "type").map(|t| t.to_s().to_lowercase()).as_deref(), Some("hidden" | "image" | "submit"))
+        {
+            return;
+        }
+        if !css::replaceable_attributes(&attrs) {
             return;
         }
         // text_with_regexp?: (pair (sym {:text :exact_text}) (regexp ...)) in the send

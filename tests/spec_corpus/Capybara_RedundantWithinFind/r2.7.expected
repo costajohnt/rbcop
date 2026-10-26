@@ -1,24 +1,38 @@
-==> offenses exit=1 1044 <==
+==> offenses exit=1 1836 <==
 000/000_spec.rb:1:8: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find(...)` call detected.
 001/001_spec.rb:1:8: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find(...)` call detected.
 002/002_spec.rb:1:8: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find(...)` call detected.
-003/003_spec.rb:1:8: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+003/003_spec.rb:1:8: C: Capybara/RedundantWithinFind: Redundant `within find(...)` call detected.
+003/003_spec.rb:3:8: C: Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
 004/004_spec.rb:1:8: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
 005/005_spec.rb:1:8: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
-005/005_spec.rb:3:8: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
 006/006_spec.rb:1:8: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+006/006_spec.rb:3:8: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
 007/007_spec.rb:1:8: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+007/007_spec.rb:3:8: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+008/008_spec.rb:1:8: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+009/009_spec.rb:1:8: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+010/010_spec.rb:1:8: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+011/011_spec.rb:1:8: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+012/012_spec.rb:1:8: C: [Correctable] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
 
-==> autocorrect exit=0 1026 <==
+==> autocorrect exit=1 1808 <==
 000/000_spec.rb:1:8: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find(...)` call detected.
 001/001_spec.rb:1:8: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find(...)` call detected.
 002/002_spec.rb:1:8: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find(...)` call detected.
-003/003_spec.rb:1:8: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+003/003_spec.rb:1:8: C: Capybara/RedundantWithinFind: Redundant `within find(...)` call detected.
+003/003_spec.rb:3:8: C: Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
 004/004_spec.rb:1:8: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
 005/005_spec.rb:1:8: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
-005/005_spec.rb:3:8: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
 006/006_spec.rb:1:8: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+006/006_spec.rb:3:8: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
 007/007_spec.rb:1:8: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+007/007_spec.rb:3:8: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+008/008_spec.rb:1:8: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+009/009_spec.rb:1:8: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+010/010_spec.rb:1:8: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+011/011_spec.rb:1:8: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
+012/012_spec.rb:1:8: C: [Corrected] Capybara/RedundantWithinFind: Redundant `within find_by_id(...)` call detected.
 
 ==> corrected/000/000_spec.rb 24 <==
 within 'foo.bar' do
@@ -32,25 +46,43 @@ end
 within 'foo.bar', visible: false do
 end
 
-==> corrected/003/003_spec.rb 21 <==
-within '#foo' do
+==> corrected/004/004_spec.rb 25 <==
+within :id, 'foo' do
 end
 
-==> corrected/004/004_spec.rb 22 <==
-within('#foo') do
+==> corrected/005/005_spec.rb 26 <==
+within(:id, 'foo') do
 end
 
-==> corrected/005/005_spec.rb 53 <==
-within '#foo\.bar' do
+==> corrected/006/006_spec.rb 58 <==
+within :id, 'foo.bar' do
 end
-within "#foo\\.bar" do
-end
-
-==> corrected/006/006_spec.rb 37 <==
-within '#foo', visible: false do
+within :id, "foo.bar" do
 end
 
-==> corrected/007/007_spec.rb 26 <==
-within id_variable do
+==> corrected/007/007_spec.rb 60 <==
+within :id, '1st-row' do
+end
+within :id, 'user:name' do
+end
+
+==> corrected/008/008_spec.rb 31 <==
+within :id, %q(foo.bar) do
+end
+
+==> corrected/009/009_spec.rb 41 <==
+within :id, 'foo', visible: false do
+end
+
+==> corrected/010/010_spec.rb 31 <==
+within :id, id_variable do
+end
+
+==> corrected/011/011_spec.rb 47 <==
+within :id, dom_id(user), visible: :all do
+end
+
+==> corrected/012/012_spec.rb 37 <==
+within :id, "user_#{user.id}" do
 end
 

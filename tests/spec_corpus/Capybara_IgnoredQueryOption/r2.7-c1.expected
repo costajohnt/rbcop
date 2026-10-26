@@ -1,0 +1,12 @@
+==> offenses exit=1 225 <==
+001/001_spec.rb:1:21: C: [Correctable] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+001/001_spec.rb:2:28: C: [Correctable] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+
+==> autocorrect exit=0 221 <==
+001/001_spec.rb:1:21: C: [Corrected] Capybara/IgnoredQueryOption: `exact` has no effect on CSS queries.
+001/001_spec.rb:2:28: C: [Corrected] Capybara/IgnoredQueryOption: `minimum` has no effect when `count` is specified.
+
+==> corrected/001/001_spec.rb 47 <==
+find(:css, '.item')
+have_text('foo', count: 1)
+

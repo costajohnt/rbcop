@@ -26,33 +26,16 @@ impl Cop for RedundantWithinFind {
             return;
         }
         let args = send_args(&find);
-        let sources = || args.iter().map(|a| node_text(a)).collect::<Vec<_>>().join(", ");
-        let msg = format!("Redundant `within {name}(...)` call detected.");
+        // replaced: nil without arguments or with a block argument
+        let replacement = (!args.is_empty() && !args.iter().any(|a| a.as_block_argument_node().is_some())).then(|| {
+            let sources = args.iter().map(|a| node_text(a)).collect::<Vec<_>>().join(", ");
+            if name == "find_by_id" { format!(":id, {sources}") } else { sources }
+        });
         let (s, e) = send_range(&find);
-        let replacement = match args.first() {
-            _ if name == "find" => sources(),
-            Some(first) if helpers::rspec::is_str(first) => {
-                // build_escaped_selector: the id's value written between the literal's first
-                // character, as RuboCop does; only an inert value in a quoted literal is written.
-                let quote = node_text(first).chars().next().unwrap_or('\'');
-                let value = String::from_utf8_lossy(first.as_string_node().unwrap().unescaped()).into_owned();
-                if !matches!(quote, '\'' | '"') || !helpers::rails::inert_in(&value, quote) {
-                    cx.add_withheld_fix(s, e, msg);
-                    return;
-                }
-                let escaped = value.replace('.', if quote == '"' { "\\\\." } else { "\\." });
-                let mut parts = vec![format!("{quote}#{escaped}{quote}")];
-                parts.extend(args[1..].iter().map(|a| node_text(a).to_string()));
-                parts.join(", ")
+        cx.add_fix(s, e, format!("Redundant `within {name}(...)` call detected."), |c| {
+            if let Some(r) = &replacement {
+                c.replace(s, e, r);
             }
-            _ => {
-                let src = sources();
-                match src.chars().next() {
-                    Some(q @ ('"' | '\'')) => format!("{q}#{}", &src[1..]),
-                    _ => src,
-                }
-            }
-        };
-        cx.add_fix(s, e, msg, |c| c.replace(s, e, &replacement));
+        });
     }
 }

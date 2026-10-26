@@ -18,7 +18,31 @@ expect(foo).not_to match_selector(bar: 'baz')
 expect(foo).not_to match_style(bar: 'baz')
 expect(foo).to match_xpath(bar: 'baz', foo: 'bar')
 
-==> 001/001_spec.rb 241 <==
+==> 001/001_spec.rb 44 <==
+expect(foo || bar).to match_css(bar: 'baz')
+
+==> 002/002_spec.rb 43 <==
+expect(foo + bar).to match_css(bar: 'baz')
+
+==> 003/003_spec.rb 41 <==
+expect(foo bar).to match_css(bar: 'baz')
+
+==> 004/004_spec.rb 46 <==
+expect((foo || bar)).to match_css(bar: 'baz')
+
+==> 005/005_spec.rb 39 <==
+expect('foo').to match_css(bar: 'baz')
+
+==> 006/006_spec.rb 48 <==
+expect(el).to match_css('b') { |n| n.visible? }
+
+==> 007/007_spec.rb 103 <==
+el = page
+expect(el).to match_css('b')
+expect(@el).to match_css('b')
+expect(Element).to match_css('b')
+
+==> 008/008_spec.rb 241 <==
 expect(foo.matches_css?(bar: 'baz')).to be_truthy
 expect(foo.matches_selector?(bar: 'baz')).not_to be_truthy
 expect(foo.matches_style?(bar: 'baz')).to {matcher_false}
