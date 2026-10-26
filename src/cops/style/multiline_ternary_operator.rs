@@ -35,9 +35,11 @@ impl Cop for MultilineTernaryOperator {
             return;
         }
         let parent = parser_parent(cx.ancestors);
-        // SINGLE_LINE_TYPES = return break next send csend, minus setter sends.
+        // SINGLE_LINE_TYPES = return break next send csend super yield, minus setter sends;
+        // `defined?` without parentheses (1.92).
         let single_line = parent.is_some_and(|p| match kind::of(p) {
-            kind::RETURN_NODE | kind::BREAK_NODE | kind::NEXT_NODE => true,
+            kind::RETURN_NODE | kind::BREAK_NODE | kind::NEXT_NODE | kind::SUPER_NODE | kind::YIELD_NODE => true,
+            kind::DEFINED_NODE => p.as_defined_node().unwrap().lparen_loc().is_none(),
             kind::CALL_NODE => !is_assignment_method(p),
             _ => false,
         });

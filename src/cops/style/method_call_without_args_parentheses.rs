@@ -4,6 +4,12 @@ pub const NAME: &str = "Style/MethodCallWithoutArgsParentheses";
 pub static COP: MethodCallWithoutArgsParentheses = MethodCallWithoutArgsParentheses;
 pub struct MethodCallWithoutArgsParentheses;
 
+const MSG: &str = "Do not use parentheses for method calls with no arguments.";
+
+/// `@pending_ranges` (1.92): candidates verified together by ReparsedEquivalence at the end.
+#[derive(Default)]
+struct Pending(Vec<(usize, usize)>);
+
 impl Cop for MethodCallWithoutArgsParentheses {
     fn correctable(&self) -> bool {
         true
@@ -44,7 +50,24 @@ impl Cop for MethodCallWithoutArgsParentheses {
         if cx.src.comments.iter().any(|c| (first..=last).contains(&cx.src.line_of(c.start))) {
             return;
         }
-        cx.add_fix(start, end, "Do not use parentheses for method calls with no arguments.", |c| c.remove(start, end));
+        cx.state::<Pending>().0.push((start, end));
+    }
+
+    /// `on_investigation_end`: the parentheses are significant when removing them changes the parse
+    /// (`foo = 1; foo()`, `foo() -1`).
+    fn on_file(&self, cx: &mut Cx) {
+        let pending = std::mem::take(&mut cx.state::<Pending>().0);
+        if pending.is_empty() {
+            return;
+        }
+        let src = cx.src;
+        let mut buf = Vec::new();
+        let (result, ..) = crate::runner::parse_for_target(src.text, &mut buf, src.version, src.target_ruby);
+        let program = result.node();
+        let remove = |c: &mut Corrector, r: (usize, usize)| c.remove(r.0, r.1);
+        for (s, e) in helpers::reparsed_equivalence::verified_by_reparse_with(src, &program, &pending, |r| r, remove, true) {
+            cx.add_fix(s, e, MSG, |c| c.remove(s, e));
+        }
     }
 }
 
