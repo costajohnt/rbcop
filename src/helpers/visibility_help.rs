@@ -4,15 +4,14 @@ use crate::prelude::*;
 
 const SCOPES: &[&str] = &["private", "protected", "public"];
 
-/// `(send nil? VISIBILITY_SCOPES ...)` with `n` arguments (None: at least one); the scope name.
-fn scope_call<'pr>(node: &Node<'pr>, n: Option<usize>) -> Option<(ruby_prism::CallNode<'pr>, &'pr str)> {
+/// `(send nil? VISIBILITY_SCOPES ...)` with `n` arguments; the scope name.
+fn scope_call<'pr>(node: &Node<'pr>, n: usize) -> Option<(ruby_prism::CallNode<'pr>, &'pr str)> {
     let call = node.as_call_node()?;
     let name = method_name(&call);
-    let count = send_args(&call).len();
     // A call with a block literal is a parser `block`, not a `send`.
     (call.receiver().is_none()
         && SCOPES.contains(&name)
-        && n.map_or(count > 0, |n| count == n)
+        && send_args(&call).len() == n
         && call.block().is_none_or(|b| b.as_block_node().is_none()))
     .then_some((call, name))
 }
@@ -36,20 +35,17 @@ pub fn node_visibility(node: &Node, parent: Option<&Node>, siblings: &[Node], id
     let scope = |name: &str| SCOPES.iter().copied().find(|s| *s == name).unwrap_or("public");
     if let Some(def) = node.as_def_node().filter(|d| d.receiver().is_none()) {
         // visibility_inline_on_def?(parent): `(send nil? VISIBILITY_SCOPES def)`
-        if let Some((call, name)) = parent.and_then(|p| scope_call(p, Some(1)))
+        if let Some((call, name)) = parent.and_then(|p| scope_call(p, 1))
             && call_args(&call).first().is_some_and(|a| a.as_def_node().is_some_and(|d| d.receiver().is_none()))
         {
             return scope(name);
         }
-        // visibility_inline_on_method_name?: `(send nil? VISIBILITY_SCOPES <(sym name) ...>)` to
-        // the right (1.92: any of the arguments, not only a sole one)
+        // visibility_inline_on_method_name?: `(send nil? VISIBILITY_SCOPES (sym name))` to the right
         let def_name = def.name().as_slice();
         if !siblings.is_empty() {
             for s in siblings[idx + 1..].iter().rev() {
-                if let Some((call, name)) = scope_call(s, None)
-                    && call_args(&call)
-                        .iter()
-                        .any(|a| a.as_symbol_node().is_some_and(|sym| sym.unescaped() == def_name))
+                if let Some((call, name)) = scope_call(s, 1)
+                    && call_args(&call).first().and_then(|a| a.as_symbol_node()).is_some_and(|sym| sym.unescaped() == def_name)
                 {
                     return scope(name);
                 }
@@ -58,7 +54,7 @@ pub fn node_visibility(node: &Node, parent: Option<&Node>, siblings: &[Node], id
     }
     if !siblings.is_empty() {
         for s in siblings[..idx].iter().rev() {
-            if let Some((_, name)) = scope_call(s, Some(0)) {
+            if let Some((_, name)) = scope_call(s, 0) {
                 return scope(name);
             }
         }
