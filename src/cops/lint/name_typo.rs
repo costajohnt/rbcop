@@ -31,6 +31,10 @@ impl Cop for NameTypo {
             kind::CALL_OPERATOR_WRITE_NODE,
             kind::CALL_OR_WRITE_NODE,
             kind::CALL_AND_WRITE_NODE,
+            kind::INDEX_TARGET_NODE,
+            kind::INDEX_OPERATOR_WRITE_NODE,
+            kind::INDEX_OR_WRITE_NODE,
+            kind::INDEX_AND_WRITE_NODE,
         ]
     }
 

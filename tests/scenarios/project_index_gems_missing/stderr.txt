@@ -1,0 +1,1 @@
+rubydex bundle indexing failed: The path `vendor/localgem` does not exist.. Indexing the project only.

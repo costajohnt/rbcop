@@ -1,0 +1,21 @@
+PATH
+  remote: vendor/localgem
+  specs:
+    localgem (1.0.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+  x86_64-linux
+
+DEPENDENCIES
+  localgem!
+
+CHECKSUMS
+  localgem (1.0.0)
+
+BUNDLED WITH
+  4.0.16

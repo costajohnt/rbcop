@@ -1681,6 +1681,36 @@ impl<'a> Badges<'a> {
     }
 }
 
+/// Runner#build_project_index (project_index_files): the whole project (the targets found under
+/// the pwd config's base directory, plus `targets`) and, with `AllCops/ProjectIndexIncludesGems`,
+/// the bundle's gem sources, sorted, so cross-file offenses do not depend on which files a run
+/// inspects.
+fn build_project_index(
+    store: &mut Store,
+    pwd_config: &Resolved,
+    targets: &[PathBuf],
+    force_exclusion: bool,
+    only_recognized: bool,
+) {
+    let root = pwd_config.base_dir.clone();
+    let mut all = targets::find(store, &[root], force_exclusion, only_recognized).unwrap_or_default();
+    all.extend(targets.iter().cloned());
+    let mut paths: Vec<String> = all.iter().map(|p| p.to_string_lossy().into_owned()).collect();
+    if pwd_config.all_cops().truthy("ProjectIndexIncludesGems") {
+        match rbcop::project_index::bundled_gem_source_files(store.cwd()) {
+            Ok(gems) => paths.extend(gems),
+            Err(e) => eprintln!(
+                "{}",
+                formatter::Paint(store.color())
+                    .yellow(&format!("rubydex bundle indexing failed: {e}. Indexing the project only."))
+            ),
+        }
+    }
+    paths.sort();
+    paths.dedup();
+    rbcop::project_index::install(paths);
+}
+
 fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Result<u8, String> {
     // MessageAnnotator#display_cop_names?: always under -d.
     if cli.debug {
@@ -1894,17 +1924,8 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     // when that file's turn comes (`-d`).
     print!("{}", rbcop::config::take_debug());
     let mut loading = vec![String::new(); files.len()];
-    // Runner#build_project_index: the whole project (the targets found under the pwd config's base
-    // directory, plus these targets), sorted, so cross-file offenses do not depend on which files a
-    // run inspects.
     if !cli.list_targets && pwd_config.all_cops().truthy("UseProjectIndex") {
-        let root = pwd_config.base_dir.clone();
-        let mut all = targets::find(&mut store, &[root], cli.force_exclusion, cli.only_recognized).unwrap_or_default();
-        all.extend(files.iter().cloned());
-        let mut paths: Vec<String> = all.iter().map(|p| p.to_string_lossy().into_owned()).collect();
-        paths.sort();
-        paths.dedup();
-        rbcop::project_index::install(paths);
+        build_project_index(&mut store, &pwd_config, &files, cli.force_exclusion, cli.only_recognized);
     }
 
     // Runner#qualify_option_cop_names runs when the first team mobilizes: after the configs of the

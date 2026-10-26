@@ -26,6 +26,10 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   inherit from a URL do this; to avoid it, inherit from local files.
 - **Gem lookups**: `inherit_gem`, and `plugins:`/`require:` of gems, ask `ruby -e` with RubyGems
   where a gem lives. That runs RubyGems, not project code, and only when the config names gems.
+- **`AllCops/ProjectIndexIncludesGems`** (#675): with `UseProjectIndex` and this option both set,
+  rbcop runs the project's `ruby` with `Bundler.load.specs` to find the bundled gems' sources. That
+  evaluates the project's Gemfile, also under `--lsp`, `--mcp` and the server options, as RuboCop
+  does. `RBCOP_FALLBACK=0` does not stop it. To avoid it, leave the option off (the default).
 
 ## Deliberate differences from RuboCop
 
@@ -506,12 +510,13 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   Naming/InclusiveLanguage, Style/ConditionalAssignment, Style/MagicCommentFormat (static).
 - `AllCops/UseProjectIndex` (#295) builds the index with vendor/rubydex (the rubydex 0.4.1 gem's
   Rust core), so rbcop behaves as RuboCop does with that gem installed, never as RuboCop without it
-  (the "rubydex gem is not installed" warning and file-local fallback). Not supported:
-  `AllCops/ProjectIndexIncludesGems` (RuboCop indexes the bundle's gem sources only under
-  Bundler; rbcop indexes the project alone), the index in `--lsp`, `--server` and `--mcp` (they
-  analyse file by file, as without the gem), and the index-aware `on_send` of
-  ArgumentMismatch, DeprecatedReference and NameTypo for index sends assigned in a multiple
-  assignment or by `recv[i] op= v`.
+  (the "rubydex gem is not installed" warning and file-local fallback).
+  `AllCops/ProjectIndexIncludesGems` (#675) asks the project's `ruby` for the bundle's gem
+  sources (`Bundler.load.specs`), so it needs `ruby` on PATH; without one rbcop warns
+  `rubydex bundle indexing failed: cannot run ruby: ...` and indexes the project only. Bundler
+  runs in its own process: when a config's `inherit_gem` already made RuboCop call
+  `Bundler.load`, what Bundler prints (`Resolving dependencies...`) appears at index time in rbcop
+  instead of at config load.
 - Metrics/CollectionLiteralLength does not count `rescue A, B` exception lists (parser `array`).
   Lint/SymbolConversion does not treat a backslash-newline inside `:"..."` as a continuation.
 - LineLength `SplitStrings: true` break points (string splitting) are not modelled. The unbracketed

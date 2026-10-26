@@ -58,3 +58,90 @@ fn lsp_transcripts_match_rubocop() {
         assert_eq!(out.status.code(), status.trim().parse().ok(), "{name}: exit status");
     }
 }
+
+/// AllCops/UseProjectIndex under `--lsp` (#675): the index is built from disk at the first run and
+/// kept while files change on disk, until `textDocument/didSave` or a watched file's change drops
+/// it. What `rubocop --lsp` 1.91.0 (rubydex 0.4.1) publishes for b.rb after each step: the two
+/// offenses of lib.rb's first version, again after lib.rb is rewritten, none after didSave
+/// (rebuilt from the second version), and both again after lib.rb is restored and reported by
+/// didChangeWatchedFiles.
+#[test]
+fn lsp_rebuilds_the_project_index_on_save() {
+    use std::io::{BufRead, BufReader, Read};
+    let dir = std::env::temp_dir().join(format!("rbcop-lsp-index-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    std::fs::create_dir_all(&dir).unwrap();
+    let dir = dir.canonicalize().unwrap();
+    let lib = |arity: &str| {
+        format!(
+            "# frozen_string_literal: true\n\n# Foo\nclass Foo\n  def self.[]({arity}); end\n\n  def self.bar({arity}); end\nend\n"
+        )
+    };
+    std::fs::write(dir.join("Gemfile"), "source \"https://rubygems.org\"\n").unwrap();
+    std::fs::write(
+        dir.join(".rubocop.yml"),
+        "AllCops:\n  UseProjectIndex: true\n  NewCops: enable\n  SuggestExtensions: false\n",
+    )
+    .unwrap();
+    std::fs::write(dir.join("lib.rb"), lib("a")).unwrap();
+    let mut child = common::command(env!("CARGO_BIN_EXE_rbcop"))
+        .arg("--lsp")
+        .current_dir(&dir)
+        .env("PWD", &dir)
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::null())
+        .spawn()
+        .unwrap();
+    let mut input = child.stdin.take().unwrap();
+    let mut output = BufReader::new(child.stdout.take().unwrap());
+    let root = format!("file://{}", dir.display());
+    let text = r"# frozen_string_literal: true\n\nFoo[1, 2] += 1\nFoo.bar(1, 2)\n";
+    let mut send = |m: String| write!(input, "Content-Length: {}\r\n\r\n{m}", m.len()).unwrap();
+    let mut read = || {
+        let mut n = 0;
+        loop {
+            let mut line = String::new();
+            output.read_line(&mut line).unwrap();
+            if let Some(len) = line.strip_prefix("Content-Length: ") {
+                n = len.trim().parse().unwrap();
+            } else if line == "\r\n" {
+                break;
+            }
+        }
+        let mut body = vec![0; n];
+        output.read_exact(&mut body).unwrap();
+        String::from_utf8(body).unwrap().matches("Wrong number of arguments").count()
+    };
+    let change = format!(
+        r#"{{"jsonrpc":"2.0","method":"textDocument/didChange","params":{{"textDocument":{{"uri":"{root}/b.rb","version":2}},"contentChanges":[{{"text":"{text}"}}]}}}}"#
+    );
+    send(format!(
+        r#"{{"jsonrpc":"2.0","id":1,"method":"initialize","params":{{"processId":null,"rootUri":"{root}","capabilities":{{}}}}}}"#
+    ));
+    read();
+    send(format!(
+        r#"{{"jsonrpc":"2.0","method":"textDocument/didOpen","params":{{"textDocument":{{"uri":"{root}/b.rb","languageId":"ruby","version":1,"text":"{text}"}}}}}}"#
+    ));
+    let mut counts = vec![read()];
+    std::fs::write(dir.join("lib.rb"), lib("a, b")).unwrap();
+    send(change.clone());
+    counts.push(read());
+    send(format!(
+        r#"{{"jsonrpc":"2.0","method":"textDocument/didSave","params":{{"textDocument":{{"uri":"{root}/b.rb"}}}}}}"#
+    ));
+    send(change.clone());
+    counts.push(read());
+    std::fs::write(dir.join("lib.rb"), lib("a")).unwrap();
+    send(format!(
+        r#"{{"jsonrpc":"2.0","method":"workspace/didChangeWatchedFiles","params":{{"changes":[{{"uri":"{root}/lib.rb","type":2}}]}}}}"#
+    ));
+    send(change);
+    counts.push(read());
+    send(r#"{"jsonrpc":"2.0","id":2,"method":"shutdown"}"#.to_string());
+    read();
+    drop(input);
+    let _ = child.wait();
+    let _ = std::fs::remove_dir_all(&dir);
+    assert_eq!(counts, [2, 2, 0, 2]);
+}

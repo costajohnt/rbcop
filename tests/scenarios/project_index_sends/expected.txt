@@ -1,0 +1,12 @@
+b.rb:10:4: W: Lint/ArgumentMismatch: Wrong number of arguments to `[]` (given 3, expected 1).
+b.rb:12:6: W: Lint/ArgumentMismatch: Wrong number of arguments to `[]` (given 2, expected 1).
+b.rb:13:4: W: Lint/DeprecatedReference: Method `[]` is deprecated: Use Foo.
+b.rb:14:4: W: Lint/DeprecatedReference: Method `[]` is deprecated: Use Foo.
+b.rb:15:4: W: Lint/ArgumentMismatch: Wrong number of arguments to `[]=` (given 1, expected 2).
+b.rb:15:4: W: Lint/DeprecatedReference: Method `[]=` is deprecated: Use Foo.
+b.rb:17:4: W: Lint/ArgumentMismatch: Wrong number of arguments to `[]=` (given 1, expected 2).
+b.rb:4:4: W: Lint/ArgumentMismatch: Wrong number of arguments to `[]` (given 2, expected 1).
+b.rb:5:4: W: Lint/ArgumentMismatch: Wrong number of arguments to `[]` (given 2, expected 1).
+b.rb:6:4: W: Lint/ArgumentMismatch: Wrong number of arguments to `[]` (given 2, expected 1).
+b.rb:7:4: W: Lint/ArgumentMismatch: Wrong number of arguments to `[]=` (given 3, expected 2).
+b.rb:8:4: W: Lint/ArgumentMismatch: Wrong number of arguments to `[]` (given 0, expected 1).

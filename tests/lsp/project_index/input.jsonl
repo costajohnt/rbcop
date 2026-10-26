@@ -1,0 +1,8 @@
+{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"processId":null,"rootUri":"file://$ROOT","capabilities":{}}}
+{"jsonrpc":"2.0","method":"initialized","params":{}}
+{"jsonrpc":"2.0","method":"textDocument/didOpen","params":{"textDocument":{"uri":"file://$ROOT/b.rb","languageId":"ruby","version":1,"text":"# frozen_string_literal: true\n\nFoo[1, 2] += 1\nFoo.bar(1, 2)\n"}}}
+{"jsonrpc":"2.0","method":"textDocument/didSave","params":{"textDocument":{"uri":"file://$ROOT/b.rb"}}}
+{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file://$ROOT/b.rb","version":2},"contentChanges":[{"text":"# frozen_string_literal: true\n\nFoo[1] += 1\nFoo.bar(1, 2)\n"}]}}
+{"jsonrpc":"2.0","method":"workspace/didChangeWatchedFiles","params":{"changes":[{"uri":"file://$ROOT/lib.rb","type":2}]}}
+{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file://$ROOT/b.rb","version":3},"contentChanges":[{"text":"# frozen_string_literal: true\n\nFoo[1, 2] += 1\nFoo.bar(1)\n"}]}}
+{"jsonrpc":"2.0","id":2,"method":"shutdown"}

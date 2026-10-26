@@ -27,11 +27,14 @@ pub struct ProjectIndex {
     /// `Graph#resolve_constant` results: resolving adds (then untracks) names, so it takes the
     /// write lock; memoized because DeprecatedReference resolves every constant of every file.
     resolved: Mutex<HashMap<ResolveKey, Option<DeclarationId>>>,
-    method_references: OnceLock<HashSet<String>>,
+    /// `Graph#method_references` names, `()` dropped (UnusedPrivateMethod#compute_referenced_names).
+    method_references: RwLock<HashSet<String>>,
     /// ProjectIndexHelp#project_index_signature: `path:mtime:size` of every indexed document.
-    signature: String,
+    signature: RwLock<String>,
 }
 
+/// One index for the process. `--lsp` and `--mcp` rebuild it in place, between requests, so no
+/// cop holds a view of the old graph and `get` stays a plain load.
 static INDEX: OnceLock<ProjectIndex> = OnceLock::new();
 
 /// `Cop::Base#project_index`: None unless the run enabled `AllCops/UseProjectIndex`.
@@ -40,7 +43,8 @@ pub fn get() -> Option<&'static ProjectIndex> {
 }
 
 /// ProjectIndexLoader.build_index: index `paths` (rubydex skips anything but .rb/.rake/.rbs/.ru
-/// and files that are not UTF-8), then resolve. Installed for the rest of the process.
+/// and files that are not UTF-8), then resolve. Installed for the rest of the process, replacing
+/// any index built before.
 pub fn install(paths: Vec<String>) {
     let mut graph = Graph::new();
     let (files, _) = rubydex::listing::collect_file_paths(paths, &graph.excluded_patterns());
@@ -63,19 +67,87 @@ pub fn install(paths: Vec<String>) {
         })
         .collect();
     lines.sort();
-    let index = ProjectIndex {
+    let method_references: HashSet<String> = graph
+        .method_references()
+        .values()
+        .filter_map(|r| graph.strings().get(r.str()))
+        .map(|s| s.as_str().strip_suffix("()").unwrap_or(s.as_str()).to_string())
+        .collect();
+    let signature = lines.join("\n");
+    if let Some(index) = INDEX.get() {
+        *index.graph.write().unwrap_or_else(|e| e.into_inner()) = graph;
+        index.resolved.lock().unwrap_or_else(|e| e.into_inner()).clear();
+        *index.method_references.write().unwrap_or_else(|e| e.into_inner()) = method_references;
+        *index.signature.write().unwrap_or_else(|e| e.into_inner()) = signature;
+        return;
+    }
+    let _ = INDEX.set(ProjectIndex {
         graph: RwLock::new(graph),
         resolved: Mutex::default(),
-        method_references: OnceLock::new(),
-        signature: lines.join("\n"),
-    };
-    let _ = INDEX.set(index);
+        method_references: RwLock::new(method_references),
+        signature: RwLock::new(signature),
+    });
+}
+
+/// ProjectIndexLoader.bundled_gem_source_files (`AllCops/ProjectIndexIncludesGems`): every bundled
+/// gem's `lib/**/*.rb`, empty outside a bundle. The project's Ruby asks Bundler, so the bundle
+/// resolves as inside RuboCop, and what Bundler prints (`Resolving dependencies...`) reaches
+/// stdout as there. `Bundler.load` is memoized per process, so a rebuilt index (`--lsp`) reuses
+/// the first list. Err: the message RuboCop warns with before indexing the project only.
+// ponytail: the memoized list also skips re-globbing the gem dirs, which do not change in a run.
+pub fn bundled_gem_source_files(cwd: &Path) -> Result<Vec<String>, String> {
+    use std::io::Write;
+    const MARK: &[u8] = b"\0rbcop-bundled-gems\0";
+    const SCRIPT: &str = r##"out = begin
+  require 'bundler'
+  files = if Bundler::SharedHelpers.in_bundle?
+    Bundler.load.specs.flat_map { |spec| Dir.glob(File.join(spec.full_gem_path, 'lib', '**', '*.rb')) }
+  else
+    []
+  end
+  "F" + files.map { |f| "#{f}\0" }.join
+rescue LoadError
+  "F"
+rescue StandardError => e
+  "E#{e.message}"
+end
+$stdout.binmode
+$stdout.print "\0rbcop-bundled-gems\0", out
+"##;
+    static FILES: OnceLock<Vec<String>> = OnceLock::new();
+    if let Some(files) = FILES.get() {
+        return Ok(files.clone());
+    }
+    let _ = std::io::stdout().flush();
+    let out = std::process::Command::new("ruby")
+        .args(["-e", SCRIPT])
+        .current_dir(cwd)
+        .stdin(std::process::Stdio::null())
+        .stderr(std::process::Stdio::inherit())
+        .output()
+        .map_err(|e| format!("cannot run ruby: {e}"))?;
+    let at = out.stdout.windows(MARK.len()).rposition(|w| w == MARK).ok_or("ruby exited without a result")?;
+    let mut stdout = std::io::stdout();
+    let _ = stdout.write_all(&out.stdout[..at]);
+    let _ = stdout.flush();
+    match out.stdout[at + MARK.len()..].split_first() {
+        Some((b'F', list)) => {
+            let files: Vec<String> = list
+                .split(|b| *b == 0)
+                .filter(|f| !f.is_empty())
+                .map(|f| String::from_utf8_lossy(f).into_owned())
+                .collect();
+            Ok(FILES.get_or_init(|| files).clone())
+        }
+        Some((_, message)) => Err(String::from_utf8_lossy(message).into_owned()),
+        None => Err("ruby exited without a result".into()),
+    }
 }
 
 impl ProjectIndex {
     /// What ProjectIndexHelp#external_dependency_checksum covers, for the result cache key.
-    pub fn signature(&self) -> &str {
-        &self.signature
+    pub fn signature(&self) -> String {
+        self.signature.read().unwrap_or_else(|e| e.into_inner()).clone()
     }
 
     pub fn read(&self) -> Ix<'_> {
@@ -96,16 +168,9 @@ impl ProjectIndex {
         found
     }
 
-    /// `Graph#method_references` names, `()` dropped (UnusedPrivateMethod#compute_referenced_names).
-    pub fn method_reference_names(&self) -> &HashSet<String> {
-        self.method_references.get_or_init(|| {
-            let ix = self.read();
-            ix.g.method_references()
-                .values()
-                .filter_map(|r| ix.g.strings().get(r.str()))
-                .map(|s| s.as_str().strip_suffix("()").unwrap_or(s.as_str()).to_string())
-                .collect()
-        })
+    /// `name` is among `Graph#method_references` (UnusedPrivateMethod#compute_referenced_names).
+    pub fn method_referenced(&self, name: &str) -> bool {
+        self.method_references.read().unwrap_or_else(|e| e.into_inner()).contains(name)
     }
 }
 
@@ -509,13 +574,18 @@ pub fn overrides_inherited_method(ancestors: &[Node], def: &ruby_prism::DefNode)
 }
 
 /// The node kinds that are a parser `send` (or `csend`) the index-aware cops' `on_send` sees: a
-/// call, a call assigned in a multiple assignment and the read of `recv.m op= v`.
+/// call, a call assigned in a multiple assignment (`recv.m, x =`, `recv[i], x =`) and the read of
+/// `recv.m op= v` / `recv[i] op= v`.
 pub const SEND_KINDS: &[usize] = &[
     crate::node_kind::CALL_NODE,
     crate::node_kind::CALL_TARGET_NODE,
     crate::node_kind::CALL_OPERATOR_WRITE_NODE,
     crate::node_kind::CALL_OR_WRITE_NODE,
     crate::node_kind::CALL_AND_WRITE_NODE,
+    crate::node_kind::INDEX_TARGET_NODE,
+    crate::node_kind::INDEX_OPERATOR_WRITE_NODE,
+    crate::node_kind::INDEX_OR_WRITE_NODE,
+    crate::node_kind::INDEX_AND_WRITE_NODE,
 ];
 
 /// A parser `send`: receiver, method name, arguments (no block argument) and selector.
@@ -526,7 +596,6 @@ pub struct Send<'pr> {
     pub selector: Option<(usize, usize)>,
 }
 
-// ponytail: `recv[i], x = ...` and `recv[i] op= v` (index sends) are left out.
 pub fn parser_send<'pr>(node: &Node<'pr>) -> Option<Send<'pr>> {
     let name = |id: ruby_prism::ConstantId| String::from_utf8_lossy(id.as_slice()).into_owned();
     let sel = |l: Option<ruby_prism::Location>| l.map(|l| (l.start_offset(), l.end_offset()));
@@ -545,6 +614,24 @@ pub fn parser_send<'pr>(node: &Node<'pr>) -> Option<Send<'pr>> {
             name: name(c.name()),
             args: Vec::new(),
             selector: Some((l.start_offset(), l.end_offset())),
+        });
+    }
+    // `recv[i], x =` is `send :[]=` and `recv[i] op= v` reads `send :[]`, the selector `[i]`.
+    let index = if let Some(c) = node.as_index_target_node() {
+        Some((Some(c.receiver()), "[]=", c.arguments(), c.opening_loc(), c.closing_loc()))
+    } else if let Some(c) = node.as_index_operator_write_node() {
+        Some((c.receiver(), "[]", c.arguments(), c.opening_loc(), c.closing_loc()))
+    } else if let Some(c) = node.as_index_or_write_node() {
+        Some((c.receiver(), "[]", c.arguments(), c.opening_loc(), c.closing_loc()))
+    } else {
+        node.as_index_and_write_node().map(|c| (c.receiver(), "[]", c.arguments(), c.opening_loc(), c.closing_loc()))
+    };
+    if let Some((receiver, name, args, open, close)) = index {
+        return Some(Send {
+            receiver,
+            name: name.to_string(),
+            args: args.map(|a| a.arguments().iter().collect()).unwrap_or_default(),
+            selector: Some((open.start_offset(), close.end_offset())),
         });
     }
     let (receiver, read, msg) = if let Some(c) = node.as_call_operator_write_node() {
