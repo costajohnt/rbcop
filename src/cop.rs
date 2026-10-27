@@ -70,9 +70,21 @@ pub struct Offense {
     pub justification: Option<String>,
     /// `--disable-uncorrectable` gave it a `# rubocop:todo` comment (status `:corrected_with_todo`).
     pub todo: bool,
-    /// Under `--lsp`: Offense#corrector's replacements (byte ranges), for the quick fix; None when
-    /// the cop made no correction.
+    /// Under `--lsp`, or with the JSON formatter (`record_edits`): Offense#corrector's replacements
+    /// (byte ranges), for the quick fix and Offense#corrections; None when the cop made no
+    /// correction.
     pub edits: Option<Vec<(usize, usize, String)>>,
+}
+
+static RECORD_EDITS: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+
+/// Keep every offense's correction in `Offense::edits` (the JSON formatter prints them).
+pub fn record_edits() {
+    RECORD_EDITS.store(true, std::sync::atomic::Ordering::Relaxed);
+}
+
+fn recording_edits() -> bool {
+    RECORD_EDITS.load(std::sync::atomic::Ordering::Relaxed) || crate::helpers::lsp::serving()
 }
 
 /// A heredoc's body lines, `first..terminator` (1-based), and its closing delimiter.
@@ -184,6 +196,7 @@ impl Cx<'_, '_> {
     /// Base#disable_uncorrectable: a `# rubocop:todo` comment for the offense (none if its line has
     /// one from this cop already), status `:corrected_with_todo`.
     fn push_todo(&mut self, start: usize, end: usize, message: String) {
+        let mut edits = None;
         if self.fixes.todo_lines.insert(self.src.line_of(start)) {
             let mut c = Corrector::new(self.facts.text.clone());
             crate::autocorrect::disable_offense(
@@ -199,10 +212,12 @@ impl Cx<'_, '_> {
             if merged.merge(&c).is_err() {
                 return self.cop_error();
             }
+            edits = (recording_edits() && !c.is_empty()).then(|| c.as_replacements());
         }
         self.push(start, end, message, true, true);
         if let Some(o) = self.out.last_mut() {
             o.todo = true;
+            o.edits = edits;
         }
     }
 
@@ -256,21 +271,18 @@ impl Cx<'_, '_> {
         if corrector.is_empty() {
             return self.push(start, end, message.into(), false, false);
         }
-        if !self.fixes.autocorrect {
-            self.push(start, end, message.into(), true, false);
-            if crate::helpers::lsp::serving()
-                && let Some(o) = self.out.last_mut()
-            {
-                o.edits = Some(corrector.as_replacements());
+        let edits = recording_edits().then(|| corrector.as_replacements());
+        if self.fixes.autocorrect {
+            // Base#apply_correction: merged into the cop's corrector; clobbering there raises too.
+            let merged = self.fixes.corrector.get_or_insert_with(|| Corrector::new(self.facts.text.clone()));
+            if merged.merge(&corrector).is_err() {
+                return self.cop_error();
             }
-            return;
         }
-        // Base#apply_correction: merged into the cop's corrector; clobbering there raises too.
-        let merged = self.fixes.corrector.get_or_insert_with(|| Corrector::new(self.facts.text.clone()));
-        if merged.merge(&corrector).is_err() {
-            return self.cop_error();
+        self.push(start, end, message.into(), true, self.fixes.autocorrect);
+        if let Some(o) = self.out.last_mut() {
+            o.edits = edits;
         }
-        self.push(start, end, message.into(), true, true);
     }
 
     /// An offense RuboCop corrects (so `[Correctable]`) whose correction rbcop deliberately withholds:

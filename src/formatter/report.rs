@@ -174,6 +174,8 @@ pub(super) struct Json {
     files: Vec<String>,
     offense_count: usize,
     target_count: usize,
+    error_count: usize,
+    warning_count: usize,
 }
 
 impl Formatter for Json {
@@ -208,11 +210,58 @@ impl Formatter for Json {
                     let j = o.justification.as_deref().map_or_else(|| "null".to_string(), json);
                     s.push_str(&format!(",\"suppressed\":true,\"justification\":{j}"));
                 }
+                if !o.corrections.is_empty() {
+                    let edits: Vec<String> = o
+                        .corrections
+                        .iter()
+                        .map(|e| {
+                            format!(
+                                "{{\"start_line\":{},\"start_column\":{},\"last_line\":{},\"last_column\":{},\
+                                 \"begin_pos\":{},\"end_pos\":{},\"replacement\":{}}}",
+                                e.start_line,
+                                e.start_column,
+                                e.last_line,
+                                e.last_column,
+                                e.begin_pos,
+                                e.end_pos,
+                                json(&e.replacement)
+                            )
+                        })
+                        .collect();
+                    // Offense#correction_safe: Cop::Base#safe_autocorrect? with the file's config.
+                    let c = f.config.hash.map(o.cop).cloned().unwrap_or_default();
+                    let safe = c.bool("Safe") != Some(false) && c.bool("SafeAutoCorrect") != Some(false);
+                    s.push_str(&format!(",\"correction\":{{\"safe\":{safe},\"edits\":[{}]}}", edits.join(",")));
+                }
                 s.push('}');
                 s
             })
             .collect();
-        self.files.push(format!("{{\"path\":{},\"offenses\":[{}]}}", json(&cx.smart_path(f.path)), offs.join(",")));
+        let path = cx.smart_path(f.path);
+        let mut entry = format!("{{\"path\":{},\"offenses\":[{}]", json(&path), offs.join(","));
+        // hash_for_problems: messages that differ only in the line and column after the file's
+        // absolute path are listed once, naming the file as its entry does.
+        let abs = crate::config::expand_path(f.path, &crate::config::cwd()).to_string_lossy().into_owned();
+        let location = regex::Regex::new(&format!("{}((?::\\d+)*)", regex::escape(&abs))).unwrap();
+        for (key, messages) in [("errors", f.errors), ("warnings", f.warnings)] {
+            if messages.is_empty() {
+                continue;
+            }
+            let mut seen = std::collections::HashSet::new();
+            let listed: Vec<String> = messages
+                .iter()
+                .filter(|m| seen.insert(location.replace_all(m, "").into_owned()))
+                .map(|m| json(&location.replace_all(m, |c: &regex::Captures| format!("{path}{}", &c[1]))))
+                .collect();
+            if key == "errors" {
+                self.error_count += listed.len();
+            } else {
+                self.warning_count += listed.len();
+            }
+            entry.push_str(&format!(",\"{key}\":[{}]", listed.join(",")));
+        }
+        entry.push('}');
+        self.files.push(entry);
         self.offense_count += f.offenses.len();
     }
 
@@ -221,7 +270,7 @@ impl Formatter for Json {
             out,
             "{{\"metadata\":{{\"rubocop_version\":{},\"ruby_engine\":\"ruby\",\"ruby_version\":{},\
              \"ruby_patchlevel\":{},\"ruby_platform\":{}}},\"files\":[{}],\"summary\":{{\"offense_count\":{},\
-             \"target_file_count\":{},\"inspected_file_count\":{}}}}}",
+             \"target_file_count\":{},\"inspected_file_count\":{}{}}}}}",
             json(RUBOCOP_VERSION),
             json(RUBY_VERSION),
             json(RUBY_PATCHLEVEL),
@@ -229,7 +278,13 @@ impl Formatter for Json {
             self.files.join(","),
             self.offense_count,
             self.target_count,
-            inspected.len()
+            inspected.len(),
+            // problem_counts: only the non-zero ones.
+            [("error_count", self.error_count), ("warning_count", self.warning_count)]
+                .iter()
+                .filter(|(_, n)| *n > 0)
+                .map(|(k, n)| format!(",\"{k}\":{n}"))
+                .collect::<String>()
         );
     }
 }
@@ -527,7 +582,7 @@ impl Formatter for Offenses {
             let link = self.links.get(cop).cloned().flatten().unwrap_or_default();
             let _ = writeln!(out, "{:<width$}{cop}{correctable}{link}", n.to_string());
         }
-        let _ = write!(out, "--\n{total}  Total in {} files\n\n", self.files);
+        let _ = write!(out, "--\n{total}  Total in {}\n\n", pluralize(self.files, "file", false));
     }
 }
 
@@ -554,7 +609,7 @@ impl Formatter for Worst {
         for (file, n) in &self.counts {
             let _ = writeln!(out, "{:<width$}{file}", n.to_string());
         }
-        let _ = write!(out, "--\n{total}  Total in {} files\n\n", self.counts.len());
+        let _ = write!(out, "--\n{total}  Total in {}\n\n", pluralize(self.counts.len(), "file", false));
     }
 }
 
@@ -581,6 +636,8 @@ fn sarif_level(sev: &str) -> &'static str {
 
 impl Formatter for Sarif {
     fn file_finished(&mut self, _out: &mut String, cx: &Ctx, f: &FileOut) {
+        // fingerprints_for: a repeat of a line hash within the file gets a `:N` suffix.
+        let mut line_hash_counts: HashMap<String, usize> = HashMap::new();
         for o in &f.offenses {
             let index = match self.index.get(o.cop) {
                 Some(&i) => i,
@@ -590,7 +647,10 @@ impl Formatter for Sarif {
                     self.rules.len() - 1
                 }
             };
-            let hash = sha256_hex(format!("{}{}", o.cop, o.source_line).as_bytes());
+            let line_hash = sha256_hex(format!("{}{}", o.cop, o.source_line).as_bytes());
+            let count = line_hash_counts.entry(line_hash.clone()).or_default();
+            *count += 1;
+            let hash = if *count == 1 { line_hash } else { format!("{line_hash}:{count}") };
             let mut r = format!(
                 "{{\"ruleId\":{},\"ruleIndex\":{index},\"level\":\"{}\",\"message\":{{\"text\":{}}},\
                  \"locations\":[{{\"physicalLocation\":{{\"artifactLocation\":{{\"uri\":{}}},\"region\":{{\
@@ -636,7 +696,12 @@ fn sarif_rule(f: &FileOut, cop: &str) -> String {
     let desc = cfg.str("Description").unwrap_or(cop).to_string();
     let dept = cop.rsplit_once('/').map_or("", |(d, _)| d);
     let uri = super::docs_url(f.config, cop);
-    let default_sev = if dept == "Lint" { "warning" } else { "convention" };
+    // Cop::Base::DEPARTMENT_SEVERITIES
+    let default_sev = match dept {
+        "Lint" | "Security" => "warning",
+        "Metrics" => "refactor",
+        _ => "convention",
+    };
     let level = sarif_level(cfg.str("Severity").unwrap_or(default_sev));
     let tag = cop.split('/').next().unwrap_or(cop);
     // help_for / rule[:helpUri]: both only with a documentation URL.

@@ -1672,7 +1672,7 @@ fn qualify_cop_options(cli: &mut Cli) -> (Vec<String>, Option<String>) {
 /// errors printed for the file, what the result cache needs to save it, and the file's
 /// `--auto-gen-config` updates (rbcop::autogen).
 type Linted = Result<
-    (FileReport, Option<String>, Option<String>, Vec<String>, Vec<String>, Saving, rbcop::autogen::Updates),
+    (FileReport, Option<String>, Option<String>, Vec<String>, Vec<(String, bool)>, Saving, rbcop::autogen::Updates),
     String,
 >;
 
@@ -1950,6 +1950,10 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     if phase.is_some() {
         resolved.push((formatter::TODO, Some(PathBuf::from(AUTO_GENERATED_FILE))));
     }
+    // JSONFormatter prints Offense#corrections.
+    if resolved.iter().any(|(n, _)| *n == "[j]son") {
+        rbcop::cop::record_edits();
+    }
 
     // Runner#find_target_files. Paths that do not exist are kept, as RuboCop keeps them, and fail
     // when their turn to be inspected comes.
@@ -2048,7 +2052,6 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
         global_color: global,
         pwd_config: pwd_config.clone(),
         default_config: store.default_config(),
-        io_console: resolved.iter().any(|(n, _)| matches!(*n, "[fu]ubar" | "[o]ffenses")),
         stdout_tty: std::io::stdout().is_terminal(),
     };
 
@@ -2217,6 +2220,8 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     // Each config's signature (Config#signature), once.
     let mut signatures = std::collections::HashMap::new();
     if result_cache.is_some() {
+        // Offense#corrections are cached (CachedData), so a JSON run on a cache hit has them.
+        rbcop::cop::record_edits();
         for (_, c) in &jobs {
             signatures
                 .entry(std::sync::Arc::as_ptr(c) as usize)
@@ -2532,9 +2537,12 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             }
             // The cop errors, printed as RuboCop's Team prints them while it inspects the file, with
             // the directive warnings where CommentConfig's analysis printed them (runner::investigate).
-            for e in &errors {
+            for (e, _) in &errors {
                 eprintln!("{e}");
             }
+            // Runner#collect_problems: the file's cop errors and warnings, for
+            // Formatter#file_problems (the directive warnings are neither).
+            let mut file_errors: Vec<String> = errors.into_iter().filter(|e| !e.1).map(|e| e.0).collect();
             // Registry#print_department_missing_warning outside that stream (a poisoned or unparsable file).
             for w in &report.warnings {
                 eprintln!("{w}");
@@ -2552,7 +2560,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             for w in &warnings {
                 eprintln!("{w}");
             }
-            cop_warnings_raised.extend(warnings);
+            cop_warnings_raised.extend(warnings.iter().cloned());
             // Team#autocorrect writes the file before it is reported (with --stdin, keeps the source
             // for printing); a failed write ends the run. Runner#record_diff: under `--diff` the
             // corrections are diffed against the source as read instead.
@@ -2575,8 +2583,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             // Runner#process_file: `errors << e`, so the summary lists it and the run fails.
             if let Some(e) = loop_error {
                 runner::file_error(e);
-                for e in runner::take_file_errors() {
+                for (e, _) in runner::take_file_errors() {
                     eprintln!("{e}");
+                    file_errors.push(e);
                 }
             }
             report.offenses.extend(fallback_offenses.remove(path).unwrap_or_default());
@@ -2597,7 +2606,10 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                     *n <= max
                 })
                 .collect();
-            set.file_finished(&cx, &FileOut { path, offenses: shown, config: cfg });
+            set.file_finished(
+                &cx,
+                &FileOut { path, offenses: shown, config: cfg, errors: &file_errors, warnings: &warnings },
+            );
             if cli.fail_fast && !passed {
                 stopped = true;
                 break;
