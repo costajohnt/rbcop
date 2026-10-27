@@ -64,6 +64,9 @@ pub fn check(
         return;
     }
     let first_line = adjusted_first_line.unwrap_or(first);
+    if first_line >= last {
+        return;
+    }
     let namespace = body.is_some_and(|b| b.len() == 1 && is_constant_definition(&b[0]));
     match style {
         "empty_lines_except_namespace" => {
@@ -130,6 +133,9 @@ pub fn check_line(cx: &mut Cx, style: &str, line: i64, msg: &str, want_empty: bo
     }
     let offset = if style == "empty_lines" && msg.contains("end.") { 2 } else { 1 };
     let line_no = line + offset;
+    if style == "empty_lines" && leading_dot_line(cx, line_no) {
+        return;
+    }
     if line_no < 1 || line_no as usize > cx.src.line_count() {
         return;
     }
@@ -138,10 +144,19 @@ pub fn check_line(cx: &mut Cx, style: &str, line: i64, msg: &str, want_empty: bo
         return;
     }
     if style == "empty_lines" {
-        cx.add_fix(start, start + 1, msg, |c| c.insert_before(start, start + 1, "\n"));
+        // EmptyLineCorrector (1.92): `insert_before(range.begin, "\n")`.
+        cx.add_fix(start, start + 1, msg, |c| c.insert_before(start, start, "\n"));
     } else {
         cx.add_fix(start, start + 1, msg, |c| c.remove(start, start + 1));
     }
+}
+
+/// leading_dot_line?: the first token on 1-based `line` is `.` or `&.`.
+fn leading_dot_line(cx: &Cx, line: i64) -> bool {
+    let src = cx.src;
+    let tokens = crate::helpers::parser_tokens::sorted_tokens(src);
+    let first = tokens.iter().find(|t| src.line_of(t.start) as i64 == line);
+    first.is_some_and(|t| matches!(t.kind, ruby_prism_sys::PM_TOKEN_DOT | ruby_prism_sys::PM_TOKEN_AMPERSAND_DOT))
 }
 
 fn check_deferred(cx: &mut Cx, body: &[Node]) {
@@ -166,5 +181,5 @@ fn check_deferred(cx: &mut Cx, body: &[Node]) {
     }
     let start = src.line_start(line_no);
     let msg = format!("Empty line missing before first {ty} definition");
-    cx.add_fix(start, start + 1, msg, |c| c.insert_before(start, start + 1, "\n"));
+    cx.add_fix(start, start + 1, msg, |c| c.insert_before(start, start, "\n"));
 }

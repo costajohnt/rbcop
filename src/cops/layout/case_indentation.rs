@@ -51,7 +51,28 @@ impl Cop for CaseIndentation {
             }
         }
         let one_step = cx.cfg.bool("IndentOneStep").unwrap_or(false);
-        let width = if one_step { helpers::alignment::configured_indentation_width(cx) } else { 0 };
+        // Under tabs one step is a single tab character, one column (1.92).
+        let tabs = helpers::alignment::using_tabs(cx);
+        let width = match (one_step, tabs) {
+            (false, _) => 0,
+            (true, true) => 1,
+            (true, false) => helpers::alignment::configured_indentation_width(cx),
+        };
+        let base_loc = if end_style { end_kw.start_offset() } else { case_kw.start_offset() };
+        // replacement: spaces to the base column, or under tabs the base line's indentation
+        // plus tabs (nothing when the base does not begin its line).
+        let replacement = if !tabs {
+            Some(" ".repeat((src.column(base_loc) as i64 + width).max(0) as usize))
+        } else if helpers::alignment::begins_its_line(src, base_loc) {
+            let ls = src.line_start(src.line_of(base_loc));
+            let indent: String = src.text[ls..]
+                .chars()
+                .take_while(|c| matches!(c, ' ' | '\t' | '\r' | '\x0b' | '\x0c'))
+                .collect();
+            Some(indent + &"\t".repeat(width.max(0) as usize))
+        } else {
+            None
+        };
         let base = if end_style { src.column(end_kw.start_offset()) } else { src.column(case_kw.start_offset()) } as i64;
         let depth = if one_step { "one step more than" } else { "as deep as" };
         let style = if end_style { "end" } else { "case" };
@@ -73,10 +94,10 @@ impl Cop for CaseIndentation {
             }
             let ls = src.line_start(src.line_of(start));
             let blank = src.text[ls..start].trim_matches(|c: char| c.is_ascii_whitespace() || c == '\0' || c == '\x0b').is_empty();
-            let replacement = " ".repeat((base + width).max(0) as usize);
+            let replacement = replacement.as_deref().filter(|_| blank);
             cx.add_fix(start, kw.end_offset(), format!("Indent `{branch_type}` {depth} `{style}`."), |c| {
-                if blank {
-                    c.replace(ls, start, &replacement);
+                if let Some(r) = replacement {
+                    c.replace(ls, start, r);
                 }
             });
         }

@@ -28,7 +28,7 @@ fn is_hash(node: &Node) -> bool {
 }
 
 /// `enforce_hash_argument_with_separator?`
-fn hash_separator_style(cx: &Cx) -> bool {
+pub fn hash_separator_style(cx: &Cx) -> bool {
     let cfg = cx.config.for_cop("Layout/HashAlignment");
     cfg.truthy("Enabled")
         && ["EnforcedColonStyle", "EnforcedHashRocketStyle"].iter().any(|k| match cfg.get(k) {
@@ -130,7 +130,12 @@ impl Cop for ArgumentAlignment {
         let (args, selector) = match kind::of(node) {
             kind::CALL_NODE => {
                 let call = node.as_call_node().unwrap();
-                if method_name(&call) == "[]=" {
+                // binary_operator_call? (1.92): `a + {b: 1,\n c: 2}`, not `a[...]` or `a.+(...)`.
+                if method_name(&call) == "[]="
+                    || (helpers::node_types::is_binary_operation(&call)
+                        && method_name(&call) != "[]"
+                        && call.call_operator_loc().is_none())
+                {
                     return;
                 }
                 let Some(sel) = call.message_loc().or(call.opening_loc()) else { return };

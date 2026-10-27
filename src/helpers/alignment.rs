@@ -39,6 +39,11 @@ pub fn enabled_cop_str(cx: &Cx, name: &str, key: &str) -> Option<String> {
     m.str(key).map(str::to_string)
 }
 
+/// `using_tabs?` (1.92): `Layout/IndentationStyle` enforces tabs.
+pub fn using_tabs(cx: &Cx) -> bool {
+    cx.config.for_cop("Layout/IndentationStyle").str("EnforcedStyle") == Some("tabs")
+}
+
 /// `Unicode::DisplayWidth.of` (unicode-display_width 3.3.0), summed per character.
 // ponytail: emoji sequences (ZWJ, skin tones, VS16) and backspace are not special-cased.
 pub fn display_width(s: &str) -> usize {

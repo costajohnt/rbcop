@@ -150,7 +150,9 @@ impl Cop for FirstArgumentIndentation {
         let c = Ctx { src, style, comment_lines, node, parent: parser_parent(node, cx.ancestors), first };
         let width = configured_indentation_width(cx);
 
-        if enabled_cop_str(cx, "Layout/ArgumentAlignment", "EnforcedStyle").as_deref() == Some("with_fixed_indentation")
+        let fixed_argument_alignment =
+            enabled_cop_str(cx, "Layout/ArgumentAlignment", "EnforcedStyle").as_deref() == Some("with_fixed_indentation");
+        if fixed_argument_alignment
             && (!cop_enabled(cx, "Layout/FirstMethodArgumentLineBreak") || conflicts_with_fixed(&c, node, &args))
         {
             return;
@@ -177,11 +179,24 @@ impl Cop for FirstArgumentIndentation {
         } else {
             "the start of the previous line".to_string()
         };
-        let (cs, ce, target) = correct_target(&c, cx.ancestors, delta);
-        let corr_node = match target {
-            None => first,
-            Some(usize::MAX) => node,
-            Some(i) => &cx.ancestors[i],
+        let (mut cs, mut ce, target) = correct_target(&c, cx.ancestors, delta);
+        // hash_elements_aligned_by_argument_alignment?: ArgumentAlignment (fixed) owns the other
+        // pairs of an unbraced hash, so only its first element moves.
+        let first_pair = (target.is_none()
+            && kind::of(first) == kind::KEYWORD_HASH_NODE
+            && fixed_argument_alignment
+            && argument_alignment_applies(node, &args)
+            && !crate::cops::layout_argument_alignment::hash_separator_style(cx))
+        .then(|| first.as_keyword_hash_node().unwrap().elements().iter().next())
+        .flatten();
+        if let Some(p) = &first_pair {
+            (cs, ce) = span(p);
+        }
+        let corr_node = match (target, &first_pair) {
+            (None, Some(p)) => p,
+            (None, None) => first,
+            (Some(usize::MAX), _) => node,
+            (Some(i), _) => &cx.ancestors[i],
         };
         let set = helpers::alignment_corrector::Settings::of(cx);
         cx.add_fix(start, end, format!("Indent the first argument one step more than {base}."), |c| {
@@ -224,7 +239,7 @@ fn correct_target(c: &Ctx, ancestors: &[Node], delta: i64) -> (usize, usize, Opt
     let inner = top_parent
         .and_then(|p| p.as_call_node())
         .is_some_and(|p| !is_csend(&p) && p.opening_loc().is_some_and(|l| l.as_slice() == b"("));
-    if !inner || display_column(c.src, span(c.node).0) as i64 >= delta.abs() {
+    if !inner || display_column(c.src, span(c.node).0) as i64 >= delta.abs() || delta > 0 {
         return (first.0, first.1, None);
     }
     let top_end_begins = top_node
@@ -245,10 +260,8 @@ fn own_block(n: &Node) -> bool {
     n.as_call_node().and_then(|c| c.block()).is_some_and(|b| kind::of(&b) == kind::BLOCK_NODE)
 }
 
-fn conflicts_with_fixed(c: &Ctx, node: &Node, args: &[Node]) -> bool {
-    if !c.special_inner_call_indentation() {
-        return false;
-    }
+/// argument_alignment_applies?: a call (not `[]=`) with 2+ arguments or a first hash of 2+ pairs.
+fn argument_alignment_applies(node: &Node, args: &[Node]) -> bool {
     let Some(call) = node.as_call_node() else { return false };
     if method_name(&call) == "[]=" {
         return false;
@@ -260,9 +273,14 @@ fn conflicts_with_fixed(c: &Ctx, node: &Node, args: &[Node]) -> bool {
                 n.as_keyword_hash_node().map(|h| h.elements().iter().filter(|e| kind::of(e) == kind::ASSOC_NODE).count())
             })
     };
-    if !(args.len() >= 2 || pairs(&args[0]).is_some_and(|n| n >= 2)) {
+    args.len() >= 2 || pairs(&args[0]).is_some_and(|n| n >= 2)
+}
+
+fn conflicts_with_fixed(c: &Ctx, node: &Node, args: &[Node]) -> bool {
+    if !c.special_inner_call_indentation() || !argument_alignment_applies(node, args) {
         return false;
     }
+    let Some(call) = node.as_call_node() else { return false };
     let line_off = call.message_loc().or(call.opening_loc()).map_or(span(node).0, |l| l.start_offset());
     let line = c.src.lines.get(c.src.line_of(line_off) - 1).copied().unwrap_or("");
     c.base_indentation() != line[..first_non_space(line).unwrap_or(0)].chars().count() as i64
