@@ -76,6 +76,22 @@ impl Cop for SpaceInsideArrayLiteralBrackets {
         };
         let (left, right) = (tokens[li], tokens[ri]);
         let line = |t: &Token| src.line_of(t.start);
+        let end_has_own_line = {
+            let col = src.column(right.start);
+            col == 0 || src.lines[line(&right) - 1].chars().take(col).all(helpers::ruby_string::is_space)
+        };
+        // closing_bracket_kept_apart?: `]` on its own line, no `[[`, and `[` not on the line of
+        // `node.children.first`.
+        let first_child = match node.as_array_node() {
+            Some(a) => a.elements().iter().next(),
+            None => {
+                let p = node.as_array_pattern_node().unwrap();
+                p.requireds().iter().chain(p.rest()).chain(p.posts().iter()).min_by_key(|n| n.location().start_offset())
+            }
+        };
+        let kept_apart = end_has_own_line
+            && !multi_dimensional(&tokens, li, true)
+            && first_child.is_none_or(|f| src.line_of(f.location().start_offset()) != line(&left));
 
         // The node's full correction (`autocorrect(corrector, node)`).
         let correct = |c: &mut Corrector| {
@@ -91,6 +107,9 @@ impl Cop for SpaceInsideArrayLiteralBrackets {
                     c.remove(s, e);
                 } else if !space_after(src, &left) {
                     c.insert_after(left.start, left.end, " ");
+                }
+                if kept_apart {
+                    return;
                 }
                 if multi_dimensional(&tokens, ri, false) {
                     let (s, e) = ss::side_space_range(src, right.start, right.end, Side::Left, true);
@@ -110,13 +129,7 @@ impl Cop for SpaceInsideArrayLiteralBrackets {
         }
 
         let start_ok = line(&tokens[li + 1]) != line(&left);
-        let end_ok = if src.line_of(node_range.0) == src.line_of(node_range.1) {
-            false
-        } else {
-            // end_has_own_line?
-            let col = src.column(right.start);
-            col == 0 || src.lines[line(&right) - 1].chars().take(col).all(helpers::ruby_string::is_space)
-        };
+        let end_ok = src.line_of(node_range.0) != src.line_of(node_range.1) && end_has_own_line;
 
         let unc = ss::uncorrectable(cx);
         let planned: Vec<Planned> = match style.as_str() {
@@ -134,10 +147,12 @@ impl Cop for SpaceInsideArrayLiteralBrackets {
                     out.extend(ss::space_offenses(src, Some(&left), None, start_ok, true, unc));
                 }
                 let md_right = multi_dimensional(&tokens, ri, false);
-                if md_right && space_before(src, &right) {
-                    out.push((right, Side::Left, ss::NO_SPACE_COMMAND));
-                } else if !md_right {
-                    out.extend(ss::space_offenses(src, None, Some(&right), true, end_ok, unc));
+                if !kept_apart {
+                    if md_right && space_before(src, &right) {
+                        out.push((right, Side::Left, ss::NO_SPACE_COMMAND));
+                    } else if !md_right {
+                        out.extend(ss::space_offenses(src, None, Some(&right), true, end_ok, unc));
+                    }
                 }
                 out
             }

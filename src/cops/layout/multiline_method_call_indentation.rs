@@ -1,5 +1,5 @@
 use crate::helpers::alignment as alignment;
-use crate::helpers::multiline_expression_indentation::{Ctx, PK, PAnc, block_of, indentation, within};
+use crate::helpers::multiline_expression_indentation::{Ctx, PAnc, PK, SELF, block_of, indentation, within};
 use crate::prelude::*;
 use ruby_prism::{CallNode, Visit};
 
@@ -104,6 +104,20 @@ impl<'a, 'b, 'pr> Check<'a, 'b, 'pr> {
                 return Some(j);
             }
             if a.kind == PK::Begin || self.ctx.inside_arg_list_parentheses(a) {
+                return None;
+            }
+            // inside_body?(ancestor, child): a block body (not its send: the previous parser
+            // ancestor from the same Prism node, or the node itself), a non-ternary `if`, a
+            // `kwbegin` or a loop.
+            let inside_body = match a.kind {
+                PK::Block | PK::OtherBlock => {
+                    if j == 0 { a.idx != SELF } else { self.ctx.anc[j - 1].idx != a.idx }
+                }
+                PK::If => !self.ctx.is_ternary(a),
+                PK::KwBegin | PK::While | PK::Until | PK::For => true,
+                _ => false,
+            };
+            if inside_body {
                 return None;
             }
         }
@@ -311,23 +325,29 @@ impl<'a, 'b, 'pr> Check<'a, 'b, 'pr> {
     }
 
     /// What `autocorrect(corrector, rhs)` hands AlignmentCorrector.correct: the rhs range, or
-    /// with a block the selector's line, the block body and the `end` line.
+    /// with a block the selector's line, then each line of the block body and the `end` line
+    /// other than the selector's (`correct_block`).
     fn correction_targets(&self, rhs: Range) -> Vec<(usize, usize, Option<Node<'pr>>)> {
         let Some(block) = block_of(&self.call) else { return vec![(rhs.0, rhs.1, None)] };
         let src = self.cx.src;
-        let line_range = |off: usize| {
-            let line = src.line_of(off);
+        let line_range = |line: usize| {
             let start = src.line_start(line);
-            (start, start + src.lines.get(line - 1).map_or(0, |l| l.len()))
+            (start, start + src.lines.get(line - 1).map_or(0, |l| l.len()), None)
         };
-        let (ls, le) = line_range(rhs.0);
-        let mut v = vec![(ls, le, None)];
-        if let Some(body) = block.body() {
-            let (s, e) = crate::ast::body_range(&body);
-            v.push((s, e, Some(body)));
+        let selector_line = src.line_of(rhs.0);
+        let mut lines: Vec<usize> = match block.body() {
+            Some(body) => {
+                let (s, e) = crate::ast::body_range(&body);
+                (src.line_of(s)..=src.line_of(e)).collect()
+            }
+            None => Vec::new(),
+        };
+        let end_line = src.line_of(block.closing_loc().start_offset());
+        if !lines.contains(&end_line) {
+            lines.push(end_line);
         }
-        let (es, ee) = line_range(block.closing_loc().start_offset());
-        v.push((es, ee, None));
+        let mut v = vec![line_range(selector_line)];
+        v.extend(lines.into_iter().filter(|&l| l != selector_line).map(line_range));
         v
     }
 }

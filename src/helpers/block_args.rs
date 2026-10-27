@@ -39,19 +39,40 @@ pub fn any(params: &BlockParametersNode) -> bool {
     !children(params).is_empty()
 }
 
-/// Number of plain required params (parser `:arg`) anywhere in the list, nested mlhs included.
-pub fn count_required(params: &BlockParametersNode) -> usize {
-    fn walk(nodes: Vec<Node>) -> usize {
-        nodes
-            .into_iter()
-            .map(|n| match kind::of(&n) {
-                kind::REQUIRED_PARAMETER_NODE => 1,
-                kind::MULTI_TARGET_NODE => walk(mlhs_children(&n)),
-                _ => 0,
-            })
-            .sum()
+/// rubocop-ast `args.each_descendant.count(&:argument_type?)`: parser arg/optarg/restarg/kwarg/
+/// kwoptarg/kwrestarg/blockarg/forward_arg/shadowarg nodes anywhere under the list (nested mlhs
+/// and default values included). Prism's ImplicitRestNode has no parser node.
+pub fn count_arguments(params: &BlockParametersNode) -> usize {
+    struct V(usize);
+    impl V {
+        fn count(&mut self, n: &Node) {
+            if matches!(
+                kind::of(n),
+                kind::REQUIRED_PARAMETER_NODE
+                    | kind::OPTIONAL_PARAMETER_NODE
+                    | kind::REST_PARAMETER_NODE
+                    | kind::REQUIRED_KEYWORD_PARAMETER_NODE
+                    | kind::OPTIONAL_KEYWORD_PARAMETER_NODE
+                    | kind::KEYWORD_REST_PARAMETER_NODE
+                    | kind::BLOCK_PARAMETER_NODE
+                    | kind::FORWARDING_PARAMETER_NODE
+                    | kind::BLOCK_LOCAL_VARIABLE_NODE
+            ) {
+                self.0 += 1;
+            }
+        }
     }
-    walk(children(params))
+    impl<'pr> ruby_prism::Visit<'pr> for V {
+        fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
+            self.count(&node);
+        }
+        fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
+            self.count(&node);
+        }
+    }
+    let mut v = V(0);
+    ruby_prism::Visit::visit(&mut v, &params.as_node());
+    v.0
 }
 
 /// Block params match `(args (arg _))`, or `(args)` when `allow_empty`; a numblock only with `_1`,

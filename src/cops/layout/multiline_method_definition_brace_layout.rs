@@ -36,6 +36,6 @@ impl Cop for MultilineMethodDefinitionBraceLayout {
         children.sort_by_key(|n| n.location().start_offset());
         // The parser `args` node spans the parentheses.
         let close = (close.start_offset(), close.end_offset());
-        mlbl::check(cx, &MSGS, open.start_offset(), close, (open.start_offset(), close.1), &children, false, Ok(None));
+        mlbl::check(cx, &MSGS, open.start_offset(), close, (open.start_offset(), close.1), &children, false, Ok(None), node);
     }
 }

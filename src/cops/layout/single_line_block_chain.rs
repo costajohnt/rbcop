@@ -33,7 +33,8 @@ impl Cop for SingleLineBlockChain {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
-        let Some((open, close)) = call.receiver().and_then(|r| block_delimiters(&r)) else { return };
+        let Some(recv) = call.receiver() else { return };
+        let Some((open, close)) = block_delimiters(&recv) else { return };
         let close_line = cx.src.line_of(close);
         if cx.src.line_of(open) < close_line {
             return;
@@ -47,6 +48,11 @@ impl Cop for SingleLineBlockChain {
             return;
         }
         let (s, e) = (dot.start_offset(), sel.end_offset());
+        // heredoc_opened_before?(node.receiver, range): a line break there would split the heredoc.
+        let line = cx.src.line_of(s);
+        if helpers::heredoc::heredoc_starts(&recv).into_iter().any(|h| cx.src.line_of(h) == line) {
+            return;
+        }
         cx.add_fix(s, e, MSG, |c| c.insert_before(s, e, "\n"));
     }
 }

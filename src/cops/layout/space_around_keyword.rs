@@ -187,7 +187,18 @@ impl Cop for SpaceAroundKeyword {
                 if c.space_before_missing(s) && !preceded_by_operator(c.ancestors) {
                     c.cx.add_fix(s, s + 5, "Space before keyword `super` is missing.", |k| k.insert_before(s, s + 5, " "));
                 }
-                if c.space_after_missing("super", s + 5) {
+                // block_brace_with_no_space_style?: `super{` under SpaceBeforeBlockBraces no_space.
+                let brace_after = node
+                    .as_forwarding_super_node()
+                    .unwrap()
+                    .block()
+                    .is_some_and(|b| b.opening_loc().start_offset() == s + 5);
+                let no_space_style = brace_after && {
+                    let m = c.cx.config.for_cop("Layout/SpaceBeforeBlockBraces");
+                    m.get("Enabled").is_none_or(|v| !matches!(v, Value::Bool(false) | Value::Null))
+                        && m.str("EnforcedStyle") == Some("no_space")
+                };
+                if c.space_after_missing("super", s + 5) && !no_space_style {
                     c.cx.add_fix(s, s + 5, "Space after keyword `super` is missing.", |k| k.insert_after(s, s + 5, " "));
                 }
             }
