@@ -27,6 +27,14 @@ impl Cop for FirstArrayElementLineBreak {
                 return;
             }
         }
+        // compact_nested_array?: SpaceInsideArrayLiteralBrackets `compact` joins `[[`.
+        if a.opening_loc().is_some_and(|o| o.as_slice() == b"[")
+            && a.elements().iter().next().is_some_and(|e| cx.src.slice(e.location().start_offset(), e.location().end_offset()).starts_with('['))
+            && helpers::alignment::cop_enabled(cx, "Layout/SpaceInsideArrayLiteralBrackets")
+            && cx.config.for_cop("Layout/SpaceInsideArrayLiteralBrackets").str("EnforcedStyle") == Some("compact")
+        {
+            return;
+        }
         let children = elb::ranges(a.elements().iter());
         elb::check_children_line_break(cx, start, &children, elb::ignore_last(cx), MSG);
     }

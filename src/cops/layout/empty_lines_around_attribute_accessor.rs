@@ -17,8 +17,9 @@ fn attribute_accessor(call: &ruby_prism::CallNode) -> bool {
 enum Sibling<'pr> {
     None,
     Node(Node<'pr>),
-    /// A node that is neither an alias nor a send (rescue body, multi-statement ensure, ...).
-    Other,
+    /// A node that is neither an alias nor a send (rescue body, multi-statement ensure, ...),
+    /// by its start offset.
+    Other(usize),
 }
 
 impl Cop for EmptyLinesAroundAttributeAccessor {
@@ -39,9 +40,12 @@ impl Cop for EmptyLinesAroundAttributeAccessor {
         if next_line_empty_or_enable_directive(cx.src, end) {
             return;
         }
+        // require_empty_line?: never when the next node starts on the accessor's last line (1.92).
+        let same_line = |at: usize| cx.src.line_of(at) == cx.src.line_of(end);
         let require = match self.right_sibling(cx, node) {
             Some(Sibling::None) | None => false,
-            Some(Sibling::Other) => true,
+            Some(Sibling::Other(at)) => !same_line(at),
+            Some(Sibling::Node(n)) if same_line(n.location().start_offset()) => false,
             Some(Sibling::Node(n)) => {
                 let alias = matches!(kind::of(&n), kind::ALIAS_METHOD_NODE | kind::ALIAS_GLOBAL_VARIABLE_NODE)
                     && cx.cfg.bool("AllowAliasSyntax").unwrap_or(true);
@@ -121,15 +125,15 @@ impl EmptyLinesAroundAttributeAccessor {
             return None;
         }
         let Some(begin) = grand.as_begin_node() else { return Some(Sibling::None) };
-        if begin.rescue_clause().is_some() {
-            return Some(Sibling::Other);
+        if let Some(r) = begin.rescue_clause() {
+            return Some(Sibling::Other(r.location().start_offset()));
         }
         let Some(ensure) = begin.ensure_clause() else { return Some(Sibling::None) };
         let mut stmts: Vec<Node> = ensure.statements().map(|s| s.body().iter().collect()).unwrap_or_default();
         Some(match stmts.len() {
             0 => Sibling::None,
             1 => Sibling::Node(stmts.remove(0)),
-            _ => Sibling::Other,
+            _ => Sibling::Other(stmts[0].location().start_offset()),
         })
     }
 }
