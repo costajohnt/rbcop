@@ -1,0 +1,2 @@
+Error: invalid yes please for `Preview` found in .rubocop.yml
+Valid choices are: true, false
