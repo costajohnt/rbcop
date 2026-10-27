@@ -354,10 +354,8 @@ pub fn run(
 pub fn parse_edit(s: &str) -> Option<(usize, usize, String)> {
     let mut f = s.split(',');
     let (b, e, hex) = (f.next()?.parse().ok()?, f.next()?.parse().ok()?, f.next()?.as_bytes());
-    let bytes: Option<Vec<u8>> = hex
-        .chunks(2)
-        .map(|c| std::str::from_utf8(c).ok().and_then(|c| u8::from_str_radix(c, 16).ok()))
-        .collect();
+    let bytes: Option<Vec<u8>> =
+        hex.chunks(2).map(|c| std::str::from_utf8(c).ok().and_then(|c| u8::from_str_radix(c, 16).ok())).collect();
     Some((b, e, String::from_utf8_lossy(&bytes?).into_owned()))
 }
 

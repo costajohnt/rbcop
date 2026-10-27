@@ -11,7 +11,7 @@ pub mod yaml;
 
 pub use todo::DEFAULT_MAXIMUM_EXCLUSION_ITEMS;
 
-pub use report::{json, ruby_platform};
+pub use report::{hash_for_offense, hash_for_problems, json, problem_counts, ruby_platform};
 
 use crate::config::{Resolved, relative_path};
 use crate::cop::{Offense, Severity};

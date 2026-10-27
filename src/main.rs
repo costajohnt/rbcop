@@ -2200,7 +2200,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
         let schema = cwd.ancestors().find_map(|d| fs::read(d.join("db/schema.rb")).ok());
         let index = rbcop::project_index::get().map(|ix| cache::digest(&[ix.signature().as_bytes()]));
         let context = format!(
-            "{only:?}|{except:?}|{}|{}|{}|{:?}|{}|{}|{}",
+            "{}|{only:?}|{except:?}|{}|{}|{}|{:?}|{}|{}",
             // CachedData keeps Offense#corrections. rbcop records them only for the JSON
             // formatter (recording them on every run costs a warm run ~40% more CPU on rails),
             // so entries with and without them live apart: a JSON run never loads an entry

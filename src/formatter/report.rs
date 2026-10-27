@@ -185,83 +185,12 @@ impl Formatter for Json {
     }
 
     fn file_finished(&mut self, _out: &mut String, cx: &Ctx, f: &FileOut) {
-        let offs: Vec<String> = f
-            .offenses
-            .iter()
-            .map(|o| {
-                let mut s = format!(
-                    "{{\"severity\":{},\"message\":{},\"cop_name\":{},\"corrected\":{},\"correctable\":{},\
-                     \"location\":{{\"start_line\":{},\"start_column\":{},\"last_line\":{},\"last_column\":{},\
-                     \"length\":{},\"line\":{},\"column\":{}}}",
-                    json(o.severity.name()),
-                    json(&o.message),
-                    json(o.cop),
-                    o.status.corrected(),
-                    o.status.correctable(),
-                    o.line,
-                    o.real_column(),
-                    o.last_line,
-                    o.real_last_column(),
-                    o.length,
-                    o.line,
-                    o.real_column()
-                );
-                if o.status.disabled() {
-                    let j = o.justification.as_deref().map_or_else(|| "null".to_string(), json);
-                    s.push_str(&format!(",\"suppressed\":true,\"justification\":{j}"));
-                }
-                if !o.corrections.is_empty() {
-                    let edits: Vec<String> = o
-                        .corrections
-                        .iter()
-                        .map(|e| {
-                            format!(
-                                "{{\"start_line\":{},\"start_column\":{},\"last_line\":{},\"last_column\":{},\
-                                 \"begin_pos\":{},\"end_pos\":{},\"replacement\":{}}}",
-                                e.start_line,
-                                e.start_column,
-                                e.last_line,
-                                e.last_column,
-                                e.begin_pos,
-                                e.end_pos,
-                                json(&e.replacement)
-                            )
-                        })
-                        .collect();
-                    // Offense#correction_safe: Cop::Base#safe_autocorrect? with the file's config.
-                    let c = f.config.hash.map(o.cop).cloned().unwrap_or_default();
-                    let safe = c.bool("Safe") != Some(false) && c.bool("SafeAutoCorrect") != Some(false);
-                    s.push_str(&format!(",\"correction\":{{\"safe\":{safe},\"edits\":[{}]}}", edits.join(",")));
-                }
-                s.push('}');
-                s
-            })
-            .collect();
+        let offs: Vec<String> = f.offenses.iter().map(|o| hash_for_offense(o, f.config)).collect();
         let path = cx.smart_path(f.path);
-        let mut entry = format!("{{\"path\":{},\"offenses\":[{}]", json(&path), offs.join(","));
-        // hash_for_problems: messages that differ only in the line and column after the file's
-        // absolute path are listed once, naming the file as its entry does.
-        let abs = crate::config::expand_path(f.path, &crate::config::cwd()).to_string_lossy().into_owned();
-        let location = regex::Regex::new(&format!("{}((?::\\d+)*)", regex::escape(&abs))).unwrap();
-        for (key, messages) in [("errors", f.errors), ("warnings", f.warnings)] {
-            if messages.is_empty() {
-                continue;
-            }
-            let mut seen = std::collections::HashSet::new();
-            let listed: Vec<String> = messages
-                .iter()
-                .filter(|m| seen.insert(location.replace_all(m, "").into_owned()))
-                .map(|m| json(&location.replace_all(m, |c: &regex::Captures| format!("{path}{}", &c[1]))))
-                .collect();
-            if key == "errors" {
-                self.error_count += listed.len();
-            } else {
-                self.warning_count += listed.len();
-            }
-            entry.push_str(&format!(",\"{key}\":[{}]", listed.join(",")));
-        }
-        entry.push('}');
-        self.files.push(entry);
+        let (problems, errors, warnings) = hash_for_problems(&path, f.path, f.errors, f.warnings);
+        self.error_count += errors;
+        self.warning_count += warnings;
+        self.files.push(format!("{{\"path\":{},\"offenses\":[{}]{problems}}}", json(&path), offs.join(",")));
         self.offense_count += f.offenses.len();
     }
 
@@ -279,14 +208,98 @@ impl Formatter for Json {
             self.offense_count,
             self.target_count,
             inspected.len(),
-            // problem_counts: only the non-zero ones.
-            [("error_count", self.error_count), ("warning_count", self.warning_count)]
-                .iter()
-                .filter(|(_, n)| *n > 0)
-                .map(|(k, n)| format!(",\"{k}\":{n}"))
-                .collect::<String>()
+            problem_counts(self.error_count, self.warning_count)
         );
     }
+}
+
+/// JSONFormatter#hash_for_offense, as a JSON object (`correction` included when the offense has
+/// corrections; `config` is the file's, for Offense#correction_safe).
+pub fn hash_for_offense(o: &Off, config: &crate::config::Resolved) -> String {
+    let mut s = format!(
+        "{{\"severity\":{},\"message\":{},\"cop_name\":{},\"corrected\":{},\"correctable\":{},\
+                     \"location\":{{\"start_line\":{},\"start_column\":{},\"last_line\":{},\"last_column\":{},\
+                     \"length\":{},\"line\":{},\"column\":{}}}",
+        json(o.severity.name()),
+        json(&o.message),
+        json(o.cop),
+        o.status.corrected(),
+        o.status.correctable(),
+        o.line,
+        o.real_column(),
+        o.last_line,
+        o.real_last_column(),
+        o.length,
+        o.line,
+        o.real_column()
+    );
+    if o.status.disabled() {
+        let j = o.justification.as_deref().map_or_else(|| "null".to_string(), json);
+        s.push_str(&format!(",\"suppressed\":true,\"justification\":{j}"));
+    }
+    if !o.corrections.is_empty() {
+        let edits: Vec<String> = o
+            .corrections
+            .iter()
+            .map(|e| {
+                format!(
+                    "{{\"start_line\":{},\"start_column\":{},\"last_line\":{},\"last_column\":{},\
+                                 \"begin_pos\":{},\"end_pos\":{},\"replacement\":{}}}",
+                    e.start_line,
+                    e.start_column,
+                    e.last_line,
+                    e.last_column,
+                    e.begin_pos,
+                    e.end_pos,
+                    json(&e.replacement)
+                )
+            })
+            .collect();
+        // Offense#correction_safe: Cop::Base#safe_autocorrect? with the file's config.
+        let c = config.hash.map(o.cop).cloned().unwrap_or_default();
+        let safe = c.bool("Safe") != Some(false) && c.bool("SafeAutoCorrect") != Some(false);
+        s.push_str(&format!(",\"correction\":{{\"safe\":{safe},\"edits\":[{}]}}", edits.join(",")));
+    }
+    s.push('}');
+    s
+}
+
+/// JSONFormatter#problem_counts: the summary's `,"error_count":N,"warning_count":N`, each only
+/// when non-zero.
+pub fn problem_counts(errors: usize, warnings: usize) -> String {
+    [("error_count", errors), ("warning_count", warnings)]
+        .iter()
+        .filter(|(_, n)| *n > 0)
+        .map(|(k, n)| format!(",\"{k}\":{n}"))
+        .collect()
+}
+
+/// JSONFormatter#hash_for_problems: the `,"errors":[...]` and `,"warnings":[...]` members of a
+/// file's entry (each only when non-empty) and how many errors and warnings they list. Messages
+/// that differ only in the line and column after the file's absolute path are listed once, naming
+/// the file as `path` (the entry's smart path) does.
+pub fn hash_for_problems(path: &str, file: &Path, errors: &[String], warnings: &[String]) -> (String, usize, usize) {
+    let mut out = String::new();
+    let mut counts = [0, 0];
+    if errors.is_empty() && warnings.is_empty() {
+        return (out, 0, 0);
+    }
+    let abs = crate::config::expand_path(file, &crate::config::cwd()).to_string_lossy().into_owned();
+    let location = regex::Regex::new(&format!("{}((?::\\d+)*)", regex::escape(&abs))).unwrap();
+    for (i, (key, messages)) in [("errors", errors), ("warnings", warnings)].into_iter().enumerate() {
+        if messages.is_empty() {
+            continue;
+        }
+        let mut seen = std::collections::HashSet::new();
+        let listed: Vec<String> = messages
+            .iter()
+            .filter(|m| seen.insert(location.replace_all(m, "").into_owned()))
+            .map(|m| json(&location.replace_all(m, |c: &regex::Captures| format!("{path}{}", &c[1]))))
+            .collect();
+        counts[i] = listed.len();
+        out.push_str(&format!(",\"{key}\":[{}]", listed.join(",")));
+    }
+    (out, counts[0], counts[1])
 }
 
 /// A JUnit testcase: classname, cop, failures as (message, location).

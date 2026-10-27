@@ -147,7 +147,7 @@ pub fn cop_autocorrects(cfg: &CopConfig, mode: Mode) -> bool {
     // autocorrect_enabled?
     if matches!(cfg.get("AutoCorrect"), Some(Value::Bool(false)))
         || cfg.str("AutoCorrect") == Some("disabled")
-        || (cfg.str("AutoCorrect") == Some("contextual") && crate::helpers::lsp::enabled())
+        || (cfg.str("AutoCorrect") == Some("contextual") && crate::helpers::lsp::holds_contextual())
     {
         return false;
     }
