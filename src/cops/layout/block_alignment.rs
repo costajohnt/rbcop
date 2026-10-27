@@ -328,8 +328,27 @@ impl BlockAlignment {
         // line's indentation).
         let start_col = if style == "start_of_block" { indent } else { src.column(line_start.0) };
         let delta = start_col as i64 - end_col as i64;
+        // 1.92 under tabs (anchor_indentation): copy the anchor line's indentation onto the `end`
+        // line, when the anchor begins its line (start_of_block: always).
+        let leading = |off: usize| {
+            let ls = src.line_start(src.line_of(off));
+            let n = src.text[ls..].bytes().take_while(|b| matches!(b, b' ' | b'\t' | b'\r' | 0x0b | 0x0c)).count();
+            &src.text[ls..ls + n]
+        };
+        let indentation = if !helpers::alignment::using_tabs(cx) {
+            None
+        } else if style == "start_of_block" {
+            Some(leading(anchor.0))
+        } else {
+            helpers::alignment::begins_its_line(src, line_start.0).then(|| leading(line_start.0))
+        };
+        let end_ws = (src.line_start(src.line_of(end_loc.0)), end_loc.0);
         cx.add_fix(end_loc.0, end_loc.1, msg, |c| {
-            if delta > 0 {
+            if let Some(indentation) = indentation {
+                if &src.text[end_ws.0..end_ws.1] != indentation {
+                    c.replace(end_ws.0, end_ws.1, indentation);
+                }
+            } else if delta > 0 {
                 c.insert_before(end_loc.0, end_loc.1, &" ".repeat(delta as usize));
             } else if delta < 0 {
                 c.remove(end_loc.0 - delta.unsigned_abs() as usize, end_loc.0);

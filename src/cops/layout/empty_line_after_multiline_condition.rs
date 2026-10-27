@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use helpers::rspec::right_sibling;
 
 pub const NAME: &str = "Layout/EmptyLineAfterMultilineCondition";
 pub static COP: EmptyLineAfterMultilineCondition = EmptyLineAfterMultilineCondition;
@@ -16,6 +17,15 @@ fn next_line_empty(cx: &Cx, line: usize) -> bool {
     cx.src.lines.get(line).is_none_or(|l| helpers::ruby_string::blank(l))
 }
 
+/// body_on_line?: the parser body (a statement list's first statement) starts on `line`.
+fn body_on_line(cx: &Cx, body: Option<usize>, line: usize) -> bool {
+    body.is_some_and(|start| cx.src.line_of(start) == line)
+}
+
+fn stmts_start(s: Option<ruby_prism::StatementsNode>) -> Option<usize> {
+    s.map(|s| s.location().start_offset())
+}
+
 /// `add_offense(range) { insert_after(range_by_whole_lines(node), "\n") }`.
 fn report(cx: &mut Cx, offense: (usize, usize), node: (usize, usize)) {
     let text = cx.src.text;
@@ -23,7 +33,8 @@ fn report(cx: &mut Cx, offense: (usize, usize), node: (usize, usize)) {
     cx.add_fix(offense.0, offense.1, MSG, |c| c.insert_after(s, e, "\n"));
 }
 
-fn check_condition(cx: &mut Cx, cond: &Node) {
+/// check_condition(condition, following_node): `following` is the start of the following node.
+fn check_condition(cx: &mut Cx, cond: &Node, following: Option<usize>) {
     let (s, e) = range(cond);
     let last = cx.src.line_of(e);
     // rubocop-ast BlockNode#multiline? compares the `{`/`do` line with the `}`/`end` line.
@@ -34,46 +45,16 @@ fn check_condition(cx: &mut Cx, cond: &Node) {
     };
     let first = block.as_ref().map_or(cx.src.line_of(s), |(o, _)| cx.src.line_of(o.start_offset()));
     let close = block.as_ref().map_or(last, |(_, c)| cx.src.line_of(c.start_offset()));
-    if first == close || next_line_empty(cx, last) {
+    if first == close || next_line_empty(cx, last) || body_on_line(cx, following, last) {
         return;
     }
     report(cx, (s, e), (s, e));
 }
 
-/// rubocop-ast `right_sibling` is non-nil for a statement (`ancestors.last()` its Prism parent).
-fn has_right_sibling(node: &Node, anc: &[Node]) -> bool {
-    let Some(stmts) = anc.last().and_then(|p| p.as_statements_node()) else { return false };
-    let body: Vec<Node> = stmts.body().iter().collect();
-    let start = node.location().start_offset();
-    if body.last().is_some_and(|l| l.location().start_offset() != start) {
-        return true;
-    }
-    if body.len() > 1 {
-        return false;
-    }
-    let is_stmts = |s: Option<ruby_prism::StatementsNode>| {
-        s.is_some_and(|s| s.location().start_offset() == stmts.location().start_offset())
-    };
-    let nonempty_else = |e: Option<ruby_prism::ElseNode>| e.is_some_and(|e| e.statements().is_some());
-    match anc.len().checked_sub(2).map(|i| &anc[i]) {
-        Some(Node::IfNode { .. }) => {
-            let i = anc[anc.len() - 2].as_if_node().unwrap();
-            is_stmts(i.statements())
-                && i.subsequent().is_some_and(|s| s.as_else_node().is_none() || nonempty_else(s.as_else_node()))
-        }
-        Some(Node::ElseNode { .. }) => {
-            // The else branch of an `unless` is parser's if_branch, followed by the unless body.
-            let i = anc.len() - 3;
-            anc.get(i).and_then(|u| u.as_unless_node()).is_some_and(|u| u.statements().is_some())
-        }
-        Some(Node::BeginNode { .. }) => {
-            let b = anc[anc.len() - 2].as_begin_node().unwrap();
-            is_stmts(b.statements())
-                && (b.rescue_clause().is_some()
-                    || b.ensure_clause().is_some_and(|e| e.statements().is_some()))
-        }
-        _ => false,
-    }
+/// followed_by_statement?: the node is in a parser `begin`/`kwbegin` and has a right sibling;
+/// the sibling's start.
+fn followed_by_statement(cx: &Cx, node: &Node) -> Option<usize> {
+    right_sibling(cx.ancestors, node).map(|s| s.location().start_offset())
 }
 
 impl Cop for EmptyLineAfterMultilineCondition {
@@ -92,23 +73,36 @@ impl Cop for EmptyLineAfterMultilineCondition {
                     return;
                 }
                 let c = helpers::if_node::cond(node).unwrap();
-                if c.ternary() || (c.modifier() && !has_right_sibling(node, cx.ancestors)) {
+                if c.ternary() {
                     return;
                 }
-                check_condition(cx, &c.condition);
-            }
-            Node::WhileNode { .. } | Node::UntilNode { .. } => {
-                let (cond, post) = match node.as_while_node() {
-                    Some(w) => (w.predicate(), w.is_begin_modifier()),
-                    None => {
-                        let u = node.as_until_node().unwrap();
-                        (u.predicate(), u.is_begin_modifier())
+                let following = if c.modifier() {
+                    let Some(next) = followed_by_statement(cx, node) else { return };
+                    Some(next)
+                } else {
+                    // IfNode#if_branch: parser's second child, the `else` body of an `unless`.
+                    match node.as_if_node() {
+                        Some(i) => stmts_start(i.statements()),
+                        None => stmts_start(node.as_unless_node().unwrap().else_clause().and_then(|e| e.statements())),
                     }
                 };
-                if post && !has_right_sibling(node, cx.ancestors) {
-                    return;
-                }
-                check_condition(cx, &cond);
+                check_condition(cx, &c.condition, following);
+            }
+            Node::WhileNode { .. } | Node::UntilNode { .. } => {
+                let (cond, post, modifier, body) = match node.as_while_node() {
+                    Some(w) => (w.predicate(), w.is_begin_modifier(), w.closing_loc().is_none(), w.statements()),
+                    None => {
+                        let u = node.as_until_node().unwrap();
+                        (u.predicate(), u.is_begin_modifier(), u.closing_loc().is_none(), u.statements())
+                    }
+                };
+                let following = if post || modifier {
+                    let Some(next) = followed_by_statement(cx, node) else { return };
+                    Some(next)
+                } else {
+                    stmts_start(body)
+                };
+                check_condition(cx, &cond, following);
             }
             Node::CaseNode { .. } => {
                 for w in node.as_case_node().unwrap().conditions().iter() {
@@ -116,7 +110,10 @@ impl Cop for EmptyLineAfterMultilineCondition {
                     let conds: Vec<Node> = w.conditions().iter().collect();
                     let (Some(first), Some(last)) = (conds.first(), conds.last()) else { continue };
                     let last_line = cx.src.line_of(range(last).1);
-                    if cx.src.line_of(range(first).0) == last_line || next_line_empty(cx, last_line) {
+                    if cx.src.line_of(range(first).0) == last_line
+                        || next_line_empty(cx, last_line)
+                        || body_on_line(cx, stmts_start(w.statements()), last_line)
+                    {
                         continue;
                     }
                     // Parser's `when` ends at its body, or at the last condition without one.
@@ -132,7 +129,10 @@ impl Cop for EmptyLineAfterMultilineCondition {
                 }
                 let last = range(exc.last().unwrap());
                 let last_line = cx.src.line_of(last.1);
-                if cx.src.line_of(range(&exc[0]).0) == last_line || next_line_empty(cx, last_line) {
+                if cx.src.line_of(range(&exc[0]).0) == last_line
+                    || next_line_empty(cx, last_line)
+                    || body_on_line(cx, stmts_start(r.statements()), last_line)
+                {
                     return;
                 }
                 let resbody = helpers::resbody::range(cx.src, &r);

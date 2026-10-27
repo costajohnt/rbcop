@@ -82,12 +82,15 @@ impl Cop for DotPosition {
         let dot_src = text(&dot).to_string();
         let (sel, recv) = ((selector.start_offset(), selector.end_offset()), receiver.location());
         let recv = (recv.start_offset(), recv.end_offset());
+        // 1.92: the dot and the gap it moves across are replaced in one action.
+        let text = src.text;
         cx.add_fix(ds, de, msg, |c| {
-            c.remove(dot_range.0, dot_range.1);
             if leading {
-                c.insert_before(sel.0, sel.1, &dot_src);
+                let gap = &text[dot_range.1..sel.0];
+                c.replace(dot_range.0, sel.0, &format!("{gap}{dot_src}"));
             } else {
-                c.insert_after(recv.0, recv.1, &dot_src);
+                let gap = &text[recv.1..dot_range.0];
+                c.replace(recv.1, dot_range.1, &format!("{dot_src}{gap}"));
             }
         });
     }

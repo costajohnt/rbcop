@@ -119,16 +119,29 @@ impl Cop for EmptyLinesAroundExceptionHandlingKeywords {
                 };
                 let Some(kw) = kw else { return };
                 let end = b.end_keyword_loc().map(|l| l.start_offset());
-                report(cx, kw, loc.start_offset(), end);
+                report(cx, kw, loc.start_offset(), end, false);
                 return;
             }
         };
         let Some(kw) = body.as_ref().and_then(keywords) else { return };
-        report(cx, kw, start, end);
+        report(cx, kw, start, end, matches!(kind::of(node), kind::BLOCK_NODE | kind::LAMBDA_NODE));
     }
 }
 
-fn report(cx: &mut Cx, kw: Keywords, start: usize, end: Option<usize>) {
+/// left_to_block_body_cop?: in a block, with Layout/EmptyLinesAroundBlockBody enforcing
+/// `empty_lines`, only blank lines follow the keyword up to the block's `end`.
+fn left_to_block_body_cop(cx: &Cx, keyword_line: usize, end_line: usize) -> bool {
+    if helpers::alignment::enabled_cop_str(cx, "Layout/EmptyLinesAroundBlockBody", "EnforcedStyle").as_deref()
+        != Some("empty_lines")
+    {
+        return false;
+    }
+    let blank = |l: usize| cx.src.lines[l - 1].trim_matches([' ', '\t', '\n', '\x0b', '\x0c', '\r', '\0']).is_empty();
+    (keyword_line + 1..=end_line).find(|&l| !blank(l)) == Some(end_line)
+}
+
+/// `in_block`: the body's parser parent is a block (a lambda literal included).
+fn report(cx: &mut Cx, kw: Keywords, start: usize, end: Option<usize>, in_block: bool) {
     let src = cx.src;
     let def_line = src.line_of(start);
     for (s, e) in kw.offsets {
@@ -144,7 +157,9 @@ fn report(cx: &mut Cx, kw: Keywords, start: usize, end: Option<usize>) {
         let keyword = src.slice(s, e);
         let after = format!("Extra empty line detected after the `{keyword}`.");
         let before = format!("Extra empty line detected before the `{keyword}`.");
-        helpers::empty_lines_around_body::check_line(cx, "no_empty_lines", line as i64, &after, true);
+        if !(in_block && left_to_block_body_cop(cx, line, src.line_of(end))) {
+            helpers::empty_lines_around_body::check_line(cx, "no_empty_lines", line as i64, &after, true);
+        }
         helpers::empty_lines_around_body::check_line(cx, "no_empty_lines", line as i64 - 2, &before, true);
     }
 }
