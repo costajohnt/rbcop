@@ -48,6 +48,13 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   cold run, and MaxFilesInCache counts both sets. RuboCop keeps one entry per file with the
   corrections always (recording them on every run cost a warm rails run about 40% more CPU).
   Output is the same either way.
+- Offenses rbcop reports without applying a fix it withholds on purpose (the rubocop-rails,
+  rubocop-rspec, rubocop-factory_bot and rubocop-capybara corrections below that would splice
+  content that is not inert) carry no `correction` in the JSON formatter's output, where
+  RuboCop's carry the edits it would make. The offense, its message and `correctable` are the same.
+- A bare `+` cop name in a `rubocop:push` or `rubocop:next` directive that two departments share
+  is kept as written, so it opts in no cop. RuboCop 1.92.1 raises AmbiguousCopName for it from
+  CommentConfig#opt_in_cops (`expand_cop_name`).
 - `--diff` with `RBCOP_FALLBACK=1` is refused when the RuboCop child would run (it corrects by writing);
   without it, `--diff` skips the fallback and prints the not-running notice.
 - HTML formatter escapes `& < >` in messages outside code spans and fully escapes paths; GitHub
