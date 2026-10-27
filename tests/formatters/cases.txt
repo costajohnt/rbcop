@@ -172,3 +172,20 @@ diff-crlf|tests/formatters/project|-f s --diff -A crlf.rb unicode.rb
 stdin-diff|tests/formatters/project|-f s --diff --stdin lib/foo.rb|tests/formatters/stdin.rb
 stdin-diff-json|tests/formatters/project|-f j --diff -A --stdin lib/foo.rb|tests/formatters/stdin.rb
 diff-only-correctable|tests/formatters/project|-f s --diff --display-only-correctable
+# --explain, cop-name checks and --max-offenses-per-cop (RuboCop 1.92.1).
+explain|tests/formatters/project|--explain Style/StringLiterals,Layout/LineLength,Lint/Syntax,Bundler/OrderedGems,Style/MethodCallWithArgsParentheses,Lint/RedundantCopDisableDirective,Naming/FileName
+explain-unknown|tests/formatters/project|--explain Style/StringLiterals,Nope,Style,Lint/Debuger
+explain-empty|tests/formatters/project|--explain ,
+explain-missing|tests/formatters/project|--explain
+cfg-explain|tests/formatters/explain|-c explain.yml --explain Style/StringLiterals,Layout/LineLength,Style/FrozenStringLiteralComment,Naming/MethodName,Style/Documentation,Style/Semicolon,Style/HashSyntax
+cfg-explain-plugin|tests/formatters/explain|-c rails.yml --explain Rails/I18nLocaleTexts,Rails/Output,Style/StringLiterals
+explain-with-show-cops|tests/formatters/project|--explain Style/StringLiterals --show-cops
+show-cops-unknown|tests/formatters/project|--show-cops Layout/LineLength,Nope,Lint/Deb*
+max-offenses|tests/formatters/project|-f e --max-offenses-per-cop 1
+max-offenses-simple|tests/formatters/project|-f s --max-offenses-per-cop=2
+max-offenses-json|tests/formatters/project|-f j --max-offenses-per-cop 1 unicode.rb
+max-offenses-zero|tests/formatters/project|-f e --max-offenses-per-cop 0
+max-offenses-inline-zero|tests/formatters/project|-f e --max-offenses-per-cop=0
+max-offenses-prefix|tests/formatters/project|-f e --max 0
+max-offenses-word|tests/formatters/project|-f e --max-offenses-per-cop abc
+parallel-not-ignored|tests/formatters/project|-f e --no-parallel -F lib/clean.rb

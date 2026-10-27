@@ -1,0 +1,4 @@
+Unrecognized cop: Nope.
+Style is a department, not a cop. Name one of its cops, such as Style/AccessModifierDeclarations.
+Unrecognized cop: Lint/Debuger.
+Did you mean? Lint/Debugger

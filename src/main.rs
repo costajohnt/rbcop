@@ -1,4 +1,4 @@
-//! The `rubocop` command line: options, formatters and exit status as RuboCop 1.91.0 has them
+//! The `rubocop` command line: options, formatters and exit status as RuboCop 1.92.1 has them
 //! (lib/rubocop/cli.rb, options.rb, runner.rb, cli/command/*.rb).
 
 use rbcop::config::{Options, RUBOCOP_VERSION, Resolved, Store, expand_path};
@@ -13,6 +13,7 @@ use std::time::Instant;
 use std::{env, fs, thread};
 
 mod cache;
+mod explain;
 mod fallback;
 mod lsp;
 mod mcp;
@@ -23,7 +24,7 @@ mod serve;
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
-/// `rubocop -h` (OptionParser#help for RuboCop 1.91.0's options), recorded verbatim.
+/// `rubocop -h` (OptionParser#help for RuboCop 1.92.1's options), recorded verbatim.
 const HELP: &str = include_str!("help.txt");
 
 /// RuboCop's exit statuses.
@@ -37,7 +38,7 @@ enum Arg {
     Optional,
 }
 
-/// Every option RuboCop 1.91.0 defines: (long name, short, argument, what rbcop does with it).
+/// Every option RuboCop 1.92.1 defines: (long name, short, argument, what rbcop does with it).
 /// Long names with `[no-]` also accept `--no-NAME`.
 #[derive(Clone, Copy, PartialEq)]
 enum Use {
@@ -94,6 +95,7 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("display-only-correctable", None, Arg::None, Use::Handle),
     ("display-only-safe-correctable", None, Arg::None, Use::Handle),
     ("display-suppressed", None, Arg::None, Use::Handle),
+    ("max-offenses-per-cop", None, Arg::Required, Use::Handle),
     ("autocorrect", Some('a'), Arg::None, Use::Handle),
     ("auto-correct", None, Arg::None, Use::Handle),
     ("safe-auto-correct", None, Arg::None, Use::Handle),
@@ -114,6 +116,7 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("list-enabled-cops-for", None, Arg::Required, Use::Handle),
     ("show-cops", None, Arg::Optional, Use::Handle),
     ("show-docs-url", None, Arg::Optional, Use::Handle),
+    ("explain", None, Arg::Required, Use::Handle),
     ("init", None, Arg::None, Use::Handle),
     ("config", Some('c'), Arg::Required, Use::Handle),
     ("debug", Some('d'), Arg::None, Use::Handle),
@@ -183,6 +186,10 @@ struct Cli {
     list_enabled_for: Option<String>,
     /// `--show-docs-url [COPS]`
     show_docs_url: Option<Vec<String>>,
+    /// `--explain COPS`
+    explain: Option<Vec<String>>,
+    /// `--max-offenses-per-cop COUNT` (OffenseLimit's max).
+    max_offenses: Option<usize>,
     /// `--only-recognized-file-types`
     only_recognized: bool,
     /// `--only-guide-cops`
@@ -221,6 +228,18 @@ struct Cli {
     ruby: Option<String>,
     /// `--changed [REVISION]`: the revision (HEAD when none is given).
     changed: Option<String>,
+    /// `--changed PATH`: the path OptionParser took as the revision (Options#return_path_given_to_changed).
+    changed_path: Option<String>,
+}
+
+/// ChangedFiles.revision?: whether `name` resolves to a commit in the current repository.
+fn is_revision(name: &str) -> bool {
+    std::process::Command::new("git")
+        .args(["rev-parse", "--verify", "--quiet", &format!("{name}^{{commit}}")])
+        .stdout(std::process::Stdio::null())
+        .stderr(std::process::Stdio::null())
+        .status()
+        .is_ok_and(|s| s.success())
 }
 
 /// Shellwords.split; Err is its ArgumentError for an unterminated quote.
@@ -444,6 +463,22 @@ fn parse_args(args: Vec<String>) -> Result<Cli, Fail> {
                 let shown = if inline_given { format!("{written}={}", value.unwrap_or_default()) } else { written };
                 return Err(Fail::Parse(format!("missing argument: {shown}")));
             }
+            // OptionsValidator#validate_max_offenses_per_cop_option raises OptionParser::InvalidArgument
+            // from the option's block, which OptionParser words with the option as written (or the
+            // whole `--option=VALUE` when given inline). `/^[1-9]\d*$/` matches any line.
+            if name == "max-offenses-per-cop"
+                && !value.as_deref().is_some_and(|v| {
+                    v.split('\n').any(|l| {
+                        l.starts_with(|c: char| ('1'..='9').contains(&c)) && l.bytes().all(|b| b.is_ascii_digit())
+                    })
+                })
+            {
+                return Err(Fail::Parse(if inline_given {
+                    format!("invalid argument: {written}={}", value.unwrap_or_default())
+                } else {
+                    format!("invalid argument: {written} --max-offenses-per-cop must be a positive integer")
+                }));
+            }
             // `@options.replace(ConfigRegeneration.new.options.merge(@options))`: the options of the
             // command recorded in the todo file, overridden by those given before this one (then
             // the rest apply as usual), so the arguments are parsed again in that order.
@@ -468,6 +503,9 @@ fn parse_args(args: Vec<String>) -> Result<Cli, Fail> {
             cli.keys.push(name.replace('-', "_"));
             apply(&mut cli, name, neg, value)?;
         }
+    }
+    if let Some(p) = cli.changed_path.take() {
+        cli.paths.insert(0, PathBuf::from(p));
     }
     Ok(cli)
 }
@@ -527,6 +565,22 @@ fn cop_list(name: &str, value: Option<String>) -> Result<Vec<String>, Fail> {
         return Err(Fail::Arg(format!("--{name} argument should be [COP1,COP2,...].")));
     };
     Ok(if list.is_empty() { vec![String::new()] } else { list.split(',').map(String::from).collect() })
+}
+
+/// String#to_i for a non-negative count: leading whitespace, then digits (with `_` between them).
+fn ruby_to_i(s: &str) -> usize {
+    let t = s.trim_start_matches([' ', '\t', '\n', '\x0B', '\x0C', '\r']);
+    let t = t.strip_prefix('+').unwrap_or(t);
+    let mut n: usize = 0;
+    let b = t.as_bytes();
+    for (i, &c) in b.iter().enumerate() {
+        if c.is_ascii_digit() {
+            n = n.saturating_mul(10).saturating_add((c - b'0') as usize);
+        } else if !(c == b'_' && i > 0 && b[i - 1].is_ascii_digit() && b.get(i + 1).is_some_and(u8::is_ascii_digit)) {
+            break;
+        }
+    }
+    n
 }
 
 /// `--fail-level`: a severity name or code (OptionParser completes unique prefixes).
@@ -622,6 +676,16 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
             cli.list_enabled_for = value;
             cli.exiting.push("list_enabled_cops_for");
         }
+        "explain" => {
+            // Ruby's split(',') drops trailing empty fields.
+            let mut list: Vec<String> = value.unwrap_or_default().split(',').map(String::from).collect();
+            while list.last().is_some_and(String::is_empty) {
+                list.pop();
+            }
+            cli.explain = Some(list);
+            cli.exiting.push("explain");
+        }
+        "max-offenses-per-cop" => cli.max_offenses = Some(ruby_to_i(&value.unwrap_or_default())),
         "show-docs-url" => {
             // Ruby's split(',') drops trailing empty fields; only emptiness matters here.
             cli.show_docs_url = Some(
@@ -642,13 +706,18 @@ fn apply(cli: &mut Cli, name: &str, neg: bool, value: Option<String>) -> Result<
         "force-default-config" => cli.opts.force_default_config = true,
         "force-exclusion" => cli.force_exclusion = true,
         "changed" => {
-            // OptionsValidator#validate_changed_revision: OptionParser hands `--changed lib/` the
-            // path as the revision.
+            // OptionsValidator#path_given_to_changed?: OptionParser hands `--changed lib/` the path
+            // as the revision, so an existing path goes back among the paths (unless it also names
+            // a revision, which is ambiguous).
+            let mut value = value;
             if let Some(r) = value.as_deref().filter(|r| Path::new(r).exists()) {
-                return Err(Fail::Arg(format!(
-                    "--changed takes a git revision, but `{r}` is a path. Write the revision as \
-                     `--changed={r}` if that is really what you meant, or drop it to compare against HEAD."
-                )));
+                if is_revision(r) {
+                    return Err(Fail::Arg(format!(
+                        "--changed got `{r}`, which is both a path and a git revision. Write `./{r}` for the \
+                         path, or `--changed={r}^0` for the revision."
+                    )));
+                }
+                cli.changed_path = value.take();
             }
             cli.changed = Some(value.unwrap_or_else(|| "HEAD".into()));
         }
@@ -810,7 +879,7 @@ fn validate(cli: &mut Cli, global: bool) -> Result<(), Fail> {
     if cli.enable_all || cli.disable_all {
         cli.opts.all_cops = Some(cli.enable_all);
     }
-    if cli.parallel.is_some() {
+    if cli.parallel == Some(true) {
         let invalid: Vec<&str> = [
             cli.fail_fast.then_some("-F/--fail-fast"),
             (cli.cache.as_deref() == Some("false")).then_some("--cache false"),
@@ -821,7 +890,8 @@ fn validate(cli: &mut Cli, global: bool) -> Result<(), Fail> {
         if !invalid.is_empty() {
             cli.parallel = None;
             cli.keys.retain(|k| k != "parallel");
-            println!("-P/--parallel is being ignored because it is not compatible with {}.", invalid.join(", "));
+            // On stderr, so that it can't end up in the middle of a formatter's output.
+            eprintln!("-P/--parallel is being ignored because it is not compatible with {}.", invalid.join(", "));
         }
     }
     if cli.exiting.len() > 1 {
@@ -1017,6 +1087,7 @@ fn auto_gen_config(mut cli: Cli, global: bool, parse_color: bool) -> Result<u8, 
         || cli.show_cops.is_some()
         || cli.list_enabled_for.is_some()
         || cli.show_docs_url.is_some()
+        || cli.explain.is_some()
     {
         return run(cli, global, parse_color, None);
     }
@@ -1340,10 +1411,8 @@ fn show_docs_url(cops: &[String], cfg: &Resolved) {
     if cops.is_empty() {
         out.push_str("https://docs.rubocop.org/rubocop\n");
     }
-    for cop in cops {
-        if let Some(name) = rbcop::helpers::cop_registry::REGISTRY.iter().find(|c| **c == cop.as_str())
-            && let Some(url) = formatter::docs_url(cfg, name)
-        {
+    for name in explain::known_cops(cops) {
+        if let Some(url) = formatter::docs_url(cfg, name) {
             out.push_str(&url);
             out.push('\n');
         }
@@ -1785,6 +1854,8 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     }
     if let Some(patterns) = &cli.show_cops {
         show_cops(patterns, &pwd_config, &pwd);
+        // Checked after printing; a wildcard is a pattern, not a name.
+        explain::validate_cop_names(patterns.iter().map(String::as_str).filter(|p| !p.contains('*')))?;
         return Ok(0);
     }
     if let Some(path) = &cli.list_enabled_for {
@@ -1796,6 +1867,13 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     }
     if let Some(cops) = &cli.show_docs_url {
         show_docs_url(cops, &pwd_config);
+        explain::validate_cop_names(cops.iter().map(String::as_str))?;
+        return Ok(0);
+    }
+    if let Some(cops) = &cli.explain {
+        let (text, checked) = explain::explain(cops, &pwd_config, &cwd);
+        print!("{text}");
+        checked?;
         return Ok(0);
     }
     if cli.lsp {
@@ -1828,6 +1906,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
         "formatters",
         "ignore_disable_comments",
         "lint",
+        "max_offenses_per_cop",
         "only",
         "only_guide_cops",
         "out",
@@ -2313,6 +2392,8 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     };
     let mut annotate = cli.annotate;
     annotate.json = cli.format.as_deref() == Some("json");
+    // OffenseLimit: offenses offered per cop, sorted by name for #elided_per_cop.
+    let mut offered: std::collections::BTreeMap<String, usize> = std::collections::BTreeMap::new();
     let mut all_passed = true;
     // Runner#diffs (`--diff`), in file order.
     let mut diffs: Vec<String> = Vec::new();
@@ -2505,7 +2586,17 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             let passed = !offs.iter().any(|o| considered_failure(o) && displayed(o));
             all_passed &= passed;
             inspected.push(path.clone());
-            let shown: Vec<_> = offs.into_iter().filter(|o| displayed(o)).collect();
+            // Runner#offenses_to_report: the display filters, then OffenseLimit across the run.
+            let shown: Vec<_> = offs
+                .into_iter()
+                .filter(|o| displayed(o))
+                .filter(|o| {
+                    let Some(max) = cli.max_offenses else { return true };
+                    let n = offered.entry(o.cop.to_string()).or_insert(0);
+                    *n += 1;
+                    *n <= max
+                })
+                .collect();
             set.file_finished(&cx, &FileOut { path, offenses: shown, config: cfg });
             if cli.fail_fast && !passed {
                 stopped = true;
@@ -2538,6 +2629,22 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     set.finished(&cx, &inspected);
     if let Some(e) = set.take_error() {
         error.get_or_insert(e);
+    }
+    // Runner#warn_about_elided_offenses, in Runner#run's ensure.
+    if let Some(max) = cli.max_offenses {
+        let elided: Vec<(&String, usize)> =
+            offered.iter().filter(|(_, n)| **n > max).map(|(c, n)| (c, n - max)).collect();
+        if !elided.is_empty() {
+            let total: usize = elided.iter().map(|(_, n)| n).sum();
+            let cops: Vec<&str> = elided.iter().map(|(c, _)| c.as_str()).collect();
+            eprintln!(
+                "{}",
+                formatter::Paint(global).yellow(&format!(
+                    "{total} more offenses were not reported because of --max-offenses-per-cop={max} ({}).",
+                    cops.join(", ")
+                ))
+            );
+        }
     }
     // The ValidationError reaches the CLI before ExecuteRunner's error summary.
     if let Some(e) = config_failure {
@@ -2576,7 +2683,8 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
         eprintln!("{}", red(global, e.trim_end()));
         return Ok(ERROR);
     }
-    let integration = matches!(cli.format.as_deref(), Some("h" | "html" | "j" | "json" | "ju" | "junit"));
+    let integration =
+        matches!(cli.format.as_deref(), Some("h" | "html" | "j" | "json" | "ju" | "junit" | "sa" | "sarif"));
     // ExecuteRunner#print_diffs: a blank line, then each diff, to --stderr's stream; not for the
     // integration formatters. Diffs mean the run has not passed.
     if cli.diff {
