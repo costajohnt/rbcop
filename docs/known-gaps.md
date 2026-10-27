@@ -229,6 +229,10 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   including one met while walking a directory) with the tool error `<path> resolves to <real
   path>, outside the project`, and write as `-a` does (never through a symlink, a new file created
   exclusively). An MCP client may be a model following text from the code it reads.
+- `--explain` prints the sections of a cop's documentation comment from src/cop_docs.txt
+  (scripts/dump-cop-docs.rb, RuboCop's and the native plugins' cops), since rbcop has no Ruby
+  sources to read. A cop of a plugin rbcop does not implement, or of a `require:`d local file, is
+  explained without those sections (description, properties, configuration and references only).
 
 ## Open gaps
 

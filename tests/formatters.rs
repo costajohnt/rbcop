@@ -46,10 +46,12 @@ fn formatters_match_rubocop() {
             }
             cwd = work.canonicalize().unwrap();
         }
+        // cfg-* cases read their directory's config.
+        let force = if name.starts_with("cfg-") { "" } else { "--force-default-config" };
         // `sh -c` so the arguments split and quote exactly as in the recording script.
         let out = common::command("sh")
             .arg("-c")
-            .arg(format!("\"$RBCOP\" --cache false --force-default-config --only {cops} {args}"))
+            .arg(format!("\"$RBCOP\" --cache false {force} --only {cops} {args}"))
             .env("RBCOP", env!("CARGO_BIN_EXE_rbcop"))
             .env("RUBY_PROGRESS_BAR_LENGTH", "80")
             .env("PWD", &cwd)

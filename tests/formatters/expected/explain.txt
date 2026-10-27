@@ -1,0 +1,570 @@
+Style/StringLiterals
+
+  Checks if uses of quotes match the configured preference.
+
+Properties
+
+  Enabled:     true
+  Safe:        true
+  Autocorrect: safe, applied by -a
+  Added:       0.9
+  Changed:     0.36
+
+Example: EnforcedStyle: single_quotes (default)
+
+    # bad
+    "No special symbols"
+    "No string interpolation"
+    "Just text"
+
+    # good
+    'No special symbols'
+    'No string interpolation'
+    'Just text'
+    "Wait! What's #{this}!"
+
+Example: EnforcedStyle: double_quotes
+
+    # bad
+    'Just some text'
+    'No special chars or interpolation'
+
+    # good
+    "Just some text"
+    "No special chars or interpolation"
+    "Every string in #{project} uses double_quotes"
+
+Configuration
+
+  ConsistentQuotesInMultiline: false
+  EnforcedStyle: single_quotes
+  SupportedStyles: single_quotes, double_quotes
+
+References
+
+  https://rubystyle.guide#consistent-string-literals
+  https://docs.rubocop.org/rubocop/cops_style.html#stylestringliterals
+
+Layout/LineLength
+
+  Checks that line length does not exceed the configured limit.
+
+Properties
+
+  Enabled:     true
+  Safe:        true
+  Autocorrect: safe, applied by -a
+  Added:       0.25
+  Changed:     1.82
+
+Details
+
+  Checks the length of lines in the source code.
+  The maximum length is configurable.
+  The tab size is configured in the `IndentationWidth`
+  of the `Layout/IndentationStyle` cop.
+  It also ignores a shebang line by default.
+
+  This cop has some autocorrection capabilities.
+  It can programmatically shorten certain long lines by
+  inserting line breaks into expressions that can be safely
+  split across lines. These include arrays, hashes, and
+  method calls with argument lists.
+
+  If autocorrection is enabled, the following cops
+  are recommended to further format the broken lines.
+  (Many of these are enabled by default.)
+
+  * `Layout/ArgumentAlignment`
+  * `Layout/ArrayAlignment`
+  * `Layout/BlockAlignment`
+  * `Layout/BlockEndNewline`
+  * `Layout/ClosingParenthesisIndentation`
+  * `Layout/FirstArgumentIndentation`
+  * `Layout/FirstArrayElementIndentation`
+  * `Layout/FirstHashElementIndentation`
+  * `Layout/FirstParameterIndentation`
+  * `Layout/HashAlignment`
+  * `Layout/IndentationWidth`
+  * `Layout/MultilineArrayLineBreaks`
+  * `Layout/MultilineBlockLayout`
+  * `Layout/MultilineHashBraceLayout`
+  * `Layout/MultilineHashKeyLineBreaks`
+  * `Layout/MultilineMethodArgumentLineBreaks`
+  * `Layout/MultilineMethodParameterLineBreaks`
+  * `Layout/ParameterAlignment`
+  * `Style/BlockDelimiters`
+
+  Together, these cops will pretty print hashes, arrays,
+  method calls, etc. For example, let's say the max columns
+  is 25:
+
+Example
+
+    # bad
+    {foo: "0000000000", bar: "0000000000", baz: "0000000000"}
+
+    # good
+    {foo: "0000000000",
+    bar: "0000000000", baz: "0000000000"}
+
+    # good (with recommended cops enabled)
+    {
+      foo: "0000000000",
+      bar: "0000000000",
+      baz: "0000000000",
+    }
+
+Configuration
+
+  AllowCopDirectives: true
+  AllowHeredoc: true
+  AllowQualifiedName: true
+  AllowRBSInlineAnnotation: false
+  AllowURI: true
+  AllowedPatterns: 
+  Max: 120
+  SplitStrings: false
+  URISchemes: http, https
+
+References
+
+  https://rubystyle.guide#max-line-length
+  https://docs.rubocop.org/rubocop/cops_layout.html#layoutlinelength
+
+Lint/Syntax
+
+  Checks for syntax errors.
+
+Properties
+
+  Enabled:     true
+  Safe:        true
+  Autocorrect: not supported
+  Added:       0.9
+
+Details
+
+  Repacks Parser's diagnostics/errors
+  into RuboCop's offenses.
+
+References
+
+  https://docs.rubocop.org/rubocop/cops_lint.html#lintsyntax
+
+Bundler/OrderedGems
+
+  Gems within groups in the Gemfile should be alphabetically sorted.
+
+Properties
+
+  Enabled:     true
+  Safe:        true
+  Autocorrect: safe, applied by -a
+  Added:       0.46
+  Changed:     0.47
+  Applies to:  **/*.gemfile, **/Gemfile, **/gems.rb
+
+Details
+
+  Gems should be alphabetically sorted within groups.
+
+Example
+
+    # bad
+    gem 'rubocop'
+    gem 'rspec'
+
+    # good
+    gem 'rspec'
+    gem 'rubocop'
+
+    # good
+    gem 'rubocop'
+
+    gem 'rspec'
+
+Example: TreatCommentsAsGroupSeparators: true (default)
+
+    # good
+    # For code quality
+    gem 'rubocop'
+    # For tests
+    gem 'rspec'
+
+Example: TreatCommentsAsGroupSeparators: false
+
+    # bad
+    # For code quality
+    gem 'rubocop'
+    # For tests
+    gem 'rspec'
+
+Configuration
+
+  ConsiderPunctuation: false
+  TreatCommentsAsGroupSeparators: true
+
+References
+
+  https://docs.rubocop.org/rubocop/cops_bundler.html#bundlerorderedgems
+
+Style/MethodCallWithArgsParentheses
+
+  Use parentheses for method calls with arguments.
+
+Properties
+
+  Enabled:     false
+  Safe:        true
+  Autocorrect: safe, applied by -a
+  Added:       0.47
+  Changed:     1.7
+
+Details
+
+  Enforces the presence (default) or absence of parentheses in
+  method calls containing arguments.
+
+  In the default style (require_parentheses), macro methods are allowed.
+  Additional methods can be added to the `AllowedMethods` or
+  `AllowedPatterns` list. These options are valid only in the default
+  style. Macros can be included by either setting `IgnoreMacros` to false,
+  adding specific macros to the `IncludedMacros` list, or using
+  `IncludedMacroPatterns` for pattern-based matching.
+
+  Precedence of options is as follows:
+
+  1. `AllowedMethods`
+  2. `AllowedPatterns`
+  3. `IncludedMacros`
+  4. `IncludedMacroPatterns`
+
+  If a method is listed in both `IncludedMacros`/`IncludedMacroPatterns`
+  and `AllowedMethods`, then the latter takes precedence (that is, the
+  method is allowed).
+
+  In the alternative style (omit_parentheses), there are three additional
+  options.
+
+  1. `AllowParenthesesInChaining` is `false` by default. Setting it to
+     `true` allows the presence of parentheses in the last call during
+     method chaining.
+
+  2. `AllowParenthesesInMultilineCall` is `false` by default. Setting it
+      to `true` allows the presence of parentheses in multi-line method
+      calls.
+
+  3. `AllowParenthesesInCamelCaseMethod` is `false` by default. This
+      allows the presence of parentheses when calling a method whose name
+      begins with a capital letter and which has no arguments. Setting it
+      to `true` allows the presence of parentheses in such a method call
+      even with arguments.
+
+  NOTE: The style of `omit_parentheses` allows parentheses in cases where
+  omitting them results in ambiguous or syntactically incorrect code.
+
+  Non-exhaustive list of examples:
+
+  - Parentheses are required allowed in method calls with arguments inside
+    literals, logical operators, setting default values in position and
+    keyword arguments, chaining and more.
+  - Parentheses are allowed in method calls with arguments inside
+    operators to avoid ambiguity.
+    triple-dot syntax introduced in Ruby 2.7 as omitting them starts an
+    endless range.
+  - Parentheses are allowed when forwarding arguments with the
+    triple-dot syntax introduced in Ruby 2.7 as omitting them starts an
+    endless range.
+  - Parentheses are required in calls with arguments when inside an
+    endless method definition introduced in Ruby 3.0.
+  - Ruby 3.1's hash omission syntax allows parentheses if the method call
+    is in conditionals and requires parentheses if the call
+    is not the value-returning expression. See
+    https://bugs.ruby-lang.org/issues/18396.
+  - Parentheses are required in anonymous arguments, keyword arguments
+    and block passing in Ruby 3.2.
+  - Parentheses are required when the first argument is a beginless range or
+    the last argument is an endless range.
+
+Example: EnforcedStyle: require_parentheses (default)
+
+    # bad
+    array.delete e
+
+    # good
+    array.delete(e)
+
+    # good
+    # Operators don't need parens
+    foo == bar
+
+    # good
+    # Setter methods don't need parens
+    foo.bar = baz
+
+    # okay with `puts` listed in `AllowedMethods`
+    puts 'test'
+
+    # okay with `^assert` listed in `AllowedPatterns`
+    assert_equal 'test', x
+
+Example: EnforcedStyle: omit_parentheses
+
+    # bad
+    array.delete(e)
+
+    # good
+    array.delete e
+
+    # bad
+    action.enforce(strict: true)
+
+    # good
+    action.enforce strict: true
+
+    # good
+    # Parentheses are allowed for code that can be ambiguous without
+    # them.
+    action.enforce(condition) || other_condition
+
+    # good
+    # Parentheses are allowed for calls that won't produce valid Ruby
+    # without them.
+    yield path, File.basename(path)
+
+    # good
+    # Omitting the parentheses in Ruby 3.1 hash omission syntax can lead
+    # to ambiguous code. We allow them in conditionals and non-last
+    # expressions. See https://bugs.ruby-lang.org/issues/18396
+    if meets(criteria:, action:)
+      safe_action(action) || dangerous_action(action)
+    end
+
+Example: IgnoreMacros: true (default)
+
+    # good
+    class Foo
+      bar :baz
+    end
+
+Example: IgnoreMacros: false
+
+    # bad
+    class Foo
+      bar :baz
+    end
+
+Example: AllowedMethods: ["puts", "print"]
+
+    # good
+    puts "Hello world"
+    print "Hello world"
+    # still enforces parentheses on other methods
+    array.delete(e)
+
+Example: AllowedPatterns: ["^assert"]
+
+    # good
+    assert_equal 'test', x
+    assert_match(/foo/, bar)
+    # still enforces parentheses on other methods
+    array.delete(e)
+
+Example: IncludedMacroPatterns: ["^assert", "^refute"]
+
+    # bad
+    assert_equal 'test', x
+    refute_nil value
+
+    # good
+    assert_equal('test', x)
+    refute_nil(value)
+
+Example: AllowParenthesesInMultilineCall: false (default)
+
+    # bad
+    foo.enforce(
+      strict: true
+    )
+
+    # good
+    foo.enforce \
+      strict: true
+
+Example: AllowParenthesesInMultilineCall: true
+
+    # good
+    foo.enforce(
+      strict: true
+    )
+
+    # good
+    foo.enforce \
+      strict: true
+
+Example: AllowParenthesesInChaining: false (default)
+
+    # bad
+    foo().bar(1)
+
+    # good
+    foo().bar 1
+
+Example: AllowParenthesesInChaining: true
+
+    # good
+    foo().bar(1)
+
+    # good
+    foo().bar 1
+
+Example: AllowParenthesesInCamelCaseMethod: false (default)
+
+    # bad
+    Array(1)
+
+    # good
+    Array 1
+
+Example: AllowParenthesesInCamelCaseMethod: true
+
+    # good
+    Array(1)
+
+    # good
+    Array 1
+
+Example: AllowParenthesesInStringInterpolation: false (default)
+
+    # bad
+    "#{t('this.is.bad')}"
+
+    # good
+    "#{t 'this.is.better'}"
+
+Example: AllowParenthesesInStringInterpolation: true
+
+    # good
+    "#{t('this.is.good')}"
+
+    # good
+    "#{t 'this.is.also.good'}"
+
+Configuration
+
+  AllowParenthesesInCamelCaseMethod: false
+  AllowParenthesesInChaining: false
+  AllowParenthesesInMultilineCall: false
+  AllowParenthesesInStringInterpolation: false
+  AllowedMethods: 
+  AllowedPatterns: 
+  EnforcedStyle: require_parentheses
+  IgnoreMacros: true
+  IncludedMacroPatterns: 
+  IncludedMacros: 
+  SupportedStyles: require_parentheses, omit_parentheses
+
+References
+
+  https://rubystyle.guide#method-invocation-parens
+  https://docs.rubocop.org/rubocop/cops_style.html#stylemethodcallwithargsparentheses
+
+Lint/RedundantCopDisableDirective
+
+  Checks for rubocop:disable comments that can be removed. Note: this cop is not disabled when disabling all cops. It must be explicitly disabled.
+
+Properties
+
+  Enabled:     true
+  Safe:        true
+  Autocorrect: safe, applied by -a
+  Added:       0.76
+
+Details
+
+  Detects instances of rubocop:disable comments that can be
+  removed without causing any offenses to be reported. It's implemented
+  as a cop in that it inherits from the Cop base class and calls
+  add_offense. The unusual part of its implementation is that it doesn't
+  have any on_* methods or an investigate method. This means that it
+  doesn't take part in the investigation phase when the other cops do
+  their work. Instead, it waits until it's called in a later stage of the
+  execution. The reason it can't be implemented as a normal cop is that
+  it depends on the results of all other cops to do its work.
+
+Example
+
+    # bad
+    # rubocop:disable Layout/LineLength
+    x += 1
+    # rubocop:enable Layout/LineLength
+
+    # good
+    x += 1
+
+References
+
+  https://docs.rubocop.org/rubocop/cops_lint.html#lintredundantcopdisabledirective
+
+Naming/FileName
+
+  Use snake_case for source file names.
+
+Properties
+
+  Enabled:     true
+  Safe:        true
+  Autocorrect: not supported
+  Added:       0.50
+  Changed:     1.23
+  Excludes:    Rakefile.rb
+
+Details
+
+  Makes sure that Ruby source files have snake_case
+  names. Ruby scripts (i.e. source files with a shebang in the
+  first line) are ignored.
+
+  The cop also ignores `.gemspec` files, because Bundler
+  recommends using dashes to separate namespaces in nested gems
+  (i.e. `bundler-console` becomes `Bundler::Console`). As such, the
+  gemspec is supposed to be named `bundler-console.gemspec`.
+
+  When `ExpectMatchingDefinition` (default: `false`) is `true`, the cop requires
+  each file to have a class, module or `Struct` defined in it that matches
+  the filename. This can be further configured using
+  `CheckDefinitionPathHierarchy` (default: `true`) to determine whether the
+  path should match the namespace of the above definition.
+
+  When `IgnoreExecutableScripts` (default: `true`) is `true`, files that start
+  with a shebang line are not considered by the cop.
+
+  When `Regex` is set, the cop will flag any filename that does not match
+  the regular expression.
+
+Example
+
+    # bad
+    lib/layoutManager.rb
+
+    anything/usingCamelCase
+
+    # good
+    lib/layout_manager.rb
+
+    anything/using_snake_case.rake
+
+Configuration
+
+  AllowedAcronyms: CLI, DSL, ACL, API, ASCII, CPU, CSS, DNS, EOF, GUID, HTML, HTTP, HTTPS, ID, IP, JSON, LHS, QPS, RAM, RHS, RPC, SLA, SMTP, SQL, SSH, TCP, TLS, TTL, UDP, UI, UID, UUID, URI, URL, UTF8, VM, XML, XMPP, XSRF, XSS
+  CheckDefinitionPathHierarchy: true
+  CheckDefinitionPathHierarchyRoots: lib, spec, test, src
+  ExpectMatchingDefinition: false
+  IgnoreExecutableScripts: true
+  Regex: 
+
+References
+
+  https://rubystyle.guide#snake-case-files
+  https://docs.rubocop.org/rubocop/cops_naming.html#namingfilename

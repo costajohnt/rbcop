@@ -1,0 +1,25 @@
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+  Exclude:
+    - 'vendor/**/*'
+    - !ruby/regexp /generated/
+Layout/LineLength:
+  Max: 100
+  AllowedPatterns: ['^#', '\A\s*']
+  AutoCorrect: contextual
+Style/FrozenStringLiteralComment:
+  Enabled: false
+  SafeAutoCorrect: true
+Naming/MethodName:
+  ForbiddenIdentifiers: [[a, b], c]
+  Custom: {a: 1, b: [x]}
+  Floaty: 1.5
+  Nada: ~
+  Sym: :foo
+Style/Documentation:
+  Include: ['app/**/*.rb']
+  Description: Checks for missing top-level documentation of classes and modules.
+Style/Semicolon:
+  AutoCorrect: false
+Style/HashSyntax:
+  Safe: false
