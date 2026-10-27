@@ -1,0 +1,6 @@
+plugins:
+  - rubocop-rspec
+AllCops:
+  Preview: true
+  NewCops: disable
+  SuggestExtensions: false

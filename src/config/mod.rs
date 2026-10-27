@@ -1504,6 +1504,18 @@ impl Store {
         // ConfigLoaderResolver#warn_on_duplicate_setting's `inherited_file`: the entry as written.
         let written = seq(hash.get("inherit_from").cloned());
         let file_is_remote = self.remote.contains_key(path);
+        // ConfigLoaderResolver#inherited_preview?: the `AllCops: Preview` in effect once
+        // inheritance is resolved (the file's own, else the last inherited file's that sets it),
+        // known before the keys merge in whatever order they come.
+        let preview_from = std::iter::once(&*hash)
+            .chain(bases.iter().rev().map(|b| &b.2))
+            .filter_map(|c| c.map("AllCops"))
+            .find(|a| a.contains("Preview"));
+        let mut preview_hash = Map::default();
+        if let Some(all) = preview_from {
+            preview_hash.insert("AllCops", Value::Map(all.clone().into()));
+        }
+        let preview = preview_on(&preview_hash, self.opts.preview);
         for (index, base_path, base) in bases.into_iter().rev() {
             override_department_setting_for_cops(&base, hash);
             override_enabled_for_disabled_departments(&base, hash);
@@ -1512,7 +1524,7 @@ impl Store {
                 let only_base_has_include = v.contains("Include") && !hash.map(&k).is_some_and(|m| m.truthy("Include"));
                 let merged = match hash.map(&k) {
                     Some(derived) => {
-                        let mode = determine_inherit_mode(hash, &k, self.opts.preview);
+                        let mode = determine_inherit_mode(hash, &k, preview);
                         if self.opts.debug && !file_is_remote {
                             let inherited = written.get(index).and_then(Value::as_string);
                             let mut out = Vec::new();
@@ -1907,7 +1919,7 @@ impl Store {
                 }
                 plugin.insert("AllCops", Value::Map(all.into()));
             }
-            combined = merge_with_default(&combined, plugin, false, &self.opts);
+            combined = merge_with_default(&combined, plugin, false, false, &self.opts);
         }
         if let (Some(all), Some(Value::Map(new_all))) =
             (self.default.map_mut("AllCops"), combined.get("AllCops").cloned())
@@ -1948,7 +1960,7 @@ impl Store {
         // It loads ConfigLoader.default_configuration, whose `AllCops` key memoizes
         // Registry#unqualified_cop_names (before any subdirectory config loads its plugins).
         crate::helpers::cop_registry::fill_unqualified_cop_names();
-        merge_with_default(&self.default, config, true, &self.opts)
+        merge_with_default(&self.default, config, true, true, &self.opts)
     }
 
     /// Gem dir for inherit_gem and plugins, as `Gem::Specification.find_by_name(name).gem_dir` reports it.
@@ -2334,9 +2346,9 @@ pub fn apply_preview_defaults(default: &Map, preview: bool) -> Map {
 
 /// ConfigLoaderResolver#with_preview_exclude_merge: under preview `Exclude` is merged, unless
 /// inherit_mode names it either way.
-fn with_preview_exclude_merge(mut mode: Map, config: &Map, cli: Option<bool>) -> Map {
+fn with_preview_exclude_merge(mut mode: Map, preview: bool) -> Map {
     let lists = |m: &Map, which: &str| m.strings(which).iter().any(|k| k == "Exclude");
-    if !preview_on(config, cli) || lists(&mode, "override") || lists(&mode, "merge") {
+    if !preview || lists(&mode, "override") || lists(&mode, "merge") {
         return mode;
     }
     let mut merge = seq(mode.get("merge").cloned());
@@ -2361,16 +2373,30 @@ fn apply_default_overrides(default: &Map, opts: &Options) -> Map {
     hash
 }
 
-/// ConfigLoaderResolver#merge_with_default (§4).
-fn merge_with_default(base_default: &Map, mut config: Map, unset_nil: bool, opts: &Options) -> Map {
-    let cli_preview = opts.preview;
+/// ConfigLoaderResolver#merge_with_default (§4). With `resolve_preview` false (a plugin's or an
+/// extension's config extending the defaults) the defaults keep their `Preview` sections and
+/// preview counts as off; it applies once a project config is resolved against them.
+fn merge_with_default(
+    base_default: &Map,
+    mut config: Map,
+    unset_nil: bool,
+    resolve_preview: bool,
+    opts: &Options,
+) -> Map {
     let all = config.map("AllCops").cloned().unwrap_or_default();
     // resolve_default_overrides: --enable-all-cops / --disable-all-cops win over the config.
     let (dbd, ebd) = match opts.all_cops {
         Some(enable) => (!enable, enable),
         None => (all.truthy("DisabledByDefault"), all.truthy("EnabledByDefault")),
     };
-    let base_default = &apply_preview_defaults(base_default, preview_on(&config, cli_preview));
+    let preview = resolve_preview && preview_on(&config, opts.preview);
+    let resolved;
+    let base_default = if resolve_preview {
+        resolved = apply_preview_defaults(base_default, preview);
+        &resolved
+    } else {
+        base_default
+    };
     let mut default = base_default.clone();
     if dbd || ebd {
         for (_, v) in default.0.iter_mut() {
@@ -2406,8 +2432,7 @@ fn merge_with_default(base_default: &Map, mut config: Map, unset_nil: bool, opts
         }
     }
     override_enabled_for_disabled_departments(&default, &mut config);
-    let mode =
-        with_preview_exclude_merge(config.map("inherit_mode").cloned().unwrap_or_default(), &config, cli_preview);
+    let mode = with_preview_exclude_merge(config.map("inherit_mode").cloned().unwrap_or_default(), preview);
     merge(&default, &config, &mode, unset_nil)
 }
 
@@ -2652,14 +2677,14 @@ fn override_enabled_for_disabled_departments(base: &Map, derived: &mut Map) {
     }
 }
 
-fn determine_inherit_mode(hash: &Map, key: &str, cli_preview: Option<bool>) -> Map {
+fn determine_inherit_mode(hash: &Map, key: &str, preview: bool) -> Map {
     let mode = hash
         .map(key)
         .and_then(|m| m.map("inherit_mode"))
         .or_else(|| hash.map("inherit_mode"))
         .cloned()
         .unwrap_or_default();
-    with_preview_exclude_merge(mode, hash, cli_preview)
+    with_preview_exclude_merge(mode, preview)
 }
 
 fn mode_lists(mode: Option<&Map>, which: &str, key: &str) -> bool {

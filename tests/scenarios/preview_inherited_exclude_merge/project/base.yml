@@ -1,0 +1,7 @@
+Style/StringLiterals:
+  Exclude:
+    - a.rb
+AllCops:
+  Preview: true
+  NewCops: disable
+  SuggestExtensions: false
