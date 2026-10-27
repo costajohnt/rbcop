@@ -1,5 +1,5 @@
 //! Remote `inherit_from` URLs (RuboCop's RemoteConfig, run by ruby), served by a local HTTP
-//! server. Expected output recorded with RuboCop 1.91.0 against the same files.
+//! server. Expected output recorded with RuboCop 1.92.1 against the same files.
 
 mod common;
 

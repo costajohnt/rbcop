@@ -170,36 +170,52 @@ pub fn changed(revision: &str) -> Result<std::collections::HashSet<PathBuf>, Str
     let root = Path::new(std::ffi::OsStr::from_bytes(root));
     // `diff.relative` would make git report paths relative to the current directory.
     // Deliberate difference: `--end-of-options` keeps a revision such as `--output=FILE` from
-    // being read as a git option (RuboCop 1.91.0 passes it through, and git writes FILE). Git's
+    // being read as a git option (RuboCop 1.92.1 passes it through, and git writes FILE). Git's
     // messages for every other revision are unchanged; a trailing `--` would reword them.
     // `--no-ext-diff --no-textconv --no-renames`: see git_command (a rename's new name is listed
     // either way, and its old one never is).
-    let diff = [
-        "-c",
-        "diff.relative=false",
-        "diff",
-        "--no-ext-diff",
-        "--no-textconv",
-        "--no-renames",
-        "--name-only",
-        "--diff-filter=d",
-        "-z",
-        "--end-of-options",
-        revision,
-    ];
-    let modified = match git(&diff) {
+    let diff = |revision: &str| {
+        git(&[
+            "-c",
+            "diff.relative=false",
+            "diff",
+            "--no-ext-diff",
+            "--no-textconv",
+            "--no-renames",
+            "--name-only",
+            "--diff-filter=d",
+            "-z",
+            "--end-of-options",
+            revision,
+        ])
+    };
+    let modified = match diff(revision) {
         Ok(out) => out,
-        // A repository without commits: everything in it is untracked.
-        Err(_) if revision == "HEAD" && !git_ok(&["rev-parse", "--verify", "--quiet", "HEAD"]) => Vec::new(),
+        // A repository without commits: against the empty tree every staged file counts as changed.
+        Err(_) if revision == "HEAD" && !git_ok(&["rev-parse", "--verify", "--quiet", "HEAD^{commit}"]) => {
+            diff(&empty_tree()?)?
+        }
         Err(e) => return Err(e),
     };
-    let untracked = git(&["ls-files", "--others", "--exclude-standard", "--full-name", "-z"])?;
+    // `:/` widens ls-files (which only looks under the current directory) to the whole repository.
+    let untracked = git(&["ls-files", "--others", "--exclude-standard", "--full-name", "-z", "--", ":/"])?;
     Ok(modified
         .split(|&b| b == 0)
         .chain(untracked.split(|&b| b == 0))
         .filter(|p| !p.is_empty())
         .map(|p| expand_path(Path::new(std::ffi::OsStr::from_bytes(p)), root))
         .collect())
+}
+
+/// ChangedFiles#empty_tree: hashed, since its id depends on the object format (SHA-1 or SHA-256).
+fn empty_tree() -> Result<String, String> {
+    if let Some(Ok(p)) = PINNED.get() {
+        return Ok(p.empty_tree.clone());
+    }
+    let out = git(&["hash-object", "-t", "tree", "--stdin"])?;
+    // String#chomp
+    let out = String::from_utf8_lossy(&out);
+    Ok(out.strip_suffix('\n').map_or(&*out, |o| o.strip_suffix('\r').unwrap_or(o)).to_string())
 }
 
 /// The repository `--mcp` resolved at startup, as canonical paths: its git dir, its common dir (a

@@ -1,5 +1,5 @@
 //! The server options (RuboCop::Server::CLI, run on ARGV before anything else). Output recorded
-//! with RuboCop 1.91.0 while no server was running, which is always the case for rbcop (it runs in
+//! with RuboCop 1.92.1 while no server was running, which is always the case for rbcop (it runs in
 //! process; docs/known-gaps.md).
 
 mod common;

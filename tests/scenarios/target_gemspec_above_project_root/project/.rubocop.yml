@@ -1,0 +1,8 @@
+# RuboCop 1.92.1 looks for the gemspec only up to the project root (the Gemfile's directory), so
+# ../outer.gemspec (Ruby 3.4) is not used, .ruby-version (2.7) is, and the shorthand below (Ruby
+# 3.1 syntax) is not asked for. RuboCop 1.91.0 took the gemspec and reported it.
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+Style/HashSyntax:
+  EnforcedShorthandSyntax: always
