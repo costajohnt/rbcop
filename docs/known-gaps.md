@@ -45,9 +45,14 @@ rbcop pins and refuses there (and nothing beyond it):
   planted later or below the root is never used; with none at startup, `changed` fails as it does
   outside a repository for the whole session. Those calls also read attributes from the empty
   tree (`GIT_ATTR_SOURCE`), so a `.gitattributes` cannot name a filter driver; the cost is that
-  `eol`/`text` attributes do not apply when git decides which files changed.
+  `eol`/`text` attributes do not apply when git decides which files changed. This fails closed:
+  if git is older than 2.40 (no `GIT_ATTR_SOURCE`) or `git hash-object` gives no well-formed
+  empty tree id, `changed` returns an error for the session instead of running git without it.
 - The MCP tools refuse to read or write a path whose canonical form is under that git dir or
-  common dir, or has a `.git`, `.hg`, `.svn` or `.jj` component (any case).
+  common dir, has a `.git`, `.hg`, `.svn` or `.jj` component, or is named `.gitattributes` (any
+  case).
+- `--changed` on the command line (the user's own repository) stays best effort: it is not pinned,
+  needs no particular git version and does not read attributes from the empty tree.
 
 Not covered: git still reads the repository's own config (aliases, `core.*`, `diff.*`), the user's
 global config and the repository's `info/attributes`; for `--changed` on the command line the

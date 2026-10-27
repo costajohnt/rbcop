@@ -104,7 +104,8 @@ fn tool_call(id: u32, tool: &str, args: &str) -> String {
 }
 
 /// Deliberate difference: the tools never read or write under version control metadata (`.git`,
-/// `.hg`, `.svn`, `.jj`, in any case), where a written `.git/config` could make git run a command.
+/// `.hg`, `.svn`, `.jj`, in any case), where a written `.git/config` could make git run a command,
+/// nor a file named `.gitattributes`.
 #[test]
 fn mcp_tools_refuse_version_control_metadata() {
     let dir = std::env::temp_dir().join(format!("rbcop-mcp-vcs-{}", std::process::id()));
@@ -125,6 +126,11 @@ fn mcp_tools_refuse_version_control_metadata() {
         tool_call(5, "inspection", r#"{"path":".git"}"#),
         tool_call(6, "inspection", r#"{"path":".svn/a.rb","source_code":"x\n"}"#),
         tool_call(7, "explain", r#"{"cop_names":["Style/StringLiterals"],"path":".jj/a.rb"}"#),
+        tool_call(
+            8,
+            "autocorrection",
+            r#"{"path":"lib/.GitAttributes","source_code":"*.rb filter=x\n","safety":true}"#,
+        ),
     ];
     let lines = mcp(&dir, &[], &requests);
     assert_eq!(lines.len(), requests.len(), "{lines:?}");
@@ -312,6 +318,44 @@ fn mcp_changed_ignores_planted_repositories() {
     }
     assert_eq!(before.replace("\"id\":1", ""), after.replace("\"id\":2", ""));
     assert!(!s.marker.exists(), "rbcop ran a planted repository's core.fsmonitor");
+}
+
+/// The MCP pinning fails closed: when `git hash-object` gives no empty tree id, or git is older
+/// than 2.40 (no GIT_ATTR_SOURCE), `changed` is an error instead of git running without it. A
+/// fake `git` first on PATH plays each part and passes everything else to the real one.
+#[test]
+fn mcp_changed_fails_closed_without_the_attribute_source() {
+    use std::os::unix::fs::PermissionsExt;
+    let s = GitScratch::new("failclosed");
+    s.repo_with_change();
+    let real = std::process::Command::new("sh").args(["-c", "command -v git"]).output().unwrap();
+    let real = String::from_utf8(real.stdout).unwrap().trim().to_string();
+    let bin = s.base.join("bin");
+    std::fs::create_dir_all(&bin).unwrap();
+    let path = format!("{}:{}", bin.display(), std::env::var("PATH").unwrap_or_default());
+    for (case, body) in [
+        ("hash-object", "for a; do [ \"$a\" = hash-object ] && exit 1; done"),
+        ("old git", "for a; do [ \"$a\" = version ] && { echo 'git version 2.39.5'; exit 0; }; done"),
+    ] {
+        let fake = bin.join("git");
+        std::fs::write(&fake, format!("#!/bin/sh\n{body}\nexec '{real}' \"$@\"\n")).unwrap();
+        std::fs::set_permissions(&fake, std::fs::Permissions::from_mode(0o755)).unwrap();
+        let mut child = common::command(env!("CARGO_BIN_EXE_rbcop"))
+            .arg("--mcp")
+            .current_dir(&s.dir)
+            .env("PWD", &s.dir)
+            .env("PATH", &path)
+            .env("GIT_CONFIG_GLOBAL", &s.gitconfig)
+            .stdin(Stdio::piped())
+            .stdout(Stdio::piped())
+            .stderr(Stdio::null())
+            .spawn()
+            .unwrap();
+        child.stdin.take().unwrap().write_all(tool_call(1, "inspection", r#"{"changed":true}"#).as_bytes()).unwrap();
+        let out = String::from_utf8(child.wait_with_output().unwrap().stdout).unwrap();
+        let want = if case == "old git" { "needs git 2.40 or newer" } else { "gave no empty tree id" };
+        assert!(out.contains("\"isError\":true") && out.contains(want), "{case}: {out}");
+    }
 }
 
 #[test]

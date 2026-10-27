@@ -31,7 +31,8 @@ const TOOLS: [&str; 3] = [
 ];
 const TOOL_NAMES: [&str; 3] = ["rubocop_inspection", "rubocop_autocorrection", "rubocop_explain"];
 
-/// Version control metadata directories the tools never read or write under (in any case).
+/// Version control metadata directories the tools never read or write under (in any case), as
+/// they never touch the pinned repository's git dirs or a `.gitattributes`.
 const VCS_DIRS: [&str; 4] = [".git", ".hg", ".svn", ".jj"];
 
 /// A JSON-RPC error: code, message, data.
@@ -576,6 +577,7 @@ impl Server {
         // (core.fsmonitor and the like), so nothing under a VCS directory is read or written.
         let metadata = real.as_ref().filter(|r| {
             self.metadata.iter().any(|dir| r.starts_with(dir))
+                || r.file_name().is_some_and(|n| n.to_string_lossy().eq_ignore_ascii_case(".gitattributes"))
                 || self.roots.iter().filter_map(|root| r.strip_prefix(root).ok()).any(|below| {
                     below
                         .components()

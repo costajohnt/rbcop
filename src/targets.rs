@@ -237,10 +237,23 @@ fn discover() -> Result<Pinned, String> {
             "--changed could not ask git which files changed: git failed with no output on standard error.".into()
         );
     };
+    // Fail closed: without GIT_ATTR_SOURCE (git 2.40) a `.gitattributes` could name a filter.
+    let version = git(&["version"])?;
+    let version = String::from_utf8_lossy(&version);
+    let numbers: Vec<u32> =
+        version.split_whitespace().nth(2).unwrap_or("").split('.').take(2).map(|n| n.parse().unwrap_or(0)).collect();
+    if numbers.as_slice() < [2, 40].as_slice() {
+        return Err(format!("`changed` needs git 2.40 or newer under rbcop --mcp ({}).", version.trim()));
+    }
     let mut pinned = Pinned { git_dir, common_dir, toplevel, empty_tree: String::new() };
     let mut cmd = git_command(&["hash-object", "-t", "tree", "--stdin"]);
     pin(&mut cmd, &pinned);
-    pinned.empty_tree = cmd.output().map(|o| String::from_utf8_lossy(&o.stdout).trim().to_string()).unwrap_or_default();
+    let out = cmd.output().ok().filter(|o| o.status.success());
+    let tree = out.map(|o| String::from_utf8_lossy(&o.stdout).trim().to_string()).unwrap_or_default();
+    if !matches!(tree.len(), 40 | 64) || !tree.bytes().all(|b| b.is_ascii_hexdigit()) {
+        return Err("`changed` could not pin the repository: git hash-object gave no empty tree id.".into());
+    }
+    pinned.empty_tree = tree;
     Ok(pinned)
 }
 
@@ -251,6 +264,7 @@ fn pin(cmd: &mut std::process::Command, p: &Pinned) {
     if let Some(parent) = p.toplevel.parent() {
         cmd.env("GIT_CEILING_DIRECTORIES", parent);
     }
+    // While pinning, the empty tree's id is not known yet (only hash-object runs then).
     if !p.empty_tree.is_empty() {
         cmd.env("GIT_ATTR_SOURCE", &p.empty_tree);
     }
