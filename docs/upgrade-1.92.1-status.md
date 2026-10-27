@@ -383,6 +383,20 @@ or `base.rb` rather than the cops; check here first.
 (C7), Style/Lambda (C9), Layout multiline brace layouts (C4, C5), Style/RedundantParentheses and
 friends (C10), Lint/UselessAssignment (C2).
 
+Status: every file above was ported with its users by the cop batches (alignment_corrector.rs
+`source_string_ranges`, Style/For `loop_variable`/`padding_needed?`/`closing_keyword`, Style/Lambda
+`argument_source`/`remove_trailing_whitespace`, multiline_literal_brace_layout.rs
+`nested_closing_bracket_moved_before_comment?`, parentheses_corrector.rs heredoc handling,
+empty_lines_around_body.rs `insert_before(range.begin)`, Lint/UselessAssignment `used?` and
+variable_force.rs `exception_may_reach?`). All-cops -A (`check-autocorrect-all.sh`): the
+integration branch before L3 gave specs `report diff 255, files differing 0`, all of it from
+Team#each_corrector checking `autocorrect_incompatible_with` in both directions (team.rb 1.92,
+ported in L3). With L3 merged, specs, rails, discourse and mastodon all report 0 and 0. RuboCop
+reports 304 infinite loops on rails in that run (Layout/MultilineMethodCallIndentation,
+Layout/RedundantLineBreak, Layout/SingleLineBlockChain, ...); rbcop reports the same 304 lines.
+The RuboCop side of rails takes about 110 minutes on CT 440 under load, so it needs a timeout
+above 3000 s (7200 was enough).
+
 ### Batch L7: mixins
 
 `cop/mixin/check_line_breakable.rb` (42), `check_single_line_suitability.rb` (10),

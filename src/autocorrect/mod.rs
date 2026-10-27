@@ -646,9 +646,10 @@ fn infinite_loop(path: &Path, iterations: &[Vec<Offense>]) -> String {
         .iter()
         .map(|offenses| {
             // InfiniteCorrectionLoop maps the team's offenses to cop names: the team reports per
-            // cop, and Registry#sort! orders its cops by name.
+            // cop, in registry (registration) order; Registry#sort! only runs for --show-cops, so
+            // cop/style.rb lists Style/MissingElse after Style/RedundantAssignment.
             let mut names: Vec<&str> = offenses.iter().map(|o| o.cop).collect();
-            names.sort_unstable();
+            names.sort_by_key(|n| (registry_index(n), *n));
             names.dedup();
             names.join(", ")
         })
@@ -695,11 +696,12 @@ mod tests {
         c
     }
 
-    /// InfiniteCorrectionLoop lists each iteration's cops in team order, which Registry#sort!
-    /// makes cop-name order. (The specs corpus input that showed it,
-    /// style/redundant_line_continuation/089.rb, no longer loops under RuboCop 1.92.1.)
+    /// InfiniteCorrectionLoop lists each iteration's cops in team order, which is registry
+    /// (registration) order: RuboCop 1.92.1 on discourse script/bulk_import/phpbb_postgresql.rb
+    /// (all cops, -A) prints `... -> Layout/LineLength, Layout/RedundantLineBreak,
+    /// Style/RedundantAssignment, Style/MissingElse`.
     #[test]
-    fn infinite_loop_names_cops_in_name_order() {
+    fn infinite_loop_names_cops_in_registry_order() {
         let offense = |cop: &'static str| Offense {
             start: 0,
             end: 0,
@@ -718,11 +720,12 @@ mod tests {
         let iterations = vec![
             vec![offense("Layout/DefEndAlignment")],
             vec![offense("Style/Semicolon"), offense("Layout/TrailingWhitespace"), offense("Style/Semicolon")],
+            vec![offense("Style/MissingElse"), offense("Style/RedundantAssignment"), offense("Layout/LineLength")],
         ];
         assert_eq!(
             infinite_loop(Path::new("/p/t.rb"), &iterations),
             "Infinite loop detected in /p/t.rb and caused by Layout/DefEndAlignment -> Layout/TrailingWhitespace, \
-             Style/Semicolon"
+             Style/Semicolon -> Layout/LineLength, Style/RedundantAssignment, Style/MissingElse"
         );
     }
 
