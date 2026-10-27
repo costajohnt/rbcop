@@ -3,7 +3,8 @@
 # (<name>.txt is stdout, <name>.status the exit status); tests/formatters.rs replays them with rbcop.
 # A case line is `name|directory (from the repo root)|arguments[|stdin file (from the repo root)]`.
 # RuboCop runs with --cache false --force-default-config --only <tests/formatters/cops.txt>, so the
-# goldens do not move when rbcop gains cops. Machine-specific text is normalised (see normalise()).
+# goldens do not move when rbcop gains cops; cfg-* cases read their directory's config (no
+# --force-default-config). Machine-specific text is normalised (see normalise()).
 # usage: scripts/formatters.sh [name...]   (RuboCop from $RUBOCOP, see scripts/rubocop.sh)
 set -eu
 . "$(dirname "$0")/rubocop.sh"
@@ -31,8 +32,10 @@ while IFS='|' read -r name cwd args input; do
     rm -rf "$run_dir" && mkdir -p "$run_dir" && cp -R "$root/$cwd/." "$run_dir"
     run_dir=$(cd "$run_dir" && pwd -P) ;;
   esac
+  force=--force-default-config
+  case "$name" in cfg-*) force= ;; esac
   set +e
-  (cd "$run_dir" && eval "RUBY_PROGRESS_BAR_LENGTH=80 rubocop --cache false --force-default-config --only $cops $args" \
+  (cd "$run_dir" && eval "RUBY_PROGRESS_BAR_LENGTH=80 rubocop --cache false $force --only $cops $args" \
     < "$stdin" 2>/dev/null) > "$dir/expected/$name.raw"
   echo $? > "$dir/expected/$name.status"
   set -e

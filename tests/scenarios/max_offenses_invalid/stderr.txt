@@ -1,0 +1,2 @@
+invalid argument: --max --max-offenses-per-cop must be a positive integer
+For usage information, use --help

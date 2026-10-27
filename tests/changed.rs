@@ -99,6 +99,7 @@ fn changed_matches_rubocop() {
     git(&repo, &["commit", "-qm", "one"]);
     write(&repo, &[("old.rb", "old = 2\n")]);
     git(&repo, &["commit", "-qam", "two"]);
+    git(&repo, &["tag", "a.rb"]);
     // Modified, deleted, untracked and ignored files.
     write(
         &repo,
@@ -138,12 +139,17 @@ fn changed_matches_rubocop() {
             ("repo", &["--changed", "-L", "--force-exclusion", "skip.rb", "b.rb"], "b.rb\n", "", 0),
             ("repo", &["--changed", "--format", "emacs"], lint, "", 1),
             ("repo", &["--changed=nope", "-L"], "", NO_REVISION, 2),
+            // Options#return_path_given_to_changed (RuboCop 1.92.1): a path given to --changed is
+            // inspected, unless it is also a revision (the tag `a.rb`).
+            ("repo", &["--changed", "sub", "-L"], "sub/f.rb\n", "", 0),
+            ("repo", &["--changed=sub", "-L"], "sub/f.rb\n", "", 0),
+            ("repo", &["--changed", "sub", "b.rb", "-L"], "sub/f.rb\nb.rb\n", "", 0),
             (
                 "repo",
-                &["--changed", "sub", "-L"],
+                &["--changed", "a.rb", "-L"],
                 "",
-                "--changed takes a git revision, but `sub` is a path. Write the revision as `--changed=sub` if \
-                 that is really what you meant, or drop it to compare against HEAD.\n",
+                "--changed got `a.rb`, which is both a path and a git revision. Write `./a.rb` for the path, or \
+                 `--changed=a.rb^0` for the revision.\n",
                 2,
             ),
             ("repo", &["--changed=", "-L"], "", &empty_revision, 2),
