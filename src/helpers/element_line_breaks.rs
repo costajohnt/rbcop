@@ -93,9 +93,21 @@ pub fn check_line_breaks(cx: &mut Cx, children: &[(usize, usize)], ignore_last: 
         return;
     }
     let mut last_seen = 0;
-    for &child in children {
+    let mut heredocs: Option<Vec<usize>> = None;
+    for (i, &child) in children.iter().enumerate() {
         let (f, l) = lines(cx, child);
         if last_seen >= f {
+            // heredoc_opened_before?(children.first(index), child): a heredoc opened on the
+            // child's line by an earlier element (its opening lies in that element's range).
+            let src = cx.src;
+            let starts = heredocs
+                .get_or_insert_with(|| src.root.as_ref().map(crate::helpers::heredoc::heredoc_starts).unwrap_or_default());
+            if starts
+                .iter()
+                .any(|&h| src.line_of(h) == f && children[..i].iter().any(|&(s, e)| s <= h && h < e))
+            {
+                continue;
+            }
             report(cx, child, msg);
         } else {
             last_seen = l;

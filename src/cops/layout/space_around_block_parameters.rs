@@ -6,12 +6,13 @@ pub static COP: SpaceAroundBlockParameters = SpaceAroundBlockParameters;
 pub struct SpaceAroundBlockParameters;
 
 /// `check_space`: report when the two positions touch (no space between them). With `node` the
-/// fix inserts a space before the range (`insert_before(node)`), otherwise after it.
+/// fix inserts a space before the range (`insert_before(node)`), otherwise at `a` (past a
+/// trailing comma).
 fn check_space(cx: &mut Cx, a: usize, b: usize, range: (usize, usize), msg: &str, node: bool) {
     if a == b {
         let (s, e) = range;
         cx.add_fix(s, e, format!("Space {msg} missing."), |c| {
-            if node { c.insert_before(s, e, " ") } else { c.insert_after(s, e, " ") }
+            if node { c.insert_before(s, e, " ") } else { c.insert_after(a, a, " ") }
         });
     }
 }
@@ -58,15 +59,9 @@ impl Cop for SpaceAroundBlockParameters {
         let (Some(first), Some(last)) = (args.first(), args.last()) else { return };
         let style = cx.cfg.str("EnforcedStyleInsidePipes").unwrap_or("no_space").to_string();
 
-        let conflicting = open.as_slice() == b"("
-            && match cx.config.for_cop("Layout/SpaceInsideParens") {
-                p if !p.truthy("Enabled") => false,
-                p => match p.str("EnforcedStyle") {
-                    Some("no_space") => style == "space",
-                    Some("space" | "compact") => style == "no_space",
-                    _ => false,
-                },
-            };
+        // checked_by_space_inside_parens?: `config.cop_enabled?` is `!!for_cop(name)['Enabled']`.
+        let conflicting =
+            open.as_slice() == b"(" && cx.config.for_cop("Layout/SpaceInsideParens").truthy("Enabled");
 
         let (first_s, first_e) = (first.location().start_offset(), first.location().end_offset());
         let last_s = last.location().start_offset();
