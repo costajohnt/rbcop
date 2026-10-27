@@ -81,7 +81,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: costajohnt/rbcop@v0.1.2
+      - uses: costajohnt/rbcop@v0.1.3
 ```
 
 By default it runs `rbcop --format github --format progress`: offenses become annotations on the pull request, and the log keeps the usual progress output. Inputs:
@@ -100,7 +100,7 @@ With plugins, install the bundle first so the fallback finds RuboCop:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - uses: costajohnt/rbcop@v0.1.2
+      - uses: costajohnt/rbcop@v0.1.3
 ```
 
 If the project already runs `bundle exec rubocop` in a Ruby job, swapping that step for `bundle exec rbcop` (with the gem in the Gemfile) works as well.
