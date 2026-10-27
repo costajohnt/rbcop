@@ -104,7 +104,7 @@ impl Runtime {
             }
         }));
         let literals = runner::take_literal_ranges();
-        for w in runner::take_file_warnings().into_iter().chain(runner::take_file_errors()) {
+        for w in runner::take_file_warnings().into_iter().chain(runner::take_file_errors().into_iter().map(|e| e.0)) {
             eprintln!("{w}");
         }
         let errored = runner::take_errored();

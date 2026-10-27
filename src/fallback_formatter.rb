@@ -1,6 +1,7 @@
 # Loaded by `rubocop --require` when rbcop runs RuboCop for the cops it does not implement
 # (src/fallback.rs). One line per offense, then `rbcop-fallback-done`. Offenses are tab-separated:
 #   path  begin_byte  end_byte  severity  correctable  corrected  global  cop  message  disabled  justification
+#   corrections
 # (justification empty when there is none; disabled offenses come only under --display-suppressed)
 # with `\`, tab and newline escaped in path and message. rbcop annotates messages itself (cop
 # name, details, style guide URL), so RuboCop's annotation is turned off here.
@@ -58,7 +59,8 @@ class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
         global = 1
       end
       output.puts [esc(file), b, e, o.severity.name, o.correctable? ? 1 : 0, o.corrected? ? 1 : 0, global,
-                   o.cop_name, esc(o.message), o.disabled? ? 1 : 0, esc(o.justification.to_s)].join("\t")
+                   o.cop_name, esc(o.message), o.disabled? ? 1 : 0, esc(o.justification.to_s),
+                   corrections(o)].join("\t")
     end
     # A cop that forks (rubocop-require_tools) would flush a copy of anything still buffered.
     output.flush
@@ -70,6 +72,16 @@ class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
   end
 
   private
+
+  # Offense#corrections as `begin_byte,end_byte,hex(replacement)` joined by `;` (empty when none).
+  def corrections(offense)
+    return '' unless offense.respond_to?(:corrections) && offense.location.is_a?(Parser::Source::Range)
+
+    source = offense.location.source_buffer.source
+    offense.corrections.map do |c|
+      [source[0, c.begin_pos].bytesize, source[0, c.end_pos].bytesize, c.replacement.unpack1('H*')].join(',')
+    end.join(';')
+  end
 
   ESCAPES = { '\\' => '\\\\', "\t" => '\\t', "\n" => '\\n' }.freeze
 

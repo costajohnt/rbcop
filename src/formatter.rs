@@ -11,7 +11,7 @@ pub mod yaml;
 
 pub use todo::DEFAULT_MAXIMUM_EXCLUSION_ITEMS;
 
-pub use report::{json, ruby_platform};
+pub use report::{hash_for_offense, hash_for_problems, json, problem_counts, ruby_platform};
 
 use crate::config::{Resolved, relative_path};
 use crate::cop::{Offense, Severity};
@@ -70,6 +70,21 @@ pub struct Off {
     pub justification: Option<String>,
     /// `Offense::edits` (`--lsp`).
     pub edits: Option<Vec<(usize, usize, String)>>,
+    /// Offense#corrections, located: `edits` in lines and characters.
+    pub corrections: Vec<Edit>,
+}
+
+/// Offense::Correction with JSONFormatter#hash_for_edit_range's location: 1-based lines,
+/// 1-based start column, end column as `real_last_column`; positions in characters.
+#[derive(Clone, Debug)]
+pub struct Edit {
+    pub start_line: usize,
+    pub start_column: usize,
+    pub last_line: usize,
+    pub last_column: usize,
+    pub begin_pos: usize,
+    pub end_pos: usize,
+    pub replacement: String,
 }
 
 impl Off {
@@ -227,8 +242,27 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                     global: true,
                     justification: o.justification.clone(),
                     edits: None,
+                    corrections: Vec::new(),
                 };
             }
+            let corrections = o
+                .edits
+                .iter()
+                .flatten()
+                .map(|(b, e, replacement)| {
+                    let (start_line, column, _, b) = p.pos(*b);
+                    let (last_line, last_column, _, e) = p.pos(*e);
+                    Edit {
+                        start_line,
+                        start_column: column + 1,
+                        last_line,
+                        last_column: if last_column == 0 { 1 } else { last_column },
+                        begin_pos: p.count(0, b),
+                        end_pos: p.count(0, e),
+                        replacement: replacement.clone(),
+                    }
+                })
+                .collect();
             Off {
                 severity: o.severity,
                 cop: o.cop,
@@ -243,6 +277,7 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                 global: false,
                 justification: o.justification.clone(),
                 edits: o.edits.clone(),
+                corrections,
             }
         })
         .collect();
@@ -385,8 +420,6 @@ pub struct Ctx {
     pub pwd_config: Arc<Resolved>,
     /// The default configuration (ConfigLoader.default_configuration).
     pub default_config: Arc<Resolved>,
-    /// Whether io/console is loaded in RuboCop (it is once ruby-progressbar is: fuubar/offenses).
-    pub io_console: bool,
     pub stdout_tty: bool,
 }
 
@@ -434,6 +467,10 @@ pub struct FileOut<'a> {
     pub path: &'a Path,
     pub offenses: Vec<Off>,
     pub config: &'a Resolved,
+    /// Formatter#file_problems: the cop errors (and an infinite correction loop) and the cop
+    /// warnings the file raised, as printed.
+    pub errors: &'a [String],
+    pub warnings: &'a [String],
 }
 
 pub trait Formatter {
