@@ -1,0 +1,678 @@
+Style/StringLiterals
+
+  Checks if uses of quotes match the configured preference.
+
+Properties
+
+  Enabled:     true
+  Safe:        true
+  Autocorrect: safe, applied by -a
+  Added:       0.9
+  Changed:     0.36
+  Excludes:    vendor/**/*, /generated/
+
+Example: EnforcedStyle: single_quotes (default)
+
+    # bad
+    "No special symbols"
+    "No string interpolation"
+    "Just text"
+
+    # good
+    'No special symbols'
+    'No string interpolation'
+    'Just text'
+    "Wait! What's #{this}!"
+
+Example: EnforcedStyle: double_quotes
+
+    # bad
+    'Just some text'
+    'No special chars or interpolation'
+
+    # good
+    "Just some text"
+    "No special chars or interpolation"
+    "Every string in #{project} uses double_quotes"
+
+Configuration
+
+  ConsistentQuotesInMultiline: false
+  EnforcedStyle: double_quotes
+  SupportedStyles: single_quotes, double_quotes
+
+References
+
+  https://rubystyle.guide#consistent-string-literals
+  https://docs.rubocop.org/rubocop/cops_style.html#stylestringliterals
+
+Layout/LineLength
+
+  Checks that line length does not exceed the configured limit.
+
+Properties
+
+  Enabled:     true
+  Safe:        true
+  Autocorrect: safe, applied by -a, but through LSP or MCP only on request
+  Added:       0.25
+  Changed:     1.82
+
+Details
+
+  Checks the length of lines in the source code.
+  The maximum length is configurable.
+  The tab size is configured in the `IndentationWidth`
+  of the `Layout/IndentationStyle` cop.
+  It also ignores a shebang line by default.
+
+  This cop has some autocorrection capabilities.
+  It can programmatically shorten certain long lines by
+  inserting line breaks into expressions that can be safely
+  split across lines. These include arrays, hashes, and
+  method calls with argument lists.
+
+  If autocorrection is enabled, the following cops
+  are recommended to further format the broken lines.
+  (Many of these are enabled by default.)
+
+  * `Layout/ArgumentAlignment`
+  * `Layout/ArrayAlignment`
+  * `Layout/BlockAlignment`
+  * `Layout/BlockEndNewline`
+  * `Layout/ClosingParenthesisIndentation`
+  * `Layout/FirstArgumentIndentation`
+  * `Layout/FirstArrayElementIndentation`
+  * `Layout/FirstHashElementIndentation`
+  * `Layout/FirstParameterIndentation`
+  * `Layout/HashAlignment`
+  * `Layout/IndentationWidth`
+  * `Layout/MultilineArrayLineBreaks`
+  * `Layout/MultilineBlockLayout`
+  * `Layout/MultilineHashBraceLayout`
+  * `Layout/MultilineHashKeyLineBreaks`
+  * `Layout/MultilineMethodArgumentLineBreaks`
+  * `Layout/MultilineMethodParameterLineBreaks`
+  * `Layout/ParameterAlignment`
+  * `Style/BlockDelimiters`
+
+  Together, these cops will pretty print hashes, arrays,
+  method calls, etc. For example, let's say the max columns
+  is 25:
+
+Example
+
+    # bad
+    {foo: "0000000000", bar: "0000000000", baz: "0000000000"}
+
+    # good
+    {foo: "0000000000",
+    bar: "0000000000", baz: "0000000000"}
+
+    # good (with recommended cops enabled)
+    {
+      foo: "0000000000",
+      bar: "0000000000",
+      baz: "0000000000",
+    }
+
+Configuration
+
+  AllowCopDirectives: true
+  AllowHeredoc: true
+  AllowQualifiedName: true
+  AllowRBSInlineAnnotation: false
+  AllowURI: true
+  AllowedPatterns: ^#, \A\s*
+  Max: 100
+  SplitStrings: false
+  URISchemes: http, https
+
+References
+
+  https://rubystyle.guide#max-line-length
+  https://docs.rubocop.org/rubocop/cops_layout.html#layoutlinelength
+
+Style/FrozenStringLiteralComment
+
+  Add the frozen_string_literal comment to the top of files to help transition to frozen string literals by default.
+
+Properties
+
+  Enabled:     false
+  Safe:        true
+  Autocorrect: safe, applied by -a
+  Added:       0.36
+  Changed:     0.79
+  Excludes:    **/*.arb
+
+Details
+
+  Helps you transition from mutable string literals
+  to frozen string literals.
+  It will add the `# frozen_string_literal: true` magic comment to the top
+  of files to enable frozen string literals. Frozen string literals may be
+  default in future Ruby. The comment will be added below a shebang and
+  encoding comment. The frozen string literal comment is only valid in Ruby 2.3+.
+
+  Note that the cop will accept files where the comment exists but is set
+  to `false` instead of `true`.
+
+  To require a blank line after this comment, please see
+  `Layout/EmptyLineAfterMagicComment` cop.
+
+Safety
+
+   This cop's autocorrection is unsafe since any strings mutations will
+   change from being accepted to raising `FrozenError`, as all strings
+   will become frozen by default, and will need to be manually refactored.
+
+Example: EnforcedStyle: always (default)
+
+    # The `always` style will always add the frozen string literal comment
+    # to a file, regardless of the Ruby version or if `freeze` or `<<` are
+    # called on a string literal.
+    # bad
+    module Bar
+      # ...
+    end
+
+    # good
+    # frozen_string_literal: true
+
+    module Bar
+      # ...
+    end
+
+    # good
+    # frozen_string_literal: false
+
+    module Bar
+      # ...
+    end
+
+Example: EnforcedStyle: never
+
+    # The `never` will enforce that the frozen string literal comment does
+    # not exist in a file.
+    # bad
+    # frozen_string_literal: true
+
+    module Baz
+      # ...
+    end
+
+    # good
+    module Baz
+      # ...
+    end
+
+Example: EnforcedStyle: always_true
+
+    # The `always_true` style enforces that the frozen string literal
+    # comment is set to `true`. This is a stricter option than `always`
+    # and forces projects to use frozen string literals.
+    # bad
+    # frozen_string_literal: false
+
+    module Baz
+      # ...
+    end
+
+    # bad
+    module Baz
+      # ...
+    end
+
+    # good
+    # frozen_string_literal: true
+
+    module Bar
+      # ...
+    end
+
+Configuration
+
+  EnforcedStyle: always
+  SupportedStyles: always, always_true, never
+
+References
+
+  https://docs.rubocop.org/rubocop/cops_style.html#stylefrozenstringliteralcomment
+
+Naming/MethodName
+
+  Use the configured style when naming methods.
+
+Properties
+
+  Enabled:     true
+  Safe:        true
+  Autocorrect: not supported
+  Added:       0.50
+  Changed:     1.75
+
+Details
+
+  Makes sure that all methods use the configured style,
+  snake_case or camelCase, for their names.
+
+  Method names matching patterns are always allowed.
+
+  The cop can be configured with `AllowedPatterns` to allow certain regexp patterns:
+
+  [source,yaml]
+  ----
+  Naming/MethodName:
+    AllowedPatterns:
+      - '\AonSelectionBulkChange\z'
+      - '\AonSelectionCleared\z'
+  ----
+
+  As well, you can also forbid specific method names or regexp patterns
+  using `ForbiddenIdentifiers` or `ForbiddenPatterns`:
+
+  [source,yaml]
+  ----
+  Naming/MethodName:
+    ForbiddenIdentifiers:
+      - 'def'
+      - 'super'
+    ForbiddenPatterns:
+      - '_v1\z'
+      - '_gen1\z'
+  ----
+
+Example: EnforcedStyle: snake_case (default)
+
+    # bad
+    def fooBar; end
+
+    # good
+    def foo_bar; end
+
+    # bad
+    define_method :fooBar do
+    end
+
+    # good
+    define_method :foo_bar do
+    end
+
+    # bad
+    Struct.new(:fooBar)
+
+    # good
+    Struct.new(:foo_bar)
+
+    # bad
+    alias_method :fooBar, :some_method
+
+    # good
+    alias_method :foo_bar, :some_method
+
+Example: EnforcedStyle: camelCase
+
+    # bad
+    def foo_bar; end
+
+    # good
+    def fooBar; end
+
+    # bad
+    define_method :foo_bar do
+    end
+
+    # good
+    define_method :fooBar do
+    end
+
+    # bad
+    Struct.new(:foo_bar)
+
+    # good
+    Struct.new(:fooBar)
+
+    # bad
+    alias_method :foo_bar, :some_method
+
+    # good
+    alias_method :fooBar, :some_method
+
+Example: ForbiddenIdentifiers: ['def', 'super']
+
+    # bad
+    def def; end
+    def super; end
+
+Example: ForbiddenPatterns: ['_v1\z', '_gen1\z']
+
+    # bad
+    def release_v1; end
+    def api_gen1; end
+
+Configuration
+
+  AllowedPatterns: 
+  Custom: {"a" => 1, "b" => ["x"]}
+  EnforcedStyle: snake_case
+  Floaty: 1.5
+  ForbiddenIdentifiers: a, b, c
+  ForbiddenPatterns: 
+  Nada: 
+  SupportedStyles: snake_case, camelCase
+  Sym: foo
+
+References
+
+  https://rubystyle.guide#snake-case-symbols-methods-vars
+  https://docs.rubocop.org/rubocop/cops_naming.html#namingmethodname
+
+Style/Documentation
+
+  Checks for missing top-level documentation of classes and modules.
+
+Properties
+
+  Enabled:     true
+  Safe:        true
+  Autocorrect: not supported
+  Added:       0.9
+  Changed:     1.89
+  Applies to:  app/**/*.rb
+  Excludes:    spec/**/*, test/**/*
+
+Details
+
+  Checks for missing top-level documentation of classes and
+  modules. Classes with no body are exempt from the check and so are
+  namespace modules - modules that have nothing in their bodies except
+  classes, other modules, constant definitions or constant visibility
+  declarations.
+
+  The documentation requirement is annulled if the class or module has
+  a `#:nodoc:` comment next to it. Likewise, `#:nodoc: all` does the
+  same for all its children.
+
+  When `AllCops/UseProjectIndex` is enabled and the `rubydex` gem is
+  installed, a reopened class or module is not reported when any of its
+  other definition sites (in the same or another file) carries a
+  documentation comment.
+
+Example
+
+    # bad
+    class Person
+      # ...
+    end
+
+    module Math
+    end
+
+    # good
+    # Description/Explanation of Person class
+    class Person
+      # ...
+    end
+
+    # allowed
+    # Class without body
+    class Person
+    end
+
+    # Namespace - A namespace can be a class or a module
+    # Containing a class
+    module Namespace
+      # Description/Explanation of Person class
+      class Person
+        # ...
+      end
+    end
+
+    # Containing constant visibility declaration
+    module Namespace
+      class Private
+      end
+
+      private_constant :Private
+    end
+
+    # Containing constant definition
+    module Namespace
+      Public = Class.new
+    end
+
+    # Macro calls
+    module Namespace
+      extend Foo
+    end
+
+Example: AllowedConstants: ['ClassMethods']
+
+    # good
+    module A
+      module ClassMethods
+        # ...
+      end
+    end
+
+Configuration
+
+  AllowedConstants: 
+
+References
+
+  https://docs.rubocop.org/rubocop/cops_style.html#styledocumentation
+
+Style/Semicolon
+
+  Don't use semicolons to terminate expressions.
+
+Properties
+
+  Enabled:     true
+  Safe:        true
+  Autocorrect: disabled
+  Added:       0.9
+  Changed:     0.19
+
+Details
+
+  Checks for multiple expressions placed on the same line.
+  It also checks for lines terminated with a semicolon.
+  In idiomatic Ruby, each expression should be on its own line
+  for readability.
+
+  This cop has `AllowAsExpressionSeparator` configuration option.
+  It allows `;` to separate several expressions on the same line.
+
+Example
+
+    # bad
+    foo = 1; bar = 2;
+    baz = 3;
+
+    # good
+    foo = 1
+    bar = 2
+    baz = 3
+
+Example: AllowAsExpressionSeparator: false (default)
+
+    # bad
+    foo = 1; bar = 2
+
+Example: AllowAsExpressionSeparator: true
+
+    # good
+    foo = 1; bar = 2
+
+Configuration
+
+  AllowAsExpressionSeparator: false
+
+References
+
+  https://rubystyle.guide#no-semicolon
+  https://docs.rubocop.org/rubocop/cops_style.html#stylesemicolon
+
+Style/HashSyntax
+
+  Prefer Ruby 1.9 hash syntax { a: 1, b: 2 } over 1.8 syntax { :a => 1, :b => 2 }.
+
+Properties
+
+  Enabled:     true
+  Safe:        false
+  Autocorrect: unsafe, applied by -A only
+  Added:       0.9
+  Changed:     1.67
+
+Details
+
+  Checks hash literal syntax.
+
+  It can enforce either the use of the class hash rocket syntax or
+  the use of the newer Ruby 1.9 syntax (when applicable).
+
+  A separate offense is registered for each problematic pair.
+
+  The supported styles are:
+
+  * ruby19 - forces use of the 1.9 syntax (e.g. `{a: 1}`) when hashes have
+  all symbols for keys
+  * hash_rockets - forces use of hash rockets for all hashes
+  * no_mixed_keys - simply checks for hashes with mixed syntaxes
+  * ruby19_no_mixed_keys - forces use of ruby 1.9 syntax and forbids mixed
+  syntax hashes
+
+  This cop has `EnforcedShorthandSyntax` option.
+  It can enforce either the use of the explicit hash value syntax or
+  the use of Ruby 3.1's hash value shorthand syntax.
+
+  The supported styles are:
+
+  * always - forces use of the 3.1 syntax (e.g. {foo:})
+  * never - forces use of explicit hash literal value
+  * either - accepts both shorthand and explicit use of hash literal value
+  * consistent - forces use of the 3.1 syntax only if all values can be omitted in the hash
+  * either_consistent - accepts both shorthand and explicit use of hash literal value,
+                        but they must be consistent
+
+Example: EnforcedStyle: ruby19 (default)
+
+    # bad
+    {:a => 2}
+    {b: 1, :c => 2}
+
+    # good
+    {a: 2, b: 1}
+    {:c => 2, 'd' => 2} # acceptable since 'd' isn't a symbol
+    {d: 1, 'e' => 2} # technically not forbidden
+
+Example: EnforcedStyle: hash_rockets
+
+    # bad
+    {a: 1, b: 2}
+    {c: 1, 'd' => 5}
+
+    # good
+    {:a => 1, :b => 2}
+
+Example: EnforcedStyle: no_mixed_keys
+
+    # bad
+    {:a => 1, b: 2}
+    {c: 1, 'd' => 2}
+
+    # good
+    {:a => 1, :b => 2}
+    {c: 1, d: 2}
+
+Example: EnforcedStyle: ruby19_no_mixed_keys
+
+    # bad
+    {:a => 1, :b => 2}
+    {c: 2, 'd' => 3} # should just use hash rockets
+
+    # good
+    {a: 1, b: 2}
+    {:c => 3, 'd' => 4}
+
+Example: EnforcedShorthandSyntax: always
+
+    # bad
+    {foo: foo, bar: bar}
+
+    # good
+    {foo:, bar:}
+
+    # good - allowed to mix syntaxes
+    {foo:, bar: baz}
+
+Example: EnforcedShorthandSyntax: never
+
+    # bad
+    {foo:, bar:}
+
+    # good
+    {foo: foo, bar: bar}
+
+Example: EnforcedShorthandSyntax: either (default)
+
+    # good
+    {foo: foo, bar: bar}
+
+    # good
+    {foo: foo, bar:}
+
+    # good
+    {foo:, bar:}
+
+Example: EnforcedShorthandSyntax: consistent
+
+    # bad - `foo` and `bar` values can be omitted
+    {foo: foo, bar: bar}
+
+    # bad - `bar` value can be omitted
+    {foo:, bar: bar}
+
+    # bad - mixed syntaxes
+    {foo:, bar: baz}
+
+    # good
+    {foo:, bar:}
+
+    # good - can't omit `baz`
+    {foo: foo, bar: baz}
+
+Example: EnforcedShorthandSyntax: either_consistent
+
+    # good - `foo` and `bar` values can be omitted, but they are consistent, so it's accepted
+    {foo: foo, bar: bar}
+
+    # bad - `bar` value can be omitted
+    {foo:, bar: bar}
+
+    # bad - mixed syntaxes
+    {foo:, bar: baz}
+
+    # good
+    {foo:, bar:}
+
+    # good - can't omit `baz`
+    {foo: foo, bar: baz}
+
+Configuration
+
+  EnforcedShorthandSyntax: either
+  EnforcedStyle: ruby19
+  PreferHashRocketsForNonAlnumEndingSymbols: false
+  SupportedShorthandSyntax: always, never, either, consistent, either_consistent
+  SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
+  UseHashRocketsWithSymbolValues: false
+
+References
+
+  https://rubystyle.guide#hash-literals
+  https://docs.rubocop.org/rubocop/cops_style.html#stylehashsyntax
