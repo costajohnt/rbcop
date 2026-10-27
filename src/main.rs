@@ -234,8 +234,7 @@ struct Cli {
 
 /// ChangedFiles.revision?: whether `name` resolves to a commit in the current repository.
 fn is_revision(name: &str) -> bool {
-    std::process::Command::new("git")
-        .args(["rev-parse", "--verify", "--quiet", &format!("{name}^{{commit}}")])
+    rbcop::targets::git_command(&["rev-parse", "--verify", "--quiet", &format!("{name}^{{commit}}")])
         .stdout(std::process::Stdio::null())
         .stderr(std::process::Stdio::null())
         .status()
@@ -1633,9 +1632,20 @@ fn qualify_option_name(name: &str, origin: &str, warnings: &mut Vec<String>) -> 
 /// Runner#qualify_option_cop_names, then OptionsValidator.validate_cop_list. RuboCop does this when
 /// it mobilizes the first team, so the warnings and the error surface at the first inspected file.
 fn qualify_cop_options(cli: &mut Cli) -> (Vec<String>, Option<String>) {
+    let result = qualify_cop_lists(cli.only.as_mut(), &mut cli.except);
+    cli.opts.only = cli.only.clone().unwrap_or_default();
+    result
+}
+
+/// `qualify_cop_options` for an `only` and `except` list (also the MCP tools' `only`/`except`).
+pub(crate) fn qualify_cop_lists(
+    only: Option<&mut Vec<String>>,
+    except: &mut Vec<String>,
+) -> (Vec<String>, Option<String>) {
     use rbcop::helpers::{cop_registry, did_you_mean};
     let mut warnings = Vec::new();
-    for (opt, list) in [("only", cli.only.as_mut()), ("except", Some(&mut cli.except))] {
+    let mut only = only;
+    for (opt, list) in [("only", only.as_deref_mut()), ("except", Some(&mut *except))] {
         let Some(list) = list else { continue };
         if opt == "except" && list.is_empty() {
             continue;
@@ -1647,8 +1657,7 @@ fn qualify_cop_options(cli: &mut Cli) -> (Vec<String>, Option<String>) {
             }
         }
     }
-    cli.opts.only = cli.only.clone().unwrap_or_default();
-    for list in [cli.only.as_deref().unwrap_or_default(), &cli.except] {
+    for list in [only.as_deref().map_or(&[][..], |o| &o[..]), &except[..]] {
         for n in list {
             let n = n.as_str();
             if cop_registry::is_known(n) || cop_registry::is_department(n) || n == "Syntax" || n == "Lint/Syntax" {

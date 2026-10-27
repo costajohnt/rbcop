@@ -1,4 +1,4 @@
-//! `--lsp`: RuboCop 1.91.0's language server (lib/rubocop/lsp/*), JSON-RPC over stdin/stdout.
+//! `--lsp`: RuboCop 1.92.1's language server (lib/rubocop/lsp/*), JSON-RPC over stdin/stdout.
 //! Requests are handled one at a time, in order (RuboCop's server is single-threaded); each
 //! response is written as RuboCop's `JSON.generate` writes it, `jsonrpc` last.
 
@@ -30,7 +30,8 @@ fn log_error(message: &str) {
 /// Server#start: read requests until stdin ends. Err is what ends the server early (a request it
 /// cannot read), which RuboCop's CLI reports with status 2.
 pub fn serve(store: Store, pwd_config: Arc<Resolved>) -> Result<u8, String> {
-    let mut server = Server { runtime: Runtime::new(store, pwd_config), safe_autocorrect: true, texts: HashMap::new() };
+    let mut server =
+        Server { runtime: Runtime::new(store, pwd_config, true), safe_autocorrect: true, texts: HashMap::new() };
     let mut input = std::io::stdin().lock();
     while let Some(request) = read_request(&mut input)? {
         if let Err(e) = server.handle(&request) {
@@ -211,11 +212,12 @@ impl Server {
                     log(&message);
                     return Ok(());
                 };
-                // The command is an intentional user action: autocorrect as outside LSP. (An error
-                // leaves LSP disabled, as RuboCop's LSP.disable block does.)
+                // The command is an intentional user action: autocorrect as outside LSP. RuboCop's
+                // LSP.disable block restores LSP mode even when the run raises.
                 rbcop::helpers::lsp::set_enabled(false);
-                let edits = self.format_file(&uri, Some(&command))?;
+                let edits = self.format_file(&uri, Some(&command));
                 rbcop::helpers::lsp::set_enabled(true);
+                let edits = edits?;
                 write(format!(
                     "{{\"id\":{id},\"method\":\"workspace/applyEdit\",\"params\":{{\"label\":{},\"edit\":{{\"changes\":{{{}:{edits}}}}}}}",
                     json(label),

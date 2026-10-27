@@ -19,8 +19,9 @@ fn copy_dir(from: &Path, to: &Path) {
     }
 }
 
-/// Deliberate difference: RuboCop's tools read and write any path the client names; rbcop's refuse
-/// one that resolves outside the working directory (absolute, `..`, or through a symlink).
+/// Deliberate difference: RuboCop's tools read and write any path the client names (and
+/// `rubocop_explain` reads the configuration of any); rbcop's refuse one that resolves outside the
+/// working directory (absolute, `..`, or through a symlink).
 #[test]
 fn mcp_tools_stay_inside_the_project() {
     use std::os::unix::fs::symlink;
@@ -52,10 +53,11 @@ fn mcp_tools_stay_inside_the_project() {
         call(8, "autocorrection", &format!("{{\"path\":\"{o}\",\"safety\":true}}")),
         call(9, "autocorrection", "{\"path\":\"lib\",\"safety\":true}"),
         call(10, "autocorrection", "{\"safety\":true}"),
+        call(11, "explain", "{\"cop_names\":[\"Style/StringLiterals\"],\"path\":\"../outside/o.rb\"}"),
     ];
     // Inside the project a new file is still written.
     let input = refused.concat()
-        + &call(11, "autocorrection", "{\"path\":\"lib/new.rb\",\"source_code\":\"puts( 2)\\n\",\"safety\":true}");
+        + &call(12, "autocorrection", "{\"path\":\"lib/new.rb\",\"source_code\":\"puts( 2)\\n\",\"safety\":true}");
     let mut child = common::command(env!("CARGO_BIN_EXE_rbcop"))
         .arg("--mcp")
         .current_dir(&project)
@@ -68,16 +70,377 @@ fn mcp_tools_stay_inside_the_project() {
     child.stdin.take().unwrap().write_all(input.as_bytes()).unwrap();
     let out = String::from_utf8(child.wait_with_output().unwrap().stdout).unwrap();
     let lines: Vec<&str> = out.lines().collect();
-    assert_eq!(lines.len(), 11, "{out}");
-    for line in &lines[..10] {
+    assert_eq!(lines.len(), 12, "{out}");
+    for line in &lines[..11] {
         assert!(line.contains("\"isError\":true") && line.contains("outside the project"), "{line}");
     }
-    assert!(lines[10].contains("\"isError\":false"), "{}", lines[10]);
+    assert!(lines[11].contains("\"isError\":false"), "{}", lines[11]);
     assert_eq!(std::fs::read_to_string(project.join("lib/new.rb")).unwrap(), "puts(2)\n");
     assert_eq!(std::fs::read_to_string(outside.join("o.rb")).unwrap(), "puts( 9)\n");
     assert!(!outside.join("new.rb").exists());
     assert!(std::fs::symlink_metadata(project.join("lib/evil.rb")).unwrap().file_type().is_symlink());
     std::fs::remove_dir_all(&base).unwrap();
+}
+
+/// The tools' `changed` (Scope#select_files, ChangedFiles) in a throwaway git repository: b.rb
+/// modified since the commit, c.rb untracked, a.rb unchanged. tests/mcp_changed.jsonl is what
+/// `rubocop --mcp` 1.92.1 answered to the same requests in the same repository (`$ROOT` for it).
+/// Runs `rbcop --mcp` in `dir` on `requests` (one JSON-RPC line each), its answers one per line.
+fn mcp(dir: &Path, envs: &[(&str, &Path)], requests: &[String]) -> Vec<String> {
+    let mut cmd = common::command(env!("CARGO_BIN_EXE_rbcop"));
+    cmd.arg("--mcp").current_dir(dir).env("PWD", dir);
+    for (k, v) in envs {
+        cmd.env(k, v);
+    }
+    let mut child = cmd.stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::null()).spawn().unwrap();
+    child.stdin.take().unwrap().write_all(requests.concat().as_bytes()).unwrap();
+    String::from_utf8(child.wait_with_output().unwrap().stdout).unwrap().lines().map(String::from).collect()
+}
+
+fn tool_call(id: u32, tool: &str, args: &str) -> String {
+    format!(
+        "{{\"jsonrpc\":\"2.0\",\"id\":{id},\"method\":\"tools/call\",\"params\":{{\"name\":\"rubocop_{tool}\",\"arguments\":{args}}}}}\n"
+    )
+}
+
+/// Deliberate difference: the tools never read or write under version control metadata (`.git`,
+/// `.hg`, `.svn`, `.jj`, in any case), where a written `.git/config` could make git run a command,
+/// nor a file named `.gitattributes`.
+#[test]
+fn mcp_tools_refuse_version_control_metadata() {
+    let dir = std::env::temp_dir().join(format!("rbcop-mcp-vcs-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    std::fs::create_dir_all(dir.join(".git")).unwrap();
+    let dir = dir.canonicalize().unwrap();
+    std::fs::write(dir.join(".git/config"), "[core]\n").unwrap();
+    std::fs::write(dir.join(".git/x.rb"), "puts( 1)\n").unwrap();
+    let requests = [
+        tool_call(
+            1,
+            "autocorrection",
+            r#"{"path":".git/config","source_code":"[core]\n\tfsmonitor = x\n","safety":true}"#,
+        ),
+        tool_call(2, "autocorrection", r#"{"path":".git/x.rb","safety":true}"#),
+        tool_call(3, "autocorrection", r#"{"path":"./.git/new.rb","source_code":"x\n","safety":true}"#),
+        tool_call(4, "autocorrection", r#"{"path":".Hg/hgrc","source_code":"x\n","safety":true}"#),
+        tool_call(5, "inspection", r#"{"path":".git"}"#),
+        tool_call(6, "inspection", r#"{"path":".svn/a.rb","source_code":"x\n"}"#),
+        tool_call(7, "explain", r#"{"cop_names":["Style/StringLiterals"],"path":".jj/a.rb"}"#),
+        tool_call(
+            8,
+            "autocorrection",
+            r#"{"path":"lib/.GitAttributes","source_code":"*.rb filter=x\n","safety":true}"#,
+        ),
+    ];
+    let lines = mcp(&dir, &[], &requests);
+    assert_eq!(lines.len(), requests.len(), "{lines:?}");
+    for line in &lines {
+        assert!(line.contains("\"isError\":true") && line.contains("inside version control metadata"), "{line}");
+    }
+    assert_eq!(std::fs::read_to_string(dir.join(".git/config")).unwrap(), "[core]\n");
+    assert_eq!(std::fs::read_to_string(dir.join(".git/x.rb")).unwrap(), "puts( 1)\n");
+    assert!(!dir.join(".git/new.rb").exists() && !dir.join(".Hg").exists());
+    std::fs::remove_dir_all(&dir).unwrap();
+}
+
+/// A scratch directory for the git hardening tests: `repo/` (canonical), a global git config with
+/// an identity, and a hook script that creates `ran` when anything executes it.
+struct GitScratch {
+    base: std::path::PathBuf,
+    dir: std::path::PathBuf,
+    gitconfig: std::path::PathBuf,
+    marker: std::path::PathBuf,
+    hook: String,
+}
+
+impl GitScratch {
+    fn new(name: &str) -> GitScratch {
+        use std::os::unix::fs::PermissionsExt;
+        let base = std::env::temp_dir().join(format!("rbcop-{name}-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&base);
+        std::fs::create_dir_all(base.join("repo")).unwrap();
+        let base = base.canonicalize().unwrap();
+        let gitconfig = base.join("gitconfig");
+        std::fs::write(&gitconfig, "[user]\n\tname = t\n\temail = t@example.invalid\n").unwrap();
+        let marker = base.join("ran");
+        let hook = base.join("hook.sh");
+        std::fs::write(&hook, format!("#!/bin/sh\ntouch '{}'\ncat\n", marker.display())).unwrap();
+        std::fs::set_permissions(&hook, std::fs::Permissions::from_mode(0o755)).unwrap();
+        GitScratch { dir: base.join("repo"), base, gitconfig, marker, hook: hook.display().to_string() }
+    }
+
+    /// Plain git (no hardening) in `dir`.
+    fn git(&self, args: &[&str]) -> std::process::Output {
+        let out = std::process::Command::new("git")
+            .args(args)
+            .current_dir(&self.dir)
+            .env("GIT_CONFIG_GLOBAL", &self.gitconfig)
+            .output()
+            .unwrap();
+        assert!(out.status.success(), "git {args:?}: {}", String::from_utf8_lossy(&out.stderr));
+        out
+    }
+
+    /// A repository with a.rb committed and then modified.
+    fn repo_with_change(&self) {
+        self.git(&["init", "-q"]);
+        std::fs::write(self.dir.join("a.rb"), "puts( 1)\n").unwrap();
+        self.git(&["add", "."]);
+        self.git(&["commit", "-qm", "init"]);
+        std::fs::write(self.dir.join("a.rb"), "puts( 22)\n").unwrap();
+    }
+
+    fn mcp(&self, requests: &[String]) -> Vec<String> {
+        mcp(&self.dir, &[("GIT_CONFIG_GLOBAL", &self.gitconfig)], requests)
+    }
+
+    /// Plain git runs the planted hook (else the test proves nothing); the marker is then removed.
+    fn assert_git_runs_the_hook(&self, what: &str) {
+        self.git(&["diff", "--name-only"]);
+        assert!(self.marker.exists(), "git itself did not run the planted {what}; the test proves nothing");
+        std::fs::remove_file(&self.marker).unwrap();
+    }
+}
+
+impl Drop for GitScratch {
+    fn drop(&mut self) {
+        let _ = std::fs::remove_dir_all(&self.base);
+    }
+}
+
+/// Deliberate difference: `--changed` and the MCP `changed` scope run git with the repository's
+/// command hooks off, so a planted `core.fsmonitor` (which plain `git diff` runs) never runs.
+#[test]
+fn changed_never_runs_a_planted_fsmonitor() {
+    let s = GitScratch::new("fsmonitor");
+    s.repo_with_change();
+    s.git(&["config", "core.fsmonitor", &s.hook]);
+    s.assert_git_runs_the_hook("core.fsmonitor");
+    let cli = common::command(env!("CARGO_BIN_EXE_rbcop"))
+        .args(["--changed", "--only", "Layout/SpaceInsideParens", "-f", "e"])
+        .current_dir(&s.dir)
+        .env("GIT_CONFIG_GLOBAL", &s.gitconfig)
+        .output()
+        .unwrap();
+    assert!(String::from_utf8_lossy(&cli.stdout).contains("a.rb:1:6"), "{cli:?}");
+    let lines = s.mcp(&[tool_call(1, "inspection", r#"{"changed":true}"#)]);
+    assert!(lines[0].contains("a.rb") && lines[0].contains("\"isError\":false"), "{lines:?}");
+    assert!(!s.marker.exists(), "rbcop ran the planted core.fsmonitor");
+}
+
+/// The MCP `changed` scope reads attributes from the empty tree: a filter driver in the config
+/// that a `.gitattributes` names (which plain `git diff` runs on a modified file) never runs.
+#[test]
+fn mcp_changed_never_runs_a_planted_filter() {
+    let s = GitScratch::new("filter");
+    s.repo_with_change();
+    s.git(&["config", "filter.evil.clean", &s.hook]);
+    std::fs::write(s.dir.join(".gitattributes"), "*.rb filter=evil\n").unwrap();
+    s.assert_git_runs_the_hook("filter driver");
+    let lines = s.mcp(&[tool_call(1, "inspection", r#"{"changed":true,"only":["Layout"]}"#)]);
+    assert!(lines[0].contains("a.rb") && lines[0].contains("\"isError\":false"), "{lines:?}");
+    assert!(!s.marker.exists(), "rbcop ran the planted filter driver");
+}
+
+/// A linked layout where `.git` is a `gitdir:` file pointing at a git dir elsewhere in the
+/// project: the MCP tools refuse that directory too, whatever it is called.
+#[test]
+fn mcp_tools_refuse_a_pinned_git_dir_under_any_name() {
+    let s = GitScratch::new("gitdir");
+    std::fs::create_dir_all(s.dir.join("meta")).unwrap();
+    s.git(&["init", "-q", "--separate-git-dir", "meta/store"]);
+    std::fs::write(s.dir.join("a.rb"), "puts( 1)\n").unwrap();
+    // A symlink alias of the git dir inside the project.
+    std::os::unix::fs::symlink(s.dir.join("meta/store"), s.dir.join("alias")).unwrap();
+    let config = std::fs::read_to_string(s.dir.join("meta/store/config")).unwrap();
+    let requests = [
+        tool_call(1, "autocorrection", r#"{"path":"meta/store/config","source_code":"x\n","safety":true}"#),
+        tool_call(2, "autocorrection", r#"{"path":"meta/store/hooks/pre-commit","source_code":"x\n","safety":true}"#),
+        tool_call(3, "inspection", r#"{"path":"meta/store/HEAD","source_code":"x\n"}"#),
+        tool_call(4, "autocorrection", r#"{"path":"alias/config","source_code":"x\n","safety":true}"#),
+        tool_call(5, "autocorrection", r#"{"path":"alias/new","source_code":"x\n","safety":true}"#),
+        tool_call(6, "inspection", r#"{"path":"a.rb","only":["Layout"]}"#),
+    ];
+    let lines = s.mcp(&requests);
+    for line in &lines[..5] {
+        assert!(line.contains("\"isError\":true") && line.contains("inside version control metadata"), "{line}");
+    }
+    assert!(lines[5].contains("\"isError\":false"), "{}", lines[5]);
+    assert_eq!(std::fs::read_to_string(s.dir.join("meta/store/config")).unwrap(), config);
+    assert!(!s.dir.join("meta/store/hooks/pre-commit").exists() && !s.dir.join("meta/store/new").exists());
+}
+
+/// On a case-insensitive file system (macOS by default) the git dir is refused however the
+/// client spells it: canonicalize keeps the caller's case there, so the check compares (device,
+/// inode). On a case-sensitive one (CT 440's ext4) `REPO.GIT` is another directory, and the test
+/// only checks that the real spelling is refused.
+#[test]
+fn mcp_tools_refuse_the_git_dir_in_any_case() {
+    let s = GitScratch::new("gitdircase");
+    s.git(&["init", "-q", "--separate-git-dir", "repo.git"]);
+    let insensitive = s.dir.join("REPO.GIT").exists();
+    let config = std::fs::read_to_string(s.dir.join("repo.git/config")).unwrap();
+    let requests = [
+        tool_call(1, "autocorrection", r#"{"path":"repo.git/config","source_code":"x\n","safety":true}"#),
+        tool_call(2, "autocorrection", r#"{"path":"REPO.GIT/config","source_code":"x\n","safety":true}"#),
+        tool_call(3, "autocorrection", r#"{"path":"Repo.Git/HEAD","source_code":"x\n","safety":true}"#),
+    ];
+    let lines = s.mcp(&requests);
+    let refused = |line: &str| line.contains("\"isError\":true") && line.contains("inside version control metadata");
+    assert!(refused(&lines[0]), "{}", lines[0]);
+    if insensitive {
+        assert!(refused(&lines[1]) && refused(&lines[2]), "{lines:?}");
+    }
+    assert_eq!(std::fs::read_to_string(s.dir.join("repo.git/config")).unwrap(), config);
+}
+
+/// No repository at startup: a bare repository planted in the project (at its root, so that
+/// git's discovery would find it, or in a subdirectory) is never used by the `changed` scope, nor
+/// one planted after startup; its config's hook never runs.
+#[test]
+fn mcp_changed_ignores_planted_repositories() {
+    use std::io::{BufRead, BufReader};
+    let s = GitScratch::new("bare");
+    let plant = |at: &std::path::Path| {
+        let out = std::process::Command::new("git")
+            .args(["init", "-q", "--bare"])
+            .arg(at)
+            .env("GIT_CONFIG_GLOBAL", &s.gitconfig)
+            .output()
+            .unwrap();
+        assert!(out.status.success());
+        let config = at.join("config");
+        let mut c = std::fs::read_to_string(&config).unwrap();
+        c.push_str(&format!("[core]\n\tfsmonitor = {}\n", s.hook));
+        std::fs::write(config, c).unwrap();
+    };
+    plant(&s.dir.join("sub"));
+    std::fs::write(s.dir.join("a.rb"), "puts( 1)\n").unwrap();
+    let mut child = common::command(env!("CARGO_BIN_EXE_rbcop"))
+        .arg("--mcp")
+        .current_dir(&s.dir)
+        .env("PWD", &s.dir)
+        .env("GIT_CONFIG_GLOBAL", &s.gitconfig)
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::null())
+        .spawn()
+        .unwrap();
+    let mut input = child.stdin.take().unwrap();
+    let mut output = BufReader::new(child.stdout.take().unwrap());
+    let mut ask = |request: String| {
+        input.write_all(request.as_bytes()).unwrap();
+        let mut line = String::new();
+        output.read_line(&mut line).unwrap();
+        line
+    };
+    let before = ask(tool_call(1, "inspection", r#"{"changed":true}"#));
+    // Now the project root itself becomes a bare repository.
+    plant(&s.dir);
+    let after = ask(tool_call(2, "inspection", r#"{"changed":true}"#));
+    let sub = ask(tool_call(3, "inspection", r#"{"changed":true,"path":"sub"}"#));
+    drop(input);
+    let _ = child.wait();
+    for line in [&before, &after, &sub] {
+        assert!(line.contains("\"isError\":true") && line.contains("not a git repository"), "{line}");
+    }
+    assert_eq!(before.replace("\"id\":1", ""), after.replace("\"id\":2", ""));
+    assert!(!s.marker.exists(), "rbcop ran a planted repository's core.fsmonitor");
+}
+
+/// The MCP pinning fails closed: when `git hash-object` gives no empty tree id, or git is older
+/// than 2.40 (no GIT_ATTR_SOURCE), `changed` is an error instead of git running without it. A
+/// fake `git` first on PATH plays each part and passes everything else to the real one.
+#[test]
+fn mcp_changed_fails_closed_without_the_attribute_source() {
+    use std::os::unix::fs::PermissionsExt;
+    let s = GitScratch::new("failclosed");
+    s.repo_with_change();
+    let real = std::process::Command::new("sh").args(["-c", "command -v git"]).output().unwrap();
+    let real = String::from_utf8(real.stdout).unwrap().trim().to_string();
+    let bin = s.base.join("bin");
+    std::fs::create_dir_all(&bin).unwrap();
+    let path = format!("{}:{}", bin.display(), std::env::var("PATH").unwrap_or_default());
+    for (case, body) in [
+        ("hash-object", "for a; do [ \"$a\" = hash-object ] && exit 1; done"),
+        ("old git", "for a; do [ \"$a\" = version ] && { echo 'git version 2.39.5'; exit 0; }; done"),
+    ] {
+        let fake = bin.join("git");
+        std::fs::write(&fake, format!("#!/bin/sh\n{body}\nexec '{real}' \"$@\"\n")).unwrap();
+        std::fs::set_permissions(&fake, std::fs::Permissions::from_mode(0o755)).unwrap();
+        let mut child = common::command(env!("CARGO_BIN_EXE_rbcop"))
+            .arg("--mcp")
+            .current_dir(&s.dir)
+            .env("PWD", &s.dir)
+            .env("PATH", &path)
+            .env("GIT_CONFIG_GLOBAL", &s.gitconfig)
+            .stdin(Stdio::piped())
+            .stdout(Stdio::piped())
+            .stderr(Stdio::null())
+            .spawn()
+            .unwrap();
+        child.stdin.take().unwrap().write_all(tool_call(1, "inspection", r#"{"changed":true}"#).as_bytes()).unwrap();
+        let out = String::from_utf8(child.wait_with_output().unwrap().stdout).unwrap();
+        let want = if case == "old git" { "needs git 2.40 or newer" } else { "gave no empty tree id" };
+        assert!(out.contains("\"isError\":true") && out.contains(want), "{case}: {out}");
+    }
+}
+
+#[test]
+fn mcp_changed_selects_the_files_git_reports() {
+    let base = std::env::temp_dir().join(format!("rbcop-mcp-changed-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&base);
+    let dir = base.join("repo");
+    std::fs::create_dir_all(&dir).unwrap();
+    let dir = dir.canonicalize().unwrap();
+    let gitconfig = base.join("gitconfig");
+    std::fs::write(&gitconfig, "[user]\n\tname = t\n\temail = t@example.invalid\n").unwrap();
+    let git = |args: &[&str]| {
+        let ok = std::process::Command::new("git")
+            .args(args)
+            .current_dir(&dir)
+            .env("GIT_CONFIG_GLOBAL", &gitconfig)
+            .env("GIT_CONFIG_NOSYSTEM", "1")
+            .output()
+            .unwrap()
+            .status
+            .success();
+        assert!(ok, "git {args:?}");
+    };
+    git(&["init", "-q"]);
+    std::fs::write(dir.join(".rubocop.yml"), "AllCops:\n  NewCops: enable\n  SuggestExtensions: false\n").unwrap();
+    std::fs::write(dir.join("a.rb"), "puts( 1)\n").unwrap();
+    std::fs::write(dir.join("b.rb"), "puts( 2)\n").unwrap();
+    git(&["add", "."]);
+    git(&["commit", "-qm", "init"]);
+    std::fs::write(dir.join("b.rb"), "puts( 3)\n").unwrap();
+    std::fs::write(dir.join("c.rb"), "puts( 4)\n").unwrap();
+    let call = |id: u32, tool: &str, args: &str| {
+        format!(
+            "{{\"jsonrpc\":\"2.0\",\"id\":{id},\"method\":\"tools/call\",\"params\":{{\"name\":\"rubocop_{tool}\",\"arguments\":{args}}}}}\n"
+        )
+    };
+    let input = "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"initialize\",\"params\":{\"protocolVersion\":\"2025-11-25\",\"capabilities\":{},\"clientInfo\":{\"name\":\"t\",\"version\":\"1\"}}}\n".to_string()
+        + &call(2, "inspection", "{\"changed\":true,\"only\":[\"Layout\"]}")
+        + &call(3, "inspection", "{\"changed\":\"HEAD\",\"path\":\"a.rb\"}")
+        + &call(4, "inspection", "{\"changed\":\"nope\"}")
+        + &call(5, "autocorrection", "{\"changed\":true,\"safety\":true,\"dry_run\":true,\"only\":[\"Layout\"]}");
+    let mut child = common::command(env!("CARGO_BIN_EXE_rbcop"))
+        .arg("--mcp")
+        .current_dir(&dir)
+        .env("PWD", &dir)
+        .env("GIT_CONFIG_GLOBAL", &gitconfig)
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::null())
+        .spawn()
+        .unwrap();
+    child.stdin.take().unwrap().write_all(input.as_bytes()).unwrap();
+    let out = String::from_utf8(child.wait_with_output().unwrap().stdout).unwrap();
+    let _ = std::fs::remove_dir_all(&base);
+    let expected =
+        std::fs::read_to_string(Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/mcp_changed.jsonl")).unwrap();
+    assert_eq!(out.replace(&dir.display().to_string(), "$ROOT"), expected);
 }
 
 #[test]
