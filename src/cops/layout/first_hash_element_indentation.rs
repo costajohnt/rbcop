@@ -46,17 +46,23 @@ impl Cop for FirstHashElementIndentation {
         let pairs: Vec<_> = hash.elements().iter().filter_map(|e| e.as_assoc_node()).collect();
         let base = |cx: &Cx| indent_base(cx, WORDS.brace_style, left, !pairs.is_empty(), paren, parent, grandparent);
 
-        if let Some(first) = pairs.first() {
+        if pairs.first().is_some_and(|p| src.line_of(p.location().start_offset()) == src.line_of(left)) {
+            return;
+        }
+        // check_first_pair: a first pair that does not begin its line is left alone.
+        if let Some(first) = pairs.first().filter(|p| src.begins_its_line(p.location().start_offset())) {
             let (start, end) = (first.location().start_offset(), first.location().end_offset());
-            if src.line_of(start) == src.line_of(left) {
-                return;
-            }
             let rocket = first.operator_loc().is_some_and(|o| o.as_slice() == b"=>");
             let key = if rocket { "EnforcedHashRocketStyle" } else { "EnforcedColonStyle" };
             let separator = cx.config.for_cop("Layout/HashAlignment").str(key) == Some("separator");
-            let offset = if separator {
-                let lengths: Vec<usize> = pairs.iter().map(|p| key_length(p)).collect();
-                (lengths.iter().max().unwrap() - lengths[0]) as i64
+            // Only single-line keys count, and a multiline first key gets no offset.
+            let single_line = |p: &ruby_prism::AssocNode| {
+                let k = p.key().location();
+                src.line_of(k.start_offset()) == src.line_of(k.end_offset())
+            };
+            let offset = if separator && single_line(first) {
+                let max = pairs.iter().filter(|p| single_line(p)).map(key_length).max().unwrap();
+                (max - key_length(first)) as i64
             } else {
                 0
             };

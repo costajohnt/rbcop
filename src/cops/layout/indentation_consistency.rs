@@ -49,7 +49,8 @@ impl Cop for IndentationConsistency {
                 }
             }
             for group in &groups {
-                alignment::check_alignment(cx, group, None, MSG);
+                let base = governed_base_column(cx, group);
+                alignment::check_alignment(cx, group, base, MSG);
             }
             return;
         }
@@ -65,8 +66,26 @@ impl Cop for IndentationConsistency {
         };
         let items: Vec<Item> =
             stmts.body().iter().zip(&bare).filter(|(_, b)| !**b).map(|(c, _)| Item::of(c)).collect();
+        let base = base.or_else(|| governed_base_column(cx, &items));
         alignment::check_alignment(cx, &items, base, MSG);
     }
+}
+
+/// governed_base_column: when Layout/IndentationWidth is disabled by comment at the first item,
+/// align with the first item it governs.
+fn governed_base_column(cx: &Cx, items: &[Item]) -> Option<i64> {
+    if !alignment::cop_enabled(cx, "Layout/IndentationWidth") || items.is_empty() {
+        return None;
+    }
+    crate::runner::comment_config_read();
+    let enabled_at = |item: &Item| {
+        let line = cx.src.line_of(item.start);
+        !crate::directives::is_disabled(&cx.facts.disabled, "Layout/IndentationWidth", line, line)
+    };
+    if enabled_at(&items[0]) {
+        return None;
+    }
+    items.iter().find(|i| enabled_at(i)).map(|i| alignment::display_column(cx.src, i.start) as i64)
 }
 
 impl IndentationConsistency {

@@ -16,8 +16,12 @@ impl Cop for IndentationStyle {
         let width = cx.cfg.int("IndentationWidth").or_else(|| cx.config.for_cop("Layout/IndentationWidth").int("Width"));
         let width = width.unwrap_or(2).max(0) as usize;
         for (i, line) in cx.src.lines.iter().enumerate() {
-            // /\A\s*\t+/ (spaces style) or /\A\s* +/ (tabs style)
-            let ws = line.len() - line.trim_start_matches(helpers::ruby_string::is_space).len();
+            // /\A\s*\t+/ (spaces style) or /\A +/ (tabs style: spaces after the tabs are alignment)
+            let ws = if tabs {
+                line.len() - line.trim_start_matches(' ').len()
+            } else {
+                line.len() - line.trim_start_matches(helpers::ruby_string::is_space).len()
+            };
             let Some(last) = line[..ws].rfind(bad) else { continue };
             let start = cx.src.line_start(i + 1);
             let end = start + last + 1;
