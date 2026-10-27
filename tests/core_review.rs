@@ -1427,10 +1427,7 @@ fn unescaped_bracket_in_regexp_corrections_converge() {
     let out = rbcop(&dir, &["-A", "--only", "Lint/UnescapedBracketInRegexp", "--force-default-config", "-f", "e", "."]);
     let report = text(&out.stdout).replace(&format!("{}/", dir.canonicalize().unwrap().display()), "");
     let msg = "Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.";
-    assert_eq!(
-        report,
-        format!("025.rb:1:16: W: [Corrected] {msg}\n042.rb:1:22: W: [Corrected] {msg}\n")
-    );
+    assert_eq!(report, format!("025.rb:1:16: W: [Corrected] {msg}\n042.rb:1:22: W: [Corrected] {msg}\n"));
     for (name, _, want) in cases {
         assert_eq!(fs::read_to_string(dir.join(name)).unwrap(), want, "{name}");
     }

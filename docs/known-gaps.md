@@ -214,17 +214,18 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   where RuboCop offers its edit. The server's stderr log carries the same lines, but an error while
   handling a request is logged as `[server] Error <message>` without RuboCop's exception class for
   rbcop's own errors and without the backtrace line; as in RuboCop such a request gets no response.
-- `--mcp` (#293) answers as RuboCop's MCP server does on the `mcp` gem 0.25.0 (the newest version
-  `~> 0.6`, the requirement RuboCop's load error names), line for line (tests/mcp, recorded with
-  `scripts/mcp.sh`): the same `rubocop_inspection` and `rubocop_autocorrection` tools, schemas,
-  results and JSON-RPC errors. RuboCop serves only with that gem installed, and otherwise prints
+- `--mcp` (#293) answers as RuboCop's MCP server does on the `mcp` gem 0.25.0, line for line
+  (tests/mcp, recorded with `scripts/mcp.sh`): the same `rubocop_inspection`,
+  `rubocop_autocorrection` and `rubocop_explain` tools, schemas, results and JSON-RPC errors.
+  RuboCop serves only with that gem installed, and otherwise prints
   ``Error: Unable to load `mcp` gem. ...``; rbcop has no gem dependency and always serves. Newer
   `mcp` gems (1.x) may answer the protocol methods differently; the tool results are RuboCop's own.
   Except: RuboCop's tools read and write any path the client names, while rbcop's refuse one that
   resolves outside the working directory (an absolute path, `..`, or a symlink pointing out,
   including one met while walking a directory) with the tool error `<path> resolves to <real
   path>, outside the project`, and write as `-a` does (never through a symlink, a new file created
-  exclusively). An MCP client may be a model following text from the code it reads.
+  exclusively); `rubocop_explain` refuses such a `path` too rather than read the configuration
+  that applies there. An MCP client may be a model following text from the code it reads.
 - `--explain` prints the sections of a cop's documentation comment from src/cop_docs.txt
   (scripts/dump-cop-docs.rb, RuboCop's and the native plugins' cops), since rbcop has no Ruby
   sources to read. A cop of a plugin rbcop does not implement, or of a `require:`d local file, is

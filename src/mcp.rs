@@ -811,9 +811,9 @@ impl Kind {
     fn errors(self, pointer: &str, value: &Json) -> Vec<String> {
         let not = |what: &str| format!("value at `{pointer}` is not {what}");
         match (self, value) {
-            (Kind::Str, Json::Str(_)) | (Kind::Bool, Json::Bool(_)) | (Kind::BoolOrStr, Json::Bool(_) | Json::Str(_)) => {
-                Vec::new()
-            }
+            (Kind::Str, Json::Str(_))
+            | (Kind::Bool, Json::Bool(_))
+            | (Kind::BoolOrStr, Json::Bool(_) | Json::Str(_)) => Vec::new(),
             (Kind::Str, _) => vec![not("a string")],
             (Kind::Bool, _) => vec![not("a boolean")],
             (Kind::BoolOrStr, _) => vec![not("one of the types: [\"boolean\", \"string\"]")],
@@ -904,7 +904,8 @@ fn list(params: Option<&Json>, items: &[&str]) -> Result<String, Fail> {
 fn problem_messages(abs: &Path, cwd: &Path, errors: &[String]) -> Vec<String> {
     let (fragment, _, _) = rbcop::formatter::hash_for_problems(&smart_path(abs, cwd), abs, errors, &[]);
     let Some(list) = fragment.strip_prefix(',') else { return Vec::new() };
-    Json::parse(&format!("{{{list}}}")).map_or(Vec::new(), |j| j.get("errors").map_or(Vec::new(), |e| e.items().iter().map(Json::string).collect()))
+    Json::parse(&format!("{{{list}}}"))
+        .map_or(Vec::new(), |j| j.get("errors").map_or(Vec::new(), |e| e.items().iter().map(Json::string).collect()))
 }
 
 #[cfg(test)]

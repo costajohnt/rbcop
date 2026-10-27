@@ -137,7 +137,8 @@ fn mcp_changed_selects_the_files_git_reports() {
     child.stdin.take().unwrap().write_all(input.as_bytes()).unwrap();
     let out = String::from_utf8(child.wait_with_output().unwrap().stdout).unwrap();
     let _ = std::fs::remove_dir_all(&base);
-    let expected = std::fs::read_to_string(Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/mcp_changed.jsonl")).unwrap();
+    let expected =
+        std::fs::read_to_string(Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/mcp_changed.jsonl")).unwrap();
     assert_eq!(out.replace(&dir.display().to_string(), "$ROOT"), expected);
 }
 

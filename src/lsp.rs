@@ -30,7 +30,8 @@ fn log_error(message: &str) {
 /// Server#start: read requests until stdin ends. Err is what ends the server early (a request it
 /// cannot read), which RuboCop's CLI reports with status 2.
 pub fn serve(store: Store, pwd_config: Arc<Resolved>) -> Result<u8, String> {
-    let mut server = Server { runtime: Runtime::new(store, pwd_config, true), safe_autocorrect: true, texts: HashMap::new() };
+    let mut server =
+        Server { runtime: Runtime::new(store, pwd_config, true), safe_autocorrect: true, texts: HashMap::new() };
     let mut input = std::io::stdin().lock();
     while let Some(request) = read_request(&mut input)? {
         if let Err(e) = server.handle(&request) {

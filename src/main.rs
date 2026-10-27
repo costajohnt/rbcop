@@ -1639,7 +1639,10 @@ fn qualify_cop_options(cli: &mut Cli) -> (Vec<String>, Option<String>) {
 }
 
 /// `qualify_cop_options` for an `only` and `except` list (also the MCP tools' `only`/`except`).
-pub(crate) fn qualify_cop_lists(only: Option<&mut Vec<String>>, except: &mut Vec<String>) -> (Vec<String>, Option<String>) {
+pub(crate) fn qualify_cop_lists(
+    only: Option<&mut Vec<String>>,
+    except: &mut Vec<String>,
+) -> (Vec<String>, Option<String>) {
     use rbcop::helpers::{cop_registry, did_you_mean};
     let mut warnings = Vec::new();
     let mut only = only;
