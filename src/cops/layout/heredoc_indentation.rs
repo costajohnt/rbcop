@@ -88,6 +88,13 @@ impl Cop for HeredocIndentation {
         if self.line_too_long(cx, body, base_indent + width - body_indent as i64) {
             return;
         }
+        // within_offending_heredoc?: a heredoc opened inside an offending heredoc's body is left
+        // to that body's correction.
+        let bodies = cx.state::<Vec<(usize, usize)>>();
+        if bodies.iter().any(|&(s, e)| s <= open_range.0 && open_range.1 <= e) {
+            return;
+        }
+        bodies.push((body_start, body_end));
         let msg = if indent_type == "<<~" {
             format!("Use {width} spaces for indentation in a heredoc.")
         } else {

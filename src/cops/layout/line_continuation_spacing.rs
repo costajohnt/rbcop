@@ -141,6 +141,12 @@ impl<'pr> Visit<'pr> for Ignored<'_> {
         self.parts(n.parts());
         ruby_prism::visit_interpolated_regular_expression_node(self, n);
     }
+    // output_record_separator_ranges: a `$\` read ends in a backslash.
+    fn visit_global_variable_read_node(&mut self, n: &ruby_prism::GlobalVariableReadNode<'pr>) {
+        if n.name().as_slice() == b"$\\" {
+            self.add(n.location());
+        }
+    }
     fn visit_array_node(&mut self, n: &ruby_prism::ArrayNode<'pr>) {
         if n.opening_loc().is_some_and(|o| o.as_slice().starts_with(b"%")) {
             self.add(n.location());
