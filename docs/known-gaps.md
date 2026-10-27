@@ -42,11 +42,7 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   `rbcop: not autocorrecting <file>: it resolves to <path>, outside the project` goes to stderr;
   the exit status follows its offenses. The check is repeated right before the write, which follows
   no symlink after it (directories are opened one by one, relative to the last). `--stdin` is unaffected.
-- `--diff` never writes a file. RuboCop 1.91.0 does when Lint/RedundantCopDisableDirective corrects:
-  its redundant-disable team does not defer corrections, so `File.write` puts every correction in
-  the file, and the inspection loop it then reruns reads that file. rbcop prints the same report
-  and the same diffs (which leave out the removed directives) and leaves the file as it was. With
-  `RBCOP_FALLBACK=1`, `--diff` is refused when the RuboCop child would run (it corrects by writing);
+- `--diff` with `RBCOP_FALLBACK=1` is refused when the RuboCop child would run (it corrects by writing);
   without it, `--diff` skips the fallback and prints the not-running notice.
 - HTML formatter escapes `& < >` in messages outside code spans and fully escapes paths; GitHub
   Actions formatter escapes CR/LF in the `file=` property. Output differs only when those appear.

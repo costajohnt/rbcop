@@ -25,7 +25,6 @@ for case in "$here"/*/; do
   rm -f "$case/$out.raw"
   [ -f "$case/status" ] && echo "$status" > "$case/status"
   # `rubocop --diff -A` stdout (report, then the diffs) into diff.txt, on a scratch copy of input/:
-  # RuboCop 1.91.0 can write a file under --diff (docs/known-gaps.md).
   # A case with a no-diff file has no diff.txt (its --diff output is a deliberate difference).
   [ "$out" = expected ] && [ ! -f "$case/no-diff" ] || continue
   rm -rf "$case/diff-run"

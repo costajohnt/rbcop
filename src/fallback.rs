@@ -317,8 +317,13 @@ pub fn run(
     };
     let mut names: HashMap<String, &'static str> = HashMap::new();
     for line in body.lines() {
-        let f: Vec<&str> = line.split('\t').collect();
-        let [path, start, end, severity, correctable, corrected, global, cop, message, disabled, justification] = f[..]
+        let mut f: Vec<&str> = line.split('\t').collect();
+        // The corrections field is optional (a stand-in child may print the eleven before it).
+        if f.len() == 11 {
+            f.push("");
+        }
+        let [path, start, end, severity, correctable, corrected, global, cop, message, disabled, justification, edits] =
+            f[..]
         else {
             return Err(format!("rbcop: RBCOP_FALLBACK: unexpected output from {program}: {line}"));
         };
@@ -338,11 +343,20 @@ pub fn run(
             disabled: disabled == "1",
             justification: (!justification.is_empty()).then(|| unescape(justification)),
             todo: false,
-            edits: None,
+            edits: (!edits.is_empty()).then(|| edits.split(';').filter_map(parse_edit).collect()),
         };
         out.entry(path).or_insert_with(Vec::new).push(offense);
     }
     Ok(out)
+}
+
+/// One `begin,end,hex(replacement)` correction of the formatter's last field.
+pub fn parse_edit(s: &str) -> Option<(usize, usize, String)> {
+    let mut f = s.split(',');
+    let (b, e, hex) = (f.next()?.parse().ok()?, f.next()?.parse().ok()?, f.next()?.as_bytes());
+    let bytes: Option<Vec<u8>> =
+        hex.chunks(2).map(|c| std::str::from_utf8(c).ok().and_then(|c| u8::from_str_radix(c, 16).ok())).collect();
+    Some((b, e, String::from_utf8_lossy(&bytes?).into_owned()))
 }
 
 fn unescape(s: &str) -> String {
@@ -388,5 +402,7 @@ mod tests {
     #[test]
     fn unescape_reverses_the_formatter() {
         assert_eq!(unescape(r"a\tb\nc\\d"), "a\tb\nc\\d");
+        assert_eq!(parse_edit("0,3,0a78"), Some((0, 3, "\nx".to_string())));
+        assert_eq!(parse_edit("4,4,"), Some((4, 4, String::new())));
     }
 }

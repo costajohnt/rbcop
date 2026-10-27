@@ -32,6 +32,16 @@ pub fn enabled() -> bool {
     ENABLED.load(Ordering::Relaxed)
 }
 
+/// The `editing` option (RuboCop 1.92.1, set by MCP): holds back `AutoCorrect: contextual`
+/// without the rest of LSP mode.
+pub static EDITING: AtomicBool = AtomicBool::new(false);
+
+/// AutocorrectLogic#contextual_autocorrect_held_back? without the `contextual` check:
+/// `LSP.enabled? || @options.fetch(:editing, false)`.
+pub fn holds_contextual() -> bool {
+    enabled() || EDITING.load(Ordering::Relaxed)
+}
+
 /// CodeLength / MethodComplexity `#location` under LSP: from the node's start to the end of its
 /// name (`def foo`, `class Foo`, the `self` of `class << self`) or of its block opener (`foo do`, `-> {`); other nodes (and
 /// every node outside editor mode) keep `range`.

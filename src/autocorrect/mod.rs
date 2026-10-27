@@ -147,7 +147,7 @@ pub fn cop_autocorrects(cfg: &CopConfig, mode: Mode) -> bool {
     // autocorrect_enabled?
     if matches!(cfg.get("AutoCorrect"), Some(Value::Bool(false)))
         || cfg.str("AutoCorrect") == Some("disabled")
-        || (cfg.str("AutoCorrect") == Some("contextual") && crate::helpers::lsp::enabled())
+        || (cfg.str("AutoCorrect") == Some("contextual") && crate::helpers::lsp::holds_contextual())
     {
         return false;
     }
@@ -155,17 +155,19 @@ pub fn cop_autocorrects(cfg: &CopConfig, mode: Mode) -> bool {
 }
 
 /// Team#collate_corrections: merge each cop's corrector in registry order, skipping a cop whose
-/// corrections clobber what is already merged or that an earlier merged cop is incompatible with.
+/// corrections clobber what is already merged or that is incompatible with an earlier merged cop,
+/// whichever of the two lists the other (Team#autocorrect_incompatible?).
 pub fn collate(mut by_cop: Vec<(&'static str, Corrector)>, source: Arc<str>) -> Option<Corrector> {
     by_cop.sort_by_key(|(name, _)| registry_index(name));
     let mut merged = Corrector::new(source);
-    let mut skips: HashSet<&str> = HashSet::new();
+    let incompatible = |a: &str, b: &str| REGISTRY.incompatible.get(a).is_some_and(|l| l.contains(&b));
+    let mut applied: Vec<&str> = Vec::new();
     for (name, c) in &by_cop {
-        if c.is_empty() || skips.contains(name) {
+        if c.is_empty() || applied.iter().any(|other| incompatible(name, other) || incompatible(other, name)) {
             continue;
         }
         let _ = merged.merge(c); // suppress_clobbering
-        skips.extend(REGISTRY.incompatible.get(name).into_iter().flatten().copied());
+        applied.push(name);
     }
     (!merged.is_empty()).then_some(merged)
 }
@@ -237,20 +239,20 @@ fn correct(
         }
         offenses.extend(found);
         // Runner#file_offenses rejects the disabled offenses unless --display-suppressed.
-        if runner::display_suppressed() {
+        if runner::display_suppressed() && corrector.is_none() {
             offenses.extend(std::mem::take(&mut pass.disabled));
         }
         if let Some(c) = corrector {
-            // RuboCop 1.91.0's redundant-disable team writes its correction to the file even under
-            // `--diff` (its corrections are not deferred), so the loop it reruns diffs against
-            // that source and the directives it removed are in no diff. rbcop writes nothing
-            // (docs/known-gaps.md) but prints the same diffs.
+            // RuboCop 1.92.1: the loop reruns on the corrected source (kept in memory under
+            // `--diff`) and finds what is left again, so only the corrected offenses are kept
+            // from before (`offenses.select(&:corrected?) | new_offenses`); `--diff` shows one
+            // diff, from the file as read to the source the last loop ended with.
             let rewritten: Arc<str> = Arc::from(c.rewrite());
             let again =
                 inspection_loop(path, display, Some(rewritten.clone()), reread(&rewritten), cfg, selected, mode);
-            if again.changed {
-                diffs.push((rewritten.clone(), again.written.clone().unwrap()));
-            }
+            let last = again.written.clone().unwrap_or_else(|| rewritten.clone());
+            diffs = vec![(original.clone(), last)];
+            offenses.retain(|o| o.corrected);
             offenses.extend(again.offenses);
             if runner::display_suppressed() {
                 offenses.extend(again.disabled);
@@ -710,6 +712,13 @@ mod tests {
             ("Layout/EmptyLineBetweenDefs", fix(&src, |c| c.remove(5, 6))),
         ];
         assert_eq!(collate(by_cop, src.clone()).unwrap().rewrite(), "abcde");
+        // RuboCop 1.92.1: either side's list counts, so a later cop that lists an earlier merged
+        // one is skipped too (Layout/FirstArgumentIndentation lists Layout/ArgumentAlignment).
+        let by_cop = vec![
+            ("Layout/ArgumentAlignment", fix(&src, |c| c.remove(0, 1))),
+            ("Layout/FirstArgumentIndentation", fix(&src, |c| c.remove(5, 6))),
+        ];
+        assert_eq!(collate(by_cop, src.clone()).unwrap().rewrite(), "bcdef");
         assert!(collate(vec![("Layout/EmptyLines", fix(&src, |_| {}))], src).is_none());
     }
 

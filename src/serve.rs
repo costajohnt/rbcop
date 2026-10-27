@@ -191,10 +191,13 @@ impl Runtime {
         rbcop::helpers::lsp::EDITING.store(false, Ordering::Relaxed);
         let literals = runner::take_literal_ranges();
         let warnings = runner::take_file_warnings();
-        let errors = runner::take_file_errors();
-        for w in warnings.iter().chain(&errors) {
+        // The cop errors, with the directive warnings RuboCop prints among them (`true`): those
+        // only go to stderr.
+        let entries = runner::take_file_errors();
+        for w in warnings.iter().chain(entries.iter().map(|e| &e.0)) {
             eprintln!("{w}");
         }
+        let errors: Vec<String> = entries.into_iter().filter(|e| !e.1).map(|e| e.0).collect();
         let errored = runner::take_errored();
         rbcop::autogen::take_file();
         let (report, corrected, loop_error) =

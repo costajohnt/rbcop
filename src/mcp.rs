@@ -62,6 +62,8 @@ pub fn serve(store: Store, pwd_config: Arc<Resolved>) -> Result<u8, String> {
     let roots = autocorrect::write_roots(store.cwd(), &[]);
     // An agent isn't an editor: offenses are located and worded as on the command line, and one
     // cop crashing on one file does not cost the rest of the request.
+    // Offenses carry their corrections, as `--format json` reports them.
+    rbcop::cop::record_edits();
     let mut runtime = Runtime::new(store, pwd_config, false);
     runtime.raise_cop_error = false;
     let mut server = Server { runtime, roots, initialized: false };
@@ -418,8 +420,13 @@ impl Server {
         let cwd = &self.runtime.cwd;
         Entry {
             path: smart_path(Path::new(file), cwd),
-            offenses: offenses.iter().map(|o| json_offense(o, cfg)).collect(),
-            problems: json_problems(&expand_path(Path::new(file), cwd), cwd, &self.runtime.errors, &self.runtime.warnings),
+            offenses: offenses.iter().map(|o| rbcop::formatter::hash_for_offense(o, cfg)).collect(),
+            problems: rbcop::formatter::hash_for_problems(
+                &smart_path(Path::new(file), cwd),
+                &expand_path(Path::new(file), cwd),
+                &self.runtime.errors,
+                &self.runtime.warnings,
+            ),
             corrected: None,
             diff: None,
         }
@@ -892,18 +899,12 @@ fn list(params: Option<&Json>, items: &[&str]) -> Result<String, Fail> {
     Ok(items[start..].join(","))
 }
 
-// L3-PENDING: JSONFormatter#hash_for_offense and #hash_for_problems come from batch L3's
-// formatter (rbcop::formatter); these stubs only keep the crate compiling until it lands.
-fn json_offense(_o: &Off, _cfg: &Resolved) -> String {
-    String::new()
-}
-
-fn json_problems(_abs: &Path, _cwd: &Path, _errors: &[String], _warnings: &[String]) -> (String, usize, usize) {
-    (String::new(), 0, 0)
-}
-
-fn problem_messages(_abs: &Path, _cwd: &Path, errors: &[String]) -> Vec<String> {
-    errors.to_vec()
+/// JSONFormatter#hash_for_problems' messages for one key, as plain strings: what a crash in
+/// corrected inline code fails the call with.
+fn problem_messages(abs: &Path, cwd: &Path, errors: &[String]) -> Vec<String> {
+    let (fragment, _, _) = rbcop::formatter::hash_for_problems(&smart_path(abs, cwd), abs, errors, &[]);
+    let Some(list) = fragment.strip_prefix(',') else { return Vec::new() };
+    Json::parse(&format!("{{{list}}}")).map_or(Vec::new(), |j| j.get("errors").map_or(Vec::new(), |e| e.items().iter().map(Json::string).collect()))
 }
 
 #[cfg(test)]
