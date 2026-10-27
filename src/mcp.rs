@@ -72,7 +72,8 @@ pub fn serve(store: Store, pwd_config: Arc<Resolved>) -> Result<u8, String> {
     let repo = rbcop::targets::pin_repository();
     let mut runtime = Runtime::new(store, pwd_config, false);
     runtime.raise_cop_error = false;
-    let metadata = repo.map_or(Vec::new(), |r| vec![r.git_dir.clone(), r.common_dir.clone()]);
+    let metadata: Vec<(PathBuf, Option<(u64, u64)>)> =
+        repo.map_or(Vec::new(), |r| [&r.git_dir, &r.common_dir].map(|d| (d.clone(), file_id(d))).to_vec());
     let mut server = Server { runtime, roots, metadata, initialized: false };
     let mut input = std::io::stdin().lock();
     loop {
@@ -145,8 +146,9 @@ struct Server {
     runtime: Runtime,
     /// The working directory, canonical: the only root the tools read and write under.
     roots: Vec<PathBuf>,
-    /// The pinned repository's git dir and common dir: never read or written either.
-    metadata: Vec<PathBuf>,
+    /// The pinned repository's git dir and common dir, with their (device, inode): never read or
+    /// written either, under any spelling a case-insensitive file system accepts.
+    metadata: Vec<(PathBuf, Option<(u64, u64)>)>,
     /// ServerSession#initialized?
     initialized: bool,
 }
@@ -576,7 +578,8 @@ impl Server {
         // A tool that wrote `.git/config` could make the next `changed` scope's git run a command
         // (core.fsmonitor and the like), so nothing under a VCS directory is read or written.
         let metadata = real.as_ref().filter(|r| {
-            self.metadata.iter().any(|dir| r.starts_with(dir))
+            self.metadata.iter().any(|(dir, _)| r.starts_with(dir))
+                || r.ancestors().filter_map(file_id).any(|id| self.metadata.iter().any(|(_, m)| *m == Some(id)))
                 || r.file_name().is_some_and(|n| n.to_string_lossy().eq_ignore_ascii_case(".gitattributes"))
                 || self.roots.iter().filter_map(|root| r.strip_prefix(root).ok()).any(|below| {
                     below
@@ -921,6 +924,12 @@ fn list(params: Option<&Json>, items: &[&str]) -> Result<String, Fail> {
         Some(_) => return Err(invalid_params("Invalid cursor")),
     };
     Ok(items[start..].join(","))
+}
+
+/// A path's (device, inode), when it exists.
+fn file_id(path: &Path) -> Option<(u64, u64)> {
+    use std::os::unix::fs::MetadataExt;
+    std::fs::metadata(path).ok().map(|m| (m.dev(), m.ino()))
 }
 
 /// JSONFormatter#hash_for_problems' messages for one key, as plain strings: what a crash in

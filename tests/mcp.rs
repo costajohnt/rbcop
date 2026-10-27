@@ -250,20 +250,48 @@ fn mcp_tools_refuse_a_pinned_git_dir_under_any_name() {
     std::fs::create_dir_all(s.dir.join("meta")).unwrap();
     s.git(&["init", "-q", "--separate-git-dir", "meta/store"]);
     std::fs::write(s.dir.join("a.rb"), "puts( 1)\n").unwrap();
+    // A symlink alias of the git dir inside the project.
+    std::os::unix::fs::symlink(s.dir.join("meta/store"), s.dir.join("alias")).unwrap();
     let config = std::fs::read_to_string(s.dir.join("meta/store/config")).unwrap();
     let requests = [
         tool_call(1, "autocorrection", r#"{"path":"meta/store/config","source_code":"x\n","safety":true}"#),
         tool_call(2, "autocorrection", r#"{"path":"meta/store/hooks/pre-commit","source_code":"x\n","safety":true}"#),
         tool_call(3, "inspection", r#"{"path":"meta/store/HEAD","source_code":"x\n"}"#),
-        tool_call(4, "inspection", r#"{"path":"a.rb","only":["Layout"]}"#),
+        tool_call(4, "autocorrection", r#"{"path":"alias/config","source_code":"x\n","safety":true}"#),
+        tool_call(5, "autocorrection", r#"{"path":"alias/new","source_code":"x\n","safety":true}"#),
+        tool_call(6, "inspection", r#"{"path":"a.rb","only":["Layout"]}"#),
     ];
     let lines = s.mcp(&requests);
-    for line in &lines[..3] {
+    for line in &lines[..5] {
         assert!(line.contains("\"isError\":true") && line.contains("inside version control metadata"), "{line}");
     }
-    assert!(lines[3].contains("\"isError\":false"), "{}", lines[3]);
+    assert!(lines[5].contains("\"isError\":false"), "{}", lines[5]);
     assert_eq!(std::fs::read_to_string(s.dir.join("meta/store/config")).unwrap(), config);
-    assert!(!s.dir.join("meta/store/hooks/pre-commit").exists());
+    assert!(!s.dir.join("meta/store/hooks/pre-commit").exists() && !s.dir.join("meta/store/new").exists());
+}
+
+/// On a case-insensitive file system (macOS by default) the git dir is refused however the
+/// client spells it: canonicalize keeps the caller's case there, so the check compares (device,
+/// inode). On a case-sensitive one (CT 440's ext4) `REPO.GIT` is another directory, and the test
+/// only checks that the real spelling is refused.
+#[test]
+fn mcp_tools_refuse_the_git_dir_in_any_case() {
+    let s = GitScratch::new("gitdircase");
+    s.git(&["init", "-q", "--separate-git-dir", "repo.git"]);
+    let insensitive = s.dir.join("REPO.GIT").exists();
+    let config = std::fs::read_to_string(s.dir.join("repo.git/config")).unwrap();
+    let requests = [
+        tool_call(1, "autocorrection", r#"{"path":"repo.git/config","source_code":"x\n","safety":true}"#),
+        tool_call(2, "autocorrection", r#"{"path":"REPO.GIT/config","source_code":"x\n","safety":true}"#),
+        tool_call(3, "autocorrection", r#"{"path":"Repo.Git/HEAD","source_code":"x\n","safety":true}"#),
+    ];
+    let lines = s.mcp(&requests);
+    let refused = |line: &str| line.contains("\"isError\":true") && line.contains("inside version control metadata");
+    assert!(refused(&lines[0]), "{}", lines[0]);
+    if insensitive {
+        assert!(refused(&lines[1]) && refused(&lines[2]), "{lines:?}");
+    }
+    assert_eq!(std::fs::read_to_string(s.dir.join("repo.git/config")).unwrap(), config);
 }
 
 /// No repository at startup: a bare repository planted in the project (at its root, so that
