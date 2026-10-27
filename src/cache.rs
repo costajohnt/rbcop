@@ -67,7 +67,10 @@ fn parse_edits(field: &str, text: &str) -> Option<Option<Vec<(usize, usize, Stri
         if hex.len() % 2 != 0 || !hex.bytes().all(|c| c.is_ascii_hexdigit()) {
             return None;
         }
-        let bytes = (0..hex.len()).step_by(2).map(|i| u8::from_str_radix(&hex[i..i + 2], 16).ok()).collect::<Option<Vec<u8>>>()?;
+        let bytes = (0..hex.len())
+            .step_by(2)
+            .map(|i| u8::from_str_radix(&hex[i..i + 2], 16).ok())
+            .collect::<Option<Vec<u8>>>()?;
         edits.push((b, e, String::from_utf8(bytes).ok()?));
     }
     Some(Some(edits))
@@ -172,13 +175,7 @@ impl Cache {
                 edits: parse_edits(edits, &text)?,
             });
         }
-        Some(FileReport {
-            offenses,
-            text,
-            warnings: Vec::new(),
-            abort: None,
-            diffs: Vec::new(),
-        })
+        Some(FileReport { offenses, text, warnings: Vec::new(), abort: None, diffs: Vec::new() })
     }
 
     /// ResultCache#save, reached where Runner#save_in_cache would save. Only writes when `write`
@@ -359,8 +356,13 @@ mod tests {
             todo: false,
             edits: Some(vec![(6, 7, String::new()), (0, 0, "a;b,\n".into())]),
         };
-        let report =
-            FileReport { offenses: vec![offense], text: text.into(), warnings: Vec::new(), abort: None, diffs: Vec::new() };
+        let report = FileReport {
+            offenses: vec![offense],
+            text: text.into(),
+            warnings: Vec::new(),
+            abort: None,
+            diffs: Vec::new(),
+        };
         cache.save("k", &report, true);
         let loaded = cache.load("k", text.as_bytes()).unwrap();
         assert_eq!(loaded.offenses[0].edits, report.offenses[0].edits);
