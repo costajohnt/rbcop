@@ -1,4 +1,4 @@
-# RuboCop gives up on b.rb (Infinite loop detected) and corrects the files around it (#680).
+# RuboCop 1.91.0 gave up on b.rb (Infinite loop detected, #680); 1.92.1 corrects it (Layout/DefEndAlignment).
 AllCops:
   NewCops: enable
   SuggestExtensions: false

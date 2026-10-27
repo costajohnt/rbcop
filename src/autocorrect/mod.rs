@@ -695,6 +695,37 @@ mod tests {
         c
     }
 
+    /// InfiniteCorrectionLoop lists each iteration's cops in team order, which Registry#sort!
+    /// makes cop-name order. (The specs corpus input that showed it,
+    /// style/redundant_line_continuation/089.rb, no longer loops under RuboCop 1.92.1.)
+    #[test]
+    fn infinite_loop_names_cops_in_name_order() {
+        let offense = |cop: &'static str| Offense {
+            start: 0,
+            end: 0,
+            cop,
+            message: String::new(),
+            severity: crate::cop::Severity::Convention,
+            correctable: true,
+            global: false,
+            corrected: true,
+            source: None,
+            disabled: false,
+            justification: None,
+            todo: false,
+            edits: None,
+        };
+        let iterations = vec![
+            vec![offense("Layout/DefEndAlignment")],
+            vec![offense("Style/Semicolon"), offense("Layout/TrailingWhitespace"), offense("Style/Semicolon")],
+        ];
+        assert_eq!(
+            infinite_loop(Path::new("/p/t.rb"), &iterations),
+            "Infinite loop detected in /p/t.rb and caused by Layout/DefEndAlignment -> Layout/TrailingWhitespace, \
+             Style/Semicolon"
+        );
+    }
+
     #[test]
     fn collate_follows_registry_order_clobbering_and_incompatibility() {
         let src: Arc<str> = Arc::from("abcdef");
