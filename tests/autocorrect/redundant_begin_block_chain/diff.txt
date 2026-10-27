@@ -1,0 +1,30 @@
+example.rb:16:20: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+example.rb:24:24: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+
+--- a/example.rb
++++ b/example.rb
+@@ -13,20 +13,18 @@
+ 
+ # Short enough when joined: redundant.
+ def short_chain
+-  @short_chain ||= begin
+-    items.
++  @short_chain ||= items.
+       map { |i| i }
+-  end
++  
+ end
+ 
+ # A multi-line block is not single-line: redundant.
+ def multiline_block
+-  @multiline_block ||= begin
+-    example_groups.
++  @multiline_block ||= example_groups.
+       flat_map(&:declaration_locations).
+       group_by(&:first).
+       transform_values do |lines|
+         lines.map(&:last).sort.reverse
+       end
+-  end
++  
+ end

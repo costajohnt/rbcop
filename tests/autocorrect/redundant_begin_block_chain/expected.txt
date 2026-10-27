@@ -1,0 +1,2 @@
+example.rb:16:20: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+example.rb:24:24: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.

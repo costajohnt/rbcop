@@ -299,10 +299,13 @@ fn too_long_when_joined(cx: &Cx, b: &BeginNode) -> bool {
     let Some(max) = cx.config.for_cop("Layout/LineLength").num("Max").map(crate::config::value::Num::f64) else {
         return false;
     };
-    let (s, e) = (statement.location().start_offset(), statement.location().end_offset());
-    if cx.src.line_of(s) != cx.src.line_of(e) {
+    // rubocop-ast `single_line?`: a block statement compares its brace lines, so a multi-line
+    // chain ending in a one-line `{ }` block counts with its whole (multi-line) source length.
+    // ponytail: lambda and super blocks use their first/last lines; port them if a corpus hits one.
+    if !helpers::rspec::single_line(cx.src, &statement) {
         return false;
     }
+    let (s, e) = (statement.location().start_offset(), statement.location().end_offset());
     let mut length = cx.src.text[s..e].chars().count();
     if low_precedence_statement(&statement) {
         length += 2;
