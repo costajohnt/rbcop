@@ -99,17 +99,11 @@ impl<'a, 'pr> Body<'a, 'pr> {
 
 /// `bare_access_modifier?` (given whether the node is in macro scope).
 fn bare_access_modifier(node: &Node, macro_scope: bool) -> bool {
-    access_modifier(node, macro_scope, true)
-}
-
-/// `access_modifier?` (bare or with arguments).
-fn access_modifier(node: &Node, macro_scope: bool, bare_only: bool) -> bool {
     let Some(c) = node.as_call_node() else { return false };
     if !macro_scope || c.receiver().is_some() || c.block().is_some_and(|b| b.as_block_node().is_some()) {
         return false;
     }
-    let has_args = !send_args(&c).is_empty();
-    if bare_only && has_args {
+    if !send_args(&c).is_empty() {
         return false;
     }
     matches!(c.name().as_slice(), b"public" | b"protected" | b"private" | b"module_function")
@@ -274,8 +268,8 @@ fn check_members(cx: &mut Cx, base: usize, body: Option<&Body>, macro_scope: boo
         _ => None,
     };
     let first_modifier = match body {
-        Some(Body::Begin(v)) if access_modifier(&v[0], macro_scope, false) => Some(Body::Child(&v[0])),
-        _ => wrapper_first.filter(|f| access_modifier(f, macro_scope, false)).map(Body::Single),
+        Some(Body::Begin(v)) if bare_access_modifier(&v[0], macro_scope) => Some(Body::Child(&v[0])),
+        _ => wrapper_first.filter(|f| bare_access_modifier(f, macro_scope)).map(Body::Single),
     };
     let outdent = cx.config.for_cop("Layout/AccessModifierIndentation").str("EnforcedStyle") == Some("outdent");
     match (&first_modifier, outdent) {
@@ -313,7 +307,7 @@ fn check_members(cx: &mut Cx, base: usize, body: Option<&Body>, macro_scope: boo
         }
     } else {
         for m in children {
-            if access_modifier(m, macro_scope, false) {
+            if bare_access_modifier(m, macro_scope) {
                 continue;
             }
             let b = Body::Child(m);

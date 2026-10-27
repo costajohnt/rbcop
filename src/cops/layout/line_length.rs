@@ -93,12 +93,11 @@ fn init(cx: &mut Cx) {
 struct Element {
     start: usize,
     end: usize,
-    heredoc: bool,
 }
 
 fn element(n: &Node) -> Element {
     let loc = n.location();
-    Element { start: loc.start_offset(), end: loc.end_offset(), heredoc: is_heredoc(n) }
+    Element { start: loc.start_offset(), end: loc.end_offset() }
 }
 
 /// CheckLineBreakable#process_args: an unbraced trailing hash contributes its pairs.
@@ -150,9 +149,9 @@ fn breakable_element(
     cx: &Cx,
     range: (usize, usize),
     elements: &[Element],
-    call: Option<(bool, bool)>,
+    movable: bool,
     def_last_line: Option<usize>,
-    is_array: bool,
+    heredoc_pos: Option<usize>,
 ) -> Option<(usize, usize)> {
     let max = max_of(cx).f64();
     let src = cx.src;
@@ -194,10 +193,7 @@ fn breakable_element(
     }
     // extract_first_element_over_column_limit
     let mut elements: Vec<&Element> = elements.iter().collect();
-    if let Some((parenthesized, first_is_heredoc)) = call
-        && !parenthesized
-        && !first_is_heredoc
-    {
+    if !movable {
         elements.remove(0);
     }
     let within = |e: &&Element| src.column(e.start) as f64 <= max && src.line_of(e.start) == first_line;
@@ -205,16 +201,15 @@ fn breakable_element(
     while elements.get(i).is_some_and(within) {
         i += 1;
     }
-    // shift_elements_for_heredoc_arg: only calls and arrays.
-    if (call.is_some() || is_array)
-        && let Some(h) = elements.iter().position(|e| e.heredoc) {
-            if h == 0 {
-                return None;
-            }
-            if h < i {
-                i = h + 1;
-            }
+    // shift_elements_for_heredoc_arg: calls, arrays and hashes (`heredoc_pos` is None for others):
+    // never break after the first heredoc, wherever it sits inside the elements.
+    if let Some(pos) = heredoc_pos {
+        let last_safe = elements.iter().rposition(|e| e.start <= pos)?;
+        if last_safe == 0 && elements[0].end > pos {
+            return None;
         }
+        i = i.min(last_safe + 1);
+    }
     let chosen = if i == 0 { elements.first()? } else { elements[i - 1] };
     Some((chosen.start, chosen.end))
 }
@@ -318,25 +313,44 @@ fn check_block(cx: &mut Cx, start: usize, block: &Node, receiver: Option<Node>, 
 }
 
 fn contains_heredoc(n: &Node) -> bool {
-    struct Find(bool);
+    first_heredoc(std::slice::from_ref(n)).is_some()
+}
+
+/// CheckLineBreakable#heredoc_begin_position: where the first heredoc in these nodes (or their
+/// descendants) opens.
+fn first_heredoc(nodes: &[Node]) -> Option<usize> {
+    struct Find(Option<usize>);
+    impl Find {
+        fn add(&mut self, o: ruby_prism::Location) {
+            if o.as_slice().starts_with(b"<<") && self.0.is_none_or(|p| o.start_offset() < p) {
+                self.0 = Some(o.start_offset());
+            }
+        }
+    }
     impl<'pr> ruby_prism::Visit<'pr> for Find {
         fn visit_string_node(&mut self, node: &ruby_prism::StringNode<'pr>) {
-            self.0 |= node.opening_loc().is_some_and(|o| o.as_slice().starts_with(b"<<"));
+            if let Some(o) = node.opening_loc() {
+                self.add(o);
+            }
         }
         fn visit_interpolated_string_node(&mut self, node: &ruby_prism::InterpolatedStringNode<'pr>) {
-            self.0 |= node.opening_loc().is_some_and(|o| o.as_slice().starts_with(b"<<"));
+            if let Some(o) = node.opening_loc() {
+                self.add(o);
+            }
             ruby_prism::visit_interpolated_string_node(self, node);
         }
         fn visit_x_string_node(&mut self, node: &ruby_prism::XStringNode<'pr>) {
-            self.0 |= node.opening_loc().as_slice().starts_with(b"<<");
+            self.add(node.opening_loc());
         }
         fn visit_interpolated_x_string_node(&mut self, node: &ruby_prism::InterpolatedXStringNode<'pr>) {
-            self.0 |= node.opening_loc().as_slice().starts_with(b"<<");
+            self.add(node.opening_loc());
             ruby_prism::visit_interpolated_x_string_node(self, node);
         }
     }
-    let mut f = Find(false);
-    ruby_prism::Visit::visit(&mut f, n);
+    let mut f = Find(None);
+    for n in nodes {
+        ruby_prism::Visit::visit(&mut f, n);
+    }
     f.0
 }
 
@@ -402,7 +416,8 @@ impl Cop for LineLength {
                 let range = send_range(&call);
                 // `parenthesized?`: parser gives `a[x, y]` no `loc.begin`.
                 let parenthesized = call.opening_loc().is_some_and(|l| l.as_slice() == b"(");
-                if let Some(pos) = breakable_element(cx, range, &elements, Some((parenthesized, first_is_heredoc)), None, false) {
+                let heredoc_pos = first_heredoc(&call_args(&call));
+                if let Some(pos) = breakable_element(cx, range, &elements, parenthesized || first_is_heredoc, None, heredoc_pos) {
                     record_node_break(cx, pos);
                 }
             }
@@ -424,7 +439,8 @@ impl Cop for LineLength {
                 // a raise (a String `Max`) is a cop error at that array
                 let (cop, src) = (cx.cop, cx.src);
                 crate::runner::own_callback(cop, src, Some(range.0), || {
-                    if let Some(pos) = breakable_element(cx, range, &elements, None, None, true) {
+                    let heredoc_pos = first_heredoc(&helpers::resbody::exceptions(node));
+                    if let Some(pos) = breakable_element(cx, range, &elements, true, None, heredoc_pos) {
                         record_node_break(cx, pos);
                     }
                 });
@@ -448,7 +464,9 @@ impl Cop for LineLength {
                 }
                 let last_line = cx.src.line_of(params.last().unwrap().end.saturating_sub(1));
                 let loc = node.location();
-                if let Some(pos) = breakable_element(cx, (loc.start_offset(), loc.end_offset()), &params, None, Some(last_line), false) {
+                // first_element_movable?: only with parenthesized parameters.
+                let movable = def.lparen_loc().is_some();
+                if let Some(pos) = breakable_element(cx, (loc.start_offset(), loc.end_offset()), &params, movable, Some(last_line), None) {
                     record_node_break(cx, pos);
                 }
             }
@@ -458,7 +476,21 @@ impl Cop for LineLength {
                     return;
                 }
                 let loc = node.location();
-                if let Some(pos) = breakable_element(cx, (loc.start_offset(), loc.end_offset()), &elements, None, None, kind::of(node) == kind::ARRAY_NODE) {
+                let children: Vec<Node> = match node.as_array_node() {
+                    Some(a) => a.elements().iter().collect(),
+                    None => node.as_hash_node().unwrap().elements().iter().collect(),
+                };
+                let heredoc_pos = first_heredoc(&children);
+                if let Some(pos) = breakable_element(cx, (loc.start_offset(), loc.end_offset()), &elements, true, None, heredoc_pos) {
+                    // compact_nested_array_break?: a nested array opening a bracketed array stays
+                    // put under Layout/SpaceInsideArrayLiteralBrackets `compact`.
+                    let compact = node.as_array_node().is_some_and(|a| a.opening_loc().is_some_and(|o| o.as_slice() == b"["))
+                        && elements.first().is_some_and(|f| (f.start, f.end) == pos && cx.src.text[pos.0..].starts_with('['))
+                        && helpers::alignment::enabled_cop_str(cx, "Layout/SpaceInsideArrayLiteralBrackets", "EnforcedStyle").as_deref()
+                            == Some("compact");
+                    if compact {
+                        return;
+                    }
                     record_node_break(cx, pos);
                 }
             }

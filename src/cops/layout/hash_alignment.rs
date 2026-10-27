@@ -113,8 +113,8 @@ impl Ctx<'_> {
             self.col(f.key.0) - self.col(c.key.0)
         }
     }
-    fn value_delta(&self, f: &Elem, c: &Elem) -> i64 {
-        if self.same_line(f, c) || f.splat || c.splat { 0 } else { self.col(f.value.0) - self.col(c.value.0) }
+    fn multiline(&self, r: (usize, usize)) -> bool {
+        self.line(r.0) != self.line(r.1)
     }
     fn delimiter_delta(&self, f: &Elem, c: &Elem) -> i64 {
         if self.same_line(f, c) || f.rocket != c.rocket { 0 } else { self.col(f.op.0) - self.col(c.op.0) }
@@ -190,27 +190,31 @@ impl Ctx<'_> {
                 value: Some(self.key_value(c)),
             },
             Style::Splat => Deltas { key: Some(self.key_delta(f, c, false)), ..Deltas::default() },
+            // SeparatorAlignment leaves pairs alone when either key spans several lines.
+            Style::Separator if self.multiline(f.key) || self.multiline(c.key) => Deltas::default(),
             Style::Table | Style::Separator => {
                 let table = style == Style::Table;
                 let key = self.key_delta(f, c, !table);
+                // separator_shift: a multiline key's separator does not move with its first line.
+                let shift = if self.multiline(c.key) { 0 } else { key };
                 let sep = if c.rocket {
                     let rocket = if table {
                         self.target_operator_column(f) - self.col(c.op.0)
                     } else {
                         self.delimiter_delta(f, c)
                     };
-                    rocket - key
+                    rocket - shift
                 } else {
                     0
                 };
                 let value = if table {
                     self.table_value(f, c)
-                } else if c.omission {
+                } else if f.range == c.range || c.omission {
                     0
                 } else {
-                    self.value_delta(f, c)
+                    self.col(f.op.1) + 1 - self.col(c.value.0)
                 };
-                Deltas { key: Some(key), sep: Some(sep), value: Some(value - key - sep) }
+                Deltas { key: Some(key), sep: Some(sep), value: Some(value - shift - sep) }
             }
         }
     }
@@ -302,6 +306,7 @@ impl Cop for HashAlignment {
         // offenses_by: insertion-ordered class => offending element indexes (duplicates kept).
         let mut offenses_by: Vec<(Style, Vec<usize>)> = Vec::new();
         let mut column_deltas: Vec<(Style, usize, Deltas)> = Vec::new();
+        let mut unalignable: Vec<Style> = Vec::new();
         let mut check = |style: Style, idx: usize, d: Deltas| {
             let pos = match offenses_by.iter().position(|(s, _)| *s == style) {
                 Some(p) => p,
@@ -311,6 +316,11 @@ impl Cop for HashAlignment {
                 }
             };
             if d.good() {
+                return;
+            }
+            // key_out_of_line?: the key would move left of column 0.
+            if d.key.unwrap_or(0) < -ctx.col(ctx.elems[idx].range.0) {
+                unalignable.push(style);
                 return;
             }
             column_deltas.retain(|(s, i, _)| !(*s == style && *i == idx));
@@ -331,8 +341,11 @@ impl Cop for HashAlignment {
         if let Some(p) = offenses_by.iter().position(|(s, _)| *s == Style::Splat) {
             register.push(offenses_by.remove(p));
         }
-        // `min_by { |_, v| v.length }`: the first class with the fewest entries.
-        if let Some(min) = offenses_by.iter().min_by_key(|(_, v)| v.len()) {
+        // `min_by { |_, v| v.length }` over the alignable classes (all of them if none is): the
+        // first class with the fewest entries.
+        let alignable: Vec<_> = offenses_by.iter().filter(|(s, _)| !unalignable.contains(s)).collect();
+        let candidates = if alignable.is_empty() { offenses_by.iter().collect() } else { alignable };
+        if let Some(min) = candidates.into_iter().min_by_key(|(_, v)| v.len()) {
             register.push(min.clone());
         }
         for (style, idxs) in register {
@@ -354,10 +367,9 @@ impl Cop for HashAlignment {
 /// Whether `correct_node` makes an edit.
 fn correct_node(ctx: &Ctx, c: &mut Corrector, e: &Elem, d: &Deltas) {
     if e.splat || e.omission {
-        let key = d.key.unwrap_or(0).max(-ctx.col(e.range.0));
-        return adjust(ctx, c, key, e.range);
+        return adjust(ctx, c, d.key.unwrap_or(0), e.range);
     }
-    adjust(ctx, c, d.key.unwrap_or(0).max(-ctx.col(e.key.0)), e.key);
+    adjust(ctx, c, d.key.unwrap_or(0), e.key);
     adjust(ctx, c, d.sep.unwrap_or(0), e.op);
     adjust(ctx, c, d.value.unwrap_or(0), e.value);
 }
