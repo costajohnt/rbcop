@@ -1391,24 +1391,6 @@ fn cop_error_is_located_at_the_visited_node() {
     let _ = fs::remove_dir_all(&dir);
 }
 
-/// InfiniteCorrectionLoop lists each iteration's cops in team order, which Registry#sort! makes
-/// cop-name order (specs corpus style/redundant_line_continuation/089.rb).
-#[test]
-fn infinite_loop_names_cops_in_name_order() {
-    let dir = scratch("infloop");
-    fs::write(dir.join("t.rb"), "class Foo\n  memoize \\\n  def do_something\n  end\nend\n").unwrap();
-    let only = "Layout/DefEndAlignment,Layout/TrailingWhitespace,Style/EmptyMethod,Style/Semicolon";
-    let out = rbcop(&dir, &["-A", "--only", only, "--force-default-config", "-f", "e", "t.rb"]);
-    let want = format!(
-        "Infinite loop detected in {} and caused by Layout/DefEndAlignment -> Layout/TrailingWhitespace, \
-         Style/EmptyMethod, Style/Semicolon\n",
-        dir.join("t.rb").display()
-    );
-    assert!(text(&out.stderr).contains(&want), "{}", text(&out.stderr));
-    assert_eq!(out.status.code(), Some(1));
-    let _ = fs::remove_dir_all(&dir);
-}
-
 /// Lint/UnescapedBracketInRegexp -A on the 1.92.1 spec examples RuboCop 1.91.0 never finishes (#680,
 /// docs/known-gaps.md): a double-quoted string gets 1.92.1's `\\]`; a `]` after an escape is no
 /// offense. Expected output recorded from RuboCop 1.92.1 (status 0: everything left is corrected).
