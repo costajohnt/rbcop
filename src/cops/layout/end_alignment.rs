@@ -141,32 +141,53 @@ fn variable_alignment_column(cx: &Cx, node: &Node) -> usize {
     let src = cx.src;
     let line = |off: usize| src.line_of(off);
     let anc = parser_ancestor_ranges(cx.ancestors);
-    let is_send = |i: usize| cx.ancestors[i].as_call_node().is_some_and(|c| !is_csend(&c));
-    // (index into `anc`, None for the node itself; start offset)
-    let mut align: (Option<usize>, usize) = (None, span(node).0);
+    let start = span(node).0;
     let case_arg = matches!(kind::of(node), kind::CASE_NODE | kind::CASE_MATCH_NODE)
         && argument_parent(cx).is_some()
-        && anc.first().is_some_and(|&(_, s, _)| line(s) == line(span(node).0));
+        && anc.first().is_some_and(|&(_, s, _)| line(s) == line(start));
     if case_arg {
-        align = (Some(0), anc[0].1);
-    } else {
-        let found = anc.iter().position(|&(i, _, _)| {
-            let a = &cx.ancestors[i];
-            helpers::node_types::is_assignment(a)
-                || a.as_call_node().is_some_and(|c| !is_csend(&c) && helpers::node_types::is_operator_method(method_name(&c)))
-        });
-        if let Some(p) = found.filter(|&p| line(span(node).0) <= line(anc[p].1)) {
-            align = (Some(p), anc[p].1);
-        }
+        return src.column(anc[0].1);
     }
+    // assignment_or_operator_method (1.92): the innermost ancestor whose leading node is (or, for
+    // an operator method, is not) the node.
+    let is_node = |n: Option<Node>| n.is_some_and(|n| kind::of(&n) == kind::of(node) && span(&n) == span(node));
+    let found = anc.iter().find(|&&(i, _, _)| {
+        let a = &cx.ancestors[i];
+        let send = a.as_call_node().filter(|c| !is_csend(c));
+        if helpers::node_types::is_assignment(a) || send.as_ref().is_some_and(|c| method_name(c) == "<<") {
+            is_node(extract_rhs(a, true).and_then(leading_node))
+        } else if let Some(c) = send {
+            if helpers::node_types::is_operator_method(method_name(&c)) {
+                !is_node(leading_node(c.as_node()))
+            } else {
+                is_node(send_args(&c).pop().and_then(leading_node))
+            }
+        } else {
+            false
+        }
+    });
+    // line_break_before_keyword?: fall back to the node itself.
+    match found {
+        Some(&(_, s, _)) if line(start) <= line(s) => src.column(s),
+        _ => src.column(start),
+    }
+}
+
+/// leading_node: the first part of the call chain, unwrapped from `begin`/`or`/`and` to its
+/// first child.
+fn leading_node(rhs: Node) -> Option<Node> {
+    let mut rhs = first_part_of_call_chain(rhs)?;
     loop {
-        let next = align.0.map_or(0, |p| p + 1);
-        match anc.get(next) {
-            Some(&(i, s, _)) if is_send(i) && line(s) == line(align.1) => align = (Some(next), s),
-            _ => break,
-        }
+        rhs = match kind::of(&rhs) {
+            kind::PARENTHESES_NODE => rhs.as_parentheses_node().unwrap().body().and_then(|b| match b.as_statements_node() {
+                Some(s) => s.body().iter().next(),
+                None => Some(b),
+            })?,
+            kind::AND_NODE => rhs.as_and_node().unwrap().left(),
+            kind::OR_NODE => rhs.as_or_node().unwrap().left(),
+            _ => return Some(rhs),
+        };
     }
-    src.column(align.1)
 }
 
 fn is_conditional(node: &Node) -> bool {
@@ -255,23 +276,7 @@ impl Cop for EndAlignment {
             }
             _ => {
                 // CheckAssignment: on_*asgn / on_send (not csend).
-                let Some(rhs) = extract_rhs(node, false) else { return };
-                let Some(mut rhs) = first_part_of_call_chain(rhs) else { return };
-                loop {
-                    let next = match kind::of(&rhs) {
-                        kind::PARENTHESES_NODE => rhs.as_parentheses_node().unwrap().body().and_then(|b| {
-                            match b.as_statements_node() {
-                                Some(s) => s.body().iter().next(),
-                                None => Some(b),
-                            }
-                        }),
-                        kind::AND_NODE => Some(rhs.as_and_node().unwrap().left()),
-                        kind::OR_NODE => Some(rhs.as_or_node().unwrap().left()),
-                        _ => break,
-                    };
-                    let Some(n) = next else { return };
-                    rhs = n;
-                }
+                let Some(rhs) = extract_rhs(node, false).and_then(leading_node) else { return };
                 if !is_conditional(&rhs) {
                     return;
                 }

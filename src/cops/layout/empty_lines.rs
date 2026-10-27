@@ -11,8 +11,8 @@ impl Cop for EmptyLines {
 
     fn on_file(&self, cx: &mut Cx) {
         let src = cx.src;
-        // RuboCop checks the raw source: a CRLF between the newlines breaks the quick check.
-        if !src.raw_text.contains("\n\n\n") || helpers::parser_tokens::tokens_empty(src, cx.facts.first_code) {
+        // consecutive_blank_lines_possible? (1.92: the buffer source, CRLF normalised).
+        if !src.text.contains("\n\n\n") || helpers::parser_tokens::tokens_empty(src, cx.facts.first_code) {
             return;
         }
         // Lines with a parser token: lexer tokens (a statement's newline after a `\` continuation
