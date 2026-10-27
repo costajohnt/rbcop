@@ -42,6 +42,12 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   `rbcop: not autocorrecting <file>: it resolves to <path>, outside the project` goes to stderr;
   the exit status follows its offenses. The check is repeated right before the write, which follows
   no symlink after it (directories are opened one by one, relative to the last). `--stdin` is unaffected.
+- The result cache keeps a run's offenses with their corrections (RuboCop 1.92.1's
+  Offense#corrections, printed by the JSON formatter) only when a JSON formatter is in use, and
+  those entries live apart from the others: switching between `-f json` and another formatter is a
+  cold run, and MaxFilesInCache counts both sets. RuboCop keeps one entry per file with the
+  corrections always (recording them on every run cost a warm rails run about 40% more CPU).
+  Output is the same either way.
 - `--diff` with `RBCOP_FALLBACK=1` is refused when the RuboCop child would run (it corrects by writing);
   without it, `--diff` skips the fallback and prints the not-running notice.
 - HTML formatter escapes `& < >` in messages outside code spans and fully escapes paths; GitHub
