@@ -82,8 +82,9 @@ fn lockfile_version(text: &str) -> Option<f64> {
 }
 
 /// TargetRuby::GemspecFile: the only *.gemspec in the nearest directory that has exactly one, up to
-/// `/` (Config#traverse_directories_upwards has no stop dir; an unreadable directory has none).
+/// ConfigFinder.project_root (inclusive) or `/` when there is none; an unreadable directory has none.
 fn gemspec_version(base_dir: &Path) -> Option<f64> {
+    let stop = super::project_root(&super::cwd());
     let mut file = None;
     for dir in base_dir.ancestors() {
         let specs: Vec<PathBuf> = std::fs::read_dir(dir)
@@ -95,6 +96,9 @@ fn gemspec_version(base_dir: &Path) -> Option<f64> {
             .collect();
         if specs.len() == 1 {
             file = specs.into_iter().next();
+            break;
+        }
+        if stop.as_deref() == Some(dir) {
             break;
         }
     }

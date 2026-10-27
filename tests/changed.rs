@@ -1,4 +1,4 @@
-//! `--changed [REVISION]` (Runner#only_changed, ChangedFiles): output recorded with RuboCop 1.91.0
+//! `--changed [REVISION]` (Runner#only_changed, ChangedFiles): output recorded with RuboCop 1.92.1
 //! on the same throwaway git repositories.
 
 mod common;
@@ -119,6 +119,9 @@ fn changed_matches_rubocop() {
         write(dir, &[(".rubocop.yml", CONFIG), ("a.rb", "x = 1\n")]);
     }
     git(&unborn, &["init", "-q", "."]);
+    // Staged in a repository without commits: changed against the empty tree (RuboCop 1.92.1).
+    write(&unborn, &[("staged.rb", "s = 1\n")]);
+    git(&unborn, &["add", "staged.rb"]);
 
     let lint = "b.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.\n\
                 b.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.\n\
@@ -155,7 +158,7 @@ fn changed_matches_rubocop() {
             ("repo", &["--changed=", "-L"], "", &empty_revision, 2),
             ("repo", &["--changed", "-s", "a.rb"], "", "--changed cannot be used with --stdin.\n", 2),
             ("repo/sub", &["--changed", "-L"], "f.rb\n", "", 0),
-            ("repo/sub", &["--changed", "-L", ".."], "../b.rb\nf.rb\n", "", 0),
+            ("repo/sub", &["--changed", "-L", ".."], "../b.rb\n../c.rb\nf.rb\n", "", 0),
             (
                 "norepo",
                 &["--changed", "-L"],
@@ -164,8 +167,8 @@ fn changed_matches_rubocop() {
                  parent directories): .git\n",
                 2,
             ),
-            ("unborn", &["--changed", "-L"], "a.rb\n", "", 0),
-            ("unborn", &["--changed=HEAD", "-L"], "a.rb\n", "", 0),
+            ("unborn", &["--changed", "-L"], "a.rb\nstaged.rb\n", "", 0),
+            ("unborn", &["--changed=HEAD", "-L"], "a.rb\nstaged.rb\n", "", 0),
             ("unborn", &["--changed=main", "-L"], "", &unborn_main, 2),
         ],
     );

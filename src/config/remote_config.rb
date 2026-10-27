@@ -1,11 +1,11 @@
-# RuboCop 1.91.0's RemoteConfig (lib/rubocop/remote_config.rb) and the cache root it is given
+# RuboCop 1.92.1's RemoteConfig (lib/rubocop/remote_config.rb) and the cache root it is given
 # (ConfigLoader.cache_root, CacheConfig.root_dir), run by src/config/mod.rs.
 # ARGV: the URL, a path relative to it (inherit_from inside a remote file; empty for none), and
 # the configured cache root (`--cache-root` or a CacheRootDirectory, as Store#early_cache_root
 # picks it; empty for none).
 # Prints the effective URL, a NUL, then the cache file path; on failure prints the exception's
 # message to stderr and exits 1.
-require 'net/http'
+require 'uri'
 require 'time'
 require 'digest/md5'
 require 'fileutils'
@@ -51,7 +51,10 @@ class RemoteConfig
   def request(uri = @uri, limit = 10, &block)
     raise ArgumentError, 'HTTP redirect too deep' if limit.zero?
 
-    http = Net::HTTP.new(uri.hostname, uri.port)
+    # Loaded here rather than at the top, since most runs never fetch a remote config.
+    require 'net/http'
+
+    http =Net::HTTP.new(uri.hostname, uri.port)
     http.use_ssl = uri.instance_of?(URI::HTTPS)
 
     generate_request(uri) do |request|
