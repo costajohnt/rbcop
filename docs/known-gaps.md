@@ -228,6 +228,8 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
     corrected offenses marked uncorrected, at offsets of the source before correction). A cached
     file without offenses is skipped and one with offenses is inspected again, as in RuboCop.
   - Pruning removes directories it emptied up to `rbcop_cache`, not above it.
+  - Pruning keeps going past an entry it cannot remove; RuboCop 1.92.1 stops at the first removal
+    error and prints it under `-d`.
   - Where RuboCop raises (no home directory, a cache directory that cannot be created for a
     reason other than EACCES/EROFS, an entry that cannot be written), rbcop runs without saving.
 - `--report-unused-todo-entries` audits only the `.rubocop_todo.yml` entries of cops rbcop
