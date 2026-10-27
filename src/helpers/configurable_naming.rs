@@ -65,15 +65,17 @@ pub fn allowed_identifier(cfg: &CopConfig, name: &str) -> bool {
 }
 
 /// ForbiddenIdentifiers#forbidden_identifier? || ForbiddenPattern#forbidden_pattern?
-/// (`forbidden_identifiers.any? && ...include?(name)`, `forbidden_patterns.map`): anything but an
-/// Array raises, a cop error.
+/// (`return false if forbidden_identifiers.empty?`, then `include?(name)`, a substring test on a
+/// String; `forbidden_patterns.map`): a value without `empty?` raises, a cop error.
 pub fn forbidden_name(cfg: &CopConfig, name: &str) -> bool {
-    let any = match cfg.get("ForbiddenIdentifiers") {
-        None => false,
-        Some(Value::Seq(items)) => items.iter().any(|i| !matches!(i, Value::Null | Value::Bool(false))),
-        Some(_) => panic!("undefined method 'any?' for ForbiddenIdentifiers"),
+    let empty = match cfg.get("ForbiddenIdentifiers") {
+        None => true,
+        Some(Value::Str(s)) => s.is_empty(),
+        Some(Value::Seq(items)) => items.is_empty(),
+        Some(Value::Map(m)) => m.keys().next().is_none(),
+        Some(_) => panic!("undefined method 'empty?' for ForbiddenIdentifiers"),
     };
-    (any && cfg.includes("ForbiddenIdentifiers", &strip_sigils(name)))
+    (!empty && cfg.includes("ForbiddenIdentifiers", &strip_sigils(name)))
         || cfg.regexes_array("ForbiddenPatterns").iter().any(|r| r.is_match(name))
 }
 
