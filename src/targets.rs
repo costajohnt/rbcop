@@ -159,7 +159,11 @@ fn hidden_in(file: &Path, base: &Path) -> bool {
 
 /// ChangedFiles#paths (`--changed REVISION`): the files added or modified since `revision` and the
 /// untracked ones, as absolute paths. Deleted files are left out. Errors are RuboCop::Error messages.
+/// With a repository pinned (`pin_repository`), only that one is asked, and none if there was none.
 pub fn changed(revision: &str) -> Result<std::collections::HashSet<PathBuf>, String> {
+    if let Some(Err(e)) = PINNED.get() {
+        return Err(e.clone());
+    }
     let root = git(&["rev-parse", "--show-toplevel"])?;
     // String#chomp
     let root = root.strip_suffix(b"\n").map(|r| r.strip_suffix(b"\r").unwrap_or(r)).unwrap_or(&root);
@@ -168,13 +172,15 @@ pub fn changed(revision: &str) -> Result<std::collections::HashSet<PathBuf>, Str
     // Deliberate difference: `--end-of-options` keeps a revision such as `--output=FILE` from
     // being read as a git option (RuboCop 1.91.0 passes it through, and git writes FILE). Git's
     // messages for every other revision are unchanged; a trailing `--` would reword them.
-    // `--no-ext-diff --no-textconv`: see git_command.
+    // `--no-ext-diff --no-textconv --no-renames`: see git_command (a rename's new name is listed
+    // either way, and its old one never is).
     let diff = [
         "-c",
         "diff.relative=false",
         "diff",
         "--no-ext-diff",
         "--no-textconv",
+        "--no-renames",
         "--name-only",
         "--diff-filter=d",
         "-z",
@@ -194,6 +200,60 @@ pub fn changed(revision: &str) -> Result<std::collections::HashSet<PathBuf>, Str
         .filter(|p| !p.is_empty())
         .map(|p| expand_path(Path::new(std::ffi::OsStr::from_bytes(p)), root))
         .collect())
+}
+
+/// The repository `--mcp` resolved at startup, as canonical paths: its git dir, its common dir (a
+/// linked worktree's main repository) and its work tree; and the empty tree's id in its object
+/// format.
+pub struct Pinned {
+    pub git_dir: PathBuf,
+    pub common_dir: PathBuf,
+    pub toplevel: PathBuf,
+    empty_tree: String,
+}
+
+/// Set once by `pin_repository`: the repository, or the error `--changed` gives without one.
+static PINNED: std::sync::OnceLock<Result<Pinned, String>> = std::sync::OnceLock::new();
+
+/// Deliberate difference (`--mcp`): the working directory's repository is resolved once, before
+/// any request, and from then on git is pointed at it (GIT_DIR, GIT_WORK_TREE,
+/// GIT_CEILING_DIRECTORIES), so a repository a client plants later, or below the root, is never
+/// discovered. With none at startup, `changed` keeps failing as it does outside a repository.
+pub fn pin_repository() -> Option<&'static Pinned> {
+    PINNED.get_or_init(discover).as_ref().ok()
+}
+
+fn discover() -> Result<Pinned, String> {
+    let out = git(&["rev-parse", "--absolute-git-dir", "--git-common-dir", "--show-toplevel"])?;
+    let out = String::from_utf8_lossy(&out);
+    let cwd = crate::config::cwd();
+    let canonical = |p: &str| {
+        let p = expand_path(Path::new(p), &cwd);
+        fs::canonicalize(&p).unwrap_or(p)
+    };
+    let mut lines = out.lines().map(canonical);
+    let (Some(git_dir), Some(common_dir), Some(toplevel)) = (lines.next(), lines.next(), lines.next()) else {
+        return Err(
+            "--changed could not ask git which files changed: git failed with no output on standard error.".into()
+        );
+    };
+    let mut pinned = Pinned { git_dir, common_dir, toplevel, empty_tree: String::new() };
+    let mut cmd = git_command(&["hash-object", "-t", "tree", "--stdin"]);
+    pin(&mut cmd, &pinned);
+    pinned.empty_tree = cmd.output().map(|o| String::from_utf8_lossy(&o.stdout).trim().to_string()).unwrap_or_default();
+    Ok(pinned)
+}
+
+/// The pinned repository's environment. Its attributes are read from the empty tree, so a
+/// `.gitattributes` a client wrote cannot name a filter driver for git to run.
+fn pin(cmd: &mut std::process::Command, p: &Pinned) {
+    cmd.env("GIT_DIR", &p.git_dir).env("GIT_WORK_TREE", &p.toplevel);
+    if let Some(parent) = p.toplevel.parent() {
+        cmd.env("GIT_CEILING_DIRECTORIES", parent);
+    }
+    if !p.empty_tree.is_empty() {
+        cmd.env("GIT_ATTR_SOURCE", &p.empty_tree);
+    }
 }
 
 /// ChangedFiles#git: git's stdout, or why it failed.
@@ -218,17 +278,34 @@ fn git_ok(args: &[&str]) -> bool {
 
 /// Open3.capture3: stdout and stderr captured, stdin an empty pipe.
 ///
-/// Deliberate difference: git runs with the repository's command hooks off (`core.fsmonitor`,
-/// `core.hooksPath`, external diff and textconv drivers, the system config, a pager), so a
-/// repository config written by someone else (an MCP client, a checked-out project) cannot make
-/// `--changed` run a command. The file lists git prints are the same.
+/// Deliberate difference: git runs with `core.fsmonitor` and `core.hooksPath` off, implicit bare
+/// repositories refused (`safe.bareRepository=explicit`), no transport (`protocol.allow=never`,
+/// GIT_NO_LAZY_FETCH), no global or system attributes file, no system config, no external diff,
+/// textconv or pager, and the pinned repository when there is one. The file lists git prints are
+/// the same.
 pub fn git_command(args: &[&str]) -> std::process::Command {
     let mut cmd = std::process::Command::new("git");
-    cmd.args(["-c", "core.fsmonitor=false", "-c", "core.hooksPath=/dev/null"])
-        .args(args)
-        .env("GIT_CONFIG_NOSYSTEM", "1")
-        .env("GIT_PAGER", "cat")
-        .env_remove("GIT_EXTERNAL_DIFF")
-        .stdin(std::process::Stdio::null());
+    cmd.args([
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "safe.bareRepository=explicit",
+        "-c",
+        "protocol.allow=never",
+        "-c",
+        "core.attributesFile=/dev/null",
+    ])
+    .args(args)
+    .env("GIT_CONFIG_NOSYSTEM", "1")
+    .env("GIT_ATTR_NOSYSTEM", "1")
+    .env("GIT_NO_LAZY_FETCH", "1")
+    .env("GIT_PAGER", "cat")
+    .env_remove("GIT_EXTERNAL_DIFF")
+    .stdin(std::process::Stdio::null());
+    if let Some(Ok(p)) = PINNED.get() {
+        pin(&mut cmd, p);
+    }
     cmd
 }

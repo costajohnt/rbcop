@@ -67,9 +67,12 @@ pub fn serve(store: Store, pwd_config: Arc<Resolved>) -> Result<u8, String> {
     // cop crashing on one file does not cost the rest of the request.
     // Offenses carry their corrections, as `--format json` reports them.
     rbcop::cop::record_edits();
+    // The repository the `changed` scope asks, fixed before any request can plant another.
+    let repo = rbcop::targets::pin_repository();
     let mut runtime = Runtime::new(store, pwd_config, false);
     runtime.raise_cop_error = false;
-    let mut server = Server { runtime, roots, initialized: false };
+    let metadata = repo.map_or(Vec::new(), |r| vec![r.git_dir.clone(), r.common_dir.clone()]);
+    let mut server = Server { runtime, roots, metadata, initialized: false };
     let mut input = std::io::stdin().lock();
     loop {
         let mut line = Vec::new();
@@ -141,6 +144,8 @@ struct Server {
     runtime: Runtime,
     /// The working directory, canonical: the only root the tools read and write under.
     roots: Vec<PathBuf>,
+    /// The pinned repository's git dir and common dir: never read or written either.
+    metadata: Vec<PathBuf>,
     /// ServerSession#initialized?
     initialized: bool,
 }
@@ -570,11 +575,12 @@ impl Server {
         // A tool that wrote `.git/config` could make the next `changed` scope's git run a command
         // (core.fsmonitor and the like), so nothing under a VCS directory is read or written.
         let metadata = real.as_ref().filter(|r| {
-            self.roots.iter().filter_map(|root| r.strip_prefix(root).ok()).any(|below| {
-                below
-                    .components()
-                    .any(|c| VCS_DIRS.contains(&c.as_os_str().to_string_lossy().to_ascii_lowercase().as_str()))
-            })
+            self.metadata.iter().any(|dir| r.starts_with(dir))
+                || self.roots.iter().filter_map(|root| r.strip_prefix(root).ok()).any(|below| {
+                    below
+                        .components()
+                        .any(|c| VCS_DIRS.contains(&c.as_os_str().to_string_lossy().to_ascii_lowercase().as_str()))
+                })
         });
         if let Some(r) = metadata {
             return Err(ToolFail::Rubo(format!("{path} resolves to {}, inside version control metadata", r.display())));

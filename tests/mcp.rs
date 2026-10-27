@@ -137,51 +137,181 @@ fn mcp_tools_refuse_version_control_metadata() {
     std::fs::remove_dir_all(&dir).unwrap();
 }
 
+/// A scratch directory for the git hardening tests: `repo/` (canonical), a global git config with
+/// an identity, and a hook script that creates `ran` when anything executes it.
+struct GitScratch {
+    base: std::path::PathBuf,
+    dir: std::path::PathBuf,
+    gitconfig: std::path::PathBuf,
+    marker: std::path::PathBuf,
+    hook: String,
+}
+
+impl GitScratch {
+    fn new(name: &str) -> GitScratch {
+        use std::os::unix::fs::PermissionsExt;
+        let base = std::env::temp_dir().join(format!("rbcop-{name}-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&base);
+        std::fs::create_dir_all(base.join("repo")).unwrap();
+        let base = base.canonicalize().unwrap();
+        let gitconfig = base.join("gitconfig");
+        std::fs::write(&gitconfig, "[user]\n\tname = t\n\temail = t@example.invalid\n").unwrap();
+        let marker = base.join("ran");
+        let hook = base.join("hook.sh");
+        std::fs::write(&hook, format!("#!/bin/sh\ntouch '{}'\ncat\n", marker.display())).unwrap();
+        std::fs::set_permissions(&hook, std::fs::Permissions::from_mode(0o755)).unwrap();
+        GitScratch { dir: base.join("repo"), base, gitconfig, marker, hook: hook.display().to_string() }
+    }
+
+    /// Plain git (no hardening) in `dir`.
+    fn git(&self, args: &[&str]) -> std::process::Output {
+        let out = std::process::Command::new("git")
+            .args(args)
+            .current_dir(&self.dir)
+            .env("GIT_CONFIG_GLOBAL", &self.gitconfig)
+            .output()
+            .unwrap();
+        assert!(out.status.success(), "git {args:?}: {}", String::from_utf8_lossy(&out.stderr));
+        out
+    }
+
+    /// A repository with a.rb committed and then modified.
+    fn repo_with_change(&self) {
+        self.git(&["init", "-q"]);
+        std::fs::write(self.dir.join("a.rb"), "puts( 1)\n").unwrap();
+        self.git(&["add", "."]);
+        self.git(&["commit", "-qm", "init"]);
+        std::fs::write(self.dir.join("a.rb"), "puts( 22)\n").unwrap();
+    }
+
+    fn mcp(&self, requests: &[String]) -> Vec<String> {
+        mcp(&self.dir, &[("GIT_CONFIG_GLOBAL", &self.gitconfig)], requests)
+    }
+
+    /// Plain git runs the planted hook (else the test proves nothing); the marker is then removed.
+    fn assert_git_runs_the_hook(&self, what: &str) {
+        self.git(&["diff", "--name-only"]);
+        assert!(self.marker.exists(), "git itself did not run the planted {what}; the test proves nothing");
+        std::fs::remove_file(&self.marker).unwrap();
+    }
+}
+
+impl Drop for GitScratch {
+    fn drop(&mut self) {
+        let _ = std::fs::remove_dir_all(&self.base);
+    }
+}
+
 /// Deliberate difference: `--changed` and the MCP `changed` scope run git with the repository's
 /// command hooks off, so a planted `core.fsmonitor` (which plain `git diff` runs) never runs.
 #[test]
 fn changed_never_runs_a_planted_fsmonitor() {
-    let base = std::env::temp_dir().join(format!("rbcop-fsmonitor-{}", std::process::id()));
-    let _ = std::fs::remove_dir_all(&base);
-    let dir = base.join("repo");
-    std::fs::create_dir_all(&dir).unwrap();
-    let (base, dir) = (base.canonicalize().unwrap(), dir.canonicalize().unwrap());
-    let gitconfig = base.join("gitconfig");
-    std::fs::write(&gitconfig, "[user]\n\tname = t\n\temail = t@example.invalid\n").unwrap();
-    let marker = base.join("ran");
-    let hook = base.join("hook.sh");
-    std::fs::write(&hook, format!("#!/bin/sh\ntouch '{}'\n", marker.display())).unwrap();
-    use std::os::unix::fs::PermissionsExt;
-    std::fs::set_permissions(&hook, std::fs::Permissions::from_mode(0o755)).unwrap();
-    let git = |args: &[&str]| {
-        let out = std::process::Command::new("git")
-            .args(args)
-            .current_dir(&dir)
-            .env("GIT_CONFIG_GLOBAL", &gitconfig)
-            .output();
-        assert!(out.unwrap().status.success(), "git {args:?}");
-    };
-    git(&["init", "-q"]);
-    std::fs::write(dir.join("a.rb"), "puts( 1)\n").unwrap();
-    git(&["add", "."]);
-    git(&["commit", "-qm", "init"]);
-    std::fs::write(dir.join("a.rb"), "puts( 2)\n").unwrap();
-    git(&["config", "core.fsmonitor", &hook.display().to_string()]);
-    // Plain git runs the hook: the planted config is live.
-    git(&["diff", "--name-only"]);
-    assert!(marker.exists(), "git itself did not run the fsmonitor hook; the test proves nothing");
-    std::fs::remove_file(&marker).unwrap();
+    let s = GitScratch::new("fsmonitor");
+    s.repo_with_change();
+    s.git(&["config", "core.fsmonitor", &s.hook]);
+    s.assert_git_runs_the_hook("core.fsmonitor");
     let cli = common::command(env!("CARGO_BIN_EXE_rbcop"))
         .args(["--changed", "--only", "Layout/SpaceInsideParens", "-f", "e"])
-        .current_dir(&dir)
-        .env("GIT_CONFIG_GLOBAL", &gitconfig)
+        .current_dir(&s.dir)
+        .env("GIT_CONFIG_GLOBAL", &s.gitconfig)
         .output()
         .unwrap();
     assert!(String::from_utf8_lossy(&cli.stdout).contains("a.rb:1:6"), "{cli:?}");
-    let lines = mcp(&dir, &[("GIT_CONFIG_GLOBAL", &gitconfig)], &[tool_call(1, "inspection", r#"{"changed":true}"#)]);
+    let lines = s.mcp(&[tool_call(1, "inspection", r#"{"changed":true}"#)]);
     assert!(lines[0].contains("a.rb") && lines[0].contains("\"isError\":false"), "{lines:?}");
-    assert!(!marker.exists(), "rbcop ran the planted core.fsmonitor");
-    std::fs::remove_dir_all(&base).unwrap();
+    assert!(!s.marker.exists(), "rbcop ran the planted core.fsmonitor");
+}
+
+/// The MCP `changed` scope reads attributes from the empty tree: a filter driver in the config
+/// that a `.gitattributes` names (which plain `git diff` runs on a modified file) never runs.
+#[test]
+fn mcp_changed_never_runs_a_planted_filter() {
+    let s = GitScratch::new("filter");
+    s.repo_with_change();
+    s.git(&["config", "filter.evil.clean", &s.hook]);
+    std::fs::write(s.dir.join(".gitattributes"), "*.rb filter=evil\n").unwrap();
+    s.assert_git_runs_the_hook("filter driver");
+    let lines = s.mcp(&[tool_call(1, "inspection", r#"{"changed":true,"only":["Layout"]}"#)]);
+    assert!(lines[0].contains("a.rb") && lines[0].contains("\"isError\":false"), "{lines:?}");
+    assert!(!s.marker.exists(), "rbcop ran the planted filter driver");
+}
+
+/// A linked layout where `.git` is a `gitdir:` file pointing at a git dir elsewhere in the
+/// project: the MCP tools refuse that directory too, whatever it is called.
+#[test]
+fn mcp_tools_refuse_a_pinned_git_dir_under_any_name() {
+    let s = GitScratch::new("gitdir");
+    std::fs::create_dir_all(s.dir.join("meta")).unwrap();
+    s.git(&["init", "-q", "--separate-git-dir", "meta/store"]);
+    std::fs::write(s.dir.join("a.rb"), "puts( 1)\n").unwrap();
+    let config = std::fs::read_to_string(s.dir.join("meta/store/config")).unwrap();
+    let requests = [
+        tool_call(1, "autocorrection", r#"{"path":"meta/store/config","source_code":"x\n","safety":true}"#),
+        tool_call(2, "autocorrection", r#"{"path":"meta/store/hooks/pre-commit","source_code":"x\n","safety":true}"#),
+        tool_call(3, "inspection", r#"{"path":"meta/store/HEAD","source_code":"x\n"}"#),
+        tool_call(4, "inspection", r#"{"path":"a.rb","only":["Layout"]}"#),
+    ];
+    let lines = s.mcp(&requests);
+    for line in &lines[..3] {
+        assert!(line.contains("\"isError\":true") && line.contains("inside version control metadata"), "{line}");
+    }
+    assert!(lines[3].contains("\"isError\":false"), "{}", lines[3]);
+    assert_eq!(std::fs::read_to_string(s.dir.join("meta/store/config")).unwrap(), config);
+    assert!(!s.dir.join("meta/store/hooks/pre-commit").exists());
+}
+
+/// No repository at startup: a bare repository planted in the project (at its root, so that
+/// git's discovery would find it, or in a subdirectory) is never used by the `changed` scope, nor
+/// one planted after startup; its config's hook never runs.
+#[test]
+fn mcp_changed_ignores_planted_repositories() {
+    use std::io::{BufRead, BufReader};
+    let s = GitScratch::new("bare");
+    let plant = |at: &std::path::Path| {
+        let out = std::process::Command::new("git")
+            .args(["init", "-q", "--bare"])
+            .arg(at)
+            .env("GIT_CONFIG_GLOBAL", &s.gitconfig)
+            .output()
+            .unwrap();
+        assert!(out.status.success());
+        let config = at.join("config");
+        let mut c = std::fs::read_to_string(&config).unwrap();
+        c.push_str(&format!("[core]\n\tfsmonitor = {}\n", s.hook));
+        std::fs::write(config, c).unwrap();
+    };
+    plant(&s.dir.join("sub"));
+    std::fs::write(s.dir.join("a.rb"), "puts( 1)\n").unwrap();
+    let mut child = common::command(env!("CARGO_BIN_EXE_rbcop"))
+        .arg("--mcp")
+        .current_dir(&s.dir)
+        .env("PWD", &s.dir)
+        .env("GIT_CONFIG_GLOBAL", &s.gitconfig)
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::null())
+        .spawn()
+        .unwrap();
+    let mut input = child.stdin.take().unwrap();
+    let mut output = BufReader::new(child.stdout.take().unwrap());
+    let mut ask = |request: String| {
+        input.write_all(request.as_bytes()).unwrap();
+        let mut line = String::new();
+        output.read_line(&mut line).unwrap();
+        line
+    };
+    let before = ask(tool_call(1, "inspection", r#"{"changed":true}"#));
+    // Now the project root itself becomes a bare repository.
+    plant(&s.dir);
+    let after = ask(tool_call(2, "inspection", r#"{"changed":true}"#));
+    let sub = ask(tool_call(3, "inspection", r#"{"changed":true,"path":"sub"}"#));
+    drop(input);
+    let _ = child.wait();
+    for line in [&before, &after, &sub] {
+        assert!(line.contains("\"isError\":true") && line.contains("not a git repository"), "{line}");
+    }
+    assert_eq!(before.replace("\"id\":1", ""), after.replace("\"id\":2", ""));
+    assert!(!s.marker.exists(), "rbcop ran a planted repository's core.fsmonitor");
 }
 
 #[test]

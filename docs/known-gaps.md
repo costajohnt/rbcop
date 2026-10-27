@@ -31,12 +31,27 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   evaluates the project's Gemfile, also under `--lsp`, `--mcp` and the server options, as RuboCop
   does. `RBCOP_FALLBACK=0` does not stop it. To avoid it, leave the option off (the default).
 
-rbcop also runs `git` for `--changed` and the MCP tools' `changed` scope, as RuboCop does, but
-hardened: every call passes `-c core.fsmonitor=false -c core.hooksPath=/dev/null` (and
-`--no-ext-diff --no-textconv` to `git diff`), with `GIT_CONFIG_NOSYSTEM=1`, `GIT_PAGER=cat` and no
-`GIT_EXTERNAL_DIFF`, so a repository config planted by a checked-out project or an MCP client
-cannot make it run a command; the file lists are git's own. The MCP tools also refuse to read or
-write anything under `.git`, `.hg`, `.svn` or `.jj` (any case).
+rbcop also runs `git` for `--changed` and the MCP tools' `changed` scope, as RuboCop does. What
+rbcop pins and refuses there (and nothing beyond it):
+
+- Every git call passes `-c core.fsmonitor=false -c core.hooksPath=/dev/null
+  -c safe.bareRepository=explicit -c protocol.allow=never -c core.attributesFile=/dev/null`, with
+  `GIT_CONFIG_NOSYSTEM=1`, `GIT_ATTR_NOSYSTEM=1`, `GIT_NO_LAZY_FETCH=1`, `GIT_PAGER=cat` and no
+  `GIT_EXTERNAL_DIFF`; `git diff` also gets `--no-ext-diff --no-textconv --no-renames`. The file
+  lists are the ones RuboCop gets.
+- `--mcp` resolves the repository once at startup (`git rev-parse --absolute-git-dir
+  --git-common-dir --show-toplevel`) and runs every later git call with `GIT_DIR`,
+  `GIT_WORK_TREE` and `GIT_CEILING_DIRECTORIES` (the work tree's parent) set to it, so a repository
+  planted later or below the root is never used; with none at startup, `changed` fails as it does
+  outside a repository for the whole session. Those calls also read attributes from the empty
+  tree (`GIT_ATTR_SOURCE`), so a `.gitattributes` cannot name a filter driver; the cost is that
+  `eol`/`text` attributes do not apply when git decides which files changed.
+- The MCP tools refuse to read or write a path whose canonical form is under that git dir or
+  common dir, or has a `.git`, `.hg`, `.svn` or `.jj` component (any case).
+
+Not covered: git still reads the repository's own config (aliases, `core.*`, `diff.*`), the user's
+global config and the repository's `info/attributes`; for `--changed` on the command line the
+worktree's `.gitattributes` still apply. Those are files the user, not an MCP client, controls.
 
 ## Deliberate differences from RuboCop
 
