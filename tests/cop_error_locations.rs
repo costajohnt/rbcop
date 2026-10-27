@@ -2,7 +2,8 @@
 //! a block is the parser gem's block node, starting at its call, and Metrics/ParameterLists counts
 //! parameters in `on_args` (#596). The project is tests/scenarios/cop_error_location_block_and_args,
 //! whose `# rubocop:disable Output` (ambiguous between Rails/Output and RSpec/Output) makes every
-//! offense a cop error. RuboCop 1.91.0's lines, sorted (its order differs; see the scenario).
+//! offense a cop error. RuboCop 1.92.1's lines, sorted (its order differs; see the scenario).
+//! Layout/IndentationConsistency reads the comment config since 1.92 (governed_base_column).
 
 mod common;
 
@@ -18,6 +19,7 @@ fn cop_errors_are_located_at_the_parser_node() {
     errors.sort();
     let at = |cop: &str, loc: &str| format!("An error occurred while {cop} cop was inspecting a.rb:{loc}.");
     let expected = [
+        at("Layout/IndentationConsistency", "4:0"),
         at("Layout/SpaceAroundBlockParameters", "4:4"),
         at("Layout/SpaceAroundBlockParameters", "5:0"),
         at("Metrics/ParameterLists", "6:5"),

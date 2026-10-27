@@ -55,19 +55,25 @@ impl Cop for LineEndStringConcatenationIndentation {
             }
         });
         let col = |n: &Node| src.column(n.location().start_offset()) as i64;
-        let mut offenses: Vec<(usize, &str, i64)> = Vec::new();
-        let check_aligned = |offenses: &mut Vec<(usize, &str, i64)>, start: usize| {
+        // (offending child, message, delta, children the correction moves)
+        let mut offenses: Vec<(usize, &str, i64, std::ops::Range<usize>)> = Vec::new();
+        // check_aligned: runs of parts on one column move together; a run already on the
+        // previous run's column or on the target column is accepted.
+        let check_aligned = |offenses: &mut Vec<(usize, &str, i64, std::ops::Range<usize>)>, start: usize, target: i64| {
             let mut base = col(&children[start - 1]);
-            for (i, child) in children.iter().enumerate().skip(start) {
-                let delta = base - col(child);
-                if delta != 0 {
-                    offenses.push((i, MSG_ALIGN, delta));
+            let mut i = start;
+            while i < children.len() {
+                let column = col(&children[i]);
+                let end = (i..children.len()).find(|&j| col(&children[j]) != column).unwrap_or(children.len());
+                if column != base && column != target {
+                    offenses.push((i, MSG_ALIGN, target - column, i..end));
                 }
-                base = col(child);
+                base = column;
+                i = end;
             }
         };
         if cx.cfg.str("EnforcedStyle") == Some("aligned") && !always_indented {
-            check_aligned(&mut offenses, 1);
+            check_aligned(&mut offenses, 1, col(&children[0]));
         } else {
             let Some(second) = children.get(1) else { return };
             let width = cx
@@ -84,15 +90,21 @@ impl Cop for LineEndStringConcatenationIndentation {
             };
             let delta = base + width - col(second);
             if delta != 0 {
-                offenses.push((1, MSG_INDENT, delta));
+                offenses.push((1, MSG_INDENT, delta, 1..2));
             }
-            check_aligned(&mut offenses, 2);
+            check_aligned(&mut offenses, 2, base + width);
         }
         let set = Settings::of(cx);
-        for (i, msg, delta) in offenses {
+        for (i, msg, delta, moved) in offenses {
             let child = &children[i];
             let (s, e) = (child.location().start_offset(), child.location().end_offset());
-            cx.add_fix(s, e, msg, |c| alignment_corrector::correct(c, src, set, s, e, Some(child), delta, false));
+            let moved = &children[moved];
+            cx.add_fix(s, e, msg, |c| {
+                for m in moved {
+                    let (ms, me) = (m.location().start_offset(), m.location().end_offset());
+                    alignment_corrector::correct(c, src, set, ms, me, Some(m), delta, false);
+                }
+            });
         }
     }
 }

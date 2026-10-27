@@ -134,19 +134,16 @@ impl Cop for HeredocArgumentClosingParenthesis {
                 if frame(a) == Frame::Transparent || a.as_statements_node().is_some() {
                     continue;
                 }
-                if let Some(c) = a.as_call_node() {
-                    // A call owning the block we come from is inside parser's block node.
-                    if anc.get(i + 1).is_some_and(|b| b.as_block_node().is_some()) {
-                        prev = (a.location().start_offset(), anc[i + 1].location().end_offset());
-                        continue;
-                    }
-                    if missing_parens(&c, prev) {
-                        outer = Some(c.as_node());
-                        break;
-                    }
+                // Climbing out of a block or lambda body (never its send node: that is the
+                // block's Prism parent) stops the search.
+                if frame(a) == Frame::Block {
+                    break;
                 }
-                if a.as_block_node().is_some() {
-                    continue;
+                if let Some(c) = a.as_call_node()
+                    && missing_parens(&c, prev)
+                {
+                    outer = Some(c.as_node());
+                    break;
                 }
                 prev = range(a);
             }
@@ -168,7 +165,10 @@ impl Cop for HeredocArgumentClosingParenthesis {
         }
         // exist_argument_between_heredoc_end_and_closing_parentheses?
         let Some(node_close) = call.closing_loc() else { return };
-        if let Some(heredoc_end) = args.iter().filter_map(|a| helpers::heredoc::parts(a).map(|p| p.1.1)).max()
+        // find_most_bottom_of_heredoc_end: heredocs anywhere inside the arguments; parser's
+        // heredoc_end stops before the terminator's newline.
+        let trimmed_end = |(s, e): (usize, usize)| s + src.slice(s, e).trim_end_matches(['\n', '\r']).len();
+        if let Some(heredoc_end) = args.iter().filter_map(|a| helpers::heredoc::last_heredoc_end(a).map(trimmed_end)).max()
             && heredoc_end < node_close.start_offset()
             && !helpers::ruby_string::strip(src.slice(heredoc_end, node_close.start_offset())).is_empty()
         {
