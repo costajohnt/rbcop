@@ -1,4 +1,4 @@
-==> .rubocop.yml 191 <==
+==> .rubocop.yml 195 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -7,33 +7,12 @@ AllCops:
   TargetRubyVersion: 3.1
 Layout/HashAlignment:
   EnforcedHashRocketStyle: table
-  EnforcedColonStyle: table
+  EnforcedColonStyle: separator
 
-==> 000.rb 13 <==
-func(a:, bb:)
-==> 001.rb 32 <==
-func(a:, bb:,
-     ccc:, dddd:)
-
-==> 002.rb 117 <==
-render :json => {a:,
-                 b:}, :status => 404
-def example
-  a(
-    b:,
-    c: d(
-      e:
-    ), f:)
-end
-
-==> 003.rb 78 <==
-hash1 = {
-  'a'   => 0,
-  'bbb' => 1
-}
-hash2 = {
-  a:   0,
-  bbb: 1,
-  ccc:
-}
+==> 000.rb 32 <==
+f(
+  a: "x",
+  bbbbb:,
+  c: 1
+)
 

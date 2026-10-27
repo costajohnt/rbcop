@@ -1,3 +1,53 @@
 Eating 6 files
+ᗧ•••••ᗣ•••••crlf.rb:3:6: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+x = 1  
+     ^^
+ᗣᗧ••••ᗣ.••••ᗣ.ᗧ•••ᗣ.ᗣ•••lib/nested/deep.rb:4:1: W: Lint/Debugger: Remove debugger entry point binding.irb.
+binding.irb
+^^^^^^^^^^^
+ᗣ.ᗣᗧ••ᗣ.ᗣᗣ••lib/style.rb:3:7: C: [Correctable] Style/DefWithParentheses: Omit the parentheses in defs when the method doesn't accept any arguments.
+def go()
+      ^^
+lib/style.rb:4:9: C: [Correctable] Layout/SpaceBeforeComma: Space found before comma.
+  puts 1 ,2
+        ^
+lib/style.rb:4:10: C: [Correctable] Layout/SpaceAfterComma: Space missing after comma.
+  puts 1 ,2
+         ^
+lib/style.rb:6:3: C: [Correctable] Style/NegatedIf: Favor unless over if for negative conditions.
+  puts x if !x
+  ^^^^^^^^^^^^
+lib/style.rb:7:4: C: [Correctable] Layout/SpaceInsideRangeLiteral: Space inside range literal.
+  (1 .. 2).each { |i| puts i }
+   ^^^^^^
+ᗣ.ᗣᗣᗧ•ᗣ.ᗣᗣᗣ•syntax_error.rb:4:3: F: Lint/Syntax: unexpected integer; expected a ) to close the parameters
+(Using Ruby 3.4 parser; configure using TargetRubyVersion parameter, under AllCops)
+  1 +
+  ^
+syntax_error.rb:4:5: F: Lint/Syntax: unexpected '+', expecting end-of-input
+(Using Ruby 3.4 parser; configure using TargetRubyVersion parameter, under AllCops)
+  1 +
+    ^
+syntax_error.rb:5:1: F: Lint/Syntax: unexpected 'end', assuming it is closing the parent method definition
+(Using Ruby 3.4 parser; configure using TargetRubyVersion parameter, under AllCops)
+end
+^^^
+ᗣ.ᗣᗣᗣᗧᗣ.ᗣᗣᗣᗣ
+unicode.rb:4:18: C: [Correctable] Style/NilComparison: Prefer the use of the nil? predicate.
+name = "日本語テキスト" == nil  
+                        ^^
+unicode.rb:4:24: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+name = "日本語テキスト" == nil  
+                              ^^
+unicode.rb:5:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
+	value = name   
+^
+unicode.rb:5:14: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+	value = name   
+	            ^^^
+unicode.rb:6:32: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+msg = "<b>&amp; `tick` 'q'</b>" 
+                               ^
+unicode.rb:8:1: C: [Correctable] Layout/TrailingEmptyLines: 2 trailing blank lines detected.
 
-0 files inspected, no offenses detected
+6 files inspected, 16 offenses detected, 12 offenses autocorrectable

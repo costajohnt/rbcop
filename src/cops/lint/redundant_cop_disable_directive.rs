@@ -114,6 +114,17 @@ fn pending_not_run(cx: &Cx, cop: &str) -> bool {
         && { let e = cx.config.enable_cop(cop); e == crate::config::value::Value::Str("pending".into()) && !cx.config.enabled_pending_cop(cop, &e) }
 }
 
+/// disabled_by_preview?: a cop that only the `Preview` defaults disable runs again as soon as
+/// preview is turned off, so its directives are still needed.
+fn disabled_by_preview(cx: &Cx, cop: &str) -> bool {
+    use crate::config::value::Value;
+    if !cx.config.preview_enabled() || !known(cop) {
+        return false;
+    }
+    let preview = helpers::method_preference::DEFAULTS.map(cop).and_then(|c| c.map("Preview"));
+    preview.is_some_and(|p| p.get("Enabled") == Some(&Value::Bool(false))) && !enabled(cx, cop)
+}
+
 fn unknown(cop: &str) -> bool {
     cop != "all" && !cop.starts_with(MARKER) && !known(cop)
 }
@@ -212,7 +223,7 @@ pub fn check(cx: &mut Cx, checked: &[Span]) {
         let Some(ranges) = cc.ranges.get(cop) else { continue };
         // Deliberate difference: a cop RuboCop would run but rbcop cannot (a plugin rbcop does not
         // implement, custom cops) may have offenses there, so its directives are never redundant.
-        if pending_not_run(cx, cop) || crate::helpers::cop_registry::is_unrunnable(cop) {
+        if pending_not_run(cx, cop) || disabled_by_preview(cx, cop) || crate::helpers::cop_registry::is_unrunnable(cop) {
             continue;
         }
         // each_already_disabled

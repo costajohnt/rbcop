@@ -31,6 +31,33 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   evaluates the project's Gemfile, also under `--lsp`, `--mcp` and the server options, as RuboCop
   does. `RBCOP_FALLBACK=0` does not stop it. To avoid it, leave the option off (the default).
 
+rbcop also runs `git` for `--changed` and the MCP tools' `changed` scope, as RuboCop does. What
+rbcop pins and refuses there (and nothing beyond it):
+
+- Every git call passes `-c core.fsmonitor=false -c core.hooksPath=/dev/null
+  -c safe.bareRepository=explicit -c protocol.allow=never -c core.attributesFile=/dev/null`, with
+  `GIT_CONFIG_NOSYSTEM=1`, `GIT_ATTR_NOSYSTEM=1`, `GIT_NO_LAZY_FETCH=1`, `GIT_PAGER=cat` and no
+  `GIT_EXTERNAL_DIFF`; `git diff` also gets `--no-ext-diff --no-textconv --no-renames`. The file
+  lists are the ones RuboCop gets.
+- `--mcp` resolves the repository once at startup (`git rev-parse --absolute-git-dir
+  --git-common-dir --show-toplevel`) and runs every later git call with `GIT_DIR`,
+  `GIT_WORK_TREE` and `GIT_CEILING_DIRECTORIES` (the work tree's parent) set to it, so a repository
+  planted later or below the root is never used; with none at startup, `changed` fails as it does
+  outside a repository for the whole session. Those calls also read attributes from the empty
+  tree (`GIT_ATTR_SOURCE`), so a `.gitattributes` cannot name a filter driver; the cost is that
+  `eol`/`text` attributes do not apply when git decides which files changed. This fails closed:
+  if git is older than 2.40 (no `GIT_ATTR_SOURCE`) or `git hash-object` gives no well-formed
+  empty tree id, `changed` returns an error for the session instead of running git without it.
+- The MCP tools refuse to read or write a path whose canonical form is under that git dir or
+  common dir, has a `.git`, `.hg`, `.svn` or `.jj` component, or is named `.gitattributes` (any
+  case).
+- `--changed` on the command line (the user's own repository) stays best effort: it is not pinned,
+  needs no particular git version and does not read attributes from the empty tree.
+
+Not covered: git still reads the repository's own config (aliases, `core.*`, `diff.*`), the user's
+global config and the repository's `info/attributes`; for `--changed` on the command line the
+worktree's `.gitattributes` still apply. Those are files the user, not an MCP client, controls.
+
 ## Deliberate differences from RuboCop
 
 - `-o/--out` pointing at a file being inspected is refused (RuboCop truncates the file).
@@ -42,11 +69,20 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   `rbcop: not autocorrecting <file>: it resolves to <path>, outside the project` goes to stderr;
   the exit status follows its offenses. The check is repeated right before the write, which follows
   no symlink after it (directories are opened one by one, relative to the last). `--stdin` is unaffected.
-- `--diff` never writes a file. RuboCop 1.91.0 does when Lint/RedundantCopDisableDirective corrects:
-  its redundant-disable team does not defer corrections, so `File.write` puts every correction in
-  the file, and the inspection loop it then reruns reads that file. rbcop prints the same report
-  and the same diffs (which leave out the removed directives) and leaves the file as it was. With
-  `RBCOP_FALLBACK=1`, `--diff` is refused when the RuboCop child would run (it corrects by writing);
+- The result cache keeps a run's offenses with their corrections (RuboCop 1.92.1's
+  Offense#corrections, printed by the JSON formatter) only when a JSON formatter is in use, and
+  those entries live apart from the others: switching between `-f json` and another formatter is a
+  cold run, and MaxFilesInCache counts both sets. RuboCop keeps one entry per file with the
+  corrections always (recording them on every run cost a warm rails run about 40% more CPU).
+  Output is the same either way.
+- Offenses rbcop reports without applying a fix it withholds on purpose (the rubocop-rails,
+  rubocop-rspec, rubocop-factory_bot and rubocop-capybara corrections below that would splice
+  content that is not inert) carry no `correction` in the JSON formatter's output, where
+  RuboCop's carry the edits it would make. The offense, its message and `correctable` are the same.
+- A bare `+` cop name in a `rubocop:push` or `rubocop:next` directive that two departments share
+  is kept as written, so it opts in no cop. RuboCop 1.92.1 raises AmbiguousCopName for it from
+  CommentConfig#opt_in_cops (`expand_cop_name`).
+- `--diff` with `RBCOP_FALLBACK=1` is refused when the RuboCop child would run (it corrects by writing);
   without it, `--diff` skips the fallback and prints the not-running notice.
 - HTML formatter escapes `& < >` in messages outside code spans and fully escapes paths; GitHub
   Actions formatter escapes CR/LF in the `file=` property. Output differs only when those appear.
@@ -61,15 +97,6 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   treats `i = ...` as a reassignment and reports the offense without `[Correctable]`. Also reached
   through other cops: Style/ParallelAssignment turning `i, j = i * 2, i * 3` into `i = i * 2`
   (corpus `specs/lint/useless_times/023.rb`, skipped by the autocorrect gates).
-- Lint/UnescapedBracketInRegexp `-a`/`-A` on a `Regexp.new`/`Regexp.compile` string (#680).
-  RuboCop 1.91.0 replaces the source character at the `]`'s offset in the string's value with
-  `\]`. In a double-quoted string (`"`, `%Q`, `%`) `\]` reads back as `]`, and when an escape
-  precedes the `]` the offset lands on another character; either way the next iteration reports more
-  `]`s, the file grows about 1.5 times per iteration and RuboCop never finishes (nor reaches its
-  200-iteration limit). rbcop writes RuboCop 1.92.1's `\\]` in a double-quoted string and withholds
-  a misplaced correction: the offense stays `[Correctable]` at RuboCop's location and the string is
-  left as is. Offenses without `-a`/`-A`, and every correction RuboCop 1.91.0 finishes, are
-  unchanged (`tests/autocorrect/unescaped_bracket_regexp_new`).
 - A file whose AST is nested more than 1,000 levels deep (`runner::MAX_AST_DEPTH`; the deepest
   corpus file is 46) is not inspected: rbcop prints `rbcop: <file>: nested more than 1000 levels
   deep, not inspected.` and counts it as an error (exit 1). RuboCop dies with SystemStackError on
@@ -201,6 +228,8 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
     corrected offenses marked uncorrected, at offsets of the source before correction). A cached
     file without offenses is skipped and one with offenses is inspected again, as in RuboCop.
   - Pruning removes directories it emptied up to `rbcop_cache`, not above it.
+  - Pruning keeps going past an entry it cannot remove; RuboCop 1.92.1 stops at the first removal
+    error and prints it under `-d`.
   - Where RuboCop raises (no home directory, a cache directory that cannot be created for a
     reason other than EACCES/EROFS, an entry that cannot be written), rbcop runs without saving.
 - `--report-unused-todo-entries` audits only the `.rubocop_todo.yml` entries of cops rbcop
@@ -227,17 +256,22 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   where RuboCop offers its edit. The server's stderr log carries the same lines, but an error while
   handling a request is logged as `[server] Error <message>` without RuboCop's exception class for
   rbcop's own errors and without the backtrace line; as in RuboCop such a request gets no response.
-- `--mcp` (#293) answers as RuboCop's MCP server does on the `mcp` gem 0.25.0 (the newest version
-  `~> 0.6`, the requirement RuboCop's load error names), line for line (tests/mcp, recorded with
-  `scripts/mcp.sh`): the same `rubocop_inspection` and `rubocop_autocorrection` tools, schemas,
-  results and JSON-RPC errors. RuboCop serves only with that gem installed, and otherwise prints
+- `--mcp` (#293) answers as RuboCop's MCP server does on the `mcp` gem 0.25.0, line for line
+  (tests/mcp, recorded with `scripts/mcp.sh`): the same `rubocop_inspection`,
+  `rubocop_autocorrection` and `rubocop_explain` tools, schemas, results and JSON-RPC errors.
+  RuboCop serves only with that gem installed, and otherwise prints
   ``Error: Unable to load `mcp` gem. ...``; rbcop has no gem dependency and always serves. Newer
   `mcp` gems (1.x) may answer the protocol methods differently; the tool results are RuboCop's own.
   Except: RuboCop's tools read and write any path the client names, while rbcop's refuse one that
   resolves outside the working directory (an absolute path, `..`, or a symlink pointing out,
   including one met while walking a directory) with the tool error `<path> resolves to <real
   path>, outside the project`, and write as `-a` does (never through a symlink, a new file created
-  exclusively). An MCP client may be a model following text from the code it reads.
+  exclusively); `rubocop_explain` refuses such a `path` too rather than read the configuration
+  that applies there. An MCP client may be a model following text from the code it reads.
+- `--explain` prints the sections of a cop's documentation comment from src/cop_docs.txt
+  (scripts/dump-cop-docs.rb, RuboCop's and the native plugins' cops), since rbcop has no Ruby
+  sources to read. A cop of a plugin rbcop does not implement, or of a `require:`d local file, is
+  explained without those sections (description, properties, configuration and references only).
 
 ## Open gaps
 

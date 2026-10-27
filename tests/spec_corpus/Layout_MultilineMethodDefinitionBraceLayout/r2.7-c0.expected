@@ -1,10 +1,12 @@
-==> offenses exit=1 411 <==
-003.rb:3:2: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+==> offenses exit=1 552 <==
+003.rb:2:10: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 004.rb:3:2: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
-005.rb:3:3: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+005.rb:3:2: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+006.rb:3:3: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 
-==> autocorrect exit=1 411 <==
-003.rb:3:2: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+==> autocorrect exit=1 552 <==
+003.rb:2:10: F: Lint/Syntax: unexpected token tCOMMA (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 004.rb:3:2: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
-005.rb:3:3: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+005.rb:3:2: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
+006.rb:3:3: F: Lint/Syntax: unexpected token tNL (Using Ruby 2.7 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)
 

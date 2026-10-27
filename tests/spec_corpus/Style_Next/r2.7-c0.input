@@ -36,7 +36,27 @@ loop do
   end
 end
 
-==> 003.rb 90 <==
+==> 003.rb 93 <==
+loop do
+  if test
+    str = <<-BLAH
+      this is a heredoc
+    BLAH
+    something
+  end
+end
+
+==> 004.rb 90 <==
+loop do
+  if test
+    puts "first
+    second #{third}
+    fourth"
+    something
+  end
+end
+
+==> 005.rb 90 <==
 loop do
   if test
     loop do
@@ -47,56 +67,56 @@ loop do
   end
 end
 
-==> 004.rb 48 <==
+==> 006.rb 48 <==
 3.downto(1) do
   if o == 1
     puts o
   end
 end
 
-==> 005.rb 50 <==
+==> 007.rb 50 <==
 3.downto(1) do
   if _1 == 1
     puts _1
   end
 end
 
-==> 006.rb 48 <==
+==> 008.rb 48 <==
 [].each do |o|
   if o == 1
     puts o
   end
 end
 
-==> 007.rb 49 <==
+==> 009.rb 49 <==
 []&.each do |o|
   if o == 1
     puts o
   end
 end
 
-==> 008.rb 70 <==
+==> 010.rb 70 <==
 [].each_with_object({}) do |o, a|
   if o == 1
     a[o] = {}
   end
 end
 
-==> 009.rb 50 <==
+==> 011.rb 50 <==
 for o in 1..3 do
   if o == 1
     puts o
   end
 end
 
-==> 010.rb 41 <==
+==> 012.rb 41 <==
 loop do
   if o == 1
     puts o
   end
 end
 
-==> 011.rb 72 <==
+==> 013.rb 72 <==
 loop do
   {}.map do |k, v|
     if v == 1
@@ -105,7 +125,7 @@ loop do
   end
 end
 
-==> 012.rb 70 <==
+==> 014.rb 70 <==
 loop do
   3.times do |o|
     if o == 1
@@ -114,42 +134,42 @@ loop do
   end
 end
 
-==> 013.rb 49 <==
+==> 015.rb 49 <==
 [].collect do |o|
   if o == 1
     true
   end
 end
 
-==> 014.rb 48 <==
+==> 016.rb 48 <==
 [].select do |o|
   if o == 1
     true
   end
 end
 
-==> 015.rb 49 <==
+==> 017.rb 49 <==
 [].select! do |o|
   if o == 1
     true
   end
 end
 
-==> 016.rb 48 <==
+==> 018.rb 48 <==
 [].reject do |o|
   if o == 1
     true
   end
 end
 
-==> 017.rb 49 <==
+==> 019.rb 49 <==
 [].reject! do |o|
   if o == 1
     true
   end
 end
 
-==> 018.rb 67 <==
+==> 020.rb 67 <==
 loop do
   until false
     if o == 1
@@ -158,7 +178,7 @@ loop do
   end
 end
 
-==> 019.rb 66 <==
+==> 021.rb 66 <==
 loop do
   while true
     if o == 1
@@ -167,7 +187,7 @@ loop do
   end
 end
 
-==> 020.rb 57 <==
+==> 022.rb 57 <==
 [].each do |o|
   puts o
   if o == 1
@@ -175,7 +195,7 @@ end
   end
 end
 
-==> 021.rb 91 <==
+==> 023.rb 91 <==
 array.each do |item|
   if
      condition
@@ -184,19 +204,19 @@ array.each do |item|
   end
 end
 
-==> 022.rb 40 <==
+==> 024.rb 40 <==
 loop do
   puts ''
   break if o == 1
 end
 
-==> 023.rb 41 <==
+==> 025.rb 41 <==
 loop do
   puts ''
   return if o == 1
 end
 
-==> 024.rb 69 <==
+==> 026.rb 69 <==
 [].each do |o|
   if o == 1
     puts o
@@ -205,7 +225,7 @@ end
   end
 end
 
-==> 025.rb 94 <==
+==> 027.rb 94 <==
 [].each do |o|
   if foo
     if o == 1
@@ -216,7 +236,7 @@ end
   end
 end
 
-==> 026.rb 78 <==
+==> 028.rb 78 <==
 [].each do |o|
   puts o
   if o == 1
@@ -226,7 +246,7 @@ end
   end
 end
 
-==> 027.rb 68 <==
+==> 029.rb 68 <==
 arr.each do |e|
   if something
     work
@@ -235,7 +255,7 @@ arr.each do |e|
   end
 end
 
-==> 028.rb 127 <==
+==> 030.rb 127 <==
 [1, 2, 3, 4].each do |num|
   if !opts.nil?
     puts num
@@ -246,56 +266,56 @@ end
  end
 end
 
-==> 029.rb 52 <==
+==> 031.rb 52 <==
 3.downto(1) do
   unless o == 1
     puts o
   end
 end
 
-==> 030.rb 54 <==
+==> 032.rb 54 <==
 3.downto(1) do
   unless _1 == 1
     puts _1
   end
 end
 
-==> 031.rb 52 <==
+==> 033.rb 52 <==
 [].each do |o|
   unless o == 1
     puts o
   end
 end
 
-==> 032.rb 53 <==
+==> 034.rb 53 <==
 []&.each do |o|
   unless o == 1
     puts o
   end
 end
 
-==> 033.rb 74 <==
+==> 035.rb 74 <==
 [].each_with_object({}) do |o, a|
   unless o == 1
     a[o] = {}
   end
 end
 
-==> 034.rb 54 <==
+==> 036.rb 54 <==
 for o in 1..3 do
   unless o == 1
     puts o
   end
 end
 
-==> 035.rb 45 <==
+==> 037.rb 45 <==
 loop do
   unless o == 1
     puts o
   end
 end
 
-==> 036.rb 76 <==
+==> 038.rb 76 <==
 loop do
   {}.map do |k, v|
     unless v == 1
@@ -304,7 +324,7 @@ loop do
   end
 end
 
-==> 037.rb 74 <==
+==> 039.rb 74 <==
 loop do
   3.times do |o|
     unless o == 1
@@ -313,42 +333,42 @@ loop do
   end
 end
 
-==> 038.rb 53 <==
+==> 040.rb 53 <==
 [].collect do |o|
   unless o == 1
     true
   end
 end
 
-==> 039.rb 52 <==
+==> 041.rb 52 <==
 [].select do |o|
   unless o == 1
     true
   end
 end
 
-==> 040.rb 53 <==
+==> 042.rb 53 <==
 [].select! do |o|
   unless o == 1
     true
   end
 end
 
-==> 041.rb 52 <==
+==> 043.rb 52 <==
 [].reject do |o|
   unless o == 1
     true
   end
 end
 
-==> 042.rb 53 <==
+==> 044.rb 53 <==
 [].reject! do |o|
   unless o == 1
     true
   end
 end
 
-==> 043.rb 71 <==
+==> 045.rb 71 <==
 loop do
   until false
     unless o == 1
@@ -357,7 +377,7 @@ loop do
   end
 end
 
-==> 044.rb 70 <==
+==> 046.rb 70 <==
 loop do
   while true
     unless o == 1
@@ -366,7 +386,7 @@ loop do
   end
 end
 
-==> 045.rb 61 <==
+==> 047.rb 61 <==
 [].each do |o|
   puts o
   unless o == 1
@@ -374,19 +394,19 @@ end
   end
 end
 
-==> 046.rb 44 <==
+==> 048.rb 44 <==
 loop do
   puts ''
   break unless o == 1
 end
 
-==> 047.rb 45 <==
+==> 049.rb 45 <==
 loop do
   puts ''
   return unless o == 1
 end
 
-==> 048.rb 73 <==
+==> 050.rb 73 <==
 [].each do |o|
   unless o == 1
     puts o
@@ -395,7 +415,7 @@ end
   end
 end
 
-==> 049.rb 98 <==
+==> 051.rb 98 <==
 [].each do |o|
   if foo
     unless o == 1
@@ -406,7 +426,7 @@ end
   end
 end
 
-==> 050.rb 82 <==
+==> 052.rb 82 <==
 [].each do |o|
   puts o
   unless o == 1
@@ -416,7 +436,7 @@ end
   end
 end
 
-==> 051.rb 72 <==
+==> 053.rb 72 <==
 arr.each do |e|
   unless something
     work
@@ -425,34 +445,34 @@ arr.each do |e|
   end
 end
 
-==> 052.rb 27 <==
+==> 054.rb 27 <==
 [].each do
 end
 [].each { }
 
-==> 053.rb 36 <==
+==> 055.rb 36 <==
 [].each do |o|
   o == x ? y : z
 end
 
-==> 054.rb 32 <==
+==> 056.rb 32 <==
 def foo
   super(a, a) { a }
 end
 
-==> 055.rb 14 <==
+==> 057.rb 14 <==
 until sup; end
-==> 056.rb 14 <==
+==> 058.rb 14 <==
 while sup; end
-==> 057.rb 15 <==
+==> 059.rb 15 <==
 for x in y; end
-==> 058.rb 28 <==
+==> 060.rb 28 <==
 loop do
   if true
   end
 end
 
-==> 059.rb 17 <==
+==> 061.rb 17 <==
 loop do
   ()
 end

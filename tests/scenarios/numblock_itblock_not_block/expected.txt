@@ -40,7 +40,7 @@ spec/a_spec.rb:14:5: C: [Correctable] Style/CombinableLoops: Combine this loop w
 spec/a_spec.rb:17:3: C: RSpec/MultipleExpectations: Example has too many expectations [3/1].
 spec/a_spec.rb:1:1: C: RSpec/SpecFilePathFormat: Spec path should end with `foo*_spec.rb`.
 spec/a_spec.rb:2:3: C: RSpec/MultipleExpectations: Example has too many expectations [4/1].
-spec/a_spec.rb:4:5: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+spec/a_spec.rb:4:5: C: Style/CombinableLoops: Combine this loop with the previous loop.
 spec/a_spec.rb:5:18: C: RSpec/VoidExpect: Do not use `expect()` without `.to` or `.not_to`. Chain the methods or remove it.
 spec/a_spec.rb:5:5: C: Style/CombinableLoops: Combine this loop with the previous loop.
 spec/a_spec.rb:6:5: C: Style/CombinableLoops: Combine this loop with the previous loop.

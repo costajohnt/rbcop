@@ -1,0 +1,17 @@
+==> .rubocop.yml 198 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Style/HashSyntax:
+  EnforcedStyle: ruby19_no_mixed_keys
+  EnforcedShorthandSyntax: always
+
+==> 000.rb 16 <==
+f(k => 1, b: b)
+
+==> 001.rb 17 <==
+f(:a => a, b: b)
+

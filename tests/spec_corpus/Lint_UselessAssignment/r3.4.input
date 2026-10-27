@@ -9,12 +9,16 @@ AllCops:
 ==> 000.rb 27 <==
 do_something { foo += it }
 
-==> 001.rb 37 <==
+==> 001.rb 40 <==
+prev = nil
+[1, 2, 3].each { prev = it }
+
+==> 002.rb 37 <==
 var = 42
 
 do_something { it == var }
 
-==> 002.rb 58 <==
+==> 003.rb 58 <==
 var = nil
 
 do_something { var = it }

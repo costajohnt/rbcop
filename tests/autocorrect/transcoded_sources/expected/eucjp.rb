@@ -3,7 +3,7 @@
 
 x = '日本語'
 puts x, 'ア'.size
-1
+ y = 1
 # コメント
 def 日付(a) = a
-puts x
+puts x.to_s

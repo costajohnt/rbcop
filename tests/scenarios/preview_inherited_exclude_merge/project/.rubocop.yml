@@ -1,0 +1,4 @@
+inherit_from: base.yml
+Style/StringLiterals:
+  Exclude:
+    - b.rb

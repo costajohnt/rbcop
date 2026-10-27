@@ -8,89 +8,92 @@ AllCops:
 Style/YodaCondition:
   EnforcedStyle: forbid_for_all_comparison_operators
 
-==> 000.rb 12 <==
+==> 000.rb 19 <==
+2 == foo(1 == bar)
+
+==> 001.rb 12 <==
 b.value == 2
-==> 001.rb 13 <==
+==> 002.rb 13 <==
 b&.value == 2
-==> 002.rb 11 <==
+==> 003.rb 11 <==
 @value == 2
-==> 003.rb 12 <==
+==> 004.rb 12 <==
 @@value == 2
-==> 004.rb 13 <==
+==> 005.rb 13 <==
 b = 1; b == 2
-==> 005.rb 9 <==
+==> 006.rb 9 <==
 $var == 5
-==> 006.rb 12 <==
+==> 007.rb 12 <==
 foo == "bar"
-==> 007.rb 10 <==
+==> 008.rb 10 <==
 foo == BAR
-==> 008.rb 25 <==
-"#{interpolation}" == foo
 ==> 009.rb 25 <==
+"#{interpolation}" == foo
+==> 010.rb 25 <==
 /#{interpolation}/ == foo
-==> 010.rb 30 <==
+==> 011.rb 30 <==
 foo[0] > "bar" || baz != "baz"
-==> 011.rb 23 <==
+==> 012.rb 23 <==
 node = last_node.parent
-==> 012.rb 30 <==
+==> 013.rb 30 <==
 (first_line - second_line) > 0
-==> 013.rb 6 <==
+==> 014.rb 6 <==
 5 == 6
-==> 014.rb 23 <==
-[1, 2, 3] <=> [4, 5, 6]
 ==> 015.rb 23 <==
+[1, 2, 3] <=> [4, 5, 6]
+==> 016.rb 23 <==
 [x] == [x].do_something
-==> 016.rb 13 <==
+==> 017.rb 13 <==
 {a: x} == foo
-==> 017.rb 5 <==
+==> 018.rb 5 <==
 !true
-==> 018.rb 8 <==
+==> 019.rb 8 <==
 not true
-==> 019.rb 9 <==
+==> 020.rb 9 <==
 0 <=> val
-==> 020.rb 13 <==
+==> 021.rb 13 <==
 "foo" === bar
-==> 021.rb 14 <==
+==> 022.rb 14 <==
 __FILE__ == $0
-==> 022.rb 25 <==
+==> 023.rb 25 <==
 __FILE__ == $PROGRAM_NAME
-==> 023.rb 14 <==
+==> 024.rb 14 <==
 __FILE__ != $0
-==> 024.rb 25 <==
+==> 025.rb 25 <==
 __FILE__ != $PROGRAM_NAME
-==> 025.rb 13 <==
+==> 026.rb 13 <==
 "foo" == bar
 
-==> 026.rb 11 <==
+==> 027.rb 11 <==
 nil == bar
 
-==> 027.rb 17 <==
+==> 028.rb 17 <==
 false == active?
 
-==> 028.rb 11 <==
+==> 029.rb 11 <==
 15 != @foo
 
-==> 029.rb 9 <==
+==> 030.rb 9 <==
 42 < bar
 
-==> 030.rb 10 <==
+==> 031.rb 10 <==
 FOO < bar
 
-==> 031.rb 21 <==
+==> 032.rb 21 <==
 if 10 == my_var; end
 
-==> 032.rb 15 <==
+==> 033.rb 15 <==
 if 2 < bar;end
 
-==> 033.rb 21 <==
+==> 034.rb 21 <==
 foo = 42 if 42 > bar
 
-==> 034.rb 22 <==
+==> 035.rb 22 <==
 42 <= foo ? bar : baz
 
-==> 035.rb 22 <==
+==> 036.rb 22 <==
 42 >= foo ? bar : baz
 
-==> 036.rb 23 <==
+==> 037.rb 23 <==
 nil != foo ? bar : baz
 

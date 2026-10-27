@@ -1,58 +1,66 @@
-==> offenses exit=1 4204 <==
+==> offenses exit=1 4885 <==
 000.rb:2:5: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
 001.rb:2:8: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-002.rb:2:3: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the start of the line where the left brace is.
-003.rb:2:5: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-004.rb:2:4: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-006.rb:2:2: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-008.rb:2:1: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-009.rb:2:5: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-010.rb:2:5: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-011.rb:2:5: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+002.rb:2:5: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+003.rb:2:3: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the start of the line where the left brace is.
+004.rb:2:5: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+005.rb:2:4: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+006.rb:2:5: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+007.rb:2:5: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+009.rb:2:2: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+011.rb:2:1: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
 012.rb:2:5: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-018.rb:2:4: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-020.rb:2:3: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the first position after the preceding left parenthesis.
-020.rb:3:1: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the first position after the preceding left parenthesis.
-021.rb:2:3: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the first position after the preceding left parenthesis.
-021.rb:3:1: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the first position after the preceding left parenthesis.
-022.rb:2:9: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-022.rb:3:7: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the start of the line where the left brace is.
-025.rb:2:7: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the first position after the preceding left parenthesis.
-026.rb:2:10: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the first position after the preceding left parenthesis.
-027.rb:2:3: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the parent hash key.
-027.rb:4:1: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the parent hash key.
-033.rb:2:8: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-034.rb:2:17: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-035.rb:2:3: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the parent hash key.
-035.rb:4:1: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the parent hash key.
+014.rb:2:11: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+016.rb:2:5: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+017.rb:2:5: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+018.rb:2:5: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+024.rb:2:4: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+026.rb:2:3: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the first position after the preceding left parenthesis.
+026.rb:3:1: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the first position after the preceding left parenthesis.
+027.rb:2:3: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the first position after the preceding left parenthesis.
+027.rb:3:1: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the first position after the preceding left parenthesis.
+028.rb:2:9: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+028.rb:3:7: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the start of the line where the left brace is.
+031.rb:2:7: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the first position after the preceding left parenthesis.
+032.rb:2:10: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the first position after the preceding left parenthesis.
+033.rb:2:3: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the parent hash key.
+033.rb:4:1: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the parent hash key.
+039.rb:2:8: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+040.rb:2:17: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+041.rb:2:3: C: [Correctable] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the parent hash key.
+041.rb:4:1: C: [Correctable] Layout/FirstHashElementIndentation: Indent the right brace the same as the parent hash key.
 
-==> autocorrect exit=0 4152 <==
+==> autocorrect exit=0 4825 <==
 000.rb:2:5: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
 001.rb:2:8: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-002.rb:2:3: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the start of the line where the left brace is.
-003.rb:2:5: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-004.rb:2:4: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-006.rb:2:2: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-008.rb:2:1: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-009.rb:2:5: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-010.rb:2:5: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-011.rb:2:5: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+002.rb:2:5: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+003.rb:2:3: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the start of the line where the left brace is.
+004.rb:2:5: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+005.rb:2:4: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+006.rb:2:5: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+007.rb:2:5: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+009.rb:2:2: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+011.rb:2:1: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
 012.rb:2:5: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-018.rb:2:4: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-020.rb:2:3: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the first position after the preceding left parenthesis.
-020.rb:3:1: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the first position after the preceding left parenthesis.
-021.rb:2:3: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the first position after the preceding left parenthesis.
-021.rb:3:1: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the first position after the preceding left parenthesis.
-022.rb:2:9: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-022.rb:3:7: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the start of the line where the left brace is.
-025.rb:2:7: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the first position after the preceding left parenthesis.
-026.rb:2:10: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the first position after the preceding left parenthesis.
-027.rb:2:3: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the parent hash key.
-027.rb:4:1: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the parent hash key.
-033.rb:2:8: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-034.rb:2:17: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
-035.rb:2:3: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the parent hash key.
-035.rb:4:1: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the parent hash key.
+014.rb:2:11: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+016.rb:2:5: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+017.rb:2:5: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+018.rb:2:5: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+024.rb:2:4: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+026.rb:2:3: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the first position after the preceding left parenthesis.
+026.rb:3:1: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the first position after the preceding left parenthesis.
+027.rb:2:3: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the first position after the preceding left parenthesis.
+027.rb:3:1: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the first position after the preceding left parenthesis.
+028.rb:2:9: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+028.rb:3:7: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the start of the line where the left brace is.
+031.rb:2:7: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the first position after the preceding left parenthesis.
+032.rb:2:10: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the first position after the preceding left parenthesis.
+033.rb:2:3: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the parent hash key.
+033.rb:4:1: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the parent hash key.
+039.rb:2:8: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+040.rb:2:17: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the start of the line where the left curly brace is.
+041.rb:2:3: C: [Corrected] Layout/FirstHashElementIndentation: Use 2 spaces for indentation in a hash, relative to the parent hash key.
+041.rb:4:1: C: [Corrected] Layout/FirstHashElementIndentation: Indent the right brace the same as the parent hash key.
 
 ==> corrected/000.rb 28 <==
 a << {
@@ -66,42 +74,72 @@ a << {
      aaa: 222
 }
 
-==> corrected/002.rb 9 <==
+==> corrected/002.rb 56 <==
+a << {
+  a: 1,
+  aaa: 222,
+  "#{foo(
+    bar
+  )}": 3
+}
+
+==> corrected/003.rb 9 <==
 a << {
 }
 
-==> corrected/003.rb 36 <==
+==> corrected/004.rb 36 <==
 a << {
   'a' => 1,
   'aaa' => 222
 }
 
-==> corrected/004.rb 35 <==
+==> corrected/005.rb 35 <==
 a << {
   'a' => 1,
  'aaa' => 222
 }
 
-==> corrected/006.rb 16 <==
+==> corrected/006.rb 61 <==
+a << {
+  'a' => 1,
+  'aaa' => 222,
+  foo(
+    bar
+  ) => 3
+}
+
+==> corrected/007.rb 85 <==
+a << {
+  foo(
+      bar
+    ) => 1,
+  'a_key_longer_than_the_multiline_one' => 222
+}
+
+==> corrected/009.rb 16 <==
 a << {
   a: 1
 }
 
-==> corrected/008.rb 96 <==
+==> corrected/011.rb 96 <==
 config.rack_cache = {
   :metastore => "rails:/",
 :entitystore => "rails:/",
 :verbose => false
 }
 
-==> corrected/009.rb 30 <==
+==> corrected/012.rb 30 <==
 a = {
   a: 1,
   b: 2,
  c: 3
 }
 
-==> corrected/010.rb 30 <==
+==> corrected/014.rb 22 <==
+a = { **foo,
+  a: 1 }
+
+==> corrected/016.rb 30 <==
 a = {
   a:
   {
@@ -109,14 +147,14 @@ a = {
   }
 }
 
-==> corrected/011.rb 28 <==
+==> corrected/017.rb 28 <==
 a = {
   a: {
     b: 1
   }
 }
 
-==> corrected/012.rb 32 <==
+==> corrected/018.rb 32 <==
 a = {
   a: [
     1,
@@ -124,31 +162,31 @@ a = {
   ]
 }
 
-==> corrected/018.rb 15 <==
+==> corrected/024.rb 15 <==
 a = {
   a: 1
 }
 
-==> corrected/020.rb 27 <==
+==> corrected/026.rb 27 <==
 func({
        a: 1
      })
 
-==> corrected/021.rb 57 <==
+==> corrected/027.rb 57 <==
 receiver&.func({
                  a: 1
                })
 
-==> corrected/022.rb 17 <==
+==> corrected/028.rb 17 <==
 var = {
   a: 1
 }
 
-==> corrected/025.rb 31 <==
+==> corrected/031.rb 31 <==
 func(x: {
        a: 1, b: 2 })
 
-==> corrected/026.rb 57 <==
+==> corrected/032.rb 57 <==
 func({
        a:
        {
@@ -156,7 +194,7 @@ func({
        }
      })
 
-==> corrected/027.rb 86 <==
+==> corrected/033.rb 86 <==
 func(x: {
        a: 1,
        b: 2
@@ -166,15 +204,15 @@ func(x: {
        d: 2
      })
 
-==> corrected/033.rb 25 <==
+==> corrected/039.rb 25 <==
 func x, {
   a: 1, b: 2 }
 
-==> corrected/034.rb 34 <==
+==> corrected/040.rb 34 <==
 func x: :foo, y: {
   a: 1, b: 2 }
 
-==> corrected/035.rb 85 <==
+==> corrected/041.rb 85 <==
 func x: {
        a: 1,
        b: 2

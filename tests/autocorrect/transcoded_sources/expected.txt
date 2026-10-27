@@ -1,19 +1,15 @@
 cp1252.rb:1:1: F: Lint/Syntax: "\x9d" to utf-8 in conversion from windows-1252 to utf-8.
 cp1252.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 cp1252.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
-cp1252.rb:2:1: W: [Corrected] Lint/OrderedMagicComments: The encoding magic comment should precede all other magic comments.
 cp1252.rb:2:5: C: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
 cp1252.rb:2:14: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
 cp1252.rb:3:7: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
 cp1252.rb:3:8: C: [Corrected] Layout/ExtraSpacing: Unnecessary spacing detected.
 cp1252.rb:3:10: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `z`.
 cp1252.rb:3:11: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-cp1252.rb:6:2: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
-cp1252.rb:6:2: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `z`.
 eucjp.rb:1:1: F: Lint/Syntax: "\xe6" followed by "\x97" on euc-jp.
 eucjp.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 eucjp.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
-eucjp.rb:2:1: W: [Corrected] Lint/OrderedMagicComments: The encoding magic comment should precede all other magic comments.
 eucjp.rb:2:5: C: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
 eucjp.rb:2:10: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
 eucjp.rb:3:17: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
@@ -22,14 +18,10 @@ eucjp.rb:3:20: W: [Corrected] Lint/UselessAssignment: Useless assignment to vari
 eucjp.rb:3:21: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
 eucjp.rb:6:1: W: [Corrected] Lint/Void: Literal `%w(日本 語)` used in void context.
 eucjp.rb:6:1: C: [Corrected] Style/PercentLiteralDelimiters: `%w`-literals should be delimited by `[` and `]`.
-eucjp.rb:6:2: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
-eucjp.rb:6:2: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `y`.
 eucjp.rb:7:6: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
-eucjp.rb:9:8: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `puts`.
 eucjp_invalid.rb:1:1: F: Lint/Syntax: "\xa4" followed by "\"" on euc-jp.
 latin1.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 latin1.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
-latin1.rb:2:1: W: [Corrected] Lint/OrderedMagicComments: The encoding magic comment should precede all other magic comments.
 latin1.rb:2:5: C: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
 latin1.rb:2:11: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
 latin1.rb:3:16: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
@@ -42,11 +34,10 @@ latin1.rb:6:2: C: [Corrected] Layout/IndentationConsistency: Inconsistent indent
 latin1.rb:6:2: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `y`.
 latin1.rb:7:5: C: Naming/AsciiIdentifiers: Use only ascii symbols in constants.
 latin1.rb:7:5: C: Naming/MethodName: Use snake_case for method names.
-latin1.rb:7:10: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+latin1.rb:7:14: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 sjis.rb:1:1: F: Lint/Syntax: "\x9e" followed by "'" on shift_jis.
 sjis.rb:1:1: C: [Corrected] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 sjis.rb:2:1: C: [Corrected] Layout/EmptyLineAfterMagicComment: Expected at least 1 empty line after magic comments; found 0.
-sjis.rb:2:1: W: [Corrected] Lint/OrderedMagicComments: The encoding magic comment should precede all other magic comments.
 sjis.rb:2:5: C: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
 sjis.rb:2:10: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
 sjis.rb:3:17: C: [Corrected] Style/Semicolon: Do not use semicolons to terminate expressions.
@@ -55,7 +46,4 @@ sjis.rb:3:20: W: [Corrected] Lint/UselessAssignment: Useless assignment to varia
 sjis.rb:3:21: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
 sjis.rb:6:1: W: [Corrected] Lint/Void: Literal `%w(日本 語)` used in void context.
 sjis.rb:6:1: C: [Corrected] Style/PercentLiteralDelimiters: `%w`-literals should be delimited by `[` and `]`.
-sjis.rb:6:2: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
-sjis.rb:6:2: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `y`.
 sjis.rb:7:6: C: [Corrected] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
-sjis.rb:9:8: W: [Corrected] Lint/RedundantStringCoercion: Redundant use of `Object#to_s` in `puts`.

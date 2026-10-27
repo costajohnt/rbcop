@@ -17,6 +17,14 @@ if (test[0] = 10)
 end
 
 ==> 002.rb 20 <==
+if (a, b = foo)
+end
+
+==> 003.rb 23 <==
+while (a, b = foo)
+end
+
+==> 004.rb 20 <==
 if (test == 10)
 end
 

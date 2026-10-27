@@ -1,0 +1,74 @@
+==> .rubocop.yml 166 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 4.0
+Style/AccessModifierDeclarations:
+  EnforcedStyle: inline
+
+==> 000.rb 56 <==
+class Test
+  private
+
+  def foo = raise Error, self
+end
+
+==> 001.rb 59 <==
+class Test
+  private
+
+  def foo = bar do
+    baz
+  end
+end
+
+==> 002.rb 58 <==
+class Test
+  protected
+
+  def foo = raise Error, self
+end
+
+==> 003.rb 61 <==
+class Test
+  protected
+
+  def foo = bar do
+    baz
+  end
+end
+
+==> 004.rb 55 <==
+class Test
+  public
+
+  def foo = raise Error, self
+end
+
+==> 005.rb 58 <==
+class Test
+  public
+
+  def foo = bar do
+    baz
+  end
+end
+
+==> 006.rb 64 <==
+class Test
+  module_function
+
+  def foo = raise Error, self
+end
+
+==> 007.rb 67 <==
+class Test
+  module_function
+
+  def foo = bar do
+    baz
+  end
+end
+

@@ -1,4 +1,4 @@
-==> .rubocop.yml 211 <==
+==> .rubocop.yml 203 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -8,21 +8,14 @@ AllCops:
 Style/DisableCopsWithinSourceCodeDirective:
   AllowWithReason: true
   AllowedCops:
-  - Metrics/AbcSize
+  - Metrics
 
-==> 000.rb 63 <==
-# rubocop:disable Metrics
-def foo
-end
-# rubocop:enable Metrics
-
-==> 001.rb 79 <==
+==> 000.rb 79 <==
 # rubocop:disable Metrics/AbcSize
 def foo
 end
 # rubocop:enable Metrics/AbcSize
 
-==> 002.rb 59 <==
-def foo # rubocop:disable Metrics/CyclomaticComplexity
-end
+==> 001.rb 52 <==
+x = 0 # rubocop:disable Layout/SpaceAroundOperators
 

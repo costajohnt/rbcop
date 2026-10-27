@@ -1,29 +1,29 @@
-==> offenses exit=1 3053 <==
+==> offenses exit=1 3195 <==
 000.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 001.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 002.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 003.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
-003.rb:4:7: C: [Correctable] Style/Next: Use `next` to skip iteration.
 004.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 005.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+005.rb:4:7: C: [Correctable] Style/Next: Use `next` to skip iteration.
 006.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 007.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 008.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 009.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 010.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
-011.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
-012.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
-013.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
-014.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+011.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+012.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+013.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
+014.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
 015.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 016.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 017.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
-018.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
-019.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
-020.rb:3:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
-021.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
-027.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
-028.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+018.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+019.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+020.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
+021.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
+022.rb:3:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+023.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 029.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 030.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 031.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
@@ -31,63 +31,67 @@
 033.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 034.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 035.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
-036.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
-037.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
-038.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
-039.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+036.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+037.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+038.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
+039.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
 040.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 041.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 042.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
-043.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
-044.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
-045.rb:3:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
-051.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+043.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+044.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+045.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
+046.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
+047.rb:3:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+053.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 
-==> autocorrect exit=0 3036 <==
+==> autocorrect exit=0 3174 <==
 000.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 001.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 002.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 003.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
-003.rb:4:7: C: [Corrected] Style/Next: Use `next` to skip iteration.
 004.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 005.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+005.rb:4:7: C: [Corrected] Style/Next: Use `next` to skip iteration.
 006.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 007.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 008.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 009.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 010.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
-011.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
-012.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
-013.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
-014.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+011.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+012.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+013.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
+014.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
 015.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 016.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 017.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
-018.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
-019.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
-020.rb:3:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
-021.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
-027.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
-028.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
-028.rb:4:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+018.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+019.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+020.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
+021.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
+022.rb:3:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+023.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 029.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 030.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+030.rb:4:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 031.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 032.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 033.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 034.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 035.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
-036.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
-037.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
-038.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
-039.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+036.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+037.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+038.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
+039.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
 040.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 041.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 042.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
-043.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
-044.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
-045.rb:3:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
-051.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+043.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+044.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+045.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
+046.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
+047.rb:3:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+053.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 
 ==> corrected/000.rb 99 <==
 loop do
@@ -115,7 +119,25 @@ loop do
   something
 end
 
-==> corrected/003.rb 82 <==
+==> corrected/003.rb 90 <==
+loop do
+  next unless test
+  str = <<-BLAH
+      this is a heredoc
+  BLAH
+  something
+end
+
+==> corrected/004.rb 89 <==
+loop do
+  next unless test
+  puts "first
+    second #{third}
+    fourth"
+  something
+end
+
+==> corrected/005.rb 82 <==
 loop do
   next unless test
   loop do
@@ -124,49 +146,49 @@ loop do
   end
 end
 
-==> corrected/004.rb 49 <==
+==> corrected/006.rb 49 <==
 3.downto(1) do
   next unless o == 1
   puts o
 end
 
-==> corrected/005.rb 51 <==
+==> corrected/007.rb 51 <==
 3.downto(1) do
   next unless _1 == 1
   puts _1
 end
 
-==> corrected/006.rb 49 <==
+==> corrected/008.rb 49 <==
 [].each do |o|
   next unless o == 1
   puts o
 end
 
-==> corrected/007.rb 50 <==
+==> corrected/009.rb 50 <==
 []&.each do |o|
   next unless o == 1
   puts o
 end
 
-==> corrected/008.rb 71 <==
+==> corrected/010.rb 71 <==
 [].each_with_object({}) do |o, a|
   next unless o == 1
   a[o] = {}
 end
 
-==> corrected/009.rb 51 <==
+==> corrected/011.rb 51 <==
 for o in 1..3 do
   next unless o == 1
   puts o
 end
 
-==> corrected/010.rb 42 <==
+==> corrected/012.rb 42 <==
 loop do
   next unless o == 1
   puts o
 end
 
-==> corrected/011.rb 71 <==
+==> corrected/013.rb 71 <==
 loop do
   {}.map do |k, v|
     next unless v == 1
@@ -174,7 +196,7 @@ loop do
   end
 end
 
-==> corrected/012.rb 69 <==
+==> corrected/014.rb 69 <==
 loop do
   3.times do |o|
     next unless o == 1
@@ -182,37 +204,37 @@ loop do
   end
 end
 
-==> corrected/013.rb 50 <==
+==> corrected/015.rb 50 <==
 [].collect do |o|
   next unless o == 1
   true
 end
 
-==> corrected/014.rb 49 <==
+==> corrected/016.rb 49 <==
 [].select do |o|
   next unless o == 1
   true
 end
 
-==> corrected/015.rb 50 <==
+==> corrected/017.rb 50 <==
 [].select! do |o|
   next unless o == 1
   true
 end
 
-==> corrected/016.rb 49 <==
+==> corrected/018.rb 49 <==
 [].reject do |o|
   next unless o == 1
   true
 end
 
-==> corrected/017.rb 50 <==
+==> corrected/019.rb 50 <==
 [].reject! do |o|
   next unless o == 1
   true
 end
 
-==> corrected/018.rb 66 <==
+==> corrected/020.rb 66 <==
 loop do
   until false
     next unless o == 1
@@ -220,7 +242,7 @@ loop do
   end
 end
 
-==> corrected/019.rb 65 <==
+==> corrected/021.rb 65 <==
 loop do
   while true
     next unless o == 1
@@ -228,21 +250,21 @@ loop do
   end
 end
 
-==> corrected/020.rb 58 <==
+==> corrected/022.rb 58 <==
 [].each do |o|
   puts o
   next unless o == 1
   puts o
 end
 
-==> corrected/021.rb 89 <==
+==> corrected/023.rb 89 <==
 array.each do |item|
   next unless condition
     next if item.zero?
     do_something
 end
 
-==> corrected/027.rb 65 <==
+==> corrected/029.rb 65 <==
 arr.each do |e|
   next unless something
   work
@@ -250,7 +272,7 @@ arr.each do |e|
   work
 end
 
-==> corrected/028.rb 120 <==
+==> corrected/030.rb 120 <==
 [1, 2, 3, 4].each do |num|
   next unless !opts.nil?
   puts num
@@ -259,49 +281,49 @@ end
   puts 'world'
 end
 
-==> corrected/029.rb 45 <==
+==> corrected/031.rb 45 <==
 3.downto(1) do
   next if o == 1
   puts o
 end
 
-==> corrected/030.rb 47 <==
+==> corrected/032.rb 47 <==
 3.downto(1) do
   next if _1 == 1
   puts _1
 end
 
-==> corrected/031.rb 45 <==
+==> corrected/033.rb 45 <==
 [].each do |o|
   next if o == 1
   puts o
 end
 
-==> corrected/032.rb 46 <==
+==> corrected/034.rb 46 <==
 []&.each do |o|
   next if o == 1
   puts o
 end
 
-==> corrected/033.rb 67 <==
+==> corrected/035.rb 67 <==
 [].each_with_object({}) do |o, a|
   next if o == 1
   a[o] = {}
 end
 
-==> corrected/034.rb 47 <==
+==> corrected/036.rb 47 <==
 for o in 1..3 do
   next if o == 1
   puts o
 end
 
-==> corrected/035.rb 38 <==
+==> corrected/037.rb 38 <==
 loop do
   next if o == 1
   puts o
 end
 
-==> corrected/036.rb 67 <==
+==> corrected/038.rb 67 <==
 loop do
   {}.map do |k, v|
     next if v == 1
@@ -309,7 +331,7 @@ loop do
   end
 end
 
-==> corrected/037.rb 65 <==
+==> corrected/039.rb 65 <==
 loop do
   3.times do |o|
     next if o == 1
@@ -317,37 +339,37 @@ loop do
   end
 end
 
-==> corrected/038.rb 46 <==
+==> corrected/040.rb 46 <==
 [].collect do |o|
   next if o == 1
   true
 end
 
-==> corrected/039.rb 45 <==
+==> corrected/041.rb 45 <==
 [].select do |o|
   next if o == 1
   true
 end
 
-==> corrected/040.rb 46 <==
+==> corrected/042.rb 46 <==
 [].select! do |o|
   next if o == 1
   true
 end
 
-==> corrected/041.rb 45 <==
+==> corrected/043.rb 45 <==
 [].reject do |o|
   next if o == 1
   true
 end
 
-==> corrected/042.rb 46 <==
+==> corrected/044.rb 46 <==
 [].reject! do |o|
   next if o == 1
   true
 end
 
-==> corrected/043.rb 62 <==
+==> corrected/045.rb 62 <==
 loop do
   until false
     next if o == 1
@@ -355,7 +377,7 @@ loop do
   end
 end
 
-==> corrected/044.rb 61 <==
+==> corrected/046.rb 61 <==
 loop do
   while true
     next if o == 1
@@ -363,14 +385,14 @@ loop do
   end
 end
 
-==> corrected/045.rb 54 <==
+==> corrected/047.rb 54 <==
 [].each do |o|
   puts o
   next if o == 1
   puts o
 end
 
-==> corrected/051.rb 61 <==
+==> corrected/053.rb 61 <==
 arr.each do |e|
   next if something
   work

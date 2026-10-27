@@ -11,3 +11,9 @@ Style/StringLiterals:
 ==> 000.rb 17 <==
 'foo'.split(/f/)
 
+==> 001.rb 20 <==
+'foo'.split(/\#\{/)
+
+==> 002.rb 20 <==
+'foo'.split(/\#\$/)
+

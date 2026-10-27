@@ -8,7 +8,14 @@ AllCops:
 Layout/LineLength:
   Max: 20
 
-==> 000.rb 30 <==
+==> 000.rb 66 <==
+class Foo
+  private def bar(baz,
+                  qux)
+  end
+end
+
+==> 001.rb 30 <==
 def foo(bar,
         baz)
 end

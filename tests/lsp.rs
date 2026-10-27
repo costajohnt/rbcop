@@ -61,7 +61,7 @@ fn lsp_transcripts_match_rubocop() {
 
 /// AllCops/UseProjectIndex under `--lsp` (#675): the index is built from disk at the first run and
 /// kept while files change on disk, until `textDocument/didSave` or a watched file's change drops
-/// it. What `rubocop --lsp` 1.91.0 (rubydex 0.4.1) publishes for b.rb after each step: the two
+/// it. What `rubocop --lsp` 1.92.1 (rubydex 0.4.1) publishes for b.rb after each step: the two
 /// offenses of lib.rb's first version, again after lib.rb is rewritten, none after didSave
 /// (rebuilt from the second version), and both again after lib.rb is restored and reported by
 /// didChangeWatchedFiles.

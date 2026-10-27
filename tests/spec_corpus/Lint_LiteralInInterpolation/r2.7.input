@@ -1148,51 +1148,67 @@ x = "#{ { foo: "\#@bar" } }"
 ==> 381.rb 27 <==
 "this is #{"\#{1}"} silly"
 
-==> 382.rb 91 <==
+==> 382.rb 19 <==
+/^(#{'#'}{1,6})\s/
+
+==> 383.rb 13 <==
+"#{'#'}@foo"
+
+==> 384.rb 14 <==
+"##{'{'}foo}"
+
+==> 385.rb 14 <==
+"##{''}{foo}"
+
+==> 386.rb 14 <==
+"##{nil}@foo"
+
+==> 387.rb 13 <==
+/##{nil}{2}/
+
+==> 388.rb 15 <==
+"\##{''}{foo}"
+
+==> 389.rb 19 <==
+"#{'#'}#{'{'}foo}"
+
+==> 390.rb 19 <==
+"#{'#'}#{''}{foo}"
+
+==> 391.rb 11 <==
+"#{1}#{2}"
+
+==> 392.rb 91 <==
 x = "ABC".gsub(/(A)(B)(C)/, "D#{'\2'}F")
 "this is #{'\n'} silly"
 "this is #{%q(\n)} silly"
 
-==> 383.rb 75 <==
+==> 393.rb 75 <==
 "this is #{"\n"} silly"
 "this is #{%(\n)} silly"
 "this is #{%Q(\n)} silly"
 
-==> 384.rb 68 <==
+==> 394.rb 68 <==
 <<~HERE
   Line with explicit space literal at the end. #{'  '}
 HERE
 
-==> 385.rb 21 <==
+==> 395.rb 69 <==
+<<~HERE
+  Line with explicit space literal at the end. #{ ' ' }
+HERE
+
+==> 396.rb 81 <==
+<<~HERE
+  Line with explicit ideographic space literal at the end. #{'　'}
+HERE
+
+==> 397.rb 21 <==
 :"this is the #{42}"
 
-==> 386.rb 20 <==
+==> 398.rb 20 <==
 `this is the #{42}`
 
-==> 387.rb 20 <==
+==> 399.rb 20 <==
 /this is the #{42}/
-
-==> 388.rb 17 <==
-/test#{'/'}test/
-
-==> 389.rb 23 <==
-/test#{'/a/b/c/'}test/
-
-==> 390.rb 19 <==
-/test#{'\\/'}test/
-
-==> 391.rb 21 <==
-/test#{'\\\\/'}test/
-
-==> 392.rb 19 <==
-%r{test#{'/'}test}
-
-==> 393.rb 17 <==
-"test#{'/'}test"
-
-==> 394.rb 16 <==
-"#{"\201\203"}"
-
-==> 395.rb 15 <==
-/#{%w[a b c]}/
 

@@ -27,49 +27,61 @@ taz(
   "abc", "foo"
 )
 
-==> 004.rb 33 <==
+==> 004.rb 46 <==
+taz("abc",
+"foo", <<~TEXT, "bar")
+  text
+TEXT
+
+==> 005.rb 40 <==
+foo(bar(<<~TEXT,
+  text
+TEXT
+  1), baz)
+
+==> 006.rb 33 <==
 taz("abc",
 "foo", "bar",
 "baz"
 )
 
-==> 005.rb 41 <==
+==> 007.rb 41 <==
 taz("abc",
 "foo", "bar", "barz",
 "baz"
 )
 
-==> 006.rb 47 <==
+==> 008.rb 47 <==
 taz("abc",
 "foo", "bar", z: "barz",
 x: "baz"
 )
 
-==> 007.rb 30 <==
+==> 009.rb 30 <==
 taz("abc", {
   foo: "edf",
 })
 
-==> 008.rb 30 <==
+==> 010.rb 30 <==
 taz({
   foo: "edf",
 }, "abc")
 
-==> 009.rb 36 <==
+==> 011.rb 36 <==
 do_something(foo, bar, baz,
   quux)
 
-==> 010.rb 14 <==
+==> 012.rb 14 <==
 foo&.bar(baz)
 
-==> 011.rb 20 <==
+==> 013.rb 20 <==
 foo&.bar(baz, quux)
 
-==> 012.rb 29 <==
+==> 014.rb 29 <==
 foo&.bar(baz, quux,
   corge)
 
-==> 013.rb 86 <==
+==> 015.rb 86 <==
 foo&.bar['foo'] = ::Time.zone.at(
                     huh['foo'],
                   )

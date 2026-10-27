@@ -1,36 +1,52 @@
-==> offenses exit=1 1725 <==
+==> offenses exit=1 2645 <==
 003.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
 004.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-005.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-006.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-011.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-015.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-016.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-017.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-017.rb:3:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-018.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-019.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-020.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-021.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-022.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-023.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+005.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+006.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+007.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+008.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+009.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+010.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+011.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+012.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+013.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+014.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+019.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+023.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+024.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+025.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+025.rb:3:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+026.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+027.rb:1:1: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+028.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+029.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+030.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+031.rb:2:3: C: [Correctable] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
 
-==> autocorrect exit=0 1695 <==
+==> autocorrect exit=0 2599 <==
 003.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
 004.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-005.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-006.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-011.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-015.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-016.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-017.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-017.rb:3:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-018.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-019.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-020.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-021.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-022.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
-023.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+005.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+006.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+007.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+008.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+009.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+010.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+011.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+012.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+013.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+014.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+019.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+023.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+024.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+025.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+025.rb:3:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+026.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+027.rb:1:1: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+028.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+029.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+030.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
+031.rb:2:3: C: [Corrected] Style/MethodCallWithArgsParentheses: Use parentheses for method calls with arguments.
 
 ==> corrected/003.rb 15 <==
 top.test(a, b)
@@ -38,57 +54,81 @@ top.test(a, b)
 ==> corrected/004.rb 16 <==
 top&.test(a, b)
 
-==> corrected/005.rb 25 <==
+==> corrected/005.rb 20 <==
+top.test((a and b))
+
+==> corrected/006.rb 19 <==
+top.test((a or b))
+
+==> corrected/007.rb 18 <==
+top.test((not a))
+
+==> corrected/008.rb 19 <==
+top.test((a if b))
+
+==> corrected/009.rb 22 <==
+top.test((a while b))
+
+==> corrected/010.rb 23 <==
+top.test((a rescue b))
+
+==> corrected/011.rb 24 <==
+top.test((a, b = 1, 2))
+
+==> corrected/012.rb 20 <==
+top.test(a ? b : c)
+
+==> corrected/013.rb 25 <==
 def foo
   test(a, b)
 end
 
-==> corrected/006.rb 25 <==
+==> corrected/014.rb 25 <==
 def foo
   Test(a, b)
 end
 
-==> corrected/011.rb 23 <==
+==> corrected/019.rb 23 <==
 def foo
   yield(a)
 end
 
-==> corrected/015.rb 14 <==
+==> corrected/023.rb 14 <==
 top.eq(1 + 2)
 
-==> corrected/016.rb 24 <==
+==> corrected/024.rb 24 <==
 def foo
   eq(1 + 2)
 end
 
-==> corrected/017.rb 43 <==
+==> corrected/025.rb 43 <==
 def foo
   eq(1, (2 + 3))
   eq(1, 2, 3)
 end
 
-==> corrected/018.rb 20 <==
+==> corrected/026.rb 20 <==
 top.eq((1 + 2) + 3)
 
-==> corrected/019.rb 19 <==
+==> corrected/027.rb 19 <==
 top.eq((1 + 2), 3)
 
-==> corrected/020.rb 43 <==
+==> corrected/028.rb 43 <==
 def my_method
   foo(bar.baz(abc, xyz))
 end
 
-==> corrected/021.rb 53 <==
+==> corrected/029.rb 53 <==
 def my_method
   foo(bar.baz(abc, xyz), foo(baz))
 end
 
-==> corrected/022.rb 47 <==
+==> corrected/030.rb 47 <==
 def my_method
   raise(NotImplementedError)
 end
 
-==> corrected/023.rb 29 <==
+==> corrected/031.rb 29 <==
 def my_method
   sleep(1)
 end

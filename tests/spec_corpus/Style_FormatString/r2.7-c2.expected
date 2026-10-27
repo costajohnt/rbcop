@@ -1,24 +1,32 @@
-==> offenses exit=1 731 <==
+==> offenses exit=1 1042 <==
 000.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `format`.
 001.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `format`.
 002.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `format`.
 003.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `format`.
 004.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `format`.
-005.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `sprintf`.
+005.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `format`.
+005.rb:1:22: C: Style/FormatString: Favor `String#%` over `format`.
 006.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `format`.
 007.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `format`.
 008.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `sprintf`.
+009.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `format`.
+010.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `format`.
+011.rb:1:1: C: [Correctable] Style/FormatString: Favor `String#%` over `sprintf`.
 
-==> autocorrect exit=0 713 <==
+==> autocorrect exit=0 1030 <==
 000.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
 001.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
 002.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
 003.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
 004.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
-005.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `sprintf`.
+005.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+005.rb:1:18: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
 006.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
 007.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
 008.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `sprintf`.
+009.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+010.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `format`.
+011.rb:1:1: C: [Corrected] Style/FormatString: Favor `String#%` over `sprintf`.
 
 ==> corrected/000.rb 14 <==
 something % a
@@ -29,21 +37,30 @@ something % [a, b]
 ==> corrected/002.rb 29 <==
 something % { a: 10, b: 11 }
 
-==> corrected/003.rb 19 <==
+==> corrected/003.rb 29 <==
+something % { a: 10, b: 11 }
+
+==> corrected/004.rb 34 <==
+something % { a: 10, b: 11 }.to_a
+
+==> corrected/005.rb 36 <==
+something % { a: other % { b: 1 } }
+
+==> corrected/006.rb 19 <==
 '%s' % (a ? b : c)
 
-==> corrected/004.rb 15 <==
+==> corrected/007.rb 15 <==
 '%s %s' % args
 
-==> corrected/005.rb 14 <==
+==> corrected/008.rb 14 <==
 something % a
 
-==> corrected/006.rb 21 <==
+==> corrected/009.rb 21 <==
 something % (a + 42)
 
-==> corrected/007.rb 23 <==
+==> corrected/010.rb 23 <==
 "%d %04x" % [123, 123]
 
-==> corrected/008.rb 29 <==
+==> corrected/011.rb 29 <==
 something % { a: 10, b: 11 }
 

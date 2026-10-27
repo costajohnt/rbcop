@@ -65,8 +65,25 @@ impl Cop for YodaCondition {
             o => o,
         };
         let (s, e) = send_range(&call);
-        let fixed = format!("{} {rev} {}", node_text(rhs), node_text(&lhs));
         let msg = format!("Reverse the order of the operands `{}`.", &cx.src.text[s..e]);
-        cx.add_fix(s, e, msg, |c| c.replace(s, e, &fixed));
+        let (l, r) = (lhs.location(), rhs.location());
+        let (l, r) = ((l.start_offset(), l.end_offset()), (r.start_offset(), r.end_offset()));
+        // Two edits around the operands rather than one replacement, so a comparison nested in
+        // an operand can be corrected in the same pass.
+        if cr {
+            // move_argument_to_front
+            let front = format!("{} {rev} ", node_text(rhs));
+            cx.add_fix(s, e, msg, |c| {
+                c.insert_before(l.0, l.1, &front);
+                c.remove(l.1, e);
+            });
+        } else {
+            // move_receiver_to_back
+            let back = format!(" {rev} {}", node_text(&lhs));
+            cx.add_fix(s, e, msg, |c| {
+                c.remove(s, r.0);
+                c.insert_after(r.0, r.1, &back);
+            });
+        }
     }
 }

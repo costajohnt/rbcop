@@ -1,22 +1,40 @@
-==> offenses exit=1 634 <==
+==> offenses exit=1 1294 <==
 000.rb:1:1: C: [Correctable] Style/ExactRegexpMatch: Use `string == 'string'`.
 001.rb:1:1: C: [Correctable] Style/ExactRegexpMatch: Use `string == 'foo\'bar'`.
 002.rb:1:1: C: [Correctable] Style/ExactRegexpMatch: Use `string == 'string'`.
-003.rb:1:1: C: [Correctable] Style/ExactRegexpMatch: Use `string == 'string'`.
 004.rb:1:1: C: [Correctable] Style/ExactRegexpMatch: Use `string == 'string'`.
-006.rb:1:1: C: [Correctable] Style/ExactRegexpMatch: Use `string == 'string'`.
-007.rb:1:1: C: [Correctable] Style/ExactRegexpMatch: Use `string != 'string'`.
-014.rb:2:1: C: [Correctable] Style/ExactRegexpMatch: Use `string == 'string'`.
+005.rb:1:1: C: [Correctable] Style/ExactRegexpMatch: Use `string == 'string'`.
+007.rb:1:1: C: [Correctable] Style/ExactRegexpMatch: Use `string == 'string'`.
+008.rb:1:1: C: [Correctable] Style/ExactRegexpMatch: Use `string != 'string'`.
+015.rb:2:1: C: [Correctable] Style/ExactRegexpMatch: Use `string == 'string'`.
+016.rb:1:2: C: [Correctable] Style/ExactRegexpMatch: Use `string == 'string'`.
+017.rb:1:1: C: [Correctable] Style/ExactRegexpMatch: Use `string == 'string'`.
+018.rb:1:10: C: [Correctable] Style/ExactRegexpMatch: Use `string == 'string'`.
+019.rb:1:17: C: [Correctable] Style/ExactRegexpMatch: Use `string == 'string'`.
+020.rb:1:22: C: [Correctable] Style/ExactRegexpMatch: Use `string == 'string'`.
+021.rb:1:1: C: Style/ExactRegexpMatch: Use `string == 'string'`.
+022.rb:1:9: C: Style/ExactRegexpMatch: Use `string == 'string'`.
+023.rb:1:10: C: Style/ExactRegexpMatch: Use `string == 'string'`.
+024.rb:1:10: C: Style/ExactRegexpMatch: Use `string == 'string'`.
 
-==> autocorrect exit=0 618 <==
+==> autocorrect exit=1 1268 <==
 000.rb:1:1: C: [Corrected] Style/ExactRegexpMatch: Use `string == 'string'`.
 001.rb:1:1: C: [Corrected] Style/ExactRegexpMatch: Use `string == 'foo\'bar'`.
 002.rb:1:1: C: [Corrected] Style/ExactRegexpMatch: Use `string == 'string'`.
-003.rb:1:1: C: [Corrected] Style/ExactRegexpMatch: Use `string == 'string'`.
 004.rb:1:1: C: [Corrected] Style/ExactRegexpMatch: Use `string == 'string'`.
-006.rb:1:1: C: [Corrected] Style/ExactRegexpMatch: Use `string == 'string'`.
-007.rb:1:1: C: [Corrected] Style/ExactRegexpMatch: Use `string != 'string'`.
-014.rb:2:1: C: [Corrected] Style/ExactRegexpMatch: Use `string == 'string'`.
+005.rb:1:1: C: [Corrected] Style/ExactRegexpMatch: Use `string == 'string'`.
+007.rb:1:1: C: [Corrected] Style/ExactRegexpMatch: Use `string == 'string'`.
+008.rb:1:1: C: [Corrected] Style/ExactRegexpMatch: Use `string != 'string'`.
+015.rb:2:1: C: [Corrected] Style/ExactRegexpMatch: Use `string == 'string'`.
+016.rb:1:2: C: [Corrected] Style/ExactRegexpMatch: Use `string == 'string'`.
+017.rb:1:1: C: [Corrected] Style/ExactRegexpMatch: Use `string == 'string'`.
+018.rb:1:10: C: [Corrected] Style/ExactRegexpMatch: Use `string == 'string'`.
+019.rb:1:17: C: [Corrected] Style/ExactRegexpMatch: Use `string == 'string'`.
+020.rb:1:22: C: [Corrected] Style/ExactRegexpMatch: Use `string == 'string'`.
+021.rb:1:1: C: Style/ExactRegexpMatch: Use `string == 'string'`.
+022.rb:1:9: C: Style/ExactRegexpMatch: Use `string == 'string'`.
+023.rb:1:10: C: Style/ExactRegexpMatch: Use `string == 'string'`.
+024.rb:1:10: C: Style/ExactRegexpMatch: Use `string == 'string'`.
 
 ==> corrected/000.rb 19 <==
 string == 'string'
@@ -27,19 +45,34 @@ string == 'foo\'bar'
 ==> corrected/002.rb 19 <==
 string == 'string'
 
-==> corrected/003.rb 19 <==
-string == 'string'
-
 ==> corrected/004.rb 19 <==
 string == 'string'
 
-==> corrected/006.rb 19 <==
+==> corrected/005.rb 19 <==
 string == 'string'
 
 ==> corrected/007.rb 19 <==
+string == 'string'
+
+==> corrected/008.rb 19 <==
 string != 'string'
 
-==> corrected/014.rb 36 <==
+==> corrected/015.rb 36 <==
 string =~ /^\P$/
 string == 'string'
+
+==> corrected/016.rb 22 <==
+!(string == 'string')
+
+==> corrected/017.rb 26 <==
+(string == 'string').to_s
+
+==> corrected/018.rb 28 <==
+result = string == 'string'
+
+==> corrected/019.rb 44 <==
+do_something if string == 'string' && other
+
+==> corrected/020.rb 42 <==
+do_something unless !(string == 'string')
 

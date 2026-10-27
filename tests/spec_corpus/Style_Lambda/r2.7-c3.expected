@@ -1,0 +1,9 @@
+==> offenses exit=1 103 <==
+000.rb:1:5: C: [Correctable] Style/Lambda: Use the `-> { ... }` lambda literal syntax for all lambdas.
+
+==> autocorrect exit=0 101 <==
+000.rb:1:5: C: [Corrected] Style/Lambda: Use the `-> { ... }` lambda literal syntax for all lambdas.
+
+==> corrected/000.rb 19 <==
+f = ->(x, y) { x }
+

@@ -1,0 +1,11 @@
+==> offenses exit=1 75 <==
+000.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [56/40]
+
+==> autocorrect exit=1 134 <==
+000.rb:1:41: C: Layout/LineLength: Line is too long. [41/40]
+000.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [56/40]
+
+==> corrected/000.rb 58 <==
+do_something(foooooooooooooo) if bar == [
+[1, 2], [3, 4]]
+

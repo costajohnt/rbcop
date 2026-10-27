@@ -784,276 +784,290 @@ top
 condition ? {} : nil
 top
 
-==> 191.rb 10 <==
+==> 191.rb 31 <==
+<<~CSS
+  /* comment */
+CSS
+top
+
+==> 192.rb 47 <==
+def foo
+  <<-CSS
+  /* comment */
+  CSS
+  1
+end
+
+==> 193.rb 10 <==
 self; top
 
-==> 192.rb 16 <==
+==> 194.rb 16 <==
 defined?(x)
 top
 
-==> 193.rb 31 <==
+==> 195.rb 31 <==
 def foo
   -> { bar }
   top
 end
 
-==> 194.rb 31 <==
+==> 196.rb 31 <==
 def foo
   top
   -> { bar }
 end
 
-==> 195.rb 36 <==
+==> 197.rb 36 <==
 def foo
   -> { bar }.call
   top
 end
 
-==> 196.rb 35 <==
+==> 198.rb 35 <==
 def foo
   lambda { bar }
   top
 end
 
-==> 197.rb 35 <==
+==> 199.rb 35 <==
 def foo
   top
   lambda { bar }
 end
 
-==> 198.rb 40 <==
+==> 200.rb 40 <==
 def foo
   lambda { bar }.call
   top
 end
 
-==> 199.rb 33 <==
+==> 201.rb 33 <==
 def foo
   proc { bar }
   top
 end
 
-==> 200.rb 33 <==
+==> 202.rb 33 <==
 def foo
   top
   proc { bar }
 end
 
-==> 201.rb 38 <==
+==> 203.rb 38 <==
 def foo
   proc { bar }.call
   top
 end
 
-==> 202.rb 37 <==
+==> 204.rb 37 <==
 def foo
   Proc.new { bar }
   top
 end
 
-==> 203.rb 37 <==
+==> 205.rb 37 <==
 def foo
   top
   Proc.new { bar }
 end
 
-==> 204.rb 42 <==
+==> 206.rb 42 <==
 def foo
   Proc.new { bar }.call
   top
 end
 
-==> 205.rb 43 <==
+==> 207.rb 43 <==
 [1,2,3].collect do |n|
   n.to_s
 end
 "done"
 
-==> 206.rb 36 <==
+==> 208.rb 36 <==
 [1,2,3].map do
   _1.to_s
 end
 "done"
 
-==> 207.rb 14 <==
+==> 209.rb 14 <==
 x.sort
 top(x)
 
-==> 208.rb 22 <==
+==> 210.rb 22 <==
 x.sort.flatten
 top(x)
 
-==> 209.rb 15 <==
+==> 211.rb 15 <==
 x&.sort
 top(x)
 
-==> 210.rb 14 <==
+==> 212.rb 14 <==
 foo = bar
 baz
 
-==> 211.rb 18 <==
+==> 213.rb 18 <==
 def merge
 end
 
 42
 
-==> 212.rb 37 <==
+==> 214.rb 37 <==
 def something
   [foo, bar]
   baz
 end
 
-==> 213.rb 45 <==
+==> 215.rb 45 <==
 def something
   [1, 2, [foo, bar]]
   baz
 end
 
-==> 214.rb 33 <==
+==> 216.rb 33 <==
 def something
   [1, 2]
   baz
 end
 
-==> 215.rb 38 <==
+==> 217.rb 38 <==
 def something
   [1, 2, [3]]
   baz
 end
 
-==> 216.rb 39 <==
+==> 218.rb 39 <==
 def something
   'foo'.freeze
   baz
 end
 
-==> 217.rb 40 <==
+==> 219.rb 40 <==
 def something
   'foo'&.freeze
   baz
 end
 
-==> 218.rb 37 <==
+==> 220.rb 37 <==
 def something
   foo.freeze
   baz
 end
 
-==> 219.rb 46 <==
+==> 221.rb 46 <==
 def something
   [1, ['foo'.freeze]]
   baz
 end
 
-==> 220.rb 44 <==
+==> 222.rb 44 <==
 def something
   [1, [foo.freeze]]
   baz
 end
 
-==> 221.rb 45 <==
+==> 223.rb 45 <==
 def something
   {k1: foo, k2: bar}
   baz
 end
 
-==> 222.rb 51 <==
+==> 224.rb 51 <==
 def something
   {k0: {k1: foo, k2: bar}}
   baz
 end
 
-==> 223.rb 47 <==
+==> 225.rb 47 <==
 def something
   {foo => 1, bar => 2}
   baz
 end
 
-==> 224.rb 52 <==
+==> 226.rb 52 <==
 def something
   {foo: 1, bar: {baz => 2}}
   baz
 end
 
-==> 225.rb 41 <==
+==> 227.rb 41 <==
 def something
   {k1: 1, k2: 2}
   baz
 end
 
-==> 226.rb 46 <==
+==> 228.rb 46 <==
 def something
   {x: {k1: 1, k2: 2}}
   baz
 end
 
-==> 227.rb 47 <==
+==> 229.rb 47 <==
 def something
   {[foo, bar] => :foo}
   baz
 end
 
-==> 228.rb 43 <==
+==> 230.rb 43 <==
 def something
   {[1, 2] => :foo}
   baz
 end
 
-==> 229.rb 28 <==
+==> 231.rb 28 <==
 def something
   42
   42
 end
 
-==> 230.rb 29 <==
+==> 232.rb 29 <==
 def initialize
   42
   42
 end
 
-==> 231.rb 28 <==
+==> 233.rb 28 <==
 def foo=(rhs)
   42
   42
 end
 
-==> 232.rb 33 <==
+==> 234.rb 33 <==
 def self.foo=(rhs)
   42
   42
 end
 
-==> 233.rb 50 <==
+==> 235.rb 50 <==
 def name=(name)
   @name = name
   reset
   name
 end
 
-==> 234.rb 36 <==
+==> 236.rb 36 <==
 array.each do |_item|
   42
   42
 end
 
-==> 235.rb 34 <==
+==> 237.rb 34 <==
 array.each do |_item|
   CONST
 end
 
-==> 236.rb 31 <==
+==> 238.rb 31 <==
 array.each do |_item|
   42
 end
 
-==> 237.rb 151 <==
+==> 239.rb 151 <==
 enumerator_as_filter.each do |item|
   # The `filter` method is used to filter for matches with `42`.
   # In this case, it's not void.
   item == 42
 end
 
-==> 238.rb 164 <==
+==> 240.rb 164 <==
 enumerator_as_filter.each do |item|
   puts item
 
@@ -1062,7 +1076,7 @@ enumerator_as_filter.each do |item|
   item == 42
 end
 
-==> 239.rb 153 <==
+==> 241.rb 153 <==
 enumerator_as_filter.each do
   puts _1
 
@@ -1071,28 +1085,28 @@ enumerator_as_filter.each do
   _1 == 42
 end
 
-==> 240.rb 25 <==
+==> 242.rb 25 <==
 foo.tap do
   _1
   42
 end
 
-==> 241.rb 23 <==
+==> 243.rb 23 <==
 array.each { |_item| }
 
-==> 242.rb 29 <==
+==> 244.rb 29 <==
 foo.tap do |x|
   42
   42
 end
 
-==> 243.rb 36 <==
+==> 245.rb 36 <==
 for _item in array do
   42
   42
 end
 
-==> 244.rb 35 <==
+==> 246.rb 35 <==
 def foo
 ensure
   bar
@@ -1100,70 +1114,70 @@ ensure
   42
 end
 
-==> 245.rb 39 <==
+==> 247.rb 39 <==
 def foo
   bar
 ensure
   [1, 2, [3]]
 end
 
-==> 246.rb 16 <==
+==> 248.rb 16 <==
 begin
  1
  2
 end
 
-==> 247.rb 15 <==
+==> 249.rb 15 <==
 lambda.(a)
 top
 
-==> 248.rb 14 <==
+==> 250.rb 14 <==
 `touch x`
 nil
 
-==> 249.rb 38 <==
+==> 251.rb 38 <==
 x = if condition
       42
     end
 nil
 
-==> 250.rb 26 <==
+==> 252.rb 26 <==
 x = (42 if condition)
 nil
 
-==> 251.rb 29 <==
+==> 253.rb 29 <==
 x = condition ? 42 : nil
 nil
 
-==> 252.rb 16 <==
+==> 254.rb 16 <==
 %x(touch x)
 nil
 
-==> 253.rb 58 <==
+==> 255.rb 58 <==
 def foo
   1..100.times.each { puts 1 }
   do_something
 end
 
-==> 254.rb 59 <==
+==> 256.rb 59 <==
 def foo
   1...100.times.each { puts 1 }
   do_something
 end
 
-==> 255.rb 32 <==
+==> 257.rb 32 <==
 def foo
   __ENCODING__
   42
 end
 
-==> 256.rb 34 <==
+==> 258.rb 34 <==
 case foo
 when 1 then 2
 end
 puts 3
 
-==> 257.rb 55 <==
+==> 259.rb 55 <==
 case foo
 when 1 then 2
 when 3 then 4
@@ -1171,38 +1185,38 @@ else 5
 end
 puts 6
 
-==> 258.rb 40 <==
+==> 260.rb 40 <==
 x = 1
 case foo
 when 1 then x
 end
 puts 3
 
-==> 259.rb 45 <==
+==> 261.rb 45 <==
 case foo
 when 1 then do_something
 end
 puts 3
 
-==> 260.rb 33 <==
+==> 262.rb 33 <==
 case foo
 when 1
   nil
 end
 puts 3
 
-==> 261.rb 27 <==
+==> 263.rb 27 <==
 case foo
 when 1 then 2
 end
 
-==> 262.rb 29 <==
+==> 264.rb 29 <==
 case foo
 when 1
 end
 puts :ok
 
-==> 263.rb 51 <==
+==> 265.rb 51 <==
 case foo
 in 1 then 2
 in 2 then 3
@@ -1210,36 +1224,36 @@ else 4
 end
 puts 5
 
-==> 264.rb 38 <==
+==> 266.rb 38 <==
 x = 1
 case foo
 in 1 then x
 end
 puts 3
 
-==> 265.rb 43 <==
+==> 267.rb 43 <==
 case foo
 in 1 then do_something
 end
 puts 3
 
-==> 266.rb 25 <==
+==> 268.rb 25 <==
 case foo
 in 1 then 2
 end
 
-==> 267.rb 27 <==
+==> 269.rb 27 <==
 case foo
 in 1
 end
 puts :ok
 
-==> 268.rb 32 <==
+==> 270.rb 32 <==
 if some_condition
 end
 
 puts :ok
 
-==> 269.rb 8 <==
+==> 271.rb 8 <==
 ((); 1)
 

@@ -1,13 +1,4 @@
-==> offenses exit=1 247 <==
-001.rb:2:6: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
-001.rb:3:12: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
+==> offenses exit=0 0 <==
 
-==> autocorrect exit=0 243 <==
-001.rb:2:6: C: [Corrected] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
-001.rb:3:12: C: [Corrected] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
-
-==> corrected/001.rb 47 <==
-hash1 = { a: 0,
-         bb:,
-        ccc: 2 }
+==> autocorrect exit=0 0 <==
 

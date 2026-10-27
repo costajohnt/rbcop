@@ -82,9 +82,9 @@ impl Cop for RescuedExceptionsVariableName {
         let msg = format!("Use `{preferred}` instead of `{offending}`.");
         cx.add_fix(loc.start_offset(), loc.end_offset(), msg, |c| {
             c.replace(loc.start_offset(), loc.end_offset(), &preferred);
-            for (s, e, insert) in edits {
-                if insert {
-                    c.insert_after(s, e, &format!(" {preferred}"));
+            for (s, e, omitted) in edits {
+                if omitted {
+                    c.replace(s, e, &format!(": {preferred}"));
                 } else {
                     c.replace(s, e, &preferred);
                 }
@@ -119,7 +119,7 @@ impl<'pr> Visit<'pr> for LvarNamed<'_> {
 struct Fixer<'a> {
     name: &'a [u8],
     stopped: bool,
-    /// (start, end, insert_after) edits
+    /// (start, end, value_omission) edits
     edits: Vec<(usize, usize, bool)>,
 }
 
@@ -164,7 +164,7 @@ impl<'pr> Visit<'pr> for Fixer<'_> {
         if self.stopped {
             return;
         }
-        // value omission `{ex:}`: insert the new name after the label colon
+        // value omission `{ex:}`: replace the label colon with `: new_name`
         let omitted = node.value().as_implicit_node().is_some_and(|i| {
             i.value().as_local_variable_read_node().is_some_and(|l| l.name().as_slice() == self.name)
         });

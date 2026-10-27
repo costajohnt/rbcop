@@ -19,3 +19,13 @@ def a
   b { c }
 end
 
+==> 002.rb 31 <==
+def foo
+  @foo ||= bar baz
+end
+
+==> 003.rb 36 <==
+def foo
+  !obj.do_something bar
+end
+

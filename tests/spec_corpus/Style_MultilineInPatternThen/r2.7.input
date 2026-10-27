@@ -83,3 +83,9 @@ in bar,
    baz then do_something
 end
 
+==> 013.rb 42 <==
+case foo
+in 500.. then
+  do_something
+end
+

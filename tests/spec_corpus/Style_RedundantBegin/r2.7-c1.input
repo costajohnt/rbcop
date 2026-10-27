@@ -1,0 +1,26 @@
+==> .rubocop.yml 153 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/LineLength:
+  Enabled: true
+  Max: 30
+
+==> 000.rb 45 <==
+var ||= begin
+  foo_bar_baz if condition
+end
+
+==> 001.rb 43 <==
+var ||= begin
+  foo_bar_b and baz_quxx
+end
+
+==> 002.rb 37 <==
+var ||= begin
+  foo if condition
+end
+

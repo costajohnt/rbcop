@@ -11,11 +11,31 @@ Style/NilComparison:
 ==> 000.rb 7 <==
 x.nil?
 
-==> 001.rb 8 <==
+==> 001.rb 10 <==
+x
+  .nil?
+
+==> 002.rb 20 <==
+x # comment
+  .nil?
+
+==> 003.rb 8 <==
 !x.nil?
 
-==> 002.rb 14 <==
+==> 004.rb 14 <==
 ary << x.nil?
 
-==> 003.rb 4 <==
+==> 005.rb 12 <==
+x.nil?.to_s
+
+==> 006.rb 13 <==
+x.nil?&.to_s
+
+==> 007.rb 12 <==
+x.nil?.nil?
+
+==> 008.rb 12 <==
+foo(x.nil?)
+
+==> 009.rb 4 <==
 nil?

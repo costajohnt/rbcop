@@ -14,7 +14,26 @@ class FooClass
   end
 end
 
-==> 001.rb 77 <==
+==> 001.rb 58 <==
+module FooModule
+  class BarClass
+ do_something
+  end
+end
+
+==> 002.rb 97 <==
+module Foo
+  do_something
+
+  module Bar
+    module Baz
+      def qux
+      end
+    end
+  end
+end
+
+==> 003.rb 77 <==
 module FooModule
   module BarModule
     def method_example
@@ -22,7 +41,7 @@ module FooModule
   end
 end
 
-==> 002.rb 166 <==
+==> 004.rb 166 <==
 module FooModule
   module BarModule
     module BazModule
@@ -36,7 +55,7 @@ module FooModule
   end
 end
 
-==> 003.rb 75 <==
+==> 005.rb 75 <==
 class Foo::Bar
   class Baz
   end
@@ -47,7 +66,7 @@ class Foo
   end
 end
 
-==> 004.rb 54 <==
+==> 006.rb 54 <==
 class Foo
   class Bar
     class Baz
@@ -55,7 +74,7 @@ class Foo
   end
 end
 
-==> 005.rb 79 <==
+==> 007.rb 79 <==
 module Foo::Bar
   module Baz
   end
@@ -66,7 +85,7 @@ module Foo
   end
 end
 
-==> 006.rb 88 <==
+==> 008.rb 88 <==
 # describe Foo
 # more Foo
 class Foo
@@ -76,14 +95,14 @@ class Foo
   end
 end
 
-==> 007.rb 61 <==
+==> 009.rb 61 <==
 class FooClass::BarClass
 end
 
 module FooClass::BarModule
 end
 
-==> 008.rb 136 <==
+==> 010.rb 136 <==
 class FooClass
   class BarClass
   end
@@ -98,19 +117,19 @@ module FooModule
   end
 end
 
-==> 009.rb 42 <==
+==> 011.rb 42 <==
 class FooClass
   def bar_method
   end
 end
 
-==> 010.rb 50 <==
+==> 012.rb 50 <==
 class FooClass < Super
   class BarClass
   end
 end
 
-==> 011.rb 53 <==
+==> 013.rb 53 <==
 module A
 	module B
 		module C
@@ -119,27 +138,27 @@ module A
 	end
 end
 
-==> 012.rb 25 <==
+==> 014.rb 25 <==
 module M
 class C
 end
 end
 
-==> 013.rb 41 <==
+==> 015.rb 41 <==
 module M
 class C
 def foo; 1; end
 end
 end
 
-==> 014.rb 47 <==
+==> 016.rb 47 <==
 module M
   class C
   def foo; 1; end
   end
 end
 
-==> 015.rb 52 <==
+==> 017.rb 52 <==
 module A
 	module B
 		module C
@@ -148,7 +167,7 @@ module A
 	end
 end
 
-==> 016.rb 49 <==
+==> 018.rb 49 <==
 module A
 	module B
 	module C
@@ -157,7 +176,7 @@ module A
 	end
 end
 
-==> 017.rb 50 <==
+==> 019.rb 50 <==
 module A
 	module B
 	module C
@@ -166,12 +185,22 @@ module A
 	end
 end
 
-==> 018.rb 41 <==
+==> 020.rb 41 <==
 class FooClass
   class BarClass; end
 end
 
-==> 019.rb 66 <==
+==> 021.rb 32 <==
+module A
+  class C < D; end
+end
+
+==> 022.rb 31 <==
+module A
+  class C; x; end
+end
+
+==> 023.rb 66 <==
 class A < B
   class C
     class D; end
@@ -181,7 +210,7 @@ class A < B
   end
 end
 
-==> 020.rb 92 <==
+==> 024.rb 92 <==
 class A < B
   class F
     class C
@@ -193,7 +222,7 @@ class A < B
   end
 end
 
-==> 021.rb 69 <==
+==> 025.rb 69 <==
 class A < B
   class C
     class D;    end

@@ -21,204 +21,239 @@ puts [1, 2, 3].map { |n|
   n * n
 }
 
-==> 001.rb 38 <==
+==> 001.rb 33 <==
+for d in aa { |c| c } do
+  f
+end
+
+==> 002.rb 35 <==
+for d in aa { |c|
+  c
+} do
+  f
+end
+
+==> 003.rb 54 <==
+def foo
+  yield [1, 2, 3].map { |n|
+    n * n
+  }
+end
+
+==> 004.rb 54 <==
+def foo
+  super [1, 2, 3].map { |n|
+    n * n
+  }
+end
+
+==> 005.rb 38 <==
 puts [1, 2, 3].map { |n|
   n * n
 }, 1
 
-==> 002.rb 42 <==
+==> 006.rb 42 <==
 puts [0] + [1,2,3].map { |n|
   n * n
 }, 1
 
-==> 003.rb 42 <==
+==> 007.rb 42 <==
 puts [1,2,3].map { |n|
   n * n
 } + [0], 1
 
-==> 004.rb 70 <==
+==> 008.rb 70 <==
 'Some text: %s' %
   %w[foo bar].map { |v|
     v.upcase
   }.join(', ')
 
-==> 005.rb 123 <==
+==> 009.rb 123 <==
 foo :bar, baz: 'Some text: %s' %
                %w[foo bar].map { |v|
                 v.upcase
                }.join(', ')
 
-==> 006.rb 36 <==
+==> 010.rb 36 <==
 puts [1, 2, 3].map {
   _1 * _1
 }, 1
 
-==> 007.rb 40 <==
+==> 011.rb 40 <==
 puts [0] + [1,2,3].map {
   _1 * _1
 }, 1
 
-==> 008.rb 40 <==
+==> 012.rb 40 <==
 puts [1,2,3].map {
   _1 * _1
 } + [0], 1
 
-==> 009.rb 55 <==
+==> 013.rb 55 <==
 foo %
   %w[bar baz].map {
     _1.upcase
   }.join(', ')
 
-==> 010.rb 120 <==
+==> 014.rb 120 <==
 foo :bar, baz: 'Some text: %s' %
                %w[foo bar].map {
                 _1.upcase
                }.join(', ')
 
-==> 011.rb 22 <==
+==> 015.rb 22 <==
 foo = map { |x|
   x
 }
 
-==> 012.rb 35 <==
+==> 016.rb 35 <==
 block do
   map { |x|
     x
   }
 end
 
-==> 013.rb 21 <==
+==> 017.rb 21 <==
 puts map { |x|
   x
 }
 
-==> 014.rb 24 <==
+==> 018.rb 24 <==
 map { |x|
   x
 }.inspect
 
-==> 015.rb 18 <==
+==> 019.rb 18 <==
 let(:foo) {
   x
 }
 
-==> 016.rb 17 <==
+==> 020.rb 17 <==
 each { |x|
   x
 }
 
-==> 017.rb 25 <==
+==> 021.rb 25 <==
 foo = map do |x|
   x
 end
 
-==> 018.rb 26 <==
+==> 022.rb 26 <==
 puts (map do |x|
   x
 end)
 
-==> 019.rb 29 <==
+==> 023.rb 29 <==
 foo.bar = map do |x|
   x
 end
 
-==> 020.rb 38 <==
+==> 024.rb 38 <==
 block do
   map do |x|
     x
   end
 end
 
-==> 021.rb 24 <==
+==> 025.rb 24 <==
 return if any? { |x| x }
-==> 022.rb 31 <==
+==> 026.rb 31 <==
 if any? { |x| x }
   return
 end
 
-==> 023.rb 35 <==
+==> 027.rb 35 <==
 unless any? { |x| x }
   return
 end
 
-==> 024.rb 32 <==
+==> 028.rb 32 <==
 case foo { |x| x }
 when bar
 end
 
-==> 025.rb 30 <==
+==> 029.rb 30 <==
 case foo { |x| x }
 in bar
 end
 
-==> 026.rb 24 <==
+==> 030.rb 24 <==
 while foo { |x| x }
 end
 
-==> 027.rb 24 <==
+==> 031.rb 24 <==
 until foo { |x| x }
 end
 
-==> 028.rb 21 <==
+==> 032.rb 21 <==
 any? { |c| c } || foo
-==> 029.rb 21 <==
+==> 033.rb 21 <==
 any? { |c| c } && foo
-==> 030.rb 24 <==
+==> 034.rb 24 <==
 [detect { true }, other]
-==> 031.rb 22 <==
+==> 035.rb 22 <==
 detect { true }..other
-==> 032.rb 23 <==
+==> 036.rb 23 <==
 detect { true }...other
-==> 033.rb 27 <==
+==> 037.rb 27 <==
 ary.map { |e| foo(e) }&.bar
-==> 034.rb 37 <==
+==> 038.rb 37 <==
 foo = bar.tap do |x|
   x.age = 3
 end
 
-==> 035.rb 30 <==
+==> 039.rb 30 <==
 foo = lambda do
   puts 42
 end
 
-==> 036.rb 35 <==
+==> 040.rb 35 <==
 foo = test_method do
   puts 42
 end
 
-==> 037.rb 20 <==
+==> 041.rb 20 <==
 each { |x| puts x }
 
-==> 038.rb 23 <==
+==> 042.rb 23 <==
 each do |x| puts x; end
-==> 039.rb 16 <==
+==> 043.rb 16 <==
 each {|x|
   x
 }
 
-==> 040.rb 22 <==
+==> 044.rb 22 <==
 let(:foo) { |x|
   x
 }
 
-==> 041.rb 37 <==
+==> 045.rb 37 <==
 foo = bar.tap do |x|
   x.age = 1
 end
 
-==> 042.rb 24 <==
+==> 046.rb 24 <==
 foo = map do|x|
   x
 end
 
-==> 043.rb 75 <==
+==> 047.rb 75 <==
 x = map do |a|
   do_something
 rescue StandardError => e
   puts 'oh no'
 end
 
-==> 044.rb 56 <==
+==> 048.rb 90 <==
+x = map do |a|
+  do_something
+rescue StandardError => e
+  puts <<~MSG
+    oh no
+  MSG
+end
+
+==> 049.rb 56 <==
 x = map do |a|
   do_something
 ensure

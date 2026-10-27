@@ -8,7 +8,14 @@ AllCops:
 Style/CaseLikeIf:
   MinBranchesCount: 3
 
-==> 000.rb 32 <==
+==> 000.rb 48 <==
+if x == 1
+elsif x == 2
+else
+  foo if x == 3
+end
+
+==> 001.rb 32 <==
 if x == 1
 elsif x == 2
 else

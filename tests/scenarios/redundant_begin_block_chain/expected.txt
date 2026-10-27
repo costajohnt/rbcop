@@ -1,0 +1,10 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+example.rb:16:20: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+example.rb:17:10: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+example.rb:24:24: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+example.rb:25:19: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+example.rb:26:40: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+example.rb:27:24: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+example.rb:7:19: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+example.rb:8:40: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.
+example.rb:9:24: C: [Correctable] Layout/DotPosition: Place the . on the next line, together with the method name.

@@ -1,4 +1,4 @@
-==> offenses exit=1 4569 <==
+==> offenses exit=1 4693 <==
 000.rb:1:17: C: [Correctable] Style/RedundantRegexpArgument: Use string `'f'` as argument instead of regexp `/f/`.
 001.rb:1:18: C: [Correctable] Style/RedundantRegexpArgument: Use string `'f'` as argument instead of regexp `/f/`.
 002.rb:1:18: C: [Correctable] Style/RedundantRegexpArgument: Use string `'f'` as argument instead of regexp `/f/`.
@@ -33,13 +33,14 @@
 031.rb:1:10: C: [Correctable] Style/RedundantRegexpArgument: Use string `'\"'` as argument instead of regexp `/\\"/`.
 032.rb:1:15: C: [Correctable] Style/RedundantRegexpArgument: Use string `'.'` as argument instead of regexp `/\./`.
 033.rb:1:25: C: [Correctable] Style/RedundantRegexpArgument: Use string `"\n"` as argument instead of regexp `/\n/`.
-034.rb:1:31: C: [Correctable] Style/RedundantRegexpArgument: Use string `"\n\n"` as argument instead of regexp `/\n\n/`.
-035.rb:1:25: C: [Correctable] Style/RedundantRegexpArgument: Use string `"\u3000"` as argument instead of regexp `/\u3000/`.
-036.rb:1:20: C: [Correctable] Style/RedundantRegexpArgument: Use string `"\\."` as argument instead of regexp `/\\\./`.
-037.rb:1:25: C: [Correctable] Style/RedundantRegexpArgument: Use string `"foo\n.\n"` as argument instead of regexp `/foo\n\.\n/`.
-038.rb:1:25: C: [Correctable] Style/RedundantRegexpArgument: Use string `'  '` as argument instead of regexp `/  /`.
+034.rb:1:12: C: [Correctable] Style/RedundantRegexpArgument: Use string `"\\\#{"` as argument instead of regexp `/\\\#\{/`.
+035.rb:1:31: C: [Correctable] Style/RedundantRegexpArgument: Use string `"\n\n"` as argument instead of regexp `/\n\n/`.
+036.rb:1:25: C: [Correctable] Style/RedundantRegexpArgument: Use string `"\u3000"` as argument instead of regexp `/\u3000/`.
+037.rb:1:20: C: [Correctable] Style/RedundantRegexpArgument: Use string `"\\."` as argument instead of regexp `/\\\./`.
+038.rb:1:25: C: [Correctable] Style/RedundantRegexpArgument: Use string `"foo\n.\n"` as argument instead of regexp `/foo\n\.\n/`.
+039.rb:1:25: C: [Correctable] Style/RedundantRegexpArgument: Use string `'  '` as argument instead of regexp `/  /`.
 
-==> autocorrect exit=0 4491 <==
+==> autocorrect exit=0 4613 <==
 000.rb:1:17: C: [Corrected] Style/RedundantRegexpArgument: Use string `'f'` as argument instead of regexp `/f/`.
 001.rb:1:18: C: [Corrected] Style/RedundantRegexpArgument: Use string `'f'` as argument instead of regexp `/f/`.
 002.rb:1:18: C: [Corrected] Style/RedundantRegexpArgument: Use string `'f'` as argument instead of regexp `/f/`.
@@ -74,11 +75,12 @@
 031.rb:1:10: C: [Corrected] Style/RedundantRegexpArgument: Use string `'\"'` as argument instead of regexp `/\\"/`.
 032.rb:1:15: C: [Corrected] Style/RedundantRegexpArgument: Use string `'.'` as argument instead of regexp `/\./`.
 033.rb:1:25: C: [Corrected] Style/RedundantRegexpArgument: Use string `"\n"` as argument instead of regexp `/\n/`.
-034.rb:1:31: C: [Corrected] Style/RedundantRegexpArgument: Use string `"\n\n"` as argument instead of regexp `/\n\n/`.
-035.rb:1:25: C: [Corrected] Style/RedundantRegexpArgument: Use string `"\u3000"` as argument instead of regexp `/\u3000/`.
-036.rb:1:20: C: [Corrected] Style/RedundantRegexpArgument: Use string `"\\."` as argument instead of regexp `/\\\./`.
-037.rb:1:25: C: [Corrected] Style/RedundantRegexpArgument: Use string `"foo\n.\n"` as argument instead of regexp `/foo\n\.\n/`.
-038.rb:1:25: C: [Corrected] Style/RedundantRegexpArgument: Use string `'  '` as argument instead of regexp `/  /`.
+034.rb:1:12: C: [Corrected] Style/RedundantRegexpArgument: Use string `"\\\#{"` as argument instead of regexp `/\\\#\{/`.
+035.rb:1:31: C: [Corrected] Style/RedundantRegexpArgument: Use string `"\n\n"` as argument instead of regexp `/\n\n/`.
+036.rb:1:25: C: [Corrected] Style/RedundantRegexpArgument: Use string `"\u3000"` as argument instead of regexp `/\u3000/`.
+037.rb:1:20: C: [Corrected] Style/RedundantRegexpArgument: Use string `"\\."` as argument instead of regexp `/\\\./`.
+038.rb:1:25: C: [Corrected] Style/RedundantRegexpArgument: Use string `"foo\n.\n"` as argument instead of regexp `/foo\n\.\n/`.
+039.rb:1:25: C: [Corrected] Style/RedundantRegexpArgument: Use string `'  '` as argument instead of regexp `/  /`.
 
 ==> corrected/000.rb 21 <==
 'foo'.byteindex('f')
@@ -182,18 +184,21 @@ str.gsub('\"')
 ==> corrected/033.rb 30 <==
 "foo\nbar\nbaz\n".split("\n")
 
-==> corrected/034.rb 38 <==
+==> corrected/034.rb 25 <==
+'foo'.gsub("\\\#{", 'x')
+
+==> corrected/035.rb 38 <==
 "foo\n\nbar\n\nbaz\n\n".split("\n\n")
 
-==> corrected/035.rb 34 <==
+==> corrected/036.rb 34 <==
 "foo\nbar\nbaz\n".split("\u3000")
 
-==> corrected/036.rb 26 <==
+==> corrected/037.rb 26 <==
 "foo\\\.bar".split("\\.")
 
-==> corrected/037.rb 36 <==
+==> corrected/038.rb 36 <==
 "foo\nbar\nbaz\n".split("foo\n.\n")
 
-==> corrected/038.rb 30 <==
+==> corrected/039.rb 30 <==
 'foo         bar'.split('  ')
 

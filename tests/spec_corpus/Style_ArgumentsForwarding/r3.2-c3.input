@@ -23,17 +23,42 @@ def foo(*args)
   bar[*args]
 end
 
-==> 003.rb 38 <==
+==> 003.rb 40 <==
+def foo(*args)
+  bar[*args] = value
+end
+
+==> 004.rb 57 <==
+def foo(key, **kwargs)
+  bar[key] = {x: 1, **kwargs}
+end
+
+==> 005.rb 52 <==
+def foo(**kwargs)
+  obj&.bar = {x: 1, **kwargs}
+end
+
+==> 006.rb 48 <==
+def foo(**kwargs)
+  obj << {x: 1, **kwargs}
+end
+
+==> 007.rb 33 <==
+def foo(*args)
+  obj.+ *args
+end
+
+==> 008.rb 38 <==
 def foo(**kwargs)
   bar(**kwargs)
 end
 
-==> 004.rb 39 <==
+==> 009.rb 39 <==
 def foo(arg=1, *args)
   bar(*args)
 end
 
-==> 005.rb 40 <==
+==> 010.rb 40 <==
 def foo(*args, arg: 1)
   bar(*args)
 end

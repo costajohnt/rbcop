@@ -32,3 +32,33 @@ end
 some_method do do_something end
 something_else
 
+==> 006.rb 21 <==
+aa { bb { cc }
+.dd }
+
+==> 007.rb 15 <==
+aa { bb
+&.cc }
+
+==> 008.rb 19 <==
+aa {
+
+  bb
+  .cc }
+
+==> 009.rb 24 <==
+foo :bar \
+do
+  baz
+end
+
+==> 010.rb 45 <==
+foo do |bar,
+        baz|
+  do_something
+end
+
+==> 011.rb 29 <==
+foo {
+  |bar| do_something }
+

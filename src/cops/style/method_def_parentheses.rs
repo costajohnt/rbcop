@@ -39,16 +39,25 @@ impl Cop for MethodDefParentheses {
             }
             return;
         }
-        if def.equal_loc().is_some() || params.as_ref().is_some_and(anonymous_arguments) {
+        // 1.92 also forces them for parameters starting below the `(` or with a `(a, b)` destructuring.
+        let first = params.as_ref().and_then(|p| parameter_nodes(p).into_iter().next());
+        let own_line =
+            parens.zip(first.as_ref()).is_some_and(|((s, _), f)| cx.src.line_of(s) != cx.src.line_of(f.location().start_offset()));
+        let destructuring = first.as_ref().is_some_and(|f| f.as_multi_target_node().is_some());
+        if def.equal_loc().is_some() || params.as_ref().is_some_and(anonymous_arguments) || own_line || destructuring {
             return cx.correct_style_detected();
         }
         if let Some((s, e)) = parens {
             if cx.block_runs(s, e) {
                 cx.string_style_detected_for("EnforcedStyle");
             }
+            // code_after_arguments?: `def foo(a) bar end` keeps a `;` in place of the `)`.
+            let line_end = cx.src.text[e..].find('\n').map_or(cx.src.text.len(), |i| e + i);
+            let rest = cx.src.text[e..line_end].trim_matches(|c: char| c.is_ascii_whitespace() || c == '\0');
+            let code_after = !rest.is_empty() && !rest.starts_with([';', '#']);
             cx.add_fix(s, e, "Use def without parentheses.", |c| {
                 c.replace(s, s + 1, " ");
-                c.remove(e - 1, e);
+                if code_after { c.replace(e - 1, e, ";") } else { c.remove(e - 1, e) }
             });
         }
     }

@@ -56,3 +56,7 @@ def some_method(
   do_something
 end
 
+==> 008.rb 33 <==
+def some_method(bar,
+  baz); end
+

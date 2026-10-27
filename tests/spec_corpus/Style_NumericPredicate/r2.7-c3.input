@@ -1,4 +1,4 @@
-==> .rubocop.yml 209 <==
+==> .rubocop.yml 180 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -7,12 +7,31 @@ AllCops:
   TargetRubyVersion: 2.7
 Style/NumericPredicate:
   EnforcedStyle: comparison
-  AllowedMethods: []
-  AllowedPatterns:
-  - zero
+  AutoCorrect: true
 
-==> 000.rb 35 <==
-if number.zero?
-  puts 'hello'
-end
+==> 000.rb 13 <==
+number.zero?
+
+==> 001.rb 14 <==
+!number.zero?
+
+==> 002.rb 20 <==
+foo == number.zero?
+
+==> 003.rb 22 <==
+number.positive?.to_s
+
+==> 004.rb 18 <==
+foo[number.zero?]
+
+==> 005.rb 27 <==
+do_something(number.zero?)
+
+==> 006.rb 15 <==
+number.nonzero?
+==> 007.rb 17 <==
+number.positive?
+
+==> 008.rb 17 <==
+number.negative?
 

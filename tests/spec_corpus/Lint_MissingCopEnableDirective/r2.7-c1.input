@@ -54,3 +54,13 @@ x =   0 +
       3
 # Some other code
 
+==> 007.rb 120 <==
+# rubocop:next -Layout/SpaceAroundOperators
+x =   0 +
+      1 +
+      2 +
+      3 +
+      4 +
+      5
+# Some other code
+

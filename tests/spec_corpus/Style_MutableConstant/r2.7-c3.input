@@ -15,3 +15,9 @@ CONST = [{ a: [] }]
 ==> 001.rb 31 <==
 CONST = [Something.new].freeze
 
+==> 002.rb 40 <==
+CONST = [1, *foo, *1..2, *[bar]].freeze
+
+==> 003.rb 18 <==
+CONST = [1, *foo]
+

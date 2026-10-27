@@ -218,7 +218,7 @@ fn allowable(cx: &Cx, b: &BeginNode, parent: Option<&Node>) -> bool {
         return true;
     }
     let Some(p) = parent else { return false };
-    (is_assignment(p) && n != 1)
+    (is_assignment(p) && (n != 1 || too_long_when_joined(cx, b)))
         || p.as_while_node().is_some_and(|w| w.is_begin_modifier())
         || p.as_until_node().is_some_and(|w| w.is_begin_modifier())
         || p.as_call_node().is_some_and(|c| !is_csend(&c))
@@ -232,9 +232,11 @@ fn plan(src: &crate::source::Source, b: &BeginNode, parent: Option<&Node>) -> Ve
     let first = children(b).into_iter().next();
     let mut ops = Vec::new();
     match (parent, &first) {
-        (Some(p), Some(first)) if is_assignment(p) => {
+        (Some(p), Some(first))
+            if is_assignment(p) || matches!(kind::of(p), kind::RETURN_NODE | kind::NEXT_NODE | kind::BREAK_NODE) =>
+        {
             let mut source = node_text(first).to_string();
-            if modifier_if(first).is_some() {
+            if low_precedence_statement(first) {
                 source = format!("({source})");
             }
             let (fs, fe) = (first.location().start_offset(), first.location().end_offset());
@@ -254,7 +256,12 @@ fn plan(src: &crate::source::Source, b: &BeginNode, parent: Option<&Node>) -> Ve
     }
     let loc = b.as_node().location();
     let multiline = src.line_of(loc.start_offset()) != src.line_of(loc.end_offset());
-    if let (true, Some((cs, ce)), Some(first)) = (multiline, parent.and_then(modifier_if), &first) {
+    // use_modifier_form_after_multiline_begin_block?: not when the kwbegin is the condition.
+    let is_condition = parent.is_some_and(|p| {
+        let pred = p.as_if_node().map(|i| i.predicate()).or_else(|| p.as_unless_node().map(|u| u.predicate()));
+        pred.is_some_and(|c| c.location().start_offset() == loc.start_offset())
+    });
+    if let (true, false, Some((cs, ce)), Some(first)) = (multiline, is_condition, parent.and_then(modifier_if), &first) {
         let (fs, fe) = (first.location().start_offset(), first.location().end_offset());
         ops.push(Op::InsertAfter(fs, fe, format!(" {}", &src.text[cs..ce])));
         let (ls, le) = range_by_whole_lines(src.text, cs, ce, true);
@@ -264,6 +271,46 @@ fn plan(src: &crate::source::Source, b: &BeginNode, parent: Option<&Node>) -> Ve
         ops.push(Op::Remove(end.start_offset(), end.end_offset()));
     }
     ops
+}
+
+/// `low_precedence_statement?`: a modifier conditional or loop, `not x`, or `and`/`or`.
+fn low_precedence_statement(node: &Node) -> bool {
+    if node.as_if_node().is_some() || node.as_unless_node().is_some() {
+        return modifier_if(node).is_some();
+    }
+    if let Some(w) = node.as_while_node() {
+        return w.closing_loc().is_none() && !w.is_begin_modifier();
+    }
+    if let Some(u) = node.as_until_node() {
+        return u.closing_loc().is_none() && !u.is_begin_modifier();
+    }
+    if let Some(c) = node.as_call_node() {
+        return !is_csend(&c) && method_name(&c) == "!" && c.message_loc().is_some_and(|m| m.as_slice() == b"not");
+    }
+    is_operator_keyword(node) && !helpers::parser_parent::is_logical_operator(node)
+}
+
+/// `too_long_when_joined?`: the single statement would not fit on the `begin` line.
+fn too_long_when_joined(cx: &Cx, b: &BeginNode) -> bool {
+    let Some(statement) = children(b).into_iter().next() else { return false };
+    if !helpers::alignment::cop_enabled(cx, "Layout/LineLength") {
+        return false;
+    }
+    let Some(max) = cx.config.for_cop("Layout/LineLength").num("Max").map(crate::config::value::Num::f64) else {
+        return false;
+    };
+    // rubocop-ast `single_line?`: a block statement compares its brace lines, so a multi-line
+    // chain ending in a one-line `{ }` block counts with its whole (multi-line) source length.
+    // ponytail: lambda and super blocks use their first/last lines; port them if a corpus hits one.
+    if !helpers::rspec::single_line(cx.src, &statement) {
+        return false;
+    }
+    let (s, e) = (statement.location().start_offset(), statement.location().end_offset());
+    let mut length = cx.src.text[s..e].chars().count();
+    if low_precedence_statement(&statement) {
+        length += 2;
+    }
+    (cx.src.column(b.as_node().location().start_offset()) + length) as f64 > max
 }
 
 /// A modifier if/unless: the range from its keyword to the end of its condition.

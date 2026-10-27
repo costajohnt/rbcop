@@ -1,12 +1,18 @@
-==> offenses exit=1 226 <==
+==> offenses exit=1 339 <==
 000.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
 001.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+005.rb:1:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
 
-==> autocorrect exit=0 222 <==
+==> autocorrect exit=0 333 <==
 000.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
 001.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
+005.rb:1:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/MethodLength`.
 
 ==> corrected/000.rb 0 <==
 
 ==> corrected/001.rb 0 <==
+
+==> corrected/005.rb 42 <==
+foo
+# rubocop:enable Metrics/MethodLength
 

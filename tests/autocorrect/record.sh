@@ -1,9 +1,10 @@
 #!/bin/sh
 # Re-record tests/autocorrect/<case>/expected{,.txt} with RuboCop: `rubocop -A` over a copy of input/.
-# usage: tests/autocorrect/record.sh
+# usage: tests/autocorrect/record.sh   (RuboCop from $RUBOCOP, see scripts/rubocop.sh)
 # A case with a rubocop-output/ dir is a deliberate difference (docs/known-gaps.md): RuboCop's result
 # is recorded there (and in rubocop-output.txt) and expected/ is left as rbcop's.
 set -eu
+. "$(dirname "$0")/../../scripts/rubocop.sh"
 here=$(cd "$(dirname "$0")" && pwd)
 for case in "$here"/*/; do
   case=${case%/}
@@ -18,18 +19,17 @@ for case in "$here"/*/; do
   [ "$cops" = all ] && only=
   # A case with a status file records the exit status there (otherwise it must be 1).
   status=0
-  (cd "$case/$out" && RBENV_VERSION=4.0.6 rbenv exec rubocop -A -c ../config.yml $only --cache false \
+  (cd "$case/$out" && rubocop -A -c ../config.yml $only --cache false \
     --format emacs . 2>/dev/null > "../$out.raw") || status=$?
   sed "s|^$case/$out/||" "$case/$out.raw" > "$case/$out.txt"
   rm -f "$case/$out.raw"
   [ -f "$case/status" ] && echo "$status" > "$case/status"
   # `rubocop --diff -A` stdout (report, then the diffs) into diff.txt, on a scratch copy of input/:
-  # RuboCop 1.91.0 can write a file under --diff (docs/known-gaps.md).
   # A case with a no-diff file has no diff.txt (its --diff output is a deliberate difference).
   [ "$out" = expected ] && [ ! -f "$case/no-diff" ] || continue
   rm -rf "$case/diff-run"
   cp -R "$case/input" "$case/diff-run"
-  (cd "$case/diff-run" && RBENV_VERSION=4.0.6 rbenv exec rubocop --diff -A -c ../config.yml $only --cache false \
+  (cd "$case/diff-run" && rubocop --diff -A -c ../config.yml $only --cache false \
     --format emacs . 2>/dev/null | sed "s|^$case/diff-run/||" > ../diff.txt) || true
   rm -rf "${case:?}/diff-run"
 done

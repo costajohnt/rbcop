@@ -17,138 +17,193 @@ puts [1, 2, 3].map { |n|
   n * n
 }
 
-==> 001.rb 38 <==
+==> 001.rb 33 <==
+for d in aa { |c| c } do
+  f
+end
+
+==> 002.rb 35 <==
+for d in aa { |c|
+  c
+} do
+  f
+end
+
+==> 003.rb 54 <==
+def foo
+  yield [1, 2, 3].map { |n|
+    n * n
+  }
+end
+
+==> 004.rb 54 <==
+def foo
+  super [1, 2, 3].map { |n|
+    n * n
+  }
+end
+
+==> 005.rb 38 <==
 puts [1, 2, 3].map { |n|
   n * n
 }, 1
 
-==> 002.rb 42 <==
+==> 006.rb 42 <==
 puts [0] + [1,2,3].map { |n|
   n * n
 }, 1
 
-==> 003.rb 42 <==
+==> 007.rb 42 <==
 puts [1,2,3].map { |n|
   n * n
 } + [0], 1
 
-==> 004.rb 70 <==
+==> 008.rb 70 <==
 'Some text: %s' %
   %w[foo bar].map { |v|
     v.upcase
   }.join(', ')
 
-==> 005.rb 123 <==
+==> 009.rb 123 <==
 foo :bar, baz: 'Some text: %s' %
                %w[foo bar].map { |v|
                 v.upcase
                }.join(', ')
 
-==> 006.rb 36 <==
+==> 010.rb 36 <==
 puts [1, 2, 3].map {
   _1 * _1
 }, 1
 
-==> 007.rb 40 <==
+==> 011.rb 40 <==
 puts [0] + [1,2,3].map {
   _1 * _1
 }, 1
 
-==> 008.rb 40 <==
+==> 012.rb 40 <==
 puts [1,2,3].map {
   _1 * _1
 } + [0], 1
 
-==> 009.rb 55 <==
+==> 013.rb 55 <==
 foo %
   %w[bar baz].map {
     _1.upcase
   }.join(', ')
 
-==> 010.rb 120 <==
+==> 014.rb 120 <==
 foo :bar, baz: 'Some text: %s' %
                %w[foo bar].map {
                 _1.upcase
                }.join(', ')
 
-==> 011.rb 16 <==
+==> 015.rb 16 <==
 each do |x| end
 
-==> 012.rb 12 <==
+==> 016.rb 12 <==
 each { |x| }
-==> 013.rb 16 <==
+==> 017.rb 16 <==
 each do |x|
 end
 
-==> 014.rb 15 <==
+==> 018.rb 15 <==
 each do _1 end
 
-==> 015.rb 11 <==
+==> 019.rb 11 <==
 each { _1 }
-==> 016.rb 17 <==
+==> 020.rb 17 <==
 each do
   _1
 end
 
-==> 017.rb 17 <==
+==> 021.rb 41 <==
+for d in x do
+  each { |y|
+    y
+  }
+end
+
+==> 022.rb 17 <==
 block do |x| end
 
-==> 018.rb 28 <==
+==> 023.rb 28 <==
 foo do rescue => e; bar end
 
-==> 019.rb 23 <==
+==> 024.rb 23 <==
 foo do rescue; bar end
 
-==> 020.rb 26 <==
+==> 025.rb 26 <==
 foo do bar ensure baz end
 
-==> 021.rb 26 <==
+==> 026.rb 26 <==
 foo do bar rescue baz end
 
-==> 022.rb 32 <==
+==> 027.rb 32 <==
 s.subspec 'Subspec' do |sp| end
 
-==> 023.rb 44 <==
+==> 028.rb 44 <==
 foo :bar, :baz, qux: lambda { |a|
   bar a
 }
 
-==> 024.rb 13 <==
+==> 029.rb 13 <==
 each { |x|
 }
 
-==> 025.rb 26 <==
+==> 030.rb 28 <==
+while foo { |x|
+}
+  bar
+end
+
+==> 031.rb 42 <==
+until (foo && baz.any? { |x|
+})
+  bar
+end
+
+==> 032.rb 30 <==
+while foo
+  bar { |x|
+  }
+end
+
+==> 033.rb 26 <==
 foo.bar = baz.map { |x|
 }
 
-==> 026.rb 42 <==
+==> 034.rb 42 <==
 blcck {
 }
 block { foo {
 } }.bar # comment
 
-==> 027.rb 33 <==
+==> 035.rb 33 <==
 baz.map { |x|
 foo(x) } # comment
 
-==> 028.rb 20 <==
+==> 036.rb 20 <==
 [foo {
 }] # comment
 
-==> 029.rb 52 <==
+==> 037.rb 52 <==
 baz.map { |x|
 foo(x) }.map { |x| x.quux } # comment
 
-==> 030.rb 42 <==
+==> 038.rb 42 <==
 baz.map { |x|
 foo(x) }.qux.quux # comment
 
-==> 031.rb 27 <==
+==> 039.rb 68 <==
+baz.map { |x|
+foo(x) }.max # rubocop:disable Style/ItBlockParameter
+
+==> 040.rb 27 <==
 baz.map { |x|
 } # comment
 
 
-==> 032.rb 264 <==
+==> 041.rb 264 <==
 scope :foo, lambda { |f|
   where(condition: "value")
 }
@@ -166,27 +221,27 @@ cr.stubs client: mock {
   expects :save
 }
 
-==> 033.rb 21 <==
+==> 042.rb 21 <==
 foo&.bar baz {
   y
 }
 
-==> 034.rb 26 <==
+==> 043.rb 26 <==
 foo.bar baz {
   y
 }&.quux
 
-==> 035.rb 25 <==
+==> 044.rb 25 <==
 foo = proc {
   puts 42
 }
 
-==> 036.rb 32 <==
+==> 045.rb 32 <==
 foo = test_method {
   puts 42
 }
 
-==> 037.rb 127 <==
+==> 046.rb 127 <==
 scope :foo, (lambda { |f|
   where(condition: "value")
 })
@@ -195,7 +250,7 @@ expect { something }.to(raise_error(ErrorClass) { |error|
   # ...
 })
 
-==> 038.rb 83 <==
+==> 047.rb 83 <==
 h2[k2] = Hash.new { |h3,k3|
   h3[k3] = 0
 }
@@ -204,44 +259,44 @@ x = done? list.reject { |e|
   e.nil?
 }
 
-==> 039.rb 41 <==
+==> 048.rb 41 <==
 each{ |x|
   some_method
   other_method
 }
 
-==> 040.rb 40 <==
+==> 049.rb 40 <==
 (0..3).each { |a| a.times {
   puts a
 }}
 
-==> 041.rb 27 <==
+==> 050.rb 27 <==
 foo bar + baz {
 }.qux.quux
 
-==> 042.rb 30 <==
+==> 051.rb 30 <==
 foo x&.bar + baz {
 }.qux.quux
 
-==> 043.rb 29 <==
+==> 052.rb 29 <==
 foo bar + baz {
 }.qux + quux
 
-==> 044.rb 66 <==
+==> 053.rb 66 <==
 my_method :arg1, arg2: proc {
   something
 }, arg3: :another_value
 
-==> 045.rb 49 <==
+==> 054.rb 49 <==
 my_method { |x|
   x.foo } unless bar   # comment
 
-==> 046.rb 29 <==
+==> 055.rb 29 <==
 map do |x| x.y? rescue z end
 
-==> 047.rb 49 <==
+==> 056.rb 49 <==
 foo do next unless bar rescue StandardError; end
 
-==> 048.rb 50 <==
+==> 057.rb 50 <==
 foo do next unless bar; rescue StandardError; end
 

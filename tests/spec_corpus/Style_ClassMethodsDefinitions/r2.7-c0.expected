@@ -1,4 +1,4 @@
-==> offenses exit=1 999 <==
+==> offenses exit=1 1429 <==
 000.rb:2:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
 001.rb:2:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
 002.rb:2:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
@@ -7,9 +7,13 @@
 005.rb:5:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
 006.rb:2:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
 007.rb:2:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+007.rb:5:9: C: Style/ClassMethodsDefinitions: Do not define public methods within class << self.
 008.rb:2:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+009.rb:2:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+010.rb:2:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+011.rb:2:3: C: [Correctable] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
 
-==> autocorrect exit=0 981 <==
+==> autocorrect exit=0 1417 <==
 000.rb:2:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
 001.rb:2:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
 002.rb:2:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
@@ -18,7 +22,11 @@
 005.rb:5:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
 006.rb:2:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
 007.rb:2:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+007.rb:4:7: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
 008.rb:2:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+009.rb:2:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+010.rb:2:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
+011.rb:2:3: C: [Corrected] Style/ClassMethodsDefinitions: Do not define public methods within class << self.
 
 ==> corrected/000.rb 80 <==
 class A
@@ -97,16 +105,38 @@ class A
   end
 end
 
-==> corrected/007.rb 55 <==
+==> corrected/007.rb 95 <==
+class A
+  def self.one
+    foo.instance_exec do
+      def self.two
+      end
+    end
+  end
+end
+
+==> corrected/008.rb 55 <==
 class Foo
   def self.do_something
     # TODO
   end
 end
 
-==> corrected/008.rb 51 <==
+==> corrected/009.rb 51 <==
 class Foo
   def self.do_something # TODO
   end
+end
+
+==> corrected/010.rb 51 <==
+class Foo
+  def self.do_something
+  end # TODO
+end
+
+==> corrected/011.rb 52 <==
+class Foo
+  def self.do_something
+  end; # TODO
 end
 

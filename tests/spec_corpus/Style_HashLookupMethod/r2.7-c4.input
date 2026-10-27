@@ -1,0 +1,54 @@
+==> .rubocop.yml 155 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/HashLookupMethod:
+  EnforcedStyle: fetch
+
+==> 000.rb 10 <==
+hash[key]
+
+==> 001.rb 22 <==
+some_method.hash[key]
+
+==> 002.rb 15 <==
+hash.fetch(key)
+==> 003.rb 24 <==
+hash.fetch(key, default)
+==> 004.rb 27 <==
+hash.fetch(key) { default }
+==> 005.rb 11 <==
+array[1, 2]
+==> 006.rb 19 <==
+result[:foo][:bar]
+
+==> 007.rb 14 <==
+hash&.[](key)
+
+==> 008.rb 13 <==
+hash.[](key)
+
+==> 009.rb 9 <==
+a[b[:y]]
+
+==> 010.rb 10 <==
+a[:x][:y]
+
+==> 011.rb 12 <==
+a[:x] ||= b
+
+==> 012.rb 12 <==
+a[:x] &&= b
+
+==> 013.rb 11 <==
+a[:x] += b
+
+==> 014.rb 16 <==
+a[:x] ||= b[:y]
+
+==> 015.rb 10 <==
+x = a[:y]
+

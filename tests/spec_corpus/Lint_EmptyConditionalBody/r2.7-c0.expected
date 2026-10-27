@@ -1,62 +1,66 @@
-==> offenses exit=1 2297 <==
+==> offenses exit=1 2470 <==
 000.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
 001.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
 002.rb:2:3: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
 003.rb:2:3: W: [Correctable] Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-009.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
-010.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-010.rb:2:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
-011.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-011.rb:2:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
+004.rb:1:1: W: [Correctable] Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+010.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
+011.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
 012.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
 012.rb:2:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
-012.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
-013.rb:1:1: W: [Correctable] Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-014.rb:1:1: W: [Correctable] Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
+013.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+013.rb:2:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
+014.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+014.rb:2:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
+014.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
 015.rb:1:1: W: [Correctable] Lint/EmptyConditionalBody: Avoid `if` branches without a body.
 016.rb:1:1: W: [Correctable] Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
-017.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
-018.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-019.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
-020.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
+017.rb:1:1: W: [Correctable] Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+018.rb:1:1: W: [Correctable] Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
+019.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
+020.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+021.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
 022.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
-024.rb:5:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
-025.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
-026.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-027.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-029.rb:1:5: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-030.rb:1:5: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-031.rb:1:6: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+024.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
+026.rb:5:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
+027.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
+028.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+029.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+031.rb:1:5: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+032.rb:1:5: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+033.rb:1:6: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
 
-==> autocorrect exit=1 2287 <==
+==> autocorrect exit=1 2458 <==
 000.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
 001.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
 002.rb:2:3: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
 003.rb:2:3: W: [Corrected] Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-009.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
-010.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-010.rb:2:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
-011.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-011.rb:2:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
+004.rb:1:1: W: [Corrected] Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+010.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
+011.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
 012.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
 012.rb:2:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
-012.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
-013.rb:1:1: W: [Corrected] Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-014.rb:1:1: W: [Corrected] Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
+013.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+013.rb:2:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
+014.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+014.rb:2:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
+014.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
 015.rb:1:1: W: [Corrected] Lint/EmptyConditionalBody: Avoid `if` branches without a body.
 016.rb:1:1: W: [Corrected] Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
-017.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
-018.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-019.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
-020.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
+017.rb:1:1: W: [Corrected] Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+018.rb:1:1: W: [Corrected] Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
+019.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
+020.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+021.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
 022.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
-024.rb:5:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
-025.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
-026.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-027.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-029.rb:1:5: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-030.rb:1:5: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-031.rb:1:6: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+024.rb:3:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
+026.rb:5:1: W: Lint/EmptyConditionalBody: Avoid `elsif` branches without a body.
+027.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `unless` branches without a body.
+028.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+029.rb:1:1: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+031.rb:1:5: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+032.rb:1:5: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
+033.rb:1:6: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
 
 ==> corrected/003.rb 56 <==
 class Foo
@@ -65,22 +69,27 @@ class Foo
   end
 end
 
-==> corrected/013.rb 36 <==
+==> corrected/004.rb 36 <==
 unless condition
   do_something
 end
 
-==> corrected/014.rb 32 <==
+==> corrected/015.rb 36 <==
+unless condition
+  do_something
+end
+
+==> corrected/016.rb 32 <==
 if condition
   do_something
 end
 
-==> corrected/015.rb 41 <==
+==> corrected/017.rb 41 <==
 unless condition
   do_something if x
 end
 
-==> corrected/016.rb 37 <==
+==> corrected/018.rb 37 <==
 if condition
   do_something if x
 end

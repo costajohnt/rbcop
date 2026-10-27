@@ -52,7 +52,7 @@ impl Cop for MixinGrouping {
                 let correction = if same(*me, mixins[0].1) {
                     let names: Vec<&str> =
                         mixins.iter().rev().flat_map(|(c, _)| send_args(c).iter().map(node_text).collect::<Vec<_>>()).collect();
-                    format!("{name} {}", names.join(", "))
+                    mixin_call(name, &names.join(", "), mixins.iter().any(|(c, _)| c.opening_loc().is_some()))
                 } else {
                     let prev = mixins.windows(2).find(|w| same(w[1].1, *me)).map(|w| w[0].1);
                     if let Some((_, pe)) = prev
@@ -73,7 +73,9 @@ impl Cop for MixinGrouping {
                     .iter()
                     .rev()
                     .enumerate()
-                    .map(|(i, a)| format!("{}{name} {}", if i == 0 { "" } else { &indent }, node_text(a)))
+                    .map(|(i, a)| {
+                        format!("{}{}", if i == 0 { "" } else { &indent }, mixin_call(name, node_text(a), call.opening_loc().is_some()))
+                    })
                     .collect();
                 let correction = lines.join("\n");
                 let (s, e) = *me;
@@ -81,4 +83,9 @@ impl Cop for MixinGrouping {
             }
         }
     }
+}
+
+/// `mixin_call` (1.92): keeps the parentheses of a parenthesized mixin call.
+fn mixin_call(name: &str, args: &str, parenthesized: bool) -> String {
+    if parenthesized { format!("{name}({args})") } else { format!("{name} {args}") }
 }

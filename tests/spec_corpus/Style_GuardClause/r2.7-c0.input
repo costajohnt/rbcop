@@ -506,21 +506,43 @@ def func
   end
 end
 
-==> 043.rb 47 <==
+==> 043.rb 104 <==
+def func
+  if condition
+    raise 'oops'
+  else
+    do_something(<<~TEXT)
+      text
+    TEXT
+  end
+end
+
+==> 044.rb 104 <==
+def func
+  if condition
+    do_something(<<~TEXT)
+      text
+    TEXT
+  else
+    raise 'oops'
+  end
+end
+
+==> 045.rb 47 <==
 if condition
   do_something
 else
   raise e
 end
 
-==> 044.rb 112 <==
+==> 046.rb 112 <==
 def test
   if something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line
     work
   end
 end
 
-==> 045.rb 144 <==
+==> 047.rb 144 <==
 def test
   if something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line
     if something_else
@@ -529,7 +551,7 @@ def test
   end
 end
 
-==> 046.rb 126 <==
+==> 048.rb 126 <==
 def test
   if something && something_that_makes_the_guard_clause_too_long_to_fit_on_one_line
     work
@@ -537,27 +559,38 @@ def test
   end
 end
 
-==> 047.rb 117 <==
+==> 049.rb 117 <==
 if foo?
 else
   raise 'very long and detailed description of the error that makes it too long to fit on one line'
 end
 
-==> 048.rb 46 <==
+==> 050.rb 150 <==
+def test
+  if something_that_makes_the_guard_clause_too_long_to_fit_on_one_line
+    raise <<~MESSAGE
+      oops
+    MESSAGE
+  else
+    work
+  end
+end
+
+==> 051.rb 46 <==
 if something
   return
 else
   puts "hello"
 end
 
-==> 049.rb 45 <==
+==> 052.rb 45 <==
 if something
  puts "hello"
 else
   return
 end
 
-==> 050.rb 69 <==
+==> 053.rb 69 <==
 if something &&
      something_else
   return
@@ -565,21 +598,21 @@ else
   puts "hello"
 end
 
-==> 051.rb 51 <==
+==> 054.rb 51 <==
 if something
   a
 elsif something_else
   return
 end
 
-==> 052.rb 51 <==
+==> 055.rb 51 <==
 if something
   return
 elsif something_else
   a
 end
 
-==> 053.rb 60 <==
+==> 056.rb 60 <==
 if something
   a
 elsif something_else
@@ -588,7 +621,7 @@ else
   return
 end
 
-==> 054.rb 90 <==
+==> 057.rb 90 <==
 if something
   return 'blah blah blah' \
         'blah blah blah'
@@ -596,7 +629,7 @@ else
   puts "hello"
 end
 
-==> 055.rb 72 <==
+==> 058.rb 72 <==
 if something
   return
 else
@@ -604,21 +637,21 @@ else
        "blah blah blah"
 end
 
-==> 056.rb 44 <==
+==> 059.rb 44 <==
 if something
   next
 else
   puts "hello"
 end
 
-==> 057.rb 43 <==
+==> 060.rb 43 <==
 if something
  puts "hello"
 else
   next
 end
 
-==> 058.rb 67 <==
+==> 061.rb 67 <==
 if something &&
      something_else
   next
@@ -626,21 +659,21 @@ else
   puts "hello"
 end
 
-==> 059.rb 49 <==
+==> 062.rb 49 <==
 if something
   a
 elsif something_else
   next
 end
 
-==> 060.rb 49 <==
+==> 063.rb 49 <==
 if something
   next
 elsif something_else
   a
 end
 
-==> 061.rb 58 <==
+==> 064.rb 58 <==
 if something
   a
 elsif something_else
@@ -649,7 +682,7 @@ else
   next
 end
 
-==> 062.rb 88 <==
+==> 065.rb 88 <==
 if something
   next 'blah blah blah' \
         'blah blah blah'
@@ -657,7 +690,7 @@ else
   puts "hello"
 end
 
-==> 063.rb 70 <==
+==> 066.rb 70 <==
 if something
   next
 else
@@ -665,21 +698,21 @@ else
        "blah blah blah"
 end
 
-==> 064.rb 45 <==
+==> 067.rb 45 <==
 if something
   break
 else
   puts "hello"
 end
 
-==> 065.rb 44 <==
+==> 068.rb 44 <==
 if something
  puts "hello"
 else
   break
 end
 
-==> 066.rb 68 <==
+==> 069.rb 68 <==
 if something &&
      something_else
   break
@@ -687,21 +720,21 @@ else
   puts "hello"
 end
 
-==> 067.rb 50 <==
+==> 070.rb 50 <==
 if something
   a
 elsif something_else
   break
 end
 
-==> 068.rb 50 <==
+==> 071.rb 50 <==
 if something
   break
 elsif something_else
   a
 end
 
-==> 069.rb 59 <==
+==> 072.rb 59 <==
 if something
   a
 elsif something_else
@@ -710,7 +743,7 @@ else
   break
 end
 
-==> 070.rb 89 <==
+==> 073.rb 89 <==
 if something
   break 'blah blah blah' \
         'blah blah blah'
@@ -718,7 +751,7 @@ else
   puts "hello"
 end
 
-==> 071.rb 71 <==
+==> 074.rb 71 <==
 if something
   break
 else
@@ -726,21 +759,21 @@ else
        "blah blah blah"
 end
 
-==> 072.rb 53 <==
+==> 075.rb 53 <==
 if something
   raise "error"
 else
   puts "hello"
 end
 
-==> 073.rb 52 <==
+==> 076.rb 52 <==
 if something
  puts "hello"
 else
   raise "error"
 end
 
-==> 074.rb 76 <==
+==> 077.rb 76 <==
 if something &&
      something_else
   raise "error"
@@ -748,21 +781,21 @@ else
   puts "hello"
 end
 
-==> 075.rb 58 <==
+==> 078.rb 58 <==
 if something
   a
 elsif something_else
   raise "error"
 end
 
-==> 076.rb 58 <==
+==> 079.rb 58 <==
 if something
   raise "error"
 elsif something_else
   a
 end
 
-==> 077.rb 67 <==
+==> 080.rb 67 <==
 if something
   a
 elsif something_else
@@ -771,7 +804,7 @@ else
   raise "error"
 end
 
-==> 078.rb 97 <==
+==> 081.rb 97 <==
 if something
   raise "error" 'blah blah blah' \
         'blah blah blah'
@@ -779,7 +812,7 @@ else
   puts "hello"
 end
 
-==> 079.rb 79 <==
+==> 082.rb 79 <==
 if something
   raise "error"
 else
@@ -787,7 +820,7 @@ else
        "blah blah blah"
 end
 
-==> 080.rb 72 <==
+==> 083.rb 72 <==
 module CopTest
   def test
     if something
@@ -796,7 +829,7 @@ module CopTest
   end
 end
 
-==> 081.rb 95 <==
+==> 084.rb 95 <==
 module CopTest
   def self.test
     if something && something_else

@@ -1,0 +1,65 @@
+{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"t","version":"1"}}}
+{"jsonrpc":"2.0","method":"notifications/initialized"}
+{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"path":"lib","only":["Layout"]}}}
+{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","except":["Style/FrozenStringLiteralComment"]}}}
+{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","only":[],"except":[]}}}
+{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","only":["Nope/Cop"]}}}
+{"jsonrpc":"2.0","id":6,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","only":["Layout","Bogus"]}}}
+{"jsonrpc":"2.0","id":7,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","except":["Stylee"]}}}
+{"jsonrpc":"2.0","id":8,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","only":["StringLiterals"]}}}
+{"jsonrpc":"2.0","id":9,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","only":["Lint/RedundantCopDisableDirective"]}}}
+{"jsonrpc":"2.0","id":10,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","only":["RedundantCopDisableDirective"]}}}
+{"jsonrpc":"2.0","id":11,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","except":["Lint/Syntax"]}}}
+{"jsonrpc":"2.0","id":12,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","except":["Syntax"]}}}
+{"jsonrpc":"2.0","id":13,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","changed":true}}}
+{"jsonrpc":"2.0","id":14,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","changed":false}}}
+{"jsonrpc":"2.0","id":15,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"path":"lib","changed":""}}}
+{"jsonrpc":"2.0","id":18,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"path":"lib","changed":false,"only":["Layout/SpaceInsideParens"]}}}
+{"jsonrpc":"2.0","id":19,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"path":"lib","max_offenses_per_cop":1}}}
+{"jsonrpc":"2.0","id":20,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"path":"lib","max_offenses_per_cop":1,"only":["Style"],"except":["Style/FrozenStringLiteralComment"]}}}
+{"jsonrpc":"2.0","id":21,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","max_offenses_per_cop":0}}}
+{"jsonrpc":"2.0","id":22,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","max_offenses_per_cop":"x"}}}
+{"jsonrpc":"2.0","id":23,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","max_offenses_per_cop":1.5}}}
+{"jsonrpc":"2.0","id":24,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","max_offenses_per_cop":2.0}}}
+{"jsonrpc":"2.0","id":25,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","max_offenses_per_cop":null}}}
+{"jsonrpc":"2.0","id":26,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","only":"Lint"}}}
+{"jsonrpc":"2.0","id":27,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","only":[1,"Lint"]}}}
+{"jsonrpc":"2.0","id":28,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","only":null}}}
+{"jsonrpc":"2.0","id":29,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","changed":1}}}
+{"jsonrpc":"2.0","id":30,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","contextual":true}}}
+{"jsonrpc":"2.0","id":31,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","only":["Lint/UselessAssignment"]}}}
+{"jsonrpc":"2.0","id":32,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"path":"lib/a.rb","only":["Lint/UselessAssignment"]}}}
+{"jsonrpc":"2.0","id":33,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"path":"lib/a.rb","only":["Layout"]}}}
+{"jsonrpc":"2.0","id":34,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"path":"lib","safety":true,"dry_run":true}}}
+{"jsonrpc":"2.0","id":35,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"path":"lib/a.rb","safety":false,"dry_run":true,"contextual":true}}}
+{"jsonrpc":"2.0","id":36,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"path":"lib/a.rb","source_code":"puts( 9)\n","safety":true,"dry_run":true}}}
+{"jsonrpc":"2.0","id":37,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"path":"lib/new.rb","source_code":"puts( 9)\n","safety":true,"dry_run":true}}}
+{"jsonrpc":"2.0","id":38,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","safety":true,"contextual":true}}}
+{"jsonrpc":"2.0","id":39,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","safety":false,"contextual":false,"only":["Style"]}}}
+{"jsonrpc":"2.0","id":40,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"source_code":"puts( 1)\nx = \"a\"\n","safety":true,"changed":true}}}
+{"jsonrpc":"2.0","id":41,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"path":"lib","safety":false,"max_offenses_per_cop":1,"only":["Layout","Lint"]}}}
+{"jsonrpc":"2.0","id":42,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"path":"lib","safety":true}}}
+{"jsonrpc":"2.0","id":43,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"path":"lib","safety":true,"max_offenses_per_cop":1}}}
+{"jsonrpc":"2.0","id":44,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"path":"lib/a.rb","safety":true,"contextual":true}}}
+{"jsonrpc":"2.0","id":45,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"path":"lib"}}}
+{"jsonrpc":"2.0","id":46,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"safety":true,"dry_run":"yes"}}}
+{"jsonrpc":"2.0","id":47,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"safety":true,"contextual":1,"max_offenses_per_cop":-1}}}
+{"jsonrpc":"2.0","id":48,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"safety":true,"foo":1}}}
+{"jsonrpc":"2.0","id":49,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"safety":true,"only":["Nope"]}}}
+{"jsonrpc":"2.0","id":50,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":["Style/StringLiterals"]}}}
+{"jsonrpc":"2.0","id":51,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":["Layout/LineLength"],"path":"lib/sub/s.rb"}}}
+{"jsonrpc":"2.0","id":52,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":["Layout/LineLength"],"path":"lib/a.rb"}}}
+{"jsonrpc":"2.0","id":53,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":["Layout/LineLength"],"path":"nope/x.rb"}}}
+{"jsonrpc":"2.0","id":54,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":["Style/StringLiterals","Nope","Lint/UselessAssignment"]}}}
+{"jsonrpc":"2.0","id":55,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":["StringLiterals"]}}}
+{"jsonrpc":"2.0","id":56,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":["Lint"]}}}
+{"jsonrpc":"2.0","id":57,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":["Nope"]}}}
+{"jsonrpc":"2.0","id":58,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":[]}}}
+{"jsonrpc":"2.0","id":59,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{}}}
+{"jsonrpc":"2.0","id":60,"method":"tools/call","params":{"name":"rubocop_explain","arguments":null}}
+{"jsonrpc":"2.0","id":61,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":"Style/StringLiterals"}}}
+{"jsonrpc":"2.0","id":62,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":[1]}}}
+{"jsonrpc":"2.0","id":63,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":["Style/StringLiterals"],"path":1}}}
+{"jsonrpc":"2.0","id":64,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":["Style/StringLiterals"],"foo":1}}}
+{"jsonrpc":"2.0","id":65,"method":"tools/call","params":{"name":"rubocop_explain","arguments":"x"}}
+{"jsonrpc":"2.0","id":66,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":["Lint/Syntax","Style/StringLiterals"]}}}

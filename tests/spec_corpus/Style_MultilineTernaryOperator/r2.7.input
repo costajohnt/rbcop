@@ -62,15 +62,39 @@ obj&.do_something cond ?
                   foo :
                   bar
 
-==> 012.rb 16 <==
+==> 012.rb 53 <==
+def foo
+  yield cond ?
+        foo :
+        bar
+end
+
+==> 013.rb 53 <==
+def foo
+  super cond ?
+        foo :
+        bar
+end
+
+==> 014.rb 44 <==
+defined? cond ?
+         foo :
+         bar
+
+==> 015.rb 45 <==
+defined?(cond ?
+         foo :
+         bar)
+
+==> 016.rb 16 <==
 a = cond ? b : c
-==> 013.rb 55 <==
+==> 017.rb 55 <==
 # comment a
 a = cond ?
   b : c # comment b
 # comment c
 
-==> 014.rb 107 <==
+==> 018.rb 107 <==
 a = cond ? # comment a
   # comment b
   b : c

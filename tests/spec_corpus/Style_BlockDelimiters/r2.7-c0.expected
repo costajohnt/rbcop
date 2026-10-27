@@ -1,59 +1,61 @@
-==> offenses exit=1 958 <==
-016.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `do...end` over `{...}` for procedural blocks.
-017.rb:1:11: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
-018.rb:1:11: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
-019.rb:1:15: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
-037.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `do...end` over `{...}` for procedural blocks.
-039.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `do...end` over `{...}` for procedural blocks.
-042.rb:1:11: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
-043.rb:1:9: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
-044.rb:1:9: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
+==> offenses exit=1 1064 <==
+020.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `do...end` over `{...}` for procedural blocks.
+021.rb:1:11: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
+022.rb:1:11: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
+023.rb:1:15: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
+041.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `do...end` over `{...}` for procedural blocks.
+043.rb:1:6: C: [Correctable] Style/BlockDelimiters: Prefer `do...end` over `{...}` for procedural blocks.
+046.rb:1:11: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
+047.rb:1:9: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
+048.rb:1:9: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
+049.rb:1:9: C: [Correctable] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
 
-==> autocorrect exit=0 940 <==
-016.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `do...end` over `{...}` for procedural blocks.
-017.rb:1:11: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
-018.rb:1:11: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
-019.rb:1:15: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
-037.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `do...end` over `{...}` for procedural blocks.
-039.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `do...end` over `{...}` for procedural blocks.
-042.rb:1:11: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
-043.rb:1:9: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
-044.rb:1:9: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
+==> autocorrect exit=0 1044 <==
+020.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `do...end` over `{...}` for procedural blocks.
+021.rb:1:11: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
+022.rb:1:11: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
+023.rb:1:15: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
+041.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `do...end` over `{...}` for procedural blocks.
+043.rb:1:6: C: [Corrected] Style/BlockDelimiters: Prefer `do...end` over `{...}` for procedural blocks.
+046.rb:1:11: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
+047.rb:1:9: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
+048.rb:1:9: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
+049.rb:1:9: C: [Corrected] Style/BlockDelimiters: Prefer `{...}` over `do...end` for functional blocks.
 
-==> corrected/016.rb 20 <==
+==> corrected/020.rb 20 <==
 each do |x|
   x
 end
 
-==> corrected/017.rb 22 <==
+==> corrected/021.rb 22 <==
 foo = map { |x|
   x
 }
 
-==> corrected/018.rb 23 <==
+==> corrected/022.rb 23 <==
 puts (map { |x|
   x
 })
 
-==> corrected/019.rb 26 <==
+==> corrected/023.rb 26 <==
 foo.bar = map { |x|
   x
 }
 
-==> corrected/037.rb 23 <==
+==> corrected/041.rb 23 <==
 each do |x| puts x end
 
-==> corrected/039.rb 20 <==
+==> corrected/043.rb 20 <==
 each do |x|
   x
 end
 
-==> corrected/042.rb 22 <==
+==> corrected/046.rb 22 <==
 foo = map { |x|
   x
 }
 
-==> corrected/043.rb 82 <==
+==> corrected/047.rb 82 <==
 x = map { |a|
   begin
 do_something
@@ -62,7 +64,18 @@ rescue StandardError => e
 end
 }
 
-==> corrected/044.rb 63 <==
+==> corrected/048.rb 97 <==
+x = map { |a|
+  begin
+do_something
+rescue StandardError => e
+  puts <<~MSG
+    oh no
+  MSG
+end
+}
+
+==> corrected/049.rb 63 <==
 x = map { |a|
   begin
 do_something

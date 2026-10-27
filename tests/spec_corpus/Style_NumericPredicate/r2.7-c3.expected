@@ -1,4 +1,44 @@
-==> offenses exit=0 0 <==
+==> offenses exit=1 800 <==
+000.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `number == 0` instead of `number.zero?`.
+001.rb:1:2: C: [Correctable] Style/NumericPredicate: Use `(number == 0)` instead of `number.zero?`.
+002.rb:1:8: C: [Correctable] Style/NumericPredicate: Use `(number == 0)` instead of `number.zero?`.
+003.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `(number > 0)` instead of `number.positive?`.
+004.rb:1:5: C: [Correctable] Style/NumericPredicate: Use `number == 0` instead of `number.zero?`.
+005.rb:1:14: C: [Correctable] Style/NumericPredicate: Use `number == 0` instead of `number.zero?`.
+007.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `number > 0` instead of `number.positive?`.
+008.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `number < 0` instead of `number.negative?`.
 
-==> autocorrect exit=0 0 <==
+==> autocorrect exit=0 784 <==
+000.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `number == 0` instead of `number.zero?`.
+001.rb:1:2: C: [Corrected] Style/NumericPredicate: Use `(number == 0)` instead of `number.zero?`.
+002.rb:1:8: C: [Corrected] Style/NumericPredicate: Use `(number == 0)` instead of `number.zero?`.
+003.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `(number > 0)` instead of `number.positive?`.
+004.rb:1:5: C: [Corrected] Style/NumericPredicate: Use `number == 0` instead of `number.zero?`.
+005.rb:1:14: C: [Corrected] Style/NumericPredicate: Use `number == 0` instead of `number.zero?`.
+007.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `number > 0` instead of `number.positive?`.
+008.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `number < 0` instead of `number.negative?`.
+
+==> corrected/000.rb 12 <==
+number == 0
+
+==> corrected/001.rb 15 <==
+!(number == 0)
+
+==> corrected/002.rb 21 <==
+foo == (number == 0)
+
+==> corrected/003.rb 18 <==
+(number > 0).to_s
+
+==> corrected/004.rb 17 <==
+foo[number == 0]
+
+==> corrected/005.rb 26 <==
+do_something(number == 0)
+
+==> corrected/007.rb 11 <==
+number > 0
+
+==> corrected/008.rb 11 <==
+number < 0
 

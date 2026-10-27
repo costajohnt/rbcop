@@ -34,6 +34,12 @@ fn preserving(n: &Node) -> bool {
     matches!(name, "sort" | "reverse" | "shuffle" | "rotate") && preserving(&recv)
 }
 
+/// `extract_base_receiver`: the innermost receiver of a call chain.
+fn extract_base_receiver<'pr>(n: &Node<'pr>) -> Option<Node<'pr>> {
+    let r = receiver(n)?;
+    if receiver(&r).is_none() { Some(r) } else { extract_base_receiver(&r) }
+}
+
 /// Parser `begin` (parentheses) unwrapped to its first child.
 fn first_child<'pr>(n: &Node<'pr>) -> Option<Node<'pr>> {
     let body = n.as_parentheses_node()?.body()?;
@@ -112,7 +118,10 @@ impl Cop for NegativeArrayIndex {
             Some(l) => {
                 preserving(&array_recv)
                     && preserving(&l)
-                    && (node_text(&l) == recv_src || receiver(&array_recv).is_some())
+                    && (node_text(&l) == recv_src
+                        || extract_base_receiver(&array_recv).is_some_and(|base| {
+                            node_text(&base) == node_text(&extract_base_receiver(&l).unwrap_or(l))
+                        }))
             }
         };
         if !matched {

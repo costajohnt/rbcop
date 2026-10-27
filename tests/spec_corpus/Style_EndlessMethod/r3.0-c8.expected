@@ -1,0 +1,40 @@
+==> offenses exit=1 492 <==
+011.rb:1:9: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+012.rb:1:9: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+013.rb:1:9: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+015.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+016.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+017.rb:1:1: C: [Correctable] Style/EndlessMethod: Use endless method definitions.
+
+==> autocorrect exit=0 480 <==
+011.rb:1:9: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+012.rb:1:9: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+013.rb:1:9: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+015.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+016.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+017.rb:1:1: C: [Corrected] Style/EndlessMethod: Use endless method definitions.
+
+==> corrected/011.rb 40 <==
+private(def foo = bar do
+    baz
+  end)
+
+==> corrected/012.rb 30 <==
+private def foo = bar { baz }
+
+==> corrected/013.rb 38 <==
+private def foo = -> do
+    baz
+  end
+
+==> corrected/015.rb 33 <==
+def foo = !obj.do_something(bar)
+
+==> corrected/016.rb 28 <==
+def foo = @foo ||= bar(baz)
+
+==> corrected/017.rb 37 <==
+def foo(x) = bar(x) do
+    baz
+  end
+

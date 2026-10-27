@@ -1,72 +1,74 @@
-==> offenses exit=1 3053 <==
+==> offenses exit=1 3145 <==
 000.rb:3:3: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
 001.rb:1:1: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-004.rb:3:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-005.rb:3:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-005.rb:6:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-005.rb:9:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-006.rb:3:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-006.rb:6:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-006.rb:9:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-007.rb:3:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-007.rb:6:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-007.rb:9:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-008.rb:4:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-008.rb:7:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-008.rb:10:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-009.rb:4:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-009.rb:7:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-009.rb:10:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-010.rb:4:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-010.rb:7:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-010.rb:10:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-011.rb:4:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-011.rb:5:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-012.rb:2:10: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-013.rb:4:10: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-013.rb:5:10: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-014.rb:2:21: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-015.rb:4:17: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-016.rb:4:11: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-017.rb:4:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-018.rb:4:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-018.rb:7:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-018.rb:10:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+008.rb:1:7: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+009.rb:3:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+010.rb:3:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+010.rb:6:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+010.rb:9:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+011.rb:3:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+011.rb:6:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+011.rb:9:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+012.rb:3:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+012.rb:6:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+012.rb:9:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+013.rb:4:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+013.rb:7:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+013.rb:10:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+014.rb:4:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+014.rb:7:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+014.rb:10:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+015.rb:4:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+015.rb:7:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+015.rb:10:6: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+016.rb:4:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+016.rb:5:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+017.rb:2:10: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+018.rb:4:10: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+018.rb:5:10: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+019.rb:2:21: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+020.rb:4:17: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+021.rb:4:11: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+022.rb:4:12: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+023.rb:4:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+023.rb:7:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+023.rb:10:5: C: [Correctable] Style/DoubleNegation: Avoid the use of double negation (`!!`).
 
-==> autocorrect exit=0 2987 <==
+==> autocorrect exit=0 3077 <==
 000.rb:3:3: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
 001.rb:1:1: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-004.rb:3:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-005.rb:3:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-005.rb:6:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-005.rb:9:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-006.rb:3:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-006.rb:6:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-006.rb:9:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-007.rb:3:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-007.rb:6:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-007.rb:9:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-008.rb:4:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-008.rb:7:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-008.rb:10:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-009.rb:4:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-009.rb:7:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-009.rb:10:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-010.rb:4:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-010.rb:7:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-010.rb:10:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-011.rb:4:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-011.rb:5:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-012.rb:2:10: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-013.rb:4:10: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-013.rb:5:10: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-014.rb:2:21: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-015.rb:4:17: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-016.rb:4:11: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-017.rb:4:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-018.rb:4:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-018.rb:7:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
-018.rb:10:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+008.rb:1:7: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+009.rb:3:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+010.rb:3:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+010.rb:6:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+010.rb:9:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+011.rb:3:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+011.rb:6:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+011.rb:9:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+012.rb:3:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+012.rb:6:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+012.rb:9:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+013.rb:4:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+013.rb:7:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+013.rb:10:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+014.rb:4:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+014.rb:7:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+014.rb:10:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+015.rb:4:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+015.rb:7:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+015.rb:10:6: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+016.rb:4:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+016.rb:5:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+017.rb:2:10: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+018.rb:4:10: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+018.rb:5:10: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+019.rb:2:21: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+020.rb:4:17: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+021.rb:4:11: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+022.rb:4:12: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+023.rb:4:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+023.rb:7:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
+023.rb:10:5: C: [Corrected] Style/DoubleNegation: Avoid the use of double negation (`!!`).
 
 ==> corrected/000.rb 48 <==
 def foo?
@@ -78,7 +80,10 @@ end
 ==> corrected/001.rb 21 <==
 !test.something.nil?
 
-==> corrected/004.rb 74 <==
+==> corrected/008.rb 28 <==
+foo.!(!test.something.nil?)
+
+==> corrected/009.rb 74 <==
 def foo?
   unless condition_foo?
     !foo.nil?
@@ -86,7 +91,7 @@ def foo?
   end
 end
 
-==> corrected/005.rb 162 <==
+==> corrected/010.rb 162 <==
 def foo?
   if condition_foo?
     !foo.nil?
@@ -100,7 +105,7 @@ def foo?
   end
 end
 
-==> corrected/006.rb 258 <==
+==> corrected/011.rb 258 <==
 def foo?
   if condition_foo?
     { foo: !foo0.nil?, bar: bar0, baz: baz0 }
@@ -114,7 +119,7 @@ def foo?
   end
 end
 
-==> corrected/007.rb 207 <==
+==> corrected/012.rb 207 <==
 def foo?
   if condition_foo?
     [!foo0.nil?, bar0, baz0]
@@ -128,7 +133,7 @@ def foo?
   end
 end
 
-==> corrected/008.rb 158 <==
+==> corrected/013.rb 158 <==
 def foo?
   case condition
   when foo
@@ -143,7 +148,7 @@ def foo?
   end
 end
 
-==> corrected/009.rb 254 <==
+==> corrected/014.rb 254 <==
 def foo?
   case condition
   when foo
@@ -158,7 +163,7 @@ def foo?
   end
 end
 
-==> corrected/010.rb 203 <==
+==> corrected/015.rb 203 <==
 def foo?
   case condition
   when foo
@@ -173,7 +178,7 @@ def foo?
   end
 end
 
-==> corrected/011.rb 61 <==
+==> corrected/016.rb 61 <==
 def foo
   [
     foo1,
@@ -182,12 +187,12 @@ def foo
   ]
 end
 
-==> corrected/012.rb 39 <==
+==> corrected/017.rb 39 <==
 def foo
   [foo1, !bar1.nil?, baz1]
 end
 
-==> corrected/013.rb 76 <==
+==> corrected/018.rb 76 <==
 def foo
   {
     foo: foo1,
@@ -196,12 +201,12 @@ def foo
   }
 end
 
-==> corrected/014.rb 56 <==
+==> corrected/019.rb 56 <==
 def foo
   { foo: foo1, bar: !bar1.nil?, baz: baz1 }
 end
 
-==> corrected/015.rb 64 <==
+==> corrected/020.rb 64 <==
 def foo
   {
     foo: foo1,
@@ -209,7 +214,7 @@ def foo
   }
 end
 
-==> corrected/016.rb 52 <==
+==> corrected/021.rb 52 <==
 def foo
   [
     foo1,
@@ -217,7 +222,7 @@ def foo
   ]
 end
 
-==> corrected/017.rb 54 <==
+==> corrected/022.rb 54 <==
 def foo
   [
     foo1,
@@ -225,7 +230,7 @@ def foo
   ]
 end
 
-==> corrected/018.rb 152 <==
+==> corrected/023.rb 152 <==
 def foo?
   case pattern
   in foo

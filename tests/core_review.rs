@@ -318,7 +318,7 @@ fn verbose_version_lists_plugins() {
         fs::write(dir.join(".rubocop.yml"), config).unwrap();
         let out = text(&rbcop(&dir, &["-V"]).stdout);
         let (first, rest) = out.split_once('\n').unwrap();
-        assert!(first.starts_with("1.91.0 (using "), "{out}");
+        assert!(first.starts_with("1.92.1 (using "), "{out}");
         assert_eq!(rest, *plugins, "{config}");
     }
     // A plugin rbcop does not implement is listed at its installed version.
@@ -1371,44 +1371,29 @@ fn cop_errors_print_in_target_order() {
     let _ = fs::remove_dir_all(&dir);
 }
 
-/// A corrector that clobbers (Style/IfInsideElse on a one-line nested if) is a cop error located
-/// at the node the cop was visiting (the outer `if`, 1:0), not at the offense (the inner `if`).
+/// A corrector that clobbers (Style/ClassMethodsDefinitions on a one-line `class << self` body,
+/// specs corpus style/trailing_body_on_class/001.rb) is a cop error located at the node the cop
+/// was visiting (the `sclass`, 2:0), not at the offense (the `def`). Style/IfInsideElse, used here
+/// before, no longer clobbers in 1.92.1.
 #[test]
 fn cop_error_is_located_at_the_visited_node() {
     let dir = scratch("coperror");
     fs::write(dir.join(".rubocop.yml"), "AllCops:\n  NewCops: disable\n  TargetRubyVersion: 2.7\n").unwrap();
-    fs::write(dir.join("t.rb"), "if cond then foo else if cond2; bar else baz end; end\n").unwrap();
-    let out = rbcop(&dir, &["--only", "Style/IfInsideElse", "-f", "e", "t.rb"]);
+    fs::write(dir.join("t.rb"), "x = 1\nclass << self; def bar; end\nend\n").unwrap();
+    let out = rbcop(&dir, &["--only", "Style/ClassMethodsDefinitions", "-f", "e", "t.rb"]);
     let err = text(&out.stderr);
     // Team#process_errors names the file by its absolute path (Dir.pwd is physical).
     let abs = dir.join("t.rb");
-    let want = format!("An error occurred while Style/IfInsideElse cop was inspecting {}:1:0.\n", abs.display());
+    let want =
+        format!("An error occurred while Style/ClassMethodsDefinitions cop was inspecting {}:2:0.\n", abs.display());
     assert!(err.starts_with(&want), "{err}");
     assert_eq!(out.status.code(), Some(1));
     let _ = fs::remove_dir_all(&dir);
 }
 
-/// InfiniteCorrectionLoop lists each iteration's cops in team order, which Registry#sort! makes
-/// cop-name order (specs corpus style/redundant_line_continuation/089.rb).
-#[test]
-fn infinite_loop_names_cops_in_name_order() {
-    let dir = scratch("infloop");
-    fs::write(dir.join("t.rb"), "class Foo\n  memoize \\\n  def do_something\n  end\nend\n").unwrap();
-    let only = "Layout/DefEndAlignment,Layout/TrailingWhitespace,Style/EmptyMethod,Style/Semicolon";
-    let out = rbcop(&dir, &["-A", "--only", only, "--force-default-config", "-f", "e", "t.rb"]);
-    let want = format!(
-        "Infinite loop detected in {} and caused by Layout/DefEndAlignment -> Layout/TrailingWhitespace, \
-         Style/EmptyMethod, Style/Semicolon\n",
-        dir.join("t.rb").display()
-    );
-    assert!(text(&out.stderr).contains(&want), "{}", text(&out.stderr));
-    assert_eq!(out.status.code(), Some(1));
-    let _ = fs::remove_dir_all(&dir);
-}
-
 /// Lint/UnescapedBracketInRegexp -A on the 1.92.1 spec examples RuboCop 1.91.0 never finishes (#680,
-/// docs/known-gaps.md): a double-quoted string gets 1.92.1's `\\]`; a `]` after an escape is left
-/// `[Correctable]`, as 1.91.0 reports it without -A.
+/// docs/known-gaps.md): a double-quoted string gets 1.92.1's `\\]`; a `]` after an escape is no
+/// offense. Expected output recorded from RuboCop 1.92.1 (status 0: everything left is corrected).
 #[test]
 fn unescaped_bracket_in_regexp_corrections_converge() {
     let dir = scratch("unescbracket");
@@ -1424,17 +1409,11 @@ fn unescaped_bracket_in_regexp_corrections_converge() {
     let out = rbcop(&dir, &["-A", "--only", "Lint/UnescapedBracketInRegexp", "--force-default-config", "-f", "e", "."]);
     let report = text(&out.stdout).replace(&format!("{}/", dir.canonicalize().unwrap().display()), "");
     let msg = "Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.";
-    assert_eq!(
-        report,
-        format!(
-            "025.rb:1:16: W: [Corrected] {msg}\n031.rb:1:17: W: [Correctable] {msg}\n\
-             042.rb:1:22: W: [Corrected] {msg}\n048.rb:1:20: W: [Correctable] {msg}\n"
-        )
-    );
+    assert_eq!(report, format!("025.rb:1:16: W: [Corrected] {msg}\n042.rb:1:22: W: [Corrected] {msg}\n"));
     for (name, _, want) in cases {
         assert_eq!(fs::read_to_string(dir.join(name)).unwrap(), want, "{name}");
     }
-    assert_eq!(out.status.code(), Some(1));
+    assert_eq!(out.status.code(), Some(0));
     let _ = fs::remove_dir_all(&dir);
 }
 
@@ -1442,7 +1421,7 @@ fn unescaped_bracket_in_regexp_corrections_converge() {
 /// Integer, SafeNavigationChainLength `Max: 0` (add_offense(nil), also for a csend with a block),
 /// a zero IndentationWidth with tabs (ZeroDivisionError). Each is a cop error at the visited node
 /// (IndentationStyle's in on_new_investigation, so the bare path) and the offense is lost.
-/// Expected lines recorded from RuboCop 1.91.
+/// Expected lines recorded from RuboCop 1.91, unchanged in 1.92.1.
 #[test]
 fn config_values_cops_raise_on_are_cop_errors() {
     let cases = [
@@ -1505,9 +1484,8 @@ fn config_values_cops_raise_on_are_cop_errors() {
     }
 }
 
-/// The processed file name is the expanded absolute path: `__FILE__`'s value (Style/StringConcatenation
-/// folds it into the literal) and a cop Warning's `(from file: ...)`, which ExecuteRunner repeats
-/// in its end-of-run `N warnings:` summary, one per raise (two -A iterations here).
+/// The processed file name is the expanded absolute path: a cop Warning's `(from file: ...)`, which
+/// ExecuteRunner repeats in its end-of-run `N warnings:` summary, one per raise (two -A iterations here).
 #[test]
 fn file_name_is_the_absolute_path() {
     let dir = scratch("abspath");
@@ -1516,7 +1494,8 @@ fn file_name_is_the_absolute_path() {
     let only = "Style/StringConcatenation,Style/Copyright";
     let out = rbcop(&dir, &["-A", "--only", only, "--force-default-config", "-f", "e", "sub/../sub/t.rb"]);
     let abs = dir.join("sub/t.rb").display().to_string();
-    assert_eq!(fs::read_to_string(dir.join("sub/t.rb")).unwrap(), format!("x = \"{abs}top\"\n"));
+    // 1.92: Style/StringConcatenation interpolates `__FILE__` as written.
+    assert_eq!(fs::read_to_string(dir.join("sub/t.rb")).unwrap(), "x = \"#{__FILE__}top\"\n");
     let warning =
         format!("Style/Copyright: An AutocorrectNotice must be defined in your RuboCop config (from file: {abs})");
     let err = text(&out.stderr);
@@ -1840,8 +1819,9 @@ fn ambiguous_directive_errors_once_for_the_variable_force() {
 
 /// List settings given as a YAML String (#474) or set to `~` (#500): where RuboCop's cop reads them bare and then calls
 /// an Array-only method (`map`, `any?`, `+`, `-`, `join`, `to_set`), the cop raises at the node it
-/// visits. Cop errors recorded from RuboCop 1.91 on the two scenario projects (their offenses are
-/// in expected.txt).
+/// visits. Cop errors recorded from RuboCop 1.92.1 on the scenario projects (their offenses are
+/// in expected.txt; since 1.92 a String Naming/MethodName `ForbiddenIdentifiers` is a substring
+/// test, not an error).
 #[test]
 fn string_list_settings_raise_where_rubocop_does() {
     let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/scenarios");
@@ -1859,12 +1839,6 @@ fn string_list_settings_raise_where_rubocop_does() {
                 "Lint/UselessAccessModifier cop was inspecting a.rb:4:0.",
                 "Naming/ClassAndModuleCamelCase cop was inspecting a.rb:22:0.",
                 "Naming/HeredocDelimiterNaming cop was inspecting a.rb:23:4.",
-                "Naming/MethodName cop was inspecting a.rb:10:2.",
-                "Naming/MethodName cop was inspecting a.rb:18:4.",
-                "Naming/MethodName cop was inspecting a.rb:26:0.",
-                "Naming/MethodName cop was inspecting a.rb:27:0.",
-                "Naming/MethodName cop was inspecting a.rb:38:2.",
-                "Naming/MethodName cop was inspecting a.rb:6:2.",
                 "Style/ArgumentsForwarding cop was inspecting a.rb:27:0.",
                 "Style/CommentAnnotation cop was inspecting a.rb.",
                 "Style/GlobalVars cop was inspecting a.rb:33:0.",

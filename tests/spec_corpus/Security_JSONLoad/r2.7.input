@@ -10,33 +10,38 @@ AllCops:
 JSON.load(arg)
 ::JSON.load(arg)
 
-==> 001.rb 511 <==
-JSON.load(arg, create_additions: true)
-::JSON.load(arg, create_additions: false)
-JSON.load(arg, { allow_nan: false, create_additions: true })
-::JSON.load(arg, { allow_nan: false, create_additions: true })
+==> 001.rb 397 <==
+JSON.load(arg, nil, create_additions: false)
+::JSON.load(arg, nil, create_additions: true)
 JSON.load(arg, proc {}, create_additions: false, max_nesting: 19)
 ::JSON.load(arg, proc {}, create_additions: false, max_nesting: 19)
 JSON.load(arg, -> {}, { max_nesting: 19, create_additions: false, allow_nan: true })
 ::JSON.load(arg, -> {}, { max_nesting: 19, create_additions: false, allow_nan: true })
 
-==> 002.rb 64 <==
+==> 002.rb 229 <==
+JSON.load(arg, create_additions: false)
+::JSON.load(arg, { create_additions: false })
+JSON.load(arg, create_additions: true)
+JSON.load(arg, { allow_nan: false, create_additions: true })
+JSON.restore(arg, create_additions: false)
+
+==> 003.rb 64 <==
 JSON.load(arg, max_nesting: 1)
 ::JSON.load(arg, max_nesting: 1)
 
-==> 003.rb 38 <==
+==> 004.rb 38 <==
 JSON.restore(arg)
 ::JSON.restore(arg)
 
-==> 004.rb 57 <==
+==> 005.rb 57 <==
 SomeModule::JSON.load(arg)
 SomeModule::JSON.restore(arg)
 
-==> 005.rb 34 <==
+==> 006.rb 34 <==
 JSON.parse(arg)
 ::JSON.parse(arg)
 
-==> 006.rb 32 <==
+==> 007.rb 32 <==
 JSON.dump(arg)
 ::JSON.dump(arg)
 

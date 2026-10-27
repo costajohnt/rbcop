@@ -1,5 +1,5 @@
 use crate::helpers::add_parentheses;
-use crate::helpers::parser_parent::{is_operator_keyword, is_top_const, parser_parent};
+use crate::helpers::parser_parent::{is_operator_keyword, is_top_const, parser_parent_index};
 use crate::prelude::*;
 
 pub const NAME: &str = "Style/HashConversion";
@@ -32,6 +32,35 @@ fn requires_parens(node: &Node) -> bool {
     is_operator_keyword(node)
 }
 
+/// add_parentheses_to_parent_call: walk up while the parent starts where the node does
+/// (`Hash[a, b].merge(c)`), then the parent if it is an unparenthesized call, `super` or `yield`
+/// that does not take its argument with operator syntax (`foo[x]`, `foo.bar = x`, `foo == x`).
+fn parent_call<'a, 'pr>(ancestors: &'a [Node<'pr>], start: usize) -> Option<&'a Node<'pr>> {
+    let mut i = ancestors.len();
+    let parent = loop {
+        let p = parser_parent_index(ancestors, i)?;
+        if ancestors[p].location().start_offset() != start {
+            break &ancestors[p];
+        }
+        i = p;
+    };
+    match parent {
+        Node::CallNode { .. } => {
+            let c = parent.as_call_node().unwrap();
+            let operator_syntax = c.equal_loc().is_some()
+                || (helpers::node_types::is_operator_method(method_name(&c)) && c.call_operator_loc().is_none());
+            (!parenthesized(&c) && !operator_syntax).then_some(parent)
+        }
+        Node::SuperNode { .. } => {
+            parent.as_super_node().unwrap().rparen_loc().is_none().then_some(parent)
+        }
+        Node::YieldNode { .. } => {
+            parent.as_yield_node().unwrap().rparen_loc().is_none().then_some(parent)
+        }
+        _ => None,
+    }
+}
+
 impl Cop for HashConversion {
     fn correctable(&self) -> bool {
         true
@@ -56,17 +85,14 @@ impl Cop for HashConversion {
         cx.state::<Vec<(usize, usize)>>().push((start, end));
         let args = send_args(&call);
         let src = cx.src.text;
-        // The parser parent as a plain send, with whether it is `to_h` and its add_parentheses fix.
-        let parent = parser_parent(cx.ancestors)
-            .filter(|_| call.block().is_none_or(|b| b.as_block_node().is_none()))
-            .and_then(|p| p.as_call_node())
-            .filter(|p| !is_csend(p) && !parenthesized(p))
-            .map(|p| (method_name(&p) == "to_h", add_parentheses::plan(&p.as_node(), src)));
+        // add_parentheses_to_parent_call: the add_parentheses fix of the call the hash literal
+        // would start the first argument of, if it needs one.
+        let parent = parent_call(cx.ancestors, start).map(|p| add_parentheses::plan(p, src));
         if let [first] = args.as_slice() {
             match first {
                 Node::HashNode { .. } | Node::KeywordHashNode { .. } => {
                     let replacement = format!("{{{}}}", node_text(first));
-                    let paren = parent.map(|(_, fix)| fix);
+                    let paren = parent;
                     // add_parentheses raises where the plan is None (no selector).
                     if matches!(paren, Some(None)) {
                         return;
@@ -123,7 +149,7 @@ impl Cop for HashConversion {
         let pairs: Vec<String> =
             args.chunks(2).map(|p| format!("{} => {}", node_text(&p[0]), node_text(&p[1]))).collect();
         let replacement = format!("{{{}}}", pairs.join(", "));
-        let paren = parent.filter(|(to_h, _)| !to_h).map(|(_, fix)| fix);
+        let paren = parent;
         if matches!(paren, Some(None)) {
             return;
         }

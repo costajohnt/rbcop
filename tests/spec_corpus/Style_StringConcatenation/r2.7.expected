@@ -1,4 +1,4 @@
-==> offenses exit=1 3288 <==
+==> offenses exit=1 3616 <==
 000.rb:1:19: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
 001.rb:1:10: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
 002.rb:1:19: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
@@ -19,19 +19,22 @@
 018.rb:1:1: C: Style/StringConcatenation: Prefer string interpolation to string concatenation.
 019.rb:1:1: C: Style/StringConcatenation: Prefer string interpolation to string concatenation.
 020.rb:1:1: C: Style/StringConcatenation: Prefer string interpolation to string concatenation.
-021.rb:1:19: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
-022.rb:1:19: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
-023.rb:1:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
-023.rb:2:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
-023.rb:3:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
-023.rb:4:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
-024.rb:1:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
-025.rb:1:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+021.rb:1:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+022.rb:1:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+023.rb:1:19: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+024.rb:1:19: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+025.rb:1:11: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
 026.rb:1:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+026.rb:2:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+026.rb:3:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+026.rb:4:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
 027.rb:1:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
 028.rb:1:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+029.rb:1:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+030.rb:1:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+031.rb:1:1: C: [Correctable] Style/StringConcatenation: Prefer string interpolation to string concatenation.
 
-==> autocorrect exit=1 3252 <==
+==> autocorrect exit=1 3574 <==
 000.rb:1:19: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
 001.rb:1:10: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
 002.rb:1:19: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
@@ -52,17 +55,20 @@
 018.rb:1:1: C: Style/StringConcatenation: Prefer string interpolation to string concatenation.
 019.rb:1:1: C: Style/StringConcatenation: Prefer string interpolation to string concatenation.
 020.rb:1:1: C: Style/StringConcatenation: Prefer string interpolation to string concatenation.
-021.rb:1:19: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
-022.rb:1:19: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
-023.rb:1:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
-023.rb:2:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
-023.rb:3:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
-023.rb:4:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
-024.rb:1:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
-025.rb:1:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+021.rb:1:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+022.rb:1:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+023.rb:1:19: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+024.rb:1:19: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+025.rb:1:11: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
 026.rb:1:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+026.rb:2:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+026.rb:3:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+026.rb:4:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
 027.rb:1:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
 028.rb:1:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+029.rb:1:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+030.rb:1:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
+031.rb:1:1: C: [Corrected] Style/StringConcatenation: Prefer string interpolation to string concatenation.
 
 ==> corrected/000.rb 49 <==
 email_with_name = "#{user.name} <#{user.email}>"
@@ -103,30 +109,39 @@ email_with_name = "#{user.name} #{user.email}\\n"
 ==> corrected/016.rb 17 <==
 "foobar: #{baz}"
 
-==> corrected/021.rb 50 <==
+==> corrected/021.rb 16 <==
+"#{__FILE__}/c"
+
+==> corrected/022.rb 16 <==
+"__FILE__#{c}d"
+
+==> corrected/023.rb 50 <==
 email_with_name = "He said \"Arrest that man!\"."
 
-==> corrected/022.rb 50 <==
+==> corrected/024.rb 50 <==
 email_with_name = "He said \"Arrest that man!\"."
 
-==> corrected/023.rb 40 <==
+==> corrected/025.rb 57 <==
+command = "clone \"#{ref}\" \"#{url}\" && echo \"done\""
+
+==> corrected/026.rb 40 <==
 "\"foo\""
 "\"foo'"
 "'foo\""
 "'foo\"bar"
 
-==> corrected/024.rb 16 <==
+==> corrected/027.rb 16 <==
 "\"bar\"#{foo}"
 
-==> corrected/025.rb 13 <==
+==> corrected/028.rb 13 <==
 "foo\#{bar}"
 
-==> corrected/026.rb 12 <==
+==> corrected/029.rb 12 <==
 "foo\#@bar"
 
-==> corrected/027.rb 13 <==
+==> corrected/030.rb 13 <==
 "foo\#@@bar"
 
-==> corrected/028.rb 12 <==
+==> corrected/031.rb 12 <==
 "foo\#$bar"
 

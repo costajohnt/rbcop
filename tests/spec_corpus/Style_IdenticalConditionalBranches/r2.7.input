@@ -42,7 +42,36 @@ else
   1 + 2 + 3
 end
 
-==> 004.rb 66 <==
+==> 004.rb 64 <==
+if something
+  method_call_here(1, 2, 3)
+  do_x
+else; do_x; end
+
+==> 005.rb 74 <==
+if something
+  method_call_here(1, 2, 3); do_x
+else
+  1 + 2 + 3; do_x
+end
+
+==> 006.rb 74 <==
+if something
+  do_x; method_call_here(1, 2, 3)
+else
+  do_x; 1 + 2 + 3
+end
+
+==> 007.rb 86 <==
+if something
+  method_call_here(1, 2, 3)
+  do_x # comment
+else
+  1 + 2 + 3
+  do_x
+end
+
+==> 008.rb 66 <==
 if condition
   h[:key] = foo
   bar
@@ -51,7 +80,7 @@ else
   baz
 end
 
-==> 005.rb 64 <==
+==> 009.rb 64 <==
 if h[:key]
   h[:key] = foo
   bar
@@ -60,7 +89,7 @@ else
   baz
 end
 
-==> 006.rb 82 <==
+==> 010.rb 82 <==
 if something
   self.foo ||= default
   do_x
@@ -69,7 +98,7 @@ else
   do_y
 end
 
-==> 007.rb 74 <==
+==> 011.rb 74 <==
 if x.condition
   x = do_something
   foo
@@ -78,7 +107,7 @@ else
   bar
 end
 
-==> 008.rb 75 <==
+==> 012.rb 75 <==
 if x&.condition
   x = do_something
   foo
@@ -87,7 +116,7 @@ else
   bar
 end
 
-==> 009.rb 64 <==
+==> 013.rb 64 <==
 if x
   x = do_something
   foo
@@ -96,7 +125,7 @@ else
   bar
 end
 
-==> 010.rb 72 <==
+==> 014.rb 72 <==
 x = 42
 
 if x
@@ -107,7 +136,7 @@ else
   bar
 end
 
-==> 011.rb 67 <==
+==> 015.rb 67 <==
 if @x
   @x = do_something
   foo
@@ -116,7 +145,7 @@ else
   bar
 end
 
-==> 012.rb 74 <==
+==> 016.rb 74 <==
 if x.condition
   foo
   x = do_something
@@ -125,7 +154,7 @@ else
   x = do_something
 end
 
-==> 013.rb 189 <==
+==> 017.rb 189 <==
 def foo
   if something
     do_x
@@ -145,21 +174,21 @@ def bar
   do_something_else
 end
 
-==> 014.rb 52 <==
+==> 018.rb 52 <==
 if something
   do_x
 elsif something_else
   do_x
 end
 
-==> 015.rb 42 <==
+==> 019.rb 42 <==
 if something
   do_x(1)
 else
   do_x(2)
 end
 
-==> 016.rb 55 <==
+==> 020.rb 55 <==
 x = 0
 if x == 0
   x += 1
@@ -169,7 +198,7 @@ else
   bar
 end
 
-==> 017.rb 61 <==
+==> 021.rb 61 <==
 case something
 when :a
   do_x
@@ -179,7 +208,7 @@ else
   do_x
 end
 
-==> 018.rb 55 <==
+==> 022.rb 55 <==
 case value
 when cond1
 else
@@ -188,7 +217,7 @@ else
   end
 end
 
-==> 019.rb 76 <==
+==> 023.rb 76 <==
 case something
 when :a
   x1
@@ -201,7 +230,7 @@ else
   do_x
 end
 
-==> 020.rb 76 <==
+==> 024.rb 76 <==
 case something
 when :a
   do_x
@@ -214,7 +243,7 @@ else
   x3
 end
 
-==> 021.rb 70 <==
+==> 025.rb 70 <==
 case something
 when :a
   nil
@@ -226,7 +255,7 @@ else
   x2
 end
 
-==> 022.rb 69 <==
+==> 026.rb 69 <==
 case something
 when :a
   ()
@@ -238,7 +267,7 @@ else
   x2
 end
 
-==> 023.rb 262 <==
+==> 027.rb 262 <==
 def foo
   case something
   when :a
@@ -266,7 +295,7 @@ def bar
   do_something
 end
 
-==> 024.rb 49 <==
+==> 028.rb 49 <==
 case something
 when :a
   do_x
@@ -274,7 +303,7 @@ when :b
   do_x
 end
 
-==> 025.rb 68 <==
+==> 029.rb 68 <==
 case something
 when :a
   do_x
@@ -285,7 +314,7 @@ else
   do_z
 end
 
-==> 026.rb 62 <==
+==> 030.rb 62 <==
 x = 0
 case x
 when 1
@@ -296,7 +325,7 @@ when 42
   bar
 end
 
-==> 027.rb 57 <==
+==> 031.rb 57 <==
 case something
 in :a
   do_x
@@ -306,7 +335,7 @@ else
   do_x
 end
 
-==> 028.rb 58 <==
+==> 032.rb 58 <==
 x = 0
 case x
 in 1
@@ -317,7 +346,7 @@ in 42
   bar
 end
 
-==> 029.rb 53 <==
+==> 033.rb 53 <==
 case value
 in cond1
 else
@@ -326,7 +355,7 @@ else
   end
 end
 
-==> 030.rb 72 <==
+==> 034.rb 72 <==
 case something
 in :a
   x1
@@ -339,7 +368,7 @@ else
   do_x
 end
 
-==> 031.rb 72 <==
+==> 035.rb 72 <==
 case something
 in :a
   do_x
@@ -352,7 +381,7 @@ else
   x3
 end
 
-==> 032.rb 254 <==
+==> 036.rb 254 <==
 def foo
   case something
   in :a
@@ -380,7 +409,7 @@ def bar
   do_something
 end
 
-==> 033.rb 45 <==
+==> 037.rb 45 <==
 case something
 in :a
   do_x
@@ -388,7 +417,7 @@ in :b
   do_x
 end
 
-==> 034.rb 64 <==
+==> 038.rb 64 <==
 case something
 in :a
   do_x
@@ -399,41 +428,41 @@ else
   do_z
 end
 
-==> 035.rb 32 <==
+==> 039.rb 32 <==
 if condition
   ()
 else
   ()
 end
 
-==> 036.rb 33 <==
+==> 040.rb 33 <==
 if condition
   ()
 else
   foo
 end
 
-==> 037.rb 33 <==
+==> 041.rb 33 <==
 if condition
   foo
 else
   ()
 end
 
-==> 038.rb 10 <==
+==> 042.rb 10 <==
 x ? y : y
 
-==> 039.rb 32 <==
+==> 043.rb 32 <==
 x = if foo
   bar
 else
   bar
 end
 
-==> 040.rb 20 <==
+==> 044.rb 20 <==
 x = foo ? bar : bar
 
-==> 041.rb 62 <==
+==> 045.rb 62 <==
 x = case something
 when :a
   bar
@@ -443,7 +472,7 @@ else
   bar
 end
 
-==> 042.rb 58 <==
+==> 046.rb 58 <==
 x = case something
 in :a
   bar
@@ -453,7 +482,7 @@ else
   bar
 end
 
-==> 043.rb 52 <==
+==> 047.rb 52 <==
 x = if foo
   bar
   do_x(1)
@@ -462,7 +491,7 @@ else
   do_x(2)
 end
 
-==> 044.rb 92 <==
+==> 048.rb 92 <==
 x = case something
 when :a
   bar
@@ -475,7 +504,7 @@ else
   do_x(3)
 end
 
-==> 045.rb 88 <==
+==> 049.rb 88 <==
 x = case something
 in :a
   bar
@@ -488,14 +517,14 @@ else
   do_x(3)
 end
 
-==> 046.rb 68 <==
+==> 050.rb 68 <==
 def fixed_point(value)
   if value then value
   else value
   end
 end
 
-==> 047.rb 72 <==
+==> 051.rb 72 <==
 def fixed_point(value)
   if value then value
   else
@@ -503,7 +532,7 @@ def fixed_point(value)
   end
 end
 
-==> 048.rb 72 <==
+==> 052.rb 72 <==
 def fixed_point(value)
   if value then
     value

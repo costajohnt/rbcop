@@ -68,3 +68,17 @@ some_method do do_something end
 
 something_else
 
+==> 010.rb 25 <==
+foo :bar \
+do
+
+  baz
+end
+
+==> 011.rb 46 <==
+foo do |bar,
+        baz|
+
+  do_something
+end
+

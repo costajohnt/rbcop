@@ -24,16 +24,31 @@ AllCops:
 ==> 005.rb 23 <==
 !(foo.any? &:working?)
 
-==> 006.rb 24 <==
+==> 006.rb 21 <==
+foo != !(bar == baz)
+
+==> 007.rb 23 <==
+foo != not(bar == baz)
+
+==> 008.rb 19 <==
+foo + !(bar < baz)
+
+==> 009.rb 19 <==
+foo[!(bar == baz)]
+
+==> 010.rb 28 <==
+do_something(!(bar == baz))
+
+==> 011.rb 24 <==
 !(foo&.any? &:working?)
 
-==> 007.rb 9 <==
+==> 012.rb 9 <==
 foo.none?
-==> 008.rb 21 <==
+==> 013.rb 21 <==
 !!(string =~ /^\w+$/)
-==> 009.rb 23 <==
+==> 014.rb 23 <==
 !!foo.reject { |e| !e }
-==> 010.rb 133 <==
+==> 015.rb 133 <==
 class TestClass
   def test_method
     [1, 2, 3, 4].select do |number|
@@ -44,345 +59,345 @@ class TestClass
   end
 end
 
-==> 011.rb 11 <==
+==> 016.rb 11 <==
 !foo.none?
 
-==> 012.rb 14 <==
+==> 017.rb 14 <==
 not foo.none?
 
-==> 013.rb 12 <==
+==> 018.rb 12 <==
 !$foo.none?
 
-==> 014.rb 15 <==
+==> 019.rb 15 <==
 not $foo.none?
 
-==> 015.rb 12 <==
+==> 020.rb 12 <==
 !@foo.none?
 
-==> 016.rb 15 <==
+==> 021.rb 15 <==
 not @foo.none?
 
-==> 017.rb 13 <==
+==> 022.rb 13 <==
 !@@foo.none?
 
-==> 018.rb 16 <==
+==> 023.rb 16 <==
 not @@foo.none?
 
-==> 019.rb 11 <==
+==> 024.rb 11 <==
 !FOO.none?
 
-==> 020.rb 14 <==
+==> 025.rb 14 <==
 not FOO.none?
 
-==> 021.rb 16 <==
+==> 026.rb 16 <==
 !FOO::BAR.none?
 
-==> 022.rb 19 <==
+==> 027.rb 19 <==
 not FOO::BAR.none?
 
-==> 023.rb 18 <==
+==> 028.rb 18 <==
 !foo["bar"].none?
 
-==> 024.rb 21 <==
+==> 029.rb 21 <==
 not foo["bar"].none?
 
-==> 025.rb 15 <==
+==> 030.rb 15 <==
 !foo.bar.none?
 
-==> 026.rb 18 <==
+==> 031.rb 18 <==
 not foo.bar.none?
 
-==> 027.rb 10 <==
+==> 032.rb 10 <==
 !foo.any?
 
-==> 028.rb 11 <==
+==> 033.rb 11 <==
 !foo.even?
 
-==> 029.rb 14 <==
+==> 034.rb 14 <==
 !foo.present?
 
-==> 030.rb 14 <==
+==> 035.rb 14 <==
 !foo.include?
 
-==> 031.rb 10 <==
+==> 036.rb 10 <==
 !foo.odd?
 
-==> 032.rb 12 <==
+==> 037.rb 12 <==
 !foo.blank?
 
-==> 033.rb 14 <==
+==> 038.rb 14 <==
 !foo.exclude?
 
-==> 034.rb 14 <==
+==> 039.rb 14 <==
 !(foo == bar)
 
-==> 035.rb 17 <==
+==> 040.rb 17 <==
 not (foo == bar)
 
-==> 036.rb 14 <==
+==> 041.rb 14 <==
 !(foo != bar)
 
-==> 037.rb 17 <==
+==> 042.rb 17 <==
 not (foo != bar)
 
-==> 038.rb 14 <==
+==> 043.rb 14 <==
 !(foo =~ bar)
 
-==> 039.rb 17 <==
+==> 044.rb 17 <==
 not (foo =~ bar)
 
-==> 040.rb 14 <==
+==> 045.rb 14 <==
 !(foo !~ bar)
 
-==> 041.rb 17 <==
+==> 046.rb 17 <==
 not (foo !~ bar)
 
-==> 042.rb 13 <==
+==> 047.rb 13 <==
 !(foo < bar)
 
-==> 043.rb 16 <==
+==> 048.rb 16 <==
 not (foo < bar)
 
-==> 044.rb 13 <==
+==> 049.rb 13 <==
 !(foo > bar)
 
-==> 045.rb 16 <==
+==> 050.rb 16 <==
 not (foo > bar)
 
-==> 046.rb 23 <==
+==> 051.rb 23 <==
 !nullable&.any?(&:odd)
 
-==> 047.rb 24 <==
+==> 052.rb 24 <==
 !nullable&.none?(&:odd)
 
-==> 048.rb 16 <==
+==> 053.rb 16 <==
 !nullable&.<(0)
 
-==> 049.rb 17 <==
+==> 054.rb 17 <==
 !nullable&.<=(0)
 
-==> 050.rb 16 <==
+==> 055.rb 16 <==
 !nullable&.>(0)
 
-==> 051.rb 17 <==
+==> 056.rb 17 <==
 !nullable&.>=(0)
 
-==> 052.rb 40 <==
+==> 057.rb 40 <==
 klass = self.class
 !(klass < BaseClass)
 
-==> 053.rb 40 <==
+==> 058.rb 40 <==
 klass = self.class
 !(BaseClass < klass)
 
-==> 054.rb 38 <==
+==> 059.rb 38 <==
 klass = self.class
 !(klass < FOO_BAR)
 
-==> 055.rb 38 <==
+==> 060.rb 38 <==
 klass = self.class
 !(FOO_BAR < klass)
 
-==> 056.rb 22 <==
+==> 061.rb 22 <==
 foo.select { |e| !e }
 
-==> 057.rb 23 <==
+==> 062.rb 23 <==
 foo&.select { |e| !e }
 
-==> 058.rb 43 <==
+==> 063.rb 43 <==
 foo.select do |e|
   something
   !e.bar
 end
 
-==> 059.rb 47 <==
+==> 064.rb 47 <==
 foo&.select do |e|
   something
   e&.bar&.!
 end
 
-==> 060.rb 26 <==
+==> 065.rb 26 <==
 foo.select { |e| e != 2 }
 
-==> 061.rb 60 <==
+==> 066.rb 60 <==
 foo.select do |e|
   something
   something_else
   e != 2
 end
 
-==> 062.rb 43 <==
+==> 067.rb 43 <==
 y.select { |key, _value| !(key =~ /c\d/) }
 
-==> 063.rb 27 <==
+==> 068.rb 27 <==
 foo.select { |e| !e.bar? }
 
-==> 064.rb 28 <==
+==> 069.rb 28 <==
 foo.select { |e| e.bar?.! }
 
-==> 065.rb 31 <==
+==> 070.rb 31 <==
 foo&.select { |e| e&.bar?&.! }
 
-==> 066.rb 30 <==
+==> 071.rb 30 <==
 foo.select { |e| e.bar?.  ! }
 
-==> 067.rb 38 <==
+==> 072.rb 38 <==
 puts 1 if !foo.select { |e| !e.bar? }
 
-==> 068.rb 31 <==
+==> 073.rb 31 <==
 foo.select do |e|
   !e.bar
 end
 
-==> 069.rb 22 <==
+==> 074.rb 22 <==
 foo.reject { |e| !e }
 
-==> 070.rb 23 <==
+==> 075.rb 23 <==
 foo&.reject { |e| !e }
 
-==> 071.rb 43 <==
+==> 076.rb 43 <==
 foo.reject do |e|
   something
   !e.bar
 end
 
-==> 072.rb 47 <==
+==> 077.rb 47 <==
 foo&.reject do |e|
   something
   e&.bar&.!
 end
 
-==> 073.rb 26 <==
+==> 078.rb 26 <==
 foo.reject { |e| e != 2 }
 
-==> 074.rb 60 <==
+==> 079.rb 60 <==
 foo.reject do |e|
   something
   something_else
   e != 2
 end
 
-==> 075.rb 43 <==
+==> 080.rb 43 <==
 y.reject { |key, _value| !(key =~ /c\d/) }
 
-==> 076.rb 27 <==
+==> 081.rb 27 <==
 foo.reject { |e| !e.bar? }
 
-==> 077.rb 28 <==
+==> 082.rb 28 <==
 foo.reject { |e| e.bar?.! }
 
-==> 078.rb 31 <==
+==> 083.rb 31 <==
 foo&.reject { |e| e&.bar?&.! }
 
-==> 079.rb 30 <==
+==> 084.rb 30 <==
 foo.reject { |e| e.bar?.  ! }
 
-==> 080.rb 38 <==
+==> 085.rb 38 <==
 puts 1 if !foo.reject { |e| !e.bar? }
 
-==> 081.rb 31 <==
+==> 086.rb 31 <==
 foo.reject do |e|
   !e.bar
 end
 
-==> 082.rb 23 <==
+==> 087.rb 23 <==
 foo.select! { |e| !e }
 
-==> 083.rb 24 <==
+==> 088.rb 24 <==
 foo&.select! { |e| !e }
 
-==> 084.rb 44 <==
+==> 089.rb 44 <==
 foo.select! do |e|
   something
   !e.bar
 end
 
-==> 085.rb 48 <==
+==> 090.rb 48 <==
 foo&.select! do |e|
   something
   e&.bar&.!
 end
 
-==> 086.rb 27 <==
+==> 091.rb 27 <==
 foo.select! { |e| e != 2 }
 
-==> 087.rb 61 <==
+==> 092.rb 61 <==
 foo.select! do |e|
   something
   something_else
   e != 2
 end
 
-==> 088.rb 44 <==
+==> 093.rb 44 <==
 y.select! { |key, _value| !(key =~ /c\d/) }
 
-==> 089.rb 28 <==
+==> 094.rb 28 <==
 foo.select! { |e| !e.bar? }
 
-==> 090.rb 29 <==
+==> 095.rb 29 <==
 foo.select! { |e| e.bar?.! }
 
-==> 091.rb 32 <==
+==> 096.rb 32 <==
 foo&.select! { |e| e&.bar?&.! }
 
-==> 092.rb 31 <==
+==> 097.rb 31 <==
 foo.select! { |e| e.bar?.  ! }
 
-==> 093.rb 39 <==
+==> 098.rb 39 <==
 puts 1 if !foo.select! { |e| !e.bar? }
 
-==> 094.rb 32 <==
+==> 099.rb 32 <==
 foo.select! do |e|
   !e.bar
 end
 
-==> 095.rb 23 <==
+==> 100.rb 23 <==
 foo.reject! { |e| !e }
 
-==> 096.rb 24 <==
+==> 101.rb 24 <==
 foo&.reject! { |e| !e }
 
-==> 097.rb 44 <==
+==> 102.rb 44 <==
 foo.reject! do |e|
   something
   !e.bar
 end
 
-==> 098.rb 48 <==
+==> 103.rb 48 <==
 foo&.reject! do |e|
   something
   e&.bar&.!
 end
 
-==> 099.rb 27 <==
+==> 104.rb 27 <==
 foo.reject! { |e| e != 2 }
 
-==> 100.rb 61 <==
+==> 105.rb 61 <==
 foo.reject! do |e|
   something
   something_else
   e != 2
 end
 
-==> 101.rb 44 <==
+==> 106.rb 44 <==
 y.reject! { |key, _value| !(key =~ /c\d/) }
 
-==> 102.rb 28 <==
+==> 107.rb 28 <==
 foo.reject! { |e| !e.bar? }
 
-==> 103.rb 29 <==
+==> 108.rb 29 <==
 foo.reject! { |e| e.bar?.! }
 
-==> 104.rb 32 <==
+==> 109.rb 32 <==
 foo&.reject! { |e| e&.bar?&.! }
 
-==> 105.rb 31 <==
+==> 110.rb 31 <==
 foo.reject! { |e| e.bar?.  ! }
 
-==> 106.rb 39 <==
+==> 111.rb 39 <==
 puts 1 if !foo.reject! { |e| !e.bar? }
 
-==> 107.rb 32 <==
+==> 112.rb 32 <==
 foo.reject! do |e|
   !e.bar
 end

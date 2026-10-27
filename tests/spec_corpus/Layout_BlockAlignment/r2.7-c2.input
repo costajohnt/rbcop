@@ -88,3 +88,9 @@ def self.foo
 end
 end
 
+==> 012.rb 32 <==
+	x = foo
+		.map do |v|
+		v
+	end
+

@@ -1,0 +1,15 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+
+==> 000.rb 38 <==
+if a in b then a in b else a in b end
+
+==> 001.rb 91 <==
+if cond then a += 1 while a < 3 else a => b end
+if cond then a rescue b else c until d end
+

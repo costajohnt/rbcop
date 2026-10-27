@@ -1,0 +1,147 @@
+==> .rubocop.yml 160 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/Lambda:
+  EnforcedStyle: line_count_dependent
+
+==> 000.rb 21 <==
+f = lambda { |x| x }
+
+==> 001.rb 17 <==
+f = lambda { x }
+
+==> 002.rb 26 <==
+l = lambda do |x|
+  x
+end
+
+==> 003.rb 32 <==
+lambda = ->(x) { x }
+lambda.(1)
+
+==> 004.rb 18 <==
+f = lambda { _1 }
+
+==> 005.rb 25 <==
+-> {
+  _1.do_something
+}
+
+==> 006.rb 23 <==
+l = lambda do
+  _1
+end
+
+==> 007.rb 30 <==
+lambda = -> { _1 }
+lambda.(1)
+
+==> 008.rb 21 <==
+f = ->(x) do
+  x
+end
+
+==> 009.rb 18 <==
+f = -> do
+  x
+end
+
+==> 010.rb 16 <==
+->(x)do
+  x
+end
+
+==> 011.rb 17 <==
+-> (x)do
+  x
+end
+
+==> 012.rb 17 <==
+->(x) do
+  x
+end
+
+==> 013.rb 15 <==
+->()do
+  x
+end
+
+==> 014.rb 16 <==
+-> ()do
+  x
+end
+
+==> 015.rb 13 <==
+->do
+  x
+end
+
+==> 016.rb 29 <==
+-> hello do
+  puts hello
+end
+
+==> 017.rb 32 <==
+->   hello  do
+  puts hello
+end
+
+==> 018.rb 38 <==
+->   hello, user  do
+  puts hello
+end
+
+==> 019.rb 15 <==
+l = lambda.test
+==> 020.rb 86 <==
+has_many :kittens, -> do
+  where(cats: Cat.young.where_values_hash)
+end, source: cats
+
+==> 021.rb 53 <==
+do_something :foo, ->(x) do
+  x.bar
+rescue
+  nil
+end
+
+==> 022.rb 55 <==
+do_something :foo, ->(x) do
+  x.bar
+ensure
+  x.baz
+end
+
+==> 023.rb 51 <==
+do_something :foo, ->(x) do
+  x.bar rescue nil
+end
+
+==> 024.rb 54 <==
+do_something(:foo, ->(x) do
+  x.bar
+rescue
+  nil
+end)
+
+==> 025.rb 67 <==
+has_many opt: -> do
+  where(cats: Cat.young.where_values_hash)
+end
+
+==> 026.rb 64 <==
+has_many opt: -> {
+  where(cats: Cat.young.where_values_hash)
+}
+
+==> 027.rb 76 <==
+has_many(
+  opt: -> do
+    where(cats: Cat.young.where_values_hash)
+  end
+)
+

@@ -12,22 +12,28 @@ test = 5
 
 top
 
-==> 001.rb 8 <==
+==> 001.rb 19 <==
+test = 5
+
+
+top
+
+==> 002.rb 8 <==
 #comment
-==> 002.rb 19 <==
+==> 003.rb 19 <==
 test
 
 #comment
 top
 
-==> 003.rb 60 <==
+==> 004.rb 60 <==
 result = "test
 
 
 
                                   string"
 
-==> 004.rb 44 <==
+==> 005.rb 44 <==
 str = <<-TEXT
 line 1
 

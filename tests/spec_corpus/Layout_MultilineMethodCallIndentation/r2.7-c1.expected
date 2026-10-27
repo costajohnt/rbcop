@@ -1,89 +1,88 @@
 ==> offenses exit=1 2601 <==
-020.rb:3:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.nil?` 2 spaces more than `0` on line 2.
-024.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `b` 2 spaces more than `a` on line 1.
-025.rb:3:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `from` 2 spaces more than `change { Bar.count }` on line 2.
-026.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.(` 2 spaces more than `a` on line 1.
-036.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.b` 2 spaces more than `a` on line 1.
-037.rb:2:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `b` 2 spaces more than `a` on line 1.
-037.rb:4:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `d` 2 spaces more than `c` on line 3.
-038.rb:3:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `c` 2 spaces more than `a` on line 1.
-039.rb:3:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `b` 2 spaces more than `a` on line 2.
-040.rb:4:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name` 2 spaces more than `VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName` on line 3.
-041.rb:4:17: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name` 2 spaces more than `VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName` on line 3.
-042.rb:3:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `each_pair` 2 spaces more than `refusal_advice_params` on line 2.
-043.rb:9:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.merge` 2 spaces more than `.reverse_merge` on line 8.
-043.rb:10:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.tap` 2 spaces more than `.reverse_merge` on line 8.
-044.rb:5:9: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.parse` 2 spaces more than `JSON` on line 4.
-044.rb:6:9: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.tap` 2 spaces more than `JSON` on line 4.
-044.rb:7:9: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.to_json` 2 spaces more than `JSON` on line 4.
-045.rb:3:37: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.select` 2 spaces more than `.uniq` on line 2.
-047.rb:3:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.bar` 2 spaces more than `.foo` on line 2.
-048.rb:2:15: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.first` 2 spaces more than `.keys` on line 1.
+025.rb:3:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.nil?` 2 spaces more than `0` on line 2.
+029.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `b` 2 spaces more than `a` on line 1.
+030.rb:3:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `from` 2 spaces more than `change { Bar.count }` on line 2.
+031.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.(` 2 spaces more than `a` on line 1.
+041.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.b` 2 spaces more than `a` on line 1.
+042.rb:2:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `b` 2 spaces more than `a` on line 1.
+042.rb:4:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `d` 2 spaces more than `c` on line 3.
+043.rb:3:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `c` 2 spaces more than `a` on line 1.
+044.rb:3:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `b` 2 spaces more than `a` on line 2.
+045.rb:4:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name` 2 spaces more than `VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName` on line 3.
+046.rb:4:17: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name` 2 spaces more than `VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName` on line 3.
+047.rb:3:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `each_pair` 2 spaces more than `refusal_advice_params` on line 2.
+048.rb:9:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.merge` 2 spaces more than `.reverse_merge` on line 8.
+048.rb:10:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.tap` 2 spaces more than `.reverse_merge` on line 8.
+049.rb:5:9: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.parse` 2 spaces more than `JSON` on line 4.
+049.rb:6:9: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.tap` 2 spaces more than `JSON` on line 4.
+049.rb:7:9: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.to_json` 2 spaces more than `JSON` on line 4.
+050.rb:3:37: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.select` 2 spaces more than `.uniq` on line 2.
+052.rb:3:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.bar` 2 spaces more than `.foo` on line 2.
+053.rb:2:15: C: [Correctable] Layout/MultilineMethodCallIndentation: Indent `.first` 2 spaces more than `.keys` on line 1.
 
-==> autocorrect exit=0 2683 <==
-020.rb:3:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.nil?` 2 spaces more than `0` on line 2.
-024.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `b` 2 spaces more than `a` on line 1.
-025.rb:3:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `from` 2 spaces more than `change { Bar.count }` on line 2.
-026.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.(` 2 spaces more than `a` on line 1.
-036.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.b` 2 spaces more than `a` on line 1.
-037.rb:2:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `b` 2 spaces more than `a` on line 1.
-037.rb:4:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `d` 2 spaces more than `c` on line 3.
-038.rb:3:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `c` 2 spaces more than `a` on line 1.
-039.rb:3:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `b` 2 spaces more than `a` on line 2.
-040.rb:4:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name` 2 spaces more than `VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName` on line 3.
-041.rb:4:17: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name` 2 spaces more than `VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName` on line 3.
-042.rb:3:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `each_pair` 2 spaces more than `refusal_advice_params` on line 2.
-043.rb:9:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.merge` 2 spaces more than `.reverse_merge` on line 8.
-043.rb:10:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.tap` 2 spaces more than `.reverse_merge` on line 8.
-044.rb:5:9: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.parse` 2 spaces more than `JSON` on line 4.
-044.rb:6:9: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.tap` 2 spaces more than `JSON` on line 4.
-044.rb:7:9: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.to_json` 2 spaces more than `JSON` on line 4.
-045.rb:3:37: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.select` 2 spaces more than `.uniq` on line 2.
-045.rb:3:41: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.select` 2 spaces more than `.uniq` on line 2.
-047.rb:3:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.bar` 2 spaces more than `.foo` on line 2.
-048.rb:2:15: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.first` 2 spaces more than `.keys` on line 1.
+==> autocorrect exit=0 2561 <==
+025.rb:3:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.nil?` 2 spaces more than `0` on line 2.
+029.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `b` 2 spaces more than `a` on line 1.
+030.rb:3:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `from` 2 spaces more than `change { Bar.count }` on line 2.
+031.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.(` 2 spaces more than `a` on line 1.
+041.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.b` 2 spaces more than `a` on line 1.
+042.rb:2:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `b` 2 spaces more than `a` on line 1.
+042.rb:4:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `d` 2 spaces more than `c` on line 3.
+043.rb:3:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `c` 2 spaces more than `a` on line 1.
+044.rb:3:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `b` 2 spaces more than `a` on line 2.
+045.rb:4:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name` 2 spaces more than `VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName` on line 3.
+046.rb:4:17: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name` 2 spaces more than `VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName` on line 3.
+047.rb:3:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `each_pair` 2 spaces more than `refusal_advice_params` on line 2.
+048.rb:9:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.merge` 2 spaces more than `.reverse_merge` on line 8.
+048.rb:10:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.tap` 2 spaces more than `.reverse_merge` on line 8.
+049.rb:5:9: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.parse` 2 spaces more than `JSON` on line 4.
+049.rb:6:9: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.tap` 2 spaces more than `JSON` on line 4.
+049.rb:7:9: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.to_json` 2 spaces more than `JSON` on line 4.
+050.rb:3:37: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.select` 2 spaces more than `.uniq` on line 2.
+052.rb:3:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.bar` 2 spaces more than `.foo` on line 2.
+053.rb:2:15: C: [Corrected] Layout/MultilineMethodCallIndentation: Indent `.first` 2 spaces more than `.keys` on line 1.
 
-==> corrected/020.rb 28 <==
+==> corrected/025.rb 28 <==
 def foo
   !0
      .nil?
 end
 
-==> corrected/024.rb 7 <==
+==> corrected/029.rb 7 <==
 a.
   b
 
-==> corrected/025.rb 68 <==
+==> corrected/030.rb 68 <==
 expect { Foo.new }.
   to change { Bar.count }.
        from(1).to(2)
 
-==> corrected/026.rb 12 <==
+==> corrected/031.rb 12 <==
 a
   .(args)
 
-==> corrected/036.rb 7 <==
+==> corrected/041.rb 7 <==
 a
   .b
 
-==> corrected/037.rb 14 <==
+==> corrected/042.rb 14 <==
 a.
   b
 c.
   d
 
-==> corrected/038.rb 12 <==
+==> corrected/043.rb 12 <==
 a.
   b.
   c
 
-==> corrected/039.rb 13 <==
+==> corrected/044.rb 13 <==
 [
  a.
    b
 ]
 
-==> corrected/040.rb 146 <==
+==> corrected/045.rb 146 <==
 def foo
   bar(
     key: VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName
@@ -91,7 +90,7 @@ def foo
   )
 end
 
-==> corrected/041.rb 146 <==
+==> corrected/046.rb 146 <==
 def foo
   bar(
     key: VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName
@@ -99,7 +98,7 @@ def foo
   )
 end
 
-==> corrected/042.rb 227 <==
+==> corrected/047.rb 227 <==
 parsed_params = refusal_advice_params.merge(
   actions: refusal_advice_params.fetch(:actions).
              each_pair do |_, suggestions|
@@ -107,7 +106,7 @@ parsed_params = refusal_advice_params.merge(
              end
 ).to_h
 
-==> corrected/043.rb 442 <==
+==> corrected/048.rb 442 <==
 def payload
   {
     type: 'action',
@@ -124,7 +123,7 @@ def payload
   }.deep_symbolize_keys
 end
 
-==> corrected/044.rb 182 <==
+==> corrected/049.rb 182 <==
 add_to_git_repo(
   initial_repo,
   "about.json" =>
@@ -134,18 +133,18 @@ add_to_git_repo(
       .to_json,
 )
 
-==> corrected/045.rb 141 <==
+==> corrected/050.rb 141 <==
 def run
   (date_columns + candidate_columns).uniq
                                       .select { |column_name| castable?(column_name) }
 end
 
-==> corrected/047.rb 23 <==
+==> corrected/052.rb 23 <==
 (a +
  b).foo
      .bar
 
-==> corrected/048.rb 43 <==
+==> corrected/053.rb 43 <==
 { a: 1, b: 2 }.keys
                 .first
 

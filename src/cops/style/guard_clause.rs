@@ -202,19 +202,20 @@ fn branch_first<'pr>(s: &Option<StatementsNode<'pr>>) -> Option<Node<'pr>> {
 }
 
 impl GuardClause {
-    fn accepted_form(cx: &Cx, p: &If, ending: bool, parent_assignment: bool) -> bool {
+    fn accepted_form(cx: &Cx, p: &If, ending: bool, parent_assignment: bool, endless_body: bool) -> bool {
         if p.modifier() || p.ternary || p.elsif_conditional || assigned_lvar_used_in_if_branch(p) {
             return true;
         }
         let accepted_if = if ending { p.has_else() } else { !p.has_else() || p.elsif };
         let l = p.pred.location();
-        accepted_if || cx.src.line_of(l.start_offset()) != cx.src.line_of(l.end_offset()) || parent_assignment
+        accepted_if || cx.src.line_of(l.start_offset()) != cx.src.line_of(l.end_offset()) || parent_assignment || endless_body
     }
 
-    fn check_ending_body(cx: &mut Cx, stmts: &[Node], parent_is_if_with_cond: Option<&Node>) {
+    fn check_ending_body(cx: &mut Cx, stmts: &[Node], parent_is_if_with_cond: Option<&Node>, endless: bool) {
         let Some(last) = stmts.last() else { return };
         let Some(p) = if_parts(last) else { return };
-        if Self::accepted_form(cx, &p, true, false) {
+        // endless_method_body?: the `if` is the whole body of an endless def.
+        if Self::accepted_form(cx, &p, true, false, endless && stmts.len() == 1) {
             return;
         }
         let min = cx.cfg.positive_int("MinBodyLength", 1);
@@ -235,7 +236,7 @@ impl GuardClause {
         Self::register(cx, &p, "return".into(), p.inverse, None);
         if let Some(s) = &p.if_branch {
             let inner: Vec<Node> = s.body().iter().collect();
-            Self::check_ending_body(cx, &inner, Some(&p.pred));
+            Self::check_ending_body(cx, &inner, Some(&p.pred), false);
         }
     }
 
@@ -254,8 +255,9 @@ impl GuardClause {
                 return;
             }
             example = format!("{kw} {cond}; {scope}; end");
-            replacement = Some(format!("{kw} {cond}\n  {scope}\nend"));
+            replacement = Some(format!("{kw} {cond}\n  {scope}"));
         }
+        let multiline = replacement.is_some();
         let replacement = replacement.unwrap_or_else(|| example.clone());
         let (ks, ke) = rng(&p.keyword);
         let msg = format!("Use a guard clause (`{example}`) instead of wrapping the code inside a conditional expression.");
@@ -267,8 +269,10 @@ impl GuardClause {
         let else_kw = p.else_kw.as_ref().map(rng);
         let if_range = p.if_branch.as_ref().map(|s| rng(&s.location()));
         let else_range = p.else_branch.as_ref().map(|s| rng(&s.location()));
-        let if_heredoc = find_heredoc(branch_first(&p.if_branch));
-        let else_heredoc = if if_heredoc.is_none() { find_heredoc(branch_first(&p.else_branch)) } else { None };
+        // guard_branch / leave_branch: the else branch holds the guard only for `guard == :else`.
+        let (guard_branch, leave_range) =
+            if guard == Some(false) { (&p.else_branch, if_range) } else { (&p.if_branch, else_range) };
+        let heredoc = find_heredoc(branch_first(guard_branch));
         let remove_range = match guard {
             Some(true) => if_range,
             Some(false) => else_range,
@@ -282,13 +286,19 @@ impl GuardClause {
             if let Some((s, e)) = then_kw {
                 c.replace(s, e, "\n");
             }
+            // close_multiline_guard_clause
+            if multiline {
+                match heredoc {
+                    Some(h) if guard.is_some() => c.insert_after(h.0, h.1, "\nend"),
+                    _ => c.insert_after(ks, pred_end, "\nend"),
+                }
+            }
             let Some((es, ee)) = end_kw else { return };
             let whole = |c: &mut Corrector, (s, e): R| {
                 let (s, e) = range_by_whole_lines(text, s, e, true);
                 c.remove(s, e);
             };
-            let heredoc = if_heredoc.map(|h| (h, else_range)).or(else_heredoc.map(|h| (h, if_range)));
-            if let Some((h, leave)) = heredoc {
+            if let Some((h, leave)) = heredoc.map(|h| (h, leave_range)) {
                 whole(c, (es, ee));
                 if !has_else {
                     return;
@@ -331,8 +341,9 @@ impl Cop for GuardClause {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         match kind::of(node) {
             kind::DEF_NODE => {
-                if let Some(stmts) = body_statements(node.as_def_node().unwrap().body()) {
-                    Self::check_ending_body(cx, &stmts, None);
+                let def = node.as_def_node().unwrap();
+                if let Some(stmts) = body_statements(def.body()) {
+                    Self::check_ending_body(cx, &stmts, None, def.equal_loc().is_some());
                 }
             }
             kind::CALL_NODE => {
@@ -342,7 +353,7 @@ impl Cop for GuardClause {
                 }
                 let Some(block) = call.block().and_then(|b| b.as_block_node()) else { return };
                 if let Some(stmts) = body_statements(block.body()) {
-                    Self::check_ending_body(cx, &stmts, None);
+                    Self::check_ending_body(cx, &stmts, None, false);
                 }
             }
             _ => {
@@ -350,8 +361,10 @@ impl Cop for GuardClause {
                     return;
                 }
                 let p = if_parts(node).unwrap();
-                let parent_assignment = helpers::parser_parent::parser_parent(cx.ancestors).is_some_and(is_assignment);
-                if Self::accepted_form(cx, &p, false, parent_assignment) {
+                let parent = helpers::parser_parent::parser_parent(cx.ancestors);
+                let parent_assignment = parent.is_some_and(is_assignment);
+                let endless_body = parent.and_then(|n| n.as_def_node()).is_some_and(|d| d.equal_loc().is_some());
+                if Self::accepted_form(cx, &p, false, parent_assignment, endless_body) {
                     return;
                 }
                 let (guard, kw, is_if) = if let Some(g) = guard_clause(&p.if_branch, cx.src) {

@@ -28,12 +28,31 @@ if condition
   obj&.do_something foo:
 end
 
-==> 002.rb 31 <==
+==> 002.rb 80 <==
+def do_something(foo)
+  if condition
+    return obj.do_something foo:
+  end
+end
+
+==> 003.rb 47 <==
+if condition
+  bar = obj.do_something foo:
+end
+
+==> 004.rb 88 <==
+def do_something(foo)
+  if condition
+    return obj.do_something( bar, foo: )
+  end
+end
+
+==> 005.rb 31 <==
 if condition
   obj.(attr:)
 end
 
-==> 003.rb 32 <==
+==> 006.rb 32 <==
 if condition
   obj&.(attr:)
 end

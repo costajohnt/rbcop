@@ -1,0 +1,11 @@
+==> offenses exit=1 84 <==
+000.rb:2:6: C: [Correctable] Style/Lambda: Use the `lambda` method for all lambdas.
+
+==> autocorrect exit=0 82 <==
+000.rb:2:6: C: [Corrected] Style/Lambda: Use the `lambda` method for all lambdas.
+
+==> corrected/000.rb 50 <==
+case value
+in ^(lambda { _1.positive? }) => x
+end
+

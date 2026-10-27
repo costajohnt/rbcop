@@ -22,19 +22,70 @@ run if cond &&
 [
 ] if inner if outer
 
-==> 004.rb 30 <==
+==> 004.rb 61 <==
+items.each { |item|
+  foo(item, <<~EOS) } if cond
+  text
+EOS
+
+==> 005.rb 46 <==
+foo(bar,
+    baz) if cond?(<<~EOS)
+  text
+EOS
+
+==> 006.rb 70 <==
+foo(bar,
+    <<~A, <<~B) if cond
+  #{baz(<<~C)}
+    c
+  C
+A
+  b
+B
+qux
+
+==> 007.rb 66 <==
+items.each do |item|
+  foo(item, <<-EOS)
+  text
+  EOS
+end if cond
+
+==> 008.rb 63 <==
+items.each do |item|
+  foo(item, <<EOS)
+  text
+EOS
+end if cond
+
+==> 009.rb 68 <==
+items.each do |item|
+  foo(item, <<~EOS)
+    text
+  EOS
+end if cond
+
+==> 010.rb 65 <==
+items.each do |item|
+  foo(item, "a
+  b", %q(c
+  d))
+end if cond
+
+==> 011.rb 30 <==
 {
   result: run
 } unless cond
 
-==> 005.rb 16 <==
+==> 012.rb 16 <==
 run unless cond
 
-==> 006.rb 36 <==
+==> 013.rb 36 <==
 run unless cond &&
            cond2
 
-==> 007.rb 30 <==
+==> 014.rb 30 <==
 [
 ] unless inner unless outer
 

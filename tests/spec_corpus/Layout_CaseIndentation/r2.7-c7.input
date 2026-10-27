@@ -1,0 +1,31 @@
+==> .rubocop.yml 223 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/CaseIndentation:
+  EnforcedStyle: case
+  IndentOneStep: true
+Layout/IndentationStyle:
+  EnforcedStyle: tabs
+
+==> 000.rb 22 <==
+case a
+when b
+  c
+end
+
+==> 001.rb 25 <==
+	case a
+	when b
+		c
+	end
+
+==> 002.rb 27 <==
+	case a
+		when b
+			c
+	end
+

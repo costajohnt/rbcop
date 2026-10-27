@@ -1,4 +1,14 @@
-==> offenses exit=0 0 <==
+==> offenses exit=1 430 <==
+006.rb:1:14: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+007.rb:1:19: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
 
-==> autocorrect exit=0 0 <==
+==> autocorrect exit=0 426 <==
+006.rb:1:14: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+007.rb:1:19: C: [Corrected] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Wrap the expression in parentheses to keep the current behavior, as it is part of a larger expression.
+
+==> corrected/006.rb 22 <==
+def foo(a) = (1 if a)
+
+==> corrected/007.rb 27 <==
+def self.foo(a) = (1 if a)
 

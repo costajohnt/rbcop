@@ -27,20 +27,31 @@ impl Cop for NilComparison {
             // (send _ {:== :===} nil)
             ((name == "==" || name == "===") && args.len() == 1 && args[0].as_nil_node().is_some(), "Prefer the use of the `nil?` predicate.")
         };
-        let Some(sel) = call.message_loc().filter(|_| hit) else { return };
-        let recv = call.receiver().unwrap();
-        let (start, end) = send_range(&call);
         let comparison = cx.cfg.str("EnforcedStyle") == Some("comparison");
-        let wrap = comparison && helpers::parser_parent::parser_parent(cx.ancestors).is_some_and(operator_expression);
+        let recv = call.receiver().unwrap();
+        let recv_end = recv.location().end_offset();
+        // comment_before_dot?: `processed_source.contains_comment?` is line-based.
+        if comparison
+            && let Some(dot) = call.call_operator_loc()
+            && helpers::comments_help::contains_comments(cx, cx.src.line_of(recv_end), cx.src.line_of(dot.start_offset()) + 1)
+        {
+            return;
+        }
+        let Some(sel) = call.message_loc().filter(|_| hit) else { return };
+        let (start, end) = send_range(&call);
+        let parent = helpers::parser_parent::parser_parent(cx.ancestors);
+        // receiver_of_parent?: `node.parent&.call_type? && node.parent.receiver.equal?(node)`
+        let receiver_of_parent = parent.and_then(|p| p.as_call_node()).and_then(|p| p.receiver()).is_some_and(|r| {
+            let l = r.location();
+            (l.start_offset(), l.end_offset()) == (start, end)
+        });
+        let wrap = comparison && (parent.is_some_and(operator_expression) || receiver_of_parent);
         let recv_is_operator = operator_expression(&recv);
         let recv_text = node_text(&recv);
-        let recv_end = recv.location().end_offset();
-        let dot = call.call_operator_loc().map(|d| d.start_offset());
+
         cx.add_fix(sel.start_offset(), sel.end_offset(), msg, |c| {
             if comparison {
-                if let Some(dot) = dot {
-                    c.replace(dot, sel.end_offset(), " == nil");
-                }
+                c.replace(recv_end, sel.end_offset(), " == nil");
                 if wrap {
                     c.wrap(start, end, "(", ")");
                 }

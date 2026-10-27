@@ -95,42 +95,76 @@ test = begin
   end
 end
 
-==> 024.rb 40 <==
+==> 024.rb 18 <==
+test = 1
+p test()
+
+==> 025.rb 35 <==
+if cond then test = 2 end
+p test()
+
+==> 026.rb 27 <==
+def foo(test)
+  test()
+end
+
+==> 027.rb 33 <==
+test = 1
+items.each { p test() }
+
+==> 028.rb 25 <==
+p test() -1
+p test() [1]
+
+==> 029.rb 18 <==
+p test()
+test = 1
+
+==> 030.rb 45 <==
+def foo
+  test = 1
+end
+
+def bar
+  test()
+end
+
+==> 031.rb 40 <==
 A = [1, 2]
 def c; A; end
 
 c[2], x = c()
 
-==> 025.rb 22 <==
+==> 032.rb 22 <==
 obj.method ||= func()
 
-==> 026.rb 22 <==
+==> 033.rb 22 <==
 obj.method &&= func()
 
-==> 027.rb 21 <==
+==> 034.rb 21 <==
 obj.method += func()
 
-==> 028.rb 36 <==
+==> 035.rb 36 <==
 Hash.new()
 Array.new()
 String.new()
 
-==> 029.rb 11 <==
+==> 036.rb 11 <==
 _a = c(d.e)
-==> 030.rb 12 <==
+==> 037.rb 12 <==
 _a = c(d())
 
-==> 031.rb 20 <==
+==> 038.rb 20 <==
 _a, _b, _c = d(e())
 
-==> 032.rb 20 <==
+==> 039.rb 20 <==
 _a, _b, _c = d&.e()
 
-==> 033.rb 26 <==
+==> 040.rb 26 <==
 h = {}
 h[:a], h[:b] = c()
 
-==> 034.rb 25 <==
+==> 041.rb 25 <==
 a = []
 a[0], a[10] = c()
 

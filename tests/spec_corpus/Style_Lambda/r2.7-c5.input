@@ -1,0 +1,16 @@
+==> .rubocop.yml 224 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Style/Lambda:
+  EnforcedStyle: literal
+Layout/SpaceInLambdaLiteral:
+  Enabled: false
+  EnforcedStyle: require_space
+
+==> 000.rb 24 <==
+f = lambda { |x, y| x }
+

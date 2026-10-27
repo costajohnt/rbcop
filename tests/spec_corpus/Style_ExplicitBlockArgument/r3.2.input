@@ -1,0 +1,13 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+
+==> 000.rb 43 <==
+def my_method(*, **)
+  super { yield }
+end
+

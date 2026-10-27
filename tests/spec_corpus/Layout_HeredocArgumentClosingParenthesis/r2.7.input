@@ -45,14 +45,30 @@ outer_method(-> {
   CODE
 })
 
-==> 005.rb 58 <==
+==> 005.rb 79 <==
+outer_method(
+  -> {
+    inner_method.chain(<<~CODE)
+      code
+    CODE
+  }
+)
+
+==> 006.rb 71 <==
+outer_method( -> {
+  inner_method.chain( <<~CODE )
+    code
+  CODE
+} )
+
+==> 007.rb 58 <==
 baz(bar(foo.bar(<<-SQL, <<-NOSQL)))
   foo
 SQL
   bar
 NOSQL
 
-==> 006.rb 51 <==
+==> 008.rb 51 <==
 foo.bar(
   <<-SQL, <<-NOSQL)
   foo
@@ -60,7 +76,7 @@ SQL
   bar
 NOSQL
 
-==> 007.rb 85 <==
+==> 009.rb 85 <==
 foo.bar(<<~TEXT,
     Lots of
     Lovely
@@ -69,54 +85,71 @@ foo.bar(<<~TEXT,
   some_arg: { foo: "bar" }
 )
 
-==> 008.rb 40 <==
+==> 010.rb 40 <==
 foo(bar do
   baz.quux <<~EOS
   EOS
 end)
 
-==> 009.rb 59 <==
+==> 011.rb 59 <==
 foo(unless condition
   bar.baz(<<~EOS)
     text
   EOS
 end)
 
-==> 010.rb 65 <==
+==> 012.rb 65 <==
 foo(unless condition
   bar(baz.quux(<<~EOS))
     text
   EOS
 end)
 
-==> 011.rb 31 <==
+==> 013.rb 31 <==
 foo.bar(<<-SQL, 123)
   foo
 SQL
 
-==> 012.rb 31 <==
+==> 014.rb 31 <==
 foo.bar(123, <<-SQL)
   foo
 SQL
 
-==> 013.rb 31 <==
+==> 015.rb 31 <==
 foo.bar(foo: <<-SQL)
   foo
 SQL
 
-==> 014.rb 42 <==
+==> 016.rb 49 <==
+foo.bar(
+  baz: <<-SQL,
+    foo
+  SQL
+  qux: 1
+)
+
+==> 017.rb 64 <==
+foo.bar(:baz,
+  foo: {
+    qux: <<-SQL,
+      foo
+    SQL
+  }
+)
+
+==> 018.rb 42 <==
 foo.bar(
   <<-SQL.tr("z", "t"))
   baz
 SQL
 
-==> 015.rb 41 <==
+==> 019.rb 41 <==
 foo.bar(
   <<-TEXT.foo)
   foobarbaz
 TEXT
 
-==> 016.rb 43 <==
+==> 020.rb 43 <==
 foo.bar(
   <<-TEXT
   foobarbaz
@@ -124,19 +157,19 @@ TEXT
 .foo
 )
 
-==> 017.rb 27 <==
+==> 021.rb 27 <==
 foo&.bar(<<-SQL)
   foo
 SQL
 
-==> 018.rb 49 <==
+==> 022.rb 49 <==
 foo&.bar(<<-SQL, <<-NOSQL)
   foo
 SQL
   bar
 NOSQL
 
-==> 019.rb 104 <==
+==> 023.rb 104 <==
 do_something(
   Model
     .foo&.bar(<<~CODE)
@@ -146,7 +179,7 @@ do_something(
       code
     CODE
 
-==> 020.rb 105 <==
+==> 024.rb 105 <==
 do_something(
   Model
     .foo&.bar(<<~CODE)
@@ -156,21 +189,37 @@ do_something(
       code
     CODE
 
-==> 021.rb 68 <==
+==> 025.rb 68 <==
 outer_method(-> {
   inner_method&.chain(<<~CODE)
     code
   CODE
 })
 
-==> 022.rb 59 <==
+==> 026.rb 80 <==
+outer_method(
+  -> {
+    inner_method&.chain(<<~CODE)
+      code
+    CODE
+  }
+)
+
+==> 027.rb 72 <==
+outer_method( -> {
+  inner_method&.chain( <<~CODE )
+    code
+  CODE
+} )
+
+==> 028.rb 59 <==
 baz(bar(foo&.bar(<<-SQL, <<-NOSQL)))
   foo
 SQL
   bar
 NOSQL
 
-==> 023.rb 52 <==
+==> 029.rb 52 <==
 foo&.bar(
   <<-SQL, <<-NOSQL)
   foo
@@ -178,7 +227,7 @@ SQL
   bar
 NOSQL
 
-==> 024.rb 86 <==
+==> 030.rb 86 <==
 foo&.bar(<<~TEXT,
     Lots of
     Lovely
@@ -187,54 +236,71 @@ foo&.bar(<<~TEXT,
   some_arg: { foo: "bar" }
 )
 
-==> 025.rb 41 <==
+==> 031.rb 41 <==
 foo(bar do
   baz&.quux <<~EOS
   EOS
 end)
 
-==> 026.rb 60 <==
+==> 032.rb 60 <==
 foo(unless condition
   bar&.baz(<<~EOS)
     text
   EOS
 end)
 
-==> 027.rb 66 <==
+==> 033.rb 66 <==
 foo(unless condition
   bar(baz&.quux(<<~EOS))
     text
   EOS
 end)
 
-==> 028.rb 32 <==
+==> 034.rb 32 <==
 foo&.bar(<<-SQL, 123)
   foo
 SQL
 
-==> 029.rb 32 <==
+==> 035.rb 32 <==
 foo&.bar(123, <<-SQL)
   foo
 SQL
 
-==> 030.rb 32 <==
+==> 036.rb 32 <==
 foo&.bar(foo: <<-SQL)
   foo
 SQL
 
-==> 031.rb 43 <==
+==> 037.rb 50 <==
+foo&.bar(
+  baz: <<-SQL,
+    foo
+  SQL
+  qux: 1
+)
+
+==> 038.rb 65 <==
+foo&.bar(:baz,
+  foo: {
+    qux: <<-SQL,
+      foo
+    SQL
+  }
+)
+
+==> 039.rb 43 <==
 foo&.bar(
   <<-SQL.tr("z", "t"))
   baz
 SQL
 
-==> 032.rb 42 <==
+==> 040.rb 42 <==
 foo&.bar(
   <<-TEXT.foo)
   foobarbaz
 TEXT
 
-==> 033.rb 44 <==
+==> 041.rb 44 <==
 foo&.bar(
   <<-TEXT
   foobarbaz
@@ -242,67 +308,67 @@ TEXT
 .foo
 )
 
-==> 034.rb 27 <==
+==> 042.rb 27 <==
 foo.bar(<<-SQL
   foo
 SQL
 )
 
-==> 035.rb 31 <==
+==> 043.rb 31 <==
 foo.bar(<<~SQL
   foo
 SQL
 ).baz
 
-==> 036.rb 32 <==
+==> 044.rb 32 <==
 foo.bar(<<~SQL
   foo
 SQL
 )&.baz
 
-==> 037.rb 32 <==
+==> 045.rb 32 <==
 foo.bar(<<~SQL,
   foo
 SQL
 ).baz
 
-==> 038.rb 32 <==
+==> 046.rb 32 <==
 foo.bar(foo: <<-SQL
   foo
 SQL
 )
 
-==> 039.rb 32 <==
+==> 047.rb 32 <==
 foo(foo.bar(<<-SQL)
   foo
 SQL
 )
 
-==> 040.rb 27 <==
+==> 048.rb 27 <==
 foo.bar(<<~SQL
   foo
 SQL
 )
 
-==> 041.rb 28 <==
+==> 049.rb 28 <==
 foo.bar(<<-SQL,
   foo
 SQL
 )
 
-==> 042.rb 32 <==
+==> 050.rb 32 <==
 foo.bar(<<-SQL    ,
   foo
 SQL
 )
 
-==> 043.rb 33 <==
+==> 051.rb 33 <==
 foo.bar(<<-SQL    ,
   foo,
 SQL
 )
 
-==> 044.rb 49 <==
+==> 052.rb 49 <==
 foo.bar(<<-SQL, <<-NOSQL
   foo
 SQL
@@ -310,7 +376,7 @@ SQL
 NOSQL
 )
 
-==> 045.rb 68 <==
+==> 053.rb 68 <==
 foo.bar(<<-SQL, <<-NOSQL
   foo
 SQL
@@ -318,31 +384,31 @@ SQL
 NOSQL
 ).baz(123).quux(456)
 
-==> 046.rb 32 <==
+==> 054.rb 32 <==
 foo.bar(<<-SQL, 123
   foo
 SQL
 )
 
-==> 047.rb 32 <==
+==> 055.rb 32 <==
 foo.bar(123, <<-SQL
   foo
 SQL
 )
 
-==> 048.rb 32 <==
+==> 056.rb 32 <==
 Foo.new(123, <<-SQL
   foo
 SQL
 )
 
-==> 049.rb 38 <==
+==> 057.rb 38 <==
 raise Foo.new(123, <<-SQL
   foo
 SQL
 )
 
-==> 050.rb 62 <==
+==> 058.rb 62 <==
 bar(
   foo.bar(123, <<-SQL
     foo
@@ -352,7 +418,7 @@ bar(
   789,
 )
 
-==> 051.rb 65 <==
+==> 059.rb 65 <==
 [
   foo.bar(123, <<-SQL
     foo
@@ -362,7 +428,7 @@ bar(
   789,
 ]
 
-==> 052.rb 102 <==
+==> 060.rb 102 <==
 [
   foo.bar(123, <<-SQL, 456, 789, <<-NOSQL,
     foo
@@ -374,7 +440,7 @@ bar(
   789,
 ]
 
-==> 053.rb 122 <==
+==> 061.rb 122 <==
 [
   foo(foo(foo.bar(123, <<-SQL, 456, 789, <<-NOSQL), 456), 400,
     foo
@@ -386,19 +452,19 @@ bar(
   789,
 ]
 
-==> 054.rb 61 <==
+==> 062.rb 61 <==
 query.order(foo.bar(<<-SQL,
   foo
 SQL
                     ))
 
-==> 055.rb 60 <==
+==> 063.rb 60 <==
 query.order(foo.bar(<<-SQL)
   foo
 SQL
                     )
 
-==> 056.rb 70 <==
+==> 064.rb 70 <==
 query.joins({
   foo: []
 }).order(foo.bar(<<-SQL),
@@ -406,7 +472,7 @@ query.joins({
 SQL
         )
 
-==> 057.rb 52 <==
+==> 065.rb 52 <==
 foo.bar(
   <<-SQL, <<-NOSQL
   foo
@@ -415,67 +481,67 @@ SQL
 NOSQL
 )
 
-==> 058.rb 28 <==
+==> 066.rb 28 <==
 foo&.bar(<<-SQL
   foo
 SQL
 )
 
-==> 059.rb 32 <==
+==> 067.rb 32 <==
 foo&.bar(<<~SQL
   foo
 SQL
 ).baz
 
-==> 060.rb 33 <==
+==> 068.rb 33 <==
 foo&.bar(<<~SQL
   foo
 SQL
 )&.baz
 
-==> 061.rb 33 <==
+==> 069.rb 33 <==
 foo&.bar(<<~SQL,
   foo
 SQL
 ).baz
 
-==> 062.rb 33 <==
+==> 070.rb 33 <==
 foo&.bar(foo: <<-SQL
   foo
 SQL
 )
 
-==> 063.rb 33 <==
+==> 071.rb 33 <==
 foo(foo&.bar(<<-SQL)
   foo
 SQL
 )
 
-==> 064.rb 28 <==
+==> 072.rb 28 <==
 foo&.bar(<<~SQL
   foo
 SQL
 )
 
-==> 065.rb 29 <==
+==> 073.rb 29 <==
 foo&.bar(<<-SQL,
   foo
 SQL
 )
 
-==> 066.rb 33 <==
+==> 074.rb 33 <==
 foo&.bar(<<-SQL    ,
   foo
 SQL
 )
 
-==> 067.rb 34 <==
+==> 075.rb 34 <==
 foo&.bar(<<-SQL    ,
   foo,
 SQL
 )
 
-==> 068.rb 50 <==
+==> 076.rb 50 <==
 foo&.bar(<<-SQL, <<-NOSQL
   foo
 SQL
@@ -483,7 +549,7 @@ SQL
 NOSQL
 )
 
-==> 069.rb 69 <==
+==> 077.rb 69 <==
 foo&.bar(<<-SQL, <<-NOSQL
   foo
 SQL
@@ -491,19 +557,19 @@ SQL
 NOSQL
 ).baz(123).quux(456)
 
-==> 070.rb 33 <==
+==> 078.rb 33 <==
 foo&.bar(<<-SQL, 123
   foo
 SQL
 )
 
-==> 071.rb 33 <==
+==> 079.rb 33 <==
 foo&.bar(123, <<-SQL
   foo
 SQL
 )
 
-==> 072.rb 63 <==
+==> 080.rb 63 <==
 bar(
   foo&.bar(123, <<-SQL
     foo
@@ -513,7 +579,7 @@ bar(
   789,
 )
 
-==> 073.rb 66 <==
+==> 081.rb 66 <==
 [
   foo&.bar(123, <<-SQL
     foo
@@ -523,7 +589,7 @@ bar(
   789,
 ]
 
-==> 074.rb 103 <==
+==> 082.rb 103 <==
 [
   foo&.bar(123, <<-SQL, 456, 789, <<-NOSQL,
     foo
@@ -535,7 +601,7 @@ bar(
   789,
 ]
 
-==> 075.rb 123 <==
+==> 083.rb 123 <==
 [
   foo(foo(foo&.bar(123, <<-SQL, 456, 789, <<-NOSQL), 456), 400,
     foo
@@ -547,19 +613,19 @@ bar(
   789,
 ]
 
-==> 076.rb 62 <==
+==> 084.rb 62 <==
 query.order(foo&.bar(<<-SQL,
   foo
 SQL
                     ))
 
-==> 077.rb 61 <==
+==> 085.rb 61 <==
 query.order(foo&.bar(<<-SQL)
   foo
 SQL
                     )
 
-==> 078.rb 71 <==
+==> 086.rb 71 <==
 query.joins({
   foo: []
 }).order(foo&.bar(<<-SQL),
@@ -567,7 +633,7 @@ query.joins({
 SQL
         )
 
-==> 079.rb 53 <==
+==> 087.rb 53 <==
 foo&.bar(
   <<-SQL, <<-NOSQL
   foo

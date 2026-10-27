@@ -457,12 +457,24 @@ impl<'pr> Visit<'pr> for Scopes<'pr> {
     }
 }
 
+/// ReparsedEquivalence#verified_subset (1.92): the whole group if it verifies with one reparse,
+/// else each half bisected the same way, down to single items. Appends the verified items in order.
+fn verified_subset<T: Copy>(group: &[T], verify: &dyn Fn(&[T]) -> bool, out: &mut Vec<T>) {
+    if verify(group) {
+        out.extend_from_slice(group);
+    } else if group.len() > 1 {
+        let (a, b) = group.split_at(group.len() / 2);
+        verified_subset(a, verify, out);
+        verified_subset(b, verify, out);
+    }
+}
+
 /// (scope range, normalized original, items).
 type Group<T> = (Option<(usize, usize)>, String, Vec<T>);
 
 /// `verified_by_reparse(items, oversized: :verify)` with `apply_reparse_correction` as `apply`:
 /// items grouped by reparse scope, a group kept whole when all its corrections together parse
-/// equivalently, else item by item. `range` gives an item's range; returns the verified items.
+/// equivalently, else bisected (`verified_subset`). `range` gives an item's range; returns the verified items.
 pub fn verified_by_reparse<T: Copy>(
     src: &Source,
     program: &Node,
@@ -596,13 +608,36 @@ fn verified_by_reparse_opts<T: Copy>(
             let fragment = scope.map_or(raw_text, |(s, e)| &text[s..e]);
             fragment.chars().count() > MAX_VERIFICATION_FRAGMENT_SIZE
         };
-        if (report_oversized && too_large()) || (group.len() > 1 && verify(group, *scope, original)) {
+        if report_oversized && too_large() {
             out.extend(group.iter().copied());
         } else if group.len().saturating_mul(text.len()) <= MAX_ITEM_BY_ITEM_WORK {
-            out.extend(group.iter().copied().filter(|&i| verify(&[i], *scope, original)));
+            verified_subset(group, &|g: &[T]| verify(g, *scope, original), &mut out);
+        } else if verify(group, *scope, original) {
+            out.extend(group.iter().copied());
         }
         // ponytail: past MAX_ITEM_BY_ITEM_WORK a failed group reports nothing (RuboCop would
-        // rewrite and reparse once per item); deliberate bound for untrusted input.
+        // bisect it); deliberate bound for untrusted input.
     }
     out
+}
+
+#[cfg(test)]
+mod tests {
+    use super::verified_subset;
+    use std::cell::Cell;
+
+    #[test]
+    fn verified_subset_bisects() {
+        // A group verifies when it holds no 3 and not both 1 and 2 (they interact).
+        let calls = Cell::new(0);
+        let ok = |g: &[i32]| {
+            calls.set(calls.get() + 1);
+            !g.contains(&3) && !(g.contains(&1) && g.contains(&2))
+        };
+        let mut out = vec![];
+        verified_subset(&[0, 1, 2, 3, 4, 5, 6, 7], &ok, &mut out);
+        // [0..8] fails; [0,1,2,3] fails; [0,1] ok; [2,3] fails; [2] ok; [3] fails; [4..8] ok.
+        assert_eq!(out, [0, 1, 2, 4, 5, 6, 7]);
+        assert_eq!(calls.get(), 7);
+    }
 }

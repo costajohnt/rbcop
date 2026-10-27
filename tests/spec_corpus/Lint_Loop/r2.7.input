@@ -16,7 +16,13 @@ begin
   something
 end until test
 
-==> 002.rb 41 <==
+==> 002.rb 31 <==
+begin something end while test
+
+==> 003.rb 31 <==
+begin something end until test
+
+==> 004.rb 41 <==
 loop do; one; two; break unless test; end
-==> 003.rb 37 <==
+==> 005.rb 37 <==
 loop do; one; two; break if test; end

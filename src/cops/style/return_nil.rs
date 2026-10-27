@@ -65,10 +65,22 @@ impl Cop for ReturnNil {
         let is_return = args.is_empty();
         let is_return_nil = args.len() == 1 && args[0].as_nil_node().is_some();
         let style_return = cx.cfg.str("EnforcedStyle") != Some("return_nil");
+        // top_level_return?: no block, lambda or def around it (a call owning a block counts as
+        // its parser `block`, also from its receiver or arguments).
+        let top_level = !anc.iter().any(|n| {
+            matches!(kind::of(n), kind::DEF_NODE | kind::LAMBDA_NODE | kind::BLOCK_NODE)
+                || n.as_call_node().is_some_and(|c| c.block().is_some_and(|b| b.as_block_node().is_some()))
+        });
         let (ok, msg, corrected) = if style_return {
             (!is_return_nil, "Use `return` instead of `return nil`.", "return")
         } else {
-            (!is_return, "Use `return nil` instead of `return`.", "return nil")
+            let parens = helpers::parser_parent::parser_parent(anc)
+                .is_some_and(helpers::parser_parent::return_needs_parentheses);
+            (
+                !is_return || top_level,
+                "Use `return nil` instead of `return`.",
+                if parens { "(return nil)" } else { "return nil" },
+            )
         };
         if ok {
             return;

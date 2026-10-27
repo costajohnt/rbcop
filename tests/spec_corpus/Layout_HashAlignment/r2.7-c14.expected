@@ -8,15 +8,15 @@
 002.rb:2:5: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
 004.rb:2:7: C: [Corrected] Layout/HashAlignment: Align keyword splats with the rest of the hash if it spans more than one line.
 
-==> corrected/000.rb 27 <==
-foo :ab => 1,
-    :c  => 2
+==> corrected/000.rb 21 <==
+foo ab: 1,
+    c:  2
 
-==> corrected/002.rb 35 <==
-foo :ab => 1,
-    :c  => 2, **rest
+==> corrected/002.rb 29 <==
+foo ab: 1,
+    c:  2, **rest
 
-==> corrected/004.rb 24 <==
-foo :a => 1,
+==> corrected/004.rb 21 <==
+foo a: 1,
     **rest
 

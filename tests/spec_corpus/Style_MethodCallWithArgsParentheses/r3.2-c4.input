@@ -14,12 +14,17 @@ def foo(*)
   do_something
 end
 
-==> 001.rb 26 <==
+==> 001.rb 32 <==
+def foo(*)
+  bar(*, baz: 1)
+end
+
+==> 002.rb 26 <==
 def foo(**)
   foo(**)
 end
 
-==> 002.rb 39 <==
+==> 003.rb 39 <==
 def foo(**)
   foo(name: value, **)
 end

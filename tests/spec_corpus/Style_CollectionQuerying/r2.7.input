@@ -14,54 +14,84 @@ x
   .count
   .positive?
 
-==> 002.rb 26 <==
+==> 002.rb 12 <==
+x.count > 0
+
+==> 003.rb 13 <==
+x.count != 0
+
+==> 004.rb 14 <==
+x.count.zero?
+
+==> 005.rb 13 <==
+x.count == 0
+
+==> 006.rb 19 <==
+(x.count > 0).to_s
+
+==> 007.rb 13 <==
+x.count == 1
+
+==> 008.rb 23 <==
+x.count.positive?.to_s
+
+==> 009.rb 19 <==
+!x.count.positive?
+
+==> 010.rb 25 <==
+x.count.positive? | true
+
+==> 011.rb 26 <==
 x.count(&:foo?).positive?
 
-==> 003.rb 39 <==
+==> 012.rb 39 <==
 x.count { |item| item.foo? }.positive?
 
-==> 004.rb 30 <==
+==> 013.rb 30 <==
 x.count { _1.foo? }.positive?
 
-==> 005.rb 30 <==
+==> 014.rb 30 <==
 x.count { it.foo? }.positive?
 
-==> 006.rb 27 <==
+==> 015.rb 27 <==
 x&.count(&:foo?).positive?
 
-==> 007.rb 19 <==
+==> 016.rb 19 <==
 x&.count.positive?
 
-==> 008.rb 20 <==
+==> 017.rb 20 <==
 x.count(&:foo?) > 0
 
-==> 009.rb 21 <==
+==> 018.rb 21 <==
 x.count(&:foo?) != 0
 
-==> 010.rb 22 <==
+==> 019.rb 22 <==
 x.count(&:foo?).zero?
 
-==> 011.rb 21 <==
+==> 020.rb 21 <==
 x.count(&:foo?) == 0
 
-==> 012.rb 21 <==
+==> 021.rb 21 <==
 x.count(&:foo?) == 1
 
-==> 013.rb 20 <==
+==> 022.rb 20 <==
 x.count(&:foo?) > 1
 
-==> 014.rb 23 <==
+==> 023.rb 12 <==
+x.count > 1
+
+==> 024.rb 23 <==
 x.count(foo).positive?
 
-==> 015.rb 28 <==
+==> 025.rb 28 <==
 x.count(foo: bar).positive?
 
-==> 016.rb 19 <==
+==> 026.rb 19 <==
 x.count&.positive?
 
-==> 017.rb 8 <==
+==> 027.rb 8 <==
 x.count
 
-==> 018.rb 16 <==
+==> 028.rb 16 <==
 count.positive?
 

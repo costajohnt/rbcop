@@ -1,10 +1,10 @@
 ==> offenses exit=1 118 <==
-002.rb:1:4: C: [Correctable] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `if`.
+004.rb:1:4: C: [Correctable] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `if`.
 
 ==> autocorrect exit=0 116 <==
-002.rb:1:4: C: [Corrected] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `if`.
+004.rb:1:4: C: [Corrected] Style/ParenthesesAroundCondition: Don't use parentheses around the condition of an `if`.
 
-==> corrected/002.rb 18 <==
+==> corrected/004.rb 18 <==
 if test == 10
 end
 

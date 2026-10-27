@@ -1,18 +1,36 @@
-==> offenses exit=1 868 <==
+==> offenses exit=1 2132 <==
 000.rb:2:1: W: [Correctable] Lint/MisplacedMagicComment: The `encoding` magic comment is ignored unless placed on the first line (or below a shebang on the first line).
 001.rb:2:1: W: [Correctable] Lint/MisplacedMagicComment: The `encoding` magic comment is ignored unless placed on the first line (or below a shebang on the first line).
 002.rb:3:1: W: [Correctable] Lint/MisplacedMagicComment: The `encoding` magic comment is ignored unless placed on the first line (or below a shebang on the first line).
-003.rb:2:1: W: [Correctable] Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
-004.rb:1:15: W: [Correctable] Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
-005.rb:2:1: W: Lint/MisplacedMagicComment: A magic comment above a shebang renders the shebang ineffective.
+003.rb:3:1: W: Lint/MisplacedMagicComment: The `encoding` magic comment is ignored unless placed on the first line (or below a shebang on the first line).
+004.rb:4:1: W: [Correctable] Lint/MisplacedMagicComment: The `encoding` magic comment is ignored unless placed on the first line (or below a shebang on the first line).
+005.rb:2:1: W: [Correctable] Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
+006.rb:1:15: W: [Correctable] Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
+007.rb:3:1: W: [Correctable] Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
+008.rb:4:1: W: [Correctable] Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
+009.rb:2:1: W: [Correctable] Lint/MisplacedMagicComment: The `encoding` magic comment is ignored unless placed on the first line (or below a shebang on the first line).
+009.rb:4:1: W: Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
+010.rb:2:1: W: Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
+010.rb:3:1: W: [Correctable] Lint/MisplacedMagicComment: The `encoding` magic comment is ignored unless placed on the first line (or below a shebang on the first line).
+011.rb:3:1: W: [Correctable] Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
+012.rb:2:1: W: Lint/MisplacedMagicComment: A magic comment above a shebang renders the shebang ineffective.
 
-==> autocorrect exit=1 858 <==
+==> autocorrect exit=1 2134 <==
 000.rb:2:1: W: [Corrected] Lint/MisplacedMagicComment: The `encoding` magic comment is ignored unless placed on the first line (or below a shebang on the first line).
 001.rb:2:1: W: [Corrected] Lint/MisplacedMagicComment: The `encoding` magic comment is ignored unless placed on the first line (or below a shebang on the first line).
 002.rb:3:1: W: [Corrected] Lint/MisplacedMagicComment: The `encoding` magic comment is ignored unless placed on the first line (or below a shebang on the first line).
-003.rb:2:1: W: [Corrected] Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
-004.rb:1:15: W: [Corrected] Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
-005.rb:2:1: W: Lint/MisplacedMagicComment: A magic comment above a shebang renders the shebang ineffective.
+003.rb:3:1: W: Lint/MisplacedMagicComment: The `encoding` magic comment is ignored unless placed on the first line (or below a shebang on the first line).
+004.rb:4:1: W: [Corrected] Lint/MisplacedMagicComment: The `encoding` magic comment is ignored unless placed on the first line (or below a shebang on the first line).
+005.rb:2:1: W: [Corrected] Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
+006.rb:1:15: W: [Corrected] Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
+007.rb:3:1: W: [Corrected] Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
+008.rb:4:1: W: [Corrected] Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
+009.rb:2:1: W: [Corrected] Lint/MisplacedMagicComment: The `encoding` magic comment is ignored unless placed on the first line (or below a shebang on the first line).
+009.rb:4:1: W: [Corrected] Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
+010.rb:3:1: W: [Corrected] Lint/MisplacedMagicComment: The `encoding` magic comment is ignored unless placed on the first line (or below a shebang on the first line).
+010.rb:3:1: W: [Corrected] Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
+011.rb:3:1: W: [Corrected] Lint/MisplacedMagicComment: The `frozen_string_literal` magic comment is ignored after any code.
+012.rb:2:1: W: Lint/MisplacedMagicComment: A magic comment above a shebang renders the shebang ineffective.
 
 ==> corrected/000.rb 60 <==
 # encoding: ascii-8bit
@@ -30,11 +48,43 @@ puts 'hello'
 # Documentation comment
 puts 'hello'
 
-==> corrected/003.rb 44 <==
+==> corrected/004.rb 59 <==
+#!/usr/bin/env ruby
+# -*- coding: binary -*-
+require 'foo'
+
+==> corrected/005.rb 44 <==
 # frozen_string_literal: true
 require 'foo'
 
-==> corrected/004.rb 44 <==
+==> corrected/006.rb 44 <==
+# frozen_string_literal: true
+require 'foo'
+
+==> corrected/007.rb 67 <==
+# encoding: ascii-8bit
+# frozen_string_literal: true
+require 'foo'
+
+==> corrected/008.rb 87 <==
+#!/usr/bin/env ruby
+# encoding: ascii-8bit
+# frozen_string_literal: true
+require 'foo'
+
+==> corrected/009.rb 91 <==
+# encoding: ascii-8bit
+# frozen_string_literal: true
+# Documentation comment
+require 'foo'
+
+==> corrected/010.rb 67 <==
+# encoding: ascii-8bit
+# frozen_string_literal: true
+require 'foo'
+
+==> corrected/011.rb 64 <==
+#!/usr/bin/env ruby
 # frozen_string_literal: true
 require 'foo'
 

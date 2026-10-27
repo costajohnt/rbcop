@@ -1,4 +1,4 @@
-==> .rubocop.yml 155 <==
+==> .rubocop.yml 193 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -6,31 +6,11 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 2.7
 Style/HashLookupMethod:
-  EnforcedStyle: fetch
+  EnforcedStyle: brackets
+Style/FetchEnvVar:
+  Enabled: true
 
-==> 000.rb 10 <==
-hash[key]
-
-==> 001.rb 22 <==
-some_method.hash[key]
-
-==> 002.rb 15 <==
-hash.fetch(key)
-==> 003.rb 24 <==
-hash.fetch(key, default)
-==> 004.rb 27 <==
-hash.fetch(key) { default }
-==> 005.rb 11 <==
-array[1, 2]
-==> 006.rb 19 <==
-result[:foo][:bar]
-
-==> 007.rb 14 <==
-hash&.[](key)
-
-==> 008.rb 9 <==
-a[b[:y]]
-
-==> 009.rb 10 <==
-a[:x][:y]
+==> 000.rb 32 <==
+ENV.fetch(key)
+::ENV.fetch(key)
 

@@ -11,73 +11,128 @@ Layout/LineLength:
   Enabled: true
   Max: 80
 
-==> 000.rb 47 <==
+==> 000.rb 27 <==
+def my_method
+  x if y
+end
+
+==> 001.rb 32 <==
+def my_method
+  super and x
+end
+
+==> 002.rb 36 <==
+def my_method(x)
+  x => Integer
+end
+
+==> 003.rb 37 <==
+def my_method?(x)
+  x in Integer
+end
+
+==> 004.rb 40 <==
+def my_method
+  begin x end while y
+end
+
+==> 005.rb 40 <==
+def my_method
+  begin x end until y
+end
+
+==> 006.rb 47 <==
 def my_method
   x
 rescue StandardError
   y
 end
 
-==> 001.rb 33 <==
+==> 007.rb 33 <==
 def my_method
   x
 ensure
   y
 end
 
-==> 002.rb 30 <==
+==> 008.rb 30 <==
 def a
   def b
     1
   end
 end
 
-==> 003.rb 20 <==
+==> 009.rb 39 <==
+def my_method foo, bar
+  foo + bar
+end
+
+==> 010.rb 33 <==
+def self.my_method foo
+  foo
+end
+
+==> 011.rb 20 <==
 def my_method() = x
 
-==> 004.rb 25 <==
+==> 012.rb 25 <==
 def self.my_method() = x
 
-==> 005.rb 24 <==
+==> 013.rb 24 <==
 def my_method(a, b) = x
 
-==> 006.rb 66 <==
+==> 014.rb 66 <==
 def my_method = x.foo
                  .bar
                  .baz
 
-==> 007.rb 18 <==
+==> 015.rb 18 <==
 def my_method
 end
 
-==> 008.rb 34 <==
+==> 016.rb 34 <==
 def my_method
   x.foo
   x.bar
 end
 
-==> 009.rb 47 <==
+==> 017.rb 47 <==
 def my_method
   begin
     foo && bar
   end
 end
 
-==> 010.rb 51 <==
+==> 018.rb 36 <==
+def my_method
+  foo, bar = 1, 2
+end
+
+==> 019.rb 32 <==
+def my_method
+  @foo = 1, 2
+end
+
+==> 020.rb 32 <==
+def my_method
+  @foo = *bar
+end
+
+==> 021.rb 51 <==
 def my_method
   <<~HEREDOC
     hello
   HEREDOC
 end
 
-==> 011.rb 56 <==
+==> 022.rb 56 <==
 def my_method
   puts <<~HEREDOC
     hello
   HEREDOC
 end
 
-==> 012.rb 57 <==
+==> 023.rb 57 <==
 def my_method
   <<~HEREDOC
     foo
@@ -85,56 +140,67 @@ def my_method
   HEREDOC
 end
 
-==> 013.rb 55 <==
+==> 024.rb 55 <==
 def my_method
   <<~`HEREDOC`
     command
   HEREDOC
 end
 
-==> 014.rb 22 <==
+==> 025.rb 22 <==
 def my_method
   x
 end
 
-==> 015.rb 27 <==
+==> 026.rb 27 <==
 def self.my_method
   x
 end
 
-==> 016.rb 28 <==
+==> 027.rb 28 <==
 def self::my_method
   x
 end
 
-==> 017.rb 28 <==
+==> 028.rb 28 <==
 def my_method(a, b)
   x
 end
 
-==> 018.rb 42 <==
+==> 029.rb 42 <==
 def my_method
   x.foo
    .bar
    .baz
 end
 
-==> 019.rb 48 <==
+==> 030.rb 48 <==
 def my_method=(arg)
   x.foo
    .bar
    .baz
 end
 
-==> 020.rb 93 <==
+==> 031.rb 93 <==
 def my_method
   'this_string_ends_at_column_75_________________________________________'
 end
 
-==> 021.rb 48 <==
+==> 032.rb 48 <==
 def my_method(a, b)
   x.foo
    .bar
    .baz
+end
+
+==> 033.rb 40 <==
+def my_method
+  x( # comment
+    1)
+end
+
+==> 034.rb 34 <==
+def my_method a # comment
+  x
 end
 

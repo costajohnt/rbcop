@@ -1,0 +1,20 @@
+==> .rubocop.yml 161 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 4.0
+Style/EndlessMethod:
+  EnforcedStyle: require_always
+
+==> 000.rb 37 <==
+private def foo(x)
+  bar :baz, x
+end
+
+==> 001.rb 36 <==
+qux 1, def foo(x)
+  bar :baz, x
+end
+

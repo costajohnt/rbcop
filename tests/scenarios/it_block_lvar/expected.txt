@@ -75,7 +75,7 @@ a.rb:50:10: C: [Correctable] Style/NumericPredicate: Use `it.size.positive?` ins
 a.rb:50:10: C: [Correctable] Style/ZeroLengthPredicate: Use `!empty?` instead of `size > 0`.
 a.rb:50:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
 a.rb:51:10: C: [Correctable] Style/NumericPredicate: Use `it.count.positive?` instead of `it.count > 0`.
-a.rb:51:13: C: [Correctable] Style/CollectionQuerying: Use `any?` instead.
+a.rb:51:13: C: [Correctable] Style/CollectionQuerying: Use `!empty?` instead.
 a.rb:51:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
 a.rb:52:13: C: [Correctable] Style/HashEachMethods: Use `each_key` instead of `keys.each`.
 a.rb:52:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
@@ -129,7 +129,7 @@ multiple_comparison.rb:11:1: C: Style/NumberedParameters: Avoid using numbered p
 multiple_comparison.rb:12:21: C: [Correctable] Style/NumericPredicate: Use `_1.zero?` instead of `_1 == 0`.
 multiple_comparison.rb:12:3: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
 multiple_comparison.rb:12:6: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.
-multiple_comparison.rb:16:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+multiple_comparison.rb:16:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
 multiple_comparison.rb:17:21: C: [Correctable] Style/NumericPredicate: Use `it.zero?` instead of `it == 0`.
 multiple_comparison.rb:17:3: C: [Correctable] Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
 multiple_comparison.rb:17:6: C: [Correctable] Style/MultipleComparison: Avoid comparing a variable with multiple items in a conditional, use `Array#include?` instead.

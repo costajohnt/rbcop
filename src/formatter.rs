@@ -11,7 +11,7 @@ pub mod yaml;
 
 pub use todo::DEFAULT_MAXIMUM_EXCLUSION_ITEMS;
 
-pub use report::{json, ruby_platform};
+pub use report::{hash_for_offense, hash_for_problems, json, problem_counts, ruby_platform};
 
 use crate::config::{Resolved, relative_path};
 use crate::cop::{Offense, Severity};
@@ -70,6 +70,21 @@ pub struct Off {
     pub justification: Option<String>,
     /// `Offense::edits` (`--lsp`).
     pub edits: Option<Vec<(usize, usize, String)>>,
+    /// Offense#corrections, located: `edits` in lines and characters.
+    pub corrections: Vec<Edit>,
+}
+
+/// Offense::Correction with JSONFormatter#hash_for_edit_range's location: 1-based lines,
+/// 1-based start column, end column as `real_last_column`; positions in characters.
+#[derive(Clone, Debug)]
+pub struct Edit {
+    pub start_line: usize,
+    pub start_column: usize,
+    pub last_line: usize,
+    pub last_column: usize,
+    pub begin_pos: usize,
+    pub end_pos: usize,
+    pub replacement: String,
 }
 
 impl Off {
@@ -227,8 +242,27 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                     global: true,
                     justification: o.justification.clone(),
                     edits: None,
+                    corrections: Vec::new(),
                 };
             }
+            let corrections = o
+                .edits
+                .iter()
+                .flatten()
+                .map(|(b, e, replacement)| {
+                    let (start_line, column, _, b) = p.pos(*b);
+                    let (last_line, last_column, _, e) = p.pos(*e);
+                    Edit {
+                        start_line,
+                        start_column: column + 1,
+                        last_line,
+                        last_column: if last_column == 0 { 1 } else { last_column },
+                        begin_pos: p.count(0, b),
+                        end_pos: p.count(0, e),
+                        replacement: replacement.clone(),
+                    }
+                })
+                .collect();
             Off {
                 severity: o.severity,
                 cop: o.cop,
@@ -243,6 +277,7 @@ pub fn offenses(text: &str, list: &[Offense], message: impl Fn(&Offense) -> Stri
                 global: false,
                 justification: o.justification.clone(),
                 edits: o.edits.clone(),
+                corrections,
             }
         })
         .collect();
@@ -277,47 +312,55 @@ pub fn annotate(cfg: &Resolved, cop: &str, message: &str, a: Annotate) -> String
         m = format!("{m} {d}");
     }
     if a.display_style_guide || all.truthy("DisplayStyleGuide") {
-        let mut urls = Vec::new();
-        if let Some(url) = cop_cfg.str("StyleGuide").filter(|u| !u.is_empty()) {
-            // MessageAnnotator.style_guide_urls: resolved once per process for each StyleGuide
-            // value, so the first offense with an anchor fixes its base for every cop (#508).
-            // ponytail: filled in report order (files, then sorted offenses); RuboCop fills it as
-            // offenses are added, disabled ones and correcting passes included.
-            static RESOLVED: std::sync::Mutex<Vec<(String, String)>> = std::sync::Mutex::new(Vec::new());
-            let mut resolved = RESOLVED.lock().unwrap_or_else(|e| e.into_inner());
-            let full = match resolved.iter().find(|(k, _)| k == url) {
-                Some((_, full)) => full.clone(),
-                None => {
-                    let dept = cop.rsplit_once('/').map_or("", |(d, _)| d);
-                    let base = cfg
-                        .hash
-                        .map(dept)
-                        .and_then(|d| d.str("StyleGuideBaseURL").map(String::from))
-                        .or_else(|| all.str("StyleGuideBaseURL").map(String::from));
-                    let full = match base {
-                        Some(b) if !b.is_empty() => uri_join(&b, url),
-                        _ => url.to_string(),
-                    };
-                    resolved.push((url.to_string(), full.clone()));
-                    full
-                }
-            };
-            urls.push(full);
-        }
-        for key in ["References", "Reference"] {
-            match cop_cfg.get(key) {
-                Some(crate::config::value::Value::Seq(items)) => {
-                    urls.extend(items.iter().filter_map(|v| v.as_string()).filter(|s| !s.is_empty()))
-                }
-                Some(v) => urls.extend(v.as_string().filter(|s| !s.is_empty())),
-                None => {}
-            }
-        }
+        let urls = cop_urls(cfg, cop);
         if !urls.is_empty() {
             m = format!("{m} ({})", urls.join(", "));
         }
     }
     m
+}
+
+/// MessageAnnotator#urls: the style guide URL, then References / Reference.
+pub fn cop_urls(cfg: &Resolved, cop: &str) -> Vec<String> {
+    let all = cfg.all_cops();
+    let cop_cfg = cfg.hash.map(cop).cloned().unwrap_or_default();
+    let mut urls = Vec::new();
+    if let Some(url) = cop_cfg.str("StyleGuide").filter(|u| !u.is_empty()) {
+        // MessageAnnotator.style_guide_urls: resolved once per process for each StyleGuide
+        // value, so the first offense with an anchor fixes its base for every cop (#508).
+        // ponytail: filled in report order (files, then sorted offenses); RuboCop fills it as
+        // offenses are added, disabled ones and correcting passes included.
+        static RESOLVED: std::sync::Mutex<Vec<(String, String)>> = std::sync::Mutex::new(Vec::new());
+        let mut resolved = RESOLVED.lock().unwrap_or_else(|e| e.into_inner());
+        let full = match resolved.iter().find(|(k, _)| k == url) {
+            Some((_, full)) => full.clone(),
+            None => {
+                let dept = cop.rsplit_once('/').map_or("", |(d, _)| d);
+                let base = cfg
+                    .hash
+                    .map(dept)
+                    .and_then(|d| d.str("StyleGuideBaseURL").map(String::from))
+                    .or_else(|| all.str("StyleGuideBaseURL").map(String::from));
+                let full = match base {
+                    Some(b) if !b.is_empty() => uri_join(&b, url),
+                    _ => url.to_string(),
+                };
+                resolved.push((url.to_string(), full.clone()));
+                full
+            }
+        };
+        urls.push(full);
+    }
+    for key in ["References", "Reference"] {
+        match cop_cfg.get(key) {
+            Some(crate::config::value::Value::Seq(items)) => {
+                urls.extend(items.iter().filter_map(|v| v.as_string()).filter(|s| !s.is_empty()))
+            }
+            Some(v) => urls.extend(v.as_string().filter(|s| !s.is_empty())),
+            None => {}
+        }
+    }
+    urls
 }
 
 /// URI.join for the shapes style guide links take.
@@ -377,8 +420,6 @@ pub struct Ctx {
     pub pwd_config: Arc<Resolved>,
     /// The default configuration (ConfigLoader.default_configuration).
     pub default_config: Arc<Resolved>,
-    /// Whether io/console is loaded in RuboCop (it is once ruby-progressbar is: fuubar/offenses).
-    pub io_console: bool,
     pub stdout_tty: bool,
 }
 
@@ -426,6 +467,10 @@ pub struct FileOut<'a> {
     pub path: &'a Path,
     pub offenses: Vec<Off>,
     pub config: &'a Resolved,
+    /// Formatter#file_problems: the cop errors (and an infinite correction loop) and the cop
+    /// warnings the file raised, as printed.
+    pub errors: &'a [String],
+    pub warnings: &'a [String],
 }
 
 pub trait Formatter {
@@ -742,7 +787,7 @@ pub fn docs_url(config: &crate::config::Resolved, cop: &str) -> Option<String> {
         None => return None,
     };
     let ext = dept_cfg.str("DocumentationExtension").unwrap_or(".html");
-    let fragment: String = cop.to_lowercase().chars().filter(char::is_ascii_lowercase).collect();
+    let fragment = cop.to_lowercase().replace('/', "");
     Some(format!("{base}/cops_{}{ext}#{fragment}", dept.to_lowercase().replace('/', "_")))
 }
 

@@ -168,15 +168,25 @@ foo = 1
 bar = 2
 puts bar
 
-==> 024.rb 10 <==
+==> 024.rb 17 <==
+foo = 1,
+      2
+
+==> 025.rb 11 <==
+foo = *bar
+
+==> 026.rb 13 <==
+foo = [1, 2]
+
+==> 027.rb 10 <==
 foo ||= 1
 
-==> 025.rb 24 <==
+==> 028.rb 24 <==
 def foo
   bar &&= 1
 end
 
-==> 026.rb 61 <==
+==> 029.rb 61 <==
 def some_method
   foo = 1
   bar = 2
@@ -184,21 +194,21 @@ def some_method
   puts bar
 end
 
-==> 027.rb 51 <==
+==> 030.rb 51 <==
 def some_method
   foo = 1
   puts foo
   foo = 3
 end
 
-==> 028.rb 51 <==
+==> 031.rb 51 <==
 def some_method
   foo = 1
   foo = 3
   puts foo
 end
 
-==> 029.rb 285 <==
+==> 032.rb 285 <==
 def const_name(node)
   const_names = []
   const_node = node
@@ -214,7 +224,7 @@ def const_name(node)
   const_names.reverse.join('::')
 end
 
-==> 030.rb 72 <==
+==> 033.rb 72 <==
 def some_method
   foo = 1
   puts foo
@@ -223,26 +233,26 @@ def some_method
   end
 end
 
-==> 031.rb 24 <==
+==> 034.rb 24 <==
 1.times do |i; foo|
 end
 
-==> 032.rb 34 <==
+==> 035.rb 34 <==
 1.times do |i; foo|
   foo = 2
 end
 
-==> 033.rb 27 <==
+==> 036.rb 27 <==
 do_something { foo += _1 }
 
-==> 034.rb 51 <==
+==> 037.rb 51 <==
 def some_method
   while true
     foo = 1
   end
 end
 
-==> 035.rb 108 <==
+==> 038.rb 108 <==
 def some_method
   total = 0
   foo = 0
@@ -255,7 +265,7 @@ def some_method
   total
 end
 
-==> 036.rb 104 <==
+==> 039.rb 104 <==
 def some_method
   total = 0
   foo = 0
@@ -268,7 +278,7 @@ def some_method
   total
 end
 
-==> 037.rb 85 <==
+==> 040.rb 85 <==
 def some_method
   obj = {}
 
@@ -277,7 +287,17 @@ def some_method
   end
 end
 
-==> 038.rb 64 <==
+==> 041.rb 77 <==
+def some_method
+  foo = 1
+  foo = 2
+  bar {
+    foo = 3
+    puts foo
+  }
+end
+
+==> 042.rb 64 <==
 def some_method
   foo = 1
   foo = 2
@@ -286,7 +306,41 @@ def some_method
   }
 end
 
-==> 039.rb 103 <==
+==> 043.rb 49 <==
+prev = nil
+[1, 2, 3].each { |item| prev = item }
+
+==> 044.rb 54 <==
+value = nil
+callback = -> { value = 1 }
+callback.call
+
+==> 045.rb 40 <==
+prev = nil
+[1, 2, 3].each { prev = _1 }
+
+==> 046.rb 72 <==
+found = false
+items.each { |item| found = true if item.ok? }
+puts found
+
+==> 047.rb 84 <==
+value = nil
+writer = -> { value = 1 }
+reader = -> { value }
+writer.call
+reader.call
+
+==> 048.rb 38 <==
+value = nil
+foo { value = 1 }
+binding
+
+==> 049.rb 51 <==
+_prev = nil
+[1, 2, 3].each { |item| _prev = item }
+
+==> 050.rb 103 <==
 def some_method
   if baz
     foo = 1
@@ -300,7 +354,7 @@ def some_method
   foo
 end
 
-==> 040.rb 114 <==
+==> 051.rb 114 <==
 def some_method
   case baz
   when 1
@@ -315,7 +369,7 @@ def some_method
   foo
 end
 
-==> 041.rb 140 <==
+==> 052.rb 140 <==
 def some_method
   changed = false
 
@@ -330,7 +384,7 @@ def some_method
   puts changed
 end
 
-==> 042.rb 215 <==
+==> 053.rb 215 <==
 def some_method
   changed = false
 
@@ -350,7 +404,7 @@ def some_method
   puts changed
 end
 
-==> 043.rb 106 <==
+==> 054.rb 106 <==
 def some_method
   total = 0
   foo = 0
@@ -363,7 +417,7 @@ def some_method
   total
 end
 
-==> 044.rb 76 <==
+==> 055.rb 76 <==
 while true
   def some_method
     foo = 1
@@ -372,7 +426,7 @@ while true
   end
 end
 
-==> 045.rb 76 <==
+==> 056.rb 76 <==
 foo = 1
 
 while foo < 100
@@ -382,14 +436,14 @@ while foo < 100
   end
 end
 
-==> 046.rb 54 <==
+==> 057.rb 54 <==
 def some_method(flag)
   if flag
     foo = 1
   end
 end
 
-==> 047.rb 73 <==
+==> 058.rb 73 <==
 def some_method(flag)
   if flag
     foo = 1
@@ -399,7 +453,7 @@ def some_method(flag)
   foo
 end
 
-==> 048.rb 72 <==
+==> 059.rb 72 <==
 def some_method(flag)
   foo = 1
 
@@ -410,7 +464,7 @@ def some_method(flag)
   foo
 end
 
-==> 049.rb 100 <==
+==> 060.rb 100 <==
 def while(param)
   ret = 1
 
@@ -422,7 +476,7 @@ def while(param)
   ret
 end
 
-==> 050.rb 110 <==
+==> 061.rb 110 <==
 def post_while(param)
   ret = 1
 
@@ -434,7 +488,7 @@ def post_while(param)
   ret
 end
 
-==> 051.rb 100 <==
+==> 062.rb 100 <==
 def until(param)
   ret = 1
 
@@ -446,7 +500,7 @@ def until(param)
   ret
 end
 
-==> 052.rb 111 <==
+==> 063.rb 111 <==
 def post_until(param)
   ret = 1
 
@@ -458,7 +512,7 @@ def post_until(param)
   ret
 end
 
-==> 053.rb 100 <==
+==> 064.rb 100 <==
 def for(param)
   ret = 1
 
@@ -470,7 +524,7 @@ def for(param)
   ret
 end
 
-==> 054.rb 80 <==
+==> 065.rb 80 <==
 def some_method(flag)
   if flag
     foo = 2
@@ -481,7 +535,7 @@ def some_method(flag)
   foo
 end
 
-==> 055.rb 78 <==
+==> 066.rb 78 <==
 def some_method(flag)
   foo = 1
 
@@ -491,7 +545,7 @@ def some_method(flag)
   end
 end
 
-==> 056.rb 86 <==
+==> 067.rb 86 <==
 def some_method(flag)
   if flag
     foo = 2
@@ -501,7 +555,7 @@ def some_method(flag)
   end
 end
 
-==> 057.rb 98 <==
+==> 068.rb 98 <==
 def some_method(flag)
   foo = 1
 
@@ -513,14 +567,14 @@ def some_method(flag)
   end
 end
 
-==> 058.rb 38 <==
+==> 069.rb 38 <==
 if flag
   foo = 1
 else
   puts foo
 end
 
-==> 059.rb 118 <==
+==> 070.rb 118 <==
 def some_method(flag_a, flag_b)
   foo = 1
 
@@ -532,7 +586,7 @@ def some_method(flag_a, flag_b)
   end
 end
 
-==> 060.rb 145 <==
+==> 071.rb 145 <==
 def some_method(flag_a, flag_b)
   foo = 1
 
@@ -547,7 +601,7 @@ def some_method(flag_a, flag_b)
   end
 end
 
-==> 061.rb 98 <==
+==> 072.rb 98 <==
 def some_method(flag_a, flag_b)
   if flag_a
     foo = 1
@@ -558,197 +612,197 @@ def some_method(flag_a, flag_b)
   end
 end
 
-==> 062.rb 58 <==
+==> 073.rb 58 <==
 def some_method(flag)
   foo = 1 unless foo
   puts foo
 end
 
-==> 063.rb 47 <==
+==> 074.rb 47 <==
 def some_method(flag)
   foo = 1 unless foo
 end
 
-==> 064.rb 84 <==
+==> 075.rb 84 <==
 def some_method
   (foo = do_something_returns_object_or_nil) && (foo = 1)
   foo
 end
 
-==> 065.rb 97 <==
+==> 076.rb 97 <==
 def some_method
   foo = 1
   (foo = do_something_returns_object_or_nil) && do_something
   foo
 end
 
-==> 066.rb 84 <==
+==> 077.rb 84 <==
 def some_method
   foo = 1
   do_something_returns_object_or_nil && foo = 2
   foo
 end
 
-==> 067.rb 68 <==
+==> 078.rb 68 <==
 def some_method(bar)
   foo = 1
   bar &&= (foo = 2)
   [foo, bar]
 end
 
-==> 068.rb 68 <==
+==> 079.rb 68 <==
 def some_method(bar)
   foo = 1
   bar ||= (foo = 2)
   [foo, bar]
 end
 
-==> 069.rb 67 <==
+==> 080.rb 67 <==
 def some_method(bar)
   foo = 1
   bar += (foo = 2)
   [foo, bar]
 end
 
-==> 070.rb 76 <==
+==> 081.rb 76 <==
 def some_method
   foo = [1, 2]
   foo = foo.map { |i| i + 1 }
   puts foo
 end
 
-==> 071.rb 41 <==
+==> 082.rb 41 <==
 foo = [1, 2]
 foo = foo.map { |i| i + 1 }
 
-==> 072.rb 47 <==
+==> 083.rb 47 <==
 def some_method
   foo = 1
   foo += 1
   foo
 end
 
-==> 073.rb 81 <==
+==> 084.rb 81 <==
 def some_method
   foo = do_something_returns_object_or_nil
   foo ||= 1
   foo
 end
 
-==> 074.rb 53 <==
+==> 085.rb 53 <==
 def some_method
   foo = 1
   foo += foo = 2
   foo
 end
 
-==> 075.rb 38 <==
+==> 086.rb 38 <==
 def some_method
   foo ||= 1
   foo
 end
 
-==> 076.rb 75 <==
+==> 087.rb 75 <==
 def some_method
   foo = do_something_returns_object_or_nil
   foo ||= 1
 end
 
-==> 077.rb 95 <==
+==> 088.rb 95 <==
 def some_method
   foo = do_something_returns_object_or_nil
   foo ||= 1
   some_return_value
 end
 
-==> 078.rb 57 <==
+==> 089.rb 57 <==
 def some_method
   foo, bar = do_something
   puts foo
 end
 
-==> 079.rb 50 <==
+==> 090.rb 50 <==
 def some_method
   a, b = func(c = 3)
   [a, b]
 end
 
-==> 080.rb 53 <==
+==> 091.rb 53 <==
 def some_method
   a, b = func(c = 3)
   [a, b, c]
 end
 
-==> 081.rb 47 <==
+==> 092.rb 47 <==
 def some_method
   foo = bar = do_something
 end
 
-==> 082.rb 47 <==
+==> 093.rb 47 <==
 def some_method
   foo = foo = do_something
 end
 
-==> 083.rb 48 <==
+==> 094.rb 48 <==
 def some_method
   foo = -bar = do_something
 end
 
-==> 084.rb 39 <==
+==> 095.rb 39 <==
 def some_method
   foo = 1, bar = 2
 end
 
-==> 085.rb 77 <==
+==> 096.rb 77 <==
 def some_method
   foo = 1
   foo, bar = do_something(foo)
   puts foo, bar
 end
 
-==> 086.rb 69 <==
+==> 097.rb 69 <==
 def some_method
   foo, (bar, baz) = do_something
   puts foo, bar
 end
 
-==> 087.rb 81 <==
+==> 098.rb 81 <==
 def some_method
   foo, (bar, (baz, qux)) = do_something
   puts foo, bar, baz
 end
 
-==> 088.rb 70 <==
+==> 099.rb 70 <==
 def some_method
   (foo, bar), *baz = do_something
   puts foo, bar
 end
 
-==> 089.rb 70 <==
+==> 100.rb 70 <==
 def some_method
   foo, (*bar, baz) = do_something
   puts foo, baz
 end
 
-==> 090.rb 58 <==
+==> 101.rb 58 <==
 def some_method
   foo, *bar = do_something
   puts foo
 end
 
-==> 091.rb 51 <==
+==> 102.rb 51 <==
 begin
   a = (a || 0) + 1
   puts a
 end while a <= 2
 
-==> 092.rb 50 <==
+==> 103.rb 50 <==
 begin
   a = (a || 0) + 1
   puts a
 end until a > 2
 
-==> 093.rb 59 <==
+==> 104.rb 59 <==
 begin
   do_something
   foo = true
@@ -756,7 +810,7 @@ rescue
   do_anything
 end
 
-==> 094.rb 163 <==
+==> 105.rb 163 <==
 begin
   do_something
   foo = :in_begin
@@ -770,7 +824,7 @@ end
 
 puts foo
 
-==> 095.rb 159 <==
+==> 106.rb 159 <==
 begin
   status = :initial
   connect_sometimes_fails!
@@ -783,7 +837,7 @@ end
 
 puts status
 
-==> 096.rb 145 <==
+==> 107.rb 145 <==
 begin
   status = :initial
   connect_sometimes_fails!
@@ -794,7 +848,7 @@ rescue
   puts status
 end
 
-==> 097.rb 145 <==
+==> 108.rb 145 <==
 begin
   status = :initial
   connect_sometimes_fails!
@@ -805,7 +859,118 @@ ensure
   puts status
 end
 
-==> 098.rb 81 <==
+==> 109.rb 249 <==
+def some_method(items)
+  step = :load
+  begin
+    unless items.empty?
+      step = :prepare
+      prepare(items)
+      step = :process
+      process(items)
+    end
+  rescue StandardError => e
+    puts "failed during #{step}: #{e.message}"
+  end
+end
+
+==> 110.rb 249 <==
+def some_method(items, flag)
+  step = :load
+  begin
+    unless items.empty?
+      if flag
+        step = :prepare
+        prepare(items)
+        step = :process
+        process(items)
+      end
+    end
+  rescue StandardError
+    puts step
+  end
+end
+
+==> 111.rb 251 <==
+def some_method(flag)
+  status = :initial
+  begin
+    begin
+      if flag
+        status = :connected
+        fetch_sometimes_fails!
+        status = :fetched
+      end
+    ensure
+      cleanup
+    end
+  rescue StandardError
+    puts status
+  end
+end
+
+==> 112.rb 214 <==
+def some_method(flag)
+  status = :initial
+  begin
+    if flag
+      status = :connected
+      fetch_sometimes_fails!
+      status = :fetched
+    end
+  rescue StandardError
+    do_something
+  end
+
+  puts status
+end
+
+==> 113.rb 184 <==
+def some_method(flag)
+  status = :initial
+  begin
+    if flag
+      status = :connected
+      fetch_sometimes_fails!
+      status = :fetched
+    end
+  ensure
+    puts status
+  end
+end
+
+==> 114.rb 195 <==
+def some_method(flag)
+  begin
+    if flag
+      status = :connected
+      fetch_sometimes_fails!
+      status = :fetched
+    end
+    puts status
+  rescue StandardError
+    do_something
+  end
+end
+
+==> 115.rb 264 <==
+def some_method(items, flag)
+  begin
+    items.each do
+      status = :initial
+      if flag
+        status = :connected
+        fetch_sometimes_fails!
+        status = :fetched
+      end
+      puts status
+    end
+  rescue StandardError
+    do_something
+  end
+end
+
+==> 116.rb 81 <==
 foo = false
 
 begin
@@ -817,7 +982,7 @@ end
 
 puts foo
 
-==> 099.rb 102 <==
+==> 117.rb 102 <==
 foo = false
 
 begin
@@ -831,7 +996,7 @@ end
 
 puts foo
 
-==> 100.rb 89 <==
+==> 118.rb 89 <==
 begin
   do_something
 rescue
@@ -843,7 +1008,7 @@ end
 
 puts foo
 
-==> 101.rb 92 <==
+==> 119.rb 92 <==
 retried = false
 
 begin
@@ -854,7 +1019,7 @@ rescue
   retry
 end
 
-==> 102.rb 90 <==
+==> 120.rb 90 <==
 retry_count = 0
 
 begin
@@ -864,7 +1029,7 @@ rescue
   retry
 end
 
-==> 103.rb 189 <==
+==> 121.rb 189 <==
 begin
   do_something
   foo = :in_begin
@@ -880,7 +1045,7 @@ end
 
 puts foo
 
-==> 104.rb 90 <==
+==> 122.rb 90 <==
 begin
   do_something
 rescue FirstError => error
@@ -888,67 +1053,67 @@ rescue SecondError
   p error # => nil
 end
 
-==> 105.rb 41 <==
+==> 123.rb 41 <==
 begin
   do_something
 rescue => error
 end
 
-==> 106.rb 43 <==
+==> 124.rb 43 <==
 def some_method(foo)
   foo = 1
   super
 end
 
-==> 107.rb 43 <==
+==> 125.rb 43 <==
 def some_method(bar)
   foo = 1
   super
 end
 
-==> 108.rb 53 <==
+==> 126.rb 53 <==
 def some_method(foo, bar)
   foo = 1
   super(bar)
 end
 
-==> 109.rb 22 <==
+==> 127.rb 22 <==
 /(?<foo>w+)/ =~ 'FOO'
 
-==> 110.rb 45 <==
+==> 128.rb 45 <==
 def some_method
   /(?<foo>\w+)/ =~ 'FOO'
 end
 
-==> 111.rb 76 <==
+==> 129.rb 76 <==
 def some_method
   /(?<foo>w+)(?<bar> +)/ =~ 'FOO'
   puts foo
   puts bar
 end
 
-==> 112.rb 75 <==
+==> 130.rb 75 <==
 def some_method
   foo = 'some string'
   /(?<foo>w+)/ =~ foo
   puts foo
 end
 
-==> 113.rb 67 <==
+==> 131.rb 67 <==
 def some_method
   foo in { bar: bar }
   baz { bar -= 1 }
   foo
 end
 
-==> 114.rb 67 <==
+==> 132.rb 67 <==
 def some_method
   foo in { bar: bar }
   baz { qux -= 1 }
   foo
 end
 
-==> 115.rb 57 <==
+==> 133.rb 57 <==
 def some_method
   begin
     foo = 1
@@ -956,7 +1121,7 @@ def some_method
   puts foo
 end
 
-==> 116.rb 68 <==
+==> 134.rb 68 <==
 def some_method
   foo = 1
   1.times do |foo|
@@ -964,85 +1129,85 @@ def some_method
   end
 end
 
-==> 117.rb 52 <==
+==> 135.rb 52 <==
 def some_method
   _foo = 1
   bar = 2
   puts bar
 end
 
-==> 118.rb 25 <==
+==> 136.rb 25 <==
 def some_method(arg)
 end
 
-==> 119.rb 31 <==
+==> 137.rb 31 <==
 def some_method(arg = nil)
 end
 
-==> 120.rb 28 <==
+==> 138.rb 28 <==
 def some_method(&block)
 end
 
-==> 121.rb 27 <==
+==> 139.rb 27 <==
 def some_method(*args)
 end
 
-==> 122.rb 33 <==
+==> 140.rb 33 <==
 def some_method(name: value)
 end
 
-==> 123.rb 68 <==
+==> 141.rb 68 <==
 def some_method(name: value, **rest_keywords)
   p rest_keywords
 end
 
-==> 124.rb 50 <==
+==> 142.rb 50 <==
 def some_method(name: value, **rest_keywords)
 end
 
-==> 125.rb 37 <==
+==> 143.rb 37 <==
 def some_method(name: value, **)
 end
 
-==> 126.rb 19 <==
+==> 144.rb 19 <==
 1.times do |i|
 end
 
-==> 127.rb 8 <==
+==> 145.rb 8 <==
 foo = 1
 
-==> 128.rb 37 <==
+==> 146.rb 37 <==
 some_method(foo = 1) do
 end
 puts foo
 
-==> 129.rb 28 <==
+==> 147.rb 28 <==
 some_method(foo = 1) do
 end
 
-==> 130.rb 53 <==
+==> 148.rb 53 <==
 pattern = '*.rb'
 Dir.glob(pattern).map do |path|
 end
 
-==> 131.rb 49 <==
+==> 149.rb 49 <==
 foo = do_something {
   bar = do_something_else
 }
 
-==> 132.rb 37 <==
+==> 150.rb 37 <==
 var = 42
 
 do_something { _1 == var }
 
-==> 133.rb 58 <==
+==> 151.rb 58 <==
 var = nil
 
 do_something { var = _1 }
 
 something_else(var)
 
-==> 134.rb 72 <==
+==> 152.rb 72 <==
 def foo
   if bar
     foo = 1
@@ -1052,14 +1217,14 @@ def foo
   foo.bar.baz
 end
 
-==> 135.rb 75 <==
+==> 153.rb 75 <==
 def some_method
   enviromnent = {}
   another_symbol
   puts environment
 end
 
-==> 136.rb 95 <==
+==> 154.rb 95 <==
 def some_method
   environment = nil
   another_symbol
@@ -1067,28 +1232,28 @@ def some_method
   puts environment
 end
 
-==> 137.rb 72 <==
+==> 155.rb 72 <==
 def some_method
   enviromnent = {}
   another_symbol
   puts envelope
 end
 
-==> 138.rb 80 <==
+==> 156.rb 80 <==
 def some_method
   enviromnent = {}
   another_symbol
   puts self.environment
 end
 
-==> 139.rb 78 <==
+==> 157.rb 78 <==
 def some_method
   enviromnent = {}
   another_symbol
   puts environment(1)
 end
 
-==> 140.rb 98 <==
+==> 158.rb 98 <==
 class SomeClass
   enviromnent = {}
 
@@ -1097,7 +1262,7 @@ class SomeClass
   end
 end
 
-==> 141.rb 67 <==
+==> 159.rb 67 <==
 case '0'
 in String
   res = 1
@@ -1107,14 +1272,14 @@ end
 
 do_something(res)
 
-==> 142.rb 38 <==
+==> 160.rb 38 <==
 while
   foo = 1
   foo = 1
   p foo
 end
 
-==> 143.rb 50 <==
+==> 161.rb 50 <==
 while
   (
     foo = 1
@@ -1123,7 +1288,7 @@ while
   p foo
 end
 
-==> 144.rb 59 <==
+==> 162.rb 59 <==
 while
   if cond
     var += 1
@@ -1132,7 +1297,7 @@ while
   end
 end
 
-==> 145.rb 101 <==
+==> 163.rb 101 <==
 var = false
 while loop_cond
   if var
@@ -1144,7 +1309,7 @@ while loop_cond
   end
 end
 
-==> 146.rb 243 <==
+==> 164.rb 243 <==
 def parse_options
   index = -1
   while loop_cond
@@ -1164,7 +1329,7 @@ def parse_options
   end
 end
 
-==> 147.rb 78 <==
+==> 165.rb 78 <==
 def testing
 rescue Foo
   attempts += 1
@@ -1173,7 +1338,7 @@ rescue Bar
   attempts += 1
 end
 
-==> 148.rb 75 <==
+==> 166.rb 75 <==
 while
   case
   when fizz then foo += 1
@@ -1181,7 +1346,7 @@ while
   end
 end
 
-==> 149.rb 76 <==
+==> 167.rb 76 <==
 while
   case expr
   in fizz then foo += 1
@@ -1189,7 +1354,7 @@ while
   end
 end
 
-==> 150.rb 104 <==
+==> 168.rb 104 <==
 keep_going = true
 while keep_going
   keep_going = false
@@ -1198,7 +1363,7 @@ while keep_going
   end
 end
 
-==> 151.rb 109 <==
+==> 169.rb 109 <==
 try = 0
 while try < max_tries
   try += 1
@@ -1207,4 +1372,36 @@ while try < max_tries
 end
 
 raise(CombinationPoolExhaustedError)
+
+==> 170.rb 130 <==
+def foo
+  keep_going = true
+  while keep_going
+    keep_going = false
+    if rand < 0.5
+      keep_going = true
+    end
+  end
+end
+
+==> 171.rb 144 <==
+def generate_pin
+  try = 0
+  while try < max_tries
+    try += 1
+    next if weak?
+    try = 0
+  end
+
+  raise(CombinationPoolExhaustedError)
+end
+
+==> 172.rb 61 <==
+x = 0
+while x < 10
+  def helper
+    x = 1
+  end
+  x += 1
+end
 

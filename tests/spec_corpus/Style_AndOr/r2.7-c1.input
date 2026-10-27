@@ -120,42 +120,48 @@ end
 x and !obj.method arg
 
 ==> 034.rb 22 <==
-!obj.method arg and x
+x and obj&.method arg
 
 ==> 035.rb 23 <==
-obj.method = arg and x
+x and !obj&.method arg
 
 ==> 036.rb 22 <==
+!obj.method arg and x
+
+==> 037.rb 23 <==
+obj.method = arg and x
+
+==> 038.rb 22 <==
 obj.method= arg and x
 
-==> 037.rb 24 <==
+==> 039.rb 24 <==
 false or 3.is_a?Integer
 
-==> 038.rb 25 <==
+==> 040.rb 25 <==
 false and 3.is_a?Integer
 
-==> 039.rb 35 <==
+==> 041.rb 35 <==
 '1'.is_a?Integer or 1.is_a?Integer
 
-==> 040.rb 36 <==
+==> 042.rb 36 <==
 '1'.is_a?Integer and 1.is_a?Integer
 
-==> 041.rb 36 <==
+==> 043.rb 36 <==
 '1'.is_a?Integer or 1.is_a? Integer
 
-==> 042.rb 37 <==
+==> 044.rb 37 <==
 '1'.is_a?Integer and 1.is_a? Integer
 
-==> 043.rb 14 <==
+==> 045.rb 14 <==
 x and not arg
 
-==> 044.rb 14 <==
+==> 046.rb 14 <==
 not arg and x
 
-==> 045.rb 19 <==
+==> 047.rb 19 <==
 !var or var.empty?
 
-==> 046.rb 37 <==
+==> 048.rb 37 <==
 def x
 end
 
@@ -163,27 +169,27 @@ def y
   a = b and a.c
 end
 
-==> 047.rb 19 <==
+==> 049.rb 19 <==
 foo == bar and baz
 
-==> 048.rb 19 <==
+==> 050.rb 19 <==
 foo or bar and baz
 
-==> 049.rb 18 <==
+==> 051.rb 18 <==
 foo or bar && baz
 
-==> 050.rb 19 <==
+==> 052.rb 19 <==
 foo and bar or baz
 
-==> 051.rb 19 <==
+==> 053.rb 19 <==
 foo and bar || baz
 
-==> 052.rb 28 <==
+==> 054.rb 28 <==
 (def y
   a = b and a.c
 end)
 
-==> 053.rb 113 <==
+==> 055.rb 113 <==
 APP_ROOT = Pathname.new File.expand_path('../../', __FILE__)
 system('bundle check') or system!('bundle install')
 

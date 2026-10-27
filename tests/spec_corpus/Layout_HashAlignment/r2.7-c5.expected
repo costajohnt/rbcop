@@ -1,10 +1,35 @@
-==> offenses exit=1 123 <==
+==> offenses exit=1 492 <==
 002.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
+005.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
+006.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
+007.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
 
-==> autocorrect exit=0 121 <==
+==> autocorrect exit=0 484 <==
 002.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
+005.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
+006.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
+007.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
 
 ==> corrected/002.rb 32 <==
 f("aaaa" => foo,
      "b" => 2)
+
+==> corrected/005.rb 106 <==
+f(
+  'short'                   => a,
+   'tiny'                   => b,
+  'considerably_longer_key' => c
+)
+
+==> corrected/006.rb 29 <==
+f(
+  'a' =>  1,
+ 'bb' => 2
+)
+
+==> corrected/007.rb 21 <==
+f(
+  a:  1,
+ bb: 2
+)
 

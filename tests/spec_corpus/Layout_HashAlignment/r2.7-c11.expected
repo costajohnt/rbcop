@@ -1,26 +1,68 @@
-==> offenses exit=1 384 <==
-000.rb:6:3: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
-000.rb:7:9: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
-001.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+==> offenses exit=1 1061 <==
+005.rb:2:5: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+005.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+006.rb:6:3: C: Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+006.rb:7:9: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+007.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+007.rb:7:9: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+008.rb:3:4: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+009.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+009.rb:9:3: C: [Correctable] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
 
-==> autocorrect exit=0 378 <==
-000.rb:6:3: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
-000.rb:7:9: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
-001.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+==> autocorrect exit=1 1159 <==
+005.rb:2:5: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+005.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+006.rb:6:3: C: Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+006.rb:7:3: C: Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+006.rb:7:9: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+007.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+007.rb:7:9: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+008.rb:3:4: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+009.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+009.rb:9:3: C: [Corrected] Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
 
-==> corrected/000.rb 118 <==
+==> corrected/005.rb 40 <==
+hash = {
+    'a' => 0,
+    'bbb' => 1
+}
+
+==> corrected/006.rb 106 <==
 hash = {
   'abcdefg' => 0,
   'abcdef'  => 0,
   'gijk'    => 0,
   'a'       => 0,
-  'b'       => 1,
-  'c'       => 1
+  'b' => 1,
+  'c' => 1
 }
 
-==> corrected/001.rb 40 <==
-other = {
-  foo:     1,
-  'bar' => 2,
+==> corrected/007.rb 96 <==
+hash = {
+  'abcdefg' => 0,
+  'abcdef' => 0,
+  'gijk' => 0,
+  'a' => 0,
+  'b' => 1,
+  'c' => 1
+}
+
+==> corrected/008.rb 56 <==
+headers = {
+  "Content-Type" => 0,
+  Authorization: 1
+}
+
+==> corrected/009.rb 121 <==
+hash = {
+  'abcdefg' => 0,
+  'abcdef' => 0,
+  'gijk' => 0
+}
+
+hash = {
+  'abcdefg' => 0,
+  'abcdef' => 0,
+  'gijk' => 0
 }
 

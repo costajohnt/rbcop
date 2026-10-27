@@ -1,0 +1,41 @@
+==> .rubocop.yml 179 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.3
+Style/MethodCallWithArgsParentheses:
+  EnforcedStyle: omit_parentheses
+
+==> 000.rb 35 <==
+def foo
+  x = bar(1) or return
+end
+
+==> 001.rb 33 <==
+def foo
+  x = bar(1) and baz
+end
+
+==> 002.rb 36 <==
+def foo
+  @x = bar(1) or return
+end
+
+==> 003.rb 44 <==
+def foo
+  x = 0
+  x += bar(1) or return
+end
+
+==> 004.rb 37 <==
+def foo
+  a.b = bar(1) or return
+end
+
+==> 005.rb 39 <==
+def foo
+  x = y = bar(1) or return
+end
+

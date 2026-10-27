@@ -143,3 +143,15 @@ foo&.bar || foo&.baz && foo.qux
 ==> 042.rb 32 <==
 foo&.bar && foo&.baz || foo.qux
 
+==> 043.rb 35 <==
+bar && foo&.baz || qux && foo&.baz
+
+==> 044.rb 27 <==
+bar && foo.baz || foo&.qux
+
+==> 045.rb 27 <==
+foo.bar && baz || foo&.qux
+
+==> 046.rb 35 <==
+bar || foo.baz && qux || foo&.quux
+

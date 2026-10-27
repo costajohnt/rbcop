@@ -24,18 +24,36 @@ Regexp.compile(/regexp/)
 ==> 005.rb 24 <==
 Regexp.new(%r{foo/bar})
 
-==> 006.rb 21 <==
+==> 006.rb 19 <==
+p Regexp.new(/ a/)
+
+==> 007.rb 26 <==
+foo&.bar Regexp.new(/=a/)
+
+==> 008.rb 26 <==
+p Regexp.new(/ a/).source
+
+==> 009.rb 20 <==
+p(Regexp.new(/ a/))
+
+==> 010.rb 24 <==
+foo x, Regexp.new(/ a/)
+
+==> 011.rb 21 <==
+p Regexp.new(%r{ a})
+
+==> 012.rb 21 <==
 Regexp.new('regexp')
 
-==> 007.rb 41 <==
+==> 013.rb 41 <==
 Regexp.new('regexp', Regexp::IGNORECASE)
 
-==> 008.rb 62 <==
+==> 014.rb 62 <==
 Regexp.new('regexp', Regexp::IGNORECASE | Regexp::IGNORECASE)
 
-==> 009.rb 25 <==
+==> 015.rb 25 <==
 Regexp.compile('regexp')
 
-==> 010.rb 9 <==
+==> 016.rb 9 <==
 /regexp/
 

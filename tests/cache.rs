@@ -59,7 +59,9 @@ fn warm_run_prints_what_a_cold_run_prints() {
         assert_same(&base, &warm, format);
     }
     // Every file is cached (the Gemfile too), the one that does not parse included.
-    assert_eq!(entries(&dir), 7);
+    // Twice: the JSON formatter's entries keep Offense#corrections, so they live apart from the
+    // other formatters' (src/main.rs, the cache context).
+    assert_eq!(entries(&dir), 14);
     // Suppressed offenses, with a directive's justification, under --display-suppressed.
     fs::write(
         dir.join("lib/suppressed.rb"),
@@ -71,6 +73,37 @@ fn warm_run_prints_what_a_cold_run_prints() {
         let base = rbcop(&dir, &[&["--cache", "false"][..], &args].concat());
         assert_same(&base, &rbcop(&dir, &args), format);
         assert_same(&base, &rbcop(&dir, &args), format);
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// ResultCache#write_cache_file (RuboCop 1.92.1): a cache directory that refuses the entry warns
+/// for each file it would save and the run goes on; a cache hit warns nothing.
+#[test]
+fn unwritable_cache_directory_warns() {
+    use std::os::unix::fs::PermissionsExt;
+    let dir = project("unwritable");
+    rbcop(&dir, &["-f", "e", "a.rb"]);
+    let top = dir.join("cache-root/rbcop_cache");
+    let contexts: Vec<PathBuf> = below(&top).iter().flat_map(|b| below(b)).collect();
+    for c in &contexts {
+        fs::set_permissions(c, fs::Permissions::from_mode(0o555)).unwrap();
+    }
+    // Root writes anyway: nothing to check.
+    if fs::write(contexts[0].join("probe"), "").is_err() {
+        fs::write(dir.join("b.rb"), "y = 1\n").unwrap();
+        let out = rbcop(&dir, &["-f", "e", "a.rb", "b.rb"]);
+        assert_same(
+            &rbcop(&dir, &["--cache", "false", "-f", "e", "a.rb", "b.rb"]),
+            &Output { stderr: vec![], ..out.clone() },
+            "warned",
+        );
+        let stderr = String::from_utf8_lossy(&out.stderr);
+        let want = "Couldn't write cache file. Continuing without cache.\n  Permission denied @ rb_sysopen - ";
+        assert!(stderr.starts_with(want) && stderr.matches("Couldn't").count() == 1, "{stderr}");
+    }
+    for c in &contexts {
+        fs::set_permissions(c, fs::Permissions::from_mode(0o755)).unwrap();
     }
     let _ = fs::remove_dir_all(&dir);
 }

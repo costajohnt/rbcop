@@ -92,3 +92,15 @@ def self.foo(bar,
         baz
     ); end
 
+==> 017.rb 37 <==
+def foo(bar, baz = {
+  qux: 1
+})
+end
+
+==> 018.rb 65 <==
+def foo(bar,
+        baz = (qux = false
+               nil))
+end
+

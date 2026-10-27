@@ -17,31 +17,40 @@ format(something, a, b)
 ==> 002.rb 32 <==
 format(something, a: 10, b: 11)
 
-==> 003.rb 24 <==
+==> 003.rb 36 <==
+format(something, { a: 10, b: 11 })
+
+==> 004.rb 37 <==
+format(something, *{ a: 10, b: 11 })
+
+==> 005.rb 42 <==
+format(something, a: format(other, b: 1))
+
+==> 006.rb 24 <==
 format('%s', a ? b : c)
 
-==> 004.rb 23 <==
+==> 007.rb 23 <==
 format('%s %s', *args)
 
-==> 005.rb 22 <==
+==> 008.rb 22 <==
 sprintf(something, a)
 
-==> 006.rb 26 <==
+==> 009.rb 26 <==
 format(something, a + 42)
 
-==> 007.rb 28 <==
+==> 010.rb 28 <==
 format("%d %04x", 123, 123)
 
-==> 008.rb 33 <==
+==> 011.rb 33 <==
 sprintf(something, a: 10, b: 11)
 
-==> 009.rb 11 <==
+==> 012.rb 11 <==
 format :xml
-==> 010.rb 12 <==
+==> 013.rb 12 <==
 sprintf :xml
-==> 011.rb 6 <==
+==> 014.rb 6 <==
 format
-==> 012.rb 7 <==
+==> 015.rb 7 <==
 sprintf
-==> 013.rb 14 <==
+==> 016.rb 14 <==
 puts "%d" % 10

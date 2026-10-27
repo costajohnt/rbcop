@@ -1,0 +1,9 @@
+==> offenses exit=1 92 <==
+000.rb:1:5: C: [Correctable] Style/HashLookupMethod: Use `Hash#[]` instead of `Hash#fetch`.
+
+==> autocorrect exit=0 90 <==
+000.rb:1:5: C: [Corrected] Style/HashLookupMethod: Use `Hash#[]` instead of `Hash#fetch`.
+
+==> corrected/000.rb 9 <==
+ENV[key]
+

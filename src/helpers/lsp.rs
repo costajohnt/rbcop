@@ -32,8 +32,18 @@ pub fn enabled() -> bool {
     ENABLED.load(Ordering::Relaxed)
 }
 
+/// The `editing` option (RuboCop 1.92.1, set by MCP): holds back `AutoCorrect: contextual`
+/// without the rest of LSP mode.
+pub static EDITING: AtomicBool = AtomicBool::new(false);
+
+/// AutocorrectLogic#contextual_autocorrect_held_back? without the `contextual` check:
+/// `LSP.enabled? || @options.fetch(:editing, false)`.
+pub fn holds_contextual() -> bool {
+    enabled() || EDITING.load(Ordering::Relaxed)
+}
+
 /// CodeLength / MethodComplexity `#location` under LSP: from the node's start to the end of its
-/// name (`def foo`, `class Foo`) or of its block opener (`foo do`, `-> {`); other nodes (and
+/// name (`def foo`, `class Foo`, the `self` of `class << self`) or of its block opener (`foo do`, `-> {`); other nodes (and
 /// every node outside editor mode) keep `range`.
 pub fn location(node: &Node, range: (usize, usize)) -> (usize, usize) {
     if !enabled() {
@@ -45,6 +55,8 @@ pub fn location(node: &Node, range: (usize, usize)) -> (usize, usize) {
         Some(class.constant_path().location().end_offset())
     } else if let Some(module) = node.as_module_node() {
         Some(module.constant_path().location().end_offset())
+    } else if let Some(sclass) = node.as_singleton_class_node() {
+        Some(sclass.expression().location().end_offset())
     } else if let Some(lambda) = node.as_lambda_node() {
         Some(lambda.opening_loc().end_offset())
     } else if let Some(call) = node.as_call_node() {

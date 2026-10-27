@@ -54,12 +54,28 @@ fn visibility_block(node: &Node) -> Option<&'static str> {
     plain_send(node).filter(|c| send_args(c).is_empty()).and_then(|c| visibility_scope(&c))
 }
 
-/// `(send nil? VISIBILITY_SCOPES (sym _))`: the scope and the symbol.
-fn visibility_inline_on_method_name(node: &Node) -> Option<(&'static str, Vec<u8>)> {
+/// The symbol arguments of a send: what `<(sym %method_name) ...>` can match.
+fn sym_args(call: &CallNode) -> Vec<Vec<u8>> {
+    send_args(call).iter().filter_map(|a| a.as_symbol_node().map(|s| s.unescaped().to_vec())).collect()
+}
+
+/// `(send nil? VISIBILITY_SCOPES <(sym _) ...>)`: the scope and the symbols (1.92: a modifier
+/// applies to every symbol it is given).
+fn visibility_inline_on_method_name(node: &Node) -> Option<(&'static str, Vec<Vec<u8>>)> {
     let call = plain_send(node)?;
-    let args = send_args(&call);
-    let sym = args.first().filter(|_| args.len() == 1)?.as_symbol_node()?;
-    Some((visibility_scope(&call)?, sym.unescaped().to_vec()))
+    Some((visibility_scope(&call)?, sym_args(&call)))
+}
+
+/// class_method_visibility_modifier?: `(send nil? {:private_class_method :public_class_method}
+/// <(sym _) ...>)`, as the category it gives (`private_class_methods`) and the symbols.
+fn class_method_visibility_modifier(node: &Node) -> Option<(&'static str, Vec<Vec<u8>>)> {
+    let call = plain_send(node).filter(|c| c.receiver().is_none())?;
+    let category = match method_name(&call) {
+        "private_class_method" => "private_class_methods",
+        "public_class_method" => "public_class_methods",
+        _ => return None,
+    };
+    Some((category, sym_args(&call)))
 }
 
 /// MethodDispatchNode#def_modifier?
@@ -127,15 +143,28 @@ impl<'pr> Body<'pr> {
                 scope = s;
             }
         }
+        // For a `defs`, `vis` is its class_method_category: the last `private_class_method :name`
+        // (or `public_`) among the right siblings, else `public_class_methods`.
         let mut inline: HashMap<Vec<u8>, &'static str> = HashMap::new();
+        let mut class_inline: HashMap<Vec<u8>, &'static str> = HashMap::new();
         for i in (0..n).rev() {
-            if let Some(def) = sibs[i].as_def_node()
-                && let Some(s) = inline.get(def.name().as_slice())
-            {
-                vis[i] = s;
+            if let Some(def) = sibs[i].as_def_node() {
+                let singleton = def.receiver().is_some();
+                match (if singleton { &class_inline } else { &inline }).get(def.name().as_slice()) {
+                    Some(s) => vis[i] = s,
+                    None if singleton => vis[i] = "public_class_methods",
+                    None => {}
+                }
             }
-            if let Some((s, name)) = visibility_inline_on_method_name(&sibs[i]) {
-                inline.entry(name).or_insert(s);
+            if let Some((s, names)) = visibility_inline_on_method_name(&sibs[i]) {
+                for name in names {
+                    inline.entry(name).or_insert(s);
+                }
+            }
+            if let Some((s, names)) = class_method_visibility_modifier(&sibs[i]) {
+                for name in names {
+                    class_inline.entry(name).or_insert(s);
+                }
             }
         }
         // private_constant?: `parent.each_child_node(:send)` with a matching symbol argument.
@@ -208,7 +237,7 @@ fn classify(conf: &Conf, node: &Node, vis: &str) -> String {
         Node::DefNode { .. } => {
             let def = node.as_def_node().unwrap();
             if def.receiver().is_some() {
-                "public_class_methods".into()
+                vis.into()
             } else if def.name().as_slice() == b"initialize" {
                 "initializer".into()
             } else {
@@ -296,13 +325,12 @@ fn range_with_comment(src: &Source, node: &Node) -> Option<(usize, usize)> {
         }
     }
     let begin = src.line_start(start_line).checked_sub(1)?;
-    let end = match is_casgn(node).then(|| helpers::heredoc::first_heredoc_end(node)).flatten() {
-        Some(e) => e + 1,
-        None => {
-            let line = src.line_of(loc.end_offset());
-            if line < src.line_count() { src.line_start(line + 1) - 1 } else { src.text.len() }
-        }
-    };
+    // end_position_for: the end of the node's last line or of its last heredoc terminator line.
+    let mut line = src.line_of(loc.end_offset());
+    if let Some((heredoc_end, _)) = helpers::heredoc::last_heredoc_end(node) {
+        line = line.max(src.line_of(heredoc_end));
+    }
+    let end = if line < src.line_count() { src.line_start(line + 1) - 1 } else { src.text.len() };
     Some((begin, end))
 }
 

@@ -1,6 +1,8 @@
 use crate::prelude::*;
 use helpers::parentheses_corrector::{self, ParenFix};
 use helpers::parser_parent::parser_parent;
+use std::cell::Cell;
+use std::collections::HashSet;
 
 pub const NAME: &str = "Style/RescueModifier";
 pub static COP: RescueModifier = RescueModifier;
@@ -55,7 +57,7 @@ fn paren_fix(cx: &Cx, idx: usize) -> Option<ParenFix> {
         cx.src,
         (open.start_offset(), open.end_offset()),
         (close.start_offset(), close.end_offset()),
-        last.map(span),
+        last,
         heredoc,
         question,
     ))
@@ -93,15 +95,29 @@ impl Cop for RescueModifier {
             .flatten()
             .filter(|m| span(&m.value()) == me)
             .map(|m| m.location().start_offset());
+        // inside_corrected_rescue_body?: in the rescue body of a rescue modifier already corrected.
+        let outer: Vec<(usize, usize)> = cx
+            .ancestors
+            .iter()
+            .filter(|a| {
+                a.as_rescue_modifier_node().is_some_and(|r| {
+                    let body = span(&r.rescue_expression());
+                    body.0 <= me.0 && me.1 <= body.1
+                })
+            })
+            .map(span)
+            .collect();
+        let corrected = cx.state::<HashSet<(usize, usize)>>();
+        let inside = outer.iter().any(|s| corrected.contains(s));
         let mut outer_fix = Some(outer_fix);
         for (i, n) in chain.iter().enumerate().rev() {
             let (fix, masgn) = if i == 0 { (outer_fix.take().flatten(), masgn) } else { (None, None) };
-            report(cx, n, fix, masgn);
+            report(cx, n, fix, masgn, inside);
         }
     }
 }
 
-fn report(cx: &mut Cx, n: &ruby_prism::RescueModifierNode, fix: Option<ParenFix>, masgn: Option<usize>) {
+fn report(cx: &mut Cx, n: &ruby_prism::RescueModifierNode, fix: Option<ParenFix>, masgn: Option<usize>, inside: bool) {
     {
         let src = cx.src;
         let (start, end) = span(&n.as_node());
@@ -117,21 +133,33 @@ fn report(cx: &mut Cx, n: &ruby_prism::RescueModifierNode, fix: Option<ParenFix>
         let op = n.expression();
         let op_span = (start, op.location().end_offset());
         let wrap_array = masgn.is_none() && op.as_array_node().is_some_and(|a| a.opening_loc().is_none());
-        let heredoc_end = op.as_call_node().and_then(|c| {
-            call_args(&c).iter().rev().find_map(|a| helpers::heredoc::parts(a).map(|(_, e, _)| e))
-        });
+        // `heredoc_end`: the terminator line (newline excluded) of the heredoc ending last.
+        let heredoc_end = |n: &Node| {
+            helpers::heredoc::last_heredoc_end(n).map(|(s, e)| (s, s + src.text[s..e].trim_end_matches(['\n', '\r']).len()))
+        };
+        let op_heredoc_end = heredoc_end(&op);
+        // The heredoc body would be left behind when the rescue body is moved.
+        let skip = inside || heredoc_end(&n.rescue_expression()).is_some();
         let clause = format!("\n{off}rescue\n{ind}{}\n{off}end", node_text(&n.rescue_expression()));
+        let done = Cell::new(false);
         cx.add_fix(start, end, "Avoid using `rescue` in its modifier form.", |c| {
+            if skip {
+                return;
+            }
+            done.set(true);
             if wrap_array {
                 c.wrap(op_span.0, op_span.1, "[", "]");
             }
             c.remove(op_span.1, end);
             c.insert_before(op_span.0, op_span.1, &format!("begin\n{ind}"));
-            let (s, e) = heredoc_end.unwrap_or(op_span);
+            let (s, e) = op_heredoc_end.unwrap_or(op_span);
             c.insert_after(s, e, &clause);
             if let Some(f) = &fix {
                 parentheses_corrector::apply(c, f);
             }
         });
+        if done.get() {
+            cx.state::<HashSet<(usize, usize)>>().insert(span(&n.as_node()));
+        }
     }
 }

@@ -1,4 +1,4 @@
-==> offenses exit=1 2948 <==
+==> offenses exit=1 3733 <==
 000.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
 001.rb:1:11: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
 002.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
@@ -19,18 +19,26 @@
 052.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
 053.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
 054.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
-055.rb:4:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
-064.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
-065.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
-066.rb:1:7: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
-067.rb:1:7: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
-068.rb:1:7: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
-069.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
-070.rb:1:11: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
-077.rb:2:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
-078.rb:2:11: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+055.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+056.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+057.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+058.rb:4:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+059.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+060.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+061.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+071.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+072.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+073.rb:1:7: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+074.rb:1:7: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+075.rb:1:7: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+076.rb:1:13: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+078.rb:1:7: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+079.rb:1:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+080.rb:1:11: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+087.rb:2:9: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+088.rb:2:11: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
 
-==> autocorrect exit=0 2888 <==
+==> autocorrect exit=0 3657 <==
 000.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
 001.rb:1:11: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
 002.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
@@ -51,16 +59,24 @@
 052.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
 053.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
 054.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
-055.rb:4:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
-064.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
-065.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
-066.rb:1:7: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
-067.rb:1:7: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
-068.rb:1:7: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
-069.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
-070.rb:1:11: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
-077.rb:2:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
-078.rb:2:11: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+055.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+056.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+057.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+058.rb:4:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+059.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+060.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+061.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+071.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+072.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+073.rb:1:7: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+074.rb:1:7: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+075.rb:1:7: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+076.rb:1:13: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+078.rb:1:7: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+079.rb:1:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+080.rb:1:11: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+087.rb:2:9: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+088.rb:2:11: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
 
 ==> corrected/000.rb 25 <==
 CONST = [1, 2, 3].freeze
@@ -122,40 +138,64 @@ CONST = (FOO % BAR).freeze
 ==> corrected/054.rb 28 <==
 CONST = (FOO ** BAR).freeze
 
-==> corrected/055.rb 84 <==
+==> corrected/055.rb 28 <==
+CONST = (FOO && BAR).freeze
+
+==> corrected/056.rb 28 <==
+CONST = (FOO || BAR).freeze
+
+==> corrected/057.rb 33 <==
+CONST = (foo ? bar : baz).freeze
+
+==> corrected/058.rb 84 <==
 FOO = [1].freeze
 BAR = [2].freeze
 BAZ = [3].freeze
 CONST = (FOO + BAR + BAZ).freeze
 
-==> corrected/064.rb 29 <==
+==> corrected/059.rb 29 <==
+CONST = (foo.bar baz).freeze
+
+==> corrected/060.rb 28 <==
+CONST = foo.bar(baz).freeze
+
+==> corrected/061.rb 30 <==
+CONST = (foo&.bar baz).freeze
+
+==> corrected/071.rb 29 <==
 CONST = (FOO + 'bar').freeze
 
-==> corrected/065.rb 39 <==
+==> corrected/072.rb 39 <==
 CONST = ('foo' + 'bar' + 'baz').freeze
 
-==> corrected/066.rb 24 <==
+==> corrected/073.rb 24 <==
 XXX = [YYY, ZZZ].freeze
 
-==> corrected/067.rb 25 <==
+==> corrected/074.rb 25 <==
 XXX = %w(YYY ZZZ).freeze
 
-==> corrected/068.rb 38 <==
+==> corrected/075.rb 38 <==
 FOO = <<-HERE.freeze
   SOMETHING
 HERE
 
-==> corrected/069.rb 22 <==
+==> corrected/076.rb 25 <==
+FOO = BAR = 'baz'.freeze
+
+==> corrected/078.rb 24 <==
+FOO = (bar = []).freeze
+
+==> corrected/079.rb 22 <==
 CONST = "#{a}".freeze
 
-==> corrected/070.rb 24 <==
+==> corrected/080.rb 24 <==
 CONST ||= "#{a}".freeze
 
-==> corrected/077.rb 53 <==
+==> corrected/087.rb 53 <==
 # frozen_string_literal: false
 CONST = "#{a}".freeze
 
-==> corrected/078.rb 55 <==
+==> corrected/088.rb 55 <==
 # frozen_string_literal: false
 CONST ||= "#{a}".freeze
 

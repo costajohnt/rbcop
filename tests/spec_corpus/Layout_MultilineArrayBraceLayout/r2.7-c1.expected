@@ -1,16 +1,20 @@
-==> offenses exit=1 695 <==
+==> offenses exit=1 959 <==
 000.rb:7:1: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
 001.rb:5:1: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
 002.rb:3:1: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
 003.rb:4:1: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
 004.rb:3:1: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
+005.rb:5:3: C: [Correctable] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
+005.rb:6:1: C: Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
 
-==> autocorrect exit=0 685 <==
+==> autocorrect exit=0 959 <==
 000.rb:7:1: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
 001.rb:5:1: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
 002.rb:3:1: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
 003.rb:4:1: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
 004.rb:3:1: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
+005.rb:5:1: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
+005.rb:5:3: C: [Corrected] Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element.
 
 ==> corrected/000.rb 28 <==
 [a,
@@ -42,4 +46,10 @@ b]
 ==> corrected/004.rb 16 <==
 [a, # a
 b,] # b
+
+==> corrected/005.rb 35 <==
+foo = [
+  [
+    1,]]
+    # comment
 

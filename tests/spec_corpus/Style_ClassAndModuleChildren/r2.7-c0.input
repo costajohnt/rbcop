@@ -107,7 +107,12 @@ class Z
   end
 end
 
-==> 018.rb 69 <==
+==> 018.rb 33 <==
+X =
+class FooClass::BarClass
+end
+
+==> 019.rb 69 <==
 module Wrap
   class Other
   end

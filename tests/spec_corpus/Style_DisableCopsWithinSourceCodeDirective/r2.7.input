@@ -18,22 +18,35 @@ end
 def foo # rubocop:enable all
 end
 
-==> 003.rb 120 <==
+==> 003.rb 87 <==
+# rubocop:push -Metrics/AbcSize
+# rubocop:push
+def foo
+end
+# rubocop:pop
+# rubocop:pop
+
+==> 004.rb 55 <==
+# rubocop:next -Metrics/AbcSize +Style/For
+def foo
+end
+
+==> 005.rb 120 <==
 # rubocop:disable Style/DisableCopsWithinSourceCodeDirective
 def foo # rubocop:disable Metrics/CyclomaticComplexity
 end
 
-==> 004.rb 81 <==
+==> 006.rb 81 <==
 # rubocop:disable all
 def foo # rubocop:disable Metrics/CyclomaticComplexity
 end
 
-==> 005.rb 83 <==
+==> 007.rb 83 <==
 # rubocop:disable Style
 def foo # rubocop:disable Metrics/CyclomaticComplexity
 end
 
-==> 006.rb 51 <==
+==> 008.rb 51 <==
 # rubocop:disable-next Metrics/AbcSize
 def foo
 end

@@ -1,16 +1,18 @@
-==> offenses exit=1 462 <==
+==> offenses exit=1 538 <==
 003.rb:1:1: C: Style/MissingElse: `if` condition requires an `else`-clause.
 011.rb:1:1: C: Style/MissingElse: `case` condition requires an `else`-clause.
 014.rb:1:15: C: Style/MissingElse: `if` condition requires an `else`-clause.
 015.rb:1:32: C: Style/MissingElse: `if` condition requires an `else`-clause.
 016.rb:1:1: C: Style/MissingElse: `case` condition requires an `else`-clause.
 017.rb:1:1: C: Style/MissingElse: `if` condition requires an `else`-clause.
+020.rb:1:1: C: Style/MissingElse: `if` condition requires an `else`-clause.
 
-==> autocorrect exit=1 462 <==
+==> autocorrect exit=1 538 <==
 003.rb:1:1: C: Style/MissingElse: `if` condition requires an `else`-clause.
 011.rb:1:1: C: Style/MissingElse: `case` condition requires an `else`-clause.
 014.rb:1:15: C: Style/MissingElse: `if` condition requires an `else`-clause.
 015.rb:1:32: C: Style/MissingElse: `if` condition requires an `else`-clause.
 016.rb:1:1: C: Style/MissingElse: `case` condition requires an `else`-clause.
 017.rb:1:1: C: Style/MissingElse: `if` condition requires an `else`-clause.
+020.rb:1:1: C: Style/MissingElse: `if` condition requires an `else`-clause.
 

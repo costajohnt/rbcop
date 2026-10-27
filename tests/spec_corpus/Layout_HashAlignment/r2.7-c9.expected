@@ -1,45 +1,92 @@
-==> offenses exit=1 863 <==
-002.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
-003.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
-008.rb:2:6: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
-008.rb:3:12: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
-008.rb:5:6: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
-008.rb:6:12: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
-009.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
+==> offenses exit=1 1792 <==
+007.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+007.rb:7:3: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+008.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+008.rb:5:3: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+009.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+010.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+010.rb:3:1: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+016.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+016.rb:7:3: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+017.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+017.rb:3:2: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+017.rb:6:4: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+017.rb:7:3: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+018.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
 
-==> autocorrect exit=1 958 <==
-002.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
-003.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
-008.rb:2:6: C: [Corrected] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
-008.rb:3:12: C: [Corrected] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
-008.rb:5:6: C: [Corrected] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
-008.rb:6:12: C: [Corrected] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
-009.rb:3:1: C: Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
-009.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
+==> autocorrect exit=0 1764 <==
+007.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+007.rb:7:3: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+008.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+008.rb:5:3: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+009.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+010.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+010.rb:3:1: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+016.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+016.rb:7:3: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+017.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+017.rb:3:2: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+017.rb:6:4: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+017.rb:7:3: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+018.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
 
-==> corrected/002.rb 40 <==
+==> corrected/007.rb 82 <==
 hash = {
-    'a' =>  0,
-  'bbb' =>  1
+  'short' => 1,
+  [
+    :a,
+    :b,
+  ]       => :val,
+  'x'     => 2,
 }
 
-==> corrected/003.rb 40 <==
+==> corrected/008.rb 127 <==
 hash = {
-    'a'  => 0,
-  'bbb'  => 1
+  'short'                    => 1,
+  [ :a,
+    :a_very_long_hash_key, ] => :val,
+  'x'                        => 2,
 }
 
-==> corrected/008.rb 104 <==
-hash1 = { a: 0,
-         bb: 1,
-        ccc: 2 }
-hash2 = { a => 0,
-         bb => 1,
-        ccc => 2 }
+==> corrected/009.rb 74 <==
+hash = {
+  'short' => 1,
+  [
+    :a,
+  ]       => :val,
+  'x'     => 2,
+}
 
-==> corrected/009.rb 78 <==
-{
-  sjtjo: sjtjo,
-too_ono_ilitjion_tofotono_o: too_ono_ilitjion_tofotono_o,
+==> corrected/010.rb 39 <==
+hash = {
+  a  => 1,
+  [:b,
+ :c] => 2
+}
+
+==> corrected/016.rb 70 <==
+hash1 = {
+  'a'   => 0,
+  'bbb' => 1
+}
+hash2 = {
+  a:   0,
+  bbb: 1
+}
+
+==> corrected/017.rb 72 <==
+hash1 = {
+  'a'   => 0,
+  'bbb' => 1
+}
+hash2 = {
+   a:   0,
+   bbb: 1
+}
+
+==> corrected/018.rb 38 <==
+hash = {
+  'a'   => 0,
+  'bbb' => 1
 }
 

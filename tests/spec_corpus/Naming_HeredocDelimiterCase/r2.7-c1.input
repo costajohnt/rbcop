@@ -11,47 +11,53 @@ Naming/HeredocDelimiterCase:
   - lowercase
   EnforcedStyle: lowercase
 
-==> 000.rb 17 <==
+==> 000.rb 40 <==
+module_eval(<<~End)
+  def foo
+  end
+End
+
+==> 001.rb 17 <==
 <<-sql
   foo
 sql
 
-==> 001.rb 17 <==
+==> 002.rb 17 <==
 <<-Sql
   foo
 Sql
 
-==> 002.rb 17 <==
+==> 003.rb 17 <==
 <<-SQL
   foo
 SQL
 
-==> 003.rb 19 <==
+==> 004.rb 19 <==
 <<-'sql'
   foo
 sql
 
-==> 004.rb 19 <==
+==> 005.rb 19 <==
 <<-'Sql'
   foo
 Sql
 
-==> 005.rb 19 <==
+==> 006.rb 19 <==
 <<-'SQL'
   foo
 SQL
 
-==> 006.rb 17 <==
+==> 007.rb 17 <==
 <<~sql
   foo
 sql
 
-==> 007.rb 17 <==
+==> 008.rb 17 <==
 <<~Sql
   foo
 Sql
 
-==> 008.rb 17 <==
+==> 009.rb 17 <==
 <<~SQL
   foo
 SQL

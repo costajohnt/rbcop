@@ -116,12 +116,58 @@ foo(
             .join_sources)
 )
 
-==> 018.rb 17 <==
+==> 018.rb 62 <==
+{
+  key: -> do
+    client
+      .beta
+      .messages
+  end
+}
+
+==> 019.rb 78 <==
+{
+  key: proc { |request|
+    request
+      .params
+      .fetch(:page)
+  }
+}
+
+==> 020.rb 85 <==
+{
+  key: begin
+    settings
+      .fetch(:connection)
+      .fetch(:retries)
+  end
+}
+
+==> 021.rb 82 <==
+{
+  key: if condition
+    client
+      .beta
+  else
+    other
+      .beta
+  end
+}
+
+==> 022.rb 56 <==
+{
+  key: while condition
+    client
+      .beta
+  end
+}
+
+==> 023.rb 17 <==
 User.a
   .c
   .b
 
-==> 019.rb 157 <==
+==> 024.rb 157 <==
 def targets_for(path)
   fullpath = fullpath_for(path)
   [
@@ -131,110 +177,110 @@ def targets_for(path)
     .delete_if { |entry| dot_directory?(entry) }
 end
 
-==> 020.rb 25 <==
+==> 025.rb 25 <==
 def foo
   !0
   .nil?
 end
 
-==> 021.rb 24 <==
+==> 026.rb 24 <==
 1 + a
       .b
       .c
 
-==> 022.rb 27 <==
+==> 027.rb 27 <==
 hash[:key]
   .do_something
 
-==> 023.rb 82 <==
+==> 028.rb 82 <==
 expect { Foo.new }.to change { Bar.count }
                         .from(1).to(2)
 
-==> 024.rb 5 <==
+==> 029.rb 5 <==
 a.
 b
 
-==> 025.rb 67 <==
+==> 030.rb 67 <==
 expect { Foo.new }.
   to change { Bar.count }.
       from(1).to(2)
 
-==> 026.rb 11 <==
+==> 031.rb 11 <==
 a
  .(args)
 
-==> 027.rb 32 <==
+==> 032.rb 32 <==
 [
   *foo
     .bar(
       arg)
 ]
 
-==> 028.rb 39 <==
+==> 033.rb 39 <==
 [
   *foo
     .bar { |arg| baz(arg) }
 ]
 
-==> 029.rb 32 <==
+==> 034.rb 32 <==
 [
   *foo
     .bar { baz(_1) }
 ]
 
-==> 030.rb 33 <==
+==> 035.rb 33 <==
 [
   **foo
     .bar(
       arg)
 ]
 
-==> 031.rb 40 <==
+==> 036.rb 40 <==
 [
   **foo
     .bar { |arg| baz(arg) }
 ]
 
-==> 032.rb 33 <==
+==> 037.rb 33 <==
 [
   **foo
     .bar { baz(_1) }
 ]
 
-==> 033.rb 45 <==
+==> 038.rb 45 <==
 (0..foo).bar { baz }
           .qux { quux }
 
-==> 034.rb 36 <==
+==> 039.rb 36 <==
 (0..foo).bar { baz }
           .qux
 
-==> 035.rb 37 <==
+==> 040.rb 37 <==
 (0..foo).bar
           .qux { quux }
 
-==> 036.rb 6 <==
+==> 041.rb 6 <==
 a
  .b
 
-==> 037.rb 16 <==
+==> 042.rb 16 <==
 a.
    b
 c.
    d
 
-==> 038.rb 14 <==
+==> 043.rb 14 <==
 a.
   b.
     c
 
-==> 039.rb 11 <==
+==> 044.rb 11 <==
 [
  a.
  b
 ]
 
-==> 040.rb 136 <==
+==> 045.rb 136 <==
 def foo
   bar(
     key: VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName
@@ -242,7 +288,7 @@ def foo
   )
 end
 
-==> 041.rb 151 <==
+==> 046.rb 151 <==
 def foo
   bar(
     key: VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName
@@ -250,7 +296,7 @@ def foo
   )
 end
 
-==> 042.rb 200 <==
+==> 047.rb 200 <==
 parsed_params = refusal_advice_params.merge(
   actions: refusal_advice_params.fetch(:actions).
     each_pair do |_, suggestions|
@@ -258,7 +304,7 @@ parsed_params = refusal_advice_params.merge(
     end
 ).to_h
 
-==> 043.rb 437 <==
+==> 048.rb 437 <==
 def payload
   {
     type: 'action',
@@ -275,7 +321,7 @@ def payload
   }.deep_symbolize_keys
 end
 
-==> 044.rb 188 <==
+==> 049.rb 188 <==
 add_to_git_repo(
   initial_repo,
   "about.json" =>
@@ -285,62 +331,62 @@ add_to_git_repo(
         .to_json,
 )
 
-==> 045.rb 139 <==
+==> 050.rb 139 <==
 def run
   (date_columns + candidate_columns).uniq
                                     .select { |column_name| castable?(column_name) }
 end
 
-==> 046.rb 221 <==
+==> 051.rb 221 <==
 def run
   (date_columns + candidate_columns).uniq
                                       .select { |column_name| castable?(column_name) }
                                       .each { |column_name| cast(column_name) }
 end
 
-==> 047.rb 21 <==
+==> 052.rb 21 <==
 (a +
  b).foo
    .bar
 
-==> 048.rb 41 <==
+==> 053.rb 41 <==
 { a: 1, b: 2 }.keys
               .first
 
-==> 049.rb 46 <==
+==> 054.rb 46 <==
 method(key: value.foo.bar
               .baz)
 
-==> 050.rb 112 <==
+==> 055.rb 112 <==
 @foo = Foo
          .where(id: Bar.select(:id)
            .joins(:bar)
            .where.not(bar: { id: 123 }))
 
-==> 051.rb 72 <==
+==> 056.rb 72 <==
 @foo = Foo.
          where(id: Bar.select(:id)
            .joins(:bar))
 
-==> 052.rb 94 <==
+==> 057.rb 94 <==
 Foo
   .where(id: Bar.select(:id)
     .joins(:bar),
          name: Car.find(:name)
     .strip)
 
-==> 053.rb 67 <==
+==> 058.rb 67 <==
 Foo
   .where(id: Bar.select(:id)
     .joins(:bar))
   .order(:name)
 
-==> 054.rb 74 <==
+==> 059.rb 74 <==
 @foo = Foo
          &.where(id: Bar.select(:id)
            &.joins(:bar))
 
-==> 055.rb 53 <==
+==> 060.rb 53 <==
 Foo
   .where({id: Bar.select(:id)
     .joins(:bar)})

@@ -1,14 +1,12 @@
 ==> offenses exit=1 123 <==
-000.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
+001.rb:3:3: C: [Correctable] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
 
-==> autocorrect exit=1 230 <==
-000.rb:3:1: C: Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
-000.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
+==> autocorrect exit=0 121 <==
+001.rb:3:3: C: [Corrected] Layout/HashAlignment: Align the separators of a hash literal if they span more than one line.
 
-==> corrected/000.rb 30 <==
+==> corrected/001.rb 24 <==
 f(
-  a: "x",
-bbbbb:,
-  c: 1
+  aaa: nil,
+   bb:
 )
 

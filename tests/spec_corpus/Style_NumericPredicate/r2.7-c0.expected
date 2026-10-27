@@ -1,33 +1,41 @@
-==> offenses exit=1 594 <==
+==> offenses exit=1 786 <==
 000.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `number.zero?` instead of `number == 0`.
 000.rb:2:1: C: [Correctable] Style/NumericPredicate: Use `number.zero?` instead of `0 == number`.
-001.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `(foo - 1).zero?` instead of `foo - 1 == 0`.
-001.rb:2:1: C: [Correctable] Style/NumericPredicate: Use `(foo - 1).zero?` instead of `0 == foo - 1`.
-004.rb:2:3: C: [Correctable] Style/NumericPredicate: Use `foo.zero?` instead of `foo == 0`.
-005.rb:2:3: C: [Correctable] Style/NumericPredicate: Use `(foo - 1).zero?` instead of `foo - 1 == 0`.
+001.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `(-foo).zero?` instead of `-foo == 0`.
+001.rb:2:1: C: [Correctable] Style/NumericPredicate: Use `(~foo).zero?` instead of `~foo == 0`.
+002.rb:1:1: C: [Correctable] Style/NumericPredicate: Use `(foo - 1).zero?` instead of `foo - 1 == 0`.
+002.rb:2:1: C: [Correctable] Style/NumericPredicate: Use `(foo - 1).zero?` instead of `0 == foo - 1`.
+005.rb:2:3: C: [Correctable] Style/NumericPredicate: Use `foo.zero?` instead of `foo == 0`.
+006.rb:2:3: C: [Correctable] Style/NumericPredicate: Use `(foo - 1).zero?` instead of `foo - 1 == 0`.
 
-==> autocorrect exit=0 582 <==
+==> autocorrect exit=0 770 <==
 000.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `number.zero?` instead of `number == 0`.
 000.rb:2:1: C: [Corrected] Style/NumericPredicate: Use `number.zero?` instead of `0 == number`.
-001.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `(foo - 1).zero?` instead of `foo - 1 == 0`.
-001.rb:2:1: C: [Corrected] Style/NumericPredicate: Use `(foo - 1).zero?` instead of `0 == foo - 1`.
-004.rb:2:3: C: [Corrected] Style/NumericPredicate: Use `foo.zero?` instead of `foo == 0`.
-005.rb:2:3: C: [Corrected] Style/NumericPredicate: Use `(foo - 1).zero?` instead of `foo - 1 == 0`.
+001.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `(-foo).zero?` instead of `-foo == 0`.
+001.rb:2:1: C: [Corrected] Style/NumericPredicate: Use `(~foo).zero?` instead of `~foo == 0`.
+002.rb:1:1: C: [Corrected] Style/NumericPredicate: Use `(foo - 1).zero?` instead of `foo - 1 == 0`.
+002.rb:2:1: C: [Corrected] Style/NumericPredicate: Use `(foo - 1).zero?` instead of `0 == foo - 1`.
+005.rb:2:3: C: [Corrected] Style/NumericPredicate: Use `foo.zero?` instead of `foo == 0`.
+006.rb:2:3: C: [Corrected] Style/NumericPredicate: Use `(foo - 1).zero?` instead of `foo - 1 == 0`.
 
 ==> corrected/000.rb 26 <==
 number.zero?
 number.zero?
 
-==> corrected/001.rb 32 <==
+==> corrected/001.rb 26 <==
+(-foo).zero?
+(~foo).zero?
+
+==> corrected/002.rb 32 <==
 (foo - 1).zero?
 (foo - 1).zero?
 
-==> corrected/004.rb 27 <==
+==> corrected/005.rb 27 <==
 def m(foo)
   foo.zero?
 end
 
-==> corrected/005.rb 33 <==
+==> corrected/006.rb 33 <==
 def m(foo)
   (foo - 1).zero?
 end

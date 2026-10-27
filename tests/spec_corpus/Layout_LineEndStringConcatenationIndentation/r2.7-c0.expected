@@ -13,9 +13,9 @@
 026.rb:6:16: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
 027.rb:2:3: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
 028.rb:2:3: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
-028.rb:3:6: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
+029.rb:3:1: C: [Correctable] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
 
-==> autocorrect exit=0 2174 <==
+==> autocorrect exit=0 1922 <==
 005.rb:3:3: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
 005.rb:6:3: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
 005.rb:9:3: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Indent the first part of a string concatenated with backslash.
@@ -29,10 +29,8 @@
 026.rb:4:16: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
 026.rb:6:16: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
 027.rb:2:3: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
-027.rb:3:3: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
 028.rb:2:3: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
-028.rb:3:3: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
-028.rb:3:6: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
+029.rb:3:1: C: [Corrected] Layout/LineEndStringConcatenationIndentation: Align parts of a string concatenated with backslash.
 
 ==> corrected/005.rb 78 <==
 if cond1
@@ -87,4 +85,10 @@ puts 'a' \
 puts 'a' \
      'b' \
      'c'
+
+==> corrected/029.rb 42 <==
+puts 'a' \
+     'b' \
+     'c' \
+     'd'
 

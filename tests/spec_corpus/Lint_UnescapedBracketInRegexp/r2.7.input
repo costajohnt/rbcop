@@ -48,114 +48,132 @@ AllCops:
 ==> 013.rb 14 <==
 /(?<=[<>=:])/
 
-==> 014.rb 6 <==
+==> 014.rb 8 <==
+/[\§]/
+
+==> 015.rb 9 <==
+/[\é]]/
+
+==> 016.rb 6 <==
 %r{]}
 
-==> 015.rb 12 <==
+==> 017.rb 12 <==
 %r{abc]123}
 
-==> 016.rb 13 <==
+==> 018.rb 13 <==
 %r{abc]123}i
 
-==> 017.rb 13 <==
+==> 019.rb 13 <==
 %r{abc]123]}
 
-==> 018.rb 13 <==
+==> 020.rb 13 <==
 %r{abc\]123}
 
-==> 019.rb 10 <==
+==> 021.rb 10 <==
 %r{[abc]}
 
-==> 020.rb 16 <==
+==> 022.rb 16 <==
 %r{(?<=[<>=:])}
 
-==> 021.rb 16 <==
+==> 023.rb 16 <==
 Regexp.new(']')
 
-==> 022.rb 22 <==
+==> 024.rb 22 <==
 Regexp.new('abc]123')
 
-==> 023.rb 27 <==
+==> 025.rb 22 <==
+Regexp.new("abc]123")
+
+==> 026.rb 27 <==
 Regexp.new('abc]123', 'i')
 
-==> 024.rb 23 <==
+==> 027.rb 23 <==
 Regexp.new('abc]123]')
 
-==> 025.rb 23 <==
+==> 028.rb 23 <==
 Regexp.new('abc\]123')
 
-==> 026.rb 20 <==
+==> 029.rb 20 <==
 Regexp.new('[abc]')
 
-==> 027.rb 32 <==
+==> 030.rb 32 <==
 Regexp.new("(?:#{arr[1]}:\s*)")
 
-==> 028.rb 16 <==
+==> 031.rb 21 <==
+Regexp.new("a\\.b]")
+
+==> 032.rb 16 <==
 Regexp.new("+")
 
-==> 029.rb 41 <==
+==> 033.rb 41 <==
 [Regexp.new('+'), Regexp.new('abc]123')]
 
-==> 030.rb 16 <==
+==> 034.rb 16 <==
 Regexp.new("*")
 
-==> 031.rb 41 <==
+==> 035.rb 41 <==
 [Regexp.new('*'), Regexp.new('abc]123')]
 
-==> 032.rb 19 <==
+==> 036.rb 19 <==
 Regexp.new("{42}")
 
-==> 033.rb 44 <==
+==> 037.rb 44 <==
 [Regexp.new('{42}'), Regexp.new('abc]123')]
 
-==> 034.rb 19 <==
+==> 038.rb 19 <==
 Regexp.new("\xff")
 
-==> 035.rb 44 <==
+==> 039.rb 44 <==
 [Regexp.new('\xff'), Regexp.new('abc]123')]
 
-==> 036.rb 20 <==
+==> 040.rb 20 <==
 Regexp.compile(']')
 
-==> 037.rb 26 <==
+==> 041.rb 26 <==
 Regexp.compile('abc]123')
 
-==> 038.rb 31 <==
+==> 042.rb 26 <==
+Regexp.compile("abc]123")
+
+==> 043.rb 31 <==
 Regexp.compile('abc]123', 'i')
 
-==> 039.rb 27 <==
+==> 044.rb 27 <==
 Regexp.compile('abc]123]')
 
-==> 040.rb 27 <==
+==> 045.rb 27 <==
 Regexp.compile('abc\]123')
 
-==> 041.rb 24 <==
+==> 046.rb 24 <==
 Regexp.compile('[abc]')
 
-==> 042.rb 36 <==
+==> 047.rb 36 <==
 Regexp.compile("(?:#{arr[1]}:\s*)")
 
-==> 043.rb 20 <==
+==> 048.rb 25 <==
+Regexp.compile("a\\.b]")
+
+==> 049.rb 20 <==
 Regexp.compile("+")
 
-==> 044.rb 49 <==
+==> 050.rb 49 <==
 [Regexp.compile('+'), Regexp.compile('abc]123')]
 
-==> 045.rb 20 <==
+==> 051.rb 20 <==
 Regexp.compile("*")
 
-==> 046.rb 49 <==
+==> 052.rb 49 <==
 [Regexp.compile('*'), Regexp.compile('abc]123')]
 
-==> 047.rb 23 <==
+==> 053.rb 23 <==
 Regexp.compile("{42}")
 
-==> 048.rb 52 <==
+==> 054.rb 52 <==
 [Regexp.compile('{42}'), Regexp.compile('abc]123')]
 
-==> 049.rb 23 <==
+==> 055.rb 23 <==
 Regexp.compile("\xff")
 
-==> 050.rb 52 <==
+==> 056.rb 52 <==
 [Regexp.compile('\xff'), Regexp.compile('abc]123')]
 

@@ -87,7 +87,21 @@ class A
   end
 end
 
-==> 007.rb 78 <==
+==> 007.rb 157 <==
+class A
+  class << self
+    def one
+      foo.instance_exec do
+        class << self
+          def two
+          end
+        end
+      end
+    end
+  end
+end
+
+==> 008.rb 78 <==
 class Foo
   class << self
     def do_something
@@ -96,7 +110,7 @@ class Foo
   end
 end
 
-==> 008.rb 72 <==
+==> 009.rb 72 <==
 class Foo
   class << self
     def do_something # TODO
@@ -104,7 +118,23 @@ class Foo
   end
 end
 
-==> 009.rb 88 <==
+==> 010.rb 72 <==
+class Foo
+  class << self
+    def do_something
+    end # TODO
+  end
+end
+
+==> 011.rb 73 <==
+class Foo
+  class << self
+    def do_something
+    end; # TODO
+  end
+end
+
+==> 012.rb 88 <==
 class A
   class << self
     def one
@@ -117,20 +147,33 @@ class A
   end
 end
 
-==> 010.rb 55 <==
+==> 013.rb 99 <==
+class A
+  class << self
+    def one
+    end
+
+    def two
+    end
+
+    private :one, :two
+  end
+end
+
+==> 014.rb 55 <==
 class A
   class << self
     attr_reader :one
   end
 end
 
-==> 011.rb 33 <==
+==> 015.rb 33 <==
 class A
   def self.one
   end
 end
 
-==> 012.rb 58 <==
+==> 016.rb 58 <==
 class A
   class << not_self
     def one
@@ -138,11 +181,17 @@ class A
   end
 end
 
-==> 013.rb 59 <==
+==> 017.rb 59 <==
 class A
   class << self
     def self.one
     end
   end
+end
+
+==> 018.rb 48 <==
+class A
+  class << self
+    def b; end; end
 end
 

@@ -1,9 +1,17 @@
-==> offenses exit=1 119 <==
+==> offenses exit=1 308 <==
 000.rb:1:16: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `foo`. Use `+` instead of `+=`.
+001.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `prev`.
+001.rb:2:18: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `prev`.
 
-==> autocorrect exit=0 117 <==
+==> autocorrect exit=0 302 <==
 000.rb:1:16: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `foo`. Use `+` instead of `+=`.
+001.rb:1:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `prev`.
+001.rb:2:18: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `prev`.
 
 ==> corrected/000.rb 26 <==
 do_something { foo + it }
+
+==> corrected/001.rb 26 <==
+nil
+[1, 2, 3].each { it }
 

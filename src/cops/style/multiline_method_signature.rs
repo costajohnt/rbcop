@@ -36,9 +36,13 @@ impl Cop for MultilineMethodSignature {
         if opening_line == closing_line {
             return;
         }
+        // 1.92: a multiline argument (e.g. a default value) cannot be joined onto one line.
+        if args.iter().any(|a| src.line_of(a.location().start_offset()) != src.line_of(a.location().end_offset())) {
+            return;
+        }
         if let Some(max) = max_line_length(cx) {
-            let line = src.lines.get(opening_line - 1).copied().unwrap_or("");
-            let indentation = line.chars().take_while(|&c| is_space(c)).count();
+            // 1.92: the def's own column, not the line's indentation.
+            let indentation = src.column(start);
             let mut width = 0;
             let mut in_space = false;
             for c in src.slice(start, args_end).chars() {

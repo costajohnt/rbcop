@@ -38,3 +38,9 @@ x if not a = 5
 ==> 010.rb 11 <==
 not a || b
 
+==> 011.rb 13 <==
+x = (not ~a)
+
+==> 012.rb 15 <==
+not (~a).zero?
+

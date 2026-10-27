@@ -543,7 +543,6 @@ fn investigate(
 ) -> (Vec<Offense>, Option<Corrector>, Vec<Offense>) {
     let text: &str = shared;
     let raw_text = raw_text.unwrap_or(text);
-    let errors_before = file_errors_len();
     let warned_before = directives::warnings_len();
     COMMENTS_READ.with(|r| r.set(false));
     let version = target_ruby::prism_version(cfg.target_ruby);
@@ -833,7 +832,14 @@ fn investigate(
         return (out, None, Vec::new());
     }
 
-    let opted_in = directives::opted_in(&src);
+    // Team#roundup_relevant_cops asks CommentConfig#opt_in_cops before any cop runs; its `no
+    // department given` warnings print then.
+    let (opted_in, opt_in_warnings) = directives::opted_in(&src);
+    if warn {
+        FILE_ERRORS.with(|e| e.borrow_mut().extend(opt_in_warnings.into_iter().map(|w| (None, w, true))));
+    }
+    // What the investigation's cop errors and CommentConfig warnings come after.
+    let errors_before = file_errors_len();
     let only_redundant = matches!(redundant, Redundant::Only(_));
     // Every file asks this of every cop: each cop's plugin is looked up once per run (#388).
     static PLUGINS: std::sync::LazyLock<Vec<Option<&'static crate::helpers::cop_registry::NativePlugin>>> =
@@ -1078,6 +1084,11 @@ fn investigate(
             .severity
             .unwrap_or_else(|| if o.severity == Severity::Convention { default_severity(o.cop) } else { o.severity });
         o.correctable &= autocorrect_allowed(c);
+        // Base#new_offense: `AutoCorrect: false` reports no corrections; the corrector stays for
+        // an editor's quick fix.
+        if !crate::helpers::lsp::serving() && disabled_autocorrect(c) {
+            o.edits = None;
+        }
     }
     // CommentConfig#cop_disabled_line_ranges analyzes lazily and the `no department given`
     // warnings print then: during the investigation when a cop reads it (comment_config_read),
@@ -1202,12 +1213,13 @@ thread_local! {
 }
 
 /// The errors `file_error` recorded on this thread since the last call (one file's, in order,
-/// with the directive warnings printed among them), the errors now kept for the summary.
-pub fn take_file_errors() -> Vec<String> {
+/// with the directive warnings printed among them, flagged `true`), the errors now kept for the
+/// summary.
+pub fn take_file_errors() -> Vec<(String, bool)> {
     let entries = FILE_ERRORS.with(|e| std::mem::take(&mut *e.borrow_mut()));
     let errors = entries.iter().filter(|e| !e.2).map(|e| e.1.clone());
     ERRORS.lock().unwrap_or_else(|e| e.into_inner()).extend(errors);
-    entries.into_iter().map(|e| e.1).collect()
+    entries.into_iter().map(|e| (e.1, e.2)).collect()
 }
 
 fn file_errors_len() -> usize {
@@ -1504,11 +1516,17 @@ pub fn profile() -> Vec<(&'static str, std::time::Duration, u64)> {
 /// Cop::Base#use_corrector: an offense with a corrector is only `[Correctable]` when the cop's
 /// `AutoCorrect` is `always`/`true` (the default) or `contextual` (not under `--editor-mode`);
 /// `false`/`disabled` turn it off.
+/// Base#disabled_autocorrect?: `AutoCorrect: disabled`, or `false`.
+fn disabled_autocorrect(cfg: &CopConfig) -> bool {
+    use crate::config::value::Value;
+    matches!(cfg.get("AutoCorrect"), Some(Value::Bool(false))) || cfg.str("AutoCorrect") == Some("disabled")
+}
+
 fn autocorrect_allowed(cfg: &CopConfig) -> bool {
     use crate::config::value::Value;
     match cfg.get("AutoCorrect") {
         None | Some(Value::Bool(true)) => true,
-        Some(Value::Str(s)) => s == "always" || (s == "contextual" && !crate::helpers::lsp::enabled()),
+        Some(Value::Str(s)) => s == "always" || (s == "contextual" && !crate::helpers::lsp::holds_contextual()),
         _ => false,
     }
 }

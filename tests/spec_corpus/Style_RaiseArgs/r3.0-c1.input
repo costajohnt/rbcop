@@ -1,0 +1,19 @@
+==> .rubocop.yml 151 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Style/RaiseArgs:
+  EnforcedStyle: exploded
+
+==> 000.rb 41 <==
+private def foo = raise(Ex.new('error'))
+
+==> 001.rb 46 <==
+private def self.foo = raise(Ex.new('error'))
+
+==> 002.rb 33 <==
+def foo = raise(Ex.new('error'))
+

@@ -74,30 +74,90 @@ foo = if condition
       else
       end
 
-==> 012.rb 31 <==
+==> 012.rb 51 <==
+def do_something
+  foo = condition ? foo : bar
+end
+
+==> 013.rb 53 <==
+if other_condition
+  foo = condition ? foo : bar
+end
+
+==> 014.rb 72 <==
+case other
+when 1
+  do_something
+else
+  foo = condition ? foo : bar
+end
+
+==> 015.rb 56 <==
+case other
+in Integer
+  foo = condition ? foo : bar
+end
+
+==> 016.rb 49 <==
+for x in items
+  foo = condition ? foo : bar
+end
+
+==> 017.rb 76 <==
+begin
+  foo = condition ? foo : bar
+rescue StandardError
+  do_something
+end
+
+==> 018.rb 92 <==
+def do_something
+  foo = condition ? foo : bar
+rescue StandardError
+  do_something_else
+end
+
+==> 019.rb 48 <==
+do_something rescue foo = condition ? foo : bar
+
+==> 020.rb 50 <==
+if foo = condition ? foo : bar
+  do_something
+end
+
+==> 021.rb 42 <==
+do_something(foo = condition ? foo : bar)
+
+==> 022.rb 34 <==
+baz = foo = condition ? foo : bar
+
+==> 023.rb 46 <==
+do_something if (foo = condition ? foo : bar)
+
+==> 024.rb 31 <==
 @foo = condition ? @bar : @foo
 
-==> 013.rb 34 <==
+==> 025.rb 34 <==
 @@foo = condition ? @@bar : @@foo
 
-==> 014.rb 31 <==
+==> 026.rb 31 <==
 $foo = condition ? $bar : $foo
 
-==> 015.rb 28 <==
+==> 027.rb 28 <==
 foo = condition ? bar : baz
 
-==> 016.rb 41 <==
+==> 028.rb 41 <==
 foo = if condition
         bar
       end
 
-==> 017.rb 15 <==
+==> 029.rb 15 <==
 foo, bar = baz
 
-==> 018.rb 67 <==
+==> 030.rb 67 <==
 foo.do_something = condition ? foo.do_something : bar.do_something
 
-==> 019.rb 70 <==
+==> 031.rb 70 <==
 foo = if condition
   foo
 elsif another_condition
@@ -106,7 +166,7 @@ else
   baz
 end
 
-==> 020.rb 106 <==
+==> 032.rb 106 <==
 foo = if condition
         bar
       elsif another_condition
@@ -115,7 +175,7 @@ foo = if condition
         baz
       end
 
-==> 021.rb 106 <==
+==> 033.rb 106 <==
 foo = if condition
         bar
       elsif another_condition

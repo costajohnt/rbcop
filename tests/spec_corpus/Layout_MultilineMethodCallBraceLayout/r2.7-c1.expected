@@ -1,18 +1,20 @@
-==> offenses exit=1 846 <==
+==> offenses exit=1 987 <==
 000.rb:7:1: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument.
 001.rb:5:1: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument.
 002.rb:3:1: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument.
 003.rb:4:1: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument.
 004.rb:3:1: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument.
-005.rb:3:1: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument.
+005.rb:5:1: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument.
+006.rb:3:1: C: [Correctable] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument.
 
-==> autocorrect exit=0 834 <==
+==> autocorrect exit=0 973 <==
 000.rb:7:1: C: [Corrected] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument.
 001.rb:5:1: C: [Corrected] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument.
 002.rb:3:1: C: [Corrected] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument.
 003.rb:4:1: C: [Corrected] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument.
 004.rb:3:1: C: [Corrected] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument.
-005.rb:3:1: C: [Corrected] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument.
+005.rb:5:1: C: [Corrected] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument.
+006.rb:3:1: C: [Corrected] Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument.
 
 ==> corrected/000.rb 31 <==
 foo(a,
@@ -45,7 +47,13 @@ b)
 foo(a, # a
 b,) # b
 
-==> corrected/005.rb 17 <==
+==> corrected/005.rb 35 <==
+foo(
+  {
+    bar: 1 # comment
+  })
+
+==> corrected/006.rb 17 <==
 foo&.bar(
   baz)
 

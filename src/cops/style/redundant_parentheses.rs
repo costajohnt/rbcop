@@ -414,7 +414,31 @@ impl<'pr> Check<'_, 'pr> {
                 return true;
             }
         }
-        self.parent_is(|p| p.as_range_node().is_some())
+        self.parent_is(|p| p.as_range_node().is_some()) 
+            || self.node.as_parentheses_node().is_some_and(|p| {
+                let close = p.closing_loc();
+                parentheses_corrector::heredoc_strands_code_after_close_paren(
+                    self.src,
+                    kids.last(),
+                    (close.start_offset(), close.end_offset()),
+                )
+            })
+    }
+
+    /// `setter_in_condition?`: `if (foo.bar = baz)` is a safe assignment, not redundant parentheses.
+    fn setter_in_condition(&self, node: &Node) -> bool {
+        if !node.as_call_node().is_some_and(|c| c.equal_loc().is_some()) {
+            return false;
+        }
+        let Some(p) = self.parent() else { return false };
+        let condition = match p {
+            Node::IfNode { .. } => Some(p.as_if_node().unwrap().predicate()),
+            Node::UnlessNode { .. } => Some(p.as_unless_node().unwrap().predicate()),
+            Node::WhileNode { .. } => p.as_while_node().filter(|w| !w.is_begin_modifier()).map(|w| w.predicate()),
+            Node::UntilNode { .. } => p.as_until_node().filter(|w| !w.is_begin_modifier()).map(|w| w.predicate()),
+            _ => None,
+        };
+        condition.is_some_and(|c| range(&c) == self.me())
     }
 
     fn ignore_syntax(&self) -> bool {
@@ -620,6 +644,9 @@ impl<'pr> Check<'_, 'pr> {
             }
             return self.method_call_with_redundant_parentheses(&n).then_some("a unary operation");
         }
+        if self.setter_in_condition(node) {
+            return None;
+        }
         self.method_call_with_redundant_parentheses(node).then_some("a method call")
     }
 
@@ -675,7 +702,7 @@ fn plan(src: &Source, target: &Node, anc: &[Node], parent: Option<usize>) -> Opt
         }
     };
     let kids = begin_children(target);
-    let last = kids.last().map(range);
+    let last = kids.last();
     let heredoc = kids.last().filter(|n| is_heredoc(n)).map(range);
     let question = parent
         .and_then(|i| anc[i].as_if_node())
@@ -725,7 +752,7 @@ impl Cop for RedundantParentheses {
                 cx.src,
                 (o.start_offset(), o.end_offset()),
                 (c.start_offset(), c.end_offset()),
-                Some(range(&e)),
+                Some(&e),
                 None,
                 None,
             );

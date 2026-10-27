@@ -1,0 +1,24 @@
+{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"t","version":"1"}}}
+{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"path":"lib"}}}
+{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"path":"lib/bc.rb","max_offenses_per_cop":1}}}
+{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"=begin=end\nputs( 1)\n"}}}
+{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"=begin=end\nputs( 1)\n","only":["Layout"]}}}
+{"jsonrpc":"2.0","id":6,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"path":"lib","safety":true,"dry_run":true}}}
+{"jsonrpc":"2.0","id":7,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"source_code":"=begin=end\nputs( 1)\n","safety":true}}}
+{"jsonrpc":"2.0","id":8,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"source_code":"=begin=end\nputs( 1)\n","safety":true,"except":["Style/BlockComments"]}}}
+{"jsonrpc":"2.0","id":9,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"path":"lib","safety":false}}}
+{"jsonrpc":"2.0","id":10,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"path":"lib"}}}
+{"jsonrpc":"2.0","id":11,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"path":"amb"}}}
+{"jsonrpc":"2.0","id":12,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"# frozen_string_literal: true\n\n# rubocop:disable Output\nputs( 1)\n"}}}
+{"jsonrpc":"2.0","id":13,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"path":"amb/a.rb","safety":false}}}
+{"jsonrpc":"2.0","id":14,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"source_code":"# frozen_string_literal: true\n\n# rubocop:disable Output\nputs( 1)\n","safety":true}}}
+{"jsonrpc":"2.0","id":15,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"source_code":"puts( 3)\n","safety":true,"path":"d.rb"}}}
+{"jsonrpc":"2.0","id":16,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":["Rails/Output","RSpec/Output","Output"]}}}
+{"jsonrpc":"2.0","id":17,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":["Rails/Output"],"path":"app/x.rb"}}}
+{"jsonrpc":"2.0","id":18,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"path":"lib/b.rb","only":["Output"]}}}
+{"jsonrpc":"2.0","id":19,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"path":"lib/b.rb","only":["Rails/Output","SpaceInsideParens"]}}}
+{"jsonrpc":"2.0","id":20,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"path":"loop","safety":true,"contextual":true,"only":["Layout/DefEndAlignment","Layout/TrailingWhitespace","Style/EmptyMethod","Style/Semicolon"],"dry_run":true}}}
+{"jsonrpc":"2.0","id":21,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"path":"loop","safety":true,"contextual":true,"only":["Layout/DefEndAlignment","Layout/TrailingWhitespace","Style/EmptyMethod","Style/Semicolon"]}}}
+{"jsonrpc":"2.0","id":22,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"path":"loop","safety":true}}}
+{"jsonrpc":"2.0","id":23,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"source_code":"class Foo\n  memoize \\\n  def do_something\n  end\nend\n","safety":true,"contextual":true,"only":["Layout/DefEndAlignment","Layout/TrailingWhitespace","Style/EmptyMethod","Style/Semicolon"]}}}
+{"jsonrpc":"2.0","id":24,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"path":"loop"}}}

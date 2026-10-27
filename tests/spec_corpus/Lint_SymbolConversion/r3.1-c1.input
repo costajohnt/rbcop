@@ -1,0 +1,13 @@
+==> .rubocop.yml 159 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Lint/SymbolConversion:
+  EnforcedStyle: consistent
+
+==> 000.rb 35 <==
+do_something('a-b': 1, c: 2, foo:)
+

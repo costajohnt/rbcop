@@ -91,11 +91,18 @@ impl Data {
         let tokens = translated(src);
         let aligned_comment_lines =
             src.comments.iter().filter(|c| src.begins_its_line(c.start)).map(|c| src.line_of(c.start)).collect();
+        // first_operator_on_line: the first assignment or comparison operator of each line.
+        let mut first_operator: HashMap<usize, usize> = HashMap::new();
+        for t in tokens.iter().filter(|t| assignment_or_comparison(t)) {
+            first_operator.entry(src.line_of(t.start)).or_insert(t.start);
+        }
         let mut seen = HashSet::new();
+        // The first `=` of each line, left out (1.92) when an operator comes before it on its line.
         let assignment_tokens: Vec<Token> = tokens
             .iter()
             .filter(|t| equal_sign(t) && !facts.def_equals.contains(&t.start))
             .filter(|t| seen.insert(src.line_of(t.start)))
+            .filter(|t| first_operator.get(&src.line_of(t.start)) == Some(&t.start))
             .copied()
             .collect();
         let assignment_lines: HashSet<usize> = assignment_tokens.iter().map(|t| src.line_of(t.start)).collect();

@@ -23,7 +23,11 @@ impl Cop for EmptyMethod {
             return;
         }
         let compact = cx.cfg.str("EnforcedStyle") != Some("expanded");
-        if (compact && first == last) || (!compact && first != last) {
+        // compact?: an argument spanning several lines can't go on one line anyway.
+        let multiline_arg = def.parameters().map(|p| parameter_nodes(&p)).unwrap_or_default().iter().any(|a| {
+            cx.src.line_of(a.location().start_offset()) != cx.src.line_of(a.location().end_offset())
+        });
+        if (compact && (first == last || multiline_arg)) || (!compact && first != last) {
             return;
         }
         if compact

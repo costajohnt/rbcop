@@ -29,79 +29,111 @@ else
   c
 end
 
-==> 003.rb 42 <==
-if b
-  # Important note.
-  b
+==> 003.rb 100 <==
+if foo.bar
+  x = foo.bar
 else
-  c
+  x = if foo.bar
+        foo.bar
+      else
+        baz
+      end
 end
 
 ==> 004.rb 42 <==
 if b
+  # Important note.
+  b
+else
+  c
+end
+
+==> 005.rb 42 <==
+if b
   b
 else
   # Important note.
   c
 end
 
-==> 005.rb 70 <==
+==> 006.rb 70 <==
 if @cache[key]
   @cache[key]
 else
   @cache[key] = heavy_load[key]
 end
 
-==> 006.rb 32 <==
+==> 007.rb 32 <==
 if b
   b
 else
   raise 'foo'
 end
 
-==> 007.rb 40 <==
+==> 008.rb 40 <==
 if b
   b
 else
   ('foo' if $VERBOSE)
 end
 
-==> 008.rb 42 <==
+==> 009.rb 42 <==
 if b
   b
 else
   (('foo' if $VERBOSE))
 end
 
-==> 009.rb 55 <==
+==> 010.rb 55 <==
 if b
   b
 else
   do_something foo, bar, key: :value
 end
 
-==> 010.rb 26 <==
+==> 011.rb 26 <==
 if b
   b
 else
   c + d
 end
 
-==> 011.rb 29 <==
+==> 012.rb 29 <==
 if b
   b
 else
   (c || d)
 end
 
-==> 012.rb 30 <==
+==> 013.rb 34 <==
+x = if b then b else return 1 end
+
+==> 014.rb 32 <==
+x = if b then b else next 1 end
+
+==> 015.rb 33 <==
+x = if b then b else break 1 end
+
+==> 016.rb 33 <==
+x = if b then b else yield 1 end
+
+==> 017.rb 33 <==
+x = if b then b else super 1 end
+
+==> 018.rb 34 <==
+x = if b then b else yield(1) end
+
+==> 019.rb 31 <==
+x = if b then b else not c end
+
+==> 020.rb 30 <==
 if b
   b
 else
   c while d
 end
 
-==> 013.rb 32 <==
+==> 021.rb 32 <==
 if b
   b
 else
@@ -109,14 +141,14 @@ else
     z)
 end
 
-==> 014.rb 63 <==
+==> 022.rb 63 <==
 ary << if foo
          foo
        else
          bar
        end
 
-==> 015.rb 26 <==
+==> 023.rb 26 <==
 if b
   b
 else
@@ -124,39 +156,39 @@ else
   d
 end
 
-==> 016.rb 28 <==
+==> 024.rb 28 <==
 if a
   a
 elsif cond
   d
 end
 
-==> 017.rb 11 <==
+==> 025.rb 11 <==
 bar if bar
 
-==> 018.rb 15 <==
+==> 026.rb 15 <==
 bar unless bar
 
-==> 019.rb 35 <==
+==> 027.rb 35 <==
 if do_something
   do_something
 end
 
-==> 020.rb 30 <==
+==> 028.rb 30 <==
 if a
   a
 else
   b ? c : d
 end
 
-==> 021.rb 29 <==
+==> 029.rb 29 <==
 if foo
   foo
 else
   1..2
 end
 
-==> 022.rb 71 <==
+==> 030.rb 71 <==
 def test
   if foo
     @value = foo
@@ -165,112 +197,154 @@ def test
   end
 end
 
-==> 023.rb 46 <==
+==> 031.rb 46 <==
 if foo
   value = foo
 else
   value = 'bar'
 end
 
-==> 024.rb 48 <==
+==> 032.rb 48 <==
 if foo
   @value = foo
 else
   @value = 'bar'
 end
 
-==> 025.rb 50 <==
+==> 033.rb 50 <==
 if foo
   @@value = foo
 else
   @@value = 'bar'
 end
 
-==> 026.rb 48 <==
+==> 034.rb 48 <==
 if foo
   $value = foo
 else
   $value = 'bar'
 end
 
-==> 027.rb 46 <==
+==> 035.rb 46 <==
 if foo
   CONST = foo
 else
   CONST = 'bar'
 end
 
-==> 028.rb 52 <==
+==> 036.rb 52 <==
 if foo
   test.bar = foo
 else
   test.bar = 'baz'
 end
 
-==> 029.rb 48 <==
+==> 037.rb 48 <==
 if foo
   @value - foo
 else
   @value - 'bar'
 end
 
-==> 030.rb 37 <==
+==> 038.rb 47 <==
+if foo
+  stack << foo
+else
+  stack << :new
+end
+
+==> 039.rb 47 <==
+if foo
+  stack == foo
+else
+  stack == :new
+end
+
+==> 040.rb 45 <==
+if foo
+  stack < foo
+else
+  stack < :new
+end
+
+==> 041.rb 47 <==
+if foo
+  stack =~ foo
+else
+  stack =~ :new
+end
+
+==> 042.rb 50 <==
+if foo
+  @value.-(foo)
+else
+  @value.-('bar')
+end
+
+==> 043.rb 30 <==
+if a + b
+  a + b
+else
+  c
+end
+
+==> 044.rb 37 <==
 if foo
   bar foo
 else
   bar 1..2
 end
 
-==> 031.rb 49 <==
+==> 045.rb 49 <==
 if foo
   bar foo
 else
   bar({ baz => quux })
 end
 
-==> 032.rb 44 <==
+==> 046.rb 44 <==
 if foo
   bar foo
 else
   bar baz => quux
 end
 
-==> 033.rb 39 <==
+==> 047.rb 39 <==
 if foo
   bar(foo)
 else
   bar(1..2)
 end
 
-==> 034.rb 37 <==
+==> 048.rb 37 <==
 if foo
   bar(foo)
 else
   bar({})
 end
 
-==> 035.rb 39 <==
+==> 049.rb 39 <==
 if foo
   bar(foo)
 else
   bar(*baz)
 end
 
-==> 036.rb 40 <==
+==> 050.rb 40 <==
 if foo
   bar(foo)
 else
   bar(**baz)
 end
 
-==> 037.rb 39 <==
+==> 051.rb 39 <==
 if foo
   bar(foo)
 else
   bar(&baz)
 end
 
-==> 038.rb 79 <==
+==> 052.rb 79 <==
 def do_something(foo, ...)
   if foo
     bar(foo)
@@ -279,49 +353,49 @@ def do_something(foo, ...)
   end
 end
 
-==> 039.rb 53 <==
+==> 053.rb 53 <==
 if foo.nil?
   @value = foo
 else
   @value = 'bar'
 end
 
-==> 040.rb 45 <==
+==> 054.rb 45 <==
 if foo
   @foo = foo
 else
   @baz = 'quux'
 end
 
-==> 041.rb 68 <==
+==> 055.rb 68 <==
 if foo.nil?
   test.bar foo, bar
 else
   test.bar = 'baz', 'quux'
 end
 
-==> 042.rb 36 <==
+==> 056.rb 36 <==
 if foo
   bar[foo]
 else
   bar[1]
 end
 
-==> 043.rb 38 <==
+==> 057.rb 38 <==
 if x
   X.find(x)
 else
   X.find(y)
 end
 
-==> 044.rb 38 <==
+==> 058.rb 38 <==
 if x
   X.find(x)
 else
   Y.find(y)
 end
 
-==> 045.rb 57 <==
+==> 059.rb 57 <==
 variable = do_something
 
 if variable
@@ -330,105 +404,105 @@ else
   a
 end
 
-==> 046.rb 33 <==
+==> 060.rb 33 <==
 if @variable
   true
 else
   a
 end
 
-==> 047.rb 34 <==
+==> 061.rb 34 <==
 if @@variable
   true
 else
   a
 end
 
-==> 048.rb 33 <==
+==> 062.rb 33 <==
 if $variable
   true
 else
   a
 end
 
-==> 049.rb 29 <==
+==> 063.rb 29 <==
 if CONST
   true
 else
   a
 end
 
-==> 050.rb 31 <==
+==> 064.rb 31 <==
 if a[:key]
   true
 else
   a
 end
 
-==> 051.rb 31 <==
+==> 065.rb 31 <==
 if a.zero?
   true
 else
   a
 end
 
-==> 052.rb 32 <==
+==> 066.rb 32 <==
 if a&.zero?
   true
 else
   a
 end
 
-==> 053.rb 34 <==
+==> 067.rb 34 <==
 if foo? arg
   true
 else
   bar
 end
 
-==> 054.rb 35 <==
+==> 068.rb 35 <==
 if foo?(arg)
   true
 else
   bar
 end
 
-==> 055.rb 39 <==
+==> 069.rb 39 <==
 if obj&.foo? arg
   true
 else
   bar
 end
 
-==> 056.rb 33 <==
+==> 070.rb 33 <==
 if !a[:key]
   a
 else
   false
 end
 
-==> 057.rb 42 <==
+==> 071.rb 42 <==
 if b.nil?
   true
 else
   'hello world'
 end
 
-==> 058.rb 40 <==
+==> 072.rb 40 <==
 if c.empty?
   true
 else
   [1, 2, 3]
 end
 
-==> 059.rb 41 <==
+==> 073.rb 41 <==
 if a.zero?
   true # comment
 else
   a
 end
 
-==> 060.rb 43 <==
+==> 074.rb 43 <==
 if a.zero?
   # comment
   true
@@ -436,14 +510,14 @@ else
   a
 end
 
-==> 061.rb 41 <==
+==> 075.rb 41 <==
 if a.zero?
   true
 else
   a # comment
 end
 
-==> 062.rb 43 <==
+==> 076.rb 43 <==
 if a.zero?
   true
 else
@@ -451,150 +525,150 @@ else
   a
 end
 
-==> 063.rb 33 <==
+==> 077.rb 33 <==
 if a.zero?
   'true'
 else
   a
 end
 
-==> 064.rb 33 <==
+==> 078.rb 33 <==
 if a.zero?
   "true"
 else
   a
 end
 
-==> 065.rb 32 <==
+==> 079.rb 32 <==
 if a.zero?
   false
 else
   a
 end
 
-==> 066.rb 28 <==
+==> 080.rb 28 <==
 if a.zero?
   1
 else
   a
 end
 
-==> 067.rb 27 <==
+==> 081.rb 27 <==
 if a.zero?
   true
 else
 end
 
-==> 068.rb 24 <==
+==> 082.rb 24 <==
 if a.zero?
 else
   a
 end
 
-==> 069.rb 28 <==
+==> 083.rb 28 <==
 if a.zero?
   a
 else
   b
 end
 
-==> 070.rb 9 <==
+==> 084.rb 9 <==
 b ? d : c
-==> 071.rb 34 <==
+==> 085.rb 34 <==
 b ? b : (raise 'foo' if $VERBOSE)
 
-==> 072.rb 10 <==
+==> 086.rb 10 <==
 b ? b : c
 
-==> 073.rb 26 <==
+==> 087.rb 26 <==
 test ? test : Proc.new {}
 
-==> 074.rb 14 <==
+==> 088.rb 14 <==
 b.x ? b.x : c
 
-==> 075.rb 12 <==
+==> 089.rb 12 <==
 @b ? @b : c
 
-==> 076.rb 20 <==
+==> 090.rb 20 <==
 a = b(x) ? b(x) : c
 
-==> 077.rb 26 <==
+==> 091.rb 26 <==
 a = b[:x] ? b[:x] : b[:y]
 
-==> 078.rb 69 <==
+==> 092.rb 69 <==
 time_period = updated_during ? updated_during : 2.days.ago..Time.now
 
-==> 079.rb 70 <==
+==> 093.rb 70 <==
 time_period = updated_during ? updated_during : 2.days.ago...Time.now
 
-==> 080.rb 27 <==
+==> 094.rb 27 <==
 foo ? bar(foo) : bar(quux)
 
-==> 081.rb 45 <==
+==> 095.rb 45 <==
 foo ? foo(foo).bar(foo) : foo(foo).bar(quux)
 
-==> 082.rb 31 <==
+==> 096.rb 31 <==
 if a
   a
 else
   b rescue c
 end
 
-==> 083.rb 28 <==
+==> 097.rb 28 <==
 if a
   a
 else
   b and c
 end
 
-==> 084.rb 19 <==
+==> 098.rb 19 <==
 a.zero? ? true : a
 
-==> 085.rb 19 <==
+==> 099.rb 19 <==
 a.zero? ? true : 5
 
-==> 086.rb 28 <==
+==> 100.rb 28 <==
 a.zero? ? true : 'a string'
 
-==> 087.rb 31 <==
+==> 101.rb 31 <==
 something = a.zero? ? true : a
 
-==> 088.rb 26 <==
+==> 102.rb 26 <==
 b.nil? ? true : [1, 2, 3]
 
-==> 089.rb 30 <==
+==> 103.rb 30 <==
 something = a.nil? ? true : a
 
-==> 090.rb 21 <==
+==> 104.rb 21 <==
 a.zero? ? 'true' : a
 
-==> 091.rb 21 <==
+==> 105.rb 21 <==
 a.zero? ? "true" : a
 
-==> 092.rb 20 <==
+==> 106.rb 20 <==
 a.zero? ? false : a
 
-==> 093.rb 16 <==
+==> 107.rb 16 <==
 a.zero? ? 1 : a
 
-==> 094.rb 16 <==
+==> 108.rb 16 <==
 a.zero? ? a : b
 
-==> 095.rb 26 <==
+==> 109.rb 26 <==
 unless a
   b
 else
   c
 end
 
-==> 096.rb 32 <==
+==> 110.rb 32 <==
 unless b
   y(x, z)
 else
   b
 end
 
-==> 097.rb 30 <==
+==> 111.rb 30 <==
 unless b
   c
   d

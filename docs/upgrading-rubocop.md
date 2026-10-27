@@ -126,6 +126,10 @@ Layout/MultilineMethodCallIndentation and Lint/UselessAssignment. Outside cops: 
 and options, and runner, cache, LSP and target-Ruby lookup changes. Plugin pins are unaffected
 (rubocop-capybara moved to 3.1.0, `rubocop ~> 1.89`, in #673).
 
+The integration branch is `feat/rubocop-1.92.1` (version bumped, everything re-recorded); its
+port worklist, with the failing tests, per-cop corpus diffs and the port batches, is
+docs/upgrade-1.92.1-status.md.
+
 ### Gate environments for 1.92.1
 
 The integration branch for #299 bumps `RUBOCOP_VERSION` to 1.92.1 first and gates against the new

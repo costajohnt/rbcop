@@ -18,9 +18,14 @@ Style/HashSyntax:
 ==> 001.rb 27 <==
 {foo:, bar: bar, baz: qux}
 
-==> 002.rb 21 <==
-{foo: bar, bar: foo}
+==> 002.rb 60 <==
+def do_something(if:, next:, bar:)
+  {if:, next:, bar:}
+end
 
 ==> 003.rb 21 <==
+{foo: bar, bar: foo}
+
+==> 004.rb 21 <==
 {foo: foo, bar: bar}
 

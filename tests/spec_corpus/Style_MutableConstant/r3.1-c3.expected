@@ -1,0 +1,9 @@
+==> offenses exit=1 99 <==
+000.rb:1:11: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+
+==> autocorrect exit=0 97 <==
+000.rb:1:11: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+
+==> corrected/000.rb 43 <==
+CONST = { foo: foo.freeze, bar: 1 }.freeze
+

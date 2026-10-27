@@ -52,14 +52,20 @@ module MyModule
   singleton_methods.each { private(_1) }
 end
 
-==> 008.rb 49 <==
+==> 008.rb 55 <==
+class Test
+  names = %i[foo bar]
+  private(*names)
+end
+
+==> 009.rb 49 <==
 class Test
   private def foo; end
 
   private
 end
 
-==> 009.rb 65 <==
+==> 010.rb 65 <==
 class Test
   # comment
   private def foo
@@ -67,52 +73,52 @@ class Test
   end
 end
 
-==> 010.rb 64 <==
+==> 011.rb 64 <==
 class Test
   private :inspect if METHODS.include?(:inspect)
 end
 
-==> 011.rb 90 <==
+==> 012.rb 90 <==
 class Test
   private get_method_name if get_method_name =~ /a/
   private def bar; end
 end
 
-==> 012.rb 150 <==
+==> 013.rb 150 <==
 class Test
   private get_method_name_1 if get_method_name_1 =~ /a/
   private def bar; end
   private get_method_name_2 if get_method_name_2 =~ /b/
 end
 
-==> 013.rb 40 <==
+==> 014.rb 40 <==
 class Foo
   foo
   bar(key: private)
 end
 
-==> 014.rb 40 <==
+==> 015.rb 40 <==
 class Test
   protected def foo; end
 end
 
-==> 015.rb 23 <==
+==> 016.rb 23 <==
 protected def foo; end
 
-==> 016.rb 27 <==
+==> 017.rb 27 <==
 class Test
   protected
 end
 
-==> 017.rb 10 <==
+==> 018.rb 10 <==
 protected
 
-==> 018.rb 33 <==
+==> 019.rb 33 <==
 class Test
   protected # hey
 end
 
-==> 019.rb 120 <==
+==> 020.rb 120 <==
 class TestOne
   protected
 end
@@ -125,24 +131,30 @@ class TestThree
   protected def foo; end
 end
 
-==> 020.rb 76 <==
+==> 021.rb 76 <==
 module MyModule
   singleton_methods.each { |method| protected(method) }
 end
 
-==> 021.rb 63 <==
+==> 022.rb 63 <==
 module MyModule
   singleton_methods.each { protected(_1) }
 end
 
-==> 022.rb 53 <==
+==> 023.rb 57 <==
+class Test
+  names = %i[foo bar]
+  protected(*names)
+end
+
+==> 024.rb 53 <==
 class Test
   protected def foo; end
 
   protected
 end
 
-==> 023.rb 67 <==
+==> 025.rb 67 <==
 class Test
   # comment
   protected def foo
@@ -150,52 +162,52 @@ class Test
   end
 end
 
-==> 024.rb 66 <==
+==> 026.rb 66 <==
 class Test
   protected :inspect if METHODS.include?(:inspect)
 end
 
-==> 025.rb 94 <==
+==> 027.rb 94 <==
 class Test
   protected get_method_name if get_method_name =~ /a/
   protected def bar; end
 end
 
-==> 026.rb 156 <==
+==> 028.rb 156 <==
 class Test
   protected get_method_name_1 if get_method_name_1 =~ /a/
   protected def bar; end
   protected get_method_name_2 if get_method_name_2 =~ /b/
 end
 
-==> 027.rb 42 <==
+==> 029.rb 42 <==
 class Foo
   foo
   bar(key: protected)
 end
 
-==> 028.rb 37 <==
+==> 030.rb 37 <==
 class Test
   public def foo; end
 end
 
-==> 029.rb 20 <==
+==> 031.rb 20 <==
 public def foo; end
 
-==> 030.rb 24 <==
+==> 032.rb 24 <==
 class Test
   public
 end
 
-==> 031.rb 7 <==
+==> 033.rb 7 <==
 public
 
-==> 032.rb 30 <==
+==> 034.rb 30 <==
 class Test
   public # hey
 end
 
-==> 033.rb 111 <==
+==> 035.rb 111 <==
 class TestOne
   public
 end
@@ -208,24 +220,30 @@ class TestThree
   public def foo; end
 end
 
-==> 034.rb 73 <==
+==> 036.rb 73 <==
 module MyModule
   singleton_methods.each { |method| public(method) }
 end
 
-==> 035.rb 60 <==
+==> 037.rb 60 <==
 module MyModule
   singleton_methods.each { public(_1) }
 end
 
-==> 036.rb 47 <==
+==> 038.rb 54 <==
+class Test
+  names = %i[foo bar]
+  public(*names)
+end
+
+==> 039.rb 47 <==
 class Test
   public def foo; end
 
   public
 end
 
-==> 037.rb 64 <==
+==> 040.rb 64 <==
 class Test
   # comment
   public def foo
@@ -233,52 +251,52 @@ class Test
   end
 end
 
-==> 038.rb 63 <==
+==> 041.rb 63 <==
 class Test
   public :inspect if METHODS.include?(:inspect)
 end
 
-==> 039.rb 88 <==
+==> 042.rb 88 <==
 class Test
   public get_method_name if get_method_name =~ /a/
   public def bar; end
 end
 
-==> 040.rb 147 <==
+==> 043.rb 147 <==
 class Test
   public get_method_name_1 if get_method_name_1 =~ /a/
   public def bar; end
   public get_method_name_2 if get_method_name_2 =~ /b/
 end
 
-==> 041.rb 39 <==
+==> 044.rb 39 <==
 class Foo
   foo
   bar(key: public)
 end
 
-==> 042.rb 46 <==
+==> 045.rb 46 <==
 class Test
   module_function def foo; end
 end
 
-==> 043.rb 29 <==
+==> 046.rb 29 <==
 module_function def foo; end
 
-==> 044.rb 33 <==
+==> 047.rb 33 <==
 class Test
   module_function
 end
 
-==> 045.rb 16 <==
+==> 048.rb 16 <==
 module_function
 
-==> 046.rb 39 <==
+==> 049.rb 39 <==
 class Test
   module_function # hey
 end
 
-==> 047.rb 138 <==
+==> 050.rb 138 <==
 class TestOne
   module_function
 end
@@ -291,24 +309,30 @@ class TestThree
   module_function def foo; end
 end
 
-==> 048.rb 82 <==
+==> 051.rb 82 <==
 module MyModule
   singleton_methods.each { |method| module_function(method) }
 end
 
-==> 049.rb 69 <==
+==> 052.rb 69 <==
 module MyModule
   singleton_methods.each { module_function(_1) }
 end
 
-==> 050.rb 65 <==
+==> 053.rb 63 <==
+class Test
+  names = %i[foo bar]
+  module_function(*names)
+end
+
+==> 054.rb 65 <==
 class Test
   module_function def foo; end
 
   module_function
 end
 
-==> 051.rb 73 <==
+==> 055.rb 73 <==
 class Test
   # comment
   module_function def foo
@@ -316,31 +340,31 @@ class Test
   end
 end
 
-==> 052.rb 72 <==
+==> 056.rb 72 <==
 class Test
   module_function :inspect if METHODS.include?(:inspect)
 end
 
-==> 053.rb 106 <==
+==> 057.rb 106 <==
 class Test
   module_function get_method_name if get_method_name =~ /a/
   module_function def bar; end
 end
 
-==> 054.rb 174 <==
+==> 058.rb 174 <==
 class Test
   module_function get_method_name_1 if get_method_name_1 =~ /a/
   module_function def bar; end
   module_function get_method_name_2 if get_method_name_2 =~ /b/
 end
 
-==> 055.rb 48 <==
+==> 059.rb 48 <==
 class Foo
   foo
   bar(key: module_function)
 end
 
-==> 056.rb 92 <==
+==> 060.rb 92 <==
 class Test
   private def foo; end
   private def bar; end

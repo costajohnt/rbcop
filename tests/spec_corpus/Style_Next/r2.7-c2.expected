@@ -1,10 +1,18 @@
-==> offenses exit=1 142 <==
+==> offenses exit=1 426 <==
 000.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
 001.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+001.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
+002.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+003.rb:2:3: C: [Correctable] Style/Next: Use `next` to skip iteration.
+003.rb:3:5: C: [Correctable] Style/Next: Use `next` to skip iteration.
 
-==> autocorrect exit=0 138 <==
+==> autocorrect exit=0 414 <==
 000.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
 001.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+001.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
+002.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+003.rb:2:3: C: [Corrected] Style/Next: Use `next` to skip iteration.
+003.rb:3:5: C: [Corrected] Style/Next: Use `next` to skip iteration.
 
 ==> corrected/000.rb 59 <==
 [].each do |o|
@@ -12,9 +20,27 @@
   puts o # comment
 end
 
-==> corrected/001.rb 55 <==
+==> corrected/001.rb 91 <==
+[].each do |o|
+  next unless o
+  o.each do |v|
+    next unless v == 1
+    puts v
+  end
+end
+
+==> corrected/002.rb 55 <==
 [].each do |o|
   next if o == 1
   puts o # comment
+end
+
+==> corrected/003.rb 83 <==
+[].each do |o|
+  next if o
+  o.each do |v|
+    next if v == 1
+    puts v
+  end
 end
 

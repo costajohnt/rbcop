@@ -1,0 +1,23 @@
+==> .rubocop.yml 206 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Style/EndlessMethod:
+  EnforcedStyle: require_always
+Layout/LineLength:
+  Enabled: true
+  Max: 80
+
+==> 000.rb 34 <==
+def my_method(a:)
+  foo 1, a:
+end
+
+==> 001.rb 35 <==
+def my_method(a:)
+  foo(1, a:)
+end
+

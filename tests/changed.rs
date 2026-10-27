@@ -1,4 +1,4 @@
-//! `--changed [REVISION]` (Runner#only_changed, ChangedFiles): output recorded with RuboCop 1.91.0
+//! `--changed [REVISION]` (Runner#only_changed, ChangedFiles): output recorded with RuboCop 1.92.1
 //! on the same throwaway git repositories.
 
 mod common;
@@ -99,6 +99,7 @@ fn changed_matches_rubocop() {
     git(&repo, &["commit", "-qm", "one"]);
     write(&repo, &[("old.rb", "old = 2\n")]);
     git(&repo, &["commit", "-qam", "two"]);
+    git(&repo, &["tag", "a.rb"]);
     // Modified, deleted, untracked and ignored files.
     write(
         &repo,
@@ -118,6 +119,9 @@ fn changed_matches_rubocop() {
         write(dir, &[(".rubocop.yml", CONFIG), ("a.rb", "x = 1\n")]);
     }
     git(&unborn, &["init", "-q", "."]);
+    // Staged in a repository without commits: changed against the empty tree (RuboCop 1.92.1).
+    write(&unborn, &[("staged.rb", "s = 1\n")]);
+    git(&unborn, &["add", "staged.rb"]);
 
     let lint = "b.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.\n\
                 b.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.\n\
@@ -138,18 +142,23 @@ fn changed_matches_rubocop() {
             ("repo", &["--changed", "-L", "--force-exclusion", "skip.rb", "b.rb"], "b.rb\n", "", 0),
             ("repo", &["--changed", "--format", "emacs"], lint, "", 1),
             ("repo", &["--changed=nope", "-L"], "", NO_REVISION, 2),
+            // Options#return_path_given_to_changed (RuboCop 1.92.1): a path given to --changed is
+            // inspected, unless it is also a revision (the tag `a.rb`).
+            ("repo", &["--changed", "sub", "-L"], "sub/f.rb\n", "", 0),
+            ("repo", &["--changed=sub", "-L"], "sub/f.rb\n", "", 0),
+            ("repo", &["--changed", "sub", "b.rb", "-L"], "sub/f.rb\nb.rb\n", "", 0),
             (
                 "repo",
-                &["--changed", "sub", "-L"],
+                &["--changed", "a.rb", "-L"],
                 "",
-                "--changed takes a git revision, but `sub` is a path. Write the revision as `--changed=sub` if \
-                 that is really what you meant, or drop it to compare against HEAD.\n",
+                "--changed got `a.rb`, which is both a path and a git revision. Write `./a.rb` for the path, or \
+                 `--changed=a.rb^0` for the revision.\n",
                 2,
             ),
             ("repo", &["--changed=", "-L"], "", &empty_revision, 2),
             ("repo", &["--changed", "-s", "a.rb"], "", "--changed cannot be used with --stdin.\n", 2),
             ("repo/sub", &["--changed", "-L"], "f.rb\n", "", 0),
-            ("repo/sub", &["--changed", "-L", ".."], "../b.rb\nf.rb\n", "", 0),
+            ("repo/sub", &["--changed", "-L", ".."], "../b.rb\n../c.rb\nf.rb\n", "", 0),
             (
                 "norepo",
                 &["--changed", "-L"],
@@ -158,8 +167,8 @@ fn changed_matches_rubocop() {
                  parent directories): .git\n",
                 2,
             ),
-            ("unborn", &["--changed", "-L"], "a.rb\n", "", 0),
-            ("unborn", &["--changed=HEAD", "-L"], "a.rb\n", "", 0),
+            ("unborn", &["--changed", "-L"], "a.rb\nstaged.rb\n", "", 0),
+            ("unborn", &["--changed=HEAD", "-L"], "a.rb\nstaged.rb\n", "", 0),
             ("unborn", &["--changed=main", "-L"], "", &unborn_main, 2),
         ],
     );

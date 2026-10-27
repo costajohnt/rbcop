@@ -45,6 +45,9 @@ variable.allbits?(flags)
 ==> 012.rb 24 <==
 (variable & flags) == 0
 
-==> 013.rb 24 <==
+==> 013.rb 22 <==
+variable & flags == 0
+
+==> 014.rb 24 <==
 variable.nobits?(flags)
 

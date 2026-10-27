@@ -85,43 +85,6 @@ pub fn delimiter_string(opening: &str) -> &str {
     OPENING_DELIMITER.captures(opening).and_then(|c| c.get(2)).map_or("", |m| m.as_str())
 }
 
-struct DstrBodies<'s, 'a> {
-    src: &'s crate::source::Source<'a>,
-    lines: Vec<usize>,
-}
-
-impl DstrBodies<'_, '_> {
-    fn add(&mut self, first: Option<usize>, closing: Option<Location>) {
-        let Some(c) = closing else { return };
-        let last = self.src.line_of(c.start_offset());
-        let first = first.map_or(last, |f| self.src.line_of(f));
-        self.lines.extend(first..last);
-    }
-}
-
-impl<'pr> Visit<'pr> for DstrBodies<'_, '_> {
-    fn visit_string_node(&mut self, node: &StringNode<'pr>) {
-        let n = node.as_node();
-        if crate::ast::is_heredoc(&n) && crate::ast::is_parser_dstr(&n) {
-            self.add(Some(node.content_loc().start_offset()), node.closing_loc());
-        }
-    }
-    fn visit_interpolated_string_node(&mut self, node: &InterpolatedStringNode<'pr>) {
-        if crate::ast::is_heredoc(&node.as_node()) {
-            self.add(node.parts().iter().next().map(|p| p.location().start_offset()), node.closing_loc());
-        }
-        ruby_prism::visit_interpolated_string_node(self, node);
-    }
-}
-
-/// `node.each_node(:dstr).select(&:heredoc?).flat_map { |n| b = n.loc.heredoc_body; (b.line...b.last_line).to_a }`:
-/// body lines (terminator excluded) of the parser-`dstr` heredocs in a subtree.
-pub fn dstr_body_lines(src: &crate::source::Source, node: &Node) -> Vec<usize> {
-    let mut v = DstrBodies { src, lines: Vec::new() };
-    v.visit(node);
-    v.lines
-}
-
 /// Prism kinds that can be heredocs (parser `on_str` / `on_dstr` / `on_xstr`).
 pub const KINDS: &[usize] = &[
     crate::node_kind::STRING_NODE,
@@ -188,4 +151,25 @@ pub fn first_heredoc_end(node: &Node) -> Option<usize> {
     let mut v = FirstHeredoc::default();
     v.visit(node);
     v.end
+}
+
+/// `node.each_node(:any_str).select(&:heredoc?)` (the node itself included): the opening start
+/// offset (parser `loc.expression.begin_pos`, so `first_line` is its line) of every heredoc.
+pub fn heredoc_starts(node: &Node) -> Vec<usize> {
+    struct V(Vec<usize>);
+    impl<'pr> Visit<'pr> for V {
+        fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
+            if crate::ast::is_heredoc(&node) {
+                self.0.push(node.location().start_offset());
+            }
+        }
+        fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
+            if crate::ast::is_heredoc(&node) {
+                self.0.push(node.location().start_offset());
+            }
+        }
+    }
+    let mut v = V(Vec::new());
+    v.visit(node);
+    v.0
 }

@@ -71,3 +71,15 @@ Style/EmptyStringInsideInterpolation:
 ==> 020.rb 38 <==
 "#{if condition; nil else 'foo' end}"
 
+==> 021.rb 45 <==
+"#{outer ? "foo#{inner ? 'bar' : ''}" : ''}"
+
+==> 022.rb 45 <==
+"#{outer ? '' : "foo#{inner ? '' : 'bar'}"}"
+
+==> 023.rb 49 <==
+"#{"#{inner ? 'bar' : ''}".empty? ? 'foo' : ''}"
+
+==> 024.rb 52 <==
+"#{"#{inner ? 'bar' : 'baz'}".empty? ? 'foo' : ''}"
+

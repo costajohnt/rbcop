@@ -44,3 +44,13 @@ if condition
   def self.method_name = body
 end
 
+==> 006.rb 26 <==
+def foo(a) = if a
+  1
+end
+
+==> 007.rb 31 <==
+def self.foo(a) = if a
+  1
+end
+

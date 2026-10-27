@@ -1,185 +1,185 @@
-==> offenses exit=1 6372 <==
-019.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-020.rb:2:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-020.rb:4:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-021.rb:3:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
-022.rb:3:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-023.rb:3:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
-024.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-025.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-026.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-027.rb:2:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-027.rb:4:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-028.rb:3:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
-029.rb:3:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-030.rb:3:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
-031.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-032.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-034.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-035.rb:3:37: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 34) spaces for indenting an expression spanning multiple lines.
-036.rb:3:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-044.rb:2:15: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.baz` with `.foo` on line 1.
-045.rb:2:18: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `baz` with `value.foo.bar.` on line 1.
-046.rb:3:8: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.baz` with `.bar` on line 2.
-053.rb:2:25: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.joins` with `.select` on line 1.
-059.rb:5:9: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.qux` with `.baz` on line 4.
-072.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.b` with `.a` on line 1.
-072.rb:3:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.c` with `.a` on line 1.
-073.rb:3:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.d` with `.c` on line 2.
-079.rb:3:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-083.rb:2:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `b` with `a.` on line 1.
-086.rb:3:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `multiple_lines` with `here_is_a_string.` on line 1.
-087.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.b` with `a` on line 1.
-088.rb:2:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `b` with `a.` on line 1.
+==> offenses exit=1 6514 <==
+024.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+025.rb:2:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+025.rb:4:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+026.rb:3:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+027.rb:3:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+028.rb:3:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
+029.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+030.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+031.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+032.rb:2:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+032.rb:4:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+033.rb:3:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+034.rb:3:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+035.rb:3:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
+036.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+037.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+039.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+040.rb:3:37: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 34) spaces for indenting an expression spanning multiple lines.
+041.rb:4:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+042.rb:3:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+050.rb:2:15: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.baz` with `.foo` on line 1.
+051.rb:2:18: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `baz` with `value.foo.bar.` on line 1.
+052.rb:3:8: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.baz` with `.bar` on line 2.
+059.rb:2:25: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.joins` with `.select` on line 1.
+065.rb:5:9: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.qux` with `.baz` on line 4.
+078.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.b` with `.a` on line 1.
+078.rb:3:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.c` with `.a` on line 1.
+079.rb:3:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.d` with `.c` on line 2.
+085.rb:3:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
 089.rb:2:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `b` with `a.` on line 1.
-093.rb:3:13: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.baz` with `.bar` on line 2.
-104.rb:3:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.each` with `.foo` on line 2.
-109.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.qux` with `.bar` on line 1.
-110.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.qux` with `.bar` on line 1.
-111.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.qux` with `.bar` on line 1.
-112.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `d` with `b.c.` on line 1.
-115.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.a` with `Foo` on line 1.
-116.rb:4:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name` with `VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName` on line 3.
-117.rb:4:17: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name` with `VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName` on line 3.
-118.rb:3:15: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `each_pair` with `refusal_advice_params.fetch(:actions).` on line 2.
-119.rb:9:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.merge` with `.reverse_merge` on line 8.
-119.rb:10:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.tap` with `.reverse_merge` on line 8.
-120.rb:5:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.parse` with `JSON` on line 4.
-120.rb:6:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.tap` with `JSON` on line 4.
-120.rb:7:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.to_json` with `JSON` on line 4.
-121.rb:3:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-122.rb:6:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.uniq` with `.flatten` on line 5.
-124.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.first` with `.keys` on line 1.
+092.rb:3:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `multiple_lines` with `here_is_a_string.` on line 1.
+093.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.b` with `a` on line 1.
+094.rb:2:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `b` with `a.` on line 1.
+095.rb:2:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `b` with `a.` on line 1.
+099.rb:3:13: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.baz` with `.bar` on line 2.
+110.rb:3:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.each` with `.foo` on line 2.
+115.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.qux` with `.bar` on line 1.
+116.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.qux` with `.bar` on line 1.
+117.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.qux` with `.bar` on line 1.
+118.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `d` with `b.c.` on line 1.
+121.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.a` with `Foo` on line 1.
+122.rb:4:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name` with `VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName` on line 3.
+123.rb:4:17: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name` with `VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName` on line 3.
+124.rb:3:15: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `each_pair` with `refusal_advice_params.fetch(:actions).` on line 2.
+125.rb:9:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.merge` with `.reverse_merge` on line 8.
+125.rb:10:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.tap` with `.reverse_merge` on line 8.
+126.rb:5:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.parse` with `JSON` on line 4.
+126.rb:6:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.tap` with `JSON` on line 4.
+126.rb:7:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.to_json` with `JSON` on line 4.
+127.rb:3:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+128.rb:6:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.uniq` with `.flatten` on line 5.
+130.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.first` with `.keys` on line 1.
 
-==> autocorrect exit=0 6585 <==
-019.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-020.rb:2:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-020.rb:4:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-021.rb:3:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
-022.rb:3:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-023.rb:3:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
-024.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-025.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-026.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-027.rb:2:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-027.rb:4:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-028.rb:3:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
-029.rb:3:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-030.rb:3:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
-031.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-032.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-034.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-035.rb:3:37: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 34) spaces for indenting an expression spanning multiple lines.
-036.rb:3:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-044.rb:2:15: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.baz` with `.foo` on line 1.
-045.rb:2:18: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `baz` with `value.foo.bar.` on line 1.
-046.rb:3:8: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.baz` with `.bar` on line 2.
-053.rb:2:25: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.joins` with `.select` on line 1.
-059.rb:5:9: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.qux` with `.baz` on line 4.
-072.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.b` with `.a` on line 1.
-072.rb:3:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.c` with `.a` on line 1.
-073.rb:3:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.d` with `.c` on line 2.
-079.rb:3:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-083.rb:2:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `b` with `a.` on line 1.
-086.rb:3:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `multiple_lines` with `here_is_a_string.` on line 1.
-087.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.b` with `a` on line 1.
-088.rb:2:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `b` with `a.` on line 1.
+==> autocorrect exit=0 6519 <==
+024.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+025.rb:2:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+025.rb:4:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+026.rb:3:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+027.rb:3:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+028.rb:3:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
+029.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+030.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+031.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+032.rb:2:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+032.rb:4:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+033.rb:3:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+034.rb:3:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+035.rb:3:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
+036.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+037.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+039.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+040.rb:3:37: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 34) spaces for indenting an expression spanning multiple lines.
+041.rb:4:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+042.rb:3:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+050.rb:2:15: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.baz` with `.foo` on line 1.
+051.rb:2:18: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `baz` with `value.foo.bar.` on line 1.
+052.rb:3:8: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.baz` with `.bar` on line 2.
+059.rb:2:25: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.joins` with `.select` on line 1.
+065.rb:5:9: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.qux` with `.baz` on line 4.
+078.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.b` with `.a` on line 1.
+078.rb:3:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.c` with `.a` on line 1.
+079.rb:3:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.d` with `.c` on line 2.
+085.rb:3:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
 089.rb:2:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `b` with `a.` on line 1.
-093.rb:3:13: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.baz` with `.bar` on line 2.
-104.rb:3:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.each` with `.foo` on line 2.
-109.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.qux` with `.bar` on line 1.
-109.rb:2:15: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.qux` with `.bar` on line 1.
-110.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.qux` with `.bar` on line 1.
-111.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.qux` with `.bar` on line 1.
-111.rb:2:15: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.qux` with `.bar` on line 1.
-112.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `d` with `b.c.` on line 1.
-115.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.a` with `Foo` on line 1.
-116.rb:4:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name` with `VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName` on line 3.
-117.rb:4:17: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name` with `VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName` on line 3.
-118.rb:3:15: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `each_pair` with `refusal_advice_params.fetch(:actions).` on line 2.
-119.rb:9:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.merge` with `.reverse_merge` on line 8.
-119.rb:10:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.tap` with `.reverse_merge` on line 8.
-120.rb:5:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.parse` with `JSON` on line 4.
-120.rb:6:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.tap` with `JSON` on line 4.
-120.rb:7:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.to_json` with `JSON` on line 4.
-121.rb:3:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-122.rb:6:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.uniq` with `.flatten` on line 5.
-122.rb:7:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.delete_if` with `.uniq` on line 6.
-124.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.first` with `.keys` on line 1.
+092.rb:3:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `multiple_lines` with `here_is_a_string.` on line 1.
+093.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.b` with `a` on line 1.
+094.rb:2:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `b` with `a.` on line 1.
+095.rb:2:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `b` with `a.` on line 1.
+099.rb:3:13: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.baz` with `.bar` on line 2.
+110.rb:3:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.each` with `.foo` on line 2.
+115.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.qux` with `.bar` on line 1.
+116.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.qux` with `.bar` on line 1.
+117.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.qux` with `.bar` on line 1.
+118.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `d` with `b.c.` on line 1.
+121.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.a` with `Foo` on line 1.
+122.rb:4:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name` with `VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName` on line 3.
+123.rb:4:17: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery_long_method_name` with `VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName` on line 3.
+124.rb:3:15: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `each_pair` with `refusal_advice_params.fetch(:actions).` on line 2.
+125.rb:9:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.merge` with `.reverse_merge` on line 8.
+125.rb:10:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.tap` with `.reverse_merge` on line 8.
+126.rb:5:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.parse` with `JSON` on line 4.
+126.rb:6:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.tap` with `JSON` on line 4.
+126.rb:7:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.to_json` with `JSON` on line 4.
+127.rb:3:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+128.rb:6:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.uniq` with `.flatten` on line 5.
+128.rb:7:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.delete_if` with `.uniq` on line 6.
+130.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.first` with `.keys` on line 1.
 
-==> corrected/019.rb 7 <==
+==> corrected/024.rb 7 <==
 a.
   b
 
-==> corrected/020.rb 14 <==
+==> corrected/025.rb 14 <==
 a.
   b
 c.
   d
 
-==> corrected/021.rb 12 <==
+==> corrected/026.rb 12 <==
 a.
   b.
   c
 
-==> corrected/022.rb 13 <==
+==> corrected/027.rb 13 <==
 [
  a.
    b
 ]
 
-==> corrected/023.rb 63 <==
+==> corrected/028.rb 63 <==
 expect { Foo.new }.
   to change { Bar.count }.
   from(1).to(2)
 
-==> corrected/024.rb 12 <==
+==> corrected/029.rb 12 <==
 a
   .(args)
 
-==> corrected/025.rb 7 <==
+==> corrected/030.rb 7 <==
 a
   .b
 
-==> corrected/026.rb 8 <==
+==> corrected/031.rb 8 <==
 a&.
   b
 
-==> corrected/027.rb 16 <==
+==> corrected/032.rb 16 <==
 a&.
   b
 c&.
   d
 
-==> corrected/028.rb 14 <==
+==> corrected/033.rb 14 <==
 a&.
   b&.
   c
 
-==> corrected/029.rb 14 <==
+==> corrected/034.rb 14 <==
 [
  a&.
    b
 ]
 
-==> corrected/030.rb 66 <==
+==> corrected/035.rb 66 <==
 expect { Foo.new }&.
   to change { Bar.count }&.
   from(1)&.to(2)
 
-==> corrected/031.rb 13 <==
+==> corrected/036.rb 13 <==
 a
   &.(args)
 
-==> corrected/032.rb 8 <==
+==> corrected/037.rb 8 <==
 a
   &.b
 
-==> corrected/034.rb 28 <==
+==> corrected/039.rb 28 <==
 MyClass.
   foo&.bar = 'baz'
 
-==> corrected/035.rb 173 <==
+==> corrected/040.rb 173 <==
 def run
   (date_columns + candidate_columns).uniq
     .select { |column_name|
@@ -190,31 +190,39 @@ def run
     }
 end
 
-==> corrected/036.rb 27 <==
+==> corrected/041.rb 46 <==
+{
+  key: -> do
+    client
+      .beta
+  end
+}
+
+==> corrected/042.rb 27 <==
 def foo
   !0
     .nil?
 end
 
-==> corrected/044.rb 49 <==
+==> corrected/050.rb 49 <==
 method(key: value.foo.bar
                  .baz)
 
-==> corrected/045.rb 44 <==
+==> corrected/051.rb 44 <==
 method(key: value.foo.bar.
             baz)
 
-==> corrected/046.rb 34 <==
+==> corrected/052.rb 34 <==
 {
   key: Foo.bar
           .baz
 }
 
-==> corrected/053.rb 61 <==
+==> corrected/059.rb 61 <==
 Foo.where(id: Bar.select(:id)
                  .joins(:bar))
 
-==> corrected/059.rb 52 <==
+==> corrected/065.rb 52 <==
 {
   key: Foo.bar do |x|
     x
@@ -222,85 +230,85 @@ Foo.where(id: Bar.select(:id)
      .qux
 }
 
-==> corrected/072.rb 21 <==
+==> corrected/078.rb 21 <==
 User.a
     .b
     .c
 
-==> corrected/073.rb 21 <==
+==> corrected/079.rb 21 <==
 a do
   b.c
    .d
 end
 
-==> corrected/079.rb 12 <==
+==> corrected/085.rb 12 <==
 a
   .b
   .c
 
-==> corrected/083.rb 27 <==
+==> corrected/089.rb 27 <==
 if a.
    b
   something
 end
 
-==> corrected/086.rb 93 <==
+==> corrected/092.rb 93 <==
 flash[:error] = here_is_a_string.
                 that_spans.
                 multiple_lines
 
-==> corrected/087.rb 35 <==
+==> corrected/093.rb 35 <==
 unless a
        .b
   something
 end
 
-==> corrected/088.rb 33 <==
+==> corrected/094.rb 33 <==
 while a.
       b
   something
 end
 
-==> corrected/089.rb 33 <==
+==> corrected/095.rb 33 <==
 until a.
       b
   something
 end
 
-==> corrected/093.rb 36 <==
+==> corrected/099.rb 36 <==
 do_something.foo do
 end.bar
    .baz
 
-==> corrected/104.rb 70 <==
+==> corrected/110.rb 70 <==
 obj
   .foo { _1.a }.bar { _1.b }
   .each do |x|
   do_something(x)
 end
 
-==> corrected/109.rb 43 <==
+==> corrected/115.rb 43 <==
 (0..foo).bar { baz }
         .qux { quux }
 
-==> corrected/110.rb 34 <==
+==> corrected/116.rb 34 <==
 (0..foo).bar { baz }
         .qux
 
-==> corrected/111.rb 35 <==
+==> corrected/117.rb 35 <==
 (0..foo).bar
         .qux { quux }
 
-==> corrected/112.rb 15 <==
+==> corrected/118.rb 15 <==
 a = b.c.
     d
 
-==> corrected/115.rb 31 <==
+==> corrected/121.rb 31 <==
 bar = Foo
       .a
       .b(c)
 
-==> corrected/116.rb 144 <==
+==> corrected/122.rb 144 <==
 def foo
   bar(
     key: VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName
@@ -308,7 +316,7 @@ def foo
   )
 end
 
-==> corrected/117.rb 144 <==
+==> corrected/123.rb 144 <==
 def foo
   bar(
     key: VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName
@@ -316,7 +324,7 @@ def foo
   )
 end
 
-==> corrected/118.rb 221 <==
+==> corrected/124.rb 221 <==
 parsed_params = refusal_advice_params.merge(
   actions: refusal_advice_params.fetch(:actions).
            each_pair do |_, suggestions|
@@ -324,7 +332,7 @@ parsed_params = refusal_advice_params.merge(
            end
 ).to_h
 
-==> corrected/119.rb 432 <==
+==> corrected/125.rb 432 <==
 def payload
   {
     type: 'action',
@@ -341,7 +349,7 @@ def payload
   }.deep_symbolize_keys
 end
 
-==> corrected/120.rb 176 <==
+==> corrected/126.rb 176 <==
 add_to_git_repo(
   initial_repo,
   "about.json" =>
@@ -351,22 +359,22 @@ add_to_git_repo(
     .to_json,
 )
 
-==> corrected/121.rb 20 <==
+==> corrected/127.rb 20 <==
 (a +
  b).foo
   .bar
 
-==> corrected/122.rb 154 <==
+==> corrected/128.rb 155 <==
 def targets_for(path)
   fullpath = fullpath_for(path)
   [
     Dir.glob(fullpath),
   ].flatten
    .uniq
-   .delete_if { |entry|dot_directory?(entry) }
+   .delete_if { |entry| dot_directory?(entry) }
 end
 
-==> corrected/124.rb 41 <==
+==> corrected/130.rb 41 <==
 { a: 1, b: 2 }.keys
               .first
 

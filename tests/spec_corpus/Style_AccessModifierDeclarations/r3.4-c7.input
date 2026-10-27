@@ -1,0 +1,242 @@
+==> .rubocop.yml 166 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+Style/AccessModifierDeclarations:
+  EnforcedStyle: inline
+
+==> 000.rb 56 <==
+class Test
+  private
+
+  def foo = raise Error, self
+end
+
+==> 001.rb 57 <==
+class Test
+  private
+
+  def foo = bar baz rescue nil
+end
+
+==> 002.rb 61 <==
+class Test
+  private
+
+  def foo = obj.bar baz rescue nil
+end
+
+==> 003.rb 59 <==
+class Test
+  private
+
+  def foo = super baz rescue nil
+end
+
+==> 004.rb 59 <==
+class Test
+  private
+
+  def foo = yield baz rescue nil
+end
+
+==> 005.rb 46 <==
+class Test
+  private
+
+  def foo = not bar
+end
+
+==> 006.rb 59 <==
+class Test
+  private
+
+  def foo = bar do
+    baz
+  end
+end
+
+==> 007.rb 50 <==
+class Test
+  private
+
+  def foo = bar { baz }
+end
+
+==> 008.rb 58 <==
+class Test
+  protected
+
+  def foo = raise Error, self
+end
+
+==> 009.rb 59 <==
+class Test
+  protected
+
+  def foo = bar baz rescue nil
+end
+
+==> 010.rb 63 <==
+class Test
+  protected
+
+  def foo = obj.bar baz rescue nil
+end
+
+==> 011.rb 61 <==
+class Test
+  protected
+
+  def foo = super baz rescue nil
+end
+
+==> 012.rb 61 <==
+class Test
+  protected
+
+  def foo = yield baz rescue nil
+end
+
+==> 013.rb 48 <==
+class Test
+  protected
+
+  def foo = not bar
+end
+
+==> 014.rb 61 <==
+class Test
+  protected
+
+  def foo = bar do
+    baz
+  end
+end
+
+==> 015.rb 52 <==
+class Test
+  protected
+
+  def foo = bar { baz }
+end
+
+==> 016.rb 55 <==
+class Test
+  public
+
+  def foo = raise Error, self
+end
+
+==> 017.rb 56 <==
+class Test
+  public
+
+  def foo = bar baz rescue nil
+end
+
+==> 018.rb 60 <==
+class Test
+  public
+
+  def foo = obj.bar baz rescue nil
+end
+
+==> 019.rb 58 <==
+class Test
+  public
+
+  def foo = super baz rescue nil
+end
+
+==> 020.rb 58 <==
+class Test
+  public
+
+  def foo = yield baz rescue nil
+end
+
+==> 021.rb 45 <==
+class Test
+  public
+
+  def foo = not bar
+end
+
+==> 022.rb 58 <==
+class Test
+  public
+
+  def foo = bar do
+    baz
+  end
+end
+
+==> 023.rb 49 <==
+class Test
+  public
+
+  def foo = bar { baz }
+end
+
+==> 024.rb 64 <==
+class Test
+  module_function
+
+  def foo = raise Error, self
+end
+
+==> 025.rb 65 <==
+class Test
+  module_function
+
+  def foo = bar baz rescue nil
+end
+
+==> 026.rb 69 <==
+class Test
+  module_function
+
+  def foo = obj.bar baz rescue nil
+end
+
+==> 027.rb 67 <==
+class Test
+  module_function
+
+  def foo = super baz rescue nil
+end
+
+==> 028.rb 67 <==
+class Test
+  module_function
+
+  def foo = yield baz rescue nil
+end
+
+==> 029.rb 54 <==
+class Test
+  module_function
+
+  def foo = not bar
+end
+
+==> 030.rb 67 <==
+class Test
+  module_function
+
+  def foo = bar do
+    baz
+  end
+end
+
+==> 031.rb 58 <==
+class Test
+  module_function
+
+  def foo = bar { baz }
+end
+

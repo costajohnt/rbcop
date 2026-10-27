@@ -380,3 +380,34 @@ describe ArticlesController do
     end
 end
 
+==> 051.rb 107 <==
+module Foo
+extend self # rubocop:disable Layout/IndentationWidth
+
+  def bar
+  end
+
+    def baz
+    end
+end
+
+==> 052.rb 138 <==
+module Foo
+  # rubocop:disable Layout/IndentationWidth
+    def bar
+    end
+  # rubocop:enable Layout/IndentationWidth
+  def baz
+  end
+end
+
+==> 053.rb 142 <==
+# rubocop:disable Layout/IndentationWidth
+module Foo
+    def bar
+    end
+      def baz
+      end
+end
+# rubocop:enable Layout/IndentationWidth
+

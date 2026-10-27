@@ -1,4 +1,4 @@
-==> .rubocop.yml 168 <==
+==> .rubocop.yml 196 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -6,9 +6,12 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 2.7
 Style/HashLookupMethod:
-  AllowedReceivers:
-  - Rails.cache
+  EnforcedStyle: brackets
+Style/FetchEnvVar:
+  Enabled: pending
 
-==> 000.rb 43 <==
-Rails.cache.fetch(name, options) { block }
+==> 000.rb 15 <==
+ENV.fetch(key)
 
+==> 001.rb 14 <==
+ENV.fetch(key)

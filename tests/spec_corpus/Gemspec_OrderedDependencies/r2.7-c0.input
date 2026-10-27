@@ -116,3 +116,14 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'parser'
 end
 
+==> 015.gemspec 272 <==
+Gem::Specification.new do |spec|
+  if spec.respond_to?(:specification_version)
+    spec.add_dependency('rubocop', '>= 1.0')
+    spec.add_dependency('rspec', '>= 3.0')
+  else
+    spec.add_dependency('rubocop', '>= 1.0')
+    spec.add_dependency('rspec', '>= 3.0')
+  end
+end
+

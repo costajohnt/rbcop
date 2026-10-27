@@ -66,24 +66,50 @@ impl Cop for ConcatArrayLiterals {
             Replace(String),
             Brackets(Vec<(usize, usize)>),
         }
+        // rebuild_call: the comments inside the call would be lost.
+        let comment_in = cx.src.comments.iter().any(|c| c.start >= os && c.end <= oe);
         let fix = if use_percent || arrays.iter().any(|a| a.elements().iter().next().is_none()) {
-            prefer.map_or(Fix::None, Fix::Replace)
-        } else {
-            let mut ranges = Vec::new();
-            for a in &arrays {
-                if let (Some(o), Some(c)) = (a.opening_loc(), a.closing_loc()) {
-                    ranges.push((o.start_offset(), o.end_offset()));
-                    ranges.push((c.start_offset(), c.end_offset()));
-                }
+            match prefer {
+                Some(p) if !comment_in => Fix::Replace(p),
+                _ => Fix::None,
             }
-            Fix::Brackets(ranges)
+        } else {
+            // remove_brackets: an array that isn't the last argument loses everything between its
+            // last element and its `]`; a comment or a heredoc body there blocks the fix.
+            let mut ranges = Vec::new();
+            let mut movable = true;
+            for (i, a) in arrays.iter().enumerate() {
+                let (Some(o), Some(c)) = (a.opening_loc(), a.closing_loc()) else { continue };
+                let close = if i + 1 == arrays.len() {
+                    c.start_offset()
+                } else {
+                    a.elements().iter().last().map_or(c.start_offset(), |e| e.location().end_offset())
+                };
+                let gap = cx.src.slice(close, c.end_offset());
+                movable &= gap.strip_suffix(']').is_some_and(|g| g.chars().all(|ch| ch.is_whitespace() || ch == ','));
+                ranges.push((o.start_offset(), o.end_offset()));
+                ranges.push((close, c.end_offset()));
+            }
+            if movable { Fix::Brackets(ranges) } else { Fix::None }
         };
         let (ss, se) = (sel.start_offset(), sel.end_offset());
+        // replace_selector: an unparenthesized multiline call becomes `push(...)`.
+        let wrap = (call.opening_loc().is_none()
+            && cx.src.line_of(call.location().start_offset()) != cx.src.line_of(oe))
+        .then(|| arrays.last().and_then(|a| a.closing_loc()))
+        .flatten()
+        .map(|c| (args[0].location().start_offset(), c.start_offset(), c.end_offset()));
         cx.add_fix(os, oe, message, |c| match &fix {
             Fix::None => {}
             Fix::Replace(p) => c.replace(os, oe, p),
             Fix::Brackets(ranges) => {
-                c.replace(ss, se, "push");
+                match wrap {
+                    Some((first, ls, le)) => {
+                        c.replace(ss, first, "push(");
+                        c.insert_after(ls, le, ")");
+                    }
+                    None => c.replace(ss, se, "push"),
+                }
                 for &(s, e) in ranges {
                     c.remove(s, e);
                 }

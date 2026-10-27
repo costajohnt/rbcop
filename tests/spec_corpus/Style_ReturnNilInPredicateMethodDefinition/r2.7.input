@@ -8,45 +8,82 @@ AllCops:
 
 ==> 000.rb 43 <==
 def foo?
+  condition || return
+
+  bar?
+end
+
+==> 001.rb 43 <==
+def foo?
+  condition or return
+
+  bar?
+end
+
+==> 002.rb 48 <==
+def foo?
+  condition ? return : baz
+
+  bar?
+end
+
+==> 003.rb 48 <==
+def foo?
+  condition ? baz : return
+
+  bar?
+end
+
+==> 004.rb 53 <==
+def foo?
+  if condition
+    return
+  end
+
+  bar?
+end
+
+==> 005.rb 43 <==
+def foo?
   return if condition
 
   bar?
 end
 
-==> 001.rb 47 <==
+==> 006.rb 47 <==
 def foo?
   return nil if condition
 
   bar?
 end
 
-==> 002.rb 47 <==
+==> 007.rb 47 <==
 def foo?
   return true if condition
 
   nil
 end
 
-==> 003.rb 19 <==
+==> 008.rb 19 <==
 def foo?
   nil
 end
 
-==> 004.rb 48 <==
+==> 009.rb 48 <==
 def foo?
   return true if condition
 
   bar?
 end
 
-==> 005.rb 49 <==
+==> 010.rb 49 <==
 def foo?
   return value if condition
 
   bar?
 end
 
-==> 006.rb 51 <==
+==> 011.rb 51 <==
 def foo?
   do_something
 
@@ -55,44 +92,44 @@ def foo?
   do_something
 end
 
-==> 007.rb 29 <==
+==> 012.rb 29 <==
 def foo?
   bar&.baz(nil)
 end
 
-==> 008.rb 28 <==
+==> 013.rb 28 <==
 def foo?
   bar.baz(nil)
 end
 
-==> 009.rb 25 <==
+==> 014.rb 25 <==
 def foo?
   bar = nil
 end
 
-==> 010.rb 49 <==
+==> 015.rb 49 <==
 def foo?
   return false if condition
 
   bar?
 end
 
-==> 011.rb 28 <==
+==> 016.rb 28 <==
 def foo?
   do_something
 end
 
-==> 012.rb 13 <==
+==> 017.rb 13 <==
 def foo?
 end
 
-==> 013.rb 52 <==
+==> 018.rb 52 <==
 def foo?
   return false unless condition
 rescue
 end
 
-==> 014.rb 52 <==
+==> 019.rb 52 <==
 def foo?
   if bar
     nil
@@ -101,7 +138,7 @@ def foo?
   end
 end
 
-==> 015.rb 52 <==
+==> 020.rb 52 <==
 def foo?
   if bar
     true
@@ -110,7 +147,7 @@ def foo?
   end
 end
 
-==> 016.rb 77 <==
+==> 021.rb 77 <==
 def foo?
   if bar
     if baz
@@ -121,7 +158,7 @@ def foo?
   end
 end
 
-==> 017.rb 58 <==
+==> 022.rb 58 <==
 def foo?
   if bar
     true
@@ -131,28 +168,28 @@ def foo?
   baz
 end
 
-==> 018.rb 48 <==
+==> 023.rb 48 <==
 def self.foo?
   return if condition
 
   bar?
 end
 
-==> 019.rb 52 <==
+==> 024.rb 52 <==
 def self.foo?
   return nil if condition
 
   bar?
 end
 
-==> 020.rb 54 <==
+==> 025.rb 54 <==
 def self.foo?
   return false if condition
 
   bar?
 end
 
-==> 021.rb 57 <==
+==> 026.rb 57 <==
 def self.foo?
   if bar
     nil
@@ -161,7 +198,7 @@ def self.foo?
   end
 end
 
-==> 022.rb 57 <==
+==> 027.rb 57 <==
 def self.foo?
   if bar
     true
@@ -170,7 +207,7 @@ def self.foo?
   end
 end
 
-==> 023.rb 82 <==
+==> 028.rb 82 <==
 def self.foo?
   if bar
     if baz
@@ -181,7 +218,7 @@ def self.foo?
   end
 end
 
-==> 024.rb 63 <==
+==> 029.rb 63 <==
 def self.foo?
   if bar
     true
@@ -191,14 +228,14 @@ def self.foo?
   baz
 end
 
-==> 025.rb 42 <==
+==> 030.rb 42 <==
 def foo
   return if condition
 
   bar?
 end
 
-==> 026.rb 51 <==
+==> 031.rb 51 <==
 def foo
   if bar
     nil

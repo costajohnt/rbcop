@@ -11,3 +11,7 @@ items.each { foo(it) }
 items.each { bar(it) }
 items.each { baz(it) }
 
+==> 001.rb 46 <==
+items.each { foo(_1) }
+items.each { bar(it) }
+

@@ -1,44 +1,56 @@
-==> offenses exit=1 1254 <==
+==> offenses exit=1 1594 <==
 000.rb:2:3: C: [Correctable] Style/For: Prefer `each` over `for`.
 001.rb:2:3: C: [Correctable] Style/For: Prefer `each` over `for`.
 002.rb:1:1: C: [Correctable] Style/For: Prefer `each` over `for`.
 002.rb:7:1: C: [Correctable] Style/For: Prefer `each` over `for`.
-003.rb:2:3: C: [Correctable] Style/For: Prefer `each` over `for`.
-004.rb:2:3: C: [Correctable] Style/For: Prefer `each` over `for`.
-005.rb:2:3: C: [Correctable] Style/For: Prefer `each` over `for`.
-006.rb:2:3: C: [Correctable] Style/For: Prefer `each` over `for`.
-007.rb:2:3: C: [Correctable] Style/For: Prefer `each` over `for`.
-008.rb:2:3: C: [Correctable] Style/For: Prefer `each` over `for`.
-009.rb:6:3: C: [Correctable] Style/For: Prefer `each` over `for`.
-010.rb:5:3: C: [Correctable] Style/For: Prefer `each` over `for`.
+003.rb:1:1: C: Style/For: Prefer `each` over `for`.
+004.rb:2:3: C: Style/For: Prefer `each` over `for`.
+005.rb:1:1: C: [Correctable] Style/For: Prefer `each` over `for`.
+006.rb:1:1: C: Style/For: Prefer `each` over `for`.
+007.rb:1:1: C: Style/For: Prefer `each` over `for`.
+008.rb:1:1: C: [Correctable] Style/For: Prefer `each` over `for`.
+009.rb:2:3: C: [Correctable] Style/For: Prefer `each` over `for`.
+010.rb:2:3: C: [Correctable] Style/For: Prefer `each` over `for`.
 011.rb:2:3: C: [Correctable] Style/For: Prefer `each` over `for`.
-012.rb:5:3: C: [Correctable] Style/For: Prefer `each` over `for`.
-013.rb:5:3: C: [Correctable] Style/For: Prefer `each` over `for`.
-014.rb:5:3: C: [Correctable] Style/For: Prefer `each` over `for`.
-015.rb:5:3: C: [Correctable] Style/For: Prefer `each` over `for`.
-016.rb:2:3: C: [Correctable] Style/For: Prefer `each` over `for`.
-017.rb:1:1: C: [Correctable] Style/For: Prefer `each` over `for`.
+012.rb:2:3: C: [Correctable] Style/For: Prefer `each` over `for`.
+013.rb:2:3: C: [Correctable] Style/For: Prefer `each` over `for`.
+014.rb:2:3: C: [Correctable] Style/For: Prefer `each` over `for`.
+015.rb:6:3: C: [Correctable] Style/For: Prefer `each` over `for`.
+016.rb:5:3: C: [Correctable] Style/For: Prefer `each` over `for`.
+017.rb:2:3: C: [Correctable] Style/For: Prefer `each` over `for`.
+018.rb:5:3: C: [Correctable] Style/For: Prefer `each` over `for`.
+019.rb:5:3: C: [Correctable] Style/For: Prefer `each` over `for`.
+020.rb:5:3: C: [Correctable] Style/For: Prefer `each` over `for`.
+021.rb:5:3: C: [Correctable] Style/For: Prefer `each` over `for`.
+022.rb:2:3: C: [Correctable] Style/For: Prefer `each` over `for`.
+023.rb:1:1: C: [Correctable] Style/For: Prefer `each` over `for`.
 
-==> autocorrect exit=0 1216 <==
+==> autocorrect exit=1 1552 <==
 000.rb:2:3: C: [Corrected] Style/For: Prefer `each` over `for`.
 001.rb:2:3: C: [Corrected] Style/For: Prefer `each` over `for`.
 002.rb:1:1: C: [Corrected] Style/For: Prefer `each` over `for`.
 002.rb:7:1: C: [Corrected] Style/For: Prefer `each` over `for`.
-003.rb:2:3: C: [Corrected] Style/For: Prefer `each` over `for`.
-004.rb:2:3: C: [Corrected] Style/For: Prefer `each` over `for`.
-005.rb:2:3: C: [Corrected] Style/For: Prefer `each` over `for`.
-006.rb:2:3: C: [Corrected] Style/For: Prefer `each` over `for`.
-007.rb:2:3: C: [Corrected] Style/For: Prefer `each` over `for`.
-008.rb:2:3: C: [Corrected] Style/For: Prefer `each` over `for`.
-009.rb:6:3: C: [Corrected] Style/For: Prefer `each` over `for`.
-010.rb:5:3: C: [Corrected] Style/For: Prefer `each` over `for`.
+003.rb:1:1: C: Style/For: Prefer `each` over `for`.
+004.rb:2:3: C: Style/For: Prefer `each` over `for`.
+005.rb:1:1: C: [Corrected] Style/For: Prefer `each` over `for`.
+006.rb:1:1: C: Style/For: Prefer `each` over `for`.
+007.rb:1:1: C: Style/For: Prefer `each` over `for`.
+008.rb:1:1: C: [Corrected] Style/For: Prefer `each` over `for`.
+009.rb:2:3: C: [Corrected] Style/For: Prefer `each` over `for`.
+010.rb:2:3: C: [Corrected] Style/For: Prefer `each` over `for`.
 011.rb:2:3: C: [Corrected] Style/For: Prefer `each` over `for`.
-012.rb:5:3: C: [Corrected] Style/For: Prefer `each` over `for`.
-013.rb:5:3: C: [Corrected] Style/For: Prefer `each` over `for`.
-014.rb:5:3: C: [Corrected] Style/For: Prefer `each` over `for`.
-015.rb:5:3: C: [Corrected] Style/For: Prefer `each` over `for`.
-016.rb:2:3: C: [Corrected] Style/For: Prefer `each` over `for`.
-017.rb:1:1: C: [Corrected] Style/For: Prefer `each` over `for`.
+012.rb:2:3: C: [Corrected] Style/For: Prefer `each` over `for`.
+013.rb:2:3: C: [Corrected] Style/For: Prefer `each` over `for`.
+014.rb:2:3: C: [Corrected] Style/For: Prefer `each` over `for`.
+015.rb:6:3: C: [Corrected] Style/For: Prefer `each` over `for`.
+016.rb:5:3: C: [Corrected] Style/For: Prefer `each` over `for`.
+017.rb:2:3: C: [Corrected] Style/For: Prefer `each` over `for`.
+018.rb:5:3: C: [Corrected] Style/For: Prefer `each` over `for`.
+019.rb:5:3: C: [Corrected] Style/For: Prefer `each` over `for`.
+020.rb:5:3: C: [Corrected] Style/For: Prefer `each` over `for`.
+021.rb:5:3: C: [Corrected] Style/For: Prefer `each` over `for`.
+022.rb:2:3: C: [Corrected] Style/For: Prefer `each` over `for`.
+023.rb:1:1: C: [Corrected] Style/For: Prefer `each` over `for`.
 
 ==> corrected/000.rb 54 <==
 def func
@@ -68,49 +80,59 @@ end
   puts n
 end
 
-==> corrected/003.rb 56 <==
+==> corrected/005.rb 49 <==
+[1, 2, 3].each do |x|
+  [x].each { puts _1 }
+end
+
+==> corrected/008.rb 46 <==
+items.each do |a, (b, *c)|
+  puts a, b, c
+end
+
+==> corrected/009.rb 56 <==
 def func
   (1...value).each do |n|
     puts n
   end
 end
 
-==> corrected/004.rb 56 <==
+==> corrected/010.rb 56 <==
 def func
   (1...value).each do |n|
     puts n
   end
 end
 
-==> corrected/005.rb 56 <==
+==> corrected/011.rb 56 <==
 def func
   (1...value).each do |n|
     puts n
   end
 end
 
-==> corrected/006.rb 56 <==
+==> corrected/012.rb 56 <==
 def func
   (1...value).each do |n|
     puts n
   end
 end
 
-==> corrected/007.rb 71 <==
+==> corrected/013.rb 71 <==
 def func
   {a: 1, b: 2, c: 3}.each do |(a, b)|
     puts a, b
   end
 end
 
-==> corrected/008.rb 54 <==
+==> corrected/014.rb 54 <==
 def func
   [1, 2, 3].each do |n|
     puts n
   end
 end
 
-==> corrected/009.rb 93 <==
+==> corrected/015.rb 93 <==
 def func
   a = [1, 2]
   b = [3, 4]
@@ -121,7 +143,7 @@ def func
   end
 end
 
-==> corrected/010.rb 82 <==
+==> corrected/016.rb 82 <==
 def func
   a = [1, 2, 3, 4]
   b = [3]
@@ -131,14 +153,14 @@ def func
   end
 end
 
-==> corrected/011.rb 63 <==
+==> corrected/017.rb 63 <==
 def func
   ([1, 2, 3, 4] * 3).each do |n|
     puts n
   end
 end
 
-==> corrected/012.rb 85 <==
+==> corrected/018.rb 85 <==
 def func
   a = [1, 2, 3, 4]
   b = [4, 5]
@@ -148,7 +170,7 @@ def func
   end
 end
 
-==> corrected/013.rb 85 <==
+==> corrected/019.rb 85 <==
 def func
   a = [1, 2, 3, 4]
   b = [4, 5]
@@ -158,7 +180,7 @@ def func
   end
 end
 
-==> corrected/014.rb 79 <==
+==> corrected/020.rb 79 <==
 def func
   a = []
   b = [1, 2, 3]
@@ -168,7 +190,7 @@ def func
   end
 end
 
-==> corrected/015.rb 80 <==
+==> corrected/021.rb 80 <==
 def func
   a = nil
   b = [1, 2, 3]
@@ -178,14 +200,14 @@ def func
   end
 end
 
-==> corrected/016.rb 64 <==
+==> corrected/022.rb 64 <==
 def func
   [1, 2, nil].compact.each do |n|
     puts n
   end
 end
 
-==> corrected/017.rb 31 <==
+==> corrected/023.rb 31 <==
 foo&.items&.each do |item|
 end
 

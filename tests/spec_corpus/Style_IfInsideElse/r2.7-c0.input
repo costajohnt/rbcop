@@ -129,34 +129,79 @@ else
   end
 end
 
-==> 012.rb 32 <==
-if a
-  blah
-else
-  foo if b
-end
+==> 012.rb 47 <==
+if a then foo else if b; bar else baz end; end
 
-==> 013.rb 48 <==
+==> 013.rb 38 <==
 if a
   blah
 else
-  if b
-    foo
-  end
-  bar
+  if b; foo; end
 end
 
 ==> 014.rb 48 <==
 if a
   blah
 else
+  if b; else
+    foo
+  end
+end
+
+==> 015.rb 51 <==
+if a
+  blah
+else
+  if b
+    foo
+  else bar end
+end
+
+==> 016.rb 40 <==
+if a
+  blah
+else if b
+    foo
+  end
+end
+
+==> 017.rb 32 <==
+if a
+  blah
+else
+  foo if b
+end
+
+==> 018.rb 30 <==
+if a
+  blah
+else foo if b
+end
+
+==> 019.rb 33 <==
+if a then blah else foo if b end
+
+==> 020.rb 48 <==
+if a
+  blah
+else
+  if b
+    foo
+  end
+  bar
+end
+
+==> 021.rb 48 <==
+if a
+  blah
+else
   bar
   if b
     foo
   end
 end
 
-==> 015.rb 69 <==
+==> 022.rb 69 <==
 if a
   blah
 else
@@ -169,7 +214,7 @@ else
   end
 end
 
-==> 016.rb 54 <==
+==> 023.rb 54 <==
 if a
   blah
 else
@@ -179,7 +224,7 @@ else
   end
 end
 
-==> 017.rb 43 <==
+==> 024.rb 43 <==
 if a
   blah
 elsif b
@@ -188,7 +233,7 @@ else
   blah
 end
 
-==> 018.rb 46 <==
+==> 025.rb 46 <==
 if a
   blah
 else
@@ -197,16 +242,16 @@ else
   end
 end
 
-==> 019.rb 34 <==
+==> 026.rb 34 <==
 unless a
   if b
     foo
   end
 end
 
-==> 020.rb 17 <==
+==> 027.rb 17 <==
 a ? b : c ? d : e
-==> 021.rb 33 <==
+==> 028.rb 33 <==
 if a
   blah
 else

@@ -1,4 +1,4 @@
-==> offenses exit=1 2077 <==
+==> offenses exit=1 2457 <==
 002.rb:3:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
 003.rb:3:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
 004.rb:5:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
@@ -21,8 +21,12 @@
 047.rb:3:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
 050.rb:4:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
 050.rb:7:9: C: Layout/IndentationConsistency: Inconsistent indentation detected.
+051.rb:2:1: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+051.rb:7:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+052.rb:3:5: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
+053.rb:5:7: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
 
-==> autocorrect exit=0 2047 <==
+==> autocorrect exit=0 2419 <==
 002.rb:3:3: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
 003.rb:3:3: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
 004.rb:5:3: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
@@ -45,6 +49,10 @@
 047.rb:3:3: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
 050.rb:4:5: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
 050.rb:7:7: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+051.rb:2:1: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+051.rb:7:5: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+052.rb:3:5: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+053.rb:5:7: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
 
 ==> corrected/002.rb 20 <==
 public
@@ -211,4 +219,35 @@ describe ArticlesController do
           end
   end
 end
+
+==> corrected/051.rb 105 <==
+module Foo
+  extend self # rubocop:disable Layout/IndentationWidth
+
+  def bar
+  end
+
+  def baz
+  end
+end
+
+==> corrected/052.rb 134 <==
+module Foo
+  # rubocop:disable Layout/IndentationWidth
+  def bar
+  end
+  # rubocop:enable Layout/IndentationWidth
+  def baz
+  end
+end
+
+==> corrected/053.rb 138 <==
+# rubocop:disable Layout/IndentationWidth
+module Foo
+    def bar
+    end
+    def baz
+    end
+end
+# rubocop:enable Layout/IndentationWidth
 

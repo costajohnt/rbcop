@@ -1,4 +1,4 @@
-==> .rubocop.yml 202 <==
+==> .rubocop.yml 179 <==
 ---
 AllCops:
   EnabledByDefault: true
@@ -6,38 +6,18 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 2.7
 Style/DisableCopsWithinSourceCodeDirective:
-  DisallowedCops:
-  - Lint/Void
-  - Security/Eval
+  AllowedCops:
+  - Metrics
 
-==> 000.rb 32 <==
-foo # rubocop:disable Lint/Void
-
-==> 001.rb 46 <==
-def foo # rubocop:disable Metrics/AbcSize
+==> 000.rb 80 <==
+# rubocop:push -Metrics/AbcSize -Metrics/MethodLength
+def foo
 end
+# rubocop:pop
 
-==> 002.rb 43 <==
-foo # rubocop:disable Lint/Void, Lint/Void
-
-==> 003.rb 25 <==
-foo # rubocop:enable all
-
-==> 004.rb 26 <==
-foo # rubocop:disable all
-
-==> 005.rb 62 <==
-foo # rubocop:disable Metrics/AbcSize, Lint/Void, Style/AndOr
-
-==> 006.rb 64 <==
-foo # rubocop:disable Lint/Void, Metrics/AbcSize, Security/Eval
-
-==> 007.rb 33 <==
-# rubocop:enable Metrics/AbcSize
-
-==> 008.rb 25 <==
-# comment
-
-class Foo
+==> 001.rb 98 <==
+# rubocop:push -Metrics/AbcSize -Layout/LineLength +Style/For -- legacy
+def foo
 end
+# rubocop:pop
 

@@ -1,0 +1,21 @@
+==> .rubocop.yml 181 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceBeforeBlockBraces:
+  Enabled: true
+  EnforcedStyle: no_space
+
+==> 000.rb 39 <==
+def each
+  super{|x| yield x.foo }
+end
+
+==> 001.rb 23 <==
+def each
+  super""
+end
+

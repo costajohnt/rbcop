@@ -1,4 +1,4 @@
-==> offenses exit=1 3036 <==
+==> offenses exit=1 3294 <==
 000.rb:2:5: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
 001.rb:2:5: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
 002.rb:2:5: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
@@ -20,10 +20,12 @@
 028.rb:4:15: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `Diagnostic.where(`.
 029.rb:4:9: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `Diagnostic.where(`.
 030.rb:4:9: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
-032.rb:2:15: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
-033.rb:3:7: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+031.rb:3:1: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+032.rb:2:1: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than `baz.qux(`.
+034.rb:2:15: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+035.rb:3:7: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
 
-==> autocorrect exit=0 3074 <==
+==> autocorrect exit=0 3328 <==
 000.rb:2:5: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
 001.rb:2:5: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
 002.rb:2:5: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
@@ -45,8 +47,10 @@
 028.rb:4:15: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `Diagnostic.where(`.
 029.rb:4:9: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `Diagnostic.where(`.
 030.rb:4:9: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
-032.rb:2:15: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
-033.rb:3:7: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+031.rb:3:1: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+032.rb:2:1: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than `baz.qux(`.
+034.rb:2:15: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
+035.rb:3:7: C: [Corrected] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
 
 ==> corrected/000.rb 26 <==
 run(
@@ -168,13 +172,26 @@ instance_variable_set(
   .ids,
 )
 
-==> corrected/032.rb 76 <==
+==> corrected/031.rb 59 <==
+foo.bar(
+  baz(:qux).quux(
+    corge,
+    grault).garply
+)
+
+==> corrected/032.rb 44 <==
+foo(bar, baz.qux(
+           quux,
+corge
+))
+
+==> corrected/034.rb 76 <==
 run :foo, Diagnostic.where(
   'limit >= 10',
             )
             .ids
 
-==> corrected/033.rb 139 <==
+==> corrected/035.rb 139 <==
 sequences = CourseSequence
   .includes(
     course_sequence_memberships: {

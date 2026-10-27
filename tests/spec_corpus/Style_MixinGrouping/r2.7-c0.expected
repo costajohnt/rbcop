@@ -1,16 +1,18 @@
-==> offenses exit=1 474 <==
+==> offenses exit=1 569 <==
 000.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in separate statements.
 002.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in separate statements.
-004.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `extend` mixins in separate statements.
-006.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `prepend` mixins in separate statements.
-008.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in separate statements.
+003.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in separate statements.
+005.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `extend` mixins in separate statements.
+007.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `prepend` mixins in separate statements.
+009.rb:2:3: C: [Correctable] Style/MixinGrouping: Put `include` mixins in separate statements.
 
-==> autocorrect exit=0 464 <==
+==> autocorrect exit=0 557 <==
 000.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in separate statements.
 002.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in separate statements.
-004.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `extend` mixins in separate statements.
-006.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `prepend` mixins in separate statements.
-008.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in separate statements.
+003.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in separate statements.
+005.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `extend` mixins in separate statements.
+007.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `prepend` mixins in separate statements.
+009.rb:2:3: C: [Corrected] Style/MixinGrouping: Put `include` mixins in separate statements.
 
 ==> corrected/000.rb 42 <==
 class Foo
@@ -25,19 +27,27 @@ class Foo
   include Qux
 end
 
-==> corrected/004.rb 40 <==
+==> corrected/003.rb 77 <==
+class Foo
+  include(Module.new do
+    do_something
+  end)
+  include(Bar)
+end
+
+==> corrected/005.rb 40 <==
 class Foo
   extend Qux
   extend Bar
 end
 
-==> corrected/006.rb 42 <==
+==> corrected/007.rb 42 <==
 class Foo
   prepend Qux
   prepend Bar
 end
 
-==> corrected/008.rb 55 <==
+==> corrected/009.rb 55 <==
 class Foo
   include Baz
   include Bar

@@ -1,4 +1,4 @@
-==> offenses exit=1 5780 <==
+==> offenses exit=1 6590 <==
 000.rb:2:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
 000.rb:4:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
 001.rb:4:5: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
@@ -7,58 +7,66 @@
 002.rb:6:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
 003.rb:2:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
 003.rb:5:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-004.rb:2:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `h[:key] = foo` out of the conditional.
-004.rb:5:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `h[:key] = foo` out of the conditional.
-006.rb:2:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `self.foo ||= default` out of the conditional.
-006.rb:5:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `self.foo ||= default` out of the conditional.
-012.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `x = do_something` out of the conditional.
-012.rb:6:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `x = do_something` out of the conditional.
-017.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-017.rb:5:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-017.rb:7:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-019.rb:4:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-019.rb:7:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-019.rb:10:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-020.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-020.rb:6:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-020.rb:9:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-027.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-027.rb:5:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-027.rb:7:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-030.rb:4:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-030.rb:7:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-030.rb:10:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+004.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+004.rb:4:7: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+005.rb:2:30: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+005.rb:4:14: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+006.rb:2:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+006.rb:4:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+007.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+007.rb:6:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+008.rb:2:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `h[:key] = foo` out of the conditional.
+008.rb:5:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `h[:key] = foo` out of the conditional.
+010.rb:2:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `self.foo ||= default` out of the conditional.
+010.rb:5:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `self.foo ||= default` out of the conditional.
+016.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `x = do_something` out of the conditional.
+016.rb:6:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `x = do_something` out of the conditional.
+021.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+021.rb:5:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+021.rb:7:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+023.rb:4:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+023.rb:7:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+023.rb:10:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+024.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+024.rb:6:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+024.rb:9:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
 031.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-031.rb:6:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-031.rb:9:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-038.rb:1:5: C: Style/IdenticalConditionalBranches: Move `y` out of the conditional.
-038.rb:1:9: C: Style/IdenticalConditionalBranches: Move `y` out of the conditional.
-039.rb:2:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-039.rb:4:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-040.rb:1:11: C: Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-040.rb:1:17: C: Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-041.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-041.rb:5:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-041.rb:7:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-042.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-042.rb:5:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-042.rb:7:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+031.rb:5:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+031.rb:7:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+034.rb:4:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+034.rb:7:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+034.rb:10:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+035.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+035.rb:6:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+035.rb:9:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+042.rb:1:5: C: Style/IdenticalConditionalBranches: Move `y` out of the conditional.
+042.rb:1:9: C: Style/IdenticalConditionalBranches: Move `y` out of the conditional.
 043.rb:2:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-043.rb:5:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-044.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-044.rb:6:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-044.rb:9:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+043.rb:4:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+044.rb:1:11: C: Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+044.rb:1:17: C: Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
 045.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-045.rb:6:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-045.rb:9:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-046.rb:2:17: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
-046.rb:3:8: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
-047.rb:2:17: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
-047.rb:4:5: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
-048.rb:3:5: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
-048.rb:4:8: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
+045.rb:5:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+045.rb:7:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+046.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+046.rb:5:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+046.rb:7:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+047.rb:2:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+047.rb:5:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+048.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+048.rb:6:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+048.rb:9:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+049.rb:3:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+049.rb:6:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+049.rb:9:3: C: [Correctable] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+050.rb:2:17: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
+050.rb:3:8: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
+051.rb:2:17: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
+051.rb:4:5: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
+052.rb:3:5: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
+052.rb:4:8: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
 
-==> autocorrect exit=1 5684 <==
+==> autocorrect exit=1 6478 <==
 000.rb:2:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
 000.rb:4:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
 001.rb:4:5: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
@@ -67,56 +75,64 @@
 002.rb:6:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
 003.rb:2:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
 003.rb:5:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-004.rb:2:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `h[:key] = foo` out of the conditional.
-004.rb:5:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `h[:key] = foo` out of the conditional.
-006.rb:2:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `self.foo ||= default` out of the conditional.
-006.rb:5:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `self.foo ||= default` out of the conditional.
-012.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `x = do_something` out of the conditional.
-012.rb:6:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `x = do_something` out of the conditional.
-017.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-017.rb:5:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-017.rb:7:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-019.rb:4:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-019.rb:7:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-019.rb:10:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-020.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-020.rb:6:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-020.rb:9:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-027.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-027.rb:5:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-027.rb:7:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-030.rb:4:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-030.rb:7:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-030.rb:10:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+004.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+004.rb:4:7: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+005.rb:2:30: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+005.rb:4:14: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+006.rb:2:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+006.rb:4:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+007.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+007.rb:6:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+008.rb:2:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `h[:key] = foo` out of the conditional.
+008.rb:5:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `h[:key] = foo` out of the conditional.
+010.rb:2:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `self.foo ||= default` out of the conditional.
+010.rb:5:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `self.foo ||= default` out of the conditional.
+016.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `x = do_something` out of the conditional.
+016.rb:6:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `x = do_something` out of the conditional.
+021.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+021.rb:5:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+021.rb:7:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+023.rb:4:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+023.rb:7:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+023.rb:10:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+024.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+024.rb:6:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+024.rb:9:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
 031.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-031.rb:6:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-031.rb:9:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
-038.rb:1:5: C: Style/IdenticalConditionalBranches: Move `y` out of the conditional.
-038.rb:1:9: C: Style/IdenticalConditionalBranches: Move `y` out of the conditional.
-039.rb:2:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-039.rb:4:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-040.rb:1:11: C: Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-040.rb:1:17: C: Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-041.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-041.rb:5:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-041.rb:7:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-042.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-042.rb:5:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-042.rb:7:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+031.rb:5:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+031.rb:7:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+034.rb:4:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+034.rb:7:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+034.rb:10:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+035.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+035.rb:6:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+035.rb:9:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `do_x` out of the conditional.
+042.rb:1:5: C: Style/IdenticalConditionalBranches: Move `y` out of the conditional.
+042.rb:1:9: C: Style/IdenticalConditionalBranches: Move `y` out of the conditional.
 043.rb:2:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-043.rb:5:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-044.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-044.rb:6:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-044.rb:9:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+043.rb:4:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+044.rb:1:11: C: Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+044.rb:1:17: C: Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
 045.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-045.rb:6:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-045.rb:9:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
-046.rb:2:17: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
-046.rb:3:8: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
-047.rb:2:17: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
-047.rb:4:5: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
-048.rb:3:5: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
-048.rb:4:8: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
+045.rb:5:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+045.rb:7:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+046.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+046.rb:5:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+046.rb:7:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+047.rb:2:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+047.rb:5:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+048.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+048.rb:6:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+048.rb:9:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+049.rb:3:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+049.rb:6:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+049.rb:9:3: C: [Corrected] Style/IdenticalConditionalBranches: Move `bar` out of the conditional.
+050.rb:2:17: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
+050.rb:3:8: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
+051.rb:2:17: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
+051.rb:4:5: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
+052.rb:3:5: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
+052.rb:4:8: C: Style/IdenticalConditionalBranches: Move `value` out of the conditional.
 
 ==> corrected/000.rb 27 <==
 if something
@@ -150,7 +166,38 @@ else
   1 + 2 + 3
 end
 
-==> corrected/004.rb 48 <==
+==> corrected/004.rb 56 <==
+if something
+  method_call_here(1, 2, 3)
+else; end
+do_x
+
+==> corrected/005.rb 67 <==
+if something
+  method_call_here(1, 2, 3)
+else
+  1 + 2 + 3
+end
+do_x
+
+==> corrected/006.rb 67 <==
+do_x
+if something
+  method_call_here(1, 2, 3)
+else
+  1 + 2 + 3
+end
+
+==> corrected/007.rb 79 <==
+if something
+  method_call_here(1, 2, 3)
+  # comment
+else
+  1 + 2 + 3
+end
+do_x
+
+==> corrected/008.rb 48 <==
 h[:key] = foo
 if condition
   bar
@@ -158,7 +205,7 @@ else
   baz
 end
 
-==> corrected/006.rb 57 <==
+==> corrected/010.rb 57 <==
 self.foo ||= default
 if something
   do_x
@@ -166,7 +213,7 @@ else
   do_y
 end
 
-==> corrected/012.rb 53 <==
+==> corrected/016.rb 53 <==
 if x.condition
   foo
 else
@@ -174,7 +221,7 @@ else
 end
 x = do_something
 
-==> corrected/017.rb 45 <==
+==> corrected/021.rb 45 <==
 case something
 when :a
 when :b
@@ -182,19 +229,7 @@ else
 end
 do_x
 
-==> corrected/019.rb 60 <==
-case something
-when :a
-  x1
-when :b
-  x2
-else
-  x3
-end
-do_x
-
-==> corrected/020.rb 60 <==
-do_x
+==> corrected/023.rb 60 <==
 case something
 when :a
   x1
@@ -203,8 +238,20 @@ when :b
 else
   x3
 end
+do_x
 
-==> corrected/027.rb 41 <==
+==> corrected/024.rb 60 <==
+do_x
+case something
+when :a
+  x1
+when :b
+  x2
+else
+  x3
+end
+
+==> corrected/031.rb 41 <==
 case something
 in :a
 in :b
@@ -212,7 +259,7 @@ else
 end
 do_x
 
-==> corrected/030.rb 56 <==
+==> corrected/034.rb 56 <==
 case something
 in :a
   x1
@@ -223,7 +270,7 @@ else
 end
 do_x
 
-==> corrected/031.rb 56 <==
+==> corrected/035.rb 56 <==
 do_x
 case something
 in :a
@@ -234,13 +281,13 @@ else
   x3
 end
 
-==> corrected/039.rb 24 <==
+==> corrected/043.rb 24 <==
 if foo
 else
 end
 x = bar
 
-==> corrected/041.rb 48 <==
+==> corrected/045.rb 48 <==
 case something
 when :a
 when :b
@@ -248,7 +295,7 @@ else
 end
 x = bar
 
-==> corrected/042.rb 44 <==
+==> corrected/046.rb 44 <==
 case something
 in :a
 in :b
@@ -256,7 +303,7 @@ else
 end
 x = bar
 
-==> corrected/043.rb 44 <==
+==> corrected/047.rb 44 <==
 bar
 x = if foo
   do_x(1)
@@ -264,7 +311,7 @@ else
   do_x(2)
 end
 
-==> corrected/044.rb 78 <==
+==> corrected/048.rb 78 <==
 bar
 x = case something
 when :a
@@ -275,7 +322,7 @@ else
   do_x(3)
 end
 
-==> corrected/045.rb 74 <==
+==> corrected/049.rb 74 <==
 bar
 x = case something
 in :a

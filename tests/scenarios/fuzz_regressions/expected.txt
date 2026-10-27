@@ -29,22 +29,22 @@ block_alignment_unicode_space.rb:3:4: C: [Correctable] Layout/IndentationConsist
 block_alignment_unicode_space.rb:3:6: C: [Correctable] Layout/BlockEndNewline: Expression at 3, 6 should be on its own line.
 closing_parenthesis_interpolation.rb:11:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `w`.
 closing_parenthesis_interpolation.rb:11:5: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
-closing_parenthesis_interpolation.rb:12:2: C: [Correctable] Layout/ClosingParenthesisIndentation: Align `)` with `(`.
+closing_parenthesis_interpolation.rb:12:2: C: Layout/ClosingParenthesisIndentation: Align `)` with `(`.
 closing_parenthesis_interpolation.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 closing_parenthesis_interpolation.rb:1:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
-closing_parenthesis_interpolation.rb:3:5: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 4)
+closing_parenthesis_interpolation.rb:3:5: C: Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 4)
 closing_parenthesis_interpolation.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
 closing_parenthesis_interpolation.rb:4:5: C: [Correctable] Style/RedundantInterpolation: Prefer `to_s` over string interpolation.
 closing_parenthesis_interpolation.rb:4:6: W: Lint/EmptyExpression: Avoid empty expressions.
 closing_parenthesis_interpolation.rb:4:6: W: [Correctable] Lint/EmptyInterpolation: Empty interpolation detected.
 closing_parenthesis_interpolation.rb:6:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `z`.
-closing_parenthesis_interpolation.rb:9:7: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 6)
+closing_parenthesis_interpolation.rb:9:7: C: Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 6)
 closing_parenthesis_interpolation_tabs.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 closing_parenthesis_interpolation_tabs.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
 closing_parenthesis_interpolation_tabs.rb:3:1: C: [Correctable] Layout/IndentationStyle: Tab detected in indentation.
 closing_parenthesis_interpolation_tabs.rb:3:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Align `.where` with `foo` on line 2.
 closing_parenthesis_interpolation_tabs.rb:4:5: C: [Correctable] Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
-closing_parenthesis_interpolation_tabs.rb:6:5: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 3 (not 4)
+closing_parenthesis_interpolation_tabs.rb:6:5: C: Layout/ClosingParenthesisIndentation: Indent `)` to column 3 (not 4)
 closing_parenthesis_interpolation_tabs.rb:6:7: C: [Correctable] Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call.
 closing_parenthesis_interpolation_tabs.rb:7:7: C: [Correctable] Layout/ClosingParenthesisIndentation: Indent `)` to column 2 (not 6)
 cop_directive_bom.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
@@ -156,6 +156,8 @@ empty_lines_continuation.rb:4:1: C: [Correctable] Layout/EmptyLines: Extra blank
 empty_lines_continuation.rb:5:3: C: [Correctable] Layout/IndentationConsistency: Inconsistent indentation detected.
 empty_lines_crlf.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 empty_lines_crlf.rb:3:1: C: Layout/EndOfLine: Carriage return character detected.
+empty_lines_crlf.rb:3:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
+empty_lines_crlf.rb:4:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
 empty_lines_second_line.rb:3:1: C: [Correctable] Layout/LeadingEmptyLines: Unnecessary blank line at the beginning of the source.
 empty_lines_second_line.rb:5:1: C: [Correctable] Layout/EmptyLines: Extra blank line detected.
 empty_lines_second_line.rb:6:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
@@ -270,7 +272,6 @@ pattern_variable_names.rb:6:17: F: Lint/Syntax: `q　z' is not allowed as a loca
 redundant_line_break_crlf.rb:1:1: C: Layout/EndOfLine: Carriage return character detected.
 redundant_line_break_crlf.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 redundant_line_break_crlf.rb:2:3: W: Lint/EmptyConditionalBody: Avoid `if` branches without a body.
-redundant_line_break_crlf.rb:4:10: C: [Correctable] Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
 redundant_parentheses_block_call_args.rb:1:10: C: [Correctable] Style/RedundantParentheses: Don't use parentheses around a method argument.
 redundant_parentheses_block_call_args.rb:1:19: W: [Correctable] Lint/UnusedBlockArgument: Unused block argument - `acc`. If it's necessary, use `_` or `_acc` as an argument name to indicate that it won't be used.
 redundant_parentheses_block_call_args.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.

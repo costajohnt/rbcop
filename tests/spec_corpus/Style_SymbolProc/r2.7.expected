@@ -1,66 +1,68 @@
-==> offenses exit=1 3236 <==
+==> offenses exit=1 3334 <==
 000.rb:1:10: C: [Correctable] Style/SymbolProc: Pass `&:upcase` as an argument to `map` instead of a block.
 001.rb:1:8: C: [Correctable] Style/SymbolProc: Pass `&:nil?` as an argument to `map` instead of a block.
 002.rb:1:11: C: [Correctable] Style/SymbolProc: Pass `&:upcase` as an argument to `map` instead of a block.
 003.rb:1:15: C: [Correctable] Style/SymbolProc: Pass `&:-@` as an argument to `map` instead of a block.
-005.rb:1:7: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `lambda` instead of a block.
+005.rb:1:1: C: [Correctable] Style/SymbolProc: Use `lambda(&:method)` instead of `->(x) { x.method }`.
 006.rb:1:6: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `proc` instead of a block.
 007.rb:1:10: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
 008.rb:1:12: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
-009.rb:1:7: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `lambda` instead of a block.
-010.rb:1:9: C: [Correctable] Style/SymbolProc: Pass `&:do_something` as an argument to `lambda` instead of a block.
-011.rb:1:6: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `proc` instead of a block.
-012.rb:1:10: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
-013.rb:1:12: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
-023.rb:1:16: C: [Correctable] Style/SymbolProc: Pass `&:test` as an argument to `method` instead of a block.
-024.rb:1:10: C: [Correctable] Style/SymbolProc: Pass `&:upcase` as an argument to `map` instead of a block.
-024.rb:1:31: C: [Correctable] Style/SymbolProc: Pass `&:downcase` as an argument to `map` instead of a block.
-025.rb:1:15: C: [Correctable] Style/SymbolProc: Pass `&:upcase` as an argument to `map` instead of a block.
-026.rb:1:18: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `reject` instead of a block.
-028.rb:1:18: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `select` instead of a block.
-030.rb:1:15: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `min` instead of a block.
-032.rb:1:15: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `max` instead of a block.
-034.rb:1:7: C: [Correctable] Style/SymbolProc: Pass `&:test` as an argument to `super` instead of a block.
-035.rb:4:3: C: [Correctable] Style/SymbolProc: Pass `&:text` as an argument to `mail` instead of a block.
-036.rb:1:18: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `reject` instead of a block.
-037.rb:1:21: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `reject` instead of a block.
-039.rb:1:18: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `select` instead of a block.
-040.rb:1:21: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `select` instead of a block.
-042.rb:1:15: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `min` instead of a block.
-044.rb:1:15: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `max` instead of a block.
-046.rb:1:11: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `something` instead of a block.
+009.rb:1:1: C: [Correctable] Style/SymbolProc: Use `lambda(&:method)` instead of `->(x) { x.method }`.
+010.rb:1:1: C: [Correctable] Style/SymbolProc: Use `lambda(&:do_something)` instead of a lambda literal with a block.
+011.rb:1:8: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `lambda` instead of a block.
+012.rb:1:6: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `proc` instead of a block.
+013.rb:1:10: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
+014.rb:1:12: C: [Correctable] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
+028.rb:1:16: C: [Correctable] Style/SymbolProc: Pass `&:test` as an argument to `method` instead of a block.
+029.rb:1:10: C: [Correctable] Style/SymbolProc: Pass `&:upcase` as an argument to `map` instead of a block.
+029.rb:1:31: C: [Correctable] Style/SymbolProc: Pass `&:downcase` as an argument to `map` instead of a block.
+030.rb:1:15: C: [Correctable] Style/SymbolProc: Pass `&:upcase` as an argument to `map` instead of a block.
+031.rb:1:18: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `reject` instead of a block.
+033.rb:1:18: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `select` instead of a block.
+035.rb:1:15: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `min` instead of a block.
+037.rb:1:15: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `max` instead of a block.
+039.rb:1:7: C: [Correctable] Style/SymbolProc: Pass `&:test` as an argument to `super` instead of a block.
+040.rb:4:3: C: [Correctable] Style/SymbolProc: Pass `&:text` as an argument to `mail` instead of a block.
+041.rb:1:18: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `reject` instead of a block.
+042.rb:1:21: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `reject` instead of a block.
+044.rb:1:18: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `select` instead of a block.
+045.rb:1:21: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `select` instead of a block.
+047.rb:1:15: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `min` instead of a block.
+049.rb:1:15: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `max` instead of a block.
+051.rb:1:11: C: [Correctable] Style/SymbolProc: Pass `&:foo` as an argument to `something` instead of a block.
 
-==> autocorrect exit=0 3176 <==
+==> autocorrect exit=0 3272 <==
 000.rb:1:10: C: [Corrected] Style/SymbolProc: Pass `&:upcase` as an argument to `map` instead of a block.
 001.rb:1:8: C: [Corrected] Style/SymbolProc: Pass `&:nil?` as an argument to `map` instead of a block.
 002.rb:1:11: C: [Corrected] Style/SymbolProc: Pass `&:upcase` as an argument to `map` instead of a block.
 003.rb:1:15: C: [Corrected] Style/SymbolProc: Pass `&:-@` as an argument to `map` instead of a block.
-005.rb:1:7: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `lambda` instead of a block.
+005.rb:1:1: C: [Corrected] Style/SymbolProc: Use `lambda(&:method)` instead of `->(x) { x.method }`.
 006.rb:1:6: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `proc` instead of a block.
 007.rb:1:10: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
 008.rb:1:12: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
-009.rb:1:7: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `lambda` instead of a block.
-010.rb:1:9: C: [Corrected] Style/SymbolProc: Pass `&:do_something` as an argument to `lambda` instead of a block.
-011.rb:1:6: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `proc` instead of a block.
-012.rb:1:10: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
-013.rb:1:12: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
-023.rb:1:16: C: [Corrected] Style/SymbolProc: Pass `&:test` as an argument to `method` instead of a block.
-024.rb:1:10: C: [Corrected] Style/SymbolProc: Pass `&:upcase` as an argument to `map` instead of a block.
-024.rb:1:31: C: [Corrected] Style/SymbolProc: Pass `&:downcase` as an argument to `map` instead of a block.
-025.rb:1:15: C: [Corrected] Style/SymbolProc: Pass `&:upcase` as an argument to `map` instead of a block.
-026.rb:1:18: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `reject` instead of a block.
-028.rb:1:18: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `select` instead of a block.
-030.rb:1:15: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `min` instead of a block.
-032.rb:1:15: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `max` instead of a block.
-034.rb:1:7: C: [Corrected] Style/SymbolProc: Pass `&:test` as an argument to `super` instead of a block.
-035.rb:4:3: C: [Corrected] Style/SymbolProc: Pass `&:text` as an argument to `mail` instead of a block.
-036.rb:1:18: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `reject` instead of a block.
-037.rb:1:21: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `reject` instead of a block.
-039.rb:1:18: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `select` instead of a block.
-040.rb:1:21: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `select` instead of a block.
-042.rb:1:15: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `min` instead of a block.
-044.rb:1:15: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `max` instead of a block.
-046.rb:1:11: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `something` instead of a block.
+009.rb:1:1: C: [Corrected] Style/SymbolProc: Use `lambda(&:method)` instead of `->(x) { x.method }`.
+010.rb:1:1: C: [Corrected] Style/SymbolProc: Use `lambda(&:do_something)` instead of a lambda literal with a block.
+011.rb:1:8: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `lambda` instead of a block.
+012.rb:1:6: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `proc` instead of a block.
+013.rb:1:10: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
+014.rb:1:12: C: [Corrected] Style/SymbolProc: Pass `&:method` as an argument to `new` instead of a block.
+028.rb:1:16: C: [Corrected] Style/SymbolProc: Pass `&:test` as an argument to `method` instead of a block.
+029.rb:1:10: C: [Corrected] Style/SymbolProc: Pass `&:upcase` as an argument to `map` instead of a block.
+029.rb:1:31: C: [Corrected] Style/SymbolProc: Pass `&:downcase` as an argument to `map` instead of a block.
+030.rb:1:15: C: [Corrected] Style/SymbolProc: Pass `&:upcase` as an argument to `map` instead of a block.
+031.rb:1:18: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `reject` instead of a block.
+033.rb:1:18: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `select` instead of a block.
+035.rb:1:15: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `min` instead of a block.
+037.rb:1:15: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `max` instead of a block.
+039.rb:1:7: C: [Corrected] Style/SymbolProc: Pass `&:test` as an argument to `super` instead of a block.
+040.rb:4:3: C: [Corrected] Style/SymbolProc: Pass `&:text` as an argument to `mail` instead of a block.
+041.rb:1:18: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `reject` instead of a block.
+042.rb:1:21: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `reject` instead of a block.
+044.rb:1:18: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `select` instead of a block.
+045.rb:1:21: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `select` instead of a block.
+047.rb:1:15: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `min` instead of a block.
+049.rb:1:15: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `max` instead of a block.
+051.rb:1:11: C: [Corrected] Style/SymbolProc: Pass `&:foo` as an argument to `something` instead of a block.
 
 ==> corrected/000.rb 19 <==
 coll.map(&:upcase)
@@ -88,63 +90,66 @@ lambda(&:method)
 ==> corrected/010.rb 23 <==
 lambda(&:do_something)
 
-==> corrected/011.rb 15 <==
+==> corrected/011.rb 17 <==
+lambda(&:method)
+
+==> corrected/012.rb 15 <==
 proc(&:method)
 
-==> corrected/012.rb 19 <==
+==> corrected/013.rb 19 <==
 Proc.new(&:method)
 
-==> corrected/013.rb 21 <==
+==> corrected/014.rb 21 <==
 ::Proc.new(&:method)
 
-==> corrected/023.rb 23 <==
+==> corrected/028.rb 23 <==
 method(one, 2, &:test)
 
-==> corrected/024.rb 35 <==
+==> corrected/029.rb 35 <==
 coll.map(&:upcase).map(&:downcase)
 
-==> corrected/025.rb 19 <==
+==> corrected/030.rb 19 <==
 coll.map(&:upcase)
 
-==> corrected/026.rb 24 <==
+==> corrected/031.rb 24 <==
 [1, 2, 3].reject(&:foo)
 
-==> corrected/028.rb 24 <==
+==> corrected/033.rb 24 <==
 [1, 2, 3].select(&:foo)
 
-==> corrected/030.rb 21 <==
+==> corrected/035.rb 21 <==
 {foo: 42}.min(&:foo)
 
-==> corrected/032.rb 21 <==
+==> corrected/037.rb 21 <==
 {foo: 42}.max(&:foo)
 
-==> corrected/034.rb 14 <==
+==> corrected/039.rb 14 <==
 super(&:test)
 
-==> corrected/035.rb 46 <==
+==> corrected/040.rb 46 <==
 mail(
   to: 'foo',
   subject: 'bar', &:text
 )
 
-==> corrected/036.rb 24 <==
+==> corrected/041.rb 24 <==
 [1, 2, 3].reject(&:foo)
 
-==> corrected/037.rb 27 <==
+==> corrected/042.rb 27 <==
 do_something.reject(&:foo)
 
-==> corrected/039.rb 24 <==
+==> corrected/044.rb 24 <==
 [1, 2, 3].select(&:foo)
 
-==> corrected/040.rb 27 <==
+==> corrected/045.rb 27 <==
 do_something.select(&:foo)
 
-==> corrected/042.rb 21 <==
+==> corrected/047.rb 21 <==
 {foo: 42}.min(&:foo)
 
-==> corrected/044.rb 21 <==
+==> corrected/049.rb 21 <==
 {foo: 42}.max(&:foo)
 
-==> corrected/046.rb 17 <==
+==> corrected/051.rb 17 <==
 something(&:foo)
 

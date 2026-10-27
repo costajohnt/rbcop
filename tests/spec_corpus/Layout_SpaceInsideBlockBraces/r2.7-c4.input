@@ -14,27 +14,59 @@ Layout/SpaceInsideBlockBraces:
 
 ==> 000.rb 11 <==
 each {puts}
-==> 001.rb 13 <==
+==> 001.rb 15 <==
+each { |x|
+ x}
+
+==> 002.rb 16 <==
+each { |x|
+ x }
+
+==> 003.rb 14 <==
+foo {
+  bar
+}
+
+==> 004.rb 21 <==
+foo
+  .bar {
+baz
+  }
+
+==> 005.rb 15 <==
+foo
+  .c {
+b }
+
+==> 006.rb 14 <==
+foo {
+  bar }
+
+==> 007.rb 13 <==
 each { puts}
 
-==> 002.rb 13 <==
+==> 008.rb 13 <==
 each {puts }
 
-==> 003.rb 26 <==
+==> 009.rb 26 <==
 each {puts}
 each { puts }
 
-==> 004.rb 10 <==
+==> 010.rb 23 <==
+foo { # comment
+  bar}
+
+==> 011.rb 10 <==
 each{puts}
-==> 005.rb 29 <==
+==> 012.rb 29 <==
 foo bar { |arg|
   baz(arg)
 }
 
-==> 006.rb 16 <==
+==> 013.rb 16 <==
 each { |x| puts}
-==> 007.rb 16 <==
+==> 014.rb 16 <==
 each {|x| puts}
 
-==> 008.rb 9 <==
+==> 015.rb 9 <==
 ->(x) {x}

@@ -45,7 +45,16 @@ impl Cop for RedundantInterpolationUnfreeze {
             return;
         }
         let (send_start, send_end) = send_range(&call);
-        let source = node_text(&dstr).to_string();
-        cx.add_fix(start, end, MSG, |c| c.replace(send_start, send_end, &source));
+        let (ds, de) = (dstr.location().start_offset(), dstr.location().end_offset());
+        // comment_outside_string?
+        if cx.src.comments.iter().any(|c| send_start <= c.start && c.end <= send_end && !(ds <= c.start && c.end <= de)) {
+            return;
+        }
+        // Only the parts around the string go, so an unfrozen string interpolated into it can be
+        // corrected in the same pass.
+        cx.add_fix(start, end, MSG, |c| {
+            c.remove(send_start, ds);
+            c.remove(de, send_end);
+        });
     }
 }

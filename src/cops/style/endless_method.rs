@@ -10,14 +10,24 @@ const MSG_MULTI_LINE: &str = "Avoid endless method definitions with multiple lin
 const MSG_REQUIRE_SINGLE: &str = "Use endless method definitions for single line methods.";
 const MSG_REQUIRE_ALWAYS: &str = "Use endless method definitions.";
 
-/// `each_descendant(:str).any?(&:heredoc?)` (parser `str` only: no interpolation, one body line).
+/// `each_descendant(:any_str).any?(&:heredoc?)`.
 #[derive(Default)]
 struct StrHeredoc(bool);
 
 impl<'pr> Visit<'pr> for StrHeredoc {
     fn visit_string_node(&mut self, node: &ruby_prism::StringNode<'pr>) {
-        let n = node.as_node();
-        self.0 |= is_heredoc(&n) && !is_parser_dstr(&n);
+        self.0 |= is_heredoc(&node.as_node());
+    }
+    fn visit_x_string_node(&mut self, node: &ruby_prism::XStringNode<'pr>) {
+        self.0 |= is_heredoc(&node.as_node());
+    }
+    fn visit_interpolated_string_node(&mut self, node: &ruby_prism::InterpolatedStringNode<'pr>) {
+        self.0 |= is_heredoc(&node.as_node());
+        ruby_prism::visit_interpolated_string_node(self, node);
+    }
+    fn visit_interpolated_x_string_node(&mut self, node: &ruby_prism::InterpolatedXStringNode<'pr>) {
+        self.0 |= is_heredoc(&node.as_node());
+        ruby_prism::visit_interpolated_x_string_node(self, node);
     }
 }
 
@@ -87,6 +97,16 @@ impl Cop for EndlessMethod {
             _ => (p.location().start_offset(), p.location().end_offset()),
         });
         let args = args_range.map_or("", |(s, e)| &src.text[s..e]);
+        // unparenthesized_arguments?: `def foo a` gets its parentheses when made endless.
+        let unparenthesized = has_args && def.lparen_loc().is_none();
+        let padding = if helpers::alignment::cop_enabled(cx, "Layout/SpaceInsideParens")
+            && cx.config.for_cop("Layout/SpaceInsideParens").str("EnforcedStyle") != Some("no_space")
+        {
+            " "
+        } else {
+            ""
+        };
+        let endless_args = if unparenthesized { format!("({padding}{args}{padding})") } else { args.to_string() };
         let body_src = body.as_ref().map_or("", |(b, _)| node_text(b));
         let column = src.column(start);
 
@@ -112,22 +132,54 @@ impl Cop for EndlessMethod {
             });
         };
 
-        let can_be_endless = matches!(body, Some((_, false)));
-        let replacement = format!("def {receiver}{name}{args} = {body_src}");
+        let sig_end = if has_args { args_range.unwrap().1 } else { def.name_loc().end_offset() };
+        let def_end = def.end_keyword_loc().map_or(end, |e| e.end_offset());
+        let body_bounds = body.as_ref().map(|(b, _)| (b.location().start_offset(), b.location().end_offset()));
+        // can_be_made_endless?: no comment in the text the rewrite drops, and a body that keeps
+        // its meaning in an endless definition.
+        let can_be_endless = body.as_ref().is_some_and(|(b, _)| {
+            let (bs, be) = body_bounds.unwrap();
+            let dropped = [(sig_end.min(bs), sig_end.max(bs)), (be.min(def_end), be.max(def_end))];
+            let comment = src.comments.iter().any(|c| {
+                (src.line_of(start)..=src.line_of(end)).contains(&src.line_of(c.start))
+                    && dropped.iter().any(|&(a, z)| a <= c.start && c.end <= z)
+            });
+            !comment
+                && helpers::endless_method_body_help::endless_method_body(
+                    b,
+                    helpers::endless_method_body_help::argument_receiving_call(cx.ancestors).as_ref(),
+                    cx.config.target_ruby,
+                    false,
+                )
+        });
+        let replacement = format!("def {receiver}{name}{endless_args} = {body_src}");
         let replacement = replacement.trim_matches(|c: char| c.is_ascii_whitespace() || c == '\0');
+        // too_long_when_made_endless?: the whole line the definition would become.
         let too_long = || {
             helpers::alignment::cop_enabled(cx, "Layout/LineLength") && {
                 let max = helpers::statement_modifier::line_length_max(&cx.config.for_cop("Layout/LineLength"));
-                (replacement.chars().count() + column) as f64 > max
+                let kw = def.def_keyword_loc().start_offset();
+                let before = &src.text[src.line_start(src.line_of(kw))..kw];
+                let after = def.end_keyword_loc().map_or("", |e| {
+                    let rest = &src.text[e.end_offset()..];
+                    &rest[..rest.find('\n').unwrap_or(rest.len())]
+                });
+                let line = format!("{before}{replacement}{after}");
+                helpers::statement_modifier::line_length(cx, &line) as f64 > max
             }
         };
         let to_endless = |cx: &mut Cx, msg: &str| {
-            let (b, _) = body.as_ref().unwrap();
-            let sig_end = if has_args { args_range.unwrap().1 } else { def.name_loc().end_offset() };
-            let (bs, be) = (b.location().start_offset(), b.location().end_offset());
-            let def_end = def.end_keyword_loc().map_or(end, |e| e.end_offset());
+            let (bs, be) = body_bounds.unwrap();
+            let name_end = def.name_loc().end_offset();
+            let first_arg = def.parameters().map(|p| p.location().start_offset()).filter(|_| unparenthesized);
             cx.add_fix(start, end, msg, |c| {
-                c.replace(sig_end.min(bs), sig_end.max(bs), " = ");
+                match first_arg {
+                    Some(a) => {
+                        c.replace(name_end, a, "(");
+                        c.replace(sig_end.min(bs), sig_end.max(bs), ") = ");
+                    }
+                    None => c.replace(sig_end.min(bs), sig_end.max(bs), " = "),
+                }
                 c.remove(be.min(def_end), be.max(def_end));
             });
         };

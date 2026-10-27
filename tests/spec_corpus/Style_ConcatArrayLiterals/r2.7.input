@@ -24,39 +24,105 @@ arr.concat([
 ==> 004.rb 30 <==
 arr.concat([foo, bar], [baz])
 
-==> 005.rb 21 <==
+==> 005.rb 33 <==
+arr.concat([
+  foo
+], [
+  bar
+])
+
+==> 006.rb 35 <==
+arr.concat([
+  foo,
+], [
+  bar,
+])
+
+==> 007.rb 29 <==
+arr.concat [
+  foo,
+  bar,
+]
+
+==> 008.rb 32 <==
+arr.concat [foo,
+  bar
+] if baz
+
+==> 009.rb 29 <==
+arr&.concat [foo], [
+  bar
+]
+
+==> 010.rb 24 <==
+arr.concat [foo], [bar]
+
+==> 011.rb 26 <==
+arr.concat([foo,], [bar])
+
+==> 012.rb 43 <==
+arr.concat([
+  foo # comment
+], [
+  bar
+])
+
+==> 013.rb 52 <==
+arr.concat([
+  <<~TEXT
+    foo
+  TEXT
+], [
+  bar
+])
+
+==> 014.rb 21 <==
 arr.concat(%i[item])
 
-==> 006.rb 28 <==
+==> 015.rb 28 <==
 arr.concat(%I[item #{foo}])
 
-==> 007.rb 28 <==
+==> 016.rb 28 <==
 arr.concat(%W[item #{foo}])
 
-==> 008.rb 21 <==
+==> 017.rb 21 <==
 arr.concat(%w[item])
 
-==> 009.rb 23 <==
+==> 018.rb 23 <==
 arr.concat(%W[#{foo}])
 
-==> 010.rb 18 <==
+==> 019.rb 18 <==
 arr.concat(items)
 
-==> 011.rb 28 <==
+==> 020.rb 28 <==
 arr.concat([foo, bar], baz)
 
-==> 012.rb 11 <==
+==> 021.rb 11 <==
 arr.concat
 
-==> 013.rb 15 <==
+==> 022.rb 15 <==
 arr.push(item)
 
-==> 014.rb 12 <==
+==> 023.rb 12 <==
 arr << item
 
-==> 015.rb 20 <==
+==> 024.rb 20 <==
 arr.concat([], [b])
 
-==> 016.rb 25 <==
+==> 025.rb 25 <==
 arr.concat([a], [], [b])
+
+==> 026.rb 46 <==
+arr.concat([ # keep me
+], [
+  'b' # and me
+])
+
+==> 027.rb 30 <==
+arr.concat([], [b]) # comment
+
+==> 028.rb 37 <==
+arr.concat(%w[a], [
+  b # comment
+])
 

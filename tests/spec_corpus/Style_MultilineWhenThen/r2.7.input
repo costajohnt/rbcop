@@ -83,3 +83,9 @@ when bar,
      baz then do_something
 end
 
+==> 013.rb 44 <==
+case foo
+when 500.. then
+  do_something
+end
+

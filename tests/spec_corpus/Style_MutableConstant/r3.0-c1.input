@@ -8,35 +8,38 @@ AllCops:
 Style/MutableConstant:
   EnforcedStyle: strict
 
-==> 000.rb 15 <==
+==> 000.rb 17 <==
+CONST = (0..100)
+
+==> 001.rb 15 <==
 CONST = "#{a}"
 
-==> 001.rb 17 <==
+==> 002.rb 17 <==
 CONST ||= "#{a}"
 
-==> 002.rb 45 <==
+==> 003.rb 45 <==
 # frozen_string_literal: true
 CONST = "#{a}"
 
-==> 003.rb 47 <==
+==> 004.rb 47 <==
 # frozen_string_literal: true
 CONST ||= "#{a}"
 
-==> 004.rb 63 <==
+==> 005.rb 63 <==
 # frozen_string_literal: true
 CONST = <<~HERE
   foo
   bar
 HERE
 
-==> 005.rb 65 <==
+==> 006.rb 65 <==
 # frozen_string_literal: true
 CONST ||= <<~HERE
   foo
   bar
 HERE
 
-==> 006.rb 85 <==
+==> 007.rb 85 <==
 # frozen_string_literal: true
 
 CONST = <<~HERE
@@ -44,22 +47,22 @@ CONST = <<~HERE
   bar
 HERE
 
-==> 007.rb 59 <==
+==> 008.rb 59 <==
 # frozen_string_literal: true
 
 CONST = 'foo'         'bar'
 
-==> 008.rb 64 <==
+==> 009.rb 64 <==
 # frozen_string_literal: true
 
 CONST = "#{foo}" \
         'bar'
 
-==> 009.rb 46 <==
+==> 010.rb 46 <==
 # frozen_string_literal: false
 CONST = "#{a}"
 
-==> 010.rb 48 <==
+==> 011.rb 48 <==
 # frozen_string_literal: false
 CONST ||= "#{a}"
 

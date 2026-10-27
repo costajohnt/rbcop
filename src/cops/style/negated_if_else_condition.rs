@@ -80,12 +80,26 @@ impl Cop for NegatedIfElseCondition {
         let cond_r = range(&condition);
         let src = cx.src;
         // loc.else / loc.end of a non-ternary if/unless.
-        let (else_kw, end_kw) = if let Some(i) = node.as_if_node() {
-            (i.subsequent().and_then(|s| s.as_else_node()).map(|e| e.else_keyword_loc()), i.end_keyword_loc())
+        let (else_kw, end_kw, then_kw) = if let Some(i) = node.as_if_node() {
+            (
+                i.subsequent().and_then(|s| s.as_else_node()).map(|e| e.else_keyword_loc()),
+                i.end_keyword_loc(),
+                i.then_keyword_loc(),
+            )
         } else {
             let u = node.as_unless_node().unwrap();
-            (u.else_clause().map(|e| e.else_keyword_loc()), u.end_keyword_loc())
+            (u.else_clause().map(|e| e.else_keyword_loc()), u.end_keyword_loc(), u.then_keyword_loc())
         };
+        // `if_start = node.loc.begin || node.condition.source_range`
+        // (parser's `loc.begin` is also a `;` standing for `then`, which Prism does not record)
+        let if_start = then_kw.map_or_else(
+            || {
+                let rest = &cx.src.text.as_bytes()[cond_end..];
+                let ws = rest.iter().take_while(|&&b| matches!(b, b' ' | b'\t')).count();
+                if rest.get(ws) == Some(&b';') { cond_end + ws + 1 } else { cond_end }
+            },
+            |t| t.end_offset(),
+        );
         let swap = if ternary {
             let Some(b) = if_body.as_ref() else { return };
             Some((b.range(), else_r))
@@ -93,7 +107,7 @@ impl Cop for NegatedIfElseCondition {
             None
         } else {
             let (Some(e), Some(end)) = (&else_kw, &end_kw) else { return };
-            Some(((cond_end, e.start_offset()), (e.end_offset(), end.start_offset())))
+            Some(((if_start, e.start_offset()), (e.end_offset(), end.start_offset())))
         };
         let remove_else = else_kw.map(|e| helpers::whole_lines::range_by_whole_lines(src.text, e.start_offset(), e.end_offset(), true));
         let corrected = cx.state::<Vec<(usize, usize)>>().clone();

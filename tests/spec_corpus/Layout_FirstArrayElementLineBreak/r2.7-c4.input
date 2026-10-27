@@ -1,0 +1,23 @@
+==> .rubocop.yml 189 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: true
+  EnforcedStyle: compact
+
+==> 000.rb 22 <==
+[[:a, :b],
+ [:c, :d]]
+
+==> 001.rb 16 <==
+[:a,
+ [:c, :d]]
+
+==> 002.rb 21 <==
+x = [1, 2],
+  [3, 4]
+

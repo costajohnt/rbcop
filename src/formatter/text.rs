@@ -251,15 +251,10 @@ impl Formatter for Text {
                 self.global = Paint(cx.global_color);
                 self.total = targets.len();
                 let _ = writeln!(out, "Eating {}", pluralize(targets.len(), "file", false));
-                // PacmanFormatter#cols calls $stdout.winsize, which only exists once something has
-                // loaded io/console, and raises unless stdout is a terminal.
-                if !cx.io_console {
-                    return Err("undefined method 'winsize' for an instance of IO".into());
-                }
-                if !cx.stdout_tty {
-                    return Err("Inappropriate ioctl for device - <STDOUT>".into());
-                }
-                self.cols = winsize(1).filter(|&w| w > 0).unwrap_or(80);
+                // PacmanFormatter#cols: the output's width when it is a terminal, else
+                // FALLBACK_TERMINAL_WIDTH.
+                // ponytail: a terminal sink is measured on stdout (`-o /dev/tty` would differ).
+                self.cols = if self.tty { winsize(1).filter(|&w| w > 0).unwrap_or(80) } else { 80 };
                 self.update_progress_line();
             }
             _ => {}

@@ -37,32 +37,74 @@ impl Cop for NestedTernaryOperator {
         let q = range_with_surrounding_space(cx.src.text, q.start_offset(), q.end_offset(), ws);
         let colon = if_node.subsequent().and_then(|c| c.as_else_node()).map(|c| c.else_keyword_loc());
         let colon = colon.map(|c| range_with_surrounding_space(cx.src.text, c.start_offset(), c.end_offset(), ws));
-        let branch = if_node.statements().and_then(|s| s.body().iter().next()).map(|b| {
-            let src = node_text(&b);
-            let stripped = src.strip_prefix('(').and_then(|x| x.strip_suffix(')')).unwrap_or(src);
-            (b.location().start_offset(), b.location().end_offset(), stripped.to_string())
-        });
+        // remove_parentheses: a parenthesized `begin` if branch loses its own `(` and `)`.
+        let parens = if_node
+            .statements()
+            .and_then(|s| s.body().iter().next())
+            .and_then(|b| b.as_parentheses_node())
+            .map(|p| (p.opening_loc(), p.closing_loc()));
+        let heredoc = helpers::heredoc::last_heredoc_end(node).is_some();
+        let modifier = modifier_position(node, cx.ancestors);
         for (ns, ne) in nested.0 {
             let ignored = cx.state::<Ignored>().0.iter().any(|&(a, b)| a <= s && e <= b);
             let ran = Cell::new(false);
             cx.add_fix(ns, ne, MSG, |c| {
-                if ignored {
+                if ignored || heredoc {
                     return;
                 }
                 c.replace(q.0, q.1, "\n");
                 if let Some(colon) = colon {
                     c.replace(colon.0, colon.1, "\nelse\n");
                 }
-                if let Some((bs, be, src)) = &branch {
-                    c.replace(*bs, *be, src);
+                if let Some((open, close)) = &parens {
+                    c.remove(open.start_offset(), open.end_offset());
+                    c.remove(close.start_offset(), close.end_offset());
                 }
-                c.wrap(s, e, "if ", "\nend");
+                if modifier {
+                    c.wrap(s, e, "(if ", "\nend)");
+                } else {
+                    c.wrap(s, e, "if ", "\nend");
+                }
                 ran.set(true);
             });
             if ran.get() {
                 cx.state::<Ignored>().0.push((s, e));
             }
         }
+    }
+}
+
+/// `modifier_position?`: an `if` right after `return`, as the operand of `not` or `defined?`, or
+/// as the first argument of a call without parentheses would be parsed as a modifier.
+fn modifier_position(node: &Node, ancestors: &[Node]) -> bool {
+    let Some(parent) = helpers::parser_parent::parser_parent(ancestors) else { return false };
+    let start = node.location().start_offset();
+    let first_is_node = |args: Option<ruby_prism::ArgumentsNode>| {
+        args.and_then(|a| a.arguments().iter().next()).is_some_and(|f| f.location().start_offset() == start)
+    };
+    match parent {
+        Node::ReturnNode { .. } | Node::BreakNode { .. } | Node::NextNode { .. } => true,
+        Node::CallNode { .. } => {
+            let c = parent.as_call_node().unwrap();
+            if c.closing_loc().is_some_and(|l| l.as_slice() == b")") {
+                return false;
+            }
+            let prefix_not = method_name(&c) == "!" && c.message_loc().is_some_and(|m| m.as_slice() == b"not");
+            prefix_not || first_is_node(c.arguments())
+        }
+        Node::SuperNode { .. } => {
+            let s = parent.as_super_node().unwrap();
+            s.rparen_loc().is_none() && first_is_node(s.arguments())
+        }
+        Node::YieldNode { .. } => {
+            let y = parent.as_yield_node().unwrap();
+            y.rparen_loc().is_none() && first_is_node(y.arguments())
+        }
+        Node::DefinedNode { .. } => {
+            let d = parent.as_defined_node().unwrap();
+            d.rparen_loc().is_none() && d.value().location().start_offset() == start
+        }
+        _ => false,
     }
 }
 

@@ -1,4 +1,4 @@
-==> offenses exit=1 951 <==
+==> offenses exit=1 1733 <==
 000.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
 001.rb:2:33: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
 002.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
@@ -9,8 +9,16 @@
 014.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `inject`.
 015.rb:1:8: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `inject`.
 019.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `reduce`.
+020.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+021.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `reduce`.
+022.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+023.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+024.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+025.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+026.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+027.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
 
-==> autocorrect exit=0 1028 <==
+==> autocorrect exit=0 1794 <==
 000.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
 001.rb:1:8: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
 001.rb:2:33: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
@@ -22,6 +30,14 @@
 014.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `inject`.
 015.rb:1:8: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `inject`.
 019.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `reduce`.
+020.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+021.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `reduce`.
+022.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+023.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+024.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+025.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+026.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+027.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
 
 ==> corrected/000.rb 43 <==
 array.to_h { |elem| [elem.id, elem.name] }
@@ -56,4 +72,28 @@ array&.to_h { |elem| [elem.id, elem.name] }
 
 ==> corrected/019.rb 43 <==
 array.to_h { |elem| [elem.id, elem.name] }
+
+==> corrected/020.rb 53 <==
+array.to_h { |elem| [elem.id, (do_something elem)] }
+
+==> corrected/021.rb 59 <==
+array.to_h { |elem| [(obj.do_something elem), elem.name] }
+
+==> corrected/022.rb 46 <==
+array.to_h { |elem| [elem.id, (yield elem)] }
+
+==> corrected/023.rb 57 <==
+array.to_h { |elem| [elem.id, [elem.name, elem.value]] }
+
+==> corrected/024.rb 41 <==
+array.to_h { |elem| [elem.id, [*elem]] }
+
+==> corrected/025.rb 57 <==
+array.to_h { |elem| [elem.id, (x = do_something elem)] }
+
+==> corrected/026.rb 65 <==
+array.to_h { |elem| [elem.id, (do_something(elem) rescue nil)] }
+
+==> corrected/027.rb 56 <==
+array.to_h { |elem| [elem.id + 1, do_something(elem)] }
 

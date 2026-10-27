@@ -37,15 +37,18 @@ Proc.new { _1.method }
 ==> 011.rb 17 <==
 -> { _1.method }
 
-==> 012.rb 19 <==
+==> 012.rb 17 <==
+-> { it.method }
+
+==> 013.rb 19 <==
 proc { _1.method }
 
-==> 013.rb 23 <==
+==> 014.rb 23 <==
 something { _2.first }
 
-==> 014.rb 23 <==
+==> 015.rb 23 <==
 Proc.new { _1.method }
 
-==> 015.rb 25 <==
+==> 016.rb 25 <==
 ::Proc.new { _1.method }
 

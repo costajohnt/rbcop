@@ -96,15 +96,22 @@ else
   baz
 end.to_i
 
-==> 026.rb 22 <==
+==> 026.rb 35 <==
+values.map(&:to_f).inject(:+).to_f
+
+==> 027.rb 22 <==
 Integer(var, 10).to_f
 
-==> 027.rb 16 <==
+==> 028.rb 16 <==
 Float(var).to_i
 
-==> 028.rb 18 <==
+==> 029.rb 18 <==
 Complex(var).to_f
 
-==> 029.rb 18 <==
+==> 030.rb 33 <==
+method_name == :to_i
+hash[:to_f]
+
+==> 031.rb 18 <==
 "foo".send(:to_c)
 

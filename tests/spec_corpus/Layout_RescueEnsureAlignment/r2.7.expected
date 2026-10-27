@@ -1,4 +1,4 @@
-==> offenses exit=1 4048 <==
+==> offenses exit=1 4394 <==
 001.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `begin` at 1, 0.
 002.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `def test` at 1, 0.
 003.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `def Test.test` at 1, 0.
@@ -34,8 +34,11 @@
 062.rb:7:12: C: Layout/RescueEnsureAlignment: `rescue` at 7, 11 is not aligned with `begin` at 6, 2.
 063.rb:2:10: C: Layout/RescueEnsureAlignment: `ensure` at 2, 9 is not aligned with `def test` at 1, 0.
 063.rb:7:12: C: Layout/RescueEnsureAlignment: `ensure` at 7, 11 is not aligned with `begin` at 6, 2.
+064.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `begin` at 1, 1.
+065.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `def foo` at 1, 1.
+067.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `x = [begin` at 1, 1.
 
-==> autocorrect exit=1 3986 <==
+==> autocorrect exit=1 4326 <==
 001.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `begin` at 1, 0.
 002.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `def test` at 1, 0.
 003.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `def Test.test` at 1, 0.
@@ -71,6 +74,9 @@
 062.rb:7:12: C: Layout/RescueEnsureAlignment: `rescue` at 7, 11 is not aligned with `begin` at 6, 2.
 063.rb:2:10: C: Layout/RescueEnsureAlignment: `ensure` at 2, 9 is not aligned with `def test` at 1, 0.
 063.rb:7:12: C: Layout/RescueEnsureAlignment: `ensure` at 7, 11 is not aligned with `begin` at 6, 2.
+064.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `begin` at 1, 1.
+065.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `def foo` at 1, 1.
+067.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `x = [begin` at 1, 1.
 
 ==> corrected/001.rb 39 <==
 begin
@@ -277,4 +283,25 @@ super do
 ensure
   nil
 end
+
+==> corrected/064.rb 32 <==
+	begin
+		foo
+ rescue
+		bar
+	end
+
+==> corrected/065.rb 34 <==
+	def foo
+		bar
+ ensure
+		baz
+	end
+
+==> corrected/067.rb 38 <==
+	x = [begin
+		foo
+ rescue
+		bar
+	end]
 

@@ -61,3 +61,7 @@ include Module.new {
   end
 }
 
+==> 011.rb 22 <==
+foo \
+  def test; end
+

@@ -1,4 +1,4 @@
-==> offenses exit=1 4434 <==
+==> offenses exit=1 7316 <==
 001.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%`-literals should be delimited by `[` and `]`.
 002.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%`-literals should be delimited by `[` and `]`.
 004.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%`-literals should be delimited by `[` and `]`.
@@ -39,8 +39,34 @@
 057.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%x`-literals should be delimited by `[` and `]`.
 060.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%i`-literals should be delimited by `[` and `]`.
 061.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%i`-literals should be delimited by `[` and `]`.
+062.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%`-literals should be delimited by `[` and `]`.
+063.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%`-literals should be delimited by `[` and `]`.
+064.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%q`-literals should be delimited by `[` and `]`.
+065.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%q`-literals should be delimited by `[` and `]`.
+066.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%Q`-literals should be delimited by `[` and `]`.
+067.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%Q`-literals should be delimited by `[` and `]`.
+068.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%s`-literals should be delimited by `[` and `]`.
+069.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%s`-literals should be delimited by `[` and `]`.
+070.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%W`-literals should be delimited by `[` and `]`.
+071.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%W`-literals should be delimited by `[` and `]`.
+072.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%x`-literals should be delimited by `[` and `]`.
+073.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%x`-literals should be delimited by `[` and `]`.
+074.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%r`-literals should be delimited by `{` and `}`.
+075.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%r`-literals should be delimited by `{` and `}`.
+076.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%I`-literals should be delimited by `[` and `]`.
+077.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%I`-literals should be delimited by `[` and `]`.
+084.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%`-literals should be delimited by `[` and `]`.
+085.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%`-literals should be delimited by `[` and `]`.
+086.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%Q`-literals should be delimited by `[` and `]`.
+087.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%Q`-literals should be delimited by `[` and `]`.
+088.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%W`-literals should be delimited by `[` and `]`.
+089.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%W`-literals should be delimited by `[` and `]`.
+090.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%x`-literals should be delimited by `[` and `]`.
+091.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%x`-literals should be delimited by `[` and `]`.
+092.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%I`-literals should be delimited by `[` and `]`.
+093.rb:1:1: C: [Correctable] Style/PercentLiteralDelimiters: `%I`-literals should be delimited by `[` and `]`.
 
-==> autocorrect exit=0 4354 <==
+==> autocorrect exit=0 7184 <==
 001.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%`-literals should be delimited by `[` and `]`.
 002.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%`-literals should be delimited by `[` and `]`.
 004.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%`-literals should be delimited by `[` and `]`.
@@ -81,6 +107,32 @@
 057.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%x`-literals should be delimited by `[` and `]`.
 060.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%i`-literals should be delimited by `[` and `]`.
 061.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%i`-literals should be delimited by `[` and `]`.
+062.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%`-literals should be delimited by `[` and `]`.
+063.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%`-literals should be delimited by `[` and `]`.
+064.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%q`-literals should be delimited by `[` and `]`.
+065.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%q`-literals should be delimited by `[` and `]`.
+066.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%Q`-literals should be delimited by `[` and `]`.
+067.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%Q`-literals should be delimited by `[` and `]`.
+068.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%s`-literals should be delimited by `[` and `]`.
+069.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%s`-literals should be delimited by `[` and `]`.
+070.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%W`-literals should be delimited by `[` and `]`.
+071.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%W`-literals should be delimited by `[` and `]`.
+072.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%x`-literals should be delimited by `[` and `]`.
+073.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%x`-literals should be delimited by `[` and `]`.
+074.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%r`-literals should be delimited by `{` and `}`.
+075.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%r`-literals should be delimited by `{` and `}`.
+076.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%I`-literals should be delimited by `[` and `]`.
+077.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%I`-literals should be delimited by `[` and `]`.
+084.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%`-literals should be delimited by `[` and `]`.
+085.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%`-literals should be delimited by `[` and `]`.
+086.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%Q`-literals should be delimited by `[` and `]`.
+087.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%Q`-literals should be delimited by `[` and `]`.
+088.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%W`-literals should be delimited by `[` and `]`.
+089.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%W`-literals should be delimited by `[` and `]`.
+090.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%x`-literals should be delimited by `[` and `]`.
+091.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%x`-literals should be delimited by `[` and `]`.
+092.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%I`-literals should be delimited by `[` and `]`.
+093.rb:1:1: C: [Corrected] Style/PercentLiteralDelimiters: `%I`-literals should be delimited by `[` and `]`.
 
 ==> corrected/001.rb 10 <==
 %[string]
@@ -219,4 +271,82 @@ words
 
 ==> corrected/061.rb 6 <==
 %i[	]
+
+==> corrected/062.rb 7 <==
+%[a\\]
+
+==> corrected/063.rb 9 <==
+%[a(b)c]
+
+==> corrected/064.rb 8 <==
+%q[a\\]
+
+==> corrected/065.rb 10 <==
+%q[a(b)c]
+
+==> corrected/066.rb 8 <==
+%Q[a\\]
+
+==> corrected/067.rb 10 <==
+%Q[a(b)c]
+
+==> corrected/068.rb 8 <==
+%s[a\\]
+
+==> corrected/069.rb 10 <==
+%s[a(b)c]
+
+==> corrected/070.rb 8 <==
+%W[a\\]
+
+==> corrected/071.rb 10 <==
+%W[a(b)c]
+
+==> corrected/072.rb 8 <==
+%x[a\\]
+
+==> corrected/073.rb 10 <==
+%x[a(b)c]
+
+==> corrected/074.rb 8 <==
+%r{a\\}
+
+==> corrected/075.rb 10 <==
+%r{a(b)c}
+
+==> corrected/076.rb 8 <==
+%I[a\\]
+
+==> corrected/077.rb 10 <==
+%I[a(b)c]
+
+==> corrected/084.rb 8 <==
+%[a\!b]
+
+==> corrected/085.rb 8 <==
+%[a\)b]
+
+==> corrected/086.rb 9 <==
+%Q[a\!b]
+
+==> corrected/087.rb 9 <==
+%Q[a\)b]
+
+==> corrected/088.rb 9 <==
+%W[a\!b]
+
+==> corrected/089.rb 9 <==
+%W[a\)b]
+
+==> corrected/090.rb 9 <==
+%x[a\!b]
+
+==> corrected/091.rb 9 <==
+%x[a\)b]
+
+==> corrected/092.rb 9 <==
+%I[a\!b]
+
+==> corrected/093.rb 9 <==
+%I[a\)b]
 

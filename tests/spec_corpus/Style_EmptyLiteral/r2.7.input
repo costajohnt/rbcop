@@ -60,7 +60,13 @@ def foo
   super Hash.new
 end
 
-==> 022.rb 40 <==
+==> 022.rb 25 <==
+assert_equal Hash[], foo
+
+==> 023.rb 14 <==
+puts Hash([])
+
+==> 024.rb 40 <==
 def foo
   super Hash.new, something
 end

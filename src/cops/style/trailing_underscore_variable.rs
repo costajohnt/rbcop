@@ -76,8 +76,12 @@ fn find_first_offense<'pr>(vars: &[Node<'pr>], allow_named: bool) -> Option<usiz
     Some(first)
 }
 
-/// unneeded_ranges for a masgn (`(rhs start, operator start)` given) or a nested mlhs.
-fn unneeded_ranges(m: &Mlhs, masgn: Option<(usize, usize)>, allow_named: bool, out: &mut Vec<(usize, usize)>) {
+/// The right-hand side of a masgn: its start, the operator start, and whether it is a list of
+/// values without brackets (`_, _ = 1, 2`).
+type Masgn = (usize, usize, bool);
+
+/// unneeded_ranges for a masgn or a nested mlhs: each range with its replacement.
+fn unneeded_ranges(m: &Mlhs, masgn: Option<Masgn>, allow_named: bool, out: &mut Vec<((usize, usize), &'static str)>) {
     for v in &m.vars {
         if let Some(child) = target_mlhs(v) {
             unneeded_ranges(&child, None, allow_named, out);
@@ -86,12 +90,16 @@ fn unneeded_ranges(m: &Mlhs, masgn: Option<(usize, usize)>, allow_named: bool, o
     let Some(first) = find_first_offense(&m.vars, allow_named) else { return };
     let offense_start = m.vars[first].location().start_offset();
     let range = if first == 0 {
-        // unused_variables_only?
-        (m.start, masgn.map_or(m.end, |(rhs, _)| rhs))
+        // unused_variables_only?: a nested group collapses into a single `_` (the parent group
+        // handles it in turn); `_, _ = 1, 2` keeps its values as an array literal.
+        match masgn {
+            None => ((m.start, m.end), "_"),
+            Some((rhs, _, bare_list)) => ((m.start, rhs), if bare_list { "[" } else { "" }),
+        }
     } else if m.parens {
-        (offense_start - 1, m.end - 1)
+        ((offense_start - 1, m.end - 1), "")
     } else {
-        (offense_start, masgn.map_or(m.end, |(_, op)| op))
+        ((offense_start, masgn.map_or(m.end, |(_, op, _)| op)), "")
     };
     out.push(range);
 }
@@ -110,17 +118,25 @@ impl Cop for TrailingUnderscoreVariable {
         let allow_named = cx.cfg.bool("AllowNamedUnderscoreVariables").unwrap_or(true);
         let parens = w.lparen_loc().zip(w.rparen_loc()).map(|(l, r)| (l.start_offset(), r.end_offset()));
         let m = mlhs(w.lefts(), w.rest(), w.rights(), parens);
-        let masgn = (w.value().location().start_offset(), w.operator_loc().start_offset());
+        let value = w.value();
+        let bare_list = value.as_array_node().is_some_and(|a| a.opening_loc().is_none());
+        let masgn = (value.location().start_offset(), w.operator_loc().start_offset(), bare_list);
         let mut ranges = Vec::new();
         unneeded_ranges(&m, Some(masgn), allow_named, &mut ranges);
         let loc = node.location();
-        let ns = loc.start_offset();
-        let src = cx.src.slice(ns, loc.end_offset());
-        for (start, end) in ranges {
-            // good_code: the masgn source with the range removed.
-            let good = format!("{}{}", &src[..start - ns], &src[end - ns..]);
+        let (ns, ne) = (loc.start_offset(), loc.end_offset());
+        let src = cx.src.slice(ns, ne);
+        for ((start, end), replacement) in ranges {
+            let closing = if replacement == "[" { "]" } else { "" };
+            // good_code: the masgn source with the range replaced.
+            let good = format!("{}{replacement}{}{closing}", &src[..start - ns], &src[end - ns..]);
             let msg = format!("Do not use trailing `_`s in parallel assignment. Prefer `{good}`.");
-            cx.add_fix(start, end, msg, |c| c.remove(start, end));
+            cx.add_fix(start, end, msg, |c| {
+                c.replace(start, end, replacement);
+                if !closing.is_empty() {
+                    c.insert_after(ns, ne, closing);
+                }
+            });
         }
     }
 }

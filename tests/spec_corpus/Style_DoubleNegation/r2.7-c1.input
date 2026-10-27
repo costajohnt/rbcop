@@ -22,20 +22,31 @@ end
 !test.something
 ==> 003.rb 22 <==
 not not test.something
-==> 004.rb 40 <==
+==> 004.rb 22 <==
+foo(!!!test.something)
+==> 005.rb 23 <==
+foo(!!!!test.something)
+==> 006.rb 20 <==
+not !!test.something
+==> 007.rb 26 <==
+foo(!!not(test.something))
+==> 008.rb 24 <==
+foo.!(!!test.something)
+
+==> 009.rb 40 <==
 def foo?
   bar
   !!baz.do_something
 end
 
-==> 005.rb 68 <==
+==> 010.rb 68 <==
 def foo?
   return !!bar.do_something if condition
   baz
   !!bar
 end
 
-==> 006.rb 53 <==
+==> 011.rb 53 <==
 def foo?
   bar
   !!baz.do_something
@@ -43,7 +54,7 @@ rescue
   qux
 end
 
-==> 007.rb 53 <==
+==> 012.rb 53 <==
 def foo?
   bar
   !!baz.do_something
@@ -51,7 +62,7 @@ ensure
   qux
 end
 
-==> 008.rb 66 <==
+==> 013.rb 66 <==
 def foo?
   bar
   !!baz.do_something
@@ -61,7 +72,7 @@ ensure
   qux
 end
 
-==> 009.rb 80 <==
+==> 014.rb 80 <==
 def foo?
   bar
   !!baz.do_something

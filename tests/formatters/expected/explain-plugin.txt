@@ -1,0 +1,182 @@
+Rails/I18nLocaleTexts
+
+  Enforces use of I18n and locale files instead of locale specific strings.
+
+Properties
+
+  Enabled:     pending
+  Safe:        true
+  Autocorrect: not supported
+  Added:       2.14
+
+Example
+
+    # bad
+    class User < ApplicationRecord
+      validates :email, presence: { message: "must be present" }
+    end
+
+    # good
+    # config/locales/en.yml
+    # en:
+    #   activerecord:
+    #     errors:
+    #       models:
+    #         user:
+    #           blank: "must be present"
+
+    class User < ApplicationRecord
+      validates :email, presence: true
+    end
+
+    # bad
+    class PostsController < ApplicationController
+      def create
+        # ...
+        redirect_to root_path, notice: "Post created!"
+      end
+    end
+
+    # good
+    # config/locales/en.yml
+    # en:
+    #   posts:
+    #     create:
+    #       success: "Post created!"
+
+    class PostsController < ApplicationController
+      def create
+        # ...
+        redirect_to root_path, notice: t(".success")
+      end
+    end
+
+    # bad
+    class PostsController < ApplicationController
+      def update
+        # ...
+        redirect_back_or_to root_path, alert: "Failed to update!"
+      end
+    end
+
+    # good
+    # config/locales/en.yml
+    # en:
+    #   posts:
+    #     update:
+    #       failure: "Failed to update!"
+
+    class PostsController < ApplicationController
+      def update
+        # ...
+        redirect_back_or_to root_path, alert: t(".failure")
+      end
+    end
+
+    # bad
+    class UserMailer < ApplicationMailer
+      def welcome(user)
+        mail(to: user.email, subject: "Welcome to My Awesome Site")
+      end
+    end
+
+    # good
+    # config/locales/en.yml
+    # en:
+    #   user_mailer:
+    #     welcome:
+    #       subject: "Welcome to My Awesome Site"
+
+    class UserMailer < ApplicationMailer
+      def welcome(user)
+        mail(to: user.email)
+      end
+    end
+
+References
+
+  https://rails.rubystyle.guide/#locale-texts
+  https://docs.rubocop.org/rubocop-rails/cops_rails.html#railsi18nlocaletexts
+
+Rails/Output
+
+  Checks for calls to puts, print, etc.
+
+Properties
+
+  Enabled:     true
+  Safe:        true
+  Autocorrect: unsafe, applied by -A only
+  Added:       0.15
+  Changed:     0.19
+  Applies to:  **/app/**/*.rb, **/config/**/*.rb, db/**/*.rb, **/lib/**/*.rb
+
+Details
+
+  Checks for the use of output calls like puts and print
+
+Safety
+
+    This cop's autocorrection is unsafe because depending on the Rails log level configuration,
+    changing from `puts` to `Rails.logger.debug` could result in no output being shown.
+
+Example
+
+    # bad
+    puts 'A debug message'
+    pp 'A debug message'
+    print 'A debug message'
+
+    # good
+    Rails.logger.debug 'A debug message'
+
+References
+
+  https://docs.rubocop.org/rubocop-rails/cops_rails.html#railsoutput
+
+Style/StringLiterals
+
+  Checks if uses of quotes match the configured preference.
+
+Properties
+
+  Enabled:     true
+  Safe:        true
+  Autocorrect: safe, applied by -a
+  Added:       0.9
+  Changed:     0.36
+
+Example: EnforcedStyle: single_quotes (default)
+
+    # bad
+    "No special symbols"
+    "No string interpolation"
+    "Just text"
+
+    # good
+    'No special symbols'
+    'No string interpolation'
+    'Just text'
+    "Wait! What's #{this}!"
+
+Example: EnforcedStyle: double_quotes
+
+    # bad
+    'Just some text'
+    'No special chars or interpolation'
+
+    # good
+    "Just some text"
+    "No special chars or interpolation"
+    "Every string in #{project} uses double_quotes"
+
+Configuration
+
+  ConsistentQuotesInMultiline: false
+  EnforcedStyle: single_quotes
+  SupportedStyles: single_quotes, double_quotes
+
+References
+
+  https://rubystyle.guide#consistent-string-literals
+  https://docs.rubocop.org/rubocop/cops_style.html#stylestringliterals

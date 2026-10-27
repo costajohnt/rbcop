@@ -190,47 +190,52 @@ long_variable_name =
     8 +
     9)
 
-==> 029.rb 25 <==
+==> 029.rb 21 <==
+a = b ||= {
+  x: 1
+}
+
+==> 030.rb 25 <==
 foo(' .x')
   .bar
   .baz
 
-==> 030.rb 35 <==
+==> 031.rb 35 <==
 foo(x,
     y,
     z)
   .bar
   .baz
 
-==> 031.rb 39 <==
+==> 032.rb 39 <==
 foo('....' \
     '....')
   .bar
   .baz
 
-==> 032.rb 36 <==
+==> 033.rb 36 <==
 foo(<<~EOS)
   xyz
 EOS
   .bar
   .baz
 
-==> 033.rb 29 <==
+==> 034.rb 29 <==
 foo('
   xyz
 ')
   .bar
   .baz
 
-==> 034.rb 3 <==
+==> 035.rb 3 <==
 %
 
 
-==> 035.rb 7 <==
+==> 036.rb 7 <==
 x = %
 
 
-==> 036.rb 110 <==
+==> 037.rb 110 <==
 my_method(11111,
           22222,
           "abcxyz")
@@ -238,30 +243,34 @@ my_method(111111 +
           222222 +
           333333)
 
-==> 037.rb 10 <==
+==> 038.rb 40 <==
+		foo('aaaaaaaaaaa' \
+		  'bbbbbbbbbb')
+
+==> 039.rb 10 <==
 foo(:"
 ")
 
-==> 038.rb 79 <==
+==> 040.rb 79 <==
 VariableReference = Struct.new(:name) do
   def assignment?
     false
   end
 end
 
-==> 039.rb 142 <==
+==> 041.rb 142 <==
 File.fnmatch?(
   pattern, path,
   File::FNM_PATHNAME | File::FNM_EXTGLOB
 ) && a && File.basename(path).start_with?('.') && !hidden_dir?(path)
 
-==> 040.rb 139 <==
+==> 042.rb 139 <==
 File.fnmatch?(
   pattern, path,
   File::FNM_PATHNAME | File::FNM_EXTGLOB
 ) + a + File.basename(path).start_with?('.') + !hidden_dir?(path)
 
-==> 041.rb 90 <==
+==> 043.rb 90 <==
 correct = lambda do
   expect_no_offenses(<<~EOT1)
     <<-EOT2
@@ -270,88 +279,88 @@ correct = lambda do
   EOT1
 end
 
-==> 042.rb 132 <==
+==> 044.rb 132 <==
 node.each_node(:dstr)
     .select(&:heredoc?)
     .map { |n| n.loc.heredoc_body }
     .flat_map { |b| (b.line...b.last_line).to_a }
 
-==> 043.rb 128 <==
+==> 045.rb 128 <==
 node.each_node(:dstr)
     .select(&:heredoc?)
     .map { _1.loc.heredoc_body }
     .flat_map {  (_1.line..._1.last_line).to_a }
 
-==> 044.rb 103 <==
+==> 046.rb 103 <==
 context 'when the configuration includes ' \
         'an unsafe cop that is 123456789012345678' do
 end
 
-==> 045.rb 100 <==
+==> 047.rb 100 <==
 context 'when the configuration includes ' \
         'an unsafe cop that is 123456789012345' do
 end
 
-==> 046.rb 77 <==
+==> 048.rb 77 <==
 RSpec.shared_context 'ruby 2.4', :ruby24 do
   let(:ruby_version) { 2.4 }
 end
 
-==> 047.rb 39 <==
+==> 049.rb 39 <==
 do_something do
 rescue CustomError
 end
 
-==> 048.rb 27 <==
+==> 050.rb 27 <==
 do_something do
 ensure
 end
 
-==> 049.rb 78 <==
+==> 051.rb 78 <==
 RSpec.shared_context('ruby 2.4', :ruby24) do
   let(:ruby_version) { 2.4 }
 end
 
-==> 050.rb 57 <==
+==> 052.rb 57 <==
 RSpec.shared_context do
   let(:ruby_version) { 2.4 }
 end
 
-==> 051.rb 9 <==
+==> 053.rb 9 <==
 f do
 end
 
-==> 052.rb 35 <==
+==> 054.rb 35 <==
 e.select do |i|
   i.cond?
 end.join
 
-==> 053.rb 39 <==
+==> 055.rb 39 <==
 a = e.select do |i|
   i.cond?
 end.join
 
-==> 054.rb 40 <==
+==> 056.rb 40 <==
 e.select do |i|
   i.cond?
 end.join + []
 
-==> 055.rb 82 <==
+==> 057.rb 82 <==
 a = RSpec.shared_context('ruby 2.4', :ruby24) do
   let(:ruby_version) { 2.4 }
 end
 
-==> 056.rb 38 <==
+==> 058.rb 38 <==
 a = Foo.do_something(arg) do
   _1
 end
 
-==> 057.rb 19 <==
+==> 059.rb 19 <==
 f do
   foo(_1)
 end
 
-==> 058.rb 114 <==
+==> 060.rb 114 <==
 e.select do |i|
   i.cond?
 end.join
@@ -362,7 +371,7 @@ e.select do |i|
   i.cond?
 end.join + []
 
-==> 059.rb 105 <==
+==> 061.rb 105 <==
 e.select do
   _1.cond?
 end.join
@@ -372,4 +381,20 @@ end.join
 e.select do
   _1.cond?
 end.join + []
+
+==> 062.rb 81 <==
+do_something(foo(a,
+                 b) => bar(c,
+                           d))
+
+==> 063.rb 41 <==
+[foo(a,
+     b), bar(c,
+             d)]
+
+==> 064.rb 82 <==
+[fooo(a,
+      b), baar(c,
+               d), baaz(e,
+                        f)]
 

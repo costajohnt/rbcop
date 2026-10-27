@@ -21,32 +21,39 @@ x.call(
   b
 )
 
-==> 003.rb 22 <==
+==> 003.rb 45 <==
+x.call(
+  a: <<~TEXT.chomp
+    text
+  TEXT
+)
+
+==> 004.rb 22 <==
 x.call(a, b)
 x.(a, b)
 
-==> 004.rb 24 <==
+==> 005.rb 24 <==
 x&.call(a, b)
 x&.(a, b)
 
-==> 005.rb 35 <==
+==> 006.rb 35 <==
 x.call(a, b)
 x.(a, b)
 x.call(a, b)
 
-==> 006.rb 38 <==
+==> 007.rb 38 <==
 x&.call(a, b)
 x&.(a, b)
 x&.call(a, b)
 
-==> 007.rb 10 <==
+==> 008.rb 10 <==
 call(a, b)
-==> 008.rb 7 <==
+==> 009.rb 7 <==
 a.call
 
-==> 009.rb 18 <==
+==> 010.rb 18 <==
 a.call asdf, x123
 
-==> 010.rb 19 <==
+==> 011.rb 19 <==
 a&.call asdf, x123
 

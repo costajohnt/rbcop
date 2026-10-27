@@ -50,9 +50,11 @@ impl Cop for NumericPredicate {
             }
             let pred = REPLACEMENTS.iter().find(|(_, o)| *o == op).unwrap().0;
             let src = node_text(&numeric);
-            let parens = numeric.as_call_node().is_some_and(|c| {
+            // A folded `- 1` is a parser `int`, not a send.
+            let parens = helpers::literal_node::folded_numeric(&numeric).is_none()
+                && numeric.as_call_node().is_some_and(|c| {
                 !is_csend(&c)
-                    && helpers::node_types::is_binary_operation(&c)
+                    && helpers::node_types::is_operator_method(method_name(&c))
                     && c.opening_loc().is_none_or(|o| o.as_slice() != b"(")
             });
             if parens { format!("({src}).{pred}") } else { format!("{src}.{pred}") }
@@ -61,13 +63,22 @@ impl Cop for NumericPredicate {
                 return;
             }
             let Some(&(_, op)) = REPLACEMENTS.iter().find(|(p, _)| *p == name) else { return };
-            let negated = helpers::parser_parent::parser_parent(cx.ancestors)
-                .and_then(|p| p.as_call_node())
-                .is_some_and(|p| !is_csend(&p) && method_name(&p) == "!");
+            // comparison_requires_parentheses?
+            let (start, end) = send_range(&call);
+            let parens = helpers::parser_parent::parser_parent(cx.ancestors).and_then(|p| p.as_call_node()).is_some_and(|p| {
+                let is_receiver = p.receiver().is_some_and(|r| {
+                    let l = r.location();
+                    (l.start_offset(), l.end_offset()) == (start, end)
+                });
+                is_receiver || (helpers::node_types::is_operator_method(method_name(&p)) && !matches!(method_name(&p), "[]" | "[]="))
+            });
             let src = node_text(&recv);
-            if negated { format!("({src} {op} 0)") } else { format!("{src} {op} 0") }
+            if parens { format!("({src} {op} 0)") } else { format!("{src} {op} 0") }
         };
 
+        if handled_by_bitwise_predicate(cx, &call) {
+            return;
+        }
         if allowed(cx, name) || ancestor_names(cx.ancestors).iter().any(|n| allowed(cx, n)) {
             return;
         }
@@ -75,6 +86,34 @@ impl Cop for NumericPredicate {
         let msg = format!("Use `{replacement}` instead of `{}`.", &cx.src.text[start..end]);
         cx.add_fix(start, end, &msg, |c| c.replace(start, end, &replacement));
     }
+}
+
+/// `handled_by_bitwise_predicate?`: `(a & b).zero?`, `(a & b) > 0` and friends are left to
+/// Style/BitwisePredicate when it is enabled and supported.
+fn handled_by_bitwise_predicate(cx: &Cx, call: &ruby_prism::CallNode) -> bool {
+    let Some(recv) = call.receiver() else { return false };
+    let recv = match recv.as_parentheses_node() {
+        Some(p) => {
+            let Some(body) = p.body() else { return false };
+            match body.as_statements_node().map(|s| s.body()) {
+                Some(b) if b.len() == 1 => b.iter().next().unwrap(),
+                Some(_) => return false,
+                None => body,
+            }
+        }
+        None => recv,
+    };
+    let bitwise_and = recv
+        .as_call_node()
+        .is_some_and(|c| !is_csend(&c) && method_name(&c) == "&" && c.receiver().is_some() && send_args(&c).len() == 1);
+    let args = send_args(call);
+    let candidate = bitwise_and
+        && match method_name(call) {
+            "positive?" | "zero?" => args.is_empty(),
+            ">" | "==" => args.len() == 1 && args[0].as_integer_node().is_some_and(|_| is_zero(&args[0])),
+            _ => false,
+        };
+    candidate && cx.config.for_cop("Style/BitwisePredicate").truthy("Enabled") && cx.config.target_ruby >= 2.5
 }
 
 /// `positive?` / `negative?` need Ruby 2.3. Only the predicate style's operator can be `>`/`<`;

@@ -70,88 +70,123 @@ foo.sort_by { |x| x.something }.last
   .sort_by { |x| x.length }
   .first and []
 
-==> 018.rb 34 <==
+==> 018.rb 48 <==
+x = obj.sort { |a, b| a <=> b }
+  .first if foo
+
+==> 019.rb 35 <==
+x = obj&.sort
+  &.first unless foo
+
+==> 020.rb 62 <==
+x = obj.sort_by { |a| a.include?(<<~STR) }
+  foo
+STR
+  .first
+
+==> 021.rb 34 <==
+obj.sort # comment
+  .first || []
+
+==> 022.rb 32 <==
+x = obj.sort # comment
+  .first
+
+==> 023.rb 39 <==
+x = obj.sort # comment
+  .first if foo
+
+==> 024.rb 41 <==
+x = obj.sort
+  # comment
+  .first if foo
+
+==> 025.rb 36 <==
+x = obj.sort # comment
+  .first + 1
+
+==> 026.rb 34 <==
 [1, 2].sort_by(&:something).first
 
-==> 019.rb 33 <==
+==> 027.rb 33 <==
 [1, 2, 3].sort_by(&:length).last
 
-==> 020.rb 19 <==
+==> 028.rb 19 <==
 [1, 2].sort.at(-1)
 
-==> 021.rb 20 <==
+==> 029.rb 20 <==
 [1, 2]&.sort.at(-1)
 
-==> 022.rb 21 <==
+==> 030.rb 21 <==
 [1, 2]&.sort&.at(-1)
 
-==> 023.rb 24 <==
+==> 031.rb 24 <==
 [1, 2, 3].sort.slice(0)
 
-==> 024.rb 18 <==
+==> 032.rb 18 <==
 [1, 2, 3].sort[0]
 
-==> 025.rb 21 <==
+==> 033.rb 21 <==
 [1, 2, 3].sort.[](0)
 
-==> 026.rb 33 <==
+==> 034.rb 33 <==
 foo.sort_by { |x| x.foo }.[](-1)
 
-==> 027.rb 31 <==
+==> 035.rb 31 <==
 [1, 2, 3].sort_by(&:foo).at(0)
 
-==> 028.rb 31 <==
+==> 036.rb 31 <==
 [1, 2].sort_by(&:foo).slice(0)
 
-==> 029.rb 35 <==
+==> 037.rb 35 <==
 [1, 2, 3].sort_by(&:foo).slice(-1)
 
-==> 030.rb 19 <==
+==> 038.rb 19 <==
 [1, 2, 3].sort[-1]
 
-==> 031.rb 25 <==
+==> 039.rb 25 <==
 [1, 2].sort_by(&:foo)[0]
 
-==> 032.rb 30 <==
+==> 040.rb 30 <==
 foo.sort_by { |x| x.foo }[-1]
 
-==> 033.rb 23 <==
+==> 041.rb 23 <==
 [1, 2, 3].sort.first(1)
-==> 034.rb 45 <==
+==> 042.rb 45 <==
 mongo_client["users"].find.sort(_id: 1).first
-==> 035.rb 21 <==
+==> 043.rb 21 <==
 [1, 2, 3].sort!.first
-==> 036.rb 36 <==
+==> 044.rb 36 <==
 [1, 2, 3].sort_by!(&:something).last
-==> 037.rb 28 <==
+==> 045.rb 28 <==
 [1, 2, 3].sort_by { |x| -x }
-==> 038.rb 15 <==
+==> 046.rb 15 <==
 [1, 2, 3].first
-==> 039.rb 27 <==
+==> 047.rb 27 <==
 [[1, 2], [3, 4]].first.sort
-==> 040.rb 23 <==
+==> 048.rb 23 <==
 [2, 1, 3].sort_by.first
-==> 041.rb 36 <==
+==> 049.rb 36 <==
 x.sort_by { |y| y.foo || bar }.last
 
-==> 042.rb 17 <==
+==> 050.rb 17 <==
 [1, 2, 3].sort[1]
-==> 043.rb 31 <==
+==> 051.rb 31 <==
 [1, 2, 3].sort_by(&:foo).at(-2)
-==> 044.rb 43 <==
+==> 052.rb 43 <==
 mongo_client["users"].find.sort(_id: 1)[-1]
-==> 045.rb 28 <==
+==> 053.rb 28 <==
 foo.sort { _2 <=> _1 }.last
 
-==> 046.rb 38 <==
+==> 054.rb 38 <==
 [1, 2, 3].sort_by { _1.length }.first
 
-==> 047.rb 35 <==
+==> 055.rb 35 <==
 [1, 2, 3].sort_by { _1.foo }.at(0)
 
-==> 048.rb 36 <==
+==> 056.rb 36 <==
 [1, 2, 3]&.sort_by { _1.foo }.at(0)
 
-==> 049.rb 37 <==
+==> 057.rb 37 <==
 [1, 2, 3]&.sort_by { _1.foo }&.at(0)
 

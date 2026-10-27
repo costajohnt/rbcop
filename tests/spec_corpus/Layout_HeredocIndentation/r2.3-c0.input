@@ -606,3 +606,13 @@ def foo
   RUBY2
 end
 
+==> 089.rb 54 <==
+def foo
+  <<~A
+  #{y ? <<~B : ""}
+  b
+  B
+  a
+  A
+end
+

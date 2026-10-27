@@ -1,4 +1,4 @@
-==> offenses exit=1 698 <==
+==> offenses exit=1 874 <==
 000.rb:2:3: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
 001.rb:2:3: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
 002.rb:2:3: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
@@ -6,9 +6,11 @@
 007.rb:1:1: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
 008.rb:1:1: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
 009.rb:1:1: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_accessor` instead.
-010.rb:1:1: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+010.rb:1:1: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_accessor` instead.
+011.rb:1:1: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+012.rb:1:1: C: [Correctable] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
 
-==> autocorrect exit=0 682 <==
+==> autocorrect exit=0 854 <==
 000.rb:2:3: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
 001.rb:2:3: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
 002.rb:2:3: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
@@ -16,7 +18,9 @@
 007.rb:1:1: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
 008.rb:1:1: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
 009.rb:1:1: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_accessor` instead.
-010.rb:1:1: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+010.rb:1:1: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_accessor` instead.
+011.rb:1:1: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
+012.rb:1:1: C: [Corrected] Style/Attr: Do not use `attr`. Use `attr_reader` instead.
 
 ==> corrected/000.rb 40 <==
 class SomeClass
@@ -50,6 +54,12 @@ attr_reader :name
 ==> corrected/009.rb 20 <==
 attr_accessor :name
 
-==> corrected/010.rb 23 <==
+==> corrected/010.rb 21 <==
+attr_accessor(:name)
+
+==> corrected/011.rb 19 <==
+attr_reader(:name)
+
+==> corrected/012.rb 23 <==
 attr_reader :foo, :bar
 

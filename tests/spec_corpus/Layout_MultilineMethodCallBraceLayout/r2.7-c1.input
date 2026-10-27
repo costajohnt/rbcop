@@ -44,7 +44,14 @@ foo(a, # a
 b, # b
 )
 
-==> 005.rb 18 <==
+==> 005.rb 36 <==
+foo(
+  {
+    bar: 1 # comment
+  }
+)
+
+==> 006.rb 18 <==
 foo&.bar(
   baz
 )

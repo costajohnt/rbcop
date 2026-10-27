@@ -339,3 +339,35 @@ var1, var2 = lambda do
   [_1, _2]
   end
 
+==> 058.rb 22 <==
+	foo do |v|
+		v
+  end
+
+==> 059.rb 30 <==
+	x = foo.map do |v|
+		v
+		end
+
+==> 060.rb 21 <==
+	foo do |v|
+		v
+	end
+
+==> 061.rb 22 <==
+	  foo do |v|
+		v
+end
+
+==> 062.rb 29 <==
+foo(
+	1, bar do |v|
+		v
+end)
+
+==> 063.rb 29 <==
+a(
+  **b(
+    c).d do
+  end)
+

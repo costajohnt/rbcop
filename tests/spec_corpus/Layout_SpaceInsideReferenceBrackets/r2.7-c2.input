@@ -77,9 +77,12 @@ a[ :key]["foo"  ][   0 ]
 ==> 018.rb 30 <==
 record[ options[:attribute] ]
 
-==> 019.rb 25 <==
+==> 019.rb 17 <==
+foo[ bar[0][1] ]
+
+==> 020.rb 25 <==
 b[ :key]["foo"  ][   0 ]
 
-==> 020.rb 30 <==
+==> 021.rb 30 <==
 j[ "pop"] = [89, nil, ""    ]
 

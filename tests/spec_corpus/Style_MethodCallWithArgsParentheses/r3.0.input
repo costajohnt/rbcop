@@ -18,3 +18,6 @@ def x() = foo(y)
 ==> 003.rb 22 <==
 def self.x() = foo(y)
 
+==> 004.rb 18 <==
+top.test (a in b)
+

@@ -1,188 +1,192 @@
-==> offenses exit=1 8017 <==
-019.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-020.rb:2:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-020.rb:4:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-021.rb:3:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
-022.rb:3:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-023.rb:3:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
-024.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-025.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-026.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-027.rb:2:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-027.rb:4:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-028.rb:3:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
-029.rb:3:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-030.rb:3:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
-031.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-032.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-034.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-035.rb:3:37: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 34) spaces for indenting an expression spanning multiple lines.
-038.rb:3:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-043.rb:3:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-045.rb:3:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-046.rb:2:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 3) spaces for indenting a condition in an `if` statement spanning multiple lines.
-051.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a condition in an `if` statement spanning multiple lines.
-054.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a condition in an `unless` statement spanning multiple lines.
-057.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a condition in a `while` statement spanning multiple lines.
-060.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a condition in an `until` statement spanning multiple lines.
-064.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a collection in a `for` statement spanning multiple lines.
-072.rb:4:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
-073.rb:2:17: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 16) spaces for indenting an expression in an assignment spanning multiple lines.
-073.rb:3:17: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 16) spaces for indenting an expression in an assignment spanning multiple lines.
-074.rb:4:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not -3) spaces for indenting an expression spanning multiple lines.
-075.rb:4:17: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 12) spaces for indenting an expression spanning multiple lines.
-076.rb:3:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression in an assignment spanning multiple lines.
-077.rb:9:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-077.rb:10:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-078.rb:5:9: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
-078.rb:6:9: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
-078.rb:7:9: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
-086.rb:2:8: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
-086.rb:3:8: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
-087.rb:2:8: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
-087.rb:3:8: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
-088.rb:2:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in an `if` statement spanning multiple lines.
-089.rb:2:8: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression in an assignment spanning multiple lines.
-089.rb:3:8: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression in an assignment spanning multiple lines.
-089.rb:4:8: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression in an assignment spanning multiple lines.
-090.rb:2:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in an `if` statement spanning multiple lines.
-092.rb:3:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
-093.rb:2:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in an `unless` statement spanning multiple lines.
-095.rb:3:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
-096.rb:2:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in a `while` statement spanning multiple lines.
-098.rb:3:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
-099.rb:2:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in an `until` statement spanning multiple lines.
-101.rb:3:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
+==> offenses exit=1 8301 <==
+024.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+025.rb:2:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+025.rb:4:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+026.rb:3:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+027.rb:3:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+028.rb:3:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
+029.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+030.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+031.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+032.rb:2:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+032.rb:4:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+033.rb:3:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+034.rb:3:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+035.rb:3:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
+036.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+037.rb:2:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+039.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+040.rb:3:37: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 34) spaces for indenting an expression spanning multiple lines.
+043.rb:3:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+047.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+048.rb:2:1: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+050.rb:3:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+052.rb:3:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+053.rb:2:4: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 3) spaces for indenting a condition in an `if` statement spanning multiple lines.
+058.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a condition in an `if` statement spanning multiple lines.
+061.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a condition in an `unless` statement spanning multiple lines.
+064.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a condition in a `while` statement spanning multiple lines.
+067.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a condition in an `until` statement spanning multiple lines.
+071.rb:2:3: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a collection in a `for` statement spanning multiple lines.
+079.rb:4:5: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+080.rb:2:17: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 16) spaces for indenting an expression in an assignment spanning multiple lines.
+080.rb:3:17: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 16) spaces for indenting an expression in an assignment spanning multiple lines.
+081.rb:4:2: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not -3) spaces for indenting an expression spanning multiple lines.
+082.rb:4:17: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 12) spaces for indenting an expression spanning multiple lines.
+083.rb:3:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression in an assignment spanning multiple lines.
+084.rb:9:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+084.rb:10:7: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+085.rb:5:9: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+085.rb:6:9: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+085.rb:7:9: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+093.rb:2:8: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
+093.rb:3:8: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
+094.rb:2:8: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
+094.rb:3:8: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
+095.rb:2:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in an `if` statement spanning multiple lines.
+096.rb:2:8: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression in an assignment spanning multiple lines.
+096.rb:3:8: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression in an assignment spanning multiple lines.
+096.rb:4:8: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression in an assignment spanning multiple lines.
+097.rb:2:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in an `if` statement spanning multiple lines.
+099.rb:3:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
+100.rb:2:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in an `unless` statement spanning multiple lines.
+102.rb:3:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
+103.rb:2:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in a `while` statement spanning multiple lines.
+105.rb:3:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
+106.rb:2:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in an `until` statement spanning multiple lines.
+108.rb:3:10: C: [Correctable] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
 
-==> autocorrect exit=0 7909 <==
-019.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-020.rb:2:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-020.rb:4:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-021.rb:3:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
-022.rb:3:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-023.rb:3:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
-024.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-025.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-026.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-027.rb:2:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-027.rb:4:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
-028.rb:3:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
-029.rb:3:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-030.rb:3:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
-031.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-032.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-034.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-035.rb:3:37: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 34) spaces for indenting an expression spanning multiple lines.
-038.rb:3:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-043.rb:3:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
-045.rb:3:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-046.rb:2:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 3) spaces for indenting a condition in an `if` statement spanning multiple lines.
-051.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a condition in an `if` statement spanning multiple lines.
-054.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a condition in an `unless` statement spanning multiple lines.
-057.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a condition in a `while` statement spanning multiple lines.
-060.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a condition in an `until` statement spanning multiple lines.
-064.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a collection in a `for` statement spanning multiple lines.
-072.rb:4:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
-073.rb:2:17: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 16) spaces for indenting an expression in an assignment spanning multiple lines.
-073.rb:3:17: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 16) spaces for indenting an expression in an assignment spanning multiple lines.
-074.rb:4:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not -3) spaces for indenting an expression spanning multiple lines.
-075.rb:4:17: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 12) spaces for indenting an expression spanning multiple lines.
-076.rb:3:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression in an assignment spanning multiple lines.
-077.rb:9:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-077.rb:10:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
-078.rb:5:9: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
-078.rb:6:9: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
-078.rb:7:9: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
-086.rb:2:8: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
-086.rb:3:8: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
-087.rb:2:8: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
-087.rb:3:8: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
-088.rb:2:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in an `if` statement spanning multiple lines.
-089.rb:2:8: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression in an assignment spanning multiple lines.
-089.rb:3:8: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression in an assignment spanning multiple lines.
-089.rb:4:8: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression in an assignment spanning multiple lines.
-090.rb:2:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in an `if` statement spanning multiple lines.
-092.rb:3:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
-093.rb:2:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in an `unless` statement spanning multiple lines.
-095.rb:3:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
-096.rb:2:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in a `while` statement spanning multiple lines.
-098.rb:3:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
-099.rb:2:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in an `until` statement spanning multiple lines.
-101.rb:3:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
+==> autocorrect exit=0 8189 <==
+024.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+025.rb:2:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+025.rb:4:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+026.rb:3:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+027.rb:3:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+028.rb:3:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
+029.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+030.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+031.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+032.rb:2:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+032.rb:4:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 3) spaces for indenting an expression spanning multiple lines.
+033.rb:3:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+034.rb:3:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+035.rb:3:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 6) spaces for indenting an expression spanning multiple lines.
+036.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+037.rb:2:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+039.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+040.rb:3:37: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 34) spaces for indenting an expression spanning multiple lines.
+043.rb:3:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+047.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+048.rb:2:1: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+050.rb:3:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 1) spaces for indenting an expression spanning multiple lines.
+052.rb:3:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+053.rb:2:4: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 3) spaces for indenting a condition in an `if` statement spanning multiple lines.
+058.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a condition in an `if` statement spanning multiple lines.
+061.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a condition in an `unless` statement spanning multiple lines.
+064.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a condition in a `while` statement spanning multiple lines.
+067.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a condition in an `until` statement spanning multiple lines.
+071.rb:2:3: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 2) spaces for indenting a collection in a `for` statement spanning multiple lines.
+079.rb:4:5: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+080.rb:2:17: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 16) spaces for indenting an expression in an assignment spanning multiple lines.
+080.rb:3:17: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 16) spaces for indenting an expression in an assignment spanning multiple lines.
+081.rb:4:2: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not -3) spaces for indenting an expression spanning multiple lines.
+082.rb:4:17: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 12) spaces for indenting an expression spanning multiple lines.
+083.rb:3:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression in an assignment spanning multiple lines.
+084.rb:9:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+084.rb:10:7: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 0) spaces for indenting an expression spanning multiple lines.
+085.rb:5:9: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+085.rb:6:9: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+085.rb:7:9: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 4) spaces for indenting an expression spanning multiple lines.
+093.rb:2:8: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
+093.rb:3:8: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
+094.rb:2:8: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
+094.rb:3:8: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
+095.rb:2:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in an `if` statement spanning multiple lines.
+096.rb:2:8: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression in an assignment spanning multiple lines.
+096.rb:3:8: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression in an assignment spanning multiple lines.
+096.rb:4:8: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression in an assignment spanning multiple lines.
+097.rb:2:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in an `if` statement spanning multiple lines.
+099.rb:3:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
+100.rb:2:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in an `unless` statement spanning multiple lines.
+102.rb:3:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
+103.rb:2:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in a `while` statement spanning multiple lines.
+105.rb:3:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
+106.rb:2:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 4 (not 9) spaces for indenting a condition in an `until` statement spanning multiple lines.
+108.rb:3:10: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 7) spaces for indenting an expression spanning multiple lines.
 
-==> corrected/019.rb 7 <==
+==> corrected/024.rb 7 <==
 a.
   b
 
-==> corrected/020.rb 14 <==
+==> corrected/025.rb 14 <==
 a.
   b
 c.
   d
 
-==> corrected/021.rb 12 <==
+==> corrected/026.rb 12 <==
 a.
   b.
   c
 
-==> corrected/022.rb 13 <==
+==> corrected/027.rb 13 <==
 [
  a.
    b
 ]
 
-==> corrected/023.rb 63 <==
+==> corrected/028.rb 63 <==
 expect { Foo.new }.
   to change { Bar.count }.
   from(1).to(2)
 
-==> corrected/024.rb 12 <==
+==> corrected/029.rb 12 <==
 a
   .(args)
 
-==> corrected/025.rb 7 <==
+==> corrected/030.rb 7 <==
 a
   .b
 
-==> corrected/026.rb 8 <==
+==> corrected/031.rb 8 <==
 a&.
   b
 
-==> corrected/027.rb 16 <==
+==> corrected/032.rb 16 <==
 a&.
   b
 c&.
   d
 
-==> corrected/028.rb 14 <==
+==> corrected/033.rb 14 <==
 a&.
   b&.
   c
 
-==> corrected/029.rb 14 <==
+==> corrected/034.rb 14 <==
 [
  a&.
    b
 ]
 
-==> corrected/030.rb 66 <==
+==> corrected/035.rb 66 <==
 expect { Foo.new }&.
   to change { Bar.count }&.
   from(1)&.to(2)
 
-==> corrected/031.rb 13 <==
+==> corrected/036.rb 13 <==
 a
   &.(args)
 
-==> corrected/032.rb 8 <==
+==> corrected/037.rb 8 <==
 a
   &.b
 
-==> corrected/034.rb 28 <==
+==> corrected/039.rb 28 <==
 MyClass.
   foo&.bar = 'baz'
 
-==> corrected/035.rb 173 <==
+==> corrected/040.rb 173 <==
 def run
   (date_columns + candidate_columns).uniq
     .select { |column_name|
@@ -193,70 +197,79 @@ def run
     }
 end
 
-==> corrected/038.rb 27 <==
+==> corrected/043.rb 27 <==
 def foo
   !0
     .nil?
 end
 
-==> corrected/043.rb 12 <==
+==> corrected/047.rb 55 <==
+foo.bar do |x| x end
+  .baz do |x| do_something(x) end
+
+==> corrected/048.rb 43 <==
+foo.bar
+  .baz { |x|
+    do_something(x) }
+
+==> corrected/050.rb 12 <==
 a
   .b
   .c
 
-==> corrected/045.rb 22 <==
+==> corrected/052.rb 22 <==
 foo[
   bar
     .baz
 ]
 
-==> corrected/046.rb 28 <==
+==> corrected/053.rb 28 <==
 if a.
     b
   something
 end
 
-==> corrected/051.rb 44 <==
+==> corrected/058.rb 44 <==
 if receiver
     .nil? &&
   !args.empty?
 end
 
-==> corrected/054.rb 48 <==
+==> corrected/061.rb 48 <==
 unless receiver
     .nil? &&
   !args.empty?
 end
 
-==> corrected/057.rb 47 <==
+==> corrected/064.rb 47 <==
 while receiver
     .nil? &&
   !args.empty?
 end
 
-==> corrected/060.rb 47 <==
+==> corrected/067.rb 47 <==
 until receiver
     .nil? &&
   !args.empty?
 end
 
-==> corrected/064.rb 22 <==
+==> corrected/071.rb 22 <==
 for n in a.
     b
 end
 
-==> corrected/072.rb 14 <==
+==> corrected/079.rb 14 <==
 a.
   b
 c.
   d
 
-==> corrected/073.rb 43 <==
+==> corrected/080.rb 43 <==
 formatted_int = int_part
   .abs
   .reverse
 
-==> corrected/074.rb 141 <==
+==> corrected/081.rb 141 <==
 def foo
   bar(
     key: VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName
@@ -264,7 +277,7 @@ def foo
   )
 end
 
-==> corrected/075.rb 141 <==
+==> corrected/082.rb 141 <==
 def foo
   bar(
     key: VeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeryLongClassName
@@ -272,7 +285,7 @@ def foo
   )
 end
 
-==> corrected/076.rb 200 <==
+==> corrected/083.rb 200 <==
 parsed_params = refusal_advice_params.merge(
   actions: refusal_advice_params.fetch(:actions).
     each_pair do |_, suggestions|
@@ -280,7 +293,7 @@ parsed_params = refusal_advice_params.merge(
     end
 ).to_h
 
-==> corrected/077.rb 447 <==
+==> corrected/084.rb 447 <==
 def payload
   {
     type: 'action',
@@ -297,7 +310,7 @@ def payload
   }.deep_symbolize_keys
 end
 
-==> corrected/078.rb 182 <==
+==> corrected/085.rb 182 <==
 add_to_git_repo(
   initial_repo,
   "about.json" =>
@@ -307,71 +320,71 @@ add_to_git_repo(
       .to_json,
 )
 
-==> corrected/086.rb 17 <==
+==> corrected/093.rb 17 <==
 User.a
   .c
   .b
 
-==> corrected/087.rb 16 <==
+==> corrected/094.rb 16 <==
 1 + a
   .b
   .c
 
-==> corrected/088.rb 28 <==
+==> corrected/095.rb 28 <==
 if a.
     b
   something
 end
 
-==> corrected/089.rb 51 <==
+==> corrected/096.rb 51 <==
 formatted_int = int_part
   .abs
   .to_s
   .reverse
 
-==> corrected/090.rb 51 <==
+==> corrected/097.rb 51 <==
 if receiver.
     nil? &&
          !args.empty?
 end
 
-==> corrected/092.rb 41 <==
+==> corrected/099.rb 41 <==
 if a
   something.
     something_else
 end
 
-==> corrected/093.rb 55 <==
+==> corrected/100.rb 55 <==
 unless receiver.
     nil? &&
          !args.empty?
 end
 
-==> corrected/095.rb 45 <==
+==> corrected/102.rb 45 <==
 unless a
   something.
     something_else
 end
 
-==> corrected/096.rb 54 <==
+==> corrected/103.rb 54 <==
 while receiver.
     nil? &&
          !args.empty?
 end
 
-==> corrected/098.rb 44 <==
+==> corrected/105.rb 44 <==
 while a
   something.
     something_else
 end
 
-==> corrected/099.rb 54 <==
+==> corrected/106.rb 54 <==
 until receiver.
     nil? &&
          !args.empty?
 end
 
-==> corrected/101.rb 44 <==
+==> corrected/108.rb 44 <==
 until a
   something.
     something_else

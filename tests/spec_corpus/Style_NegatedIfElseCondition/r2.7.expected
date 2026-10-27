@@ -1,56 +1,62 @@
-==> offenses exit=1 2961 <==
+==> offenses exit=1 3318 <==
 000.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
 001.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-002.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
-003.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
+002.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+003.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
 004.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
 005.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
-006.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-007.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
-008.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-009.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
-010.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-011.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
-012.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-013.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
-014.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-015.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
-016.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-016.rb:4:3: C: Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+006.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
+007.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+008.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
+009.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+010.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
+011.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+012.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
+013.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+014.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
+015.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+016.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
 017.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-021.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-022.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-023.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+018.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
+019.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+019.rb:4:3: C: Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+020.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
 024.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-025.rb:4:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+025.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
 026.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+027.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+028.rb:4:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+029.rb:1:1: C: [Correctable] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
 
-==> autocorrect exit=0 2925 <==
+==> autocorrect exit=0 3276 <==
 000.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
 001.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-002.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
-003.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
+002.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+003.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
 004.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
 005.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
-006.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-007.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
-008.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-009.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
-010.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-011.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
-012.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-013.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
-014.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-015.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
-016.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-016.rb:2:3: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+006.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
+007.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+008.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
+009.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+010.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
+011.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+012.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
+013.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+014.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
+015.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+016.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
 017.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-021.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-022.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-023.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+018.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the ternary branches.
+019.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+019.rb:2:3: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+020.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
 024.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
-025.rb:4:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+025.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
 026.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+027.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+028.rb:4:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
+029.rb:1:1: C: [Corrected] Style/NegatedIfElseCondition: Invert the negated condition and swap the if-else branches.
 
 ==> corrected/000.rb 49 <==
 if x
@@ -66,35 +72,48 @@ else
   do_something
 end
 
-==> corrected/002.rb 37 <==
+==> corrected/002.rb 54 <==
+if x then
+  do_something_else
+else
+  do_something
+end
+
+==> corrected/003.rb 50 <==
+if x then do_something_else else do_something end
+
+==> corrected/004.rb 48 <==
+if x; do_something_else; else do_something; end
+
+==> corrected/005.rb 37 <==
 x ? do_something_else : do_something
 
-==> corrected/003.rb 51 <==
+==> corrected/006.rb 51 <==
 x ?
   do_something_else :
   do_something # comment
 
-==> corrected/004.rb 54 <==
+==> corrected/007.rb 54 <==
 if x == y
   do_something_else
 else
   do_something
 end
 
-==> corrected/005.rb 42 <==
+==> corrected/008.rb 42 <==
 x == y ? do_something_else : do_something
 
-==> corrected/006.rb 56 <==
+==> corrected/009.rb 56 <==
 if (x == y)
   do_something_else
 else
   do_something
 end
 
-==> corrected/007.rb 44 <==
+==> corrected/010.rb 44 <==
 (x == y) ? do_something_else : do_something
 
-==> corrected/008.rb 66 <==
+==> corrected/011.rb 66 <==
 if begin
   x == y
 end
@@ -103,32 +122,32 @@ else
   do_something
 end
 
-==> corrected/009.rb 54 <==
+==> corrected/012.rb 54 <==
 begin
   x == y
 end ? do_something_else : do_something
 
-==> corrected/010.rb 54 <==
+==> corrected/013.rb 54 <==
 if x =~ y
   do_something_else
 else
   do_something
 end
 
-==> corrected/011.rb 42 <==
+==> corrected/014.rb 42 <==
 x =~ y ? do_something_else : do_something
 
-==> corrected/012.rb 56 <==
+==> corrected/015.rb 56 <==
 if (x =~ y)
   do_something_else
 else
   do_something
 end
 
-==> corrected/013.rb 44 <==
+==> corrected/016.rb 44 <==
 (x =~ y) ? do_something_else : do_something
 
-==> corrected/014.rb 66 <==
+==> corrected/017.rb 66 <==
 if begin
   x =~ y
 end
@@ -137,12 +156,12 @@ else
   do_something
 end
 
-==> corrected/015.rb 54 <==
+==> corrected/018.rb 54 <==
 begin
   x =~ y
 end ? do_something_else : do_something
 
-==> corrected/016.rb 97 <==
+==> corrected/019.rb 97 <==
 if x
   if y
     do_something_else_2
@@ -153,12 +172,12 @@ else
   do_something
 end
 
-==> corrected/017.rb 33 <==
+==> corrected/020.rb 33 <==
 if condition.nil?
   foo = 42
 end
 
-==> corrected/021.rb 107 <==
+==> corrected/024.rb 107 <==
 if condition.nil?
   # part A
   # and foo is 42
@@ -169,7 +188,7 @@ else
   foo = 39
 end
 
-==> corrected/022.rb 149 <==
+==> corrected/025.rb 149 <==
 if condition.nil?
   # part B
   # and foo is 3 and bar is 4
@@ -182,7 +201,7 @@ else
   bar = 2
 end
 
-==> corrected/023.rb 55 <==
+==> corrected/026.rb 55 <==
 if condition
   do_c
 else
@@ -191,7 +210,7 @@ else
   do_b
 end
 
-==> corrected/024.rb 48 <==
+==> corrected/027.rb 48 <==
 if condition
   do_c
 else
@@ -199,7 +218,7 @@ else
   do_b
 end
 
-==> corrected/025.rb 70 <==
+==> corrected/028.rb 70 <==
 # outer comment
 do_a
 
@@ -210,7 +229,7 @@ else
   do_a
 end
 
-==> corrected/026.rb 48 <==
+==> corrected/029.rb 48 <==
 if condition
   do_c
 else

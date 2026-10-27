@@ -1,10 +1,12 @@
-==> offenses exit=1 188 <==
+==> offenses exit=1 268 <==
 000.rb:2:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
 000.rb:3:1: C: [Correctable] Style/CombinableLoops: Combine this loop with the previous loop.
+001.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
 
-==> autocorrect exit=0 184 <==
+==> autocorrect exit=1 264 <==
 000.rb:2:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
 000.rb:3:1: C: [Corrected] Style/CombinableLoops: Combine this loop with the previous loop.
+001.rb:2:1: C: Style/CombinableLoops: Combine this loop with the previous loop.
 
 ==> corrected/000.rb 39 <==
 items.each { foo(it)
