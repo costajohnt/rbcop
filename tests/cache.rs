@@ -59,7 +59,9 @@ fn warm_run_prints_what_a_cold_run_prints() {
         assert_same(&base, &warm, format);
     }
     // Every file is cached (the Gemfile too), the one that does not parse included.
-    assert_eq!(entries(&dir), 7);
+    // Twice: the JSON formatter's entries keep Offense#corrections, so they live apart from the
+    // other formatters' (src/main.rs, the cache context).
+    assert_eq!(entries(&dir), 14);
     // Suppressed offenses, with a directive's justification, under --display-suppressed.
     fs::write(
         dir.join("lib/suppressed.rb"),
