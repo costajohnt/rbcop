@@ -1508,7 +1508,7 @@ fn autocorrect_allowed(cfg: &CopConfig) -> bool {
     use crate::config::value::Value;
     match cfg.get("AutoCorrect") {
         None | Some(Value::Bool(true)) => true,
-        Some(Value::Str(s)) => s == "always" || (s == "contextual" && !crate::helpers::lsp::enabled()),
+        Some(Value::Str(s)) => s == "always" || (s == "contextual" && !crate::helpers::lsp::holds_contextual()),
         _ => false,
     }
 }

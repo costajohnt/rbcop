@@ -19,8 +19,9 @@ fn copy_dir(from: &Path, to: &Path) {
     }
 }
 
-/// Deliberate difference: RuboCop's tools read and write any path the client names; rbcop's refuse
-/// one that resolves outside the working directory (absolute, `..`, or through a symlink).
+/// Deliberate difference: RuboCop's tools read and write any path the client names (and
+/// `rubocop_explain` reads the configuration of any); rbcop's refuse one that resolves outside the
+/// working directory (absolute, `..`, or through a symlink).
 #[test]
 fn mcp_tools_stay_inside_the_project() {
     use std::os::unix::fs::symlink;
@@ -52,10 +53,11 @@ fn mcp_tools_stay_inside_the_project() {
         call(8, "autocorrection", &format!("{{\"path\":\"{o}\",\"safety\":true}}")),
         call(9, "autocorrection", "{\"path\":\"lib\",\"safety\":true}"),
         call(10, "autocorrection", "{\"safety\":true}"),
+        call(11, "explain", "{\"cop_names\":[\"Style/StringLiterals\"],\"path\":\"../outside/o.rb\"}"),
     ];
     // Inside the project a new file is still written.
     let input = refused.concat()
-        + &call(11, "autocorrection", "{\"path\":\"lib/new.rb\",\"source_code\":\"puts( 2)\\n\",\"safety\":true}");
+        + &call(12, "autocorrection", "{\"path\":\"lib/new.rb\",\"source_code\":\"puts( 2)\\n\",\"safety\":true}");
     let mut child = common::command(env!("CARGO_BIN_EXE_rbcop"))
         .arg("--mcp")
         .current_dir(&project)
@@ -68,16 +70,75 @@ fn mcp_tools_stay_inside_the_project() {
     child.stdin.take().unwrap().write_all(input.as_bytes()).unwrap();
     let out = String::from_utf8(child.wait_with_output().unwrap().stdout).unwrap();
     let lines: Vec<&str> = out.lines().collect();
-    assert_eq!(lines.len(), 11, "{out}");
-    for line in &lines[..10] {
+    assert_eq!(lines.len(), 12, "{out}");
+    for line in &lines[..11] {
         assert!(line.contains("\"isError\":true") && line.contains("outside the project"), "{line}");
     }
-    assert!(lines[10].contains("\"isError\":false"), "{}", lines[10]);
+    assert!(lines[11].contains("\"isError\":false"), "{}", lines[11]);
     assert_eq!(std::fs::read_to_string(project.join("lib/new.rb")).unwrap(), "puts(2)\n");
     assert_eq!(std::fs::read_to_string(outside.join("o.rb")).unwrap(), "puts( 9)\n");
     assert!(!outside.join("new.rb").exists());
     assert!(std::fs::symlink_metadata(project.join("lib/evil.rb")).unwrap().file_type().is_symlink());
     std::fs::remove_dir_all(&base).unwrap();
+}
+
+/// The tools' `changed` (Scope#select_files, ChangedFiles) in a throwaway git repository: b.rb
+/// modified since the commit, c.rb untracked, a.rb unchanged. tests/mcp_changed.jsonl is what
+/// `rubocop --mcp` 1.92.1 answered to the same requests in the same repository (`$ROOT` for it).
+#[test]
+fn mcp_changed_selects_the_files_git_reports() {
+    let base = std::env::temp_dir().join(format!("rbcop-mcp-changed-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&base);
+    let dir = base.join("repo");
+    std::fs::create_dir_all(&dir).unwrap();
+    let dir = dir.canonicalize().unwrap();
+    let gitconfig = base.join("gitconfig");
+    std::fs::write(&gitconfig, "[user]\n\tname = t\n\temail = t@example.invalid\n").unwrap();
+    let git = |args: &[&str]| {
+        let ok = std::process::Command::new("git")
+            .args(args)
+            .current_dir(&dir)
+            .env("GIT_CONFIG_GLOBAL", &gitconfig)
+            .env("GIT_CONFIG_NOSYSTEM", "1")
+            .output()
+            .unwrap()
+            .status
+            .success();
+        assert!(ok, "git {args:?}");
+    };
+    git(&["init", "-q"]);
+    std::fs::write(dir.join(".rubocop.yml"), "AllCops:\n  NewCops: enable\n  SuggestExtensions: false\n").unwrap();
+    std::fs::write(dir.join("a.rb"), "puts( 1)\n").unwrap();
+    std::fs::write(dir.join("b.rb"), "puts( 2)\n").unwrap();
+    git(&["add", "."]);
+    git(&["commit", "-qm", "init"]);
+    std::fs::write(dir.join("b.rb"), "puts( 3)\n").unwrap();
+    std::fs::write(dir.join("c.rb"), "puts( 4)\n").unwrap();
+    let call = |id: u32, tool: &str, args: &str| {
+        format!(
+            "{{\"jsonrpc\":\"2.0\",\"id\":{id},\"method\":\"tools/call\",\"params\":{{\"name\":\"rubocop_{tool}\",\"arguments\":{args}}}}}\n"
+        )
+    };
+    let input = "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"initialize\",\"params\":{\"protocolVersion\":\"2025-11-25\",\"capabilities\":{},\"clientInfo\":{\"name\":\"t\",\"version\":\"1\"}}}\n".to_string()
+        + &call(2, "inspection", "{\"changed\":true,\"only\":[\"Layout\"]}")
+        + &call(3, "inspection", "{\"changed\":\"HEAD\",\"path\":\"a.rb\"}")
+        + &call(4, "inspection", "{\"changed\":\"nope\"}")
+        + &call(5, "autocorrection", "{\"changed\":true,\"safety\":true,\"dry_run\":true,\"only\":[\"Layout\"]}");
+    let mut child = common::command(env!("CARGO_BIN_EXE_rbcop"))
+        .arg("--mcp")
+        .current_dir(&dir)
+        .env("PWD", &dir)
+        .env("GIT_CONFIG_GLOBAL", &gitconfig)
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::null())
+        .spawn()
+        .unwrap();
+    child.stdin.take().unwrap().write_all(input.as_bytes()).unwrap();
+    let out = String::from_utf8(child.wait_with_output().unwrap().stdout).unwrap();
+    let _ = std::fs::remove_dir_all(&base);
+    let expected = std::fs::read_to_string(Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/mcp_changed.jsonl")).unwrap();
+    assert_eq!(out.replace(&dir.display().to_string(), "$ROOT"), expected);
 }
 
 #[test]

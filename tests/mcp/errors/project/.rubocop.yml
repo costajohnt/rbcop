@@ -1,0 +1,4 @@
+plugins: [rubocop-rails, rubocop-rspec]
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false

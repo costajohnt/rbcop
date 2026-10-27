@@ -1,14 +1,15 @@
-//! What `--lsp` and `--mcp` share: RuboCop's LSP::Runtime (a buffer inspected or formatted as a
-//! path, its offenses as LSP diagnostics), the URI helpers and the JSON both protocols speak.
+//! What `--lsp` and `--mcp` share: RuboCop 1.92.1's LSP::Runtime (a buffer inspected or formatted
+//! as a path, its offenses as LSP diagnostics or as they are), the URI helpers and the JSON both
+//! protocols speak.
 
 use crate::Badges;
 use rbcop::autocorrect::Mode;
 use rbcop::config::{Resolved, Store, expand_path, relative_path};
 use rbcop::formatter::{self, Annotate, Off, json};
 use rbcop::runner::{self, FileReport};
-use std::collections::HashMap;
 use std::path::PathBuf;
 use std::sync::Arc;
+use std::sync::atomic::Ordering;
 
 /// LSP::Runtime over its StdinRunner. Plugin cops rbcop does not implement are not run here, and
 /// the RuboCop fallback never is (RBCOP_FALLBACK or not).
@@ -19,29 +20,87 @@ pub struct Runtime {
     pwd_config: Arc<Resolved>,
     /// Runtime#config_only_options: `Lint` (lintMode) and `Layout` (layoutMode).
     pub only: Vec<String>,
-    /// The `--only` each config's cops were first mobilized with, by config.
-    mobilized: HashMap<usize, Vec<String>>,
     /// StdinRunner's @project_index_built: the index is built from disk at the first run and
     /// reused until `reset_project_index`.
     index_built: bool,
+    /// Runtime#raise_cop_error: when off, cop errors and correction loops are kept in `errors`
+    /// and the run goes on.
+    pub raise_cop_error: bool,
+    /// Runtime#errors and #warnings: the last run's, as printed.
+    pub errors: Vec<String>,
+    pub warnings: Vec<String>,
+}
+
+/// What a caller adds for one call (Runtime#call_options): `only` and `except` select the cops
+/// (an `only` replaces the lint/layout mode's departments), `editing` holds back the corrections
+/// of `AutoCorrect: contextual` cops.
+#[derive(Clone, Default)]
+pub struct CallOptions {
+    pub only: Vec<String>,
+    pub except: Vec<String>,
+    pub editing: bool,
+}
+
+/// Why a run failed: a RuboCop::Error (`Rubo`, its message) or anything else.
+pub enum Fail {
+    Rubo(String),
+    Other(String),
+}
+
+impl From<Fail> for String {
+    fn from(f: Fail) -> String {
+        match f {
+            Fail::Rubo(e) | Fail::Other(e) => e,
+        }
+    }
+}
+
+impl From<String> for Fail {
+    fn from(e: String) -> Fail {
+        Fail::Other(e)
+    }
 }
 
 /// What a run returns: the report and, when autocorrecting, the corrected source.
-struct Run {
-    report: FileReport,
-    corrected: Option<String>,
+pub struct Run {
+    pub report: FileReport,
+    pub corrected: Option<String>,
     /// LSP::DisableCommentEdits' multiline literal ranges; None without a tree.
     literals: Option<Vec<(usize, usize)>>,
     /// The file's config (its MessageAnnotator settings).
-    cfg: Arc<Resolved>,
+    pub cfg: Arc<Resolved>,
+    /// The corrections looped (Runner::InfiniteCorrectionLoop, kept with `raise_cop_error` off).
+    pub looped: bool,
+}
+
+impl Run {
+    /// The offenses `keep` picks, as the formatters see them (messages annotated).
+    pub fn offs(&self, keep: impl Fn(&rbcop::cop::Offense) -> bool) -> Vec<Off> {
+        let list: Vec<rbcop::cop::Offense> = self.report.offenses.iter().filter(|o| keep(o)).cloned().collect();
+        formatter::offenses(&self.report.text, &list, |o| {
+            formatter::annotate(&self.cfg, o.cop, &o.message, Annotate::default())
+        })
+    }
 }
 
 impl Runtime {
-    /// LSP::Runtime.new: serving, with LSP enabled.
-    pub fn new(store: Store, pwd_config: Arc<Resolved>) -> Runtime {
-        rbcop::helpers::lsp::start_serving();
+    /// LSP::Runtime.new: serving, with LSP enabled unless `lsp_mode` is off (`--mcp`, whose
+    /// offenses keep the command line's locations and messages).
+    pub fn new(store: Store, pwd_config: Arc<Resolved>, lsp_mode: bool) -> Runtime {
+        if lsp_mode {
+            rbcop::helpers::lsp::start_serving();
+        }
         let cwd = store.cwd().to_path_buf();
-        Runtime { store, cwd, pwd_config, only: Vec::new(), mobilized: HashMap::new(), index_built: false }
+        Runtime {
+            store,
+            cwd,
+            pwd_config,
+            only: Vec::new(),
+            index_built: false,
+            raise_cop_error: true,
+            errors: Vec::new(),
+            warnings: Vec::new(),
+        }
     }
 
     /// Runtime#reset_project_index: a file changed on disk, so the next run rebuilds the index.
@@ -51,25 +110,42 @@ impl Runtime {
 
     /// Runtime#offenses: `text` inspected as `path`, each offense an LSP diagnostic.
     pub fn offenses(&mut self, path: &str, text: String) -> Result<Vec<String>, String> {
-        let run = self.run(path, text, None)?;
+        let run = self.run(path, text, None, &CallOptions::default())?;
         self.diagnostics(path, &run)
     }
 
-    /// Runtime#format: `text` autocorrected as `path` (safe corrections only when `safe`).
+    /// Runtime#raw_offenses: `text` inspected as `path`, the offenses as they are.
+    pub fn raw_offenses(&mut self, path: &str, text: String, options: &CallOptions) -> Result<Run, Fail> {
+        self.run(path, text, None, options)
+    }
+
+    /// Runtime#format: `text` autocorrected as `path` (safe corrections only when `safe`). The
+    /// run's `corrected` is `text` itself when nothing changed; Runtime#uncorrected_offenses are
+    /// its report's offenses that are not `corrected`, located in that source.
+    pub fn format_run(&mut self, path: &str, text: String, safe: bool, options: &CallOptions) -> Result<Run, Fail> {
+        let mut run = self.run(path, text.clone(), Some(if safe { Mode::Safe } else { Mode::All }), options)?;
+        run.corrected.get_or_insert(text);
+        Ok(run)
+    }
+
+    /// Runtime#format, as `--lsp` calls it.
     pub fn format(&mut self, path: &str, text: String, safe: bool) -> Result<String, String> {
-        let run = self.run(path, text.clone(), Some(if safe { Mode::Safe } else { Mode::All }))?;
-        Ok(run.corrected.unwrap_or(text))
+        Ok(self.format_run(path, text, safe, &CallOptions::default())?.corrected.unwrap_or_default())
     }
 
     /// StdinRunner#run: the buffer inspected (or autocorrected) as `path`, with the
-    /// `--force-exclusion` of `-s` and the `--only` of lintMode/layoutMode.
-    fn run(&mut self, path: &str, text: String, mode: Option<Mode>) -> Result<Run, String> {
+    /// `--force-exclusion` of `-s` and the cops Runtime#call_options selects. StdinRunner forgets
+    /// the mobilized cops whenever that selection changes, so every run gets its own.
+    fn run(&mut self, path: &str, text: String, mode: Option<Mode>, options: &CallOptions) -> Result<Run, Fail> {
+        self.errors.clear();
+        self.warnings.clear();
         let abs = expand_path(std::path::Path::new(path), &self.cwd);
         let skipped = |text: String| Run {
             report: FileReport { offenses: Vec::new(), text, warnings: Vec::new(), abort: None, diffs: Vec::new() },
             corrected: None,
             literals: None,
             cfg: self.pwd_config.clone(),
+            looped: false,
         };
         let excluded = self.store.for_dir(&self.cwd)?.file_to_exclude(&abs);
         // Runner#run builds the index from the targets (none when excluded) before inspecting.
@@ -82,10 +158,18 @@ impl Runtime {
             return Ok(skipped(text));
         }
         let cfg = self.store.for_file(&abs)?;
-        // Runner#mobilized_cop_classes is memoized per config: the first run's --only sticks to it
-        // (a later `initialize` changing lintMode/layoutMode does not reach that config's files).
-        let only = self.mobilized.entry(Arc::as_ptr(&cfg) as usize).or_insert_with(|| self.only.clone()).clone();
-        let badges = Badges::new(&only, &[], false);
+        // Runtime#call_options: without an `only`, the lint/layout mode's departments.
+        let mut only = if options.only.is_empty() { self.only.clone() } else { options.only.clone() };
+        let mut except = options.except.clone();
+        // Runner#mobilize_team: Runner#qualify_option_cop_names, then validate_cop_list.
+        let (warnings, error) = crate::qualify_cop_lists(Some(&mut only), &mut except);
+        for w in warnings {
+            eprintln!("{w}");
+        }
+        if let Some(e) = error {
+            return Err(Fail::Rubo(e.strip_prefix("Error: ").unwrap_or(&e).to_string()));
+        }
+        let badges = Badges::new(&only, &except, false);
         cfg.mobilize_team();
         rbcop::config::validator::cop_validate_config(&cfg, |cop| {
             badges.badge_selected(cop, &cfg) && cfg.cop_enabled(cop)
@@ -96,6 +180,7 @@ impl Runtime {
         let display = relative_path(&abs, &self.cwd);
         rbcop::config::value::reset_run_budget();
         runner::take_literal_ranges();
+        rbcop::helpers::lsp::EDITING.store(options.editing, Ordering::Relaxed);
         let linted = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| match mode {
             None => (runner::inspect(&abs, &display, text, &cfg, &selected), None, None),
             Some(mode) => {
@@ -103,8 +188,11 @@ impl Runtime {
                 (c.report, c.source, c.error)
             }
         }));
+        rbcop::helpers::lsp::EDITING.store(false, Ordering::Relaxed);
         let literals = runner::take_literal_ranges();
-        for w in runner::take_file_warnings().into_iter().chain(runner::take_file_errors()) {
+        let warnings = runner::take_file_warnings();
+        let errors = runner::take_file_errors();
+        for w in warnings.iter().chain(&errors) {
             eprintln!("{w}");
         }
         let errored = runner::take_errored();
@@ -115,13 +203,23 @@ impl Runtime {
             eprintln!("{w}");
         }
         // StdinRunner raises cop errors (`raise_cop_error: true`) and infinite loops: no response.
-        if let Some(e) = loop_error {
-            return Err(format!("RuboCop::Runner::InfiniteCorrectionLoop {e}"));
+        if self.raise_cop_error {
+            if let Some(e) = loop_error {
+                return Err(Fail::Other(format!("RuboCop::Runner::InfiniteCorrectionLoop {e}")));
+            }
+            if errored {
+                return Err(Fail::Other(format!("RuboCop::ErrorWithAnalyzedFileLocation inspecting {display}")));
+            }
         }
-        if errored {
-            return Err(format!("RuboCop::ErrorWithAnalyzedFileLocation inspecting {display}"));
+        // Runner#run: with cop errors kept, the error that then ends the run (an ambiguous cop
+        // name in a directive).
+        if let Some(e) = &report.abort {
+            return Err(Fail::Rubo(e.strip_prefix("Error: ").unwrap_or(e).to_string()));
         }
-        Ok(Run { report, corrected, literals, cfg })
+        let looped = loop_error.is_some();
+        self.errors = errors.into_iter().chain(loop_error).collect();
+        self.warnings = warnings;
+        Ok(Run { report, corrected, literals, cfg, looped })
     }
 
     /// Runtime#offenses: each offense as LSP::Diagnostic#to_lsp_diagnostic writes it.
