@@ -31,6 +31,13 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   evaluates the project's Gemfile, also under `--lsp`, `--mcp` and the server options, as RuboCop
   does. `RBCOP_FALLBACK=0` does not stop it. To avoid it, leave the option off (the default).
 
+rbcop also runs `git` for `--changed` and the MCP tools' `changed` scope, as RuboCop does, but
+hardened: every call passes `-c core.fsmonitor=false -c core.hooksPath=/dev/null` (and
+`--no-ext-diff --no-textconv` to `git diff`), with `GIT_CONFIG_NOSYSTEM=1`, `GIT_PAGER=cat` and no
+`GIT_EXTERNAL_DIFF`, so a repository config planted by a checked-out project or an MCP client
+cannot make it run a command; the file lists are git's own. The MCP tools also refuse to read or
+write anything under `.git`, `.hg`, `.svn` or `.jj` (any case).
+
 ## Deliberate differences from RuboCop
 
 - `-o/--out` pointing at a file being inspected is refused (RuboCop truncates the file).

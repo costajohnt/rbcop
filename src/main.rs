@@ -234,8 +234,7 @@ struct Cli {
 
 /// ChangedFiles.revision?: whether `name` resolves to a commit in the current repository.
 fn is_revision(name: &str) -> bool {
-    std::process::Command::new("git")
-        .args(["rev-parse", "--verify", "--quiet", &format!("{name}^{{commit}}")])
+    rbcop::targets::git_command(&["rev-parse", "--verify", "--quiet", &format!("{name}^{{commit}}")])
         .stdout(std::process::Stdio::null())
         .stderr(std::process::Stdio::null())
         .status()

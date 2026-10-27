@@ -168,8 +168,19 @@ pub fn changed(revision: &str) -> Result<std::collections::HashSet<PathBuf>, Str
     // Deliberate difference: `--end-of-options` keeps a revision such as `--output=FILE` from
     // being read as a git option (RuboCop 1.91.0 passes it through, and git writes FILE). Git's
     // messages for every other revision are unchanged; a trailing `--` would reword them.
-    let diff =
-        ["-c", "diff.relative=false", "diff", "--name-only", "--diff-filter=d", "-z", "--end-of-options", revision];
+    // `--no-ext-diff --no-textconv`: see git_command.
+    let diff = [
+        "-c",
+        "diff.relative=false",
+        "diff",
+        "--no-ext-diff",
+        "--no-textconv",
+        "--name-only",
+        "--diff-filter=d",
+        "-z",
+        "--end-of-options",
+        revision,
+    ];
     let modified = match git(&diff) {
         Ok(out) => out,
         // A repository without commits: everything in it is untracked.
@@ -206,8 +217,18 @@ fn git_ok(args: &[&str]) -> bool {
 }
 
 /// Open3.capture3: stdout and stderr captured, stdin an empty pipe.
-fn git_command(args: &[&str]) -> std::process::Command {
+///
+/// Deliberate difference: git runs with the repository's command hooks off (`core.fsmonitor`,
+/// `core.hooksPath`, external diff and textconv drivers, the system config, a pager), so a
+/// repository config written by someone else (an MCP client, a checked-out project) cannot make
+/// `--changed` run a command. The file lists git prints are the same.
+pub fn git_command(args: &[&str]) -> std::process::Command {
     let mut cmd = std::process::Command::new("git");
-    cmd.args(args).stdin(std::process::Stdio::null());
+    cmd.args(["-c", "core.fsmonitor=false", "-c", "core.hooksPath=/dev/null"])
+        .args(args)
+        .env("GIT_CONFIG_NOSYSTEM", "1")
+        .env("GIT_PAGER", "cat")
+        .env_remove("GIT_EXTERNAL_DIFF")
+        .stdin(std::process::Stdio::null());
     cmd
 }

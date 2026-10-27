@@ -31,6 +31,9 @@ const TOOLS: [&str; 3] = [
 ];
 const TOOL_NAMES: [&str; 3] = ["rubocop_inspection", "rubocop_autocorrection", "rubocop_explain"];
 
+/// Version control metadata directories the tools never read or write under (in any case).
+const VCS_DIRS: [&str; 4] = [".git", ".hg", ".svn", ".jj"];
+
 /// A JSON-RPC error: code, message, data.
 type Fail = (i32, &'static str, String);
 
@@ -546,8 +549,9 @@ impl Server {
     }
 
     /// Where `path` really is (symlinks resolved, a missing tail kept as named), or a tool error
-    /// when that is outside the working directory. RuboCop's tools read and write wherever the
-    /// client points; rbcop's stay inside the project, the root `-a` writes under.
+    /// when that is outside the working directory or inside version control metadata
+    /// (VCS_DIRS). RuboCop's tools read and write wherever the client points; rbcop's stay inside
+    /// the project, the root `-a` writes under.
     fn contain(&self, path: &str) -> Result<PathBuf, ToolFail> {
         let mut base = self.runtime.cwd.join(path);
         let mut rest = Vec::new();
@@ -563,6 +567,18 @@ impl Server {
             base.pop();
         };
         let real = real.map(|r| rest.iter().rev().fold(r, |p, c| p.join(c)));
+        // A tool that wrote `.git/config` could make the next `changed` scope's git run a command
+        // (core.fsmonitor and the like), so nothing under a VCS directory is read or written.
+        let metadata = real.as_ref().filter(|r| {
+            self.roots.iter().filter_map(|root| r.strip_prefix(root).ok()).any(|below| {
+                below
+                    .components()
+                    .any(|c| VCS_DIRS.contains(&c.as_os_str().to_string_lossy().to_ascii_lowercase().as_str()))
+            })
+        });
+        if let Some(r) = metadata {
+            return Err(ToolFail::Rubo(format!("{path} resolves to {}, inside version control metadata", r.display())));
+        }
         match real {
             Some(real) if !autocorrect::outside_roots(&real, &self.roots) => Ok(real),
             real => Err(ToolFail::Rubo(format!(
