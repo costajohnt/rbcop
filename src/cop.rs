@@ -83,7 +83,7 @@ pub fn record_edits() {
     RECORD_EDITS.store(true, std::sync::atomic::Ordering::Relaxed);
 }
 
-fn recording_edits() -> bool {
+pub fn recording_edits() -> bool {
     RECORD_EDITS.load(std::sync::atomic::Ordering::Relaxed) || crate::helpers::lsp::serving()
 }
 
