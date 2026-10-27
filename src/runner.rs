@@ -543,7 +543,6 @@ fn investigate(
 ) -> (Vec<Offense>, Option<Corrector>, Vec<Offense>) {
     let text: &str = shared;
     let raw_text = raw_text.unwrap_or(text);
-    let errors_before = file_errors_len();
     let warned_before = directives::warnings_len();
     COMMENTS_READ.with(|r| r.set(false));
     let version = target_ruby::prism_version(cfg.target_ruby);
@@ -833,7 +832,14 @@ fn investigate(
         return (out, None, Vec::new());
     }
 
-    let opted_in = directives::opted_in(&src);
+    // Team#roundup_relevant_cops asks CommentConfig#opt_in_cops before any cop runs; its `no
+    // department given` warnings print then.
+    let (opted_in, opt_in_warnings) = directives::opted_in(&src);
+    if warn {
+        FILE_ERRORS.with(|e| e.borrow_mut().extend(opt_in_warnings.into_iter().map(|w| (None, w, true))));
+    }
+    // What the investigation's cop errors and CommentConfig warnings come after.
+    let errors_before = file_errors_len();
     let only_redundant = matches!(redundant, Redundant::Only(_));
     // Every file asks this of every cop: each cop's plugin is looked up once per run (#388).
     static PLUGINS: std::sync::LazyLock<Vec<Option<&'static crate::helpers::cop_registry::NativePlugin>>> =

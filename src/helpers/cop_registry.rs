@@ -349,12 +349,11 @@ fn camel_case(part: &str) -> String {
     RE.replace_all(part, |c: &regex::Captures| c[0][c[0].len() - 1..].to_uppercase()).into_owned()
 }
 
-/// Registry.qualified_cop?: the first department (in registration order) with a cop of this
-/// name is the name's own (`RSpec/Output` is not, once rubocop-rails registered Rails/Output).
+/// Registry.qualified_cop?: `qualify_badge(badge).include?(badge)`, so the name itself is a
+/// registered cop (1.91.0 took only the first department, which dropped `RSpec/Output` once
+/// rubocop-rails registered Rails/Output).
 pub fn is_qualified_cop(name: &str) -> bool {
-    let (dept, cop) = (department_of(name), name.rsplit('/').next().unwrap_or(name));
-    let registered = |d: &str| REGISTRY.iter().any(|c| department_of(c) == d && c.rsplit('/').next() == Some(cop));
-    departments().into_iter().find(|d| registered(d)) == Some(dept)
+    REGISTRY.contains(&name)
 }
 
 /// Registry#qualified_cop_name(name, nil, warn: false); None on AmbiguousCopName.
