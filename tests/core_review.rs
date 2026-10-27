@@ -1421,7 +1421,7 @@ fn unescaped_bracket_in_regexp_corrections_converge() {
 /// Integer, SafeNavigationChainLength `Max: 0` (add_offense(nil), also for a csend with a block),
 /// a zero IndentationWidth with tabs (ZeroDivisionError). Each is a cop error at the visited node
 /// (IndentationStyle's in on_new_investigation, so the bare path) and the offense is lost.
-/// Expected lines recorded from RuboCop 1.91.
+/// Expected lines recorded from RuboCop 1.91, unchanged in 1.92.1.
 #[test]
 fn config_values_cops_raise_on_are_cop_errors() {
     let cases = [
@@ -1819,8 +1819,9 @@ fn ambiguous_directive_errors_once_for_the_variable_force() {
 
 /// List settings given as a YAML String (#474) or set to `~` (#500): where RuboCop's cop reads them bare and then calls
 /// an Array-only method (`map`, `any?`, `+`, `-`, `join`, `to_set`), the cop raises at the node it
-/// visits. Cop errors recorded from RuboCop 1.91 on the two scenario projects (their offenses are
-/// in expected.txt).
+/// visits. Cop errors recorded from RuboCop 1.92.1 on the scenario projects (their offenses are
+/// in expected.txt; since 1.92 a String Naming/MethodName `ForbiddenIdentifiers` is a substring
+/// test, not an error).
 #[test]
 fn string_list_settings_raise_where_rubocop_does() {
     let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/scenarios");
@@ -1838,12 +1839,6 @@ fn string_list_settings_raise_where_rubocop_does() {
                 "Lint/UselessAccessModifier cop was inspecting a.rb:4:0.",
                 "Naming/ClassAndModuleCamelCase cop was inspecting a.rb:22:0.",
                 "Naming/HeredocDelimiterNaming cop was inspecting a.rb:23:4.",
-                "Naming/MethodName cop was inspecting a.rb:10:2.",
-                "Naming/MethodName cop was inspecting a.rb:18:4.",
-                "Naming/MethodName cop was inspecting a.rb:26:0.",
-                "Naming/MethodName cop was inspecting a.rb:27:0.",
-                "Naming/MethodName cop was inspecting a.rb:38:2.",
-                "Naming/MethodName cop was inspecting a.rb:6:2.",
                 "Style/ArgumentsForwarding cop was inspecting a.rb:27:0.",
                 "Style/CommentAnnotation cop was inspecting a.rb.",
                 "Style/GlobalVars cop was inspecting a.rb:33:0.",
