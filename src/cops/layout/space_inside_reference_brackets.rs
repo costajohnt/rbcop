@@ -37,38 +37,39 @@ impl Cop for SpaceInsideReferenceBrackets {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        // The parser `send` (:[] / :[]=) this node stands for: its range and whether it is `[]=`.
-        let (start, end, setter) = match kind::of(node) {
+        // The parser `send` (:[] / :[]=) this node stands for: its range and `loc.selector.begin_pos`.
+        let (start, end, bracket_pos) = match kind::of(node) {
             kind::CALL_NODE => {
                 let call = node.as_call_node().unwrap();
                 let name = method_name(&call);
                 if is_csend(&call) || !matches!(name, "[]" | "[]=") {
                     return;
                 }
+                let Some(sel) = call.message_loc() else { return };
                 let (s, e) = send_range(&call);
-                (s, e, name == "[]=")
+                (s, e, sel.start_offset())
             }
             kind::INDEX_TARGET_NODE => {
                 let l = node.location();
-                (l.start_offset(), l.end_offset(), true)
+                (l.start_offset(), l.end_offset(), node.as_index_target_node().unwrap().opening_loc().start_offset())
             }
             k => {
-                let (recv, close) = match k {
+                let (recv, open, close) = match k {
                     kind::INDEX_OPERATOR_WRITE_NODE => {
                         let n = node.as_index_operator_write_node().unwrap();
-                        (n.receiver(), n.closing_loc())
+                        (n.receiver(), n.opening_loc(), n.closing_loc())
                     }
                     kind::INDEX_OR_WRITE_NODE => {
                         let n = node.as_index_or_write_node().unwrap();
-                        (n.receiver(), n.closing_loc())
+                        (n.receiver(), n.opening_loc(), n.closing_loc())
                     }
                     _ => {
                         let n = node.as_index_and_write_node().unwrap();
-                        (n.receiver(), n.closing_loc())
+                        (n.receiver(), n.opening_loc(), n.closing_loc())
                     }
                 };
                 let Some(recv) = recv else { return };
-                (recv.location().start_offset(), close.end_offset(), false)
+                (recv.location().start_offset(), close.end_offset(), open.start_offset())
             }
         };
         let src = cx.src;
@@ -86,13 +87,7 @@ impl Cop for SpaceInsideReferenceBrackets {
         }
         let tokens: Vec<Token> = all[first..=last.min(all.len() - 1)].to_vec();
         // left_ref_bracket
-        let Some(current) = tokens.iter().rposition(left_ref) else { return };
-        let previous = (first + current).checked_sub(1).map(|i| all[i]);
-        let left_i = if setter || previous.is_some_and(|p| !right_bracket(&p)) {
-            tokens.iter().position(left_ref).unwrap()
-        } else {
-            current
-        };
+        let Some(left_i) = tokens.iter().position(|t| left_ref(t) && t.start == bracket_pos) else { return };
         let left = tokens[left_i];
         // closing_bracket
         let mut depth = 0i32;

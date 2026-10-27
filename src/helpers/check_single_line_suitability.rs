@@ -102,6 +102,15 @@ impl<'pr> Visit<'pr> for Unsafe<'_> {
     }
 }
 
+/// `too_long_as_single_line?(first..last)`: lines `first..=last` joined by `to_single_line` are
+/// longer than Layout/LineLength's Max (LineLengthHelp#line_length, so tab indentation counts).
+pub fn too_long_as_single_line(cx: &Cx, first: usize, last: usize) -> bool {
+    let Some(max) = max_line_length(cx) else { return false };
+    let src = cx.src;
+    let joined = src.lines[first - 1..last.min(src.lines.len())].join("\n");
+    crate::helpers::statement_modifier::line_length(cx, &to_single_line(&joined)) as f64 > max
+}
+
 /// `suitable_as_single_line?(node)` for a node spanning `start..end`; `node` is walked for
 /// `safe_to_split?` (descendants only, as `each_descendant`).
 pub fn suitable_as_single_line(cx: &Cx, node: &Node, start: usize, end: usize) -> bool {
@@ -119,11 +128,8 @@ pub fn suitable_as_single_line_skipping(
 ) -> bool {
     let src = cx.src;
     let (first, last) = (src.line_of(start), src.line_of(end));
-    if let Some(max) = max_line_length(cx) {
-        let joined = src.lines[first - 1..last.min(src.lines.len())].join("\n");
-        if to_single_line(&joined).chars().count() as f64 > max {
-            return false;
-        }
+    if too_long_as_single_line(cx, first, last) {
+        return false;
     }
     if src.comments.iter().any(|c| (first..=last).contains(&src.line_of(c.start))) {
         return false;

@@ -24,8 +24,8 @@ impl Settings {
 }
 
 /// `AlignmentCorrector.correct(corrector, processed_source, node_or_range, column_delta,
-/// tab_indentation:)` on `start..end`; `node` (None for a plain range) supplies the strings
-/// whose contents are never touched.
+/// tab_indentation:)` on `start..end`; `node` (None for a plain range: the whole program)
+/// supplies the strings whose contents are never touched.
 #[allow(clippy::too_many_arguments)]
 pub fn correct(
     c: &mut Corrector,
@@ -40,7 +40,8 @@ pub fn correct(
     if src.comments.iter().any(|cm| cm.embdoc && cm.start >= start && cm.end <= end) {
         return;
     }
-    let taboo = node.map_or_else(Vec::new, |n| taboo_ranges(src, n));
+    // inside_string_ranges: a plain range takes the whole AST's strings (source_string_ranges).
+    let taboo = node.or(src.root.as_ref()).map_or_else(Vec::new, |n| taboo_ranges(src, n));
     let within = |r: (usize, usize)| taboo.iter().any(|&(s, e)| r.0 >= s && r.1 <= e);
     let text = src.text.as_bytes();
     let mut line_begin = start;

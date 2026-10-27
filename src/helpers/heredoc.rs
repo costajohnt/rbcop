@@ -152,3 +152,24 @@ pub fn first_heredoc_end(node: &Node) -> Option<usize> {
     v.visit(node);
     v.end
 }
+
+/// `node.each_node(:any_str).select(&:heredoc?)` (the node itself included): the opening start
+/// offset (parser `loc.expression.begin_pos`, so `first_line` is its line) of every heredoc.
+pub fn heredoc_starts(node: &Node) -> Vec<usize> {
+    struct V(Vec<usize>);
+    impl<'pr> Visit<'pr> for V {
+        fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
+            if crate::ast::is_heredoc(&node) {
+                self.0.push(node.location().start_offset());
+            }
+        }
+        fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
+            if crate::ast::is_heredoc(&node) {
+                self.0.push(node.location().start_offset());
+            }
+        }
+    }
+    let mut v = V(Vec::new());
+    v.visit(node);
+    v.0
+}

@@ -34,7 +34,7 @@ impl Cop for MultilineMethodCallBraceLayout {
         let ca = !owns_block && mlbl::chained_or_argument(node, cx.ancestors);
         let close = (close.start_offset(), close.end_offset());
         let chain = if owns_block || !first_is_str_heredoc(&children) { Ok(None) } else { heredoc_chain(node, cx.ancestors) };
-        mlbl::check(cx, &MSGS, open.start_offset(), close, range, &children, ca, chain);
+        mlbl::check(cx, &MSGS, open.start_offset(), close, range, &children, ca, chain, node);
     }
 }
 

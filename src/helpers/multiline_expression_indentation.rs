@@ -173,7 +173,7 @@ impl<'a, 'pr> Ctx<'a, 'pr> {
         self.prism(a).as_call_node()
     }
 
-    fn is_ternary(&self, a: &PAnc) -> bool {
+    pub fn is_ternary(&self, a: &PAnc) -> bool {
         self.prism(a).as_if_node().is_some_and(|n| n.if_keyword_loc().is_none())
     }
 
