@@ -1,0 +1,2 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+c.rb:3:6: C: [Correctable] Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.

@@ -1,4 +1,4 @@
-//! ConfigValidator#validate (plus Config#deprecation_check and ConfigObsoletion) from RuboCop 1.91:
+//! ConfigValidator#validate (plus Config#deprecation_check and ConfigObsoletion) from RuboCop 1.92.1:
 //! the checks Config#check runs on every loaded config file, and validate_after_resolution's target
 //! Ruby check. Warnings are appended to `out` as Kernel#warn writes them; an error is returned as
 //! the CLI prints it (`Error: ...`, painted red by the caller).
@@ -259,6 +259,15 @@ impl Validator<'_> {
                 SEVERITIES.join(", ")
             ));
         }
+        // validate_preview_parameter
+        if let Some(preview) = hash.map("AllCops").and_then(|a| a.get("Preview"))
+            && !matches!(preview, Value::Null | Value::Bool(_))
+        {
+            return Err(format!(
+                "Error: invalid {} for `Preview` found in {shown}\nValid choices are: true, false",
+                to_s(preview)
+            ));
+        }
         // validate_parameter_names
         for name in &valid {
             let (Some(section), Some(default)) = (hash.map(name), self.default.map(name)) else { continue };
@@ -402,9 +411,9 @@ impl Validator<'_> {
             let base = format!("The `{old}` cop has been removed");
             let alternatives: Vec<String> =
                 strings(meta.get("alternatives")).iter().map(|a| format!("`{a}`")).collect();
-            // `Array(...)` alternatives are always truthy, so no reason means "Please use".
             let msg = match meta.str("reason") {
                 Some(reason) => format!("{base} since {}.", reason.trim_end_matches('\n')),
+                None if alternatives.is_empty() => format!("{base}."),
                 None => format!("{base}. Please use {} instead.", to_sentence(&alternatives, "and/or")),
             };
             add(meta.str("severity") == Some("warning"), cop_msg(msg));
@@ -629,7 +638,7 @@ pub fn check_target_ruby(hash: &Map, path: &Path, pwd: &Path) -> Result<(), Stri
 }
 
 /// Team#validate_config: the `validate_config` of each cop the team mobilizes (`team` says which),
-/// in registry order; the first ValidationError wins. RuboCop 1.91 has four.
+/// in registry order; the first ValidationError wins. RuboCop 1.92.1 has four.
 pub fn cop_validate_config(cfg: &super::Resolved, team: impl Fn(&str) -> bool) -> Result<(), String> {
     const MAGIC: &str = "Layout/EmptyLineAfterMagicComment";
     if team(MAGIC) {

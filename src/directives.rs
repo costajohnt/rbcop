@@ -1,4 +1,4 @@
-//! `# rubocop:...` directive comments, ported from RuboCop 1.91's DirectiveComment and CommentConfig
+//! `# rubocop:...` directive comments, ported from RuboCop 1.92.1's DirectiveComment and CommentConfig
 //! (with its DisableNext and PushPop parts).
 
 use crate::source::Source;
@@ -245,27 +245,48 @@ fn resolve_signed(d: &Directive) -> Vec<(char, String)> {
     out
 }
 
-/// CommentConfig#opt_in_cops: raw names after `enable`/`enable-next` (not `all`) and `+` args of
-/// push/next. Raw names are compared with qualified cop names, so `enable LineLength` opts nothing in.
-pub fn opted_in(src: &Source) -> Vec<&'static str> {
+/// CommentConfig#opt_in_cops (opted_in_by): the `+` args of push/next, departments expanded and
+/// the rest qualified (PushPop#expand_cop_name, which warns about each bare name: the returned
+/// warnings); DirectiveComment#cop_names of `enable-next` (departments expanded, unqualified);
+/// raw names of `enable`. Unqualified names are compared with qualified cop names, so
+/// `enable LineLength` opts nothing in. `all` opts nothing in.
+// ponytail: a `+` name two departments share raises AmbiguousCopName in RuboCop; here it is kept as written.
+pub fn opted_in(src: &Source) -> (Vec<&'static str>, Vec<String>) {
     if !src.text.contains("rubocop") {
-        return Vec::new();
+        return (Vec::new(), Vec::new());
     }
+    let mark = warnings_len();
     let mut raw: Vec<String> = Vec::new();
     for c in &src.comments {
         let Some(d) = parse(src.slice(c.start, c.end)) else { continue };
-        if d.enabled() {
-            if d.cops.as_deref() != Some("all") {
-                raw.extend(d.raw_names().into_iter().map(String::from));
+        if d.signed() {
+            for (_, name) in d.signed_args().into_iter().filter(|(op, _)| *op == '+') {
+                if is_department(name) {
+                    let cops = crate::helpers::cop_registry::names_for_department(name);
+                    raw.extend(cops.into_iter().map(String::from));
+                } else {
+                    warn_name(src, name);
+                    raw.push(qualify(name));
+                }
             }
-        } else if d.signed() {
-            raw.extend(d.signed_args().into_iter().filter(|(op, _)| *op == '+').map(|(_, n)| n.to_string()));
+        } else if !d.enabled() || d.cops.as_deref() == Some("all") {
+            continue;
+        } else if d.mode == "enable-next" {
+            for name in d.raw_names() {
+                if is_department(name) {
+                    raw.extend(department_cops(name).into_iter().map(String::from));
+                } else if name != LINT_SYNTAX {
+                    raw.push(name.to_string());
+                }
+            }
+        } else {
+            raw.extend(d.raw_names().into_iter().map(String::from));
         }
     }
     let mut out: Vec<&'static str> = known().filter(|k| raw.iter().any(|r| r == k)).collect();
     out.sort_unstable();
     out.dedup();
-    out
+    (out, take_warnings_since(mark))
 }
 
 /// What CommentConfig needs to know about the file's lines.
