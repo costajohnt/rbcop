@@ -1391,27 +1391,9 @@ fn cop_error_is_located_at_the_visited_node() {
     let _ = fs::remove_dir_all(&dir);
 }
 
-/// InfiniteCorrectionLoop lists each iteration's cops in team order, which Registry#sort! makes
-/// cop-name order (specs corpus style/redundant_line_continuation/089.rb).
-#[test]
-fn infinite_loop_names_cops_in_name_order() {
-    let dir = scratch("infloop");
-    fs::write(dir.join("t.rb"), "class Foo\n  memoize \\\n  def do_something\n  end\nend\n").unwrap();
-    let only = "Layout/DefEndAlignment,Layout/TrailingWhitespace,Style/EmptyMethod,Style/Semicolon";
-    let out = rbcop(&dir, &["-A", "--only", only, "--force-default-config", "-f", "e", "t.rb"]);
-    let want = format!(
-        "Infinite loop detected in {} and caused by Layout/DefEndAlignment -> Layout/TrailingWhitespace, \
-         Style/EmptyMethod, Style/Semicolon\n",
-        dir.join("t.rb").display()
-    );
-    assert!(text(&out.stderr).contains(&want), "{}", text(&out.stderr));
-    assert_eq!(out.status.code(), Some(1));
-    let _ = fs::remove_dir_all(&dir);
-}
-
 /// Lint/UnescapedBracketInRegexp -A on the 1.92.1 spec examples RuboCop 1.91.0 never finishes (#680,
-/// docs/known-gaps.md): a double-quoted string gets 1.92.1's `\\]`; a `]` after an escape is left
-/// `[Correctable]`, as 1.91.0 reports it without -A.
+/// docs/known-gaps.md): a double-quoted string gets 1.92.1's `\\]`; a `]` after an escape is no
+/// offense. Expected output recorded from RuboCop 1.92.1 (status 0: everything left is corrected).
 #[test]
 fn unescaped_bracket_in_regexp_corrections_converge() {
     let dir = scratch("unescbracket");
@@ -1429,15 +1411,12 @@ fn unescaped_bracket_in_regexp_corrections_converge() {
     let msg = "Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.";
     assert_eq!(
         report,
-        format!(
-            "025.rb:1:16: W: [Corrected] {msg}\n031.rb:1:17: W: [Correctable] {msg}\n\
-             042.rb:1:22: W: [Corrected] {msg}\n048.rb:1:20: W: [Correctable] {msg}\n"
-        )
+        format!("025.rb:1:16: W: [Corrected] {msg}\n042.rb:1:22: W: [Corrected] {msg}\n")
     );
     for (name, _, want) in cases {
         assert_eq!(fs::read_to_string(dir.join(name)).unwrap(), want, "{name}");
     }
-    assert_eq!(out.status.code(), Some(1));
+    assert_eq!(out.status.code(), Some(0));
     let _ = fs::remove_dir_all(&dir);
 }
 

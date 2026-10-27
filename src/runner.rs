@@ -1084,6 +1084,11 @@ fn investigate(
             .severity
             .unwrap_or_else(|| if o.severity == Severity::Convention { default_severity(o.cop) } else { o.severity });
         o.correctable &= autocorrect_allowed(c);
+        // Base#new_offense: `AutoCorrect: false` reports no corrections; the corrector stays for
+        // an editor's quick fix.
+        if !crate::helpers::lsp::serving() && disabled_autocorrect(c) {
+            o.edits = None;
+        }
     }
     // CommentConfig#cop_disabled_line_ranges analyzes lazily and the `no department given`
     // warnings print then: during the investigation when a cop reads it (comment_config_read),
@@ -1208,12 +1213,13 @@ thread_local! {
 }
 
 /// The errors `file_error` recorded on this thread since the last call (one file's, in order,
-/// with the directive warnings printed among them), the errors now kept for the summary.
-pub fn take_file_errors() -> Vec<String> {
+/// with the directive warnings printed among them, flagged `true`), the errors now kept for the
+/// summary.
+pub fn take_file_errors() -> Vec<(String, bool)> {
     let entries = FILE_ERRORS.with(|e| std::mem::take(&mut *e.borrow_mut()));
     let errors = entries.iter().filter(|e| !e.2).map(|e| e.1.clone());
     ERRORS.lock().unwrap_or_else(|e| e.into_inner()).extend(errors);
-    entries.into_iter().map(|e| e.1).collect()
+    entries.into_iter().map(|e| (e.1, e.2)).collect()
 }
 
 fn file_errors_len() -> usize {
@@ -1510,6 +1516,12 @@ pub fn profile() -> Vec<(&'static str, std::time::Duration, u64)> {
 /// Cop::Base#use_corrector: an offense with a corrector is only `[Correctable]` when the cop's
 /// `AutoCorrect` is `always`/`true` (the default) or `contextual` (not under `--editor-mode`);
 /// `false`/`disabled` turn it off.
+/// Base#disabled_autocorrect?: `AutoCorrect: disabled`, or `false`.
+fn disabled_autocorrect(cfg: &CopConfig) -> bool {
+    use crate::config::value::Value;
+    matches!(cfg.get("AutoCorrect"), Some(Value::Bool(false))) || cfg.str("AutoCorrect") == Some("disabled")
+}
+
 fn autocorrect_allowed(cfg: &CopConfig) -> bool {
     use crate::config::value::Value;
     match cfg.get("AutoCorrect") {
