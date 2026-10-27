@@ -233,6 +233,10 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   (scripts/dump-cop-docs.rb, RuboCop's and the native plugins' cops), since rbcop has no Ruby
   sources to read. A cop of a plugin rbcop does not implement, or of a `require:`d local file, is
   explained without those sections (description, properties, configuration and references only).
+- A `+` argument of a `push`/`next` directive naming a bare cop name that two departments share
+  (`# rubocop:push +Foo` with `A/Foo` and `B/Foo`): RuboCop 1.92.1 raises AmbiguousCopName from
+  `CommentConfig#opt_in_cops` while expanding it; rbcop keeps the name as written (`opted_in` in
+  `src/directives.rs`), so it opts in no cop and the run goes on.
 
 ## Open gaps
 
