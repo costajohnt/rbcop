@@ -61,6 +61,10 @@ AllCops:
 %W(foo bar baz)
 ==> 018.rb 7 <==
 %W(' ")
+==> 019.rb 15 <==
+%W(' " ! = # ,)
+==> 020.rb 10 <==
+%W(#{a} b)
 ==> 021.rb 24 <==
 %W('foo', 'bar', 'baz')
 
@@ -107,13 +111,3 @@ AllCops:
 
 ==> 034.rb 8 <==
 %W(\255)
-==> 035.rb 32 <==
-# encoding: BINARY
-
-%W[À "foo"]
-
-==> 036.rb 28 <==
-# encoding: BINARY
-
-%W[À Á]
-

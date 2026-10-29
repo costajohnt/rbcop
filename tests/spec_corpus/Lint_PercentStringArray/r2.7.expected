@@ -1,4 +1,4 @@
-==> offenses exit=1 3366 <==
+==> offenses exit=1 3217 <==
 005.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
 006.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
 007.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
@@ -22,9 +22,8 @@
 030.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
 031.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
 033.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
-035.rb:3:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
 
-==> autocorrect exit=1 3334 <==
+==> autocorrect exit=1 3187 <==
 005.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
 006.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
 007.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
@@ -48,7 +47,6 @@
 030.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
 031.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
 033.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
-035.rb:3:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
 
 ==> corrected/005.rb 16 <==
 %w(foo bar baz)
@@ -100,9 +98,4 @@
 
 ==> corrected/033.rb 14 <==
 %W(a\255\255)
-
-==> corrected/035.rb 30 <==
-# encoding: BINARY
-
-%W[À foo]
 

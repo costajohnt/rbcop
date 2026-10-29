@@ -220,7 +220,8 @@ fn correct(
     let mut changed = pass.changed;
     let mut offenses = std::mem::take(&mut pass.offenses);
     // Runner#add_redundant_disables (skipped when the loop raised): Lint/RedundantCopDisableDirective
-    // judges the final source against every offense found, and when it removed directives the
+    // judges the final source against every offense found and not corrected
+    // (`offenses.reject(&:corrected?)`, RuboCop 1.92.2), and when it removed directives the
     // whole loop runs once more; both offense lists are kept (`offenses |= new_offenses`).
     // (Nor when the file ends the run: Runner#check_for_redundant_disables? raised; nor when the
     // final source could not be transcoded: it has no comments.)
@@ -229,8 +230,17 @@ fn correct(
         && !runner::aborting()
     {
         let mut lines = Lines::default();
-        let span = |o: &Offense| (o.cop, lines.line_col(o, o.start).0, lines.line_col(o, o.end.max(o.start)).0);
-        let checked: Vec<runner::Span> = offenses.iter().chain(&pass.disabled).map(span).collect();
+        // `offenses_by_iteration.flatten.uniq` keeps the first of equal offenses (a todo offense
+        // found again as disabled in the next iteration is the corrected one), then
+        // `offenses.reject(&:corrected?)` (RuboCop 1.92.2).
+        let mut seen = HashSet::new();
+        let mut checked: Vec<runner::Span> = Vec::new();
+        for o in offenses.iter().chain(&pass.disabled) {
+            let (line, col) = lines.line_col(o, o.start);
+            if seen.insert((line, col, o.cop, o.message.clone(), o.severity)) && !o.corrected {
+                checked.push((o.cop, line, lines.line_col(o, o.end.max(o.start)).0));
+            }
+        }
         let normalised = normalise(&view);
         let (mut found, corrector) =
             runner::redundant_disables(path, display, &normalised, cfg, selected, mode, &checked);

@@ -258,10 +258,25 @@ pub fn check(cx: &mut Cx, checked: &[Span]) {
                 let next_follows = ranges.get(idx + 1).is_some_and(|n| r.1 == n.0);
                 let unknowable = crate::helpers::cop_registry::has_unrunnable();
                 (!next_follows && !unknowable && ctx.free(r, |_| true)).then(|| "all".to_string())
-            } else if department_disabled(cop, &d) {
-                ctx.redundant_department(cop, r)
             } else {
-                ctx.redundant_cop(cop, r)
+                // line_range_through_repeated_disables: the range runs on through the ranges that
+                // follow it directly and are opened by another directive naming the cop itself.
+                let mut last = r;
+                for next in &ranges[idx + 1..] {
+                    let repeated = next.2.map(|j| ctx.directive(j)).is_some_and(|nd| {
+                        !skip(Some(&nd)) && !nd.disabled_all() && !department_disabled(cop, &nd)
+                    });
+                    if last.1 != next.0 || !repeated {
+                        break;
+                    }
+                    last = next;
+                }
+                let range = (r.0, last.1, r.2);
+                if department_disabled(cop, &d) {
+                    ctx.redundant_department(cop, &range)
+                } else {
+                    ctx.redundant_cop(cop, &range)
+                }
             };
             if let Some(f) = found {
                 add(i, f);

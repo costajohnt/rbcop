@@ -4,8 +4,8 @@
 # Binary (`# encoding: BINARY`) sources with bytes that are not valid UTF-8 (`%i[\xC0 :foo]`):
 # rbcop inspects them with those bytes replaced, which shifts later columns and is never
 # autocorrected (docs/known-gaps.md, same as scripts/cold-skip.txt).
-Lint_PercentStringArray/r2.7/019.rb
-Lint_PercentStringArray/r2.7/020.rb
+Lint_PercentStringArray/r2.7/035.rb
+Lint_PercentStringArray/r2.7/036.rb
 Lint_PercentSymbolArray/r2.7/010.rb
 Lint_PercentSymbolArray/r2.7/011.rb
 #
