@@ -126,6 +126,10 @@ impl Cop for RedundantSplatExpansion {
         };
         // redundant_splat_expansion
         if let Some(block) = new {
+            // redundant_array_new_splat?: as a method argument the splat provides the arguments.
+            if !matches!(parent, Parent::Array { .. }) {
+                return;
+            }
             if !block && matches!(parent, Parent::Array { count, .. } if count > 1) {
                 return; // array_new_inside_array_literal?
             }

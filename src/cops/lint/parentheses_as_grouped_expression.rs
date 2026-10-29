@@ -25,6 +25,11 @@ fn invalid_bare_argument(paren: &ruby_prism::ParenthesesNode) -> bool {
             },
         };
     }
+    keyword_operator_or_modifier(&node) || command_call_operand(&node)
+}
+
+/// keyword_operator? || modifier_expression?
+fn keyword_operator_or_modifier(node: &Node) -> bool {
     if let Some(a) = node.as_and_node() {
         return a.operator_loc().as_slice() == b"and";
     }
@@ -48,6 +53,47 @@ fn invalid_bare_argument(paren: &ruby_prism::ParenthesesNode) -> bool {
     }
     if let Some(u) = node.as_until_node() {
         return u.closing_loc().is_none() && !u.is_begin_modifier();
+    }
+    false
+}
+
+/// command_call_operand?: an assignment (or setter/index assignment) whose value, or a `!` whose
+/// operand, is a command call (possibly through more of them).
+fn command_call_operand(node: &Node) -> bool {
+    if let Some((_, value)) = assignment_parts(node) {
+        return command_call_value(&value);
+    }
+    let Some(call) = node.as_call_node() else { return false };
+    let name = method_name(&call);
+    // call_type? && assignment_method?: `children.last` is the last argument.
+    if name.ends_with('=') && !matches!(name, "==" | "===" | "!=" | "<=" | ">=") {
+        return send_args(&call).last().is_some_and(command_call_value);
+    }
+    // send_type? && prefix_bang?
+    if !is_csend(&call) && name == "!" && call.message_loc().is_some_and(|m| m.as_slice() == b"!") {
+        return call.receiver().is_some_and(|r| command_call_value(&r));
+    }
+    false
+}
+
+fn command_call_value(node: &Node) -> bool {
+    command_call(node) || command_call_operand(node)
+}
+
+/// command_call?: a send/csend, `super` or `yield` (a block's send node for a block) with arguments
+/// and without parentheses, not an operator method.
+fn command_call(node: &Node) -> bool {
+    if let Some(call) = node.as_call_node() {
+        return !send_args(&call).is_empty()
+            && call.closing_loc().is_none_or(|c| c.as_slice() != b")")
+            && !helpers::node_types::is_operator_method(method_name(&call));
+    }
+    if let Some(sup) = node.as_super_node() {
+        let block_pass = sup.block().is_some_and(|b| b.as_block_argument_node().is_some());
+        return (sup.arguments().is_some() || block_pass) && sup.rparen_loc().is_none();
+    }
+    if let Some(y) = node.as_yield_node() {
+        return y.arguments().is_some() && y.rparen_loc().is_none();
     }
     false
 }

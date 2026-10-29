@@ -133,6 +133,12 @@ pub fn sequence_parts(source: &str) -> SequenceParts<'_> {
     }
 }
 
+/// `/\A#{SEQUENCE}\z/`: `s` is exactly one format sequence.
+pub fn is_sequence(s: &str) -> bool {
+    static WHOLE: LazyLock<Regex> = LazyLock::new(|| Regex::new(&format!(r"\A(?:{})\z", SEQUENCE.as_str())).unwrap());
+    WHOLE.is_match(s)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -158,3 +164,4 @@ mod tests {
         assert_eq!((p.flags.as_str(), p.width, p.name, p.ty), ("+", Some("5"), Some("c"), None));
     }
 }
+

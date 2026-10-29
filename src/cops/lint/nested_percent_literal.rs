@@ -37,7 +37,9 @@ impl Cop for NestedPercentLiteral {
                 (_, Some(s)) => s.unescaped().to_vec(),
                 _ => return false,
             };
-            nested(&String::from_utf8_lossy(&value))
+            let literal = String::from_utf8_lossy(&value);
+            // FORMAT_SEQUENCE: a whole format sequence (`%{foo}`, `%-5s`) is not a percent literal.
+            !helpers::format_string::is_sequence(&literal) && nested(&literal)
         });
         if hit {
             let l = node.location();

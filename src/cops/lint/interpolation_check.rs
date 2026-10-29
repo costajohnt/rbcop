@@ -15,23 +15,38 @@ fn has_interpolation(src: &str) -> bool {
     })
 }
 
-/// `valid_syntax?`: the double-quoted version parses (as the target's parser does) to a single `dstr`.
-fn valid_syntax(src: &str, version: &'static str, legacy: Option<f64>) -> bool {
-    let dq = if src.contains('"') {
-        let s = src.strip_prefix('\'').map_or(src.to_string(), |s| format!("%{{{s}"));
-        match s.strip_suffix('\'') {
-            Some(s) => format!("{s}}}"),
-            None => s,
+/// `interpolated_source`: the string with double quotes, as `%{}` when it contains a `"`, or with
+/// its `"` escaped when it continues another string part (a `%` there is the `%` operator).
+fn interpolated_source(src: &str, continued: bool) -> String {
+    let content = &src[1..src.len() - 1];
+    if !content.contains('"') {
+        return format!("\"{content}\"");
+    }
+    if !continued {
+        return format!("%{{{content}}}");
+    }
+    // gsub(/\\.|"/) { |m| m == '"' ? '\"' : m }
+    let mut out = String::from("\"");
+    let mut chars = content.chars();
+    while let Some(c) = chars.next() {
+        match c {
+            '"' => out.push_str("\\\""),
+            '\\' => {
+                // `\\.` keeps an escape pair as it is (a newline after it is kept anyway).
+                out.push(c);
+                out.extend(chars.next());
+            }
+            _ => out.push(c),
         }
-    } else {
-        let s = src.strip_prefix('\'').map_or(src.to_string(), |s| format!("\"{s}"));
-        match s.strip_suffix('\'') {
-            Some(s) => format!("{s}\""),
-            None => s,
-        }
-    };
+    }
+    out.push('"');
+    out
+}
+
+/// `valid_syntax?`: the interpolated version parses (as the target's parser does) to a single `dstr`.
+fn valid_syntax(dq: &str, version: &'static str, legacy: Option<f64>) -> bool {
     let mut buf = Vec::new();
-    let Some(result) = helpers::reparsed_equivalence::parse_clean(&dq, &mut buf, version, legacy) else {
+    let Some(result) = helpers::reparsed_equivalence::parse_clean(dq, &mut buf, version, legacy) else {
         return false;
     };
     let program = result.node();
@@ -50,12 +65,12 @@ impl Cop for InterpolationCheck {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let s = node.as_string_node().unwrap();
+        // single_quoted?
         let (Some(open), Some(close)) = (s.opening_loc(), s.closing_loc()) else { return };
-        let src = node_text(node);
-        // A string spanning lines is a `dstr` in parser, checked only when single-quoted.
-        if src.contains('\n') && open.as_slice() != b"'" {
+        if open.as_slice() != b"'" || close.as_slice().is_empty() {
             return;
         }
+        let src = node_text(node);
         if is_heredoc(node) || cx.ancestors.iter().any(is_heredoc) {
             return;
         }
@@ -64,15 +79,21 @@ impl Cop for InterpolationCheck {
         }) {
             return;
         }
-        if close.as_slice().is_empty() || !has_interpolation(src) || !valid_syntax(src, cx.src.version, cx.src.legacy()) {
+        if !has_interpolation(src) {
             return;
         }
-        let (start, end) = if src.contains('"') { ("%{", "}") } else { ("\"", "\"") };
-        let (os, oe, cs, ce) = (open.start_offset(), open.end_offset(), close.start_offset(), close.end_offset());
-        let l = node.location();
-        cx.add_fix(l.start_offset(), l.end_offset(), "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.", |c| {
-            c.replace(os, oe, start);
-            c.replace(cs, ce, end);
+        // continued_string_part?: a part of a `dstr` after another part.
+        let start = node.location().start_offset();
+        let continued = cx.parent().and_then(|p| p.as_interpolated_string_node()).is_some_and(|d| {
+            d.parts().iter().next().is_some_and(|first| first.location().start_offset() != start)
+        });
+        let replacement = interpolated_source(src, continued);
+        if !valid_syntax(&replacement, cx.src.version, cx.src.legacy()) {
+            return;
+        }
+        let end = node.location().end_offset();
+        cx.add_fix(start, end, "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.", |c| {
+            c.replace(start, end, &replacement);
         });
     }
 }
