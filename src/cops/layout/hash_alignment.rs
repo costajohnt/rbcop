@@ -167,7 +167,14 @@ impl Ctx<'_> {
         let on_same_line = pairs.windows(2).any(|w| self.same_line(w[0], w[1]));
         let mixed = pairs.iter().any(|p| p.rocket != pairs[0].rocket);
         let later = pairs.iter().any(|p| self.line(p.key.1) != self.line(p.value.0));
-        !on_same_line && !mixed && !pairs[0].omission && !later
+        // pair_after_kwsplat_on_same_line? (1.92.2): a pair other than the first starts on the line
+        // where the element before it ends.
+        let first = pairs[0].range;
+        let after_same_line = self
+            .elems
+            .windows(2)
+            .any(|w| !w[1].splat && w[1].range != first && self.line(w[0].range.1) == self.line(w[1].range.0));
+        !on_same_line && !mixed && !pairs[0].omission && !later && !after_same_line
     }
 
     fn first_deltas(&self, style: Style, f: &Elem) -> Deltas {
@@ -192,6 +199,11 @@ impl Ctx<'_> {
             Style::Splat => Deltas { key: Some(self.key_delta(f, c, false)), ..Deltas::default() },
             // SeparatorAlignment leaves pairs alone when either key spans several lines.
             Style::Separator if self.multiline(f.key) || self.multiline(c.key) => Deltas::default(),
+            // ValueAlignment#deltas (1.92.2): a pair other than the first that doesn't begin its line
+            // can't be moved without deleting whatever precedes it.
+            Style::Table | Style::Separator if f.range != c.range && !self.begins_its_line(c.range.0) => {
+                Deltas::default()
+            }
             Style::Table | Style::Separator => {
                 let table = style == Style::Table;
                 let key = self.key_delta(f, c, !table);

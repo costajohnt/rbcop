@@ -9,6 +9,24 @@ pub struct SpaceBeforeBlockBraces;
 const MISSING: &str = "Space missing to the left of {.";
 const DETECTED: &str = "Space detected to the left of {.";
 
+/// `autocorrect` for the space before the brace. A space with a line break is only removed after a
+/// `\` continuation, together with the `\` and the blanks before it (1.92.2): when a heredoc body
+/// sits between the `\` and the brace, the newline ends the heredoc and stays.
+fn remove_space(c: &mut Corrector, text: &str, s: usize, e: usize) {
+    if !text[s..e].contains('\n') {
+        return c.remove(s, e);
+    }
+    let b = text.as_bytes();
+    if s == 0 || b[s - 1] != b'\\' {
+        return;
+    }
+    let mut begin = s;
+    while begin > 0 && matches!(b[begin - 1], b' ' | b'\t' | b'\\') {
+        begin -= 1;
+    }
+    c.remove(begin, e);
+}
+
 impl Cop for SpaceBeforeBlockBraces {
     fn correctable(&self) -> bool {
         true
@@ -38,6 +56,7 @@ impl Cop for SpaceBeforeBlockBraces {
                 return;
             }
         }
+        let text = cx.src.text;
         let (brace_s, brace_e) = (open.start_offset(), open.end_offset());
         let (space_s, _) = range_with_surrounding_space(cx.src.text, brace_s, brace_e, Surrounding::default());
         let used = if space_s == brace_s { "no_space" } else { "space" };
@@ -61,7 +80,7 @@ impl Cop for SpaceBeforeBlockBraces {
             if empty_style == "space" {
                 cx.add_fix(brace_s, brace_e, MISSING, |c| c.insert_before(brace_s, brace_e, " "));
             } else {
-                cx.add_fix(space_s, brace_s, DETECTED, |c| c.remove(space_s, brace_s));
+                cx.add_fix(space_s, brace_s, DETECTED, |c| remove_space(c, text, space_s, brace_s));
             }
         } else if used == style {
             cx.correct_style_detected();
@@ -71,7 +90,7 @@ impl Cop for SpaceBeforeBlockBraces {
                 cx.opposite_style_detected();
             }
             if used == "space" {
-                cx.add_fix(space_s, brace_s, DETECTED, |c| c.remove(space_s, brace_s));
+                cx.add_fix(space_s, brace_s, DETECTED, |c| remove_space(c, text, space_s, brace_s));
             } else {
                 cx.add_fix(brace_s, brace_e, MISSING, |c| c.insert_before(brace_s, brace_e, " "));
             }

@@ -80,16 +80,12 @@ impl Cop for EmptyLinesAfterModuleInclusion {
         if next_line_empty_or_enable_directive(cx.src, end) {
             return;
         }
-        // `next_line_node`: RuboCop crashes without a parent; nil under if / rescue / ensure, which
-        // (like every other single-statement parent here) leaves no right sibling.
+        // `next_line_node`: RuboCop crashes without a parent; nil under if / rescue / ensure / and /
+        // or (1.92.2), which (like every other single-statement parent here) leaves no right sibling.
         let Some(parent) = parent else { return };
         let sibling = if let Some(s) = parent.as_statements_node() {
             let body: Vec<Node> = s.body().iter().collect();
             body.iter().position(|n| n.location().start_offset() == start).and_then(|i| body.into_iter().nth(i + 1))
-        } else if let Some(a) = parent.as_and_node() {
-            (a.left().location().start_offset() == start).then(|| a.right())
-        } else if let Some(o) = parent.as_or_node() {
-            (o.left().location().start_offset() == start).then(|| o.right())
         } else if let Some(c) = parent.as_call_node().filter(|c| is_csend(c)) {
             // A csend parent is not skipped (only `send`): the next argument is the right sibling (#450).
             let args = send_args(&c);
