@@ -49,6 +49,31 @@ fn parser_body<'pr>(def: &ruby_prism::DefNode<'pr>) -> Option<(Node<'pr>, bool)>
     Some((body, true))
 }
 
+/// ambiguous_when_made_endless?: the def is the left operand of an `and`/`or`, or the body of a
+/// modifier `if`/`unless`/`while`/`until`, which would then apply to the endless definition's body.
+fn ambiguous_when_made_endless(node: &Node, ancestors: &[Node]) -> bool {
+    let start = node.location().start_offset();
+    let Some(parent) = ancestors.last() else { return false };
+    let left = parent.as_and_node().map(|n| n.left()).or_else(|| parent.as_or_node().map(|n| n.left()));
+    if let Some(left) = left {
+        return left.location().start_offset() == start;
+    }
+    // `(if _ <any_def _>)` / `({while until} _ any_def)`: the def alone in the branch or body.
+    if parent.as_statements_node().is_none_or(|s| s.body().iter().count() != 1) || ancestors.len() < 2 {
+        return false;
+    }
+    match &ancestors[ancestors.len() - 2] {
+        g @ Node::IfNode { .. } => {
+            let i = g.as_if_node().unwrap();
+            i.if_keyword_loc().is_some_and(|k| k.as_slice() == b"if") && i.end_keyword_loc().is_none()
+        }
+        g @ Node::UnlessNode { .. } => g.as_unless_node().unwrap().end_keyword_loc().is_none(),
+        g @ Node::WhileNode { .. } => g.as_while_node().unwrap().closing_loc().is_none(),
+        g @ Node::UntilNode { .. } => g.as_until_node().unwrap().closing_loc().is_none(),
+        _ => false,
+    }
+}
+
 impl Cop for EndlessMethod {
     fn correctable(&self) -> bool {
         true
@@ -168,6 +193,7 @@ impl Cop for EndlessMethod {
                 helpers::statement_modifier::line_length(cx, &line) as f64 > max
             }
         };
+        let ambiguous = ambiguous_when_made_endless(node, cx.ancestors);
         let to_endless = |cx: &mut Cx, msg: &str| {
             let (bs, be) = body_bounds.unwrap();
             let name_end = def.name_loc().end_offset();
@@ -198,11 +224,11 @@ impl Cop for EndlessMethod {
             "require_single_line" => {
                 if endless && multiline {
                     to_multiline(cx, MSG_MULTI_LINE, false);
-                } else if !endless && can_be_endless && !replacement.contains('\n') && !too_long() {
+                } else if !endless && can_be_endless && !too_long() && !ambiguous && !replacement.contains('\n') {
                     to_endless(cx, MSG_REQUIRE_SINGLE);
                 }
             }
-            "require_always" if !endless && can_be_endless && !too_long() => {
+            "require_always" if !endless && can_be_endless && !too_long() && !ambiguous => {
                 to_endless(cx, MSG_REQUIRE_ALWAYS);
             }
             _ => {}
