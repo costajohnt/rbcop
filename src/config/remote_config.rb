@@ -1,4 +1,4 @@
-# RuboCop 1.92.1's RemoteConfig (lib/rubocop/remote_config.rb) and the cache root it is given
+# RuboCop 1.92.2's RemoteConfig (lib/rubocop/remote_config.rb) and the cache root it is given
 # (ConfigLoader.cache_root, CacheConfig.root_dir), run by src/config/mod.rs.
 # ARGV: the URL, a path relative to it (inherit_from inside a remote file; empty for none), and
 # the configured cache root (`--cache-root` or a CacheRootDirectory, as Store#early_cache_root

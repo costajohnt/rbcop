@@ -1,4 +1,4 @@
-//! ConfigValidator#validate (plus Config#deprecation_check and ConfigObsoletion) from RuboCop 1.92.1:
+//! ConfigValidator#validate (plus Config#deprecation_check and ConfigObsoletion) from RuboCop 1.92.2:
 //! the checks Config#check runs on every loaded config file, and validate_after_resolution's target
 //! Ruby check. Warnings are appended to `out` as Kernel#warn writes them; an error is returned as
 //! the CLI prints it (`Error: ...`, painted red by the caller).
@@ -638,7 +638,7 @@ pub fn check_target_ruby(hash: &Map, path: &Path, pwd: &Path) -> Result<(), Stri
 }
 
 /// Team#validate_config: the `validate_config` of each cop the team mobilizes (`team` says which),
-/// in registry order; the first ValidationError wins. RuboCop 1.92.1 has four.
+/// in registry order; the first ValidationError wins. RuboCop 1.92.2 has four.
 pub fn cop_validate_config(cfg: &super::Resolved, team: impl Fn(&str) -> bool) -> Result<(), String> {
     const MAGIC: &str = "Layout/EmptyLineAfterMagicComment";
     if team(MAGIC) {

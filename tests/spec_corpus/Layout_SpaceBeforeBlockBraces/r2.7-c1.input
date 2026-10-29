@@ -8,19 +8,29 @@ AllCops:
 Layout/SpaceBeforeBlockBraces:
   EnforcedStyle: no_space
 
-==> 000.rb 14 <==
+==> 000.rb 21 <==
+foo(bar) \
+  { baz }
+
+==> 001.rb 28 <==
+foo(<<~X) \
+  a
+X
+  { baz }
+
+==> 002.rb 14 <==
 each { puts }
 
-==> 001.rb 27 <==
+==> 003.rb 27 <==
 each{ puts }
 each { puts }
 
-==> 002.rb 12 <==
+==> 004.rb 12 <==
 each{ puts }
-==> 003.rb 23 <==
+==> 005.rb 23 <==
 each{ _1 }
 each { _1 }
 
-==> 004.rb 28 <==
+==> 006.rb 28 <==
 let(:foo){{foo: 1, bar: 2}}
 

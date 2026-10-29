@@ -350,4 +350,3 @@ Style/TimeNow: # new in 1.90
 Style/YAMLFileRead: # new in 1.53
   Enabled: true
 For more information: https://docs.rubocop.org/rubocop/versioning.html
-Warning: Using `Naming/PredicateName` configuration in .rubocop.yml for `Naming/PredicatePrefix`.

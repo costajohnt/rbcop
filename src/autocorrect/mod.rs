@@ -243,7 +243,7 @@ fn correct(
             offenses.extend(std::mem::take(&mut pass.disabled));
         }
         if let Some(c) = corrector {
-            // RuboCop 1.92.1: the loop reruns on the corrected source (kept in memory under
+            // RuboCop 1.92.2: the loop reruns on the corrected source (kept in memory under
             // `--diff`) and finds what is left again, so only the corrected offenses are kept
             // from before (`offenses.select(&:corrected?) | new_offenses`); `--diff` shows one
             // diff, from the file as read to the source the last loop ended with.
@@ -697,7 +697,7 @@ mod tests {
     }
 
     /// InfiniteCorrectionLoop lists each iteration's cops in team order, which is registry
-    /// (registration) order: RuboCop 1.92.1 on discourse script/bulk_import/phpbb_postgresql.rb
+    /// (registration) order: RuboCop 1.92.2 on discourse script/bulk_import/phpbb_postgresql.rb
     /// (all cops, -A) prints `... -> Layout/LineLength, Layout/RedundantLineBreak,
     /// Style/RedundantAssignment, Style/MissingElse`.
     #[test]
@@ -746,7 +746,7 @@ mod tests {
             ("Layout/EmptyLineBetweenDefs", fix(&src, |c| c.remove(5, 6))),
         ];
         assert_eq!(collate(by_cop, src.clone()).unwrap().rewrite(), "abcde");
-        // RuboCop 1.92.1: either side's list counts, so a later cop that lists an earlier merged
+        // RuboCop 1.92.2: either side's list counts, so a later cop that lists an earlier merged
         // one is skipped too (Layout/FirstArgumentIndentation lists Layout/ArgumentAlignment).
         let by_cop = vec![
             ("Layout/ArgumentAlignment", fix(&src, |c| c.remove(0, 1))),

@@ -246,3 +246,11 @@ method[
 method[a:
           "foo"]
 
+==> 050.rb 45 <==
+def foo(...)
+  bar(
+    baz,
+    ...
+  )
+end
+

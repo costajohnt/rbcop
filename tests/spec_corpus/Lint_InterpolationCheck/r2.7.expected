@@ -1,18 +1,24 @@
-==> offenses exit=1 930 <==
+==> offenses exit=1 1395 <==
 000.rb:1:1: W: [Correctable] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
 001.rb:1:1: W: [Correctable] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
 002.rb:1:1: W: [Correctable] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
 003.rb:2:3: W: [Correctable] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
 004.rb:2:3: W: [Correctable] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
-015.rb:1:7: W: [Correctable] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+005.rb:2:3: W: [Correctable] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+006.rb:2:3: W: [Correctable] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+008.rb:1:1: W: [Correctable] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+019.rb:1:7: W: [Correctable] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
 
-==> autocorrect exit=0 918 <==
+==> autocorrect exit=0 1377 <==
 000.rb:1:1: W: [Corrected] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
 001.rb:1:1: W: [Corrected] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
 002.rb:1:1: W: [Corrected] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
 003.rb:2:3: W: [Corrected] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
 004.rb:2:3: W: [Corrected] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
-015.rb:1:7: W: [Corrected] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+005.rb:2:3: W: [Corrected] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+006.rb:2:3: W: [Corrected] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+008.rb:1:1: W: [Corrected] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
+019.rb:1:7: W: [Corrected] Lint/InterpolationCheck: Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.
 
 ==> corrected/000.rb 13 <==
 "foo #{bar}"
@@ -31,7 +37,19 @@
 "x" \
   "foo #{bar}"
 
-==> corrected/015.rb 55 <==
+==> corrected/005.rb 25 <==
+'x' \
+  "foo \"#{bar}\""
+
+==> corrected/006.rb 27 <==
+'x' \
+  "foo \\\"#{bar}\""
+
+==> corrected/008.rb 24 <==
+%{foo "#{bar}"} \
+  'x'
+
+==> corrected/019.rb 55 <==
 foo = "something with #{interpolation}
 spanning lines"
 

@@ -1,4 +1,4 @@
-==> offenses exit=1 4394 <==
+==> offenses exit=1 4625 <==
 001.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `begin` at 1, 0.
 002.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `def test` at 1, 0.
 003.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `def Test.test` at 1, 0.
@@ -28,17 +28,19 @@
 055.rb:2:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `a` at 1, 0.
 056.rb:2:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `a` at 1, 0.
 057.rb:2:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `a` at 1, 0.
-058.rb:4:5: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 4, 4 is not aligned with `proc do` at 2, 2.
-059.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `super do` at 1, 0.
-062.rb:2:10: C: Layout/RescueEnsureAlignment: `rescue` at 2, 9 is not aligned with `def test` at 1, 0.
-062.rb:7:12: C: Layout/RescueEnsureAlignment: `rescue` at 7, 11 is not aligned with `begin` at 6, 2.
-063.rb:2:10: C: Layout/RescueEnsureAlignment: `ensure` at 2, 9 is not aligned with `def test` at 1, 0.
-063.rb:7:12: C: Layout/RescueEnsureAlignment: `ensure` at 7, 11 is not aligned with `begin` at 6, 2.
-064.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `begin` at 1, 1.
-065.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `def foo` at 1, 1.
-067.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `x = [begin` at 1, 1.
+058.rb:2:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `foo[bar]` at 1, 0.
+059.rb:2:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `foo.bar` at 1, 0.
+060.rb:4:5: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 4, 4 is not aligned with `proc do` at 2, 2.
+061.rb:3:5: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `super do` at 1, 0.
+064.rb:2:10: C: Layout/RescueEnsureAlignment: `rescue` at 2, 9 is not aligned with `def test` at 1, 0.
+064.rb:7:12: C: Layout/RescueEnsureAlignment: `rescue` at 7, 11 is not aligned with `begin` at 6, 2.
+065.rb:2:10: C: Layout/RescueEnsureAlignment: `ensure` at 2, 9 is not aligned with `def test` at 1, 0.
+065.rb:7:12: C: Layout/RescueEnsureAlignment: `ensure` at 7, 11 is not aligned with `begin` at 6, 2.
+066.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `begin` at 1, 1.
+067.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `def foo` at 1, 1.
+069.rb:3:3: C: [Correctable] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `x = [begin` at 1, 1.
 
-==> autocorrect exit=1 4326 <==
+==> autocorrect exit=1 4553 <==
 001.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `begin` at 1, 0.
 002.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `def test` at 1, 0.
 003.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 4 is not aligned with `def Test.test` at 1, 0.
@@ -68,15 +70,17 @@
 055.rb:2:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `a` at 1, 0.
 056.rb:2:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `a` at 1, 0.
 057.rb:2:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `a` at 1, 0.
-058.rb:4:5: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 4, 4 is not aligned with `proc do` at 2, 2.
-059.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `super do` at 1, 0.
-062.rb:2:10: C: Layout/RescueEnsureAlignment: `rescue` at 2, 9 is not aligned with `def test` at 1, 0.
-062.rb:7:12: C: Layout/RescueEnsureAlignment: `rescue` at 7, 11 is not aligned with `begin` at 6, 2.
-063.rb:2:10: C: Layout/RescueEnsureAlignment: `ensure` at 2, 9 is not aligned with `def test` at 1, 0.
-063.rb:7:12: C: Layout/RescueEnsureAlignment: `ensure` at 7, 11 is not aligned with `begin` at 6, 2.
-064.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `begin` at 1, 1.
-065.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `def foo` at 1, 1.
-067.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `x = [begin` at 1, 1.
+058.rb:2:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `foo[bar]` at 1, 0.
+059.rb:2:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 2, 2 is not aligned with `foo.bar` at 1, 0.
+060.rb:4:5: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 4, 4 is not aligned with `proc do` at 2, 2.
+061.rb:3:5: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 4 is not aligned with `super do` at 1, 0.
+064.rb:2:10: C: Layout/RescueEnsureAlignment: `rescue` at 2, 9 is not aligned with `def test` at 1, 0.
+064.rb:7:12: C: Layout/RescueEnsureAlignment: `rescue` at 7, 11 is not aligned with `begin` at 6, 2.
+065.rb:2:10: C: Layout/RescueEnsureAlignment: `ensure` at 2, 9 is not aligned with `def test` at 1, 0.
+065.rb:7:12: C: Layout/RescueEnsureAlignment: `ensure` at 7, 11 is not aligned with `begin` at 6, 2.
+066.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `begin` at 1, 1.
+067.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `ensure` at 3, 2 is not aligned with `def foo` at 1, 1.
+069.rb:3:3: C: [Corrected] Layout/RescueEnsureAlignment: `rescue` at 3, 2 is not aligned with `x = [begin` at 1, 1.
 
 ==> corrected/001.rb 39 <==
 begin
@@ -269,7 +273,17 @@ a ||= [].map do |_|
 rescue StandardError => _
 end
 
-==> corrected/058.rb 55 <==
+==> corrected/058.rb 45 <==
+foo[bar] ||= baz do
+rescue StandardError
+end
+
+==> corrected/059.rb 43 <==
+foo.bar += baz do
+rescue StandardError
+end
+
+==> corrected/060.rb 55 <==
 valid =
   proc do |bar|
     baz
@@ -277,28 +291,28 @@ valid =
     qux
   end
 
-==> corrected/059.rb 32 <==
+==> corrected/061.rb 32 <==
 super do
   nil
 ensure
   nil
 end
 
-==> corrected/064.rb 32 <==
+==> corrected/066.rb 32 <==
 	begin
 		foo
  rescue
 		bar
 	end
 
-==> corrected/065.rb 34 <==
+==> corrected/067.rb 34 <==
 	def foo
 		bar
  ensure
 		baz
 	end
 
-==> corrected/067.rb 38 <==
+==> corrected/069.rb 38 <==
 	x = [begin
 		foo
  rescue

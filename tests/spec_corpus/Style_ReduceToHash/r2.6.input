@@ -111,3 +111,30 @@ array.each_with_object({}) { |elem, hash| hash[elem.id] = do_something(elem) res
 ==> 027.rb 83 <==
 array.each_with_object({}) { |elem, hash| hash[elem.id + 1] = do_something(elem) }
 
+==> 028.rb 92 <==
+foo(<<~EOS).each_with_object({}) do |elem, hash|
+  text
+EOS
+  hash[elem.id] = elem.name
+end
+
+==> 029.rb 84 <==
+array.each_with_object({}) do |elem, hash|
+  hash[elem] = <<~EOS
+    text
+  EOS
+end
+
+==> 030.rb 81 <==
+array.inject({}) do |hash, elem|
+  hash[elem] = <<~EOS
+    text
+  EOS
+  hash
+end
+
+==> 031.rb 71 <==
+array.inject({}) { |hash, elem| hash[elem] = <<~EOS; hash }
+  text
+EOS
+

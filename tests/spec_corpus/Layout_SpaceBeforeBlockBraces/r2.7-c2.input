@@ -14,3 +14,13 @@ Layout/SpaceBeforeBlockBraces:
 ==> 001.rb 6 <==
 -> {}
 
+==> 002.rb 16 <==
+foo(bar) \
+  {}
+
+==> 003.rb 23 <==
+foo(<<~X) \
+  a
+X
+  {}
+

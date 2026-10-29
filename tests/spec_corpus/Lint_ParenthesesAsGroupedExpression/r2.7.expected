@@ -1,20 +1,24 @@
-==> offenses exit=1 807 <==
+==> offenses exit=1 1048 <==
 000.rb:1:7: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `(x)` interpreted as grouped expression.
 001.rb:1:4: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `(x)` interpreted as grouped expression.
 002.rb:1:9: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `((1..1).map { |i| i * 10 })` interpreted as grouped expression.
 004.rb:1:9: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `((1..1).map { _1 * 10 })` interpreted as grouped expression.
 023.rb:1:5: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `(1..10)` interpreted as grouped expression.
 026.rb:1:8: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `(x)` interpreted as grouped expression.
-032.rb:1:7: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `(foo && bar)` interpreted as grouped expression.
+038.rb:1:17: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `(x = foo('baz'))` interpreted as grouped expression.
+039.rb:1:17: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `(x = foo + bar)` interpreted as grouped expression.
+040.rb:1:7: W: [Correctable] Lint/ParenthesesAsGroupedExpression: `(foo && bar)` interpreted as grouped expression.
 
-==> autocorrect exit=0 793 <==
+==> autocorrect exit=0 1030 <==
 000.rb:1:7: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `(x)` interpreted as grouped expression.
 001.rb:1:4: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `(x)` interpreted as grouped expression.
 002.rb:1:9: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `((1..1).map { |i| i * 10 })` interpreted as grouped expression.
 004.rb:1:9: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `((1..1).map { _1 * 10 })` interpreted as grouped expression.
 023.rb:1:5: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `(1..10)` interpreted as grouped expression.
 026.rb:1:8: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `(x)` interpreted as grouped expression.
-032.rb:1:7: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `(foo && bar)` interpreted as grouped expression.
+038.rb:1:17: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `(x = foo('baz'))` interpreted as grouped expression.
+039.rb:1:17: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `(x = foo + bar)` interpreted as grouped expression.
+040.rb:1:7: W: [Corrected] Lint/ParenthesesAsGroupedExpression: `(foo && bar)` interpreted as grouped expression.
 
 ==> corrected/000.rb 10 <==
 a.func(x)
@@ -34,6 +38,12 @@ rand(1..10)
 ==> corrected/026.rb 11 <==
 a&.func(x)
 
-==> corrected/032.rb 19 <==
+==> corrected/038.rb 33 <==
+obj.do_something(x = foo('baz'))
+
+==> corrected/039.rb 32 <==
+obj.do_something(x = foo + bar)
+
+==> corrected/040.rb 19 <==
 false?(foo && bar)
 

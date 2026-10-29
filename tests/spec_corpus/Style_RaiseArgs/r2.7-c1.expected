@@ -1,82 +1,111 @@
-==> offenses exit=1 1860 <==
+==> offenses exit=1 2300 <==
 000.rb:1:1: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
 001.rb:1:1: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-002.rb:1:7: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-003.rb:1:8: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-004.rb:1:8: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-005.rb:1:10: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-006.rb:1:1: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-007.rb:1:2: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-008.rb:1:8: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-009.rb:1:12: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-010.rb:1:12: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-011.rb:4:3: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-012.rb:4:3: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-012.rb:6:3: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-013.rb:3:3: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-021.rb:1:1: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-021.rb:1:26: C: Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+002.rb:1:1: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+003.rb:1:1: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+004.rb:1:1: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+005.rb:1:7: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+006.rb:1:8: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+007.rb:1:8: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+008.rb:1:9: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+009.rb:1:10: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+010.rb:1:1: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+011.rb:1:2: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+012.rb:1:8: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+013.rb:1:12: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+014.rb:1:12: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+015.rb:4:3: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+016.rb:4:3: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+016.rb:6:3: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+017.rb:3:3: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+025.rb:1:1: C: [Correctable] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+025.rb:1:26: C: Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
 
-==> autocorrect exit=0 1840 <==
+==> autocorrect exit=0 2272 <==
 000.rb:1:1: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
 001.rb:1:1: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-002.rb:1:7: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-003.rb:1:8: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-004.rb:1:8: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-005.rb:1:10: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-006.rb:1:1: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-007.rb:1:2: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-008.rb:1:8: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-009.rb:1:12: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-010.rb:1:12: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-011.rb:4:3: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-012.rb:4:3: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-012.rb:6:3: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-013.rb:3:3: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-021.rb:1:1: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
-021.rb:1:23: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+002.rb:1:1: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+003.rb:1:1: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+004.rb:1:1: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+005.rb:1:7: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+006.rb:1:8: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+007.rb:1:8: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+008.rb:1:9: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+009.rb:1:10: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+010.rb:1:1: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+011.rb:1:2: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+012.rb:1:8: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+013.rb:1:12: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+014.rb:1:12: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+015.rb:4:3: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+016.rb:4:3: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+016.rb:6:3: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+017.rb:3:3: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+025.rb:1:1: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
+025.rb:1:23: C: [Corrected] Style/RaiseArgs: Provide an exception class and message as arguments to `raise`.
 
 ==> corrected/000.rb 14 <==
 raise Ex, msg
 
-==> corrected/001.rb 9 <==
+==> corrected/001.rb 53 <==
+raise(
+  RuntimeError, <<~MSG.strip
+    text
+  MSG
+)
+
+==> corrected/002.rb 30 <==
+raise(Foo, <<~MSG)
+  text
+MSG
+
+==> corrected/003.rb 44 <==
+raise ArgumentError, <<~MSG
+    text
+  MSG
+
+
+==> corrected/004.rb 9 <==
 raise Ex
 
-==> corrected/002.rb 31 <==
+==> corrected/005.rb 31 <==
 foo ? raise(Ex, 'error') : bar
 
-==> corrected/003.rb 26 <==
+==> corrected/006.rb 26 <==
 bar && raise(Ex, 'error')
 
-==> corrected/004.rb 26 <==
+==> corrected/007.rb 26 <==
 bar || raise(Ex, 'error')
 
-==> corrected/005.rb 28 <==
+==> corrected/008.rb 28 <==
+bar || (raise(Ex, 'error'))
+
+==> corrected/009.rb 28 <==
 foo bar, raise(Ex, 'error')
 
-==> corrected/006.rb 23 <==
+==> corrected/010.rb 23 <==
 raise(Ex, 'error').foo
 
-==> corrected/007.rb 21 <==
+==> corrected/011.rb 21 <==
 [raise(Ex, 'error')]
 
-==> corrected/008.rb 28 <==
+==> corrected/012.rb 28 <==
 { foo: raise(Ex, 'error') }
 
-==> corrected/009.rb 30 <==
+==> corrected/013.rb 30 <==
 super bar, raise(Ex, 'error')
 
-==> corrected/010.rb 30 <==
+==> corrected/014.rb 30 <==
 yield bar, raise(Ex, 'error')
 
-==> corrected/011.rb 56 <==
+==> corrected/015.rb 56 <==
 if a
   raise RuntimeError, msg
 else
   raise Ex, msg
 end
 
-==> corrected/012.rb 91 <==
+==> corrected/016.rb 91 <==
 if a
   raise RuntimeError, msg
 elsif b
@@ -85,12 +114,12 @@ else
   raise ArgumentError, msg
 end
 
-==> corrected/013.rb 64 <==
+==> corrected/017.rb 64 <==
 def do_something
   klass = RuntimeError
   raise klass, 'hi'
 end
 
-==> corrected/021.rb 43 <==
+==> corrected/025.rb 43 <==
 raise Foo, "#{fetch { raise Bar, 'bad' }}"
 

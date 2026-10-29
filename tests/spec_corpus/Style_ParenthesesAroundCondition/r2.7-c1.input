@@ -24,7 +24,43 @@ end
 while (a, b = foo)
 end
 
-==> 004.rb 20 <==
+==> 004.rb 19 <==
+if (x = foo 1)
+end
+
+==> 005.rb 35 <==
+while (x = obj.do_something 1)
+end
+
+==> 006.rb 23 <==
+if (obj.x = foo 1)
+end
+
+==> 007.rb 23 <==
+if (x = y = foo 1)
+end
+
+==> 008.rb 26 <==
+if (x = foo 1 do end)
+end
+
+==> 009.rb 30 <==
+if (x = foo 1 rescue nil)
+end
+
+==> 010.rb 21 <==
+if (x = yield 1)
+end
+
+==> 011.rb 20 <==
+if (x = foo(1))
+end
+
+==> 012.rb 21 <==
+if (x = foo + 1)
+end
+
+==> 013.rb 20 <==
 if (test == 10)
 end
 

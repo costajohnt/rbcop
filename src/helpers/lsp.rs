@@ -32,7 +32,7 @@ pub fn enabled() -> bool {
     ENABLED.load(Ordering::Relaxed)
 }
 
-/// The `editing` option (RuboCop 1.92.1, set by MCP): holds back `AutoCorrect: contextual`
+/// The `editing` option (RuboCop 1.92.2, set by MCP): holds back `AutoCorrect: contextual`
 /// without the rest of LSP mode.
 pub static EDITING: AtomicBool = AtomicBool::new(false);
 

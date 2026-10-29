@@ -1,0 +1,10 @@
+==> offenses exit=1 100 <==
+000.rb:2:8: C: [Correctable] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+
+==> autocorrect exit=0 98 <==
+000.rb:2:8: C: [Corrected] Layout/ExtraSpacing: `=` is not aligned with the preceding assignment.
+
+==> corrected/000.rb 35 <==
+a      = do_something
+bbbbbb = foo
+

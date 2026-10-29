@@ -84,7 +84,7 @@ mod tests {
     #[test]
     fn ancestor_kinds() {
         // in_pattern, pinned expression, guard, begin, const_pattern, find_pattern, hash pattern
-        // pair, the `in` body (checked against RuboCop 1.92.1's Style/SymbolProc)
+        // pair, the `in` body (checked against RuboCop 1.92.2's Style/SymbolProc)
         let case = "case x\nin (->(y) { y.a }) then 1\nin ^(->(y) { y.b }) then 1\nin ->(y) { y.c } if z then 1\n\
                     in Foo(->(y) { y.d }) then 1\nin [*, ->(y) { y.e }, *] then 1\nin {k: ->(y) { y.f }} then 1\n\
                     in ->(y) { y.g }\n  ->(y) { y.h }\nend\n";

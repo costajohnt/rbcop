@@ -1,12 +1,26 @@
-==> offenses exit=1 244 <==
+==> offenses exit=1 502 <==
 000.rb:2:41: C: Layout/LineLength: Line is too long. [52/40]
 001.rb:1:41: C: Layout/LineLength: Line is too long. [66/40]
 002.rb:1:41: C: Layout/LineLength: Line is too long. [66/40]
 003.rb:1:41: C: Layout/LineLength: Line is too long. [68/40]
+004.rb:1:41: C: Layout/LineLength: Line is too long. [56/40]
+005.rb:1:41: C: Layout/LineLength: Line is too long. [45/40]
+006.rb:1:41: C: Layout/LineLength: Line is too long. [54/40]
+007.rb:1:41: C: [Correctable] Layout/LineLength: Line is too long. [54/40]
 
-==> autocorrect exit=1 244 <==
+==> autocorrect exit=1 500 <==
 000.rb:2:41: C: Layout/LineLength: Line is too long. [52/40]
 001.rb:1:41: C: Layout/LineLength: Line is too long. [66/40]
 002.rb:1:41: C: Layout/LineLength: Line is too long. [66/40]
 003.rb:1:41: C: Layout/LineLength: Line is too long. [68/40]
+004.rb:1:41: C: Layout/LineLength: Line is too long. [56/40]
+005.rb:1:41: C: Layout/LineLength: Line is too long. [45/40]
+006.rb:1:41: C: Layout/LineLength: Line is too long. [54/40]
+007.rb:1:41: C: [Corrected] Layout/LineLength: Line is too long. [54/40]
+
+==> corrected/007.rb 71 <==
+[foo, bar, baz, 
+<<~HEREDOC, items.map { |item| item }]
+  text
+HEREDOC
 

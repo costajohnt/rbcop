@@ -141,22 +141,52 @@ def my_method
   x
 end
 
-==> 024.rb 30 <==
+==> 024.rb 27 <==
+def my_method
+  x
+end if y
+
+==> 025.rb 28 <==
+def my_method
+  x
+end and y
+
+==> 026.rb 27 <==
+def my_method
+  x
+end && y
+
+==> 027.rb 27 <==
+def my_method
+  x
+end || y
+
+==> 028.rb 30 <==
+def my_method
+  x
+end while y
+
+==> 029.rb 32 <==
+def self.my_method
+  x
+end && y
+
+==> 030.rb 30 <==
 private def my_method
   x
 end
 
-==> 025.rb 34 <==
+==> 031.rb 34 <==
 def my_method=(arg)
   arg.foo
 end
 
-==> 026.rb 93 <==
+==> 032.rb 93 <==
 def my_method
   'this_string_ends_at_column_75_________________________________________'
 end
 
-==> 027.rb 124 <==
+==> 033.rb 124 <==
 module A
   module B
     def my_method
@@ -165,64 +195,64 @@ module A
   end
 end
 
-==> 028.rb 82 <==
+==> 034.rb 82 <==
 def my_method
   'this_string_puts_the_endless_form_just_over_the_limit______'
 end
 
-==> 029.rb 87 <==
+==> 035.rb 87 <==
 	def my_method
 	  'this_string_puts_the_endless_form_over_the_limit_____________'
 	end
 
-==> 030.rb 86 <==
+==> 036.rb 86 <==
 	def my_method
 	  'this_string_keeps_the_endless_form_within_the_limit_________'
 	end
 
-==> 031.rb 98 <==
+==> 037.rb 98 <==
 def my_method
   'this_string_is_short'
 end # this_trailing_comment_pushes_the_line_past_the_limit
 
-==> 032.rb 93 <==
+==> 038.rb 93 <==
 private def my_method
   'this_string_ends_at_column_75_________________________________'
 end
 
-==> 033.rb 28 <==
+==> 039.rb 28 <==
 def my_method(a, b)
   x
 end
 
-==> 034.rb 84 <==
+==> 040.rb 84 <==
 def my_method(a, b) = x.foo
                        .bar
                        .baz
 
-==> 035.rb 32 <==
+==> 041.rb 32 <==
 def my_method # comment
   x
 end
 
-==> 036.rb 34 <==
+==> 042.rb 34 <==
 def my_method
   # comment
   x
 end
 
-==> 037.rb 32 <==
+==> 043.rb 32 <==
 def my_method
   x # comment
 end
 
-==> 038.rb 34 <==
+==> 044.rb 34 <==
 def my_method
   x
   # comment
 end
 
-==> 039.rb 32 <==
+==> 045.rb 32 <==
 def my_method
   x
 end # comment

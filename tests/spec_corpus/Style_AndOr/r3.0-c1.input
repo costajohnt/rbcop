@@ -1,0 +1,19 @@
+==> .rubocop.yml 145 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
+Style/AndOr:
+  EnforcedStyle: always
+
+==> 000.rb 38 <==
+arg in Symbol or raise TypeError, 'x'
+
+==> 001.rb 21 <==
+foo or arg in Symbol
+
+==> 002.rb 22 <==
+foo and arg => Symbol
+

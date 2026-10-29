@@ -1,0 +1,19 @@
+==> offenses exit=1 206 <==
+000.rb:1:15: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+001.rb:1:5: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+002.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+
+==> autocorrect exit=0 200 <==
+000.rb:1:15: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+001.rb:1:5: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+002.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+
+==> corrected/000.rb 41 <==
+(arg in Symbol) || raise(TypeError, 'x')
+
+==> corrected/001.rb 23 <==
+foo || (arg in Symbol)
+
+==> corrected/002.rb 23 <==
+foo && (arg => Symbol)
+

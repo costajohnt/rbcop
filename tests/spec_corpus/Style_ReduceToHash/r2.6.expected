@@ -1,4 +1,4 @@
-==> offenses exit=1 1733 <==
+==> offenses exit=1 2110 <==
 000.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
 001.rb:2:33: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
 002.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
@@ -17,8 +17,12 @@
 025.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
 026.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
 027.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+028.rb:1:13: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+029.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+030.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `inject`.
+031.rb:1:7: C: [Correctable] Style/ReduceToHash: Use `to_h { ... }` instead of `inject`.
 
-==> autocorrect exit=0 1794 <==
+==> autocorrect exit=0 2163 <==
 000.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
 001.rb:1:8: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
 001.rb:2:33: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
@@ -38,12 +42,18 @@
 025.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
 026.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
 027.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+028.rb:1:13: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+029.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `each_with_object`.
+030.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `inject`.
+031.rb:1:7: C: [Corrected] Style/ReduceToHash: Use `to_h { ... }` instead of `inject`.
 
 ==> corrected/000.rb 43 <==
 array.to_h { |elem| [elem.id, elem.name] }
 
-==> corrected/001.rb 98 <==
-tables.to_h { |table| [table.node, table.columns.to_h { |column| [column.name, column.alias] }] }
+==> corrected/001.rb 100 <==
+tables.to_h { |table|
+  [table.node, table.columns.to_h { |column| [column.name, column.alias] }]
+}
 
 ==> corrected/002.rb 48 <==
 array.to_h do |elem|
@@ -96,4 +106,30 @@ array.to_h { |elem| [elem.id, (do_something(elem) rescue nil)] }
 
 ==> corrected/027.rb 56 <==
 array.to_h { |elem| [elem.id + 1, do_something(elem)] }
+
+==> corrected/028.rb 65 <==
+foo(<<~EOS).to_h do |elem|
+  text
+EOS
+  [elem.id, elem.name]
+end
+
+==> corrected/029.rb 57 <==
+array.to_h do |elem|
+  [elem, <<~EOS]
+    text
+  EOS
+end
+
+==> corrected/030.rb 57 <==
+array.to_h do |elem|
+  [elem, <<~EOS]
+    text
+  EOS
+end
+
+==> corrected/031.rb 48 <==
+array.to_h { |elem| [elem, <<~EOS] }
+  text
+EOS
 

@@ -102,6 +102,30 @@ false? (foo rescue bar)
 ==> 031.rb 20 <==
 false? (foo if bar)
 
-==> 032.rb 20 <==
+==> 032.rb 37 <==
+obj.do_something (x = foo.bar 'baz')
+
+==> 033.rb 35 <==
+obj.do_something (x ||= foo 'baz')
+
+==> 034.rb 35 <==
+obj.do_something (x.y = foo 'baz')
+
+==> 035.rb 37 <==
+obj.do_something (x = y = foo 'baz')
+
+==> 036.rb 40 <==
+obj.do_something (x = foo 'baz' do end)
+
+==> 037.rb 30 <==
+obj.do_something (!foo 'baz')
+
+==> 038.rb 34 <==
+obj.do_something (x = foo('baz'))
+
+==> 039.rb 33 <==
+obj.do_something (x = foo + bar)
+
+==> 040.rb 20 <==
 false? (foo && bar)
 

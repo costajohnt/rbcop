@@ -17,7 +17,7 @@ pub const DEFAULT_YML: &str = include_str!("../../config/default.yml");
 /// Where `-d` says built-in config files come from (RuboCop names the gem's file on disk).
 const BUILT_IN: &str = "<rbcop built-in>";
 const BUILT_IN_DEFAULT: &str = "<rbcop built-in>/rubocop/config/default.yml";
-pub const RUBOCOP_VERSION: &str = "1.92.1";
+pub const RUBOCOP_VERSION: &str = "1.92.2";
 const DOTFILE: &str = ".rubocop.yml";
 
 /// Command-line switches that change how configs resolve.

@@ -1,0 +1,15 @@
+==> .rubocop.yml 158 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+Style/HashLookupMethod:
+  EnforcedStyle: brackets
+
+==> 000.rb 40 <==
+def do_something(&)
+  hash.fetch(&)
+end
+

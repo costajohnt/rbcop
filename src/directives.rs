@@ -1,4 +1,4 @@
-//! `# rubocop:...` directive comments, ported from RuboCop 1.92.1's DirectiveComment and CommentConfig
+//! `# rubocop:...` directive comments, ported from RuboCop 1.92.2's DirectiveComment and CommentConfig
 //! (with its DisableNext and PushPop parts).
 
 use crate::source::Source;

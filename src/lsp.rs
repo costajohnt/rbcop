@@ -1,4 +1,4 @@
-//! `--lsp`: RuboCop 1.92.1's language server (lib/rubocop/lsp/*), JSON-RPC over stdin/stdout.
+//! `--lsp`: RuboCop 1.92.2's language server (lib/rubocop/lsp/*), JSON-RPC over stdin/stdout.
 //! Requests are handled one at a time, in order (RuboCop's server is single-threaded); each
 //! response is written as RuboCop's `JSON.generate` writes it, `jsonrpc` last.
 

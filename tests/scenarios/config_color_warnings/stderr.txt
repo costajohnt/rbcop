@@ -396,5 +396,3 @@ Please also note that you can opt-in to new cops by default by adding this to yo
 [33mStyle/YAMLFileRead: # new in 1.53[0m
 [33m  Enabled: true[0m
 [33mFor more information: https://docs.rubocop.org/rubocop/versioning.html[0m
-[33mWarning: Using `Naming/PredicateName` configuration in .rubocop.yml for `Naming/PredicatePrefix`.
-[0m

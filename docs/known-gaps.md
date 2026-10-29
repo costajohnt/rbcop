@@ -69,7 +69,7 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
   `rbcop: not autocorrecting <file>: it resolves to <path>, outside the project` goes to stderr;
   the exit status follows its offenses. The check is repeated right before the write, which follows
   no symlink after it (directories are opened one by one, relative to the last). `--stdin` is unaffected.
-- The result cache keeps a run's offenses with their corrections (RuboCop 1.92.1's
+- The result cache keeps a run's offenses with their corrections (RuboCop 1.92.2's
   Offense#corrections, printed by the JSON formatter) only when a JSON formatter is in use, and
   those entries live apart from the others: switching between `-f json` and another formatter is a
   cold run, and MaxFilesInCache counts both sets. RuboCop keeps one entry per file with the
@@ -80,7 +80,7 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
   content that is not inert) carry no `correction` in the JSON formatter's output, where
   RuboCop's carry the edits it would make. The offense, its message and `correctable` are the same.
 - A bare `+` cop name in a `rubocop:push` or `rubocop:next` directive that two departments share
-  is kept as written, so it opts in no cop. RuboCop 1.92.1 raises AmbiguousCopName for it from
+  is kept as written, so it opts in no cop. RuboCop 1.92.2 raises AmbiguousCopName for it from
   CommentConfig#opt_in_cops (`expand_cop_name`).
 - `--diff` with `RBCOP_FALLBACK=1` is refused when the RuboCop child would run (it corrects by writing);
   without it, `--diff` skips the fallback and prints the not-running notice.
@@ -228,7 +228,7 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
     corrected offenses marked uncorrected, at offsets of the source before correction). A cached
     file without offenses is skipped and one with offenses is inspected again, as in RuboCop.
   - Pruning removes directories it emptied up to `rbcop_cache`, not above it.
-  - Pruning keeps going past an entry it cannot remove; RuboCop 1.92.1 stops at the first removal
+  - Pruning keeps going past an entry it cannot remove; RuboCop 1.92.2 stops at the first removal
     error and prints it under `-d`.
   - Where RuboCop raises (no home directory, a cache directory that cannot be created for a
     reason other than EACCES/EROFS, an entry that cannot be written), rbcop runs without saving.

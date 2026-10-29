@@ -1,31 +1,26 @@
-==> .rubocop.yml 108 <==
+==> .rubocop.yml 232 <==
 ---
 AllCops:
   EnabledByDefault: true
   NewCops: enable
   SuggestExtensions: false
   TargetRubyVersion: 2.7
+Layout/ExtraSpacing:
+  AllowForAlignment: true
+  ForceEqualSignAlignment: true
+Layout/LineLength:
+  Enabled: true
+  Max: 20
 
-==> 000.rb 38 <==
-one  # comment one
-two  # comment two
+==> 000.rb 29 <==
+a = do_something
+bbbbb = foo
 
-==> 001.rb 39 <==
-one  # comment one
-two   # comment two
+==> 001.rb 30 <==
+a = do_something
+bbbbbb = foo
 
-==> 002.rb 290 <==
-class Foo
-  def require(p)  # rubocop:disable Naming/MethodParameterName
-  end
-
-  def load(p)  # rubocop:disable Naming/MethodParameterName
-  end
-
-  def join(*ps)  # rubocop:disable Naming/MethodParameterName
-  end
-
-  def exist?(*ps)  # rubocop:disable Naming/MethodParameterName
-  end
-end
+==> 002.rb 30 <==
+a = foo
+bbbbbb = do_something
 

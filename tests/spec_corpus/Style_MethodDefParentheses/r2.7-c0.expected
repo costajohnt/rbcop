@@ -1,4 +1,4 @@
-==> offenses exit=1 1097 <==
+==> offenses exit=1 1315 <==
 000.rb:1:10: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
 001.rb:3:10: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
 002.rb:1:9: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
@@ -9,8 +9,10 @@
 008.rb:3:15: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
 008.rb:5:16: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
 009.rb:1:10: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+010.rb:2:5: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+011.rb:2:5: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
 
-==> autocorrect exit=0 1077 <==
+==> autocorrect exit=0 1291 <==
 000.rb:1:10: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
 001.rb:3:10: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
 002.rb:1:9: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
@@ -21,6 +23,8 @@
 008.rb:3:15: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
 008.rb:5:16: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
 009.rb:1:10: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+010.rb:2:5: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+011.rb:2:5: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
 
 ==> corrected/000.rb 19 <==
 def func(a, b)
@@ -61,5 +65,15 @@ def self.test2(param); end
 ==> corrected/009.rb 23 <==
 def test(one,
 two)
+end
+
+==> corrected/010.rb 24 <==
+def func(
+    a, b)
+end
+
+==> corrected/011.rb 29 <==
+def self.func(
+    a, b)
 end
 

@@ -1,4 +1,4 @@
-//! The `rubocop` command line: options, formatters and exit status as RuboCop 1.92.1 has them
+//! The `rubocop` command line: options, formatters and exit status as RuboCop 1.92.2 has them
 //! (lib/rubocop/cli.rb, options.rb, runner.rb, cli/command/*.rb).
 
 use rbcop::config::{Options, RUBOCOP_VERSION, Resolved, Store, expand_path};
@@ -24,7 +24,7 @@ mod serve;
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
-/// `rubocop -h` (OptionParser#help for RuboCop 1.92.1's options), recorded verbatim.
+/// `rubocop -h` (OptionParser#help for RuboCop 1.92.2's options), recorded verbatim.
 const HELP: &str = include_str!("help.txt");
 
 /// RuboCop's exit statuses.
@@ -38,7 +38,7 @@ enum Arg {
     Optional,
 }
 
-/// Every option RuboCop 1.92.1 defines: (long name, short, argument, what rbcop does with it).
+/// Every option RuboCop 1.92.2 defines: (long name, short, argument, what rbcop does with it).
 /// Long names with `[no-]` also accept `--no-NAME`.
 #[derive(Clone, Copy, PartialEq)]
 enum Use {

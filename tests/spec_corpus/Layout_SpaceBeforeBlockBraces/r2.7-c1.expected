@@ -1,21 +1,28 @@
-==> offenses exit=1 279 <==
-000.rb:1:5: C: [Correctable] Layout/SpaceBeforeBlockBraces: Space detected to the left of {.
-001.rb:2:5: C: [Correctable] Layout/SpaceBeforeBlockBraces: Space detected to the left of {.
+==> offenses exit=1 452 <==
+000.rb:1:11: C: [Correctable] Layout/SpaceBeforeBlockBraces: Space detected to the left of {.
+001.rb:3:2: C: Layout/SpaceBeforeBlockBraces: Space detected to the left of {.
+002.rb:1:5: C: [Correctable] Layout/SpaceBeforeBlockBraces: Space detected to the left of {.
 003.rb:2:5: C: [Correctable] Layout/SpaceBeforeBlockBraces: Space detected to the left of {.
+005.rb:2:5: C: [Correctable] Layout/SpaceBeforeBlockBraces: Space detected to the left of {.
 
-==> autocorrect exit=0 273 <==
-000.rb:1:5: C: [Corrected] Layout/SpaceBeforeBlockBraces: Space detected to the left of {.
-001.rb:2:5: C: [Corrected] Layout/SpaceBeforeBlockBraces: Space detected to the left of {.
+==> autocorrect exit=1 444 <==
+000.rb:1:11: C: [Corrected] Layout/SpaceBeforeBlockBraces: Space detected to the left of {.
+001.rb:3:2: C: Layout/SpaceBeforeBlockBraces: Space detected to the left of {.
+002.rb:1:5: C: [Corrected] Layout/SpaceBeforeBlockBraces: Space detected to the left of {.
 003.rb:2:5: C: [Corrected] Layout/SpaceBeforeBlockBraces: Space detected to the left of {.
+005.rb:2:5: C: [Corrected] Layout/SpaceBeforeBlockBraces: Space detected to the left of {.
 
-==> corrected/000.rb 13 <==
+==> corrected/000.rb 16 <==
+foo(bar){ baz }
+
+==> corrected/002.rb 13 <==
 each{ puts }
 
-==> corrected/001.rb 26 <==
+==> corrected/003.rb 26 <==
 each{ puts }
 each{ puts }
 
-==> corrected/003.rb 22 <==
+==> corrected/005.rb 22 <==
 each{ _1 }
 each{ _1 }
 

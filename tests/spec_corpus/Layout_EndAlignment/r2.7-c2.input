@@ -260,190 +260,196 @@ end.ab.tap { _1 }
 ==> 061.rb 23 <==
 var = case a when b
 end
-==> 062.rb 21 <==
+==> 062.rb 19 <==
+Foo = class Bar
+end
+==> 063.rb 20 <==
+Foo = module Bar
+end
+==> 064.rb 21 <==
 var =
   if test
   end
-==> 063.rb 22 <==
+==> 065.rb 22 <==
 var = case a; in b
 end
-==> 064.rb 36 <==
+==> 066.rb 36 <==
 var = if test
         foo
 end || ""
 
-==> 065.rb 42 <==
+==> 067.rb 42 <==
 var = if test
         foo
       end || ""
 
-==> 066.rb 36 <==
+==> 068.rb 36 <==
 var = if test
         foo
 end && ""
 
-==> 067.rb 42 <==
+==> 069.rb 42 <==
 var = if test
         foo
       end && ""
 
-==> 068.rb 24 <==
+==> 070.rb 24 <==
 var = if test
       end
 
-==> 069.rb 28 <==
+==> 071.rb 28 <==
 var = unless test
       end
 
-==> 070.rb 27 <==
+==> 072.rb 27 <==
 var = while test
       end
 
-==> 071.rb 27 <==
+==> 073.rb 27 <==
 var = until test
       end
 
-==> 072.rb 26 <==
+==> 074.rb 26 <==
 var << if test
        end
 
-==> 073.rb 30 <==
+==> 075.rb 30 <==
 var << unless test
        end
 
-==> 074.rb 33 <==
+==> 076.rb 33 <==
 var[x] = while test
          end
 
-==> 075.rb 29 <==
+==> 077.rb 29 <==
 var << until test
        end
 
-==> 076.rb 20 <==
+==> 078.rb 20 <==
 var =
   if test
 end
 
-==> 077.rb 25 <==
+==> 079.rb 25 <==
 var =
   unless test
  end
 
-==> 078.rb 38 <==
+==> 080.rb 38 <==
 var =
   # comment
   while test
    end
 
-==> 079.rb 44 <==
+==> 081.rb 44 <==
 var =
   until test
     do_something
     end
 
-==> 080.rb 29 <==
+==> 082.rb 29 <==
 var = until test
       end.j
 
-==> 081.rb 18 <==
+==> 083.rb 18 <==
 @var = if test
 end
-==> 082.rb 19 <==
+==> 084.rb 19 <==
 @@var = if test
 end
-==> 083.rb 18 <==
+==> 085.rb 18 <==
 $var = if test
 end
-==> 084.rb 18 <==
+==> 086.rb 18 <==
 CNST = if test
 end
-==> 085.rb 18 <==
+==> 087.rb 18 <==
 a, b = if test
 end
-==> 086.rb 19 <==
+==> 088.rb 19 <==
 var ||= if test
 end
-==> 087.rb 19 <==
+==> 089.rb 19 <==
 var &&= if test
 end
-==> 088.rb 18 <==
+==> 090.rb 18 <==
 var += if test
 end
-==> 089.rb 18 <==
+==> 091.rb 18 <==
 h[k] = if test
 end
-==> 090.rb 17 <==
+==> 092.rb 17 <==
 h.k = if test
 end
-==> 091.rb 30 <==
+==> 093.rb 30 <==
 var = case a when b
       end
 
-==> 092.rb 26 <==
+==> 094.rb 26 <==
 @var = if test
        end
 
-==> 093.rb 28 <==
+==> 095.rb 28 <==
 @@var = if test
         end
 
-==> 094.rb 26 <==
+==> 096.rb 26 <==
 $var = if test
        end
 
-==> 095.rb 26 <==
+==> 097.rb 26 <==
 CNST = if test
        end
 
-==> 096.rb 26 <==
+==> 098.rb 26 <==
 a, b = if test
        end
 
-==> 097.rb 28 <==
+==> 099.rb 28 <==
 var ||= if test
         end
 
-==> 098.rb 28 <==
+==> 100.rb 28 <==
 var &&= if test
         end
 
-==> 099.rb 26 <==
+==> 101.rb 26 <==
 var += if test
        end
 
-==> 100.rb 26 <==
+==> 102.rb 26 <==
 h[k] = if test
        end
 
-==> 101.rb 32 <==
+==> 103.rb 32 <==
 var << case a when b
        end
 
-==> 102.rb 28 <==
+==> 104.rb 28 <==
 @var << if test
         end
 
-==> 103.rb 30 <==
+==> 105.rb 30 <==
 @@var << if test
          end
 
-==> 104.rb 28 <==
+==> 106.rb 28 <==
 $var << if test
         end
 
-==> 105.rb 28 <==
+==> 107.rb 28 <==
 CNST << if test
         end
 
-==> 106.rb 28 <==
+==> 108.rb 28 <==
 h[k] << if test
         end
 
-==> 107.rb 27 <==
+==> 109.rb 27 <==
 h.k = if test
          end
 
-==> 108.rb 29 <==
+==> 110.rb 29 <==
 var = case a; in b
       end
 

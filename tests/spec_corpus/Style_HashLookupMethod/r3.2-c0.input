@@ -1,0 +1,20 @@
+==> .rubocop.yml 158 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+Style/HashLookupMethod:
+  EnforcedStyle: brackets
+
+==> 000.rb 40 <==
+def do_something(*)
+  hash.fetch(*)
+end
+
+==> 001.rb 42 <==
+def do_something(**)
+  hash.fetch(**)
+end
+

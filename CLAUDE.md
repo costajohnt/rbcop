@@ -1,6 +1,6 @@
 # rbcop
 
-Rust reimplementation of RuboCop 1.92.1 on Prism. Target is byte-identical output
+Rust reimplementation of RuboCop 1.92.2 on Prism. Target is byte-identical output
 to RuboCop (offenses, ranges, messages, `[Correctable]`, autocorrect, formatters,
 exit status). `README.md` covers install, usage, parity and speed.
 
@@ -15,8 +15,8 @@ exit status). `README.md` covers install, usage, parity and speed.
   only. Run `scripts/ci.sh` before pushing.
 - `cargo test` replays recorded RuboCop output (`tests/spec_corpus`, `tests/scenarios`,
   `tests/formatters`, `tests/show_cops`, `tests/autocorrect`). Recording scripts and
-  the oracle/cold/autocorrect gates need RuboCop 1.92.1 on PATH
-  (on the CI host `RUBOCOP=~/rubocop-1.92.1/bin/rubocop`; scripts take `$RUBOCOP`). Each script's header documents
+  the oracle/cold/autocorrect gates need RuboCop 1.92.2 on PATH
+  (on the CI host `RUBOCOP=~/rubocop-1.92.2/bin/rubocop`; scripts take `$RUBOCOP`). Each script's header documents
   its arguments.
 
 ## Docs to read first
@@ -27,7 +27,7 @@ exit status). `README.md` covers install, usage, parity and speed.
 - `docs/upgrading-rubocop.md`: moving the target to a new RuboCop release (#299).
 
 ## Rules
-- RuboCop is the oracle. When unsure what a cop should do, run RuboCop 1.92.1.
+- RuboCop is the oracle. When unsure what a cop should do, run RuboCop 1.92.2.
 - Releases: follow `docs/releasing.md`. Checksums in `packaging/checksums/X.Y.Z.sha256`
   are committed before the tag; never rebuild archives between committing checksums
   and uploading.

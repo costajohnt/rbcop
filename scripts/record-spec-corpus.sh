@@ -1,7 +1,7 @@
 #!/bin/sh
 # Re-record tests/spec_corpus (RuboCop's spec examples for every cop, with RuboCop's offenses and
 # -A output) using scripts/record_spec_corpus.rb, whose header describes the format.
-# usage: scripts/record-spec-corpus.sh <rubocop-src checkout at v1.92.1>
+# usage: scripts/record-spec-corpus.sh <rubocop-src checkout at v1.92.2>
 # env: RUBOCOP (see scripts/rubocop.sh), JOBS (parallel RuboCop runs, default CPU count)
 set -eu
 . "$(dirname "$0")/rubocop.sh"

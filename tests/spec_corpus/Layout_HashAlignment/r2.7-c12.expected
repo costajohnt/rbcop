@@ -1,12 +1,18 @@
-==> offenses exit=1 384 <==
+==> offenses exit=1 772 <==
 000.rb:6:3: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
 000.rb:7:9: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
 001.rb:2:3: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+002.rb:2:7: C: [Correctable] Layout/HashAlignment: Align keyword splats with the rest of the hash if it spans more than one line.
+003.rb:2:7: C: [Correctable] Layout/HashAlignment: Align keyword splats with the rest of the hash if it spans more than one line.
+005.rb:5:3: C: [Correctable] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
 
-==> autocorrect exit=0 378 <==
+==> autocorrect exit=0 760 <==
 000.rb:6:3: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
 000.rb:7:9: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
 001.rb:2:3: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
+002.rb:2:7: C: [Corrected] Layout/HashAlignment: Align keyword splats with the rest of the hash if it spans more than one line.
+003.rb:2:7: C: [Corrected] Layout/HashAlignment: Align keyword splats with the rest of the hash if it spans more than one line.
+005.rb:5:3: C: [Corrected] Layout/HashAlignment: Align the keys and values of a hash literal if they span more than one line.
 
 ==> corrected/000.rb 118 <==
 hash = {
@@ -22,5 +28,21 @@ hash = {
 other = {
   foo:     1,
   'bar' => 2,
+}
+
+==> corrected/002.rb 42 <==
+x = { **a, b:  1,
+           **c, dd: 2 }
+
+==> corrected/003.rb 48 <==
+x = { **a, :b  => 1,
+           **c, :dd => 2 }
+
+==> corrected/005.rb 53 <==
+h = {
+  a:   1,
+  bb:  2,
+  ccc: 3,
+  e:   5, f: 6
 }
 

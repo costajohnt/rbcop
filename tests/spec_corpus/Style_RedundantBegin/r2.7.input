@@ -175,7 +175,37 @@ else
   end
 end
 
-==> 021.rb 68 <==
+==> 021.rb 34 <==
+condition ? foo : begin
+  bar
+end
+
+==> 022.rb 40 <==
+condition ? foo : begin
+  bar
+  baz
+end
+
+==> 023.rb 28 <==
+condition ? foo : begin
+end
+
+==> 024.rb 41 <==
+condition ? foo : begin
+  bar if baz
+end
+
+==> 025.rb 38 <==
+condition ? foo : begin
+  not bar
+end
+
+==> 026.rb 42 <==
+condition ? foo : begin
+  bar and baz
+end
+
+==> 027.rb 68 <==
 case condition
   when foo
     begin
@@ -184,7 +214,7 @@ case condition
     end
 end
 
-==> 022.rb 84 <==
+==> 028.rb 84 <==
 case condition
   when foo
     bar
@@ -195,7 +225,7 @@ case condition
     end
 end
 
-==> 023.rb 66 <==
+==> 029.rb 66 <==
 case condition
   in foo
     begin
@@ -204,7 +234,7 @@ case condition
     end
 end
 
-==> 024.rb 82 <==
+==> 030.rb 82 <==
 case condition
   in foo
     bar
@@ -215,7 +245,7 @@ case condition
     end
 end
 
-==> 025.rb 50 <==
+==> 031.rb 50 <==
 while condition
   begin
     foo
@@ -223,7 +253,7 @@ while condition
   end
 end
 
-==> 026.rb 50 <==
+==> 032.rb 50 <==
 until condition
   begin
     foo
@@ -231,7 +261,7 @@ until condition
   end
 end
 
-==> 027.rb 78 <==
+==> 033.rb 78 <==
 if condition
   begin
     foo
@@ -241,7 +271,7 @@ if condition
   end
 end
 
-==> 028.rb 64 <==
+==> 034.rb 64 <==
 if condition
   begin
     foo
@@ -251,7 +281,7 @@ if condition
   end
 end
 
-==> 029.rb 104 <==
+==> 035.rb 104 <==
 case condition
   when foo
     begin
@@ -262,7 +292,7 @@ case condition
     end
 end
 
-==> 030.rb 90 <==
+==> 036.rb 90 <==
 case condition
   when foo
     begin
@@ -273,7 +303,7 @@ case condition
     end
 end
 
-==> 031.rb 81 <==
+==> 037.rb 81 <==
 while condition
   begin
     foo
@@ -283,7 +313,7 @@ while condition
   end
 end
 
-==> 032.rb 67 <==
+==> 038.rb 67 <==
 while condition
   begin
     foo
@@ -293,7 +323,7 @@ while condition
   end
 end
 
-==> 033.rb 81 <==
+==> 039.rb 81 <==
 until condition
   begin
     foo
@@ -303,7 +333,7 @@ until condition
   end
 end
 
-==> 034.rb 67 <==
+==> 040.rb 67 <==
 until condition
   begin
     foo
@@ -313,33 +343,33 @@ until condition
   end
 end
 
-==> 035.rb 30 <==
+==> 041.rb 30 <==
 var ||= begin
   foo
   bar
 end
 
-==> 036.rb 18 <==
+==> 042.rb 18 <==
 var ||= begin
 end
 
-==> 037.rb 75 <==
+==> 043.rb 75 <==
 begin
   do_first_thing
   some_value = do_second_thing
 end while some_value
 
-==> 038.rb 75 <==
+==> 044.rb 75 <==
 begin
   do_first_thing
   some_value = do_second_thing
 end until some_value
 
-==> 039.rb 10 <==
+==> 045.rb 10 <==
 begin
 end
 
-==> 040.rb 47 <==
+==> 046.rb 47 <==
 var ||= begin
   foo
   bar
@@ -347,62 +377,62 @@ end.baz do
   qux
 end
 
-==> 041.rb 35 <==
+==> 047.rb 35 <==
 do_something begin
   foo
   bar
 end
 
-==> 042.rb 35 <==
+==> 048.rb 35 <==
 condition && begin
   foo
   bar
 end
 
-==> 043.rb 36 <==
+==> 049.rb 36 <==
 condition and begin
   foo
   bar
 end
 
-==> 044.rb 37 <==
+==> 050.rb 37 <==
 begin foo; bar; end unless condition
 
-==> 045.rb 38 <==
+==> 051.rb 38 <==
 begin
   foo; bar
 end unless condition
 
-==> 046.rb 31 <==
+==> 052.rb 31 <==
 begin foo end unless condition
 
-==> 047.rb 33 <==
+==> 053.rb 33 <==
 begin
   foo
 end unless condition
 
-==> 048.rb 46 <==
+==> 054.rb 46 <==
 foo if begin begin
   bar
 rescue
   nil
 end end
 
-==> 049.rb 43 <==
+==> 055.rb 43 <==
 unless condition
   begin
     foo
   end
 end
 
-==> 050.rb 50 <==
+==> 056.rb 50 <==
 @foo ||= begin
   @bar ||= begin
     baz
   end
 end
 
-==> 051.rb 144 <==
+==> 057.rb 144 <==
 var = do_something do
   begin
     do_something do
@@ -417,7 +447,7 @@ var = do_something do
   end
 end
 
-==> 052.rb 143 <==
+==> 058.rb 143 <==
 var = do_something do
   begin
     do_something do
@@ -432,43 +462,43 @@ var = do_something do
   end
 end
 
-==> 053.rb 26 <==
+==> 059.rb 26 <==
 var = begin
   a and b
 end
 
-==> 054.rb 25 <==
+==> 060.rb 25 <==
 var = begin
   a || b
 end
 
-==> 055.rb 37 <==
+==> 061.rb 37 <==
 var = begin
   i += 1 until i > 2
 end
 
-==> 056.rb 41 <==
+==> 062.rb 41 <==
 def foo
   return begin
     bar
   end
 end
 
-==> 057.rb 43 <==
+==> 063.rb 43 <==
 def foo
   return begin
     not a
   end
 end
 
-==> 058.rb 42 <==
+==> 064.rb 42 <==
 loop do
   next begin
     a or b
   end
 end
 
-==> 059.rb 43 <==
+==> 065.rb 43 <==
 loop do
   break begin
     a or b

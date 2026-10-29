@@ -30,3 +30,23 @@ str = <<~`HEREDOC`.do_something.with_args(foo: '', bar: '', baz: '')
   text
 HEREDOC
 
+==> 004.rb 72 <==
+do_something(<<~HEREDOC, items.map { |item| item.to_s })
+  text
+HEREDOC
+
+==> 005.rb 61 <==
+str = <<~HEREDOC; do_something_else(foo, bar)
+  text
+HEREDOC
+
+==> 006.rb 70 <==
+do_something(<<~HEREDOC) + do_something_else(foo, bar)
+  text
+HEREDOC
+
+==> 007.rb 70 <==
+[foo, bar, baz, <<~HEREDOC, items.map { |item| item }]
+  text
+HEREDOC
+

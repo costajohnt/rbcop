@@ -153,7 +153,13 @@ end
 
 ==> 034.rb 41 <==
 # rubocop:disable Layout/IndentationStyle
-==> 035.rb 115 <==
+==> 035.rb 143 <==
+# rubocop:disable Layout/IndentationStyle
+# rubocop:disable Layout/IndentationStyle
+# 3, offense here
+# rubocop:enable Layout/IndentationStyle
+
+==> 036.rb 115 <==
 # 1
 # 2
 # 3, offense here
@@ -162,36 +168,36 @@ end
 #
 # rubocop:enable Layout/IndentationStyle
 
-==> 036.rb 23 <==
+==> 037.rb 23 <==
 # rubocop : disable all
-==> 037.rb 95 <==
+==> 038.rb 95 <==
 # rubocop:disable Metrics/MethodLength
 def my_method
 end
 # rubocop:enable Metrics/MethodLength
 
-==> 038.rb 96 <==
+==> 039.rb 96 <==
 # rubocop:disable Metrics/MethodLength
 
 def my_method
 end
 # rubocop:enable Metrics/MethodLength
 
-==> 039.rb 110 <==
+==> 040.rb 110 <==
 # rubocop:disable Metrics/MethodLength
 # @api private
 def my_method
 end
 # rubocop:enable Metrics/MethodLength
 
-==> 040.rb 96 <==
+==> 041.rb 96 <==
 
 # rubocop:disable Metrics/MethodLength
 def my_method
 end
 # rubocop:enable Metrics/MethodLength
 
-==> 041.rb 113 <==
+==> 042.rb 113 <==
 attr_reader :foo
 
 # rubocop:disable Metrics/MethodLength
@@ -199,7 +205,7 @@ def my_method
 end
 # rubocop:enable Metrics/MethodLength
 
-==> 042.rb 139 <==
+==> 043.rb 139 <==
 module Foo
   module Bar
     # rubocop:disable Metrics/ClassLength
@@ -209,7 +215,7 @@ module Foo
   end
 end
 
-==> 043.rb 102 <==
+==> 044.rb 102 <==
 module Foo
   module Bar
     class Baz         # rubocop:disable Metrics/ClassLength
@@ -217,7 +223,7 @@ module Foo
   end
 end
 
-==> 044.rb 88 <==
+==> 045.rb 88 <==
 def foo; end
 
 def bar # rubocop:disable Metrics/ClassLength
@@ -225,43 +231,48 @@ def bar # rubocop:disable Metrics/ClassLength
   end
 end
 
-==> 045.rb 51 <==
+==> 046.rb 51 <==
 # rubocop:disable Style
 def bar
   do_something
 end
 
-==> 046.rb 72 <==
+==> 047.rb 72 <==
 # rubocop:disable Style, Metrics/ClassLength
 def bar
   do_something
 end
 
-==> 047.rb 74 <==
+==> 048.rb 74 <==
 # rubocop:disable Metrics, Metrics/ClassLength
 def bar
   do_something
 end
 
-==> 048.rb 91 <==
+==> 049.rb 91 <==
 # rubocop:disable Metrics
 def bar
   do_something # rubocop:disable Metrics/ClassLength
 end
 
-==> 049.rb 105 <==
+==> 050.rb 82 <==
+# rubocop:disable Metrics
+# rubocop:disable Metrics/ClassLength
+# 3, offense here
+
+==> 051.rb 105 <==
 # rubocop:disable Metrics
 def bar
   do_something # rubocop:disable Metrics/ClassLength -- the reason
 end
 
-==> 050.rb 98 <==
+==> 052.rb 98 <==
 # rubocop:disable Metrics
 def bar
   do_something # rubocop:disable Metrics/ClassLength - note
 end
 
-==> 051.rb 127 <==
+==> 053.rb 127 <==
 # rubocop:disable Metrics
 class One
   # rubocop:disable Metrics
@@ -269,19 +280,19 @@ class One
 end
 # rubocop:enable Metrics
 
-==> 052.rb 83 <==
+==> 054.rb 83 <==
 # rubocop:disable Metrics
 class One
 @@class_var = 1  # rubocop:disable Metrics
 end
 
-==> 053.rb 86 <==
+==> 055.rb 86 <==
 # rubocop:disable Metrics
 def bar
   do_something # rubocop:disable Metrics - note
 end
 
-==> 054.rb 53 <==
+==> 056.rb 53 <==
 # rubocop:disable Metrics
 def bar
   do_something

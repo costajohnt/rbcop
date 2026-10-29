@@ -32,7 +32,10 @@ Regexp.last_match(1).to_f / Regexp.last_match(1).to_f
 ==> 007.rb 27 <==
 (a * b) / (c - d / 2).to_f
 
-==> 008.rb 8 <==
+==> 008.rb 21 <==
+a / b.to_f # comment
+
+==> 009.rb 8 <==
 a / to_f
-==> 009.rb 10 <==
+==> 010.rb 10 <==
 a.to_f / b

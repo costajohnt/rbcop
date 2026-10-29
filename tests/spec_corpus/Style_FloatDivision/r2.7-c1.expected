@@ -1,14 +1,16 @@
-==> offenses exit=1 360 <==
+==> offenses exit=1 450 <==
 000.rb:1:1: C: [Correctable] Style/FloatDivision: Prefer using `.to_f` on the right side.
 003.rb:1:1: C: [Correctable] Style/FloatDivision: Prefer using `.to_f` on the right side.
 004.rb:1:1: C: [Correctable] Style/FloatDivision: Prefer using `.to_f` on the right side.
 005.rb:1:1: C: [Correctable] Style/FloatDivision: Prefer using `.to_f` on the right side.
+008.rb:1:1: C: [Correctable] Style/FloatDivision: Prefer using `.to_f` on the right side.
 
-==> autocorrect exit=0 352 <==
+==> autocorrect exit=0 440 <==
 000.rb:1:1: C: [Corrected] Style/FloatDivision: Prefer using `.to_f` on the right side.
 003.rb:1:1: C: [Corrected] Style/FloatDivision: Prefer using `.to_f` on the right side.
 004.rb:1:1: C: [Corrected] Style/FloatDivision: Prefer using `.to_f` on the right side.
 005.rb:1:1: C: [Corrected] Style/FloatDivision: Prefer using `.to_f` on the right side.
+008.rb:1:1: C: [Corrected] Style/FloatDivision: Prefer using `.to_f` on the right side.
 
 ==> corrected/000.rb 11 <==
 a / b.to_f
@@ -21,4 +23,7 @@ a / b.to_f
 
 ==> corrected/005.rb 11 <==
 a / b.to_f
+
+==> corrected/008.rb 21 <==
+a / b.to_f # comment
 

@@ -1,11 +1,11 @@
 # Switching from RuboCop
 
-rbcop is RuboCop 1.92.1's command line reimplemented in Rust. It reads the same `.rubocop.yml`, takes the same options and prints the same offenses, so switching is mostly a matter of installing it and calling `rbcop` where you called `rubocop`. This guide covers the Gemfile, `bundle exec`, CI and editors.
+rbcop is RuboCop 1.92.2's command line reimplemented in Rust. It reads the same `.rubocop.yml`, takes the same options and prints the same offenses, so switching is mostly a matter of installing it and calling `rbcop` where you called `rubocop`. This guide covers the Gemfile, `bundle exec`, CI and editors.
 
 Before switching, check two things:
 
 - **Plugins and custom cops.** rbcop runs RuboCop's 613 core cops and the plugins listed in [plugins.md](plugins.md) (rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot, rubocop-capybara). Cops from other plugins and custom cops loaded with `require:` are not run natively: rbcop runs them with RuboCop when the bundle has the rubocop gem (or `rubocop` is on `PATH`), and otherwise names them on stderr (see [Plugins and custom cops](#plugins-and-custom-cops) below). A project that uses only core cops needs nothing else and never starts RuboCop.
-- **Options.** Every RuboCop 1.92.1 option is accepted (the `--server` options run in process); [known-gaps.md](known-gaps.md) lists every known difference.
+- **Options.** Every RuboCop 1.92.2 option is accepted (the `--server` options run in process); [known-gaps.md](known-gaps.md) lists every known difference.
 
 ## Gemfile
 

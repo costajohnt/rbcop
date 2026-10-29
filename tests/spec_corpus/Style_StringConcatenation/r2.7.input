@@ -18,105 +18,108 @@ email_with_name = "\n" + user.name + ' ' + user.email + '\n'
 ==> 003.rb 31 <==
 "\x0a" + "test" + "A" + "\xff"
 
-==> 004.rb 73 <==
+==> 004.rb 53 <==
+"#" + "{" + '#' + '@foo' + "#" + "$bar" + "\#" + "{"
+
+==> 005.rb 73 <==
 (user.vip? ? greeting + ', ' : '') + user.name + ' <' + user.email + '>'
 
-==> 005.rb 29 <==
+==> 006.rb 29 <==
 "foo" + "\"#{bar}\"" + 'baz'
 
-==> 006.rb 29 <==
+==> 007.rb 29 <==
 "foo" + "\'#{bar}\'" + 'baz'
 
-==> 007.rb 23 <==
+==> 008.rb 23 <==
 user.name + user.email
 
-==> 008.rb 14 <==
+==> 009.rb 14 <==
 "a" + "b" "c"
 
-==> 009.rb 14 <==
+==> 010.rb 14 <==
 "a" "b" + "c"
 
-==> 010.rb 20 <==
+==> 011.rb 20 <==
 "a" + "b" "c" + "d"
 
-==> 011.rb 40 <==
+==> 012.rb 40 <==
 "string #{interpolation}" 'foo' + 'bar'
 
-==> 012.rb 54 <==
+==> 013.rb 54 <==
 "this is a long string " +
   "this is a continuation"
 
-==> 013.rb 60 <==
+==> 014.rb 60 <==
 email_with_name = user.name +
   ' ' +
   user.email +
   '\n'
 
-==> 014.rb 53 <==
+==> 015.rb 53 <==
 "result:" + if condition
   "true"
 else
   "false"
 end
 
-==> 015.rb 60 <==
+==> 016.rb 60 <==
 '(' + values.map do |v|
     v.titleize
 end.join(', ') + ')'
 
-==> 016.rb 22 <==
+==> 017.rb 22 <==
 "foo" + "bar: #{baz}"
 
-==> 017.rb 53 <==
+==> 018.rb 53 <==
 '(' + values.map { |v| v.titleize }.join(', ') + ')'
 
-==> 018.rb 50 <==
+==> 019.rb 50 <==
 '(' + values.map { _1.titleize }.join(', ') + ')'
 
-==> 019.rb 26 <==
+==> 020.rb 26 <==
 "foo" + <<~STR
   text
 STR
 
-==> 020.rb 33 <==
+==> 021.rb 33 <==
 "foo" + <<~TEXT
   bar
   baz
 TEXT
 
-==> 021.rb 16 <==
+==> 022.rb 16 <==
 __FILE__ + '/c'
 
-==> 022.rb 21 <==
+==> 023.rb 21 <==
 "__FILE__#{c}" + 'd'
 
-==> 023.rb 55 <==
+==> 024.rb 55 <==
 email_with_name = "He said " + "\"Arrest that man!\"."
 
-==> 024.rb 55 <==
+==> 025.rb 55 <==
 email_with_name = %(He said ) + %("Arrest that man!".)
 
-==> 025.rb 58 <==
+==> 026.rb 58 <==
 command = %(clone "#{ref}" "#{url}" && ) + %(echo "done")
 
-==> 026.rb 80 <==
+==> 027.rb 80 <==
 '"' + "foo" + '"'
 '"' + "foo" + "'"
 "'" + "foo" + '"'
 "'" + "foo" + '"' + "bar"
 
-==> 027.rb 14 <==
+==> 028.rb 14 <==
 '"bar"' + foo
 
-==> 028.rb 17 <==
+==> 029.rb 17 <==
 "foo" + '#{bar}'
 
-==> 029.rb 16 <==
+==> 030.rb 16 <==
 "foo" + '#@bar'
 
-==> 030.rb 17 <==
+==> 031.rb 17 <==
 "foo" + '#@@bar'
 
-==> 031.rb 16 <==
+==> 032.rb 16 <==
 "foo" + '#$bar'
 

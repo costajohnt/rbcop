@@ -44,7 +44,7 @@ impl Cop for DefEndAlignment {
         let style = cx.cfg.str("EnforcedStyleAlignWith").unwrap_or("start_of_line").to_string();
         let (def, ranges) = if kind::of(node) == kind::CALL_NODE {
             let Some(def) = def_modifier(node) else { return };
-            // 1.92.1: a single-line `def` has nothing to align, even when a line continuation
+            // 1.92.2: a single-line `def` has nothing to align, even when a line continuation
             // puts it on a later line than the modifier (and the def itself is still checked).
             let l = def.location();
             if cx.src.line_of(l.start_offset()) == cx.src.line_of(l.end_offset()) {
