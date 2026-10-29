@@ -322,9 +322,6 @@ pub struct Resolved {
     cop_list: Vec<(&'static str, CopConfig)>,
     /// Index in `cop_list` by name, with a cheap hash (the keys are cop names).
     cops: HashMap<&'static str, usize, std::hash::BuildHasherDefault<Fnv>>,
-    /// (cop, warning) for configuration under a cop's deprecated name, which Config#for_cop warns
-    /// about the first time the cop's config is asked for.
-    pub deprecated_warnings: Vec<(&'static str, String)>,
     /// Cop-like keys no registered cop has (see Store::unregistered).
     unregistered: Vec<String>,
     /// The options the cops were resolved with (Registry#enabled_cop_name? for other cop names).
@@ -380,7 +377,6 @@ impl Resolved {
             target_ruby,
             cop_list: Vec::new(),
             cops: HashMap::default(),
-            deprecated_warnings: Vec::new(),
             unregistered: Vec::new(),
             opts: opts.clone(),
             for_cop_cache: std::sync::OnceLock::new(),
@@ -395,13 +391,6 @@ impl Resolved {
             let mut cfg = r.build_cop(name, opts);
             intern(&mut lists, &mut cfg);
             r.set_cop(name, cfg);
-            for old in validator::deprecated_names_for(name) {
-                if r.hash.map(&old).is_some_and(|m| !m.0.is_empty()) {
-                    let path = loaded_path.map(|p| p.display().to_string()).unwrap_or_default();
-                    let msg = format!("Warning: Using `{old}` configuration in {path} for `{name}`.\n");
-                    r.deprecated_warnings.push((name, msg));
-                }
-            }
         }
         r
     }
@@ -694,7 +683,7 @@ impl Resolved {
         let dept_map = department.and_then(|d| self.hash.map(d)).cloned().unwrap_or_default();
         let mut effective = self.enable_cop(name);
         // Config#for_cop: configuration under a deprecated name (a rename that only warns) is
-        // merged over the cop's, Enabled included.
+        // merged over the cop's, Enabled included. Since 1.92.2 the merge prints nothing.
         for old in validator::deprecated_names_for(name) {
             for (k, v) in self.hash.map(&old).cloned().unwrap_or_default().0 {
                 if k == "Enabled" {
@@ -1675,6 +1664,28 @@ impl Store {
         Ok(())
     }
 
+    /// ConfigurationIntegrator#warn_about_obsolete_config (1.92.2): obsolete keys in a plugin's own
+    /// config warn once, naming the plugin, and never stop the run.
+    // ponytail: the plugin is named by its gem, which is what LintRoller::About#name holds for
+    // every rubocop-* plugin checked so far.
+    fn warn_about_obsolete_plugin_config(&mut self, plugin: &str, config: &Map, path: &Path) {
+        let messages = validator::Validator {
+            default: &self.default,
+            pwd: &self.cwd,
+            loaded_plugins: &self.loaded_plugins,
+            ignore_unrecognized_cops: self.opts.ignore_unrecognized_cops,
+            custom_cops: self.custom_cops,
+            plugin_constants: &self.plugin_constants,
+            color: self.opts.color,
+        }
+        .obsoletion_messages(config, path);
+        if !messages.is_empty() {
+            let text =
+                format!("Warning: obsolete configuration found in the `{plugin}` plugin:\n{}\n", messages.join("\n"));
+            self.emit(&[(true, text)]);
+        }
+    }
+
     /// Plugin::ConfigurationIntegrator: fold each plugin gem's config/default.yml into the defaults.
     // ponytail: assumes the LintRoller rules path is <gem>/config/default.yml, which every
     // rubocop-* plugin checked so far uses. Local `require: ./file` entries (custom cops, `local`
@@ -1702,7 +1713,10 @@ impl Store {
         // fill Registry#unqualified_cop_names, and then each plugin's config.
         // ponytail: a config's `plugins:` and plugin-capable `require:` gems merge their configs as
         // one batch; RuboCop integrates each such `require:` on its own, after `plugins:`.
-        let mut configs: Vec<Result<&'static crate::helpers::cop_registry::NativePlugin, PathBuf>> = Vec::new();
+        // Err: a gem's config path, with the plugin's name when it came in as a plugin (LintRoller
+        // `:path` rules) rather than injected by a plain `require:`.
+        let mut configs: Vec<Result<&'static crate::helpers::cop_registry::NativePlugin, (PathBuf, Option<String>)>> =
+            Vec::new();
         for (at, name, load) in names {
             // `require:` loads in order, each entry on its own: the `plugins:` batch and every gem
             // with a config before this entry have memoized Registry#unqualified_cop_names, and a
@@ -1869,7 +1883,8 @@ impl Store {
             crate::helpers::cop_registry::set_foreign_autocorrect(
                 cops.into_iter().filter_map(|(c, ac)| ac.then_some(c)),
             );
-            configs.extend(paths.into_iter().map(Err));
+            let plugin = (load != Load::Require).then(|| name.clone());
+            configs.extend(paths.into_iter().map(|p| Err((p, plugin.clone()))));
         }
         // (A gem with a config is a plugin, or an older extension whose inject_defaults! loads
         // the default configuration as well.)
@@ -1884,6 +1899,7 @@ impl Store {
         for config in configs {
             // ponytail: an extension's injected config (a plain `require:`) is named as a plugin's.
             self.debug(&format!("{ONCE}Plugin "));
+            let mut stale_check = None;
             let mut plugin = match config {
                 Ok(native) => {
                     self.debug(&format!("configuration from {BUILT_IN}/{}/config/default.yml\n", native.gem));
@@ -1895,9 +1911,16 @@ impl Store {
                     make_excludes_absolute(&mut m, &self.cwd);
                     m
                 }
-                Err(path) => self.load_file(&path, false)?,
+                Err((path, plugin_name)) => {
+                    let m = self.load_file(&path, false)?;
+                    stale_check = plugin_name.map(|n| (n, path));
+                    m
+                }
             };
             self.debug(&END_ONCE.to_string());
+            if let Some((plugin_name, path)) = stale_check {
+                self.warn_about_obsolete_plugin_config(&plugin_name, &plugin, &path);
+            }
             if let Some(Value::Map(new_all)) = plugin.get("AllCops").cloned() {
                 let mut all = combined.map("AllCops").cloned().unwrap_or_default();
                 for (key, value) in Arc::unwrap_or_clone(new_all).0 {
