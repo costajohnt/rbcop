@@ -4,18 +4,12 @@ pub const NAME: &str = "Layout/SpaceInsideRangeLiteral";
 pub static COP: SpaceInsideRangeLiteral = SpaceInsideRangeLiteral;
 pub struct SpaceInsideRangeLiteral;
 
-// Ruby's \s is ASCII whitespace only.
-static IRANGE_NL: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\.\.\n[ \t\n\x0B\x0C\r]*").unwrap());
-static ERANGE_NL: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\.\.\.\n[ \t\n\x0B\x0C\r]*").unwrap());
-static IRANGE_SPACE: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"[ \t\n\x0B\x0C\r]\.\.|\.\.[ \t\n\x0B\x0C\r]").unwrap());
-static ERANGE_SPACE: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"[ \t\n\x0B\x0C\r]\.\.\.|\.\.\.[ \t\n\x0B\x0C\r]").unwrap());
-
-static IRANGE_BEFORE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[ \t\n\x0B\x0C\r]+\.\.").unwrap());
-static IRANGE_AFTER: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\.\.[ \t\n\x0B\x0C\r]+").unwrap());
-static ERANGE_BEFORE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[ \t\n\x0B\x0C\r]+\.\.\.").unwrap());
-static ERANGE_AFTER: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\.\.\.[ \t\n\x0B\x0C\r]+").unwrap());
+/// `whitespace_range`: the range when it is all (ASCII, Ruby `\s`) whitespace.
+fn whitespace_range(text: &str, begin: usize, end: usize) -> Option<(usize, usize)> {
+    let s = text.get(begin..end)?;
+    (!s.is_empty() && s.bytes().all(|b| matches!(b, b' ' | b'\t' | b'\n' | b'\x0b' | b'\x0c' | b'\r')))
+        .then_some((begin, end))
+}
 
 impl Cop for SpaceInsideRangeLiteral {
     fn correctable(&self) -> bool {
@@ -34,19 +28,21 @@ impl Cop for SpaceInsideRangeLiteral {
         if range.left().is_none() && cx.src.target_ruby < 2.7 {
             return;
         }
-        let (nl, space, op) = if range.is_exclude_end() {
-            (&*ERANGE_NL, &*ERANGE_SPACE, "...")
-        } else {
-            (&*IRANGE_NL, &*IRANGE_SPACE, "..")
-        };
-        let loc = node.location();
+        let text = cx.src.text;
+        let op = range.operator_loc();
+        let (op_begin, op_end) = (op.start_offset(), op.end_offset());
+        let before = range.left().and_then(|l| whitespace_range(text, l.location().end_offset(), op_begin));
+        let after = range.right().and_then(|r| whitespace_range(text, op_end, r.location().start_offset()));
+        let spaces: Vec<(usize, usize)> = before.into_iter().chain(after).collect();
         // A line break right after the operator (plus the next line's indentation) is fine.
-        let expression = nl.replace(node_text(node), op);
-        if space.is_match(&expression) {
-            let (before, after) = if range.is_exclude_end() { (&*ERANGE_BEFORE, &*ERANGE_AFTER) } else { (&*IRANGE_BEFORE, &*IRANGE_AFTER) };
-            let fixed = after.replace(&before.replace(&expression, op), op).into_owned();
-            let (s, e) = (loc.start_offset(), loc.end_offset());
-            cx.add_fix(s, e, "Space inside range literal.", |c| c.replace(s, e, &fixed));
+        if spaces.iter().all(|&(b, _)| b == op_end && text.as_bytes()[b] == b'\n') {
+            return;
         }
+        let loc = node.location();
+        cx.add_fix(loc.start_offset(), loc.end_offset(), "Space inside range literal.", |c| {
+            for &(b, e) in &spaces {
+                c.remove(b, e);
+            }
+        });
     }
 }

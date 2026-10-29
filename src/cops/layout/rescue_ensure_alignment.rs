@@ -17,8 +17,7 @@ fn first_non_space(src: &Source, off: usize) -> usize {
     s + src.text[s..].bytes().take_while(|b| matches!(b, b' ' | b'\t' | b'\x0b' | b'\x0c' | b'\r')).count()
 }
 
-/// End of `node.loc.name` for an assignment node, None where RuboCop would crash
-/// (`a.b ||= ...`: the first child is a send without `loc.name`).
+/// End of `node.loc.name` (or `node.lhs` for masgn and op-assignments) for an assignment node.
 fn assignment_name_end(n: &Node) -> Option<Option<usize>> {
     macro_rules! name {
         ($($as:ident),*) => {
@@ -67,15 +66,21 @@ fn assignment_name_end(n: &Node) -> Option<Option<usize>> {
         });
         return Some(end);
     }
-    match kind::of(n) {
-        kind::CALL_OPERATOR_WRITE_NODE
-        | kind::CALL_OR_WRITE_NODE
-        | kind::CALL_AND_WRITE_NODE
-        | kind::INDEX_OPERATOR_WRITE_NODE
-        | kind::INDEX_OR_WRITE_NODE
-        | kind::INDEX_AND_WRITE_NODE => Some(None),
-        _ => None,
+    // op_asgn / or_asgn / and_asgn on a send: `node.lhs.source_range` (1.92.2), the `a.b` or
+    // `a[i]` target.
+    macro_rules! call_target {
+        ($($as:ident),*) => {
+            $(if let Some(x) = n.$as() { return Some(x.message_loc().map(|l| l.end_offset())); })*
+        };
     }
+    call_target!(as_call_operator_write_node, as_call_or_write_node, as_call_and_write_node);
+    macro_rules! index_target {
+        ($($as:ident),*) => {
+            $(if let Some(x) = n.$as() { return Some(Some(x.closing_loc().end_offset())); })*
+        };
+    }
+    index_target!(as_index_operator_write_node, as_index_or_write_node, as_index_and_write_node);
+    None
 }
 
 impl Cop for RescueEnsureAlignment {

@@ -9,13 +9,11 @@ pub struct SpaceAroundOperators;
 
 const IRREGULAR_METHODS: &[&str] = &["[]", "!", "[]="];
 
-static SURROUNDED: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"(?m)^[ \t\r\n\x0b\x0c].*[ \t\r\n\x0b\x0c]$").unwrap());
-
 #[derive(Clone, Copy, PartialEq, Eq)]
 enum Type {
     Assignment,
     SpecialAsgn,
+    Pair,
     Other,
 }
 
@@ -33,6 +31,34 @@ fn is_space(b: u8) -> bool {
 
 fn strip(s: &str) -> &str {
     s.trim_matches(|c: char| c == '\0' || (c.is_ascii() && is_space(c as u8)))
+}
+
+/// missing_surrounding_space? (1.92.2): not `/\A\s.*\s\z/m`, unless only a `\` line continuation
+/// follows the operator.
+fn missing_surrounding_space(text: &str, ws: usize, we: usize) -> bool {
+    let b = &text.as_bytes()[ws..we];
+    let first = b.first().is_some_and(|&c| is_space(c));
+    if first && b.len() >= 2 && is_space(b[b.len() - 1]) {
+        return false;
+    }
+    !first || !text[we..].starts_with("\\\n")
+}
+
+/// aligned_with_another_hash_rocket?: another `=>` pair of the parent hash has its operator in
+/// the same column.
+fn aligned_with_another_hash_rocket(cx: &Cx, op_start: usize) -> bool {
+    let elements: Vec<Node> = match cx.parent() {
+        Some(p) if p.as_hash_node().is_some() => p.as_hash_node().unwrap().elements().iter().collect(),
+        Some(p) if p.as_keyword_hash_node().is_some() => p.as_keyword_hash_node().unwrap().elements().iter().collect(),
+        _ => return false,
+    };
+    let column = cx.src.column(op_start);
+    let rockets = elements
+        .iter()
+        .filter_map(|e| e.as_assoc_node()?.operator_loc().filter(|l| l.as_slice() == b"=>"))
+        .filter(|l| cx.src.column(l.start_offset()) == column)
+        .count();
+    rockets > 1
 }
 
 impl SpaceAroundOperators {
@@ -64,7 +90,7 @@ impl SpaceAroundOperators {
                 return;
             }
             format!("Space around operator `{op_src}` detected.")
-        } else if !SURROUNDED.is_match(with_space) {
+        } else if missing_surrounding_space(src.text, ws, we) {
             format!("Surrounding space missing for operator `{op_src}`.")
         } else {
             let leading = allow && with_space.starts_with("  ");
@@ -72,6 +98,7 @@ impl SpaceAroundOperators {
             if !leading && !trailing {
                 return;
             }
+            let rocket_aligned = ty == Type::Pair && aligned_with_another_hash_rocket(cx, op.0);
             let program = &cx.ancestors[0];
             let data = cx.state::<Option<Data>>().get_or_insert_with(|| Data::new(src, program));
             let al = Alignment { src, d: data };
@@ -87,7 +114,8 @@ impl SpaceAroundOperators {
                         }
                     }
                 } else {
-                    !al.aligned_with_operator(r)
+                    // aligned? (1.92.2): a `=>` may also line up with another pair's in its hash.
+                    !(al.aligned_with_operator(r) || rocket_aligned)
                 };
             let excess_trailing =
                 trailing && (!allow || !al.aligned_with_something(Range { start: right.0, end: right.1 }));
@@ -204,7 +232,7 @@ impl Cop for SpaceAroundOperators {
                         return;
                     }
                 }
-                self.check(cx, o, range(&op), node_range(node), false);
+                self.check(cx, Type::Pair, range(&op), node_range(node), false);
             }
             kind::IF_NODE => {
                 let n = node.as_if_node().unwrap();

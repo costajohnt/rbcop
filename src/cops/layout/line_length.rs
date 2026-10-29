@@ -60,6 +60,15 @@ struct Breakable {
     by_line: std::collections::HashMap<usize, (usize, usize)>,
     /// 0-based line index of an endless method definition to its multiline rewrite (range, replacement), if correctable.
     endless: std::collections::HashMap<usize, Option<(usize, usize, String)>>,
+    /// `heredoc_openers`: (line, offset) of every heredoc opener in the file.
+    openers: Vec<(usize, usize)>,
+}
+
+/// `after_heredoc_opener?` (1.92.2): a break at `pos` follows a heredoc opener on its line, so
+/// breaking there would move code into the heredoc body.
+fn after_heredoc_opener(cx: &mut Cx, pos: usize) -> bool {
+    let line = cx.src.line_of(pos);
+    cx.state::<Breakable>().openers.iter().any(|&(l, o)| l == line && o < pos)
 }
 
 fn max_of(cx: &Cx) -> Num {
@@ -72,19 +81,29 @@ fn init(cx: &mut Cx) {
         return;
     }
     let src = cx.src;
+    let openers: Vec<(usize, usize)> = src
+        .tokens()
+        .iter()
+        .filter(|t| t.kind == sys::PM_TOKEN_HEREDOC_START)
+        .map(|t| (src.line_of(t.start), t.start))
+        .collect();
+    let after_opener = |pos: usize| openers.iter().any(|&(l, o)| l == src.line_of(pos) && o < pos);
     let mut found = Vec::new();
     if src.text.contains(';') {
         for t in src.tokens().iter().rev().filter(|t| t.kind == sys::PM_TOKEN_SEMICOLON) {
             // breakable_range_after_semicolon: the next character, if it is on the same line and
             // neither a line break nor another semicolon.
             match src.text[t.end..].chars().next() {
-                Some(c) if c != '\n' && c != '\r' && c != ';' => found.push((src.line_of(t.end) - 1, (t.end, t.end + c.len_utf8()))),
+                Some(c) if c != '\n' && c != '\r' && c != ';' && !after_opener(t.end) => {
+                    found.push((src.line_of(t.end) - 1, (t.end, t.end + c.len_utf8())))
+                }
                 _ => {}
             }
         }
     }
     let st = cx.state::<Breakable>();
     st.init = true;
+    st.openers = openers;
     for (line, pos) in found {
         st.by_line.insert(line, pos);
     }
@@ -274,11 +293,14 @@ fn endless_rewrite(cx: &Cx, def: &ruby_prism::DefNode) -> Option<(usize, usize, 
 
 fn record_node_break(cx: &mut Cx, pos: (usize, usize)) {
     let line = cx.src.line_of(pos.0) - 1;
-    cx.state::<Breakable>().by_line.entry(line).or_insert(pos);
+    if cx.state::<Breakable>().by_line.contains_key(&line) || after_heredoc_opener(cx, pos.0) {
+        return;
+    }
+    cx.state::<Breakable>().by_line.insert(line, pos);
 }
 
 /// LineLength#check_for_breakable_block (on_block): overwrites any earlier break point on the line.
-fn check_block(cx: &mut Cx, start: usize, block: &Node, receiver: Option<Node>, lambda: bool) {
+fn check_block(cx: &mut Cx, start: usize, block: &Node, lambda: bool) {
     let src = cx.src;
     let (opening, closing, params) = match kind::of(block) {
         kind::BLOCK_NODE => {
@@ -295,9 +317,6 @@ fn check_block(cx: &mut Cx, start: usize, block: &Node, receiver: Option<Node>, 
     if src.line_of(opening.start_offset()) != src.line_of(closing.start_offset()) {
         return;
     }
-    if receiver.as_ref().is_some_and(|r| contains_heredoc(r)) {
-        return;
-    }
     let arguments_end = params.as_ref().and_then(|p| p.as_block_parameters_node()).and_then(|p| {
         let has_args = p.parameters().is_some() || p.locals().iter().next().is_some();
         if has_args { p.closing_loc().map(|c| c.start_offset()) } else { None }
@@ -308,6 +327,9 @@ fn check_block(cx: &mut Cx, start: usize, block: &Node, receiver: Option<Node>, 
         _ => opening.start_offset() + 1,
     };
     let pos = range_begin + 1;
+    if after_heredoc_opener(cx, pos) {
+        return;
+    }
     let line = src.line_of(start) - 1;
     cx.state::<Breakable>().by_line.insert(line, (pos, pos + src.text[pos..].chars().next().map_or(0, char::len_utf8)));
 }
@@ -399,7 +421,7 @@ impl Cop for LineLength {
                 if let Some(block) = call.block().filter(|b| kind::of(b) == kind::BLOCK_NODE) {
                     let loc = node.location();
                     let lambda = method_name(&call) == "lambda";
-                    check_block(cx, loc.start_offset(), &block, call.receiver(), lambda);
+                    check_block(cx, loc.start_offset(), &block, lambda);
                 }
                 let mut recv = call.receiver();
                 while let Some(r) = recv {
@@ -425,7 +447,7 @@ impl Cop for LineLength {
             // on_send does not run for `super`.
             kind::SUPER_NODE | kind::FORWARDING_SUPER_NODE => {
                 if let Some(block) = helpers::node_types::literal_block(node) {
-                    check_block(cx, node.location().start_offset(), &block.as_node(), None, false);
+                    check_block(cx, node.location().start_offset(), &block.as_node(), false);
                 }
             }
             kind::RESCUE_NODE => {
@@ -447,7 +469,7 @@ impl Cop for LineLength {
             }
             kind::LAMBDA_NODE => {
                 let loc = node.location();
-                check_block(cx, loc.start_offset(), node, None, true);
+                check_block(cx, loc.start_offset(), node, true);
             }
             kind::DEF_NODE => {
                 let def = node.as_def_node().unwrap();
