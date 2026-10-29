@@ -183,7 +183,18 @@ pub fn line_length(cx: &Cx, line: &str) -> usize {
 /// StatementModifier#modifier_fits_on_single_line?
 pub fn modifier_fits_on_single_line(cx: &Cx, s: &Stmt, parenthesize: bool) -> bool {
     let Some(max) = max_line_length(cx) else { return true };
-    line_length(cx, &line_in_modifier_form(cx, s, parenthesize)) as f64 <= max
+    let mut length = line_length(cx, &line_in_modifier_form(cx, s, parenthesize));
+    if parenthesize && space_inside_parens(cx) {
+        length += 2;
+    }
+    length as f64 <= max
+}
+
+/// `space_inside_parens?` (StatementModifier, Style/RedundantBegin): Layout/SpaceInsideParens is
+/// enabled with a style that pads the parentheses the correction adds.
+pub fn space_inside_parens(cx: &Cx) -> bool {
+    cop_enabled(cx, "Layout/SpaceInsideParens")
+        && matches!(cx.config.for_cop("Layout/SpaceInsideParens").str("EnforcedStyle"), Some("space" | "compact"))
 }
 
 fn line_in_modifier_form(cx: &Cx, s: &Stmt, parenthesize: bool) -> String {

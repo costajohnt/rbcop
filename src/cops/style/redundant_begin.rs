@@ -1,5 +1,5 @@
 use crate::helpers::node_types::is_assignment;
-use crate::helpers::parser_parent::{is_operator_keyword, parser_parent};
+use crate::helpers::parser_parent::{is_operator_keyword, is_ternary, parser_parent};
 use crate::helpers::range_help::{Surrounding, range_with_surrounding_space};
 use crate::helpers::whole_lines::range_by_whole_lines;
 use crate::prelude::*;
@@ -62,23 +62,24 @@ impl Cop for RedundantBegin {
                 if is_pattern_guard(node, cx.ancestors) {
                     return;
                 }
+                let ternary = is_ternary(node);
                 for branch in if_branches(node) {
-                    inspect_branch(cx, branch);
+                    inspect_branch(cx, branch, ternary);
                 }
             }
             kind::CASE_NODE => {
                 let n = node.as_case_node().unwrap();
                 for w in n.conditions().iter() {
-                    inspect_branch(cx, w.as_when_node().and_then(|w| w.statements()).map(|s| s.as_node()));
+                    inspect_branch(cx, w.as_when_node().and_then(|w| w.statements()).map(|s| s.as_node()), false);
                 }
-                inspect_branch(cx, n.else_clause().and_then(|e| e.statements()).map(|s| s.as_node()));
+                inspect_branch(cx, n.else_clause().and_then(|e| e.statements()).map(|s| s.as_node()), false);
             }
             kind::CASE_MATCH_NODE => {
                 let n = node.as_case_match_node().unwrap();
                 for w in n.conditions().iter() {
-                    inspect_branch(cx, w.as_in_node().and_then(|w| w.statements()).map(|s| s.as_node()));
+                    inspect_branch(cx, w.as_in_node().and_then(|w| w.statements()).map(|s| s.as_node()), false);
                 }
-                inspect_branch(cx, n.else_clause().and_then(|e| e.statements()).map(|s| s.as_node()));
+                inspect_branch(cx, n.else_clause().and_then(|e| e.statements()).map(|s| s.as_node()), false);
             }
             kind::WHILE_NODE | kind::UNTIL_NODE => {
                 let (closing, post, body) = match node.as_while_node() {
@@ -91,7 +92,7 @@ impl Cop for RedundantBegin {
                 if closing.is_none() || post {
                     return;
                 }
-                inspect_branch(cx, body.map(|s| s.as_node()));
+                inspect_branch(cx, body.map(|s| s.as_node()), false);
             }
             kind::BLOCK_NODE => {
                 let b = node.as_block_node().unwrap();
@@ -149,13 +150,24 @@ fn kwbegin_body(body: Option<Node<'_>>) -> Option<BeginNode<'_>> {
     }
 }
 
-/// inspect_branches: a kwbegin branch without rescue/ensure.
-fn inspect_branch(cx: &mut Cx, branch: Option<Node>) {
+/// inspect_branches: a kwbegin branch without rescue/ensure. `ternary`: the branches are a
+/// ternary's.
+fn inspect_branch(cx: &mut Cx, branch: Option<Node>, ternary: bool) {
     let Some(b) = kwbegin_body(branch) else { return };
     // A lonely `else` (accepted up to Ruby 2.5) keeps the begin, like rescue/ensure.
-    if b.rescue_clause().is_none() && b.ensure_clause().is_none() && b.else_clause().is_none() {
+    if b.rescue_clause().is_none()
+        && b.ensure_clause().is_none()
+        && b.else_clause().is_none()
+        && !(ternary && ternary_operand_requiring_begin(&b, children(&b).len()))
+    {
         register_simple(cx, &b);
     }
+}
+
+/// `ternary_operand_requiring_begin?` once the parent is known to be a ternary: `n` is the
+/// kwbegin's parser child count.
+fn ternary_operand_requiring_begin(b: &BeginNode, n: usize) -> bool {
+    n != 1 || children(b).first().is_some_and(low_precedence_statement)
 }
 
 /// register_offense where the parent is a def/block/loop/branching node: remove `begin` and `end`.
@@ -223,6 +235,7 @@ fn allowable(cx: &Cx, b: &BeginNode, parent: Option<&Node>) -> bool {
         || p.as_until_node().is_some_and(|w| w.is_begin_modifier())
         || p.as_call_node().is_some_and(|c| !is_csend(&c))
         || is_operator_keyword(p)
+        || (is_ternary(p) && ternary_operand_requiring_begin(b, n))
 }
 
 /// The corrector block of register_offense for a kwbegin with its parser parent.
@@ -308,7 +321,8 @@ fn too_long_when_joined(cx: &Cx, b: &BeginNode) -> bool {
     let (s, e) = (statement.location().start_offset(), statement.location().end_offset());
     let mut length = cx.src.text[s..e].chars().count();
     if low_precedence_statement(&statement) {
-        length += 2;
+        // parentheses_width
+        length += if helpers::statement_modifier::space_inside_parens(cx) { 4 } else { 2 };
     }
     (cx.src.column(b.as_node().location().start_offset()) + length) as f64 > max
 }
