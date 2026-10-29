@@ -65,6 +65,7 @@ impl Cop for HashLookupMethod {
             && args.len() == 1
             && !block_literal
             && !csend
+            && !forwarded_or_splatted(&args[0])
             && receiver.as_ref().is_some_and(|r| !exempt_from_brackets(cx, r, dot));
         let fetch = fetch_style && name == "[]" && args.len() == 1;
         if !brackets && !fetch {
@@ -95,4 +96,15 @@ fn exempt_from_brackets(cx: &Cx, receiver: &Node, dot: Option<(usize, usize)>) -
     let (first, last) = (cx.src.line_of(receiver.location().end_offset()), cx.src.line_of(dot.1));
     helpers::comments_help::contains_comments(cx, first, last + 1)
         || (helpers::parser_parent::is_top_const(receiver, "ENV") && cx.config.cop_enabled("Style/FetchEnvVar"))
+}
+
+/// forwarded_or_splatted?: `...`, `*`/`*args`, `&`/`&blk`, or an unbraced hash with `**`/`**opts`.
+fn forwarded_or_splatted(arg: &Node) -> bool {
+    match arg.as_keyword_hash_node() {
+        Some(h) => h.elements().iter().any(|e| e.as_assoc_splat_node().is_some()),
+        None => matches!(
+            kind::of(arg),
+            kind::FORWARDING_ARGUMENTS_NODE | kind::SPLAT_NODE | kind::BLOCK_ARGUMENT_NODE
+        ),
+    }
 }
