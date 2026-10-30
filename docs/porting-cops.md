@@ -1,11 +1,11 @@
 # Porting a RuboCop cop to rbcop
 
-The bar is **identical output to RuboCop 1.92.1**: same offenses, same ranges, same messages, same
+The bar is **identical output to RuboCop 1.92.2**: same offenses, same ranges, same messages, same
 `[Correctable]` flag, on every corpus. RuboCop is the oracle; when in doubt, run it.
 
 ## Where things are
 
-- RuboCop source: `~/rubocop-1.92.1/gems/gems/rubocop-1.92.1/lib/rubocop/cop/<dept>/<cop>.rb` on the CI host,
+- RuboCop source: `~/rubocop-1.92.2/gems/gems/rubocop-1.92.2/lib/rubocop/cop/<dept>/<cop>.rb` on the CI host,
   mixins in `.../cop/mixin/`, cop config in `.../config/default.yml` (rbcop vendors a copy in `config/default.yml`).
 - rubocop-ast (node helpers such as `single_line?`, `method?`, `loc.selector`, node groups like `:any_block`):
   `~/.rbenv/versions/4.0.6/lib/ruby/gems/4.0.0/gems/rubocop-ast-1.50.0/lib/rubocop/ast/`.

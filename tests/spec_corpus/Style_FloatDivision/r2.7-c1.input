@@ -36,7 +36,10 @@ a.
   # comment
   to_f / b
 
-==> 008.rb 8 <==
+==> 008.rb 21 <==
+a.to_f / b # comment
+
+==> 009.rb 8 <==
 to_f / b
-==> 009.rb 10 <==
+==> 010.rb 10 <==
 a / b.to_f

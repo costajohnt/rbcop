@@ -133,7 +133,7 @@ fn avoid_comma(cx: &mut Cx, style: &str, kind: &str, pos: usize) {
 
 fn put_comma(cx: &mut Cx, items: &[Node], kind: &str) {
     let Some(last) = items.last() else { return };
-    if last.as_block_argument_node().is_some() {
+    if last.as_block_argument_node().is_some() || last.as_forwarding_arguments_node().is_some() {
         return;
     }
     // autocorrect_range: from the first non-space character of the item's last line

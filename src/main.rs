@@ -1,4 +1,4 @@
-//! The `rubocop` command line: options, formatters and exit status as RuboCop 1.92.1 has them
+//! The `rubocop` command line: options, formatters and exit status as RuboCop 1.92.2 has them
 //! (lib/rubocop/cli.rb, options.rb, runner.rb, cli/command/*.rb).
 
 use rbcop::config::{Options, RUBOCOP_VERSION, Resolved, Store, expand_path};
@@ -24,7 +24,7 @@ mod serve;
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
-/// `rubocop -h` (OptionParser#help for RuboCop 1.92.1's options), recorded verbatim.
+/// `rubocop -h` (OptionParser#help for RuboCop 1.92.2's options), recorded verbatim.
 const HELP: &str = include_str!("help.txt");
 
 /// RuboCop's exit statuses.
@@ -38,7 +38,7 @@ enum Arg {
     Optional,
 }
 
-/// Every option RuboCop 1.92.1 defines: (long name, short, argument, what rbcop does with it).
+/// Every option RuboCop 1.92.2 defines: (long name, short, argument, what rbcop does with it).
 /// Long names with `[no-]` also accept `--no-NAME`.
 #[derive(Clone, Copy, PartialEq)]
 enum Use {
@@ -2087,7 +2087,6 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     let only = &cli.opts.only;
     let except = &cli.except;
     let badges = Badges::new(only, except, cli.only_guide);
-    let selected = |cop: &str| badges.selected(cop);
     let badge_selected = |cop: &str, cfg: &Resolved| badges.badge_selected(cop, cfg);
     let guide_only = |cfg: &Resolved| badges.guide_only(cfg);
     let badge_selected_in =
@@ -2422,7 +2421,6 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     if error.is_none() {
         let mut cop_notes = Some((cop_warnings, cop_error));
         let mut stopped = false;
-        let mut warned_configs = std::collections::HashSet::new();
         let mut similar_view: Option<Option<usize>> = None;
         for (idx, ((path, cfg), linted)) in jobs.iter().zip(reports.iter_mut()).enumerate() {
             // Runner#file_started, then the file's config loading (Runner#process_file).
@@ -2442,16 +2440,6 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                     error = Some(e);
                     stopped = true;
                     break;
-                }
-            }
-            // Config#for_cop warns about deprecated-name configuration once per config, when the
-            // cops are mobilized for its first file.
-            if (stdin_text.is_some() || path.is_file()) && warned_configs.insert(std::sync::Arc::as_ptr(cfg)) {
-                for (cop, msg) in &cfg.deprecated_warnings {
-                    if selected(cop) {
-                        let msg = formatter::Paint(global).yellow(msg);
-                        eprint!("{msg}{}", if msg.ends_with('\n') { "" } else { "\n" });
-                    }
                 }
             }
             if let Some((_, e)) = team_error.take_if(|(i, _)| *i == idx) {

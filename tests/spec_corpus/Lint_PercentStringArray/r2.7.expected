@@ -1,24 +1,52 @@
-==> offenses exit=1 1341 <==
+==> offenses exit=1 3217 <==
 005.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
 006.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
 007.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
 008.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
-013.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
-014.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
-015.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
-016.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
-017.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
+009.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+010.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+011.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+012.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+013.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+014.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+015.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+021.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
+022.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
+023.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
+024.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
+025.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+026.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+027.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+028.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+029.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+030.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+031.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+033.rb:1:1: W: [Correctable] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
 
-==> autocorrect exit=0 1323 <==
+==> autocorrect exit=1 3187 <==
 005.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
 006.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
 007.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
 008.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
-013.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
-014.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
-015.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
-016.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
-017.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
+009.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+010.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+011.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+012.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+013.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+014.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+015.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+021.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
+022.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
+023.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
+024.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
+025.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+026.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+027.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+028.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+029.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+030.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+031.rb:1:1: W: Lint/PercentStringArray: Within `%w`/`%W`, quoted strings are split at whitespace; use an array literal instead.
+033.rb:1:1: W: [Corrected] Lint/PercentStringArray: Within `%w`/`%W`, quotes and ',' are unnecessary and may be unwanted in the resulting strings.
 
 ==> corrected/005.rb 16 <==
 %w(foo bar baz)
@@ -32,18 +60,42 @@
 ==> corrected/008.rb 16 <==
 %w(foo bar baz)
 
-==> corrected/013.rb 16 <==
+==> corrected/009.rb 19 <==
+['foo bar', 'baz']
+
+==> corrected/010.rb 15 <==
+['foo != ""',]
+
+==> corrected/011.rb 29 <==
+[
+  'foo bar',
+  "baz qux"
+]
+
+==> corrected/021.rb 16 <==
 %W(foo bar baz)
 
-==> corrected/014.rb 16 <==
+==> corrected/022.rb 16 <==
 %W(foo bar baz)
 
-==> corrected/015.rb 16 <==
+==> corrected/023.rb 16 <==
 %W(foo bar baz)
 
-==> corrected/016.rb 16 <==
+==> corrected/024.rb 16 <==
 %W(foo bar baz)
 
-==> corrected/017.rb 14 <==
+==> corrected/025.rb 19 <==
+['foo bar', 'baz']
+
+==> corrected/026.rb 15 <==
+['foo != ""',]
+
+==> corrected/027.rb 29 <==
+[
+  'foo bar',
+  "baz qux"
+]
+
+==> corrected/033.rb 14 <==
 %W(a\255\255)
 

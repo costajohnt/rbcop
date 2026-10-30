@@ -14,7 +14,7 @@ running the pinned plugin version below.
 | rubocop-factory_bot | 2.28.0 | FactoryBot | all 11 | #285 |
 | rubocop-capybara | 3.1.0 | Capybara, Capybara/RSpec | all 25 | #285, #673 |
 
-Each version is the newest release that supports RuboCop 1.92.1 (rubocop-performance 1.27.0
+Each version is the newest release that supports RuboCop 1.92.2 (rubocop-performance 1.27.0
 requires `rubocop >= 1.89.0, < 2.0`, released 2026-08-16; rubocop-rails 2.38.0 requires
 `rubocop >= 1.89.0, < 2.0`, released 2026-09-20;
 rubocop-minitest 0.41.0 requires `rubocop >= 1.89.0, < 2.0`, released 2026-10-02;
@@ -100,7 +100,7 @@ installed; a different installed version is ignored.
 
 ## Porting a plugin
 
-1. Pin the version: the newest release whose gemspec accepts RuboCop 1.92.1. Install it with the
+1. Pin the version: the newest release whose gemspec accepts RuboCop 1.92.2. Install it with the
    rbenv Ruby on every machine that runs the oracle (same version on all) and add it to the table above.
 2. Vendor its `config/default.yml` as `config/plugins/<gem>.yml`, add an entry to `NATIVE_PLUGINS`,
    regenerate `src/autocorrect/registry.tsv`, and add `config/all-cops-<plugin>.yml` (oracle config)

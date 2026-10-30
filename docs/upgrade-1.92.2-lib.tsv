@@ -1,0 +1,10 @@
+changed	4	lib/rubocop/config.rb
+changed	9	lib/rubocop/config_obsoletion.rb
+changed	2	lib/rubocop/cop/correctors/empty_line_corrector.rb
+changed	2	lib/rubocop/cop/mixin/comments_help.rb
+changed	18	lib/rubocop/cop/mixin/hash_alignment_styles.rb
+changed	15	lib/rubocop/cop/mixin/statement_modifier.rb
+changed	2	lib/rubocop/cop/mixin/trailing_comma.rb
+changed	27	lib/rubocop/plugin/configuration_integrator.rb
+changed	2	lib/rubocop/runner.rb
+changed	2	lib/rubocop/version.rb

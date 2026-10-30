@@ -1,4 +1,4 @@
-//! `--explain COPS` and the cop-name checks of `--show-cops` / `--show-docs-url`, as RuboCop 1.92.1
+//! `--explain COPS` and the cop-name checks of `--show-cops` / `--show-docs-url`, as RuboCop 1.92.2
 //! has them (cli/command/explain.rb, cli/command/cop_names.rb, cop/cop_explanation.rb). The
 //! documentation sections are cop/cop_documentation.rb's, read from the comment above each cop
 //! class: rbcop has no Ruby sources, so src/cop_docs.txt holds them (scripts/dump-cop-docs.rb).

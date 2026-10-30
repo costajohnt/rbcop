@@ -94,13 +94,13 @@ impl Cop for QuotedSymbols {
         }
         let binary = cx.src.binary;
         let correct_quotes = |s: &str| {
-            let correction = if single {
-                safe_string_literal(s.as_bytes())
+            if single {
+                safe_string_literal(s.as_bytes()).replace("\\\\", "\\").replace("\\\"", "\"")
             } else {
                 let s = s.replace("\\'", "'");
-                if binary { inspect_binary(s.as_bytes()) } else { inspect(s.as_bytes()) }
-            };
-            correction.replace("\\\\", "\\").replace("\\\"", "\"")
+                let inspected = if binary { inspect_binary(s.as_bytes()) } else { inspect(s.as_bytes()) };
+                inspected.replace("\\\\", "\\")
+            }
         };
         // `source[1..-2]` / `source[2..-2]` by characters.
         let chars: Vec<char> = src.chars().collect();

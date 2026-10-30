@@ -1,6 +1,7 @@
 == Gemfile ==
 C:  1:  1: [Todo] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 C:  1:  8: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+W:  1: 31: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of Style/FrozenStringLiteralComment.
 == lib/u.rb ==
 C:  3: 81: [Corrected] Layout/LineLength: Line is too long. [90/80]
 C:  3: 89: [Todo] Naming/MethodParameterName: Method parameter must be at least 3 characters long.
@@ -29,4 +30,4 @@ W: 21: 25: [Corrected] Lint/CopDirectiveSyntax: Malformed directive comment dete
 C: 22:  1: [Corrected] Style/IfUnlessModifier: Favor modifier if usage when having a single-line body. Another good alternative is the usage of control flow &&/||.
 C: 24:  1: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 0 instead of 2).
 
-2 files inspected, 28 offenses detected, 28 offenses corrected
+2 files inspected, 29 offenses detected, 29 offenses corrected

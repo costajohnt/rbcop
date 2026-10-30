@@ -53,6 +53,48 @@ fn safe_assignment(children: &[Node]) -> bool {
     )
 }
 
+/// `command_call_assignment?`: an assignment (setter calls included) whose value, through nested
+/// assignments and a modifier rescue, is a command call (`if (a = foo bar)`).
+fn command_call_assignment(n: &Node) -> bool {
+    let value = match n.as_call_node() {
+        Some(c) if c.equal_loc().is_some() => send_args(&c).pop(),
+        Some(_) => None,
+        None => assignment_parts(n).map(|(_, v)| v),
+    };
+    let Some(mut value) = value else { return false };
+    if let Some(r) = value.as_rescue_modifier_node() {
+        value = r.expression();
+    }
+    command_call_assignment(&value) || command_call(&value)
+}
+
+/// `command_call?`: a call, `super` or `yield` (a block's send included) with unparenthesized
+/// arguments, not an operator, setter or `[]`.
+fn command_call(n: &Node) -> bool {
+    match n {
+        Node::CallNode { .. } => {
+            let c = n.as_call_node().unwrap();
+            let has_args = c.arguments().is_some() || c.block().is_some_and(|b| b.as_block_argument_node().is_some());
+            let name = method_name(&c);
+            has_args
+                && c.opening_loc().is_none_or(|o| o.as_slice() != b"(")
+                && !helpers::node_types::is_operator_method(name)
+                && c.equal_loc().is_none()
+                && name != "[]"
+        }
+        Node::SuperNode { .. } => {
+            let s = n.as_super_node().unwrap();
+            let has_args = s.arguments().is_some() || s.block().is_some_and(|b| b.as_block_argument_node().is_some());
+            has_args && s.lparen_loc().is_none()
+        }
+        Node::YieldNode { .. } => {
+            let y = n.as_yield_node().unwrap();
+            y.arguments().is_some() && y.lparen_loc().is_none()
+        }
+        _ => false,
+    }
+}
+
 impl Cop for ParenthesesAroundCondition {
     fn correctable(&self) -> bool {
         true
@@ -101,7 +143,7 @@ impl Cop for ParenthesesAroundCondition {
         {
             return;
         }
-        if modifier_op(first) || first.as_multi_write_node().is_some() {
+        if modifier_op(first) || first.as_multi_write_node().is_some() || command_call_assignment(first) {
             return;
         }
         // parens_allowed?

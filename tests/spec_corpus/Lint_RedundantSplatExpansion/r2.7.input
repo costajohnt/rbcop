@@ -171,9 +171,15 @@ do_something(*[])
 ==> 041.rb 30 <==
 send(method, *Array.new(foo))
 
-==> 042.rb 23 <==
+==> 042.rb 30 <==
+a = foo(*Array.new(3) { 42 })
+
+==> 043.rb 35 <==
+@a = foo(bar, *::Array.new(3, 42))
+
+==> 044.rb 23 <==
 [:a, :b, *%i(c d), :e]
 
-==> 043.rb 30 <==
+==> 045.rb 30 <==
 [:a, :b, *%I(#{one} two), :e]
 

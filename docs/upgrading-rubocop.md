@@ -112,7 +112,28 @@ check-cops corpus at diff 0, the cold corpus and `cargo test` green, the corpus2
 Then also run `scripts/check-autocorrect-all.sh` with the new release, since -A output moves with
 almost every bug-fix release.
 
-## In progress: 1.91.0 to 1.92.1
+## In progress: 1.92.1 to 1.92.2
+
+Inventory taken 2026-10-29 (`docs/upgrade-1.92.2.tsv`, `docs/upgrade-1.92.2-lib.tsv`, release notes
+of 1.92.2: 55 entries, all bug fixes and two behaviour changes). No new, removed or renamed cops;
+`config/default.yml` and `config/obsoletion.yml` are unchanged. 30 cop files and 10 other lib files
+change (five mixins and correctors, the runner's redundant-disable input, the renamed-cop config
+warning, obsolete plugin config warnings). On the nine corpora five cops report differently (50
+offenses gone, 3 new, no crash changes; Layout/SpaceAroundOperators is 47 of them). Plugin pins are
+unaffected. The integration branch is `feat/rubocop-1.92.2`; its worklist and batches are
+docs/upgrade-1.92.2-status.md.
+
+### Gate environments for 1.92.2
+
+As for 1.92.1 below, with `1.92.2` in every name: `~/rubocop-1.92.2/gems` is a copy of the 1.92.1
+gem home with rubocop 1.92.1 replaced by 1.92.2 (`gem install --ignore-dependencies --local`; the
+gemspec's dependency minimums did not move, so every other gem stays at the version the 1.92.1 set
+pins), `~/rubocop-1.92.2/bin/rubocop` is the wrapper, `~/rubocop-1.92.2/record-oracles.sh` records
+the root `/Users/johncosta/.claude/jobs/89c7fab2/tmp-1.92.2/`, and `ci-run.sh` has a `1.92.2` case.
+The recording scripts in step 4 also need mcp 0.25.0 and rubydex 0.4.1 on `GEM_PATH`
+(`~/rubocop-1.92.2/extra-gems` on CT 440, a separate gem home: put it first in `GEM_PATH`).
+
+## Done: 1.91.0 to 1.92.1 (#703)
 
 Inventory taken 2026-10-25 (`docs/upgrade-1.92.1.tsv`, `docs/upgrade-1.92.1-lib.tsv`, release notes
 of 1.92.0 and 1.92.1: about 440 entries). No new or removed cops; `config/default.yml` changes three

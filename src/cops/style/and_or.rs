@@ -39,15 +39,7 @@ fn report(cx: &mut Cx, node: &Node, parent_is_and: bool) {
     };
     let mut edits = Vec::new();
     for (expr, is_last) in [(&lhs, false), (&rhs, true)] {
-        match expr.as_call_node().filter(|c| !has_block(c) && !match_with_lvasgn(c)) {
-            Some(call) => correct_send(&call, expr, is_last, src, &mut edits),
-            None if matches!(kind::of(expr), kind::RETURN_NODE | kind::NEXT_NODE | kind::BREAK_NODE | kind::YIELD_NODE)
-                || is_assignment(expr) =>
-            {
-                correct_other(expr, is_last, &mut edits)
-            }
-            None => {}
-        }
+        correct_operand(expr, is_last, src, &mut edits);
     }
     edits.push(Edit::Replace(s, e, alt));
     // keep_operator_precedence
@@ -82,10 +74,38 @@ fn has_block(call: &ruby_prism::CallNode) -> bool {
 }
 
 /// Parser `last_argument`: a `&blk` block pass counts as an argument.
-fn last_argument(call: &ruby_prism::CallNode) -> Option<(usize, usize)> {
-    let block_pass = call.block().filter(|b| b.as_block_argument_node().is_some());
-    let last = block_pass.or_else(|| call.arguments().and_then(|a| a.arguments().iter().last()))?;
+fn last_argument(args: Option<ruby_prism::ArgumentsNode>, block: Option<Node>) -> Option<(usize, usize)> {
+    let block_pass = block.filter(|b| b.as_block_argument_node().is_some());
+    let last = block_pass.or_else(|| args.and_then(|a| a.arguments().iter().last()))?;
     Some((last.location().start_offset(), last.location().end_offset()))
+}
+
+/// `correct_operand`: a block operand is corrected through its send node (Prism's call or
+/// `super` already is that node); `zsuper` and lambdas have nothing to correct.
+fn correct_operand(expr: &Node, is_last: bool, src: &str, edits: &mut Vec<Edit>) {
+    if let Some(call) = expr.as_call_node().filter(|c| !match_with_lvasgn(c)) {
+        correct_send(&call, expr, is_last, src, edits);
+    } else if let Some(sup) = expr.as_super_node() {
+        correct_super(&sup, src, edits);
+    } else if wrap_in_parentheses(expr) {
+        correct_other(expr, is_last, edits);
+    }
+}
+
+/// `wrap_in_parentheses?`: operands that bind looser than `&&` and `||`, or can't be their operands.
+fn wrap_in_parentheses(node: &Node) -> bool {
+    matches!(
+        kind::of(node),
+        kind::RETURN_NODE
+            | kind::NEXT_NODE
+            | kind::BREAK_NODE
+            | kind::YIELD_NODE
+            | kind::MATCH_PREDICATE_NODE
+            | kind::MATCH_REQUIRED_NODE
+            | kind::RANGE_NODE
+            | kind::DEFINED_NODE
+    ) || is_assignment(node)
+        || node.as_if_node().is_some_and(|i| i.if_keyword_loc().is_none())
 }
 
 fn correct_send(call: &ruby_prism::CallNode, node: &Node, is_last: bool, src: &str, edits: &mut Vec<Edit>) {
@@ -94,10 +114,12 @@ fn correct_send(call: &ruby_prism::CallNode, node: &Node, is_last: bool, src: &s
         // correct_not
         match call.message_loc().map(|l| l.as_slice()) {
             Some(b"!") => {
-                if let Some(recv) = call.receiver()
-                    && let Some(rc) = recv.as_call_node().filter(|c| !has_block(c) && !match_with_lvasgn(c))
-                {
-                    correct_send(&rc, &recv, false, src, edits);
+                if let Some(recv) = call.receiver() {
+                    if let Some(rc) = recv.as_call_node().filter(|c| !match_with_lvasgn(c)) {
+                        correct_send(&rc, &recv, false, src, edits);
+                    } else if let Some(sup) = recv.as_super_node() {
+                        correct_super(&sup, src, edits);
+                    }
                 }
             }
             Some(b"not") => correct_other(node, is_last, edits),
@@ -107,7 +129,7 @@ fn correct_send(call: &ruby_prism::CallNode, node: &Node, is_last: bool, src: &s
     }
     if call.equal_loc().is_some() {
         // correct_setter
-        if let (Some(recv), Some(last)) = (call.receiver(), last_argument(call)) {
+        if let (Some(recv), Some(last)) = (call.receiver(), last_argument(call.arguments(), call.block())) {
             let r = recv.location();
             edits.push(Edit::InsertBefore(r.start_offset(), r.end_offset(), "("));
             edits.push(Edit::InsertAfter(last.0, last.1, ")"));
@@ -117,16 +139,49 @@ fn correct_send(call: &ruby_prism::CallNode, node: &Node, is_last: bool, src: &s
     if matches!(name, "==" | "===" | "!=" | "<=" | ">=" | ">" | "<") {
         return correct_other(node, is_last, edits);
     }
-    // correctable_send?
+    correct_block_receiver(call, src, edits);
+    // correctable_send?: operator syntax such as `a + b` or `a[b]` already binds tighter.
+    if helpers::node_types::is_operator_method(name) && call.call_operator_loc().is_none() {
+        return;
+    }
     let parenthesized = call.closing_loc().is_some_and(|l| l.as_slice() == b")");
-    let Some(last) = last_argument(call) else { return };
-    if parenthesized || name == "[]" {
+    let Some(last) = last_argument(call.arguments(), call.block()) else { return };
+    if parenthesized {
         return;
     }
     let Some(sel) = call.message_loc() else { return };
-    // whitespace_before_arg
-    let begin = sel.end_offset();
-    let (s, e) = send_range(call);
+    add_parens(sel.end_offset(), send_range(call), last, src, edits);
+}
+
+/// `correct_send` on a `super` with arguments: only `correctable_send?` applies.
+fn correct_super(sup: &ruby_prism::SuperNode, src: &str, edits: &mut Vec<Edit>) {
+    let Some(last) = last_argument(sup.arguments(), sup.block()) else { return };
+    if sup.lparen_loc().is_some() {
+        return;
+    }
+    // The parser `super` node excludes an attached `do`/`{}` block.
+    let kw = sup.keyword_loc();
+    let end = sup.block().filter(|b| b.as_block_node().is_some()).map_or(sup.location().end_offset(), |_| last.1);
+    add_parens(kw.end_offset(), (kw.start_offset(), end), last, src, edits);
+}
+
+/// `correct_block_receiver`: a method chained onto a `do` block (`bar baz do ... end.qux`) still
+/// needs parentheses around the arguments of the call that takes the block.
+fn correct_block_receiver(call: &ruby_prism::CallNode, src: &str, edits: &mut Vec<Edit>) {
+    let mut receiver = call.receiver();
+    while let Some(c) = receiver.as_ref().and_then(|r| r.as_call_node()).filter(|c| !has_block(c) && !match_with_lvasgn(c)) {
+        receiver = c.receiver();
+    }
+    let Some(r) = receiver else { return };
+    if let Some(c) = r.as_call_node().filter(has_block) {
+        correct_send(&c, &r, false, src, edits);
+    } else if let Some(sup) = r.as_super_node().filter(|s| s.block().is_some_and(|b| b.as_block_node().is_some())) {
+        correct_super(&sup, src, edits);
+    }
+}
+
+/// `whitespace_before_arg` and the parentheses around the arguments.
+fn add_parens(begin: usize, (s, e): (usize, usize), last: (usize, usize), src: &str, edits: &mut Vec<Edit>) {
     let end = if QUESTION_NON_SPACE.is_match(&src[s..e]) { begin } else { begin + 1 };
     edits.push(Edit::Remove(begin, end));
     edits.push(Edit::InsertBefore(begin, end, "("));
@@ -140,6 +195,7 @@ fn correct_other(node: &Node, is_last: bool, edits: &mut Vec<Edit>) {
     let open = match kind::of(node) {
         kind::CALL_NODE => node.as_call_node().unwrap().opening_loc(),
         kind::YIELD_NODE => node.as_yield_node().unwrap().lparen_loc(),
+        kind::DEFINED_NODE => node.as_defined_node().unwrap().lparen_loc(),
         _ => None,
     };
     if open.is_some_and(|l| l.as_slice() == b"(") {

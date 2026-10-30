@@ -1,388 +1,394 @@
-==> offenses exit=1 14840 <==
+==> offenses exit=1 14942 <==
 007.rb:1:7: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `&&`.
-025.rb:1:11: C: [Correctable] Layout/SpaceAroundOperators: Space around operator `**` detected.
-025.rb:2:10: C: [Correctable] Layout/SpaceAroundOperators: Space around operator `**` detected.
-027.rb:1:11: C: [Correctable] Layout/SpaceAroundOperators: Space around operator `/` detected.
-027.rb:2:10: C: [Correctable] Layout/SpaceAroundOperators: Space around operator `/` detected.
-029.rb:1:5: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `**=`.
-030.rb:1:4: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `/=`.
-032.rb:1:10: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `/`.
-032.rb:2:10: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `/`.
-033.rb:2:5: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
-033.rb:2:7: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
-034.rb:2:7: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
-035.rb:1:9: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
-035.rb:1:11: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
-036.rb:1:11: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
-045.rb:1:6: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `<<`.
-046.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-046.rb:2:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `+=`.
-046.rb:3:6: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-047.rb:1:7: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `?`.
-047.rb:1:9: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `:`.
-048.rb:1:7: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `?`.
-048.rb:1:10: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `:`.
-049.rb:1:8: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `?`.
-049.rb:1:11: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `:`.
-050.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-050.rb:2:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-051.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-051.rb:2:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-052.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-052.rb:2:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+025.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+028.rb:1:11: C: [Correctable] Layout/SpaceAroundOperators: Space around operator `**` detected.
+028.rb:2:10: C: [Correctable] Layout/SpaceAroundOperators: Space around operator `**` detected.
+030.rb:1:11: C: [Correctable] Layout/SpaceAroundOperators: Space around operator `/` detected.
+030.rb:2:10: C: [Correctable] Layout/SpaceAroundOperators: Space around operator `/` detected.
+032.rb:1:5: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `**=`.
+033.rb:1:4: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `/=`.
+035.rb:1:10: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `/`.
+035.rb:2:10: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `/`.
+036.rb:2:5: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
+036.rb:2:7: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
+037.rb:2:7: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
+038.rb:1:9: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
+038.rb:1:11: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
+039.rb:1:11: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
+048.rb:1:6: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `<<`.
+049.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+049.rb:2:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `+=`.
+049.rb:3:6: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+050.rb:1:7: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `?`.
+050.rb:1:9: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `:`.
+051.rb:1:7: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `?`.
+051.rb:1:10: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `:`.
+052.rb:1:8: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `?`.
+052.rb:1:11: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `:`.
 053.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
 053.rb:2:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-054.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `-`.
-054.rb:2:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `&`.
-054.rb:3:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
-055.rb:1:7: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
-056.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `+=`.
-056.rb:1:6: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
-056.rb:1:8: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `-`.
-056.rb:1:10: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `*`.
-056.rb:1:12: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `/`.
-056.rb:1:14: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `%`.
-056.rb:1:16: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `^`.
-056.rb:1:18: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
-056.rb:1:20: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `&`.
-056.rb:1:22: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `||`.
-056.rb:2:3: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `-=`.
-056.rb:2:6: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `&&`.
-057.rb:1:4: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-058.rb:1:4: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-059.rb:1:4: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
-060.rb:2:4: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
-061.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=~`.
-061.rb:2:3: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `!~`.
-062.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `||=`.
-062.rb:2:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `&&=`.
-062.rb:3:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `*=`.
-062.rb:4:3: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-062.rb:5:4: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-062.rb:6:4: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-062.rb:7:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-062.rb:8:5: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-062.rb:9:3: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-062.rb:10:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `||=`.
-063.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `==`.
-063.rb:2:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `!=`.
-063.rb:3:5: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `===`.
-064.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `-`.
-065.rb:1:26: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `<`.
-066.rb:2:17: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
-067.rb:1:12: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
-067.rb:2:16: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
-069.rb:1:5: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-069.rb:2:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
-069.rb:3:7: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-070.rb:1:9: C: [Correctable] Layout/SpaceAroundOperators: Operator `?` should be surrounded by a single space.
-070.rb:1:13: C: [Correctable] Layout/SpaceAroundOperators: Operator `:` should be surrounded by a single space.
-071.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-071.rb:2:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-072.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-072.rb:2:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-073.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-073.rb:2:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+054.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+054.rb:2:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+055.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+055.rb:2:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+056.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+056.rb:2:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+057.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `-`.
+057.rb:2:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `&`.
+057.rb:3:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
+058.rb:1:7: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
+059.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `+=`.
+059.rb:1:6: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
+059.rb:1:8: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `-`.
+059.rb:1:10: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `*`.
+059.rb:1:12: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `/`.
+059.rb:1:14: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `%`.
+059.rb:1:16: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `^`.
+059.rb:1:18: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
+059.rb:1:20: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `&`.
+059.rb:1:22: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `||`.
+059.rb:2:3: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `-=`.
+059.rb:2:6: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `&&`.
+060.rb:1:4: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+061.rb:1:4: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+062.rb:1:4: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
+063.rb:2:4: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
+064.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=~`.
+064.rb:2:3: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `!~`.
+065.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `||=`.
+065.rb:2:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `&&=`.
+065.rb:3:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `*=`.
+065.rb:4:3: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+065.rb:5:4: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+065.rb:6:4: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+065.rb:7:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+065.rb:8:5: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+065.rb:9:3: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+065.rb:10:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `||=`.
+066.rb:1:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `==`.
+066.rb:2:2: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `!=`.
+066.rb:3:5: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `===`.
+067.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `-`.
+068.rb:1:26: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `<`.
+069.rb:2:17: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
+070.rb:1:12: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
+070.rb:2:16: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
+072.rb:1:5: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+072.rb:2:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
+072.rb:3:7: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+073.rb:1:9: C: [Correctable] Layout/SpaceAroundOperators: Operator `?` should be surrounded by a single space.
+073.rb:1:13: C: [Correctable] Layout/SpaceAroundOperators: Operator `:` should be surrounded by a single space.
 074.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
 074.rb:2:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-075.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `-` should be surrounded by a single space.
-075.rb:2:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `&` should be surrounded by a single space.
-075.rb:3:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `+` should be surrounded by a single space.
-076.rb:1:8: C: [Correctable] Layout/SpaceAroundOperators: Operator `+` should be surrounded by a single space.
-077.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
-077.rb:2:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `+` should be surrounded by a single space.
-077.rb:3:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `-` should be surrounded by a single space.
-077.rb:4:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `*` should be surrounded by a single space.
-077.rb:5:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `/` should be surrounded by a single space.
-077.rb:6:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `%` should be surrounded by a single space.
-077.rb:7:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `^` should be surrounded by a single space.
-077.rb:8:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `|` should be surrounded by a single space.
-077.rb:9:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `&` should be surrounded by a single space.
-077.rb:10:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `||` should be surrounded by a single space.
-077.rb:11:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `-=` should be surrounded by a single space.
-077.rb:11:12: C: [Correctable] Layout/SpaceAroundOperators: Operator `&&` should be surrounded by a single space.
-078.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
-078.rb:1:10: C: [Correctable] Layout/SpaceAroundOperators: Operator `+` should be surrounded by a single space.
-078.rb:1:14: C: [Correctable] Layout/SpaceAroundOperators: Operator `-` should be surrounded by a single space.
-078.rb:1:20: C: [Correctable] Layout/SpaceAroundOperators: Operator `*` should be surrounded by a single space.
-078.rb:1:24: C: [Correctable] Layout/SpaceAroundOperators: Operator `/` should be surrounded by a single space.
-078.rb:1:30: C: [Correctable] Layout/SpaceAroundOperators: Operator `%` should be surrounded by a single space.
-078.rb:1:35: C: [Correctable] Layout/SpaceAroundOperators: Operator `^` should be surrounded by a single space.
-078.rb:1:41: C: [Correctable] Layout/SpaceAroundOperators: Operator `|` should be surrounded by a single space.
-078.rb:1:45: C: [Correctable] Layout/SpaceAroundOperators: Operator `&` should be surrounded by a single space.
-078.rb:1:51: C: [Correctable] Layout/SpaceAroundOperators: Operator `||` should be surrounded by a single space.
-078.rb:2:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `-=` should be surrounded by a single space.
-078.rb:2:12: C: [Correctable] Layout/SpaceAroundOperators: Operator `&&` should be surrounded by a single space.
-079.rb:1:6: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-080.rb:1:6: C: [Correctable] Layout/SpaceAroundOperators: Operator `=>` should be surrounded by a single space.
-081.rb:2:5: C: [Correctable] Layout/SpaceAroundOperators: Operator `=>` should be surrounded by a single space.
-083.rb:1:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `=~` should be surrounded by a single space.
-083.rb:2:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `!~` should be surrounded by a single space.
-086.rb:1:5: C: [Correctable] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
-087.rb:2:5: C: [Correctable] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
-088.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `||=` should be surrounded by a single space.
-088.rb:2:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `&&=` should be surrounded by a single space.
-088.rb:3:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `*=` should be surrounded by a single space.
-088.rb:4:6: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-088.rb:5:7: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-088.rb:6:8: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-088.rb:7:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-088.rb:8:8: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-088.rb:9:7: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-088.rb:10:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `||=` should be surrounded by a single space.
-088.rb:11:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
-089.rb:1:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `==` should be surrounded by a single space.
-089.rb:2:5: C: [Correctable] Layout/SpaceAroundOperators: Operator `!=` should be surrounded by a single space.
-089.rb:3:8: C: [Correctable] Layout/SpaceAroundOperators: Operator `===` should be surrounded by a single space.
-090.rb:1:5: C: [Correctable] Layout/SpaceAroundOperators: Operator `-` should be surrounded by a single space.
-091.rb:1:12: C: [Correctable] Layout/SpaceAroundOperators: Operator `<` should be surrounded by a single space.
-092.rb:2:20: C: [Correctable] Layout/SpaceAroundOperators: Operator `=>` should be surrounded by a single space.
-095.rb:3:5: C: [Correctable] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
+075.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+075.rb:2:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+076.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+076.rb:2:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+077.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+077.rb:2:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+078.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `-` should be surrounded by a single space.
+078.rb:2:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `&` should be surrounded by a single space.
+078.rb:3:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `+` should be surrounded by a single space.
+079.rb:1:8: C: [Correctable] Layout/SpaceAroundOperators: Operator `+` should be surrounded by a single space.
+080.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
+080.rb:2:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `+` should be surrounded by a single space.
+080.rb:3:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `-` should be surrounded by a single space.
+080.rb:4:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `*` should be surrounded by a single space.
+080.rb:5:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `/` should be surrounded by a single space.
+080.rb:6:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `%` should be surrounded by a single space.
+080.rb:7:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `^` should be surrounded by a single space.
+080.rb:8:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `|` should be surrounded by a single space.
+080.rb:9:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `&` should be surrounded by a single space.
+080.rb:10:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `||` should be surrounded by a single space.
+080.rb:11:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `-=` should be surrounded by a single space.
+080.rb:11:12: C: [Correctable] Layout/SpaceAroundOperators: Operator `&&` should be surrounded by a single space.
+081.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
+081.rb:1:10: C: [Correctable] Layout/SpaceAroundOperators: Operator `+` should be surrounded by a single space.
+081.rb:1:14: C: [Correctable] Layout/SpaceAroundOperators: Operator `-` should be surrounded by a single space.
+081.rb:1:20: C: [Correctable] Layout/SpaceAroundOperators: Operator `*` should be surrounded by a single space.
+081.rb:1:24: C: [Correctable] Layout/SpaceAroundOperators: Operator `/` should be surrounded by a single space.
+081.rb:1:30: C: [Correctable] Layout/SpaceAroundOperators: Operator `%` should be surrounded by a single space.
+081.rb:1:35: C: [Correctable] Layout/SpaceAroundOperators: Operator `^` should be surrounded by a single space.
+081.rb:1:41: C: [Correctable] Layout/SpaceAroundOperators: Operator `|` should be surrounded by a single space.
+081.rb:1:45: C: [Correctable] Layout/SpaceAroundOperators: Operator `&` should be surrounded by a single space.
+081.rb:1:51: C: [Correctable] Layout/SpaceAroundOperators: Operator `||` should be surrounded by a single space.
+081.rb:2:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `-=` should be surrounded by a single space.
+081.rb:2:12: C: [Correctable] Layout/SpaceAroundOperators: Operator `&&` should be surrounded by a single space.
+082.rb:1:6: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+083.rb:1:6: C: [Correctable] Layout/SpaceAroundOperators: Operator `=>` should be surrounded by a single space.
+084.rb:2:5: C: [Correctable] Layout/SpaceAroundOperators: Operator `=>` should be surrounded by a single space.
+087.rb:1:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `=~` should be surrounded by a single space.
+087.rb:2:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `!~` should be surrounded by a single space.
+090.rb:1:5: C: [Correctable] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
+091.rb:2:5: C: [Correctable] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
+092.rb:1:3: C: [Correctable] Layout/SpaceAroundOperators: Operator `||=` should be surrounded by a single space.
+092.rb:2:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `&&=` should be surrounded by a single space.
+092.rb:3:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `*=` should be surrounded by a single space.
+092.rb:4:6: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+092.rb:5:7: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+092.rb:6:8: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+092.rb:7:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+092.rb:8:8: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+092.rb:9:7: C: [Correctable] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+092.rb:10:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `||=` should be surrounded by a single space.
+092.rb:11:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
+093.rb:1:4: C: [Correctable] Layout/SpaceAroundOperators: Operator `==` should be surrounded by a single space.
+093.rb:2:5: C: [Correctable] Layout/SpaceAroundOperators: Operator `!=` should be surrounded by a single space.
+093.rb:3:8: C: [Correctable] Layout/SpaceAroundOperators: Operator `===` should be surrounded by a single space.
+094.rb:1:5: C: [Correctable] Layout/SpaceAroundOperators: Operator `-` should be surrounded by a single space.
+095.rb:1:12: C: [Correctable] Layout/SpaceAroundOperators: Operator `<` should be surrounded by a single space.
+096.rb:2:20: C: [Correctable] Layout/SpaceAroundOperators: Operator `=>` should be surrounded by a single space.
+099.rb:3:5: C: [Correctable] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
 
-==> autocorrect exit=0 14562 <==
+==> autocorrect exit=0 14662 <==
 007.rb:1:7: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `&&`.
-025.rb:1:11: C: [Corrected] Layout/SpaceAroundOperators: Space around operator `**` detected.
-025.rb:2:10: C: [Corrected] Layout/SpaceAroundOperators: Space around operator `**` detected.
-027.rb:1:11: C: [Corrected] Layout/SpaceAroundOperators: Space around operator `/` detected.
-027.rb:2:10: C: [Corrected] Layout/SpaceAroundOperators: Space around operator `/` detected.
-029.rb:1:5: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `**=`.
-030.rb:1:4: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `/=`.
-032.rb:1:10: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `/`.
-032.rb:2:10: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `/`.
-033.rb:2:5: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
-033.rb:2:7: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
-034.rb:2:7: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
-035.rb:1:9: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
-035.rb:1:11: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
-036.rb:1:11: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
-045.rb:1:6: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `<<`.
-046.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-046.rb:2:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `+=`.
-046.rb:3:6: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-047.rb:1:7: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `?`.
-047.rb:1:9: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `:`.
-048.rb:1:7: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `?`.
-048.rb:1:10: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `:`.
-049.rb:1:8: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `?`.
-049.rb:1:11: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `:`.
-050.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-050.rb:2:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-051.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-051.rb:2:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-052.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-052.rb:2:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+025.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+028.rb:1:11: C: [Corrected] Layout/SpaceAroundOperators: Space around operator `**` detected.
+028.rb:2:10: C: [Corrected] Layout/SpaceAroundOperators: Space around operator `**` detected.
+030.rb:1:11: C: [Corrected] Layout/SpaceAroundOperators: Space around operator `/` detected.
+030.rb:2:10: C: [Corrected] Layout/SpaceAroundOperators: Space around operator `/` detected.
+032.rb:1:5: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `**=`.
+033.rb:1:4: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `/=`.
+035.rb:1:10: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `/`.
+035.rb:2:10: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `/`.
+036.rb:2:5: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
+036.rb:2:7: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
+037.rb:2:7: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
+038.rb:1:9: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
+038.rb:1:11: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
+039.rb:1:11: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
+048.rb:1:6: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `<<`.
+049.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+049.rb:2:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `+=`.
+049.rb:3:6: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+050.rb:1:7: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `?`.
+050.rb:1:9: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `:`.
+051.rb:1:7: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `?`.
+051.rb:1:10: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `:`.
+052.rb:1:8: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `?`.
+052.rb:1:11: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `:`.
 053.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
 053.rb:2:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-054.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `-`.
-054.rb:2:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `&`.
-054.rb:3:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
-055.rb:1:7: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
-056.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `+=`.
-056.rb:1:6: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
-056.rb:1:8: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `-`.
-056.rb:1:10: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `*`.
-056.rb:1:12: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `/`.
-056.rb:1:14: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `%`.
-056.rb:1:16: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `^`.
-056.rb:1:18: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
-056.rb:1:20: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `&`.
-056.rb:1:22: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `||`.
-056.rb:2:3: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `-=`.
-056.rb:2:6: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `&&`.
-057.rb:1:4: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-058.rb:1:4: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-059.rb:1:4: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
-060.rb:2:4: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
-061.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=~`.
-061.rb:2:3: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `!~`.
-062.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `||=`.
-062.rb:2:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `&&=`.
-062.rb:3:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `*=`.
-062.rb:4:3: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-062.rb:5:4: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-062.rb:6:4: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-062.rb:7:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-062.rb:8:5: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-062.rb:9:3: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
-062.rb:10:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `||=`.
-063.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `==`.
-063.rb:2:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `!=`.
-063.rb:3:5: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `===`.
-064.rb:1:3: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `-`.
-065.rb:1:26: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `<`.
-066.rb:2:17: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
-067.rb:1:12: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
-067.rb:2:16: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
-069.rb:1:5: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-069.rb:2:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
-069.rb:3:7: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-070.rb:1:9: C: [Corrected] Layout/SpaceAroundOperators: Operator `?` should be surrounded by a single space.
-070.rb:1:13: C: [Corrected] Layout/SpaceAroundOperators: Operator `:` should be surrounded by a single space.
-071.rb:1:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-071.rb:2:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-072.rb:1:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-072.rb:2:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-073.rb:1:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-073.rb:2:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+054.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+054.rb:2:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+055.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+055.rb:2:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+056.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+056.rb:2:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+057.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `-`.
+057.rb:2:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `&`.
+057.rb:3:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
+058.rb:1:7: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
+059.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `+=`.
+059.rb:1:6: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
+059.rb:1:8: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `-`.
+059.rb:1:10: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `*`.
+059.rb:1:12: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `/`.
+059.rb:1:14: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `%`.
+059.rb:1:16: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `^`.
+059.rb:1:18: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `|`.
+059.rb:1:20: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `&`.
+059.rb:1:22: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `||`.
+059.rb:2:3: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `-=`.
+059.rb:2:6: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `&&`.
+060.rb:1:4: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+061.rb:1:4: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+062.rb:1:4: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
+063.rb:2:4: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
+064.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=~`.
+064.rb:2:3: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `!~`.
+065.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `||=`.
+065.rb:2:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `&&=`.
+065.rb:3:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `*=`.
+065.rb:4:3: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+065.rb:5:4: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+065.rb:6:4: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+065.rb:7:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+065.rb:8:5: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+065.rb:9:3: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=`.
+065.rb:10:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `||=`.
+066.rb:1:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `==`.
+066.rb:2:2: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `!=`.
+066.rb:3:5: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `===`.
+067.rb:1:3: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `-`.
+068.rb:1:26: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `<`.
+069.rb:2:17: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `=>`.
+070.rb:1:12: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
+070.rb:2:16: C: [Corrected] Layout/SpaceAroundOperators: Surrounding space missing for operator `+`.
+072.rb:1:5: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+072.rb:2:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
+072.rb:3:7: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+073.rb:1:9: C: [Corrected] Layout/SpaceAroundOperators: Operator `?` should be surrounded by a single space.
+073.rb:1:13: C: [Corrected] Layout/SpaceAroundOperators: Operator `:` should be surrounded by a single space.
 074.rb:1:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
 074.rb:2:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-075.rb:1:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `-` should be surrounded by a single space.
-075.rb:2:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `&` should be surrounded by a single space.
-075.rb:3:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `+` should be surrounded by a single space.
-076.rb:1:8: C: [Corrected] Layout/SpaceAroundOperators: Operator `+` should be surrounded by a single space.
-077.rb:1:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
-077.rb:2:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `+` should be surrounded by a single space.
-077.rb:3:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `-` should be surrounded by a single space.
-077.rb:4:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `*` should be surrounded by a single space.
-077.rb:5:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `/` should be surrounded by a single space.
-077.rb:6:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `%` should be surrounded by a single space.
-077.rb:7:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `^` should be surrounded by a single space.
-077.rb:8:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `|` should be surrounded by a single space.
-077.rb:9:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `&` should be surrounded by a single space.
-077.rb:10:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `||` should be surrounded by a single space.
-077.rb:11:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `-=` should be surrounded by a single space.
-077.rb:11:12: C: [Corrected] Layout/SpaceAroundOperators: Operator `&&` should be surrounded by a single space.
-078.rb:1:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
-078.rb:1:10: C: [Corrected] Layout/SpaceAroundOperators: Operator `+` should be surrounded by a single space.
-078.rb:1:14: C: [Corrected] Layout/SpaceAroundOperators: Operator `-` should be surrounded by a single space.
-078.rb:1:20: C: [Corrected] Layout/SpaceAroundOperators: Operator `*` should be surrounded by a single space.
-078.rb:1:24: C: [Corrected] Layout/SpaceAroundOperators: Operator `/` should be surrounded by a single space.
-078.rb:1:30: C: [Corrected] Layout/SpaceAroundOperators: Operator `%` should be surrounded by a single space.
-078.rb:1:35: C: [Corrected] Layout/SpaceAroundOperators: Operator `^` should be surrounded by a single space.
-078.rb:1:41: C: [Corrected] Layout/SpaceAroundOperators: Operator `|` should be surrounded by a single space.
-078.rb:1:45: C: [Corrected] Layout/SpaceAroundOperators: Operator `&` should be surrounded by a single space.
-078.rb:1:51: C: [Corrected] Layout/SpaceAroundOperators: Operator `||` should be surrounded by a single space.
-078.rb:2:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `-=` should be surrounded by a single space.
-078.rb:2:12: C: [Corrected] Layout/SpaceAroundOperators: Operator `&&` should be surrounded by a single space.
-079.rb:1:6: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-080.rb:1:6: C: [Corrected] Layout/SpaceAroundOperators: Operator `=>` should be surrounded by a single space.
-081.rb:2:5: C: [Corrected] Layout/SpaceAroundOperators: Operator `=>` should be surrounded by a single space.
-083.rb:1:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `=~` should be surrounded by a single space.
-083.rb:2:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `!~` should be surrounded by a single space.
-086.rb:1:5: C: [Corrected] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
-087.rb:2:5: C: [Corrected] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
-088.rb:1:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `||=` should be surrounded by a single space.
-088.rb:2:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `&&=` should be surrounded by a single space.
-088.rb:3:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `*=` should be surrounded by a single space.
-088.rb:4:6: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-088.rb:5:7: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-088.rb:6:8: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-088.rb:7:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-088.rb:8:8: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-088.rb:9:7: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
-088.rb:10:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `||=` should be surrounded by a single space.
-088.rb:11:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
-089.rb:1:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `==` should be surrounded by a single space.
-089.rb:2:5: C: [Corrected] Layout/SpaceAroundOperators: Operator `!=` should be surrounded by a single space.
-089.rb:3:8: C: [Corrected] Layout/SpaceAroundOperators: Operator `===` should be surrounded by a single space.
-090.rb:1:5: C: [Corrected] Layout/SpaceAroundOperators: Operator `-` should be surrounded by a single space.
-091.rb:1:12: C: [Corrected] Layout/SpaceAroundOperators: Operator `<` should be surrounded by a single space.
-092.rb:2:20: C: [Corrected] Layout/SpaceAroundOperators: Operator `=>` should be surrounded by a single space.
-095.rb:3:5: C: [Corrected] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
+075.rb:1:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+075.rb:2:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+076.rb:1:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+076.rb:2:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+077.rb:1:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+077.rb:2:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+078.rb:1:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `-` should be surrounded by a single space.
+078.rb:2:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `&` should be surrounded by a single space.
+078.rb:3:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `+` should be surrounded by a single space.
+079.rb:1:8: C: [Corrected] Layout/SpaceAroundOperators: Operator `+` should be surrounded by a single space.
+080.rb:1:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
+080.rb:2:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `+` should be surrounded by a single space.
+080.rb:3:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `-` should be surrounded by a single space.
+080.rb:4:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `*` should be surrounded by a single space.
+080.rb:5:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `/` should be surrounded by a single space.
+080.rb:6:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `%` should be surrounded by a single space.
+080.rb:7:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `^` should be surrounded by a single space.
+080.rb:8:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `|` should be surrounded by a single space.
+080.rb:9:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `&` should be surrounded by a single space.
+080.rb:10:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `||` should be surrounded by a single space.
+080.rb:11:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `-=` should be surrounded by a single space.
+080.rb:11:12: C: [Corrected] Layout/SpaceAroundOperators: Operator `&&` should be surrounded by a single space.
+081.rb:1:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
+081.rb:1:10: C: [Corrected] Layout/SpaceAroundOperators: Operator `+` should be surrounded by a single space.
+081.rb:1:14: C: [Corrected] Layout/SpaceAroundOperators: Operator `-` should be surrounded by a single space.
+081.rb:1:20: C: [Corrected] Layout/SpaceAroundOperators: Operator `*` should be surrounded by a single space.
+081.rb:1:24: C: [Corrected] Layout/SpaceAroundOperators: Operator `/` should be surrounded by a single space.
+081.rb:1:30: C: [Corrected] Layout/SpaceAroundOperators: Operator `%` should be surrounded by a single space.
+081.rb:1:35: C: [Corrected] Layout/SpaceAroundOperators: Operator `^` should be surrounded by a single space.
+081.rb:1:41: C: [Corrected] Layout/SpaceAroundOperators: Operator `|` should be surrounded by a single space.
+081.rb:1:45: C: [Corrected] Layout/SpaceAroundOperators: Operator `&` should be surrounded by a single space.
+081.rb:1:51: C: [Corrected] Layout/SpaceAroundOperators: Operator `||` should be surrounded by a single space.
+081.rb:2:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `-=` should be surrounded by a single space.
+081.rb:2:12: C: [Corrected] Layout/SpaceAroundOperators: Operator `&&` should be surrounded by a single space.
+082.rb:1:6: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+083.rb:1:6: C: [Corrected] Layout/SpaceAroundOperators: Operator `=>` should be surrounded by a single space.
+084.rb:2:5: C: [Corrected] Layout/SpaceAroundOperators: Operator `=>` should be surrounded by a single space.
+087.rb:1:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `=~` should be surrounded by a single space.
+087.rb:2:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `!~` should be surrounded by a single space.
+090.rb:1:5: C: [Corrected] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
+091.rb:2:5: C: [Corrected] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
+092.rb:1:3: C: [Corrected] Layout/SpaceAroundOperators: Operator `||=` should be surrounded by a single space.
+092.rb:2:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `&&=` should be surrounded by a single space.
+092.rb:3:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `*=` should be surrounded by a single space.
+092.rb:4:6: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+092.rb:5:7: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+092.rb:6:8: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+092.rb:7:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+092.rb:8:8: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+092.rb:9:7: C: [Corrected] Layout/SpaceAroundOperators: Operator `=` should be surrounded by a single space.
+092.rb:10:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `||=` should be surrounded by a single space.
+092.rb:11:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
+093.rb:1:4: C: [Corrected] Layout/SpaceAroundOperators: Operator `==` should be surrounded by a single space.
+093.rb:2:5: C: [Corrected] Layout/SpaceAroundOperators: Operator `!=` should be surrounded by a single space.
+093.rb:3:8: C: [Corrected] Layout/SpaceAroundOperators: Operator `===` should be surrounded by a single space.
+094.rb:1:5: C: [Corrected] Layout/SpaceAroundOperators: Operator `-` should be surrounded by a single space.
+095.rb:1:12: C: [Corrected] Layout/SpaceAroundOperators: Operator `<` should be surrounded by a single space.
+096.rb:2:20: C: [Corrected] Layout/SpaceAroundOperators: Operator `=>` should be surrounded by a single space.
+099.rb:3:5: C: [Corrected] Layout/SpaceAroundOperators: Operator `+=` should be surrounded by a single space.
 
 ==> corrected/007.rb 13 <==
 x = !a && !b
 
-==> corrected/025.rb 26 <==
+==> corrected/025.rb 10 <==
+x = \
+  0
+
+==> corrected/028.rb 26 <==
 x = a * b**2
 y = a * b**2
 
-==> corrected/027.rb 28 <==
+==> corrected/030.rb 28 <==
 x = a * b/42r
 y = a * b/42r
 
-==> corrected/029.rb 13 <==
+==> corrected/032.rb 13 <==
 base **= exp
 
-==> corrected/030.rb 10 <==
+==> corrected/033.rb 10 <==
 val /= 2r
 
-==> corrected/032.rb 30 <==
+==> corrected/035.rb 30 <==
 x = a * b / 42
 y = a * b / 42
 
-==> corrected/033.rb 26 <==
+==> corrected/036.rb 26 <==
 case foo
 in 0 | 1 | 2
 end
 
-==> corrected/034.rb 27 <==
+==> corrected/037.rb 27 <==
 case foo
 in bar => baz
 end
 
-==> corrected/035.rb 17 <==
+==> corrected/038.rb 17 <==
 foo in 0 | 1 | 2
 
-==> corrected/036.rb 18 <==
+==> corrected/039.rb 18 <==
 foo in bar => baz
 
-==> corrected/045.rb 18 <==
+==> corrected/048.rb 18 <==
 class << self
 end
 
-==> corrected/046.rb 22 <==
+==> corrected/049.rb 22 <==
 x = 0
 y += 0
 z[0] = 0
 
-==> corrected/047.rb 15 <==
+==> corrected/050.rb 15 <==
 x == 0 ? 1 : 2
 
-==> corrected/048.rb 15 <==
+==> corrected/051.rb 15 <==
 x == 0 ? 1 : 2
 
-==> corrected/049.rb 15 <==
+==> corrected/052.rb 15 <==
 x == 0 ? 1 : 2
 
-==> corrected/050.rb 25 <==
+==> corrected/053.rb 25 <==
 a = 1 if condition
 c = 2
 
-==> corrected/051.rb 29 <==
+==> corrected/054.rb 29 <==
 a = 1 unless condition
 c = 2
 
-==> corrected/052.rb 28 <==
+==> corrected/055.rb 28 <==
 a = 1 while condition
 c = 2
 
-==> corrected/053.rb 28 <==
+==> corrected/056.rb 28 <==
 a = 1 until condition
 c = 2
 
-==> corrected/054.rb 21 <==
+==> corrected/057.rb 21 <==
 a - 3
 x & 0xff
 z + 0
 
-==> corrected/055.rb 11 <==
+==> corrected/058.rb 11 <==
 puts 1 + 2
 
-==> corrected/056.rb 56 <==
+==> corrected/059.rb 56 <==
 x += a + b - c * d / e % f ^ g | h & i || j
 y -= k && l
 
-==> corrected/057.rb 8 <==
+==> corrected/060.rb 8 <==
 x.y = 2
 
-==> corrected/058.rb 10 <==
+==> corrected/061.rb 10 <==
 x.y = 2,3
 
-==> corrected/059.rb 17 <==
+==> corrected/062.rb 17 <==
 { 1 => 2, a: b }
 
-==> corrected/060.rb 21 <==
+==> corrected/063.rb 21 <==
 {
   1 => 2,
   a: b
 }
 
-==> corrected/061.rb 22 <==
+==> corrected/064.rb 22 <==
 x =~ /abc/
 y !~ /abc/
 
-==> corrected/062.rb 76 <==
+==> corrected/065.rb 76 <==
 x ||= 0
 y &&= 0
 z *= 2
@@ -394,61 +400,61 @@ x[3] = 0
 $A = 0
 A ||= 0
 
-==> corrected/063.rb 25 <==
+==> corrected/066.rb 25 <==
 x == 0
 y != 0
 Hash === z
 
-==> corrected/064.rb 9 <==
+==> corrected/067.rb 9 <==
 -1 - arg
 
-==> corrected/065.rb 57 <==
+==> corrected/068.rb 57 <==
 class ShowSourceTestClass < ShowSourceTestSuperClass
 end
 
-==> corrected/066.rb 32 <==
+==> corrected/069.rb 32 <==
 begin
 rescue Exception => e
 end
 
-==> corrected/067.rb 53 <==
+==> corrected/070.rb 53 <==
 'Here is a' +
 'joined string' +
 'across three lines'
 
-==> corrected/069.rb 22 <==
+==> corrected/072.rb 22 <==
 x = 0
 y += 0
 z[0] = 0
 
-==> corrected/070.rb 15 <==
+==> corrected/073.rb 15 <==
 x == 0 ? 1 : 2
 
-==> corrected/071.rb 25 <==
+==> corrected/074.rb 25 <==
 a = 1 if condition
 c = 2
 
-==> corrected/072.rb 29 <==
+==> corrected/075.rb 29 <==
 a = 1 unless condition
 c = 2
 
-==> corrected/073.rb 28 <==
+==> corrected/076.rb 28 <==
 a = 1 while condition
 c = 2
 
-==> corrected/074.rb 28 <==
+==> corrected/077.rb 28 <==
 a = 1 until condition
 c = 2
 
-==> corrected/075.rb 21 <==
+==> corrected/078.rb 21 <==
 a - 3
 x & 0xff
 z + 0
 
-==> corrected/076.rb 11 <==
+==> corrected/079.rb 11 <==
 puts 1 + 2
 
-==> corrected/077.rb 74 <==
+==> corrected/080.rb 74 <==
 x += a
 a + b
 b - c
@@ -461,34 +467,34 @@ h & i
 i || j
 y -= k && l
 
-==> corrected/078.rb 56 <==
+==> corrected/081.rb 56 <==
 x += a + b - c * d / e % f ^ g | h & i || j
 y -= k && l
 
-==> corrected/079.rb 8 <==
+==> corrected/082.rb 8 <==
 x.y = 2
 
-==> corrected/080.rb 17 <==
+==> corrected/083.rb 17 <==
 { 1 => 2, a: b }
 
-==> corrected/081.rb 13 <==
+==> corrected/084.rb 13 <==
 {
   1 => 2
 }
 
-==> corrected/083.rb 22 <==
+==> corrected/087.rb 22 <==
 x =~ /abc/
 y !~ /abc/
 
-==> corrected/086.rb 21 <==
+==> corrected/090.rb 21 <==
 x += foo
 'yz << bar'
 
-==> corrected/087.rb 21 <==
+==> corrected/091.rb 21 <==
 'yz << bar'
 x += foo
 
-==> corrected/088.rb 83 <==
+==> corrected/092.rb 83 <==
 x ||= 0
 y &&= 0
 z *= 2
@@ -501,24 +507,24 @@ $A = 0
 A ||= 0
 A += 0
 
-==> corrected/089.rb 25 <==
+==> corrected/093.rb 25 <==
 x == 0
 y != 0
 Hash === z
 
-==> corrected/090.rb 9 <==
+==> corrected/094.rb 9 <==
 -1 - arg
 
-==> corrected/091.rb 20 <==
+==> corrected/095.rb 20 <==
 class Foo < Bar
 end
 
-==> corrected/092.rb 32 <==
+==> corrected/096.rb 32 <==
 begin
 rescue Exception => e
 end
 
-==> corrected/095.rb 20 <==
+==> corrected/099.rb 20 <==
 aaaa = 1
 foo
 b += 2

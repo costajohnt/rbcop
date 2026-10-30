@@ -1,12 +1,14 @@
-==> offenses exit=1 568 <==
-006.rb:1:1: W: Lint/NestedPercentLiteral: Within percent literals, nested percent literals do not function and may be unwanted in the result.
-007.rb:1:1: W: Lint/NestedPercentLiteral: Within percent literals, nested percent literals do not function and may be unwanted in the result.
+==> offenses exit=1 710 <==
 008.rb:1:1: W: Lint/NestedPercentLiteral: Within percent literals, nested percent literals do not function and may be unwanted in the result.
+009.rb:1:1: W: Lint/NestedPercentLiteral: Within percent literals, nested percent literals do not function and may be unwanted in the result.
 010.rb:1:1: W: Lint/NestedPercentLiteral: Within percent literals, nested percent literals do not function and may be unwanted in the result.
+011.rb:1:1: W: Lint/NestedPercentLiteral: Within percent literals, nested percent literals do not function and may be unwanted in the result.
+013.rb:1:1: W: Lint/NestedPercentLiteral: Within percent literals, nested percent literals do not function and may be unwanted in the result.
 
-==> autocorrect exit=1 568 <==
-006.rb:1:1: W: Lint/NestedPercentLiteral: Within percent literals, nested percent literals do not function and may be unwanted in the result.
-007.rb:1:1: W: Lint/NestedPercentLiteral: Within percent literals, nested percent literals do not function and may be unwanted in the result.
+==> autocorrect exit=1 710 <==
 008.rb:1:1: W: Lint/NestedPercentLiteral: Within percent literals, nested percent literals do not function and may be unwanted in the result.
+009.rb:1:1: W: Lint/NestedPercentLiteral: Within percent literals, nested percent literals do not function and may be unwanted in the result.
 010.rb:1:1: W: Lint/NestedPercentLiteral: Within percent literals, nested percent literals do not function and may be unwanted in the result.
+011.rb:1:1: W: Lint/NestedPercentLiteral: Within percent literals, nested percent literals do not function and may be unwanted in the result.
+013.rb:1:1: W: Lint/NestedPercentLiteral: Within percent literals, nested percent literals do not function and may be unwanted in the result.
 

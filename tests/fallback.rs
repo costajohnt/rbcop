@@ -1,5 +1,5 @@
 //! Cops rbcop cannot run: the stderr notice, and RBCOP_FALLBACK=1 (src/fallback.rs) compared with
-//! a live RuboCop 1.92.1 when one is on PATH.
+//! a live RuboCop 1.92.2 when one is on PATH.
 
 mod common;
 
@@ -52,7 +52,7 @@ fn rubocop(dir: &Path, args: &[&str]) -> Output {
 }
 
 fn have_rubocop() -> bool {
-    Command::new("rubocop").arg("-v").output().is_ok_and(|o| o.stdout == b"1.92.1\n")
+    Command::new("rubocop").arg("-v").output().is_ok_and(|o| o.stdout == b"1.92.2\n")
 }
 
 fn text(b: &[u8]) -> String {
@@ -400,7 +400,7 @@ fn same(dir: &Path, env: &[(&str, &str)], args: &[&str]) {
 #[test]
 fn fallback_forwards_the_command_line() {
     if !have_rubocop() {
-        eprintln!("skipped: RuboCop 1.92.1 is not on PATH");
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
         return;
     }
     let dir = project("flags");
@@ -434,7 +434,7 @@ fn fallback_forwards_the_command_line() {
 #[test]
 fn fallback_prints_config_warnings_once() {
     if !have_rubocop() {
-        eprintln!("skipped: RuboCop 1.92.1 is not on PATH");
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
         return;
     }
     // #416: a config warning, and the missing-department warnings for directive names (of a cop
@@ -456,7 +456,7 @@ fn fallback_prints_config_warnings_once() {
 #[test]
 fn fallback_fail_fast_autocorrect_stops_correcting() {
     if !have_rubocop() {
-        eprintln!("skipped: RuboCop 1.92.1 is not on PATH");
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
         return;
     }
     // -A -F: an uncorrectable offense in a.rb stops the run, so the fallback corrects no b.rb.
@@ -541,7 +541,7 @@ fn plugin_cops_come_from_lib_classes() {
 #[test]
 fn fallback_output_matches_rubocop() {
     if !have_rubocop() {
-        eprintln!("skipped: RuboCop 1.92.1 is not on PATH");
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
         return;
     }
     let dir = project("report");
@@ -640,7 +640,7 @@ fn copless_plugin_files_go_to_rubocop() {
 #[test]
 fn fallback_autocorrect_matches_rubocop() {
     if !have_rubocop() {
-        eprintln!("skipped: RuboCop 1.92.1 is not on PATH");
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
         return;
     }
     let ours = project("ac-ours");
@@ -694,7 +694,7 @@ fn fallback_is_the_default() {
         assert_eq!(text(&out.stderr), format!("rbcop: {refusal}\n"), "{args:?}");
     }
     // A bundle that locks rubocop, and a stand-in `bundle` that records how it was run.
-    fs::write(dir.join("Gemfile.lock"), "GEM\n  specs:\n    rubocop (1.92.1)\n").unwrap();
+    fs::write(dir.join("Gemfile.lock"), "GEM\n  specs:\n    rubocop (1.92.2)\n").unwrap();
     // What a cop prints itself passes through to stdout.
     fs::write(
         bin.join("bundle"),
@@ -811,7 +811,7 @@ fn fallback_is_the_default() {
 #[test]
 fn default_fallback_matches_rubocop() {
     if !have_rubocop() {
-        eprintln!("skipped: RuboCop 1.92.1 is not on PATH");
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
         return;
     }
     let dir = project("default-live");

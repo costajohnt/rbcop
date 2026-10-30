@@ -1,4 +1,3 @@
-use crate::helpers::add_parentheses;
 use crate::prelude::*;
 
 pub const NAME: &str = "Style/MethodDefParentheses";
@@ -26,14 +25,19 @@ impl Cop for MethodDefParentheses {
             if parens.is_none()
                 && let Some(p) = &params
             {
-                // Util#add_parentheses on an `args` node.
                 let (s, e) = (p.location().start_offset(), p.location().end_offset());
-                let fix = add_parentheses::plan(&p.as_node(), cx.src.text).unwrap();
+                // range_before_arguments: from the name to the arguments, cut at the last line
+                // break so a `\` line continuation stays out of the `(`.
+                let name_end = def.name_loc().end_offset();
+                let before = name_end + cx.src.text[name_end..s].rfind('\n').unwrap_or(s - name_end);
                 // `unexpected_style_detected 'require_no_parentheses'`: a String, so nil.
                 if cx.block_runs(s, e) {
                     cx.string_style_detected_for("EnforcedStyle");
                 }
-                cx.add_fix(s, e, "Use def with parentheses when there are parameters.", |c| add_parentheses::apply(c, &fix));
+                cx.add_fix(s, e, "Use def with parentheses when there are parameters.", |c| {
+                    c.replace(name_end, before, "(");
+                    c.insert_after(s, e, ")");
+                });
             } else {
                 cx.correct_style_detected();
             }

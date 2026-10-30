@@ -205,3 +205,11 @@ foo.bar[
   baz: 1,
 ]&.fetch(:qux)
 
+==> 044.rb 45 <==
+def foo(...)
+  bar(
+    baz,
+    ...
+  )
+end
+

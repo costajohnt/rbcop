@@ -1,124 +1,168 @@
-==> offenses exit=1 4085 <==
+==> offenses exit=1 5608 <==
 000.rb:1:11: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
 001.rb:2:20: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
 002.rb:1:11: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
 003.rb:2:20: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
 004.rb:1:7: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
 005.rb:1:25: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-006.rb:1:11: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-007.rb:1:11: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-008.rb:1:16: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-009.rb:1:20: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-010.rb:1:19: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-011.rb:1:19: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-012.rb:1:10: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-013.rb:1:12: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-014.rb:1:14: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-015.rb:1:16: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-016.rb:1:14: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-017.rb:1:3: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-018.rb:1:11: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-019.rb:1:16: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-020.rb:1:20: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-021.rb:1:19: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-022.rb:1:19: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-023.rb:1:10: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-024.rb:1:12: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-025.rb:1:14: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-026.rb:1:16: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-027.rb:1:14: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-028.rb:1:3: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-029.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-030.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-031.rb:2:7: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-031.rb:3:7: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-032.rb:2:7: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-033.rb:1:3: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-034.rb:1:3: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-035.rb:1:3: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-036.rb:1:17: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-037.rb:1:18: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-038.rb:1:17: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-039.rb:1:7: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-040.rb:1:7: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-041.rb:1:18: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-042.rb:1:18: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-043.rb:1:18: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-044.rb:1:18: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-045.rb:1:3: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-046.rb:1:9: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-047.rb:1:6: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-048.rb:5:9: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-049.rb:1:12: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-050.rb:1:5: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-050.rb:1:12: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-051.rb:1:5: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-052.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-052.rb:1:13: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
-053.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-054.rb:2:9: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
-055.rb:2:24: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+006.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+007.rb:1:17: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+008.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+009.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+010.rb:1:11: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+011.rb:1:14: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+012.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+013.rb:1:15: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+014.rb:1:11: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+015.rb:1:11: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+016.rb:1:11: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+017.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+018.rb:1:11: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+019.rb:1:16: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+020.rb:1:20: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+021.rb:1:19: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+022.rb:1:19: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+023.rb:1:10: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+024.rb:1:12: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+025.rb:1:14: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+026.rb:1:16: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+027.rb:1:14: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+028.rb:1:3: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+029.rb:1:11: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+030.rb:1:16: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+031.rb:1:20: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+032.rb:1:19: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+033.rb:1:19: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+034.rb:1:10: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+035.rb:1:12: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+036.rb:1:14: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+037.rb:1:16: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+038.rb:1:14: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+039.rb:1:3: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+040.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+041.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+042.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+043.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+044.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+045.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+046.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+047.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+048.rb:2:7: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+048.rb:3:7: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+049.rb:2:7: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+050.rb:2:7: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+051.rb:2:13: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+052.rb:2:7: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+053.rb:2:7: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+054.rb:2:7: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+055.rb:1:3: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+056.rb:1:3: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+057.rb:1:3: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+058.rb:1:17: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+059.rb:1:18: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+060.rb:1:17: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+061.rb:1:7: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+062.rb:1:7: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+063.rb:1:18: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+064.rb:1:18: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+065.rb:1:18: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+066.rb:1:18: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+067.rb:1:3: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+068.rb:1:9: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+069.rb:1:6: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+070.rb:5:9: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+071.rb:1:12: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+072.rb:1:5: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+072.rb:1:12: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+073.rb:1:5: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+074.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+074.rb:1:13: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
+075.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+076.rb:2:9: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+077.rb:2:24: C: [Correctable] Style/AndOr: Use `||` instead of `or`.
 
-==> autocorrect exit=0 3967 <==
+==> autocorrect exit=0 5446 <==
 000.rb:1:11: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
 001.rb:2:20: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
 002.rb:1:11: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
 003.rb:2:20: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
 004.rb:1:7: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
 005.rb:1:25: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-006.rb:1:11: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-007.rb:1:11: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-008.rb:1:16: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-009.rb:1:20: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-010.rb:1:19: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-011.rb:1:19: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-012.rb:1:10: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-013.rb:1:12: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-014.rb:1:14: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-015.rb:1:16: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-016.rb:1:14: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-017.rb:1:3: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-018.rb:1:11: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-019.rb:1:16: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-020.rb:1:20: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-021.rb:1:19: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-022.rb:1:19: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-023.rb:1:10: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-024.rb:1:12: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-025.rb:1:14: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-026.rb:1:16: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-027.rb:1:14: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-028.rb:1:3: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-029.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-030.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-031.rb:2:7: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-031.rb:3:7: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-032.rb:2:7: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-033.rb:1:3: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-034.rb:1:3: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-035.rb:1:3: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-036.rb:1:17: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-037.rb:1:18: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-038.rb:1:17: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-039.rb:1:7: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-040.rb:1:7: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-041.rb:1:18: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-042.rb:1:18: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-043.rb:1:18: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-044.rb:1:18: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-045.rb:1:3: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-046.rb:1:9: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-047.rb:1:6: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-048.rb:5:9: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-049.rb:1:12: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-050.rb:1:5: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-050.rb:1:12: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-051.rb:1:5: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-052.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-052.rb:1:13: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
-053.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-054.rb:2:9: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
-055.rb:2:24: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+006.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+007.rb:1:17: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+008.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+009.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+010.rb:1:11: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+011.rb:1:14: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+012.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+013.rb:1:15: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+014.rb:1:11: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+015.rb:1:11: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+016.rb:1:11: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+017.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+018.rb:1:11: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+019.rb:1:16: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+020.rb:1:20: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+021.rb:1:19: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+022.rb:1:19: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+023.rb:1:10: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+024.rb:1:12: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+025.rb:1:14: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+026.rb:1:16: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+027.rb:1:14: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+028.rb:1:3: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+029.rb:1:11: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+030.rb:1:16: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+031.rb:1:20: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+032.rb:1:19: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+033.rb:1:19: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+034.rb:1:10: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+035.rb:1:12: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+036.rb:1:14: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+037.rb:1:16: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+038.rb:1:14: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+039.rb:1:3: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+040.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+041.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+042.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+043.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+044.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+045.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+046.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+047.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+048.rb:2:7: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+048.rb:3:7: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+049.rb:2:7: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+050.rb:2:7: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+051.rb:2:13: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+052.rb:2:7: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+053.rb:2:7: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+054.rb:2:7: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+055.rb:1:3: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+056.rb:1:3: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+057.rb:1:3: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+058.rb:1:17: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+059.rb:1:18: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+060.rb:1:17: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+061.rb:1:7: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+062.rb:1:7: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+063.rb:1:18: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+064.rb:1:18: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+065.rb:1:18: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+066.rb:1:18: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+067.rb:1:3: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+068.rb:1:9: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+069.rb:1:6: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+070.rb:5:9: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+071.rb:1:12: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+072.rb:1:5: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+072.rb:1:12: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+073.rb:1:5: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+074.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+074.rb:1:13: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
+075.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+076.rb:2:9: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+077.rb:2:24: C: [Corrected] Style/AndOr: Use `||` instead of `or`.
 
 ==> corrected/000.rb 15 <==
 test if a && b
@@ -142,138 +186,230 @@ end
 ==> corrected/005.rb 36 <==
 teststring.include?('b') || (x = y)
 
-==> corrected/006.rb 23 <==
+==> corrected/006.rb 25 <==
+foo && (bar ? baz : qux)
+
+==> corrected/007.rb 25 <==
+(bar ? baz : qux) && foo
+
+==> corrected/008.rb 24 <==
+foo && if bar
+  baz
+end
+
+==> corrected/009.rb 18 <==
+foo && (bar..baz)
+
+==> corrected/010.rb 19 <==
+(bar...baz) || foo
+
+==> corrected/011.rb 22 <==
+(defined? bar) && foo
+
+==> corrected/012.rb 22 <==
+foo && (defined? bar)
+
+==> corrected/013.rb 21 <==
+defined?(bar) && foo
+
+==> corrected/014.rb 23 <==
 foo[:bar] && foo[:baz]
 
-==> corrected/007.rb 26 <==
-(x = a + b) && (return x)
+==> corrected/015.rb 31 <==
+bar + baz && qux.quux ** corge
 
-==> corrected/008.rb 20 <==
-x = a + b if a && b
+==> corrected/016.rb 25 <==
+bar % baz || qux << quux
 
-==> corrected/009.rb 24 <==
-x = a + b unless a && b
-
-==> corrected/010.rb 23 <==
-x = a + b while a && b
-
-==> corrected/011.rb 23 <==
-x = a + b until a && b
-
-==> corrected/012.rb 15 <==
-method(a) && b
-
-==> corrected/013.rb 17 <==
-method(a,b) && b
-
-==> corrected/014.rb 19 <==
-obj.method(a) && b
-
-==> corrected/015.rb 21 <==
-obj.method(a,b) && b
-
-==> corrected/016.rb 18 <==
-method(a, b) && b
-
-==> corrected/017.rb 17 <==
-b && method(a,b)
+==> corrected/017.rb 18 <==
+foo && bar.+(baz)
 
 ==> corrected/018.rb 26 <==
-(x = a + b) || (return x)
+(x = a + b) && (return x)
 
 ==> corrected/019.rb 20 <==
-x = a + b if a || b
+x = a + b if a && b
 
 ==> corrected/020.rb 24 <==
-x = a + b unless a || b
+x = a + b unless a && b
 
 ==> corrected/021.rb 23 <==
-x = a + b while a || b
+x = a + b while a && b
 
 ==> corrected/022.rb 23 <==
-x = a + b until a || b
+x = a + b until a && b
 
 ==> corrected/023.rb 15 <==
-method(a) || b
+method(a) && b
 
 ==> corrected/024.rb 17 <==
-method(a,b) || b
+method(a,b) && b
 
 ==> corrected/025.rb 19 <==
-obj.method(a) || b
+obj.method(a) && b
 
 ==> corrected/026.rb 21 <==
-obj.method(a,b) || b
+obj.method(a,b) && b
 
 ==> corrected/027.rb 18 <==
-method(a, b) || b
+method(a, b) && b
 
 ==> corrected/028.rb 17 <==
+b && method(a,b)
+
+==> corrected/029.rb 26 <==
+(x = a + b) || (return x)
+
+==> corrected/030.rb 20 <==
+x = a + b if a || b
+
+==> corrected/031.rb 24 <==
+x = a + b unless a || b
+
+==> corrected/032.rb 23 <==
+x = a + b while a || b
+
+==> corrected/033.rb 23 <==
+x = a + b until a || b
+
+==> corrected/034.rb 15 <==
+method(a) || b
+
+==> corrected/035.rb 17 <==
+method(a,b) || b
+
+==> corrected/036.rb 19 <==
+obj.method(a) || b
+
+==> corrected/037.rb 21 <==
+obj.method(a,b) || b
+
+==> corrected/038.rb 18 <==
+method(a, b) || b
+
+==> corrected/039.rb 17 <==
 b || method(a,b)
 
-==> corrected/029.rb 14 <==
+==> corrected/040.rb 14 <==
 foo && return
 
-==> corrected/030.rb 18 <==
+==> corrected/041.rb 18 <==
 foo && (return x)
 
-==> corrected/031.rb 62 <==
+==> corrected/042.rb 31 <==
+foo && bar(baz) do |x|
+  x
+end
+
+==> corrected/043.rb 28 <==
+foo && bar(baz) do
+  _1
+end
+
+==> corrected/044.rb 35 <==
+foo && bar(baz) do |x|
+  x
+end.qux
+
+==> corrected/045.rb 41 <==
+foo && bar(baz) do |x|
+  x
+end.qux(quux)
+
+==> corrected/046.rb 36 <==
+foo && !bar.baz(qux) do |x|
+  x
+end
+
+==> corrected/047.rb 32 <==
+foo && !bar(baz) do |x|
+  x
+end
+
+==> corrected/048.rb 62 <==
 items.each do |item|
   foo && (next 1)
   bar && (break 2)
 end
 
-==> corrected/032.rb 29 <==
+==> corrected/049.rb 29 <==
 def m
   foo && (yield 1)
 end
 
-==> corrected/033.rb 22 <==
+==> corrected/050.rb 30 <==
+def m
+  foo && super(baz)
+end
+
+==> corrected/051.rb 30 <==
+def m
+  super(baz) && foo
+end
+
+==> corrected/052.rb 49 <==
+def m
+  foo && super(baz) do |x|
+    x
+  end
+end
+
+==> corrected/053.rb 31 <==
+def m
+  foo && !super(baz)
+end
+
+==> corrected/054.rb 25 <==
+def m
+  foo && super
+end
+
+==> corrected/055.rb 22 <==
 x && !obj.method(arg)
 
-==> corrected/034.rb 22 <==
+==> corrected/056.rb 22 <==
 x && obj&.method(arg)
 
-==> corrected/035.rb 23 <==
+==> corrected/057.rb 23 <==
 x && !obj&.method(arg)
 
-==> corrected/036.rb 22 <==
+==> corrected/058.rb 22 <==
 !obj.method(arg) && x
 
-==> corrected/037.rb 24 <==
+==> corrected/059.rb 24 <==
 (obj.method = arg) && x
 
-==> corrected/038.rb 23 <==
+==> corrected/060.rb 23 <==
 (obj.method= arg) && x
 
-==> corrected/039.rb 26 <==
+==> corrected/061.rb 26 <==
 false || 3.is_a?(Integer)
 
-==> corrected/040.rb 26 <==
+==> corrected/062.rb 26 <==
 false && 3.is_a?(Integer)
 
-==> corrected/041.rb 39 <==
+==> corrected/063.rb 39 <==
 '1'.is_a?(Integer) || 1.is_a?(Integer)
 
-==> corrected/042.rb 39 <==
+==> corrected/064.rb 39 <==
 '1'.is_a?(Integer) && 1.is_a?(Integer)
 
-==> corrected/043.rb 39 <==
+==> corrected/065.rb 39 <==
 '1'.is_a?(Integer) || 1.is_a?(Integer)
 
-==> corrected/044.rb 39 <==
+==> corrected/066.rb 39 <==
 '1'.is_a?(Integer) && 1.is_a?(Integer)
 
-==> corrected/045.rb 15 <==
+==> corrected/067.rb 15 <==
 x && (not arg)
 
-==> corrected/046.rb 15 <==
+==> corrected/068.rb 15 <==
 (not arg) && x
 
-==> corrected/047.rb 19 <==
+==> corrected/069.rb 19 <==
 !var || var.empty?
 
-==> corrected/048.rb 38 <==
+==> corrected/070.rb 38 <==
 def x
 end
 
@@ -281,27 +417,27 @@ def y
   (a = b) && a.c
 end
 
-==> corrected/049.rb 20 <==
+==> corrected/071.rb 20 <==
 (foo == bar) && baz
 
-==> corrected/050.rb 20 <==
+==> corrected/072.rb 20 <==
 (foo || bar) && baz
 
-==> corrected/051.rb 18 <==
+==> corrected/073.rb 18 <==
 foo || bar && baz
 
-==> corrected/052.rb 18 <==
+==> corrected/074.rb 18 <==
 foo && bar || baz
 
-==> corrected/053.rb 20 <==
+==> corrected/075.rb 20 <==
 foo && (bar || baz)
 
-==> corrected/054.rb 29 <==
+==> corrected/076.rb 29 <==
 (def y
   (a = b) && a.c
 end)
 
-==> corrected/055.rb 113 <==
+==> corrected/077.rb 113 <==
 APP_ROOT = Pathname.new File.expand_path('../../', __FILE__)
 system('bundle check') || system!('bundle install')
 

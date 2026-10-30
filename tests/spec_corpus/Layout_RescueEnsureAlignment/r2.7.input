@@ -393,7 +393,17 @@ a ||= [].map do |_|
   rescue StandardError => _
 end
 
-==> 058.rb 57 <==
+==> 058.rb 47 <==
+foo[bar] ||= baz do
+  rescue StandardError
+end
+
+==> 059.rb 45 <==
+foo.bar += baz do
+  rescue StandardError
+end
+
+==> 060.rb 57 <==
 valid =
   proc do |bar|
     baz
@@ -401,28 +411,28 @@ valid =
     qux
   end
 
-==> 059.rb 36 <==
+==> 061.rb 36 <==
 super do
   nil
     ensure
   nil
 end
 
-==> 060.rb 32 <==
+==> 062.rb 32 <==
 super do
   nil
 ensure
   nil
 end
 
-==> 061/foo.rb 29 <==
+==> 063/foo.rb 29 <==
 begin
   foo
 rescue
   bar
 end
 
-==> 062.rb 89 <==
+==> 064.rb 89 <==
 def test
   'foo'; rescue; 'baz'
 end
@@ -433,7 +443,7 @@ def test
   end
 end
 
-==> 063.rb 89 <==
+==> 065.rb 89 <==
 def test
   'foo'; ensure; 'baz'
 end
@@ -444,28 +454,28 @@ def test
   end
 end
 
-==> 064.rb 33 <==
+==> 066.rb 33 <==
 	begin
 		foo
   rescue
 		bar
 	end
 
-==> 065.rb 35 <==
+==> 067.rb 35 <==
 	def foo
 		bar
 		ensure
 		baz
 	end
 
-==> 066.rb 32 <==
+==> 068.rb 32 <==
 	begin
 		foo
 	rescue
 		bar
 	end
 
-==> 067.rb 39 <==
+==> 069.rb 39 <==
 	x = [begin
 		foo
   rescue

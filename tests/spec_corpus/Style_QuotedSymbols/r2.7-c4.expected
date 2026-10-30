@@ -1,14 +1,18 @@
-==> offenses exit=1 600 <==
+==> offenses exit=1 900 <==
 010.rb:1:1: C: [Correctable] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
 011.rb:1:1: C: [Correctable] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
 012.rb:1:1: C: [Correctable] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
-015.rb:1:3: C: [Correctable] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
+013.rb:1:1: C: [Correctable] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
+014.rb:1:3: C: [Correctable] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
+017.rb:1:3: C: [Correctable] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
 
-==> autocorrect exit=0 592 <==
+==> autocorrect exit=0 888 <==
 010.rb:1:1: C: [Corrected] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
 011.rb:1:1: C: [Corrected] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
 012.rb:1:1: C: [Corrected] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
-015.rb:1:3: C: [Corrected] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
+013.rb:1:1: C: [Corrected] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
+014.rb:1:3: C: [Corrected] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
+017.rb:1:3: C: [Corrected] Style/QuotedSymbols: Prefer double-quoted symbols unless you need single quotes to avoid extra backslashes for escaping.
 
 ==> corrected/010.rb 5 <==
 :"a"
@@ -19,6 +23,12 @@
 ==> corrected/012.rb 12 <==
 :"foo\\bar"
 
-==> corrected/015.rb 18 <==
+==> corrected/013.rb 9 <==
+:"foo\\"
+
+==> corrected/014.rb 17 <==
+{ "foo\\": bar }
+
+==> corrected/017.rb 18 <==
 { :"a" => value }
 

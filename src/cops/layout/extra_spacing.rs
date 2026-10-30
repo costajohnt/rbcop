@@ -252,6 +252,19 @@ impl Cop for ExtraSpacing {
                     src.column(t.end) - spaces + 1
                 };
                 let Some(align_to) = tokens.iter().map(align_column).max() else { continue };
+                // exceeds_max_line_length? (1.92.2): no offense when padding an `=` would push its
+                // line past Layout/LineLength's Max.
+                let max = helpers::statement_modifier::max_line_length(cx);
+                let exceeds = max.is_some_and(|max| {
+                    tokens.iter().any(|t| {
+                        let padding = align_to as isize - src.column(t.end) as isize;
+                        let line = &src.lines[src.line_of(t.start) - 1];
+                        padding > 0 && (helpers::statement_modifier::line_length(cx, line) as isize + padding) as f64 > max
+                    })
+                });
+                if exceeds {
+                    continue;
+                }
                 let corrected = &corrected;
                 cx.add_fix(t2.start, t2.end, MSG_UNALIGNED_ASGN, |c| {
                     for t in &tokens {

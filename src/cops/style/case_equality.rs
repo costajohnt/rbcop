@@ -8,6 +8,11 @@ fn is_const(node: &Node) -> bool {
     node.as_constant_read_node().is_some() || node.as_constant_path_node().is_some()
 }
 
+/// rubocop-ast `numeric_type?`: int, float, rational or complex literal.
+fn is_numeric(node: &Node) -> bool {
+    matches!(kind::of(node), kind::INTEGER_NODE | kind::FLOAT_NODE | kind::RATIONAL_NODE | kind::IMAGINARY_NODE)
+}
+
 /// (send (self) :class)
 fn self_class(node: &Node) -> bool {
     node.as_call_node().is_some_and(|c| {
@@ -79,7 +84,13 @@ impl Cop for CaseEquality {
                 Some(s) => s.body().iter().next(),
                 None => Some(b),
             });
-            first.filter(|f| f.as_range_node().is_some()).map(|_| format!("{}.include?({})", node_text(&lhs), node_text(rhs)))
+            first.and_then(|f| f.as_range_node()).map(|range| {
+                // cover_semantics?: `Range#===` is `cover?` since Ruby 2.7, which `include?`
+                // matches only for numeric ranges.
+                let numeric = [range.left(), range.right()].iter().flatten().all(is_numeric);
+                let method = if cx.config.target_ruby >= 2.7 && !numeric { "cover?" } else { "include?" };
+                format!("{}.{method}({})", node_text(&lhs), node_text(rhs))
+            })
         } else if is_const(&lhs) || self_class(&lhs) {
             Some(format!("{}.is_a?({})", paren(rhs), node_text(&lhs)))
         } else {

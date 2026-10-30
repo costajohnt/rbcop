@@ -11,29 +11,56 @@ Style/RaiseArgs:
 ==> 000.rb 24 <==
 raise RuntimeError, msg
 
-==> 001.rb 23 <==
+==> 001.rb 55 <==
+raise(
+  RuntimeError,
+  <<~MSG.strip
+    text
+  MSG
+)
+
+==> 002.rb 38 <==
+raise RuntimeError, <<~MSG
+  text
+MSG
+
+==> 003.rb 34 <==
+raise(e.class, <<~MSG)
+  text
+MSG
+
+==> 004.rb 23 <==
 raise error_class, msg
 
-==> 002.rb 28 <==
+==> 005.rb 28 <==
 raise FooError.new, message
 
-==> 003.rb 31 <==
+==> 006.rb 23 <==
+raise e.class, message
+
+==> 007.rb 27 <==
+raise e.class.new, message
+
+==> 008.rb 31 <==
 foo ? raise(Ex, 'error') : bar
 
-==> 004.rb 26 <==
+==> 009.rb 26 <==
 bar && raise(Ex, 'error')
 
-==> 005.rb 26 <==
+==> 010.rb 26 <==
 bar || raise(Ex, 'error')
 
-==> 006.rb 60 <==
+==> 011.rb 28 <==
+bar || (raise(Ex, 'error'))
+
+==> 012.rb 60 <==
 if a
   raise RuntimeError, msg
 else
   raise Ex.new(msg)
 end
 
-==> 007.rb 95 <==
+==> 013.rb 95 <==
 if a
   raise RuntimeError, msg
 elsif b
@@ -42,15 +69,17 @@ else
   raise ArgumentError, msg
 end
 
-==> 008.rb 32 <==
+==> 014.rb 32 <==
 raise RuntimeError, msg, caller
 
-==> 009.rb 9 <==
+==> 015.rb 9 <==
 raise msg
-==> 010.rb 17 <==
+==> 016.rb 17 <==
 raise Ex.new(msg)
-==> 011.rb 43 <==
+==> 017.rb 43 <==
 raise MyKwArgError.new(a: 1, b: 2), message
-==> 012.rb 43 <==
+==> 018.rb 32 <==
+raise MyError.new(code), message
+==> 019.rb 43 <==
 raise Foo, "#{fetch { raise Bar, 'bad' }}"
 

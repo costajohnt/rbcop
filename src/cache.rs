@@ -48,7 +48,7 @@ pub fn digest(parts: &[&[u8]]) -> String {
 }
 
 /// The entry layout, part of the build digest: entries of another layout are never read.
-/// 2: each offense line carries its corrections (RuboCop 1.92.1's Offense#corrections).
+/// 2: each offense line carries its corrections (RuboCop 1.92.2's Offense#corrections).
 const FORMAT: &[u8] = b"format 2";
 
 /// One saved offense's corrections: `-`, or `begin,end,hex(replacement)` joined by `;`. None when

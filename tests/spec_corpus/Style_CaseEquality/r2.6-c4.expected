@@ -1,0 +1,14 @@
+==> offenses exit=1 202 <==
+000.rb:1:12: C: [Correctable] Style/CaseEquality: Avoid the use of the case equality operator `===`.
+001.rb:1:13: C: [Correctable] Style/CaseEquality: Avoid the use of the case equality operator `===`.
+
+==> autocorrect exit=0 198 <==
+000.rb:1:12: C: [Corrected] Style/CaseEquality: Avoid the use of the case equality operator `===`.
+001.rb:1:13: C: [Corrected] Style/CaseEquality: Avoid the use of the case equality operator `===`.
+
+==> corrected/000.rb 25 <==
+('a'..'z').include?(var)
+
+==> corrected/001.rb 26 <==
+(min...max).include?(var)
+

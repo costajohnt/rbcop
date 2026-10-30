@@ -109,12 +109,20 @@ fn adjust_str(node: &Node) -> String {
 }
 
 fn replacement(parts: &[Node]) -> String {
-    let inner: String = parts
-        .iter()
-        .map(adjust_str)
-        .map(|s| if s == "\"" { "\\\"".to_string() } else { s })
-        .collect();
+    let mut inner = String::new();
+    for part in parts.iter().map(adjust_str).map(|s| if s == "\"" { "\\\"".to_string() } else { s }) {
+        // join_parts: escape a `#` that would start an interpolation with this part.
+        if part.starts_with(['{', '@', '$']) && ends_with_unescaped_hash(&inner) {
+            inner.insert(inner.len() - 1, '\\');
+        }
+        inner.push_str(&part);
+    }
     format!("\"{inner}\"")
+}
+
+/// `/(?<!\\)(?:\\\\)*#\z/`: a trailing `#` after an even run of backslashes.
+fn ends_with_unescaped_hash(s: &str) -> bool {
+    s.strip_suffix('#').is_some_and(|rest| (rest.len() - rest.trim_end_matches('\\').len()) % 2 == 0)
 }
 
 /// Index in `ancestors` of the parser parent of the node whose ancestors are `ancestors`.

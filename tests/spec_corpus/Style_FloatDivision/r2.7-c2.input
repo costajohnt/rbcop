@@ -14,13 +14,16 @@ a.to_f / b.to_f
 ==> 001.rb 32 <==
 (a - b).to_f / (3 * d / 2).to_f
 
-==> 002.rb 10 <==
-a.to_f / b
+==> 002.rb 26 <==
+a.to_f / b.to_f # comment
+
 ==> 003.rb 10 <==
+a.to_f / b
+==> 004.rb 10 <==
 a / b.to_f
-==> 004.rb 8 <==
-a / to_f
 ==> 005.rb 8 <==
+a / to_f
+==> 006.rb 8 <==
 to_f / b
-==> 006.rb 11 <==
+==> 007.rb 11 <==
 to_f / to_f

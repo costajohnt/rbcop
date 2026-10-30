@@ -84,9 +84,29 @@ impl Cop for NumericPredicate {
         }
         let (start, end) = send_range(&call);
         let msg = format!("Use `{replacement}` instead of `{}`.", &cx.src.text[start..end]);
-        cx.add_fix(start, end, &msg, |c| c.replace(start, end, &replacement));
+        // inside_corrected_predicate?: a `send` ancestor this cop already corrected (ignore_node).
+        let ancestors = cx.ancestors;
+        let ignored = &cx.state::<Ignored>().0;
+        let inside_corrected = ancestors.iter().enumerate().any(|(i, a)| {
+            a.as_call_node().is_some_and(|c| {
+                let in_block = ancestors.get(i + 1).is_some_and(|n| n.as_block_node().is_some());
+                !in_block && !is_csend(&c) && ignored.contains(&send_range(&c))
+            })
+        });
+        if !inside_corrected && cx.block_runs(start, end) {
+            cx.state::<Ignored>().0.push((start, end));
+        }
+        cx.add_fix(start, end, &msg, |c| {
+            if !inside_corrected {
+                c.replace(start, end, &replacement);
+            }
+        });
     }
 }
+
+/// `ignore_node`d (corrected) sends.
+#[derive(Default)]
+struct Ignored(Vec<(usize, usize)>);
 
 /// `handled_by_bitwise_predicate?`: `(a & b).zero?`, `(a & b) > 0` and friends are left to
 /// Style/BitwisePredicate when it is enabled and supported.

@@ -351,14 +351,25 @@ class Foo
   include Qux
 end
 
-==> 056.rb 55 <==
+==> 056.rb 51 <==
+def foo
+  bar
+  extend(IO) && write if in_file
+end
+
+==> 057.rb 34 <==
+def foo
+  extend(IO) or write
+end
+
+==> 058.rb 55 <==
 begin
   include Foo
 rescue NameError
   include Bar
 end
 
-==> 057.rb 46 <==
+==> 059.rb 46 <==
 begin
   include Foo
 ensure

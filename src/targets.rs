@@ -170,7 +170,7 @@ pub fn changed(revision: &str) -> Result<std::collections::HashSet<PathBuf>, Str
     let root = Path::new(std::ffi::OsStr::from_bytes(root));
     // `diff.relative` would make git report paths relative to the current directory.
     // Deliberate difference: `--end-of-options` keeps a revision such as `--output=FILE` from
-    // being read as a git option (RuboCop 1.92.1 passes it through, and git writes FILE). Git's
+    // being read as a git option (RuboCop 1.92.2 passes it through, and git writes FILE). Git's
     // messages for every other revision are unchanged; a trailing `--` would reword them.
     // `--no-ext-diff --no-textconv --no-renames`: see git_command (a rename's new name is listed
     // either way, and its old one never is).

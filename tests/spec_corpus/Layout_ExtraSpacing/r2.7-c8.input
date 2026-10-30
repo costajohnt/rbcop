@@ -1,0 +1,31 @@
+==> .rubocop.yml 108 <==
+---
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000.rb 38 <==
+one  # comment one
+two  # comment two
+
+==> 001.rb 39 <==
+one  # comment one
+two   # comment two
+
+==> 002.rb 290 <==
+class Foo
+  def require(p)  # rubocop:disable Naming/MethodParameterName
+  end
+
+  def load(p)  # rubocop:disable Naming/MethodParameterName
+  end
+
+  def join(*ps)  # rubocop:disable Naming/MethodParameterName
+  end
+
+  def exist?(*ps)  # rubocop:disable Naming/MethodParameterName
+  end
+end
+

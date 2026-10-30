@@ -1,4 +1,4 @@
-==> offenses exit=1 824 <==
+==> offenses exit=1 933 <==
 000.rb:1:9: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
 002.rb:1:9: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
 003.rb:1:14: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
@@ -8,8 +8,9 @@
 010.rb:1:8: C: [Correctable] Style/MethodDefParentheses: Use def without parentheses.
 011.rb:1:10: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
 012.rb:4:10: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+013.rb:2:5: C: [Correctable] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
 
-==> autocorrect exit=0 806 <==
+==> autocorrect exit=0 913 <==
 000.rb:1:9: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
 002.rb:1:9: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
 003.rb:1:14: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
@@ -19,6 +20,7 @@
 010.rb:1:8: C: [Corrected] Style/MethodDefParentheses: Use def without parentheses.
 011.rb:1:10: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
 012.rb:4:10: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
+013.rb:2:5: C: [Corrected] Style/MethodDefParentheses: Use def with parentheses when there are parameters.
 
 ==> corrected/000.rb 18 <==
 def func a, b
@@ -60,5 +62,11 @@ def func(a,
 end
 def func(a,
          b)
+end
+
+==> corrected/013.rb 28 <==
+def func(
+    a,
+    b)
 end
 

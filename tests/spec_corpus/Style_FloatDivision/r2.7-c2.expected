@@ -1,14 +1,19 @@
-==> offenses exit=1 178 <==
+==> offenses exit=1 267 <==
 000.rb:1:1: C: [Correctable] Style/FloatDivision: Prefer using `.to_f` on one side only.
 001.rb:1:1: C: [Correctable] Style/FloatDivision: Prefer using `.to_f` on one side only.
+002.rb:1:1: C: [Correctable] Style/FloatDivision: Prefer using `.to_f` on one side only.
 
-==> autocorrect exit=0 174 <==
+==> autocorrect exit=0 261 <==
 000.rb:1:1: C: [Corrected] Style/FloatDivision: Prefer using `.to_f` on one side only.
 001.rb:1:1: C: [Corrected] Style/FloatDivision: Prefer using `.to_f` on one side only.
+002.rb:1:1: C: [Corrected] Style/FloatDivision: Prefer using `.to_f` on one side only.
 
 ==> corrected/000.rb 11 <==
 a.to_f / b
 
 ==> corrected/001.rb 27 <==
 (a - b).to_f / (3 * d / 2)
+
+==> corrected/002.rb 21 <==
+a.to_f / b # comment
 

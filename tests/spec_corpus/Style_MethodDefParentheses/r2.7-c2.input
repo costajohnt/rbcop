@@ -67,3 +67,9 @@ def func a,
          b
 end
 
+==> 013.rb 28 <==
+def func \
+    a,
+    b
+end
+

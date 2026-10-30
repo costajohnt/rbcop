@@ -86,7 +86,7 @@ Layout/MultilineOperationIndentation
 Layout/ParameterAlignment
 Layout/RedundantLineBreak
 Layout/RescueEnsureAlignment
-Layout/SingleLineBlockChain	Style/FloatDivision	Style/MapToHash	Style/NilComparison	Style/RedundantSort
+Layout/SingleLineBlockChain	Style/FloatDivision	Style/MapToHash	Style/MapToSet	Style/NilComparison	Style/RedundantSort
 Layout/SpaceAfterColon
 Layout/SpaceAfterComma
 Layout/SpaceAfterMethodName
@@ -106,7 +106,7 @@ Layout/SpaceBeforeSemicolon
 Layout/SpaceInLambdaLiteral
 Layout/SpaceInsideArrayPercentLiteral
 Layout/SpaceInsideArrayLiteralBrackets
-Layout/SpaceInsideBlockBraces	Style/BlockDelimiters
+Layout/SpaceInsideBlockBraces	Layout/BlockAlignment	Style/BlockDelimiters
 Layout/SpaceInsideHashLiteralBraces
 Layout/SpaceInsideParens
 Layout/SpaceInsidePercentLiteralDelimiters
@@ -335,7 +335,7 @@ Style/BlockDelimiters	Layout/SpaceBeforeBlockBraces	Style/MethodCallWithArgsPare
 Style/CaseEquality
 Style/CaseLikeIf	Style/IfInsideElse
 Style/CharacterLiteral
-Style/ClassAndModuleChildren	Style/StructInheritance
+Style/ClassAndModuleChildren	Style/DataInheritance	Style/StructInheritance
 Style/ClassCheck
 Style/ClassEqualityComparison
 Style/ClassMethods
@@ -380,7 +380,7 @@ Style/EmptyLambdaParameter
 Style/EmptyLiteral
 Style/EmptyMethod
 Style/EmptyStringInsideInterpolation
-Style/EndlessMethod	Style/GuardClause	Style/MethodCallWithArgsParentheses	Style/MethodDefParentheses	Style/RaiseArgs
+Style/EndlessMethod	Style/GuardClause	Style/IfUnlessModifier	Style/MethodCallWithArgsParentheses	Style/MethodDefParentheses	Style/RaiseArgs	Style/WhileUntilModifier
 Style/Encoding
 Style/EndBlock
 Style/EnvHome
@@ -405,7 +405,7 @@ Style/FrozenStringLiteralComment
 Style/GlobalStdStream
 Style/GlobalVars
 Style/GuardClause	Style/MissingElse
-Style/HashAsLastArrayItem	Style/TrailingCommaInArrayLiteral
+Style/HashAsLastArrayItem	Layout/MultilineArrayBraceLayout	Style/TrailingCommaInArrayLiteral
 Style/HashConversion	Style/MethodCallWithArgsParentheses
 Style/HashEachMethods
 Style/HashExcept
@@ -443,7 +443,7 @@ Style/MapJoin
 Style/MapToHash	Layout/SingleLineBlockChain
 Style/MapToSet
 Style/MethodCallWithoutArgsParentheses
-Style/MethodCallWithArgsParentheses	Style/NestedParenthesizedCalls	Style/RedundantParentheses	Style/RescueModifier	Style/TernaryParentheses	Style/TrailingCommaInArguments	Rails/EagerEvaluationLogMessage
+Style/MethodCallWithArgsParentheses	Layout/HeredocArgumentClosingParenthesis	Style/NestedParenthesizedCalls	Style/RedundantParentheses	Style/RescueModifier	Style/TernaryParentheses	Style/TrailingCommaInArguments	Rails/EagerEvaluationLogMessage
 Style/MinMaxComparison
 Style/ModuleMemberExistenceCheck
 Style/MultilineInPatternThen

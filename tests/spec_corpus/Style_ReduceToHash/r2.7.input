@@ -15,3 +15,11 @@ array.each_with_object({}) { _2[_1.id] = _2[_1.id].to_i + 1 }
 ==> 002.rb 45 <==
 array.inject({}) { _1[_2.id] = _2.name; _1 }
 
+==> 003.rb 63 <==
+array.inject({}) do
+  _1[_2] = <<~EOS
+    #{_2}
+  EOS
+  _1
+end
+

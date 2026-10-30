@@ -53,3 +53,13 @@ def test one,
 two
 end
 
+==> 010.rb 24 <==
+def func \
+    a, b
+end
+
+==> 011.rb 29 <==
+def self.func \
+    a, b
+end
+

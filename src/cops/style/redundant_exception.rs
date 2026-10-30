@@ -16,8 +16,7 @@ impl Cop for RedundantException {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
-        let command = method_name(&call);
-        if call.receiver().is_some() || is_csend(&call) || !matches!(command, "raise" | "fail") {
+        if call.receiver().is_some() || is_csend(&call) || !matches!(method_name(&call), "raise" | "fail") {
             return;
         }
         let args = send_args(&call);
@@ -28,10 +27,12 @@ impl Cop for RedundantException {
                 if message.as_nil_node().is_some() {
                     return;
                 }
-                let arg = message_source(message);
-                let arg = if call.opening_loc().is_some() { format!("({arg})") } else { format!(" {arg}") };
-                let fix = format!("{command}{arg}");
-                cx.add_fix(s, e, "Redundant `RuntimeError` argument can be removed.", |c| c.replace(s, e, &fix));
+                let fix = message_source(message);
+                let (xs, ms, me) = (exc.location().start_offset(), message.location().start_offset(), message.location().end_offset());
+                cx.add_fix(s, e, "Redundant `RuntimeError` argument can be removed.", |c| {
+                    c.remove(xs, ms);
+                    c.replace(ms, me, &fix);
+                });
             }
             // (send nil? {:raise :fail} $(send (const {nil? cbase} :RuntimeError) :new $_))
             [new_call] => {
@@ -50,8 +51,13 @@ impl Cop for RedundantException {
                 }
                 let fix = message_source(message);
                 let (ns, ne) = send_range(&new);
+                // heredoc_body_inside?: replacing the call would drop a heredoc body inside its
+                // parentheses.
+                let body_inside = helpers::heredoc::first_heredoc_end(message).is_some_and(|end| end < ne);
                 cx.add_fix(s, e, "Redundant `RuntimeError.new` call can be replaced with just the message.", |c| {
-                    c.replace(ns, ne, &fix)
+                    if !body_inside {
+                        c.replace(ns, ne, &fix);
+                    }
                 });
             }
             _ => {}

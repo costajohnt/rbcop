@@ -33,7 +33,7 @@ class Rbcop < Formula
   test do
     (testpath/"Gemfile").write ""
     (testpath/"a.rb").write "x = \"a\"\nputs x\n"
-    assert_equal "1.92.1\n", shell_output("#{bin}/rbcop -v")
+    assert_equal "1.92.2\n", shell_output("#{bin}/rbcop -v")
     assert_match "Style/StringLiterals", shell_output("#{bin}/rbcop -f e a.rb", 1)
   end
 end

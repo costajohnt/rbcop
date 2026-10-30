@@ -61,21 +61,30 @@ a, b = do_something(self.a)
 self.a = b
 ==> 022.rb 16 <==
 a, self.b = c, d
-==> 023.rb 28 <==
+==> 023.rb 19 <==
+self.a, *self.b = c
+==> 024.rb 19 <==
+*self.a, self.b = c
+==> 025.rb 24 <==
+a, (self.b, *self.c) = d
+==> 026.rb 15 <==
+a, b = *self.c
+
+==> 027.rb 28 <==
 self.logger ||= Rails.logger
-==> 024.rb 21 <==
+==> 028.rb 21 <==
 self.x ||= 42
 self.x
 
-==> 025.rb 19 <==
+==> 029.rb 19 <==
 self.flag &&= value
-==> 026.rb 14 <==
+==> 030.rb 14 <==
 self.sum += 10
-==> 027.rb 7 <==
+==> 031.rb 7 <==
 self[a]
-==> 028.rb 9 <==
+==> 032.rb 9 <==
 self << a
-==> 029.rb 452 <==
+==> 033.rb 452 <==
 a = self.class
 self.for(deps, [], true)
 self.and(other)
@@ -116,7 +125,7 @@ self.__FILE__
 self.__LINE__
 self.__ENCODING__
 
-==> 030.rb 150 <==
+==> 034.rb 150 <==
 %w[draft preview moderation approved rejected].each do |state|
   self.state == state
   define_method "#{state}?" do
@@ -124,27 +133,27 @@ self.__ENCODING__
   end
 end
 
-==> 031.rb 42 <==
+==> 035.rb 42 <==
 %w[x y z].select do
   self.axis == _1
 end
 
-==> 032.rb 60 <==
+==> 036.rb 60 <==
 def requested_specs(&groups)
   some_method(self.groups)
 end
 
-==> 033.rb 59 <==
+==> 037.rb 59 <==
 def requested_specs(groups)
   some_method(self.groups)
 end
 
-==> 034.rb 73 <==
+==> 038.rb 73 <==
 def requested_specs(final = true)
   something if self.final != final
 end
 
-==> 035.rb 166 <==
+==> 039.rb 166 <==
 def requested_specs
   @requested_specs ||= begin
     groups = self.groups - Bundler.settings.without
@@ -153,52 +162,52 @@ def requested_specs
   end
 end
 
-==> 036.rb 48 <==
+==> 040.rb 48 <==
 def foo
   do_something
 rescue => e
   self.e
 end
 
-==> 037.rb 46 <==
+==> 041.rb 46 <==
 begin
   do_something
 rescue => e
   self.e
 end
 
-==> 038.rb 38 <==
+==> 042.rb 38 <==
 def foo(bar)
   puts bar, self.bar
 end
 
-==> 039.rb 64 <==
+==> 043.rb 64 <==
 def foo(bar)
   def inner_method(); end
   puts bar, self.bar
 end
 
-==> 040.rb 66 <==
+==> 044.rb 66 <==
 def requested_specs(groups, **nil)
   some_method(self.groups)
 end
 
-==> 041.rb 65 <==
+==> 045.rb 65 <==
 def self.requested_specs(&groups)
   some_method(self.groups)
 end
 
-==> 042.rb 64 <==
+==> 046.rb 64 <==
 def self.requested_specs(groups)
   some_method(self.groups)
 end
 
-==> 043.rb 78 <==
+==> 047.rb 78 <==
 def self.requested_specs(final = true)
   something if self.final != final
 end
 
-==> 044.rb 171 <==
+==> 048.rb 171 <==
 def self.requested_specs
   @requested_specs ||= begin
     groups = self.groups - Bundler.settings.without
@@ -207,96 +216,96 @@ def self.requested_specs
   end
 end
 
-==> 045.rb 8 <==
+==> 049.rb 8 <==
 self.Foo
-==> 046.rb 7 <==
+==> 050.rb 7 <==
 self.()
-==> 047.rb 10 <==
+==> 051.rb 10 <==
 self.call
 
-==> 048.rb 9 <==
+==> 052.rb 9 <==
 self.open
-==> 049.rb 131 <==
+==> 053.rb 131 <==
 def do_something((a, b)) # This method expects Array that has 2 elements as argument.
   self.a = a
   self.b.some_method_call b
 end
 
-==> 050.rb 20 <==
+==> 054.rb 20 <==
 0.times { self.it }
 
-==> 051.rb 39 <==
+==> 055.rb 39 <==
 0.times do
   self.it
   it = 1
   it
 end
 
-==> 052.rb 22 <==
+==> 056.rb 22 <==
 def foo
   self.it
 end
 
-==> 053.rb 25 <==
+==> 057.rb 25 <==
 0.times { ||
   self.it
 }
 
-==> 054.rb 27 <==
+==> 058.rb 27 <==
 0.times { |_n|
   self.it
 }
 
-==> 055.rb 52 <==
+==> 059.rb 52 <==
 case foo
   in Integer => bar
     self.bar + bar
 end
 
-==> 056.rb 50 <==
+==> 060.rb 50 <==
 case pattern
   in {x: foo}
     self.foo + foo
 end
 
-==> 057.rb 52 <==
+==> 061.rb 52 <==
 case pattern
   in [foo, bar]
     self.foo + foo
 end
 
-==> 058.rb 74 <==
+==> 062.rb 74 <==
 case pattern
   in _foo | _bar
     self._foo + self._bar + _foo + _bar
 end
 
-==> 059.rb 66 <==
+==> 063.rb 66 <==
 case pattern
   in { foo: [bar, baz] }
     self.bar + self.baz
 end
 
-==> 060.rb 56 <==
+==> 064.rb 56 <==
 case pattern
   in a, b if b == a * 2
     self.a + b
 end
 
-==> 061.rb 56 <==
+==> 065.rb 56 <==
 case pattern
   in a, b if b == self.a * 2
     a + b
 end
 
-==> 062.rb 78 <==
+==> 066.rb 78 <==
 foo = 17
 case pattern
   in ^foo, *bar
     self.foo + self.bar + foo + bar
 end
 
-==> 063.rb 89 <==
+==> 067.rb 89 <==
 case foo
   in Integer => bar
     self.bar + bar

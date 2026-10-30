@@ -144,8 +144,10 @@ pub fn check_line(cx: &mut Cx, style: &str, line: i64, msg: &str, want_empty: bo
         return;
     }
     if style == "empty_lines" {
-        // EmptyLineCorrector (1.92): `insert_before(range.begin, "\n")`.
-        cx.add_fix(start, start + 1, msg, |c| c.insert_before(start, start, "\n"));
+        // EmptyLineCorrector (1.92.2): `replace(range.begin.adjust(begin_pos: -1), "\n\n")`, the
+        // line break before the line becomes two.
+        let nl = start.saturating_sub(1);
+        cx.add_fix(start, start + 1, msg, |c| c.replace(nl, start, "\n\n"));
     } else {
         cx.add_fix(start, start + 1, msg, |c| c.remove(start, start + 1));
     }

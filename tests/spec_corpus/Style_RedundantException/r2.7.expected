@@ -1,4 +1,4 @@
-==> offenses exit=1 3111 <==
+==> offenses exit=1 3563 <==
 000.rb:1:1: C: [Correctable] Style/RedundantException: Redundant `RuntimeError` argument can be removed.
 001.rb:1:1: C: [Correctable] Style/RedundantException: Redundant `RuntimeError` argument can be removed.
 002.rb:1:1: C: [Correctable] Style/RedundantException: Redundant `RuntimeError.new` call can be replaced with just the message.
@@ -26,8 +26,12 @@
 032.rb:1:1: C: [Correctable] Style/RedundantException: Redundant `RuntimeError.new` call can be replaced with just the message.
 033.rb:1:1: C: [Correctable] Style/RedundantException: Redundant `RuntimeError` argument can be removed.
 034.rb:1:1: C: [Correctable] Style/RedundantException: Redundant `RuntimeError` argument can be removed.
+035.rb:1:1: C: [Correctable] Style/RedundantException: Redundant `RuntimeError` argument can be removed.
+036.rb:1:1: C: [Correctable] Style/RedundantException: Redundant `RuntimeError` argument can be removed.
+037.rb:1:1: C: [Correctable] Style/RedundantException: Redundant `RuntimeError.new` call can be replaced with just the message.
+038.rb:1:1: C: Style/RedundantException: Redundant `RuntimeError.new` call can be replaced with just the message.
 
-==> autocorrect exit=0 3057 <==
+==> autocorrect exit=1 3503 <==
 000.rb:1:1: C: [Corrected] Style/RedundantException: Redundant `RuntimeError` argument can be removed.
 001.rb:1:1: C: [Corrected] Style/RedundantException: Redundant `RuntimeError` argument can be removed.
 002.rb:1:1: C: [Corrected] Style/RedundantException: Redundant `RuntimeError.new` call can be replaced with just the message.
@@ -55,6 +59,10 @@
 032.rb:1:1: C: [Corrected] Style/RedundantException: Redundant `RuntimeError.new` call can be replaced with just the message.
 033.rb:1:1: C: [Corrected] Style/RedundantException: Redundant `RuntimeError` argument can be removed.
 034.rb:1:1: C: [Corrected] Style/RedundantException: Redundant `RuntimeError` argument can be removed.
+035.rb:1:1: C: [Corrected] Style/RedundantException: Redundant `RuntimeError` argument can be removed.
+036.rb:1:1: C: [Corrected] Style/RedundantException: Redundant `RuntimeError` argument can be removed.
+037.rb:1:1: C: [Corrected] Style/RedundantException: Redundant `RuntimeError.new` call can be replaced with just the message.
+038.rb:1:1: C: Style/RedundantException: Redundant `RuntimeError.new` call can be replaced with just the message.
 
 ==> corrected/000.rb 16 <==
 raise "message"
@@ -136,4 +144,25 @@ raise (!foo).to_s
 
 ==> corrected/034.rb 18 <==
 raise foo[1].to_s
+
+==> corrected/035.rb 36 <==
+raise(
+  <<~MSG
+    message
+  MSG
+)
+
+==> corrected/036.rb 47 <==
+raise(
+  <<~MSG.strip.to_s
+    message
+  MSG
+)
+
+==> corrected/037.rb 36 <==
+raise(
+  <<~MSG
+    message
+  MSG
+)
 

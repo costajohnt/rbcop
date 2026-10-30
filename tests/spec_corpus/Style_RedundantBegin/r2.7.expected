@@ -1,4 +1,4 @@
-==> offenses exit=1 3149 <==
+==> offenses exit=1 3235 <==
 000.rb:1:11: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
 001.rb:2:3: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
 002.rb:2:3: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
@@ -14,30 +14,31 @@
 018.rb:2:3: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
 019.rb:4:3: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
 020.rb:4:3: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-021.rb:3:5: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-022.rb:5:5: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-023.rb:3:5: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-024.rb:5:5: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-025.rb:2:3: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-026.rb:2:3: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-046.rb:1:1: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-047.rb:1:1: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-048.rb:1:8: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-049.rb:2:3: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-050.rb:2:12: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-051.rb:2:3: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-051.rb:4:7: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-052.rb:2:3: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-052.rb:4:7: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-053.rb:1:7: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-054.rb:1:7: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-055.rb:1:7: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-056.rb:2:10: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-057.rb:2:10: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-058.rb:2:8: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
-059.rb:2:9: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+021.rb:1:19: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+027.rb:3:5: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+028.rb:5:5: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+029.rb:3:5: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+030.rb:5:5: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+031.rb:2:3: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+032.rb:2:3: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+052.rb:1:1: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+053.rb:1:1: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+054.rb:1:8: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+055.rb:2:3: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+056.rb:2:12: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+057.rb:2:3: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+057.rb:4:7: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+058.rb:2:3: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+058.rb:4:7: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+059.rb:1:7: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+060.rb:1:7: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+061.rb:1:7: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+062.rb:2:10: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+063.rb:2:10: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+064.rb:2:8: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
+065.rb:2:9: C: [Correctable] Style/RedundantBegin: Redundant `begin` block detected.
 
-==> autocorrect exit=0 3159 <==
+==> autocorrect exit=0 3243 <==
 000.rb:1:11: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
 001.rb:2:3: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
 002.rb:2:3: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
@@ -53,29 +54,30 @@
 018.rb:2:3: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
 019.rb:4:3: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
 020.rb:4:3: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-021.rb:3:5: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-022.rb:5:5: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-023.rb:3:5: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-024.rb:5:5: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-025.rb:2:3: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-026.rb:2:3: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-046.rb:1:1: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-047.rb:1:1: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-048.rb:1:8: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-049.rb:2:3: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-050.rb:1:10: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-050.rb:2:12: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-051.rb:2:3: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-051.rb:4:7: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-052.rb:2:3: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-052.rb:4:7: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-053.rb:1:7: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-054.rb:1:7: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-055.rb:1:7: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-056.rb:2:10: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-057.rb:2:10: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-058.rb:2:8: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
-059.rb:2:9: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+021.rb:1:19: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+027.rb:3:5: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+028.rb:5:5: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+029.rb:3:5: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+030.rb:5:5: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+031.rb:2:3: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+032.rb:2:3: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+052.rb:1:1: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+053.rb:1:1: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+054.rb:1:8: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+055.rb:2:3: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+056.rb:1:10: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+056.rb:2:12: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+057.rb:2:3: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+057.rb:4:7: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+058.rb:2:3: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+058.rb:4:7: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+059.rb:1:7: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+060.rb:1:7: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+061.rb:1:7: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+062.rb:2:10: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+063.rb:2:10: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+064.rb:2:8: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
+065.rb:2:9: C: [Corrected] Style/RedundantBegin: Redundant `begin` block detected.
 
 ==> corrected/000.rb 34 <==
 def func; ; x; y; rescue; z ; end
@@ -193,7 +195,12 @@ else
   
 end
 
-==> corrected/021.rb 60 <==
+==> corrected/021.rb 26 <==
+condition ? foo : 
+  bar
+
+
+==> corrected/027.rb 60 <==
 case condition
   when foo
     
@@ -202,7 +209,7 @@ case condition
     
 end
 
-==> corrected/022.rb 76 <==
+==> corrected/028.rb 76 <==
 case condition
   when foo
     bar
@@ -213,7 +220,7 @@ case condition
     
 end
 
-==> corrected/023.rb 58 <==
+==> corrected/029.rb 58 <==
 case condition
   in foo
     
@@ -222,7 +229,7 @@ case condition
     
 end
 
-==> corrected/024.rb 74 <==
+==> corrected/030.rb 74 <==
 case condition
   in foo
     bar
@@ -233,7 +240,7 @@ case condition
     
 end
 
-==> corrected/025.rb 42 <==
+==> corrected/031.rb 42 <==
 while condition
   
     foo
@@ -241,7 +248,7 @@ while condition
   
 end
 
-==> corrected/026.rb 42 <==
+==> corrected/032.rb 42 <==
 until condition
   
     foo
@@ -249,33 +256,33 @@ until condition
   
 end
 
-==> corrected/046.rb 23 <==
+==> corrected/052.rb 23 <==
  foo  unless condition
 
-==> corrected/047.rb 24 <==
+==> corrected/053.rb 24 <==
 
   foo unless condition
 
-==> corrected/048.rb 38 <==
+==> corrected/054.rb 38 <==
 foo if  begin
   bar
 rescue
   nil
 end 
 
-==> corrected/049.rb 35 <==
+==> corrected/055.rb 35 <==
 unless condition
   
     foo
   
 end
 
-==> corrected/050.rb 26 <==
+==> corrected/056.rb 26 <==
 @foo ||= @bar ||= baz
   
 
 
-==> corrected/051.rb 128 <==
+==> corrected/057.rb 128 <==
 var = do_something do
   
     do_something do
@@ -290,7 +297,7 @@ var = do_something do
   
 end
 
-==> corrected/052.rb 127 <==
+==> corrected/058.rb 127 <==
 var = do_something do
   
     do_something do
@@ -305,37 +312,37 @@ var = do_something do
   
 end
 
-==> corrected/053.rb 17 <==
+==> corrected/059.rb 17 <==
 var = (a and b)
 
 
-==> corrected/054.rb 14 <==
+==> corrected/060.rb 14 <==
 var = a || b
 
 
-==> corrected/055.rb 28 <==
+==> corrected/061.rb 28 <==
 var = (i += 1 until i > 2)
 
 
-==> corrected/056.rb 28 <==
+==> corrected/062.rb 28 <==
 def foo
   return bar
   
 end
 
-==> corrected/057.rb 32 <==
+==> corrected/063.rb 32 <==
 def foo
   return (not a)
   
 end
 
-==> corrected/058.rb 31 <==
+==> corrected/064.rb 31 <==
 loop do
   next (a or b)
   
 end
 
-==> corrected/059.rb 32 <==
+==> corrected/065.rb 32 <==
 loop do
   break (a or b)
   

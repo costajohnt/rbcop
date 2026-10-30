@@ -175,28 +175,49 @@ impl Cop for ReduceToHash {
         if key_acc || value_acc || key_nested || value_nested {
             return;
         }
+        // heredoc_in_inject_numblock?
+        let name = method_name(&call);
+        if m.numbered
+            && name != "each_with_object"
+            && [&m.key, &m.value].iter().any(|n| !helpers::heredoc::heredoc_starts(n).is_empty())
+        {
+            return;
+        }
         let Some(sel) = call.message_loc() else { return };
         let block = call.block().unwrap().as_block_node().unwrap();
-        let name = method_name(&call);
         let adjust = |n: &Node| {
             let s = element_source(n);
             if m.numbered && name != "each_with_object" { s.replace("_2", "_1") } else { s.to_string() }
         };
-        let body = format!("[{}, {}]", adjust(&m.key), adjust(&m.value));
-        let braces = block.opening_loc().as_slice() == b"{";
-        let indent = " ".repeat(cx.src.column(node.location().start_offset()));
-        let do_end = |arg: Option<&str>| {
-            let args = arg.map_or(String::new(), |a| format!(" |{a}|"));
-            format!("to_h do{args}\n{indent}  {body}\n{indent}end")
-        };
-        let replacement = match (m.elem, braces) {
-            (None, true) => format!("to_h {{ {body} }}"),
-            (Some(a), true) => format!("to_h {{ |{a}| {body} }}"),
-            (arg, false) => do_end(arg),
-        };
+        // Each part is replaced separately so that heredoc bodies between them are kept.
+        let mut edits: Vec<(usize, usize, String)> = Vec::new();
         let (start, end) = (sel.start_offset(), sel.end_offset());
-        let block_end = node.location().end_offset();
+        // method_call_range: the selector to the end of the send (its arguments).
+        edits.push((start, send_range(&call).1, "to_h".to_string()));
+        if let (Some(elem), Some(params)) = (m.elem, block.parameters()) {
+            let l = params.location();
+            edits.push((l.start_offset(), l.end_offset(), format!("|{elem}|")));
+        }
+        let stmts: Vec<Node> = block.body().and_then(|b| b.as_statements_node()).map_or(Vec::new(), |s| s.body().iter().collect());
+        let assignment = stmts[0].location();
+        edits.push((assignment.start_offset(), assignment.end_offset(), format!("[{}, {}]", adjust(&m.key), adjust(&m.value))));
+        if let [_, acc] = stmts.as_slice() {
+            // accumulator_range
+            use helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
+            let text = cx.src.text;
+            let l = acc.location();
+            let left = Surrounding { side: Side::Left, ..Surrounding::default() };
+            let (mut b, e) = range_with_surrounding_space(text, l.start_offset(), l.end_offset(), left);
+            if b > 0 && text.as_bytes()[b - 1] == b';' {
+                b = range_with_surrounding_space(text, b - 1, e, Surrounding { newlines: false, ..left }).0;
+            }
+            edits.push((b, e, String::new()));
+        }
         let msg = format!("Use `to_h {{ ... }}` instead of `{name}`.");
-        cx.add_fix(start, end, msg, |c| c.replace(start, block_end, &replacement));
+        cx.add_fix(start, end, msg, |c| {
+            for (a, b, t) in &edits {
+                c.replace(*a, *b, t);
+            }
+        });
     }
 }

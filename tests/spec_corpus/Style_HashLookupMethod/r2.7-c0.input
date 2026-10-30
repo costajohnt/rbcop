@@ -35,13 +35,27 @@ result.fetch(:foo).fetch(:bar)
 hash.fetch(key, default)
 ==> 007.rb 27 <==
 hash.fetch(key) { default }
-==> 008.rb 10 <==
-fetch(key)
-==> 009.rb 22 <==
-fetch(key) { default }
+==> 008.rb 44 <==
+def do_something(...)
+  hash.fetch(...)
+end
+
+==> 009.rb 17 <==
+hash.fetch(*args)
 ==> 010.rb 21 <==
+hash.fetch(**options)
+==> 011.rb 18 <==
+hash.fetch(&block)
+==> 012.rb 26 <==
+hash.fetch({ **options })
+
+==> 013.rb 10 <==
+fetch(key)
+==> 014.rb 22 <==
+fetch(key) { default }
+==> 015.rb 21 <==
 a.fetch(b.fetch(:y))
 
-==> 011.rb 17 <==
+==> 016.rb 17 <==
 hash&.fetch(key)
 

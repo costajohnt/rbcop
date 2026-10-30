@@ -105,3 +105,31 @@ raise RuntimeError, !foo
 ==> 034.rb 27 <==
 raise RuntimeError, foo[1]
 
+==> 035.rb 50 <==
+raise(
+  RuntimeError, <<~MSG
+    message
+  MSG
+)
+
+==> 036.rb 56 <==
+raise(
+  RuntimeError, <<~MSG.strip
+    message
+  MSG
+)
+
+==> 037.rb 54 <==
+raise(
+  RuntimeError.new(<<~MSG)
+    message
+  MSG
+)
+
+==> 038.rb 53 <==
+raise RuntimeError.new(
+  <<~MSG
+    message
+  MSG
+)
+

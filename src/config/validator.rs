@@ -1,4 +1,4 @@
-//! ConfigValidator#validate (plus Config#deprecation_check and ConfigObsoletion) from RuboCop 1.92.1:
+//! ConfigValidator#validate (plus Config#deprecation_check and ConfigObsoletion) from RuboCop 1.92.2:
 //! the checks Config#check runs on every loaded config file, and validate_after_resolution's target
 //! Ruby check. Warnings are appended to `out` as Kernel#warn writes them; an error is returned as
 //! the CLI prints it (`Error: ...`, painted red by the caller).
@@ -366,9 +366,29 @@ impl Validator<'_> {
 
     /// ConfigObsoletion#reject_obsolete! and ConfigValidator#check_obsoletions.
     fn check_obsoletions(&self, hash: &Map, path: &Path, shown: &str, out: &mut Output) -> Result<(), String> {
-        let mut errors = Vec::new();
-        let mut warnings = Vec::new();
-        let mut add = |warning: bool, msg: String| if warning { warnings.push(msg) } else { errors.push(msg) };
+        let (warnings, errors): (Vec<_>, Vec<_>) =
+            self.violated_rules(hash, path, shown, true).into_iter().partition(|(warning, _)| *warning);
+        let join = |v: Vec<(bool, String)>| v.into_iter().map(|(_, m)| m).collect::<Vec<_>>().join("\n");
+        if !errors.is_empty() {
+            return Err(format!("Error: {}", join(errors)));
+        }
+        if !warnings.is_empty() {
+            out.push((true, format!("Warning: {}", join(warnings))));
+        }
+        Ok(())
+    }
+
+    /// ConfigObsoletion#messages (1.92.2): every violated rule's message, whatever its severity,
+    /// extracted cops left out. For a plugin's own config, which only warns.
+    pub fn obsoletion_messages(&self, hash: &Map, path: &Path) -> Vec<String> {
+        let shown = smart_path(path, self.pwd);
+        self.violated_rules(hash, path, &shown, false).into_iter().map(|(_, m)| m).collect()
+    }
+
+    /// ConfigObsoletion#rules that `hash` violates, in rule order, with whether each only warns.
+    fn violated_rules(&self, hash: &Map, path: &Path, shown: &str, extracted: bool) -> Vec<(bool, String)> {
+        let mut found = Vec::new();
+        let mut add = |warning: bool, msg: String| found.push((warning, msg));
         let cop_msg = |m: String| format!("{m}\n(obsolete configuration found in {shown}, please update it)");
         // CopRule#violated?: the old name, or its bare cop name.
         let has = |old: &str| hash.contains(old) || hash.contains(old.rsplit('/').next().unwrap_or(old));
@@ -427,6 +447,9 @@ impl Validator<'_> {
             add(false, cop_msg(format!("The `{old}` cop has been split into {}.", to_sentence(&alternatives, "and"))));
         }
         for (old, v) in rules("extracted") {
+            if !extracted {
+                break;
+            }
             let Some(gem) = v.as_string() else { continue };
             if self.loaded_plugins.contains(&gem) {
                 continue;
@@ -516,13 +539,7 @@ impl Validator<'_> {
                 }
             }
         }
-        if !errors.is_empty() {
-            return Err(format!("Error: {}", errors.join("\n")));
-        }
-        if !warnings.is_empty() {
-            out.push((true, format!("Warning: {}", warnings.join("\n"))));
-        }
-        Ok(())
+        found
     }
 
     /// alert_about_unrecognized_cops: an error, or a warning under --ignore-unrecognized-cops.
@@ -638,7 +655,7 @@ pub fn check_target_ruby(hash: &Map, path: &Path, pwd: &Path) -> Result<(), Stri
 }
 
 /// Team#validate_config: the `validate_config` of each cop the team mobilizes (`team` says which),
-/// in registry order; the first ValidationError wins. RuboCop 1.92.1 has four.
+/// in registry order; the first ValidationError wins. RuboCop 1.92.2 has four.
 pub fn cop_validate_config(cfg: &super::Resolved, team: impl Fn(&str) -> bool) -> Result<(), String> {
     const MAGIC: &str = "Layout/EmptyLineAfterMagicComment";
     if team(MAGIC) {

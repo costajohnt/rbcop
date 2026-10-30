@@ -82,8 +82,13 @@ impl Cop for FloatDivision {
         if !hit {
             return;
         }
-        // comment_before_to_f?: a comment on the lines between the receiver and a `to_f` the
-        // correction removes (`contains_comment?` is line based).
+        // comment_in_range?: a comment lying wholly inside the range.
+        let comment_in = |a: usize, b: usize| cx.src.comments.iter().any(|c| a <= c.start && c.end <= b);
+        // comment_around_fdiv_operator?: between the receiver and the argument.
+        if style == "fdiv" && comment_in(recv.location().end_offset(), arg.location().start_offset()) {
+            return;
+        }
+        // comment_before_to_f?: a comment between the receiver and a `to_f` the correction removes.
         let losing: Vec<(&Node, bool)> = match style {
             "left_coerce" | "single_coerce" => vec![(arg, to_f_method(arg))],
             "right_coerce" => vec![(&recv, l)],
@@ -92,7 +97,7 @@ impl Cop for FloatDivision {
         if losing.iter().any(|&(n, is_to_f)| {
             is_to_f && {
                 let (a, b, _) = to_f_parts(n);
-                helpers::comments_help::contains_comments(cx, cx.src.line_of(a), cx.src.line_of(b) + 1)
+                comment_in(a, b)
             }
         }) {
             return;

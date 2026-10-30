@@ -247,7 +247,8 @@ impl Cop for EndAlignment {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         match kind::of(node) {
-            kind::SINGLETON_CLASS_NODE => match assignment_parent(cx) {
+            // `on_class` / `on_module` alias `on_sclass` (1.92.2).
+            kind::SINGLETON_CLASS_NODE | kind::CLASS_NODE | kind::MODULE_NODE => match assignment_parent(cx) {
                 Some(p) => {
                     let start = span(p).0;
                     check_asgn(cx, start, node);
@@ -263,9 +264,7 @@ impl Cop for EndAlignment {
                 }
                 None => check_other(cx, node),
             },
-            kind::CLASS_NODE
-            | kind::MODULE_NODE
-            | kind::IF_NODE
+            kind::IF_NODE
             | kind::UNLESS_NODE
             | kind::WHILE_NODE
             | kind::UNTIL_NODE => {

@@ -99,3 +99,7 @@ hash2 = { a => 0,
   too_ono_ilitjion_tofotono_o: too_ono_ilitjion_tofotono_o,
 }
 
+==> 013.rb 36 <==
+x = { **a, b: 1,
+      **c, dd: 2 }
+

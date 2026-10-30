@@ -1,0 +1,11 @@
+==> offenses exit=1 69 <==
+000.rb:1:5: C: [Correctable] Style/AndOr: Use `&&` instead of `and`.
+
+==> autocorrect exit=0 67 <==
+000.rb:1:5: C: [Corrected] Style/AndOr: Use `&&` instead of `and`.
+
+==> corrected/000.rb 28 <==
+foo && bar(baz) do
+  it
+end
+

@@ -318,7 +318,7 @@ fn verbose_version_lists_plugins() {
         fs::write(dir.join(".rubocop.yml"), config).unwrap();
         let out = text(&rbcop(&dir, &["-V"]).stdout);
         let (first, rest) = out.split_once('\n').unwrap();
-        assert!(first.starts_with("1.92.1 (using "), "{out}");
+        assert!(first.starts_with("1.92.2 (using "), "{out}");
         assert_eq!(rest, *plugins, "{config}");
     }
     // A plugin rbcop does not implement is listed at its installed version.
@@ -340,6 +340,74 @@ fn verbose_version_lists_plugins() {
         assert_eq!(out.split_once('\n').unwrap().1, "  - rubocop-fake 0.1.0\n  - rubocop-performance 1.27.0\n");
     }
     let _ = fs::remove_dir_all(&dir);
+}
+
+/// RuboCop 1.92.2 (ConfigurationIntegrator#warn_about_obsolete_config): obsolete keys in a
+/// plugin's own config/default.yml warn once, naming the plugin, whatever their severity, and the
+/// run goes on. The renamed cop's config no longer warns against the user's file. Recorded from
+/// RuboCop 1.92.2 with the same gem layout.
+#[test]
+fn obsolete_plugin_config_warns_naming_the_plugin() {
+    let dir = scratch("stale-plugin");
+    let gem = dir.join("gems/gems/rubocop-stale-0.1.0");
+    fs::create_dir_all(dir.join("gems/specifications")).unwrap();
+    fs::create_dir_all(gem.join("lib/rubocop/stale")).unwrap();
+    fs::create_dir_all(gem.join("config")).unwrap();
+    fs::write(gem.join("lib/rubocop-stale.rb"), "require_relative 'rubocop/stale/plugin'\n").unwrap();
+    fs::write(
+        gem.join("lib/rubocop/stale/plugin.rb"),
+        "require 'lint_roller'\nmodule RuboCop\n  module Stale\n    class Plugin < LintRoller::Plugin\n      \
+         def about = LintRoller::About.new(name: 'rubocop-stale', version: '0.1.0', homepage: 'x', description: 'x')\n      \
+         def supported?(context) = context.engine == :rubocop\n      \
+         def rules(_context) = LintRoller::Rules.new(type: :path, config_format: :rubocop, \
+         value: Pathname.new(__dir__).join('../../../config/default.yml'))\n    end\n  end\nend\n",
+    )
+    .unwrap();
+    fs::write(
+        gem.join("config/default.yml"),
+        "Naming/PredicateName:\n  Enabled: true\nLayout/LineLength:\n  IgnoredPatterns: ['x']\n\
+         Style/MethodMissing:\n  Enabled: true\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.join("gems/specifications/rubocop-stale-0.1.0.gemspec"),
+        "Gem::Specification.new { |s| s.name = 'rubocop-stale'; s.version = '0.1.0'; \
+         s.metadata = { 'default_lint_roller_plugin' => 'RuboCop::Stale::Plugin' } }\n",
+    )
+    .unwrap();
+    fs::write(dir.join(".rubocop.yml"), "plugins:\n  - rubocop-stale\nAllCops:\n  NewCops: disable\n").unwrap();
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nx = 1\n").unwrap();
+    let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
+        .env("GEM_PATH", dir.join("gems"))
+        .args(["--cache", "false", "--only", "Lint/UselessAssignment", "--format", "emacs", "a.rb"])
+        .current_dir(&dir)
+        .output()
+        .unwrap();
+    let (stdout, stderr) = (text(&out.stdout), text(&out.stderr));
+    let _ = fs::remove_dir_all(&dir);
+    // Without a ruby on PATH the gem cannot be found.
+    if stderr.contains("cannot load such file") {
+        return;
+    }
+    let shown = "gems/gems/rubocop-stale-0.1.0/config/default.yml";
+    assert_eq!(
+        stderr,
+        format!(
+            "Warning: obsolete configuration found in the `rubocop-stale` plugin:\n\
+             The `Naming/PredicateName` cop has been renamed to `Naming/PredicatePrefix`.\n\
+             (obsolete configuration found in {shown}, please update it)\n\
+             The `Style/MethodMissing` cop has been split into `Style/MethodMissingSuper` and \
+             `Style/MissingRespondToMissing`.\n\
+             (obsolete configuration found in {shown}, please update it)\n\
+             obsolete parameter `IgnoredPatterns` (for `Layout/LineLength`) found in {shown}\n\
+             `IgnoredPatterns` has been renamed to `AllowedPatterns`.\n"
+        )
+    );
+    assert!(
+        stdout.ends_with("a.rb:3:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.\n"),
+        "{stdout}"
+    );
+    assert_eq!(out.status.code(), Some(1));
 }
 
 /// A failed write to an -o file (here a file size limit) fails the run like RuboCop's raise,

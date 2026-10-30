@@ -15,23 +15,26 @@ number.zero?
 ==> 001.rb 14 <==
 !number.zero?
 
-==> 002.rb 20 <==
+==> 002.rb 40 <==
+foo.count { |x| x.positive? }.positive?
+
+==> 003.rb 20 <==
 foo == number.zero?
 
-==> 003.rb 22 <==
+==> 004.rb 22 <==
 number.positive?.to_s
 
-==> 004.rb 18 <==
+==> 005.rb 18 <==
 foo[number.zero?]
 
-==> 005.rb 27 <==
+==> 006.rb 27 <==
 do_something(number.zero?)
 
-==> 006.rb 15 <==
+==> 007.rb 15 <==
 number.nonzero?
-==> 007.rb 17 <==
+==> 008.rb 17 <==
 number.positive?
 
-==> 008.rb 17 <==
+==> 009.rb 17 <==
 number.negative?
 

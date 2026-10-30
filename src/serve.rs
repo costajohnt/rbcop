@@ -1,4 +1,4 @@
-//! What `--lsp` and `--mcp` share: RuboCop 1.92.1's LSP::Runtime (a buffer inspected or formatted
+//! What `--lsp` and `--mcp` share: RuboCop 1.92.2's LSP::Runtime (a buffer inspected or formatted
 //! as a path, its offenses as LSP diagnostics or as they are), the URI helpers and the JSON both
 //! protocols speak.
 
