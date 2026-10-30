@@ -1,5 +1,10 @@
 # RuboCop 1.92.2 port status
 
+**Done.** Every batch below landed on `feat/rubocop-1.92.2` (L1 #705, C1 #706, C2 #707, C3 #708,
+C4 #709), which merged to master in #704 (full gate `remote ci: ok at e853378b`, all-cops `-A`
+diff 0 on specs, rails, discourse and mastodon). Kept as the record of the port; the tables describe
+the base commit, not master.
+
 Worklist for #299 on `feat/rubocop-1.92.2`, taken 2026-10-29 at the base commit that bumps
 `RUBOCOP_VERSION` to 1.92.2 and re-records every expectation with RuboCop 1.92.2 (no cop ports yet).
 Port PRs target `feat/rubocop-1.92.2`; the branch merges to master once everything here is green.
