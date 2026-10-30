@@ -112,7 +112,7 @@ check-cops corpus at diff 0, the cold corpus and `cargo test` green, the corpus2
 Then also run `scripts/check-autocorrect-all.sh` with the new release, since -A output moves with
 almost every bug-fix release.
 
-## In progress: 1.92.1 to 1.92.2
+## Done: 1.92.1 to 1.92.2 (#704)
 
 Inventory taken 2026-10-29 (`docs/upgrade-1.92.2.tsv`, `docs/upgrade-1.92.2-lib.tsv`, release notes
 of 1.92.2: 55 entries, all bug fixes and two behaviour changes). No new, removed or renamed cops;

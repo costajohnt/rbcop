@@ -1,5 +1,9 @@
 # RuboCop 1.92.1 port status
 
+**Done.** Every batch below landed on `feat/rubocop-1.92.1`, which merged to master in #703
+(full gate `remote ci: ok`, corpus offense diff 3,335 -> 0). Kept as the record of the port; the
+tables describe the base commit, not master.
+
 Worklist for #299 on `feat/rubocop-1.92.1`, taken 2026-10-26 at the base commit that bumps
 `RUBOCOP_VERSION` to 1.92.1, vendors 1.92.1's `config/default.yml` and re-records every expectation
 with RuboCop 1.92.1 (no cop ports yet). Port PRs target `feat/rubocop-1.92.1`; the branch merges to
