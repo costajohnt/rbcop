@@ -26,7 +26,7 @@ The binary is `target/release/rbcop`. The crate is not published to crates.io: i
 
 ## Usage
 
-The command line is RuboCop's. Options, `.rubocop.yml` lookup and inheritance, `RUBOCOP_OPTS`, `.rubocop` argument files, inline `# rubocop:disable` / `enable` / `todo` comments, output and exit status follow RuboCop 1.91.0.
+The command line is RuboCop's. Options, `.rubocop.yml` lookup and inheritance, `RUBOCOP_OPTS`, `.rubocop` argument files, inline `# rubocop:disable` / `enable` / `todo` comments, output and exit status follow RuboCop 1.92.2.
 
 ```sh
 rbcop [options] [paths...]
