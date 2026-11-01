@@ -1,5 +1,9 @@
 # rbcop
 
+Drop-in replacement for RuboCop 1.92.2. Same config, same command line, same output, [about 14x faster](#speed) than `rubocop --parallel` in CI.
+
+`gem "rbcop", require: false`, then `bundle exec rbcop`.
+
 A reimplementation of [RuboCop](https://github.com/rubocop/rubocop) 1.92.2 in Rust, built on [Prism](https://github.com/ruby/prism) (`ruby-prism` crate).
 
 The target is byte-identical output: same offenses, ranges, messages, `[Correctable]` flags, autocorrections, formatter output and exit status as RuboCop 1.92.2 for the same files and configuration. All 613 cops in RuboCop's `config/default.yml` are implemented. rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot and rubocop-capybara run natively ([docs/plugins.md](docs/plugins.md)). Other plugins (rubocop-sorbet and so on) and custom cops do not; rbcop hands them to RuboCop when one is installed, and otherwise says which cops it skips (see [Plugins and custom cops](#plugins-and-custom-cops)).
