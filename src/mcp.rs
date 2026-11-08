@@ -456,10 +456,17 @@ impl Server {
             return self.correct_inline(path, source, request, scope);
         }
         let targets = self.targets(path, scope)?;
+        // Every source is read before any is written, so a refusal leaves the project untouched.
+        // ponytail: holds all targets' text at once; read twice if a project outgrows memory.
+        let sources = targets
+            .iter()
+            .map(|file| {
+                let abs = file.display().to_string();
+                self.read_rewritable(&abs).map(|source| (abs, source))
+            })
+            .collect::<Result<Vec<_>, _>>()?;
         let mut entries = Vec::new();
-        for file in &targets {
-            let abs = file.display().to_string();
-            let source = self.read_file(&abs)?;
+        for (abs, source) in sources {
             entries.push(self.correct_file(&abs, source, request, limit, scope)?);
         }
         let mut result = build_result(targets.len(), entries);
@@ -616,9 +623,22 @@ impl Server {
 
     /// SourceFiles.read: the file's text; a missing file is a RuboCop::Error.
     fn read_file(&self, abs: &str) -> Result<String, ToolFail> {
-        let real = self.contain(abs)?;
         // ponytail: invalid UTF-8 is read lossily; RuboCop keeps the bytes and reports Lint/Syntax.
-        std::fs::read(real).map(|b| String::from_utf8_lossy(&b).into_owned()).map_err(|e| match e.kind() {
+        self.read_bytes(abs).map(|b| String::from_utf8_lossy(&b).into_owned())
+    }
+
+    /// `read_file` for a source autocorrection may rewrite. Deliberate difference: a file that is
+    /// not valid UTF-8 is refused, since a lossy read would write U+FFFD over every invalid byte;
+    /// `rbcop -a` likewise never rewrites one (autocorrect::correct_bytes).
+    // ponytail: a magic-comment file (`# encoding: iso-8859-1`) is refused too; the CLI transcodes it.
+    fn read_rewritable(&self, abs: &str) -> Result<String, ToolFail> {
+        String::from_utf8(self.read_bytes(abs)?)
+            .map_err(|_| ToolFail::Rubo(format!("{abs} is not valid UTF-8; not corrected")))
+    }
+
+    fn read_bytes(&self, abs: &str) -> Result<Vec<u8>, ToolFail> {
+        let real = self.contain(abs)?;
+        std::fs::read(real).map_err(|e| match e.kind() {
             std::io::ErrorKind::NotFound => ToolFail::Rubo(format!("No such file or directory: {abs}")),
             _ => ToolFail::Other(errno(&e, abs)),
         })

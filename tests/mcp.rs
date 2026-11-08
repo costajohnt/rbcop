@@ -177,6 +177,32 @@ fn mcp_tools_refuse_to_write_evaluated_config() {
     std::fs::remove_dir_all(&dir).unwrap();
 }
 
+/// Deliberate difference: autocorrection refuses a file that is not valid UTF-8 (as `rbcop -a`
+/// never rewrites one) instead of writing U+FFFD over its bytes, and writes nothing else first.
+#[test]
+fn mcp_autocorrection_refuses_invalid_utf8() {
+    let dir = std::env::temp_dir().join(format!("rbcop-mcp-utf8-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    std::fs::create_dir_all(dir.join("lib")).unwrap();
+    let dir = dir.canonicalize().unwrap();
+    std::fs::write(dir.join("Gemfile"), "").unwrap();
+    std::fs::write(dir.join("lib/a.rb"), "puts( 1)\n").unwrap();
+    let latin1: &[u8] = b"# caf\xE9\nputs( 2)\n";
+    std::fs::write(dir.join("lib/b.rb"), latin1).unwrap();
+    let requests = [
+        tool_call(1, "autocorrection", r#"{"path":"lib/b.rb","safety":true}"#),
+        tool_call(2, "autocorrection", r#"{"safety":true}"#),
+    ];
+    let lines = mcp(&dir, &[], &requests);
+    assert_eq!(lines.len(), requests.len(), "{lines:?}");
+    for line in &lines {
+        assert!(line.contains("\"isError\":true") && line.contains("is not valid UTF-8"), "{line}");
+    }
+    assert_eq!(std::fs::read(dir.join("lib/b.rb")).unwrap(), latin1);
+    assert_eq!(std::fs::read_to_string(dir.join("lib/a.rb")).unwrap(), "puts( 1)\n");
+    std::fs::remove_dir_all(&dir).unwrap();
+}
+
 /// A scratch directory for the git hardening tests: `repo/` (canonical), a global git config with
 /// an identity, and a hook script that creates `ran` when anything executes it.
 struct GitScratch {
