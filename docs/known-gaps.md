@@ -60,7 +60,8 @@ rbcop pins and refuses there (and nothing beyond it):
   is in default.yml's `AllCops: Include`, or it has no extension and a `#!` line. A file with a
   `#!` line, whatever its name, also needs that line's program (after `env`, the first word past
   `NAME=value` assignments and `-S`; any other `env` option refuses) to be exactly one of the
-  default `RubyInterpreters`. The project's config is not consulted for this, so a
+  default `RubyInterpreters`, spelled only with letters, digits and `_./+-` (so nothing `env -S`
+  would expand, unquote or unescape). The project's config is not consulted for this, so a
   `RubyInterpreters: []` or an `Include` cannot widen it. Never a new file, and never a file such
   as `.envrc`, `.bundle/config` or a shell `bin/setup` that other tools run or read: the tool
   error is `<path> resolves to <real path>, not an existing file rbcop would inspect as Ruby; not

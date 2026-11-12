@@ -735,18 +735,24 @@ fn first_line(path: &Path) -> String {
 /// program cannot be told, and the caller refuses. None without a `#!` at the start.
 fn shebang_interpreter(line: &str) -> Option<String> {
     let mut words = line.strip_prefix("#!")?.split_whitespace();
-    let base = |w: &str| w.rsplit('/').next().unwrap_or(w).to_string();
-    let first = base(words.next()?);
+    // `env -S` reads quotes, `\` escapes, `${VAR}` and `#` comments in its string: a word with any
+    // character beyond these may not be the program it looks like.
+    let base = |w: &str| {
+        w.bytes()
+            .all(|b| b.is_ascii_alphanumeric() || b"_./+-".contains(&b))
+            .then(|| w.rsplit('/').next().unwrap_or(w).to_string())
+    };
+    let first = base(words.next()?)?;
     if first != "env" {
         return Some(first);
     }
     for w in words {
         match w.strip_prefix("-S") {
             Some("") => continue,
-            Some(program) if !program.starts_with('-') => return Some(base(program)),
+            Some(program) if !program.starts_with('-') => return base(program),
             _ if w.starts_with('-') => return None,
             _ if w.contains('=') => continue,
-            _ => return Some(base(w)),
+            _ => return base(w),
         }
     }
     None

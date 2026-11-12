@@ -203,6 +203,7 @@ fn mcp_inline_writes_only_existing_ruby_files() {
         ("bin/env", "#!/usr/bin/env bash # ruby\n"),
         ("bin/unset", "#!/usr/bin/env -u ruby bash\n"),
         ("bin/chdir", "#!/usr/bin/env -C ruby bash\n"),
+        ("bin/expand", "#!/usr/bin/env -S ${X}/ruby\n"),
         ("lib/deploy.rb", "#!/bin/sh\nputs( 1)\n"),
         (".ruby-version", "3.3.0\n"),
         ("Gemfile", "source 'https://rubygems.org'\n"),
@@ -233,6 +234,7 @@ fn mcp_inline_writes_only_existing_ruby_files() {
         "bin/env",
         "bin/unset",
         "bin/chdir",
+        "bin/expand",
         "lib/deploy.rb",
         ".ruby-version",
         "lib/env.rb",
@@ -267,7 +269,7 @@ fn mcp_inline_writes_only_existing_ruby_files() {
     for line in rest {
         assert!(line.contains("\"isError\":false") && line.contains("puts(2)"), "{line}");
     }
-    for (p, text) in &files[..10] {
+    for (p, text) in &files[..11] {
         assert_eq!(&std::fs::read_to_string(dir.join(p)).unwrap(), text, "{p} was written");
     }
     assert_eq!(std::fs::read_to_string(dir.join("lib/b.rb")).unwrap(), "puts( 1)\n");
