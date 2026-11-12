@@ -661,7 +661,7 @@ impl Server {
                 // O_EXCL: never an existing file, nor a symlink planted since.
                 std::fs::OpenOptions::new().write(true).create_new(true).custom_flags(libc::O_NOFOLLOW).open(&real)?;
             }
-            autocorrect::write_source(&real, content, &self.roots)
+            autocorrect::write_source(&real, content, None, &self.roots).map(drop)
         })();
         written.map_err(|e| match e.raw_os_error() {
             Some(libc::EPERM) => ToolFail::Rubo(format!("Operation not permitted: {path}")),

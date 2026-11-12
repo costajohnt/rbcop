@@ -136,6 +136,13 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
   is cut to its length) are kept, as are files owned by another user or in an unwritable directory (in place);
   extended attributes and ACLs are not copied to the renamed file. Files are written in the reporting
   loop, in target order, so an error or `--fail-fast` stops before later files change.
+- `-a/-A` inspects and corrects files in parallel before writing them, so the time between reading a
+  file and writing it is the run, not one file's inspection as in RuboCop. A file that no longer
+  holds what was read (an editor or another tool changed it meanwhile) is not written:
+  `rbcop: not autocorrecting <file>: it changed on disk after it was read` goes to stderr and the
+  file is inspected again and reported as without `-a` (no `[Corrected]`). It is checked again right
+  before the write; a file found changed only then is left alone with the same warning but still
+  reported as corrected. RuboCop overwrites such a file.
 - Directory walks follow symlinked directories and keep symlinked files, as TargetFinder does, so
   `-a/-A` corrects files a project links to outside itself, exactly as RuboCop does (checked on a
   scratch project). A symlinked directory that is already an ancestor of the walked directory

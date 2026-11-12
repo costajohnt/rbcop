@@ -182,6 +182,9 @@ pub struct Corrected {
     pub source: Option<String>,
     /// `Infinite loop detected in <path> and caused by <cops>`, if the loop gave up.
     pub error: Option<String>,
+    /// With a correction from `correct_file`: the bytes read, for `write_source` to check that the
+    /// file still holds them.
+    pub read: Option<Vec<u8>>,
 }
 
 /// What the next ProcessedSource makes of a corrected source: the text, or Lint/Syntax's message.
@@ -283,7 +286,7 @@ fn correct(
         abort: runner::take_abort(),
         diffs,
     };
-    Corrected { source: changed.then(|| written.to_string()), report, error: pass.error }
+    Corrected { source: changed.then(|| written.to_string()), report, error: pass.error, read: None }
 }
 
 /// parser's Source::Buffer#source: CRLF normalised to LF (what cops see and corrections apply to).
@@ -383,7 +386,11 @@ pub fn correct_file(
     mode: Mode,
 ) -> Result<Corrected, String> {
     let bytes = std::fs::read(path).map_err(|e| runner::io_error(&e, path))?;
-    Ok(correct_bytes(path, display, bytes, cfg, selected, mode))
+    let mut c = correct_bytes(path, display, bytes.clone(), cfg, selected, mode);
+    if c.source.is_some() {
+        c.read = Some(bytes);
+    }
+    Ok(c)
 }
 
 /// `correct` for a source already decoded (`--lsp` buffers: Ruby strings from JSON are UTF-8, so
@@ -414,6 +421,7 @@ pub fn correct_bytes(
         report: runner::inspect_bytes(path, display, bytes, cfg, selected),
         source: None,
         error: None,
+        read: None,
     };
     match crate::source::reencode(bytes.clone()) {
         crate::source::Reencoded::Text(text) => {
@@ -443,10 +451,15 @@ pub fn correct_bytes(
 /// write. The directories from that root down to the file are then opened one by one without
 /// following symlinks, and every later step works relative to the last one (`openat`, `renameat`),
 /// so a directory swapped for a symlink after the check fails the write instead of redirecting it.
+///
+/// Deliberate difference: given the bytes the file held when it was `read`, a file that no longer
+/// holds them (changed since, by an editor or another tool during a long run) is left alone and
+/// `Ok(false)` returned. Ok(true): written.
 // ponytail: extended attributes and ACLs are not copied to the renamed file.
-pub fn write_source(path: &Path, new: &str, roots: &[PathBuf]) -> std::io::Result<()> {
+// ponytail: a change between this check and the rename is still overwritten (microseconds, not the run).
+pub fn write_source(path: &Path, new: &str, read: Option<&[u8]>, roots: &[PathBuf]) -> std::io::Result<bool> {
     use std::fs;
-    use std::io::Write;
+    use std::io::{Read, Write};
     use std::os::unix::fs::MetadataExt;
     static COUNTER: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
     let target = fs::canonicalize(path)?;
@@ -466,8 +479,16 @@ pub fn write_source(path: &Path, new: &str, roots: &[PathBuf]) -> std::io::Resul
         dir = at::open(&dir, c.as_os_str(), at::DIR | libc::O_NOFOLLOW, 0)?;
     }
     // File.open(path, 'w') fails on a file that is not writable; the rename must not get round that.
-    let mut file = at::open(&dir, name, libc::O_WRONLY | libc::O_NOFOLLOW, 0)?;
+    let access = if read.is_some() { libc::O_RDWR } else { libc::O_WRONLY };
+    let file = at::open(&dir, name, access | libc::O_NOFOLLOW, 0)?;
     let meta = file.metadata()?;
+    if let Some(read) = read {
+        let mut now = Vec::with_capacity(read.len());
+        (&file).read_to_end(&mut now)?;
+        if now != read {
+            return Ok(false);
+        }
+    }
     // SAFETY: geteuid has no preconditions.
     if meta.nlink() == 1 && meta.uid() == unsafe { libc::geteuid() } {
         // An unguessable name, created exclusively (O_EXCL: never an existing file or symlink) and
@@ -490,7 +511,7 @@ pub fn write_source(path: &Path, new: &str, roots: &[PathBuf]) -> std::io::Resul
                 if written.is_err() {
                     let _ = at::unlink(&dir, tmp);
                 }
-                return written;
+                return written.map(|()| true);
             }
             drop(f);
             let _ = at::unlink(&dir, tmp);
@@ -501,7 +522,8 @@ pub fn write_source(path: &Path, new: &str, roots: &[PathBuf]) -> std::io::Resul
     use std::os::unix::fs::FileExt;
     file.write_all_at(new.as_bytes(), 0)?;
     file.set_len(new.len() as u64)?;
-    file.sync_all()
+    file.sync_all()?;
+    Ok(true)
 }
 
 /// Create or replace (`append`: append to) `path` with `content`, refusing a file whose directory
@@ -796,19 +818,19 @@ mod tests {
         std::fs::write(&file, "old\n").unwrap();
         std::fs::set_permissions(&file, std::fs::Permissions::from_mode(0o640)).unwrap();
         let root = std::fs::canonicalize(&dir).unwrap();
-        write_source(&file, "new\n", std::slice::from_ref(&root)).unwrap();
+        write_source(&file, "new\n", None, std::slice::from_ref(&root)).unwrap();
         assert_eq!(std::fs::read_to_string(&file).unwrap(), "new\n");
         assert_eq!(std::fs::metadata(&file).unwrap().permissions().mode() & 0o777, 0o640);
         assert_eq!(std::fs::read_dir(&sub).unwrap().count(), 1, "temp file left behind");
         // A file argument is its own root.
-        write_source(&file, "again\n", &[std::fs::canonicalize(&file).unwrap()]).unwrap();
+        write_source(&file, "again\n", None, &[std::fs::canonicalize(&file).unwrap()]).unwrap();
         assert_eq!(std::fs::read_to_string(&file).unwrap(), "again\n");
-        let err = write_source(&file, "no\n", &[root.join("elsewhere")]).unwrap_err();
+        let err = write_source(&file, "no\n", None, &[root.join("elsewhere")]).unwrap_err();
         assert_eq!(err.kind(), std::io::ErrorKind::PermissionDenied);
         // A hard-linked file is written in place: both names see the new, shorter content.
         let link = sub.join("y.rb");
         std::fs::hard_link(&file, &link).unwrap();
-        write_source(&file, "z\n", std::slice::from_ref(&root)).unwrap();
+        write_source(&file, "z\n", None, std::slice::from_ref(&root)).unwrap();
         assert_eq!(std::fs::read_to_string(&link).unwrap(), "z\n");
         std::fs::remove_dir_all(&dir).unwrap();
     }
