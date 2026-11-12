@@ -36,7 +36,7 @@ fi
 
 (cd "$root" && cargo build --release -q)
 cops=${*:-$(cd "$corpus" && ls)}
-list=$(echo $cops | tr ' ' '\n' | sed 's|_|/|' | paste -sd, -)
+list=$(echo $cops | tr ' ' '\n' | sed 's|_|/|g' | paste -sd, -)
 pattern=": [CWEFRI]: (\[Correctable\] )?($(echo "$list" | tr , '|')): "
 rm -rf "$out"
 mkdir -p "$out"
@@ -64,7 +64,7 @@ printf 'offenses   rubocop %6s  rbcop %6s  diff %5s\n' "$(wc -l < "$out/rubocop"
 
 # Autocorrect: each variant with only its own cop, both tools on copies.
 for c in $cops; do
-  cop=$(echo "$c" | sed 's|_|/|')
+  cop=$(echo "$c" | sed 's|_|/|g')
   for v in $(variants "$c"); do
     rel=${v#"$corpus"/}
     for side in rubocop rbcop; do
