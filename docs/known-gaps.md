@@ -12,7 +12,7 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   rubocop-erb), and for `-r`/`--require`, `--plugin` and custom formatter classes. It runs RuboCop
   (`RBCOP_RUBOCOP`, else `bundle exec rubocop`, else `rubocop` on PATH), which loads the project's
   Gemfile, plugins and cop files. Each run prints `rbcop: running <command> for <what>; set
-  RBCOP_FALLBACK=0 to never run Ruby` on stderr first (not under `RBCOP_FALLBACK=1`, which asked for
+  RBCOP_FALLBACK=0 to skip RuboCop` on stderr first (not under `RBCOP_FALLBACK=1`, which asked for
   it). Under `--lsp`, `--mcp`, the server options, `--editor-mode` or `--stdin` (an editor opening
   a project), given anywhere (command line, `.rubocop`, `RUBOCOP_OPTS`, abbreviated), it runs only
   with `RBCOP_FALLBACK=1`; the language and MCP servers lint natively and never start RuboCop for a file. Turn it off with `RBCOP_FALLBACK=0`: the fallback then starts no Ruby at all,
