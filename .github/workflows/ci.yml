@@ -27,10 +27,11 @@ concurrency:
 env:
   RUST_TOOLCHAIN: 1.97.0
   CARGO_TERM_COLOR: never
-  # rubocop 1.92.2 and its dependencies, then the plugin pins (docs/plugins.md) and theirs.
+  # rubocop 1.92.2 and its dependencies, then the plugin pins (docs/plugins.md) and theirs. The
+  # versions `-V` names must match src/config/mod.rs and docs/plugins.md (tests/core_review.rs).
   GEMS: >-
     ast:2.4.3 json:3.1.0 language_server-protocol:3.17.0.6 lint_roller:1.1.0 parallel:2.3.0
-    parser:3.3.13.0 prism:1.9.0 racc:1.8.1 rainbow:3.1.1 regexp_parser:2.13.1 rubocop-ast:1.50.0
+    parser:3.3.12.0 prism:1.9.0 racc:1.8.1 rainbow:3.1.1 regexp_parser:2.13.1 rubocop-ast:1.50.0
     ruby-progressbar:1.13.0 unicode-display_width:3.3.0 unicode-emoji:4.3.0 rubocop:1.92.2
     rubocop-performance:1.27.0 rubocop-rails:2.38.0 rubocop-minitest:0.41.0 rubocop-rspec:3.10.2
     rubocop-rspec_rails:2.33.0 rubocop-factory_bot:2.28.0 rubocop-capybara:3.1.0

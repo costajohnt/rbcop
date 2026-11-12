@@ -79,7 +79,10 @@ corpus (step 4) and targeted cases to catch. Commit the final `delta.tsv` and `d
 
 All with `RUBOCOP="$NEW"` (and `RUBOCOP_EXPECTED=X.Y.Z` until `RUBOCOP_VERSION` in
 `src/config/mod.rs` names the new release: `scripts/rubocop.sh` refuses any other version), so
-nothing records with the old release by accident:
+nothing records with the old release by accident. `scripts/rubocop.sh` also compares the gems
+`-V` names (Parser, Prism, rubocop-ast, ruby, each plugin) with the constants beside
+`RUBOCOP_VERSION` and the docs/plugins.md pins; until those are bumped too, list the moved ones in
+`RUBOCOP_EXPECTED_DEPS` (`"rubocop-ast:1.51.0 rubocop-rails:2.39.0"`):
 
 - `tests/spec_corpus`: `scripts/record-spec-corpus.sh <rubocop-src checkout at vX.Y.Z>` (clone into
   scratch, `git -C <dir> checkout vX.Y.Z`; the corpus copy of rubocop-src stays as it is).
@@ -103,7 +106,11 @@ row is a recording problem (wrong version, locale, plugin version) until shown o
 In the same change as the ports and recordings:
 
 - `RUBOCOP_VERSION` in `src/config/mod.rs` (`rbcop -v`, `-V`, the JSON/HTML formatters,
-  `--auto-gen-config`, LSP, the remote-config shim).
+  `--auto-gen-config`, LSP, the remote-config shim), and beside it `PARSER_VERSION`,
+  `PRISM_VERSION`, `RUBOCOP_AST_VERSION` and `RUBY_VERSION` if the new gem home moved them (`-V`
+  prints them; `scripts/rubocop.sh` checks them).
+- `.github/workflows/ci.yml` `GEMS`: the new gem home's versions (`cargo test` checks the `-V` ones
+  and the plugin pins against `src/config/mod.rs` and docs/plugins.md).
 - `config/default.yml`: copy the new release's file verbatim.
 - The version named in prose and comments: `git grep -n '<old>'` (README.md, CLAUDE.md, action.yml,
   packaging/gem/rbcop.gemspec, packaging/homebrew/rbcop.rb.in, docs/*.md, script headers). Comments
