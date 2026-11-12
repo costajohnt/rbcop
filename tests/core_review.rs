@@ -106,6 +106,91 @@ fn autocorrect_unwritable_or_unreadable_file_is_an_error() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// A run that stops on a read, -a write or formatter write error raises out of Runner#run, so
+/// ExecuteRunner#display_summary prints neither the warning nor the error summary, and a file the
+/// run never reached prints no cop error (#720). RuboCop 1.92.2's output, recorded.
+#[test]
+fn stopped_run_prints_no_summaries() {
+    if root() {
+        return;
+    }
+    let setup = |name: &str| {
+        let dir = scratch(name);
+        fs::write(dir.join(".rubocop.yml"), "AllCops:\n  NewCops: disable\nStyle/GuardClause:\n  MinBodyLength: 0\n")
+            .unwrap();
+        fs::write(dir.join("a.rb"), "def f\n  if x\n    y\n  end\nend\nz = 1  \n").unwrap();
+        fs::write(dir.join("b.rb"), "def g\n  if x\n    y\n  end\nend\n").unwrap();
+        dir
+    };
+    let args = |extra: &[&'static str]| {
+        let mut a = vec!["--only", "Style/GuardClause,Layout/TrailingWhitespace", "-f", "progress"];
+        a.extend(extra);
+        a.extend(["a.rb", "b.rb"]);
+        a
+    };
+    let cop_error = |dir: &Path, f: &str| {
+        // Without RuboCop's backtrace hint (docs/known-gaps.md).
+        format!("An error occurred while Style/GuardClause cop was inspecting {}:1:0.\n", dir.join(f).display())
+    };
+    let check = |dir: &Path, out: Output, stdout: &str, stderr: String| {
+        assert_eq!(out.status.code(), Some(2), "{}", text(&out.stderr));
+        assert_eq!(text(&out.stdout), stdout);
+        assert_eq!(text(&out.stderr), stderr);
+        let _ = fs::remove_dir_all(dir);
+    };
+    let nothing = "Inspecting 2 files\n\n\n0 files inspected, no offenses detected\n";
+
+    // -a cannot write a.rb (each correcting iteration raises the cop error).
+    let dir = setup("stop-write");
+    fs::set_permissions(dir.join("a.rb"), fs::Permissions::from_mode(0o444)).unwrap();
+    let out = rbcop(&dir, &args(&["-a"]));
+    let denied = format!("Permission denied @ rb_sysopen - {}\n", dir.join("a.rb").display());
+    check(&dir, out, nothing, format!("{0}{0}{denied}", cop_error(&dir, "a.rb")));
+
+    // b.rb cannot be read: a.rb is reported, then the run stops.
+    let dir = setup("stop-read");
+    fs::set_permissions(dir.join("b.rb"), fs::Permissions::from_mode(0o000)).unwrap();
+    let out = rbcop(&dir, &args(&[]));
+    let stdout = "Inspecting 2 files\nC\n\nOffenses:\n\na.rb:6:6: C: [Correctable] Layout/TrailingWhitespace: \
+                  Trailing whitespace detected.\nz = 1  \n     ^^\n\n1 file inspected, 1 offense detected, 1 offense \
+                  autocorrectable\n";
+    let denied = format!("Permission denied @ rb_sysopen - {}\n", dir.join("b.rb").display());
+    check(&dir, out, stdout, format!("{}{denied}", cop_error(&dir, "a.rb")));
+
+    // The formatter's output cannot be written. Ruby buffers the -o file and fails at its final
+    // flush (`fptr_finalize_flush`, after b.rb); rbcop writes unbuffered and stops at the first
+    // write after a.rb (docs/known-gaps.md). Either way, no summary.
+    if Path::new("/dev/full").exists() {
+        let dir = setup("stop-format");
+        let out = rbcop(&dir, &args(&["-o", "/dev/full"]));
+        let full = "No space left on device @ rb_sys_fail_on_write - /dev/full\n";
+        check(&dir, out, "", format!("{}{full}", cop_error(&dir, "a.rb")));
+    }
+}
+
+/// A file -a refuses to correct (it resolves outside the project) is inspected twice; only the
+/// inspection it is reported from counts its cop errors for the summary (#720).
+#[test]
+fn refused_autocorrect_counts_cop_errors_once() {
+    let dir = scratch("refused-errors");
+    let outside = scratch("refused-errors-outside");
+    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  NewCops: disable\nStyle/GuardClause:\n  MinBodyLength: 0\n")
+        .unwrap();
+    fs::write(outside.join("o.rb"), "def f\n  if x\n    y\n  end\nend\nz = 1  \n").unwrap();
+    symlink(outside.join("o.rb"), dir.join("l.rb")).unwrap();
+    let args = ["--only", "Style/GuardClause,Layout/TrailingWhitespace", "-f", "e"];
+    let plain = rbcop(&dir, &args);
+    let out = rbcop(&dir, &[&["-a"], &args[..]].concat());
+    let real = outside.join("o.rb").canonicalize().unwrap();
+    let warning = format!("rbcop: not autocorrecting l.rb: it resolves to {}, outside the project\n", real.display());
+    assert!(text(&plain.stderr).contains("\n1 error occurred:\n"), "{}", text(&plain.stderr));
+    assert_eq!(text(&out.stderr), format!("{warning}{}", text(&plain.stderr)));
+    assert_eq!(text(&out.stdout), text(&plain.stdout));
+    assert_eq!(out.status.code(), plain.status.code());
+    let _ = fs::remove_dir_all(&dir);
+    let _ = fs::remove_dir_all(&outside);
+}
+
 /// `-F -a` stops at the first failing file: files after it are neither reported nor corrected.
 #[test]
 fn fail_fast_autocorrect_leaves_later_files_alone() {

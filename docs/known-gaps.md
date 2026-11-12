@@ -158,7 +158,10 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
   and its `-V` line: bugs in rbcop's output belong to rbcop.
 - Error wording for I/O failures follows Ruby's (`Permission denied @ rb_sysopen - <file>`,
   `... @ rb_sys_fail_on_write - <out file>`) but without the backtrace; a failed `-o` directory or
-  file creation is worded `<path>: <reason>`.
+  file creation is worded `<path>: <reason>`. Formatter output is written unbuffered, so a write
+  that fails (a full disk) stops the run at the first file reported after it; Ruby buffers an `-o`
+  file and raises only when the buffer is flushed (at the end of a short run, as
+  `... @ fptr_finalize_flush - <out file>`).
 - rubocop-rails corrections that splice string or symbol content from the file into new source are
   withheld when that content is not inert. RuboCop applies them unescaped and can write arbitrary
   code (`tag("div\nsystem('x')")` becomes `tag.div` and then `system('x')()`). Offenses and
