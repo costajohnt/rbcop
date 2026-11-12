@@ -521,8 +521,16 @@ impl Server {
     ) -> Result<String, ToolFail> {
         let file = path.unwrap_or("example.rb");
         let real = self.contain(file)?;
-        if path.is_some() && !request.dry_run && runs_code_when_loaded(&real) {
-            return Err(refuse_evaluated(file, &real));
+        if path.is_some() && !request.dry_run {
+            if runs_code_when_loaded(&real) {
+                return Err(refuse_evaluated(file, &real));
+            }
+            if !self.ruby_target(&real)? {
+                return Err(ToolFail::Rubo(format!(
+                    "{file} resolves to {}, not an existing file rbcop would inspect as Ruby; not written",
+                    real.display()
+                )));
+            }
         }
         let options = request.runtime_options(scope);
         let run = self.runtime.format_run(file, source.to_string(), request.safety, &options)?;
@@ -609,6 +617,20 @@ impl Server {
         }
     }
 
+    /// Deliberate difference: inline code is written only over an existing regular file that a
+    /// `path` call would select (TargetFinder#find with :only_recognized_file_types), never a new
+    /// file and never one like `.envrc`, `.bundle/config` or a shell `bin/setup`, which other tools
+    /// run or read as configuration. The client wrote that code, possibly following text from the
+    /// code it reads.
+    fn ruby_target(&mut self, real: &Path) -> Result<bool, ToolFail> {
+        if !real.is_file() {
+            return Ok(false);
+        }
+        let found = rbcop::targets::find(&mut self.runtime.store, &[real.to_path_buf()], false, true)
+            .map_err(ToolFail::Other)?;
+        Ok(!found.is_empty())
+    }
+
     /// TargetFinder#find(path ? [path] : [], :only_recognized_file_types), then Scope#select_files.
     fn targets(&mut self, path: Option<&str>, scope: &Scope) -> Result<Vec<PathBuf>, ToolFail> {
         if let Some(path) = path {
@@ -645,8 +667,9 @@ impl Server {
     }
 
     /// SourceFiles.write: nothing when the file already holds `content` (its modification time
-    /// stays), else Util.replace_file_contents, which creates a missing file; its likely errors
-    /// are RuboCop::Errors. Through autocorrect::write_source as `-a` writes, never via a symlink.
+    /// stays), else Util.replace_file_contents; its likely errors are RuboCop::Errors. Through
+    /// autocorrect::write_source as `-a` writes, never via a symlink. Deliberate difference: a
+    /// missing file is not created (RuboCop creates it); every caller writes an existing file.
     fn write_file(&self, path: &str, content: &str) -> Result<(), ToolFail> {
         let real = self.contain(path)?;
         if runs_code_when_loaded(&real) {
@@ -655,15 +678,7 @@ impl Server {
         if real.is_file() && std::fs::read(&real).is_ok_and(|b| b == content.as_bytes()) {
             return Ok(());
         }
-        let written = (|| {
-            if !real.exists() {
-                use std::os::unix::fs::OpenOptionsExt;
-                // O_EXCL: never an existing file, nor a symlink planted since.
-                std::fs::OpenOptions::new().write(true).create_new(true).custom_flags(libc::O_NOFOLLOW).open(&real)?;
-            }
-            autocorrect::write_source(&real, content, &self.roots)
-        })();
-        written.map_err(|e| match e.raw_os_error() {
+        autocorrect::write_source(&real, content, &self.roots).map_err(|e| match e.raw_os_error() {
             Some(libc::EPERM) => ToolFail::Rubo(format!("Operation not permitted: {path}")),
             Some(libc::EACCES) => ToolFail::Rubo(format!("Permission denied: {path}")),
             Some(libc::ENOSPC) => ToolFail::Rubo(format!("No space left on device: {path}")),
