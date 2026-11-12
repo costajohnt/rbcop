@@ -18,7 +18,7 @@ fi
 # which RuboCop's --only rejects. Both fail (non-zero, nothing printed) rather than print an empty
 # list; call them in a plain assignment (`cops=$(rbcop_cops)`), where set -e sees the failure.
 rbcop_cops() {
-  rbcop_cops_list=$("$bin" --show-cops ${CONFIG:+--config "$CONFIG"} | sed -n 's/^\([A-Z][A-Za-z]*\/[A-Za-z0-9]*\):$/\1/p' | grep -vx "${1:-}" | paste -sd, -)
+  rbcop_cops_list=$("$bin" --show-cops ${CONFIG:+--config "$CONFIG"} | sed -n 's|^\([A-Z][A-Za-z]*/[A-Za-z0-9/]*\):$|\1|p' | grep -vx "${1:-}" | paste -sd, -)
   if [ -z "$rbcop_cops_list" ]; then
     echo "$0: no cops from '$bin --show-cops'" >&2
     return 1
