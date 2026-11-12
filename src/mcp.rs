@@ -639,13 +639,15 @@ impl Server {
         let defaults = self.runtime.store.default_config();
         let (exts, names) = defaults.ruby_extensions_and_names();
         let name = real.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
-        match real.extension() {
-            Some(ext) => exts.contains(&format!(".{}", ext.to_string_lossy())) || names.contains(&name),
-            None => {
-                names.contains(&name)
-                    || shebang_interpreter(&first_line(real)).is_some_and(|i| defaults.ruby_interpreters().contains(&i))
-            }
+        let ext = real.extension().map(|e| format!(".{}", e.to_string_lossy()));
+        let named = names.contains(&name) || ext.as_ref().is_some_and(|e| exts.contains(e));
+        let line = first_line(real);
+        if !line.starts_with("#!") {
+            return named;
         }
+        // A `#!` line decides, whatever the name: `deploy.rb` starting `#!/bin/sh` is a shell script.
+        (named || ext.is_none())
+            && shebang_interpreter(&line).is_some_and(|i| defaults.ruby_interpreters().contains(&i))
     }
 
     /// TargetFinder#find(path ? [path] : [], :only_recognized_file_types), then Scope#select_files.
@@ -728,7 +730,9 @@ fn first_line(path: &Path) -> String {
 }
 
 /// The program a `#!` line runs: the basename of its first word, or for `env` the first word
-/// after it that is not an option or a `NAME=value`. None without a `#!` at the start.
+/// after it, past `NAME=value` assignments and `-S` (also `-Sprogram`). Any other `env` option
+/// (`-u NAME`, `-C DIR`, ...) may take the next word as its argument, so it gives None: the
+/// program cannot be told, and the caller refuses. None without a `#!` at the start.
 fn shebang_interpreter(line: &str) -> Option<String> {
     let mut words = line.strip_prefix("#!")?.split_whitespace();
     let base = |w: &str| w.rsplit('/').next().unwrap_or(w).to_string();
@@ -736,7 +740,16 @@ fn shebang_interpreter(line: &str) -> Option<String> {
     if first != "env" {
         return Some(first);
     }
-    words.find(|w| !w.starts_with('-') && !w.contains('=')).map(base)
+    for w in words {
+        match w.strip_prefix("-S") {
+            Some("") => continue,
+            Some(program) if !program.starts_with('-') => return Some(base(program)),
+            _ if w.starts_with('-') => return None,
+            _ if w.contains('=') => continue,
+            _ => return Some(base(w)),
+        }
+    }
+    None
 }
 
 fn refuse_evaluated(path: &str, real: &Path) -> ToolFail {

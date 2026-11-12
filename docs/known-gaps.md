@@ -56,16 +56,18 @@ rbcop pins and refuses there (and nothing beyond it):
   and the `.rubocop` options file (`tests/mcp.rs`). Ruby files, Gemfile and gemspecs included, are
   written as RuboCop writes them.
 - `rubocop_autocorrection` with `source_code` and a `path` writes the corrected code only over an
-  existing regular file that is Ruby by RuboCop's defaults alone: an extension or exact file name
-  from default.yml's `AllCops: Include`, or, without an extension, a `#!` line whose program (or,
-  after `env`, the first word that is not an option) is exactly one of the default
-  `RubyInterpreters`. The project's config is not consulted for this, so a `RubyInterpreters: []`
-  or an `Include` cannot widen it. Never a new file, and never a file such as `.envrc`,
-  `.bundle/config` or a shell `bin/setup` that other tools run or read: the tool error is `<path>
-  resolves to <real path>, not an existing file rbcop would inspect as Ruby; not written`. Nor may
-  the corrected code add, drop or change a `#!` line (`..., and the corrected code changes its #!
-  line; not written`). RuboCop writes any path, creating it if missing. Without a `path`, or with
-  `dry_run`, nothing is written and the corrected code comes back as in RuboCop (#721).
+  existing regular file that is Ruby by RuboCop's defaults alone: its extension or exact file name
+  is in default.yml's `AllCops: Include`, or it has no extension and a `#!` line. A file with a
+  `#!` line, whatever its name, also needs that line's program (after `env`, the first word past
+  `NAME=value` assignments and `-S`; any other `env` option refuses) to be exactly one of the
+  default `RubyInterpreters`. The project's config is not consulted for this, so a
+  `RubyInterpreters: []` or an `Include` cannot widen it. Never a new file, and never a file such
+  as `.envrc`, `.bundle/config` or a shell `bin/setup` that other tools run or read: the tool
+  error is `<path> resolves to <real path>, not an existing file rbcop would inspect as Ruby; not
+  written`. Nor may the corrected code add, drop or change a `#!` line (`..., and the corrected
+  code changes its #! line; not written`). RuboCop writes any path, creating it if missing.
+  Without a `path`, or with `dry_run`, nothing is written and the corrected code comes back as in
+  RuboCop (#721).
 - `--changed` on the command line (the user's own repository) stays best effort: it is not pinned,
   needs no particular git version and does not read attributes from the empty tree.
 

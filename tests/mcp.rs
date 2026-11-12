@@ -180,10 +180,11 @@ fn mcp_tools_refuse_to_write_evaluated_config() {
 
 /// Deliberate difference (#721): inline code given a `path` is written only over an existing
 /// regular file that is Ruby by default.yml alone (extension, exact filename, or a `#!` line whose
-/// interpreter is exactly a default Ruby interpreter), so a client cannot create a file, nor write
-/// one other tools run or read (`.envrc`, `.bundle/config`, a shell `bin/setup`), even when the
-/// project config says `RubyInterpreters: []`; nor can it add, drop or change a `#!` line. A dry
-/// run writes nothing and is still answered.
+/// interpreter is exactly a default Ruby interpreter; a `#!` line must pass even on `x.rb`, and an
+/// `env` option other than `-S` refuses), so a client cannot create a file, nor write one other
+/// tools run or read (`.envrc`, `.bundle/config`, a shell `bin/setup`), even when the project
+/// config says `RubyInterpreters: []`; nor can it add, drop or change a `#!` line. A dry run
+/// writes nothing and is still answered.
 #[test]
 fn mcp_inline_writes_only_existing_ruby_files() {
     use std::os::unix::fs::symlink;
@@ -200,17 +201,21 @@ fn mcp_inline_writes_only_existing_ruby_files() {
         ("bin/setup", "#!/bin/sh\nexit 0\n"),
         ("bin/sub", "#!/bin/sh -c 'echo notruby'\n"),
         ("bin/env", "#!/usr/bin/env bash # ruby\n"),
+        ("bin/unset", "#!/usr/bin/env -u ruby bash\n"),
+        ("bin/chdir", "#!/usr/bin/env -C ruby bash\n"),
+        ("lib/deploy.rb", "#!/bin/sh\nputs( 1)\n"),
         (".ruby-version", "3.3.0\n"),
         ("Gemfile", "source 'https://rubygems.org'\n"),
         ("exe/tool", "#!/usr/bin/env ruby\nputs 1\n"),
-        ("bin/console", "#!/usr/bin/env -S ruby -w\nputs 1\n"),
+        ("bin/console", "#!/usr/bin/env -S RUBYOPT=-w ruby\nputs 1\n"),
+        ("bin/joined", "#!/usr/bin/env -Sruby\nputs 1\n"),
         ("lib/a.rb", "puts( 1)\n"),
         ("lib/b.rb", "puts( 1)\n"),
     ];
     for (p, text) in files {
         std::fs::write(dir.join(p), text).unwrap();
     }
-    for p in ["exe/tool", "bin/console"] {
+    for p in ["exe/tool", "bin/console", "bin/joined"] {
         use std::os::unix::fs::PermissionsExt;
         std::fs::set_permissions(dir.join(p), std::fs::Permissions::from_mode(0o755)).unwrap();
     }
@@ -226,6 +231,9 @@ fn mcp_inline_writes_only_existing_ruby_files() {
         "bin/setup",
         "bin/sub",
         "bin/env",
+        "bin/unset",
+        "bin/chdir",
+        "lib/deploy.rb",
         ".ruby-version",
         "lib/env.rb",
         "lib/new.rb",
@@ -236,7 +244,8 @@ fn mcp_inline_writes_only_existing_ruby_files() {
         ("lib/a.rb", plain),
         ("Gemfile", plain),
         ("exe/tool", "#!/usr/bin/env ruby\nputs( 2)\n"),
-        ("bin/console", "#!/usr/bin/env -S ruby -w\nputs( 2)\n"),
+        ("bin/console", "#!/usr/bin/env -S RUBYOPT=-w ruby\nputs( 2)\n"),
+        ("bin/joined", "#!/usr/bin/env -Sruby\nputs( 2)\n"),
     ];
     let mut requests: Vec<String> = not_ruby.iter().map(|p| call(1, p, plain, "")).collect();
     requests.extend(shebang.iter().map(|(p, src)| call(2, p, src, "")));
@@ -258,7 +267,7 @@ fn mcp_inline_writes_only_existing_ruby_files() {
     for line in rest {
         assert!(line.contains("\"isError\":false") && line.contains("puts(2)"), "{line}");
     }
-    for (p, text) in &files[..7] {
+    for (p, text) in &files[..10] {
         assert_eq!(&std::fs::read_to_string(dir.join(p)).unwrap(), text, "{p} was written");
     }
     assert_eq!(std::fs::read_to_string(dir.join("lib/b.rb")).unwrap(), "puts( 1)\n");
