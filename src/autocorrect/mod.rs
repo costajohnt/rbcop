@@ -484,7 +484,8 @@ pub fn write_source(path: &Path, new: &str, roots: &[PathBuf]) -> std::io::Resul
                     f.set_permissions(meta.permissions())?;
                     f.write_all(new.as_bytes())?;
                     f.sync_all()?;
-                    at::rename(&dir, tmp, name)
+                    at::rename(&dir, tmp, name)?;
+                    at::sync_dir(&dir)
                 })();
                 if written.is_err() {
                     let _ = at::unlink(&dir, tmp);
@@ -495,8 +496,12 @@ pub fn write_source(path: &Path, new: &str, roots: &[PathBuf]) -> std::io::Resul
             let _ = at::unlink(&dir, tmp);
         }
     }
-    file.set_len(0)?;
-    file.write_all(new.as_bytes())
+    // In place: the new content over the old before the file is cut to its length, so a full disk
+    // or a kill leaves the old content's tail rather than an empty or short file.
+    use std::os::unix::fs::FileExt;
+    file.write_all_at(new.as_bytes(), 0)?;
+    file.set_len(new.len() as u64)?;
+    file.sync_all()
 }
 
 /// Create or replace (`append`: append to) `path` with `content`, refusing a file whose directory
@@ -556,7 +561,9 @@ pub fn write_contained(path: &Path, content: &[u8], roots: &[PathBuf], append: b
     let written = (|| {
         f.set_permissions(meta.permissions())?;
         f.write_all(content)?;
-        at::rename(&dir, tmp, name)
+        f.sync_all()?;
+        at::rename(&dir, tmp, name)?;
+        at::sync_dir(&dir)
     })();
     if let Err(e) = written {
         let _ = at::unlink(&dir, tmp);
@@ -628,6 +635,19 @@ mod at {
         let d = dir.as_raw_fd();
         // SAFETY: an open descriptor and two NUL-terminated strings, all alive for the call.
         check(unsafe { libc::renameat(d, from.as_ptr(), d, to.as_ptr()) }).map(drop)
+    }
+
+    /// fsync the directory `dir` (a search-only descriptor cannot be synced on Linux, so `.` is
+    /// opened again for reading), making a rename in it durable. Skipped where the directory cannot
+    /// be read or its filesystem does not sync directories.
+    pub fn sync_dir(dir: &File) -> Result<()> {
+        let Ok(d) = open(dir, OsStr::new("."), libc::O_RDONLY | libc::O_DIRECTORY | libc::O_NOFOLLOW, 0) else {
+            return Ok(());
+        };
+        match d.sync_all() {
+            Err(e) if matches!(e.raw_os_error(), Some(libc::EINVAL | libc::ENOTSUP | libc::EROFS)) => Ok(()),
+            r => r,
+        }
     }
 
     pub fn unlink(dir: &File, name: &OsStr) -> Result<()> {
@@ -785,6 +805,11 @@ mod tests {
         assert_eq!(std::fs::read_to_string(&file).unwrap(), "again\n");
         let err = write_source(&file, "no\n", &[root.join("elsewhere")]).unwrap_err();
         assert_eq!(err.kind(), std::io::ErrorKind::PermissionDenied);
+        // A hard-linked file is written in place: both names see the new, shorter content.
+        let link = sub.join("y.rb");
+        std::fs::hard_link(&file, &link).unwrap();
+        write_source(&file, "z\n", std::slice::from_ref(&root)).unwrap();
+        assert_eq!(std::fs::read_to_string(&link).unwrap(), "z\n");
         std::fs::remove_dir_all(&dir).unwrap();
     }
 }

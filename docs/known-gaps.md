@@ -131,8 +131,9 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
   the regex size limit (about 100k characters) instead of failing the cop.
 - `-a/-A` writes a corrected file through a temporary file in the same directory renamed over it
   (`autocorrect::write_source`), so a crash or a full disk never leaves it truncated; RuboCop
-  truncates and writes in place. Mode, group, symlinks (the target is written) and hard links (written
-  in place) are kept, as are files owned by another user or in an unwritable directory (in place);
+  truncates and writes in place. The file and its directory are synced. Mode, group, symlinks (the
+  target is written) and hard links (written in place, the new content over the old before the file
+  is cut to its length) are kept, as are files owned by another user or in an unwritable directory (in place);
   extended attributes and ACLs are not copied to the renamed file. Files are written in the reporting
   loop, in target order, so an error or `--fail-fast` stops before later files change.
 - Directory walks follow symlinked directories and keep symlinked files, as TargetFinder does, so
