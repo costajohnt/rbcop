@@ -525,7 +525,7 @@ impl Server {
             if runs_code_when_loaded(&real) {
                 return Err(refuse_evaluated(file, &real));
             }
-            if !self.ruby_target(&real)? {
+            if !self.ruby_target(&real) {
                 return Err(ToolFail::Rubo(format!(
                     "{file} resolves to {}, not an existing file rbcop would inspect as Ruby; not written",
                     real.display()
@@ -543,6 +543,14 @@ impl Server {
         if let Some(path) = path
             && !request.dry_run
         {
+            // A `#!` line names what runs the file: a write may not add, drop or change one.
+            let (old, new) = (first_line(&real), corrected.lines().next().unwrap_or("").to_string());
+            if old != new && (old.starts_with("#!") || new.starts_with("#!")) {
+                return Err(ToolFail::Rubo(format!(
+                    "{path} resolves to {}, and the corrected code changes its #! line; not written",
+                    real.display()
+                )));
+            }
             self.write_file(path, &corrected)?;
         }
         Ok(corrected)
@@ -617,18 +625,27 @@ impl Server {
         }
     }
 
-    /// Deliberate difference: inline code is written only over an existing regular file that a
-    /// `path` call would select (TargetFinder#find with :only_recognized_file_types), never a new
-    /// file and never one like `.envrc`, `.bundle/config` or a shell `bin/setup`, which other tools
-    /// run or read as configuration. The client wrote that code, possibly following text from the
-    /// code it reads.
-    fn ruby_target(&mut self, real: &Path) -> Result<bool, ToolFail> {
+    /// Deliberate difference: inline code is written only over an existing regular file that is
+    /// Ruby by default.yml alone (its extension, an exact `RubyFilenames` name, or a `#!` line
+    /// whose interpreter is exactly one of `RubyInterpreters`), never a new file and never one
+    /// like `.envrc`, `.bundle/config` or a shell `bin/setup`, which other tools run or read as
+    /// configuration. The project's own config is not asked: the client may have written it, and
+    /// TargetFinder's substring shebang test (empty list: any `#!`) selects files to lint, not to
+    /// overwrite. The client wrote that code, possibly following text from the code it reads.
+    fn ruby_target(&self, real: &Path) -> bool {
         if !real.is_file() {
-            return Ok(false);
+            return false;
         }
-        let found = rbcop::targets::find(&mut self.runtime.store, &[real.to_path_buf()], false, true)
-            .map_err(ToolFail::Other)?;
-        Ok(!found.is_empty())
+        let defaults = self.runtime.store.default_config();
+        let (exts, names) = defaults.ruby_extensions_and_names();
+        let name = real.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
+        match real.extension() {
+            Some(ext) => exts.contains(&format!(".{}", ext.to_string_lossy())) || names.contains(&name),
+            None => {
+                names.contains(&name)
+                    || shebang_interpreter(&first_line(real)).is_some_and(|i| defaults.ruby_interpreters().contains(&i))
+            }
+        }
     }
 
     /// TargetFinder#find(path ? [path] : [], :only_recognized_file_types), then Scope#select_files.
@@ -698,6 +715,28 @@ impl Server {
 fn runs_code_when_loaded(path: &Path) -> bool {
     let name = path.file_name().map(|n| n.to_string_lossy().to_ascii_lowercase()).unwrap_or_default();
     name.ends_with(".yml") || name.ends_with(".yaml") || name == ".rubocop"
+}
+
+/// The file's first line without its line break ("" when unreadable or empty).
+fn first_line(path: &Path) -> String {
+    use std::io::BufRead;
+    let mut line = Vec::new();
+    if let Ok(f) = std::fs::File::open(path) {
+        let _ = std::io::BufReader::new(f).read_until(b'\n', &mut line);
+    }
+    String::from_utf8_lossy(&line).trim_end_matches(['\n', '\r']).to_string()
+}
+
+/// The program a `#!` line runs: the basename of its first word, or for `env` the first word
+/// after it that is not an option or a `NAME=value`. None without a `#!` at the start.
+fn shebang_interpreter(line: &str) -> Option<String> {
+    let mut words = line.strip_prefix("#!")?.split_whitespace();
+    let base = |w: &str| w.rsplit('/').next().unwrap_or(w).to_string();
+    let first = base(words.next()?);
+    if first != "env" {
+        return Some(first);
+    }
+    words.find(|w| !w.starts_with('-') && !w.contains('=')).map(base)
 }
 
 fn refuse_evaluated(path: &str, real: &Path) -> ToolFail {
