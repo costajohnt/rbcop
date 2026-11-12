@@ -21,7 +21,9 @@ inputs:
       Run cops rbcop does not implement (plugin and custom cops) with RuboCop: auto (when one is
       found, for example installed by ruby/setup-ruby with bundler-cache), true (RBCOP_FALLBACK=1)
       or false (RBCOP_FALLBACK=0). auto runs RuboCop, and so the repository's Ruby code, when the
-      config needs it.
+      config needs it. false skips RuboCop only: rbcop still runs ruby for ERB in config files,
+      remote inherit_from URLs and AllCops/ProjectIndexIncludesGems (docs/known-gaps.md, "Security:
+      when rbcop runs Ruby").
     default: auto
   rubocop:
     description: >-

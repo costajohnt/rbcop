@@ -49,7 +49,7 @@ pub fn editor_context() {
 /// Once per run, unless RBCOP_FALLBACK=1 asked for it: which RuboCop runs the project's Ruby.
 pub fn announce(program: &str, what: &str) {
     if std::env::var_os("RBCOP_FALLBACK").is_none_or(|v| v != "1") && !ANNOUNCED.swap(true, Relaxed) {
-        eprintln!("rbcop: running {program} for {what}; set RBCOP_FALLBACK=0 to never run Ruby");
+        eprintln!("rbcop: running {program} for {what}; set RBCOP_FALLBACK=0 to skip RuboCop");
     }
 }
 
