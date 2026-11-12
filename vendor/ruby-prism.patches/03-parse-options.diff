@@ -1,0 +1,144 @@
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -983,6 +983,141 @@
+     }
+ }
+ 
++// rbcop patch: options are not in ruby-prism-sys's generated bindings, but libprism exports them.
++extern "C" {
++    fn pm_options_version_set(options: *mut ruby_prism_sys::pm_options_t, version: *const c_char, length: usize) -> bool;
++    fn pm_options_free(options: *mut ruby_prism_sys::pm_options_t);
++    fn pm_options_partial_script_set(options: *mut ruby_prism_sys::pm_options_t, partial_script: bool);
++}
++
++/// rbcop patch: parse as a given Ruby version (`"3.3"`, `"3.4"`, `"4.0"`, ...), like
++/// `Prism.parse(source, version: ...)`. Unknown versions fall back to the latest grammar.
++/// `encoding_locked` is `Prism.parse(..., encoding: false)`: magic encoding comments are ignored
++/// (what Prism::Translation::Parser does for every source that is not binary).
++#[must_use]
++pub fn parse_with_version<'a>(source: &'a [u8], version: &str, encoding_locked: bool) -> ParseResult<'a> {
++    unsafe {
++        // A zeroed pm_options_t is prism's own default (`pm_options_t options = { 0 }`).
++        let mut options = MaybeUninit::<ruby_prism_sys::pm_options_t>::zeroed().assume_init();
++        pm_options_version_set(&mut options, version.as_ptr().cast(), version.len());
++        options.encoding_locked = encoding_locked;
++        // Prism::Translation::Parser (what RuboCop uses) always parses with partial_script: true.
++        pm_options_partial_script_set(&mut options, true);
++
++        let uninit = Box::new(MaybeUninit::<pm_parser_t>::uninit());
++        let uninit = Box::into_raw(uninit);
++
++        pm_parser_init((*uninit).as_mut_ptr(), source.as_ptr(), source.len(), &options);
++
++        let parser = (*uninit).assume_init_mut();
++        let parser = NonNull::new_unchecked(parser);
++
++        let node = pm_parse(parser.as_ptr());
++        let node = NonNull::new_unchecked(node);
++        pm_options_free(&mut options);
++
++        ParseResult { source, parser, node }
++    }
++}
++
++/// rbcop patch: a token as prism's lexer produced it (what `Prism.lex` returns).
++#[derive(Debug, Clone, Copy)]
++pub struct Token {
++    /// The token type's name (`"IDENTIFIER"`, `"PARENTHESIS_LEFT"`, ...).
++    pub kind: &'static str,
++    /// Byte offset of the token's start.
++    pub start: usize,
++    /// Byte offset of the token's end.
++    pub end: usize,
++    /// The lexer state after the token (`pm_lex_state_t` bits).
++    pub state: u32,
++}
++
++/// rbcop patch: `parse_with_version` that also returns every token lexed, in order.
++#[must_use]
++pub fn parse_with_version_and_tokens<'a>(
++    source: &'a [u8],
++    version: &str,
++    encoding_locked: bool,
++) -> (ParseResult<'a>, Vec<Token>) {
++    // SAFETY: prism only reads the buffer, which `source` keeps alive and unchanged for 'a.
++    let (parser, node, tokens) = unsafe { parse_tokens_raw(source.as_ptr(), source.len(), version, encoding_locked) };
++    (ParseResult { source, parser, node }, tokens)
++}
++
++/// rbcop patch: `parse_with_version_and_tokens`, then each `(offset, byte)` of `restore` written
++/// back into `source`, so every slice of the result (node, comment and token locations) reads the
++/// restored bytes. For parsing a rewritten copy whose offsets match the original text.
++///
++/// # Panics
++/// Panics if an offset of `restore` is out of bounds.
++#[must_use]
++pub fn parse_with_version_and_tokens_restoring<'a>(
++    source: &'a mut [u8],
++    version: &str,
++    encoding_locked: bool,
++    restore: &[(usize, u8)],
++) -> (ParseResult<'a>, Vec<Token>) {
++    let len = source.len();
++    assert!(restore.iter().all(|&(i, _)| i < len), "restore offset out of bounds");
++    let ptr = source.as_mut_ptr();
++    // SAFETY: prism keeps raw pointers derived from `ptr`; the writes go through `ptr` as well,
++    // before any shared reference to the buffer exists.
++    let (parser, node, tokens) = unsafe { parse_tokens_raw(ptr, len, version, encoding_locked) };
++    for &(i, b) in restore {
++        unsafe { *ptr.add(i) = b };
++    }
++    let source: &'a [u8] = source;
++    (ParseResult { source, parser, node }, tokens)
++}
++
++unsafe fn parse_tokens_raw(
++    source: *const u8,
++    len: usize,
++    version: &str,
++    encoding_locked: bool,
++) -> (NonNull<pm_parser_t>, NonNull<pm_node_t>, Vec<Token>) {
++    extern "C" {
++        fn pm_token_type_name(token_type: ruby_prism_sys::pm_token_type_t) -> *const c_char;
++    }
++    unsafe extern "C" fn collect(data: *mut std::ffi::c_void, parser: *mut pm_parser_t, token: *mut ruby_prism_sys::pm_token_t) {
++        unsafe {
++            let tokens = &mut *data.cast::<Vec<Token>>();
++            let base = (*parser).start;
++            let name = CStr::from_ptr(pm_token_type_name((*token).type_)).to_str().unwrap_or("");
++            tokens.push(Token {
++                kind: name,
++                start: (*token).start.offset_from(base) as usize,
++                end: (*token).end.offset_from(base) as usize,
++                state: (*parser).lex_state,
++            });
++        }
++    }
++    unsafe {
++        let mut options = MaybeUninit::<ruby_prism_sys::pm_options_t>::zeroed().assume_init();
++        pm_options_version_set(&mut options, version.as_ptr().cast(), version.len());
++        options.encoding_locked = encoding_locked;
++        pm_options_partial_script_set(&mut options, true);
++
++        let uninit = Box::into_raw(Box::new(MaybeUninit::<pm_parser_t>::uninit()));
++        pm_parser_init((*uninit).as_mut_ptr(), source, len, &options);
++        let parser = (*uninit).assume_init_mut();
++        let mut tokens: Box<Vec<Token>> = Box::default();
++        let mut callback = Box::new(ruby_prism_sys::pm_lex_callback_t {
++            data: std::ptr::from_mut::<Vec<Token>>(&mut tokens).cast(),
++            callback: Some(collect),
++        });
++        parser.lex_callback = &mut *callback;
++        let parser = NonNull::new_unchecked(parser);
++
++        let node = NonNull::new_unchecked(pm_parse(parser.as_ptr()));
++        (*parser.as_ptr()).lex_callback = std::ptr::null_mut();
++        pm_options_free(&mut options);
++
++        (parser, node, *tokens)
++    }
++}
++
+ #[cfg(test)]
+ mod tests {
+     use super::parse;

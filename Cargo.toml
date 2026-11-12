@@ -25,7 +25,8 @@ rubydex = { path = "vendor/rubydex" }
 [target.'cfg(target_env = "musl")'.dependencies]
 mimalloc = { version = "0.1", default-features = false }
 
-# Vendored with an added parse_with_version (see vendor/ruby-prism/src/lib.rs, "rbcop patch").
+# Vendored with an added parse_with_version (see vendor/ruby-prism/src/lib.rs, "rbcop patch"): the
+# crates.io crate plus vendor/ruby-prism.patches (scripts/prism-patch.sh).
 [patch.crates-io]
 ruby-prism = { path = "vendor/ruby-prism" }
 
