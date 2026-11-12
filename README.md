@@ -13,7 +13,7 @@ The target is byte-identical output: same offenses, ranges, messages, `[Correcta
 ## Install
 
 - Gemfile: `gem "rbcop", require: false`, then `bundle exec rbcop` where you ran `bundle exec rubocop`. The gem carries a prebuilt binary (macOS arm64/x86_64, Linux x86_64/aarch64 glibc and musl); no Rust toolchain is needed.
-- GitHub Actions: `uses: costajohnt/rbcop@v<version>` downloads and caches the release binary.
+- GitHub Actions: `uses: costajohnt/rbcop@v<version>` downloads and caches the release binary, and keeps rbcop's result cache between runs ([inputs](docs/migration.md#github-actions)).
 - Homebrew: `brew install costajohnt/tap/rbcop`. Release archives with each release.
 
 [docs/migration.md](docs/migration.md) covers switching a project from RuboCop: Gemfile, binstubs, CI, editors and plugins. `docs/releasing.md` describes how releases are built.

@@ -67,7 +67,7 @@ end
 
 ## CI
 
-rbcop keeps a result cache as RuboCop does (`AllCops: UseCache`, `--cache`, `--cache-root`, `RUBOCOP_CACHE_ROOT`), in `rbcop_cache` next to RuboCop's `rubocop_cache`. On a cold CI runner the cache is empty and every file is inspected, using all cores; a workflow that restores the cache directory between runs skips the unchanged files.
+rbcop keeps a result cache as RuboCop does (`AllCops: UseCache`, `--cache`, `--cache-root`, `RUBOCOP_CACHE_ROOT`), in `rbcop_cache` next to RuboCop's `rubocop_cache`. On a cold CI runner the cache is empty and every file is inspected, using all cores; a workflow that restores the cache directory between runs skips the unchanged files (the GitHub Action below does, see its `cache` input).
 
 ### GitHub Actions
 
@@ -91,6 +91,7 @@ By default it runs `rbcop --format github --format progress`: offenses become an
 | `args` | `--format github --format progress` | rbcop's arguments; empty only installs `rbcop` on `PATH` |
 | `version` | the action's version | the rbcop release to run |
 | `fallback` | `auto` | run plugin and custom cops with RuboCop: `auto` when one is found, `true` always (`RBCOP_FALLBACK=1`), `false` never (`RBCOP_FALLBACK=0`). `auto` runs RuboCop, and so the repository's Ruby code, when the config needs it. `false` skips RuboCop only: rbcop still runs `ruby` for ERB in config files, remote `inherit_from` URLs and `AllCops/ProjectIndexIncludesGems` ([known-gaps.md](known-gaps.md#security-when-rbcop-runs-ruby)). |
+| `cache` | `true` | keep the result cache between runs with `actions/cache` (keyed on the rbcop version, runner OS and architecture, the `.rubocop*.yml` and `Gemfile.lock` contents and the commit, restored from the newest entry with the same config, else any for that version), so files unchanged since then are not inspected again. It sets `RUBOCOP_CACHE_ROOT`, which overrides `--cache-root` and `AllCops: CacheRootDirectory`; `MaxFilesInCache` still prunes it. A run with offenses saves too. `false` leaves the cache settings alone. |
 | `rubocop` | (found) | the RuboCop command the fallback runs (`RBCOP_RUBOCOP`); by default `bundle exec rubocop` when `Gemfile.lock` has rubocop, else `rubocop` on `PATH` |
 
 With plugins, install the bundle first so the fallback finds RuboCop:

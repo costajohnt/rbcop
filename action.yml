@@ -25,6 +25,12 @@ inputs:
       remote inherit_from URLs and AllCops/ProjectIndexIncludesGems (docs/known-gaps.md, "Security:
       when rbcop runs Ruby").
     default: auto
+  cache:
+    description: >-
+      Keep rbcop's result cache between runs with actions/cache (true or false), so files unchanged
+      since a cached run are not inspected again. Sets RUBOCOP_CACHE_ROOT for the run, which takes
+      precedence over --cache-root and AllCops/CacheRootDirectory.
+    default: 'true'
   rubocop:
     description: >-
       The RuboCop command for the fallback (RBCOP_RUBOCOP); empty finds one: bundle exec rubocop
@@ -59,12 +65,35 @@ runs:
       run: |
         sh "$GITHUB_ACTION_PATH/scripts/dist/install.sh" "$VERSION" "$RUNNER_TEMP/rbcop-bin"
         echo "$RUNNER_TEMP/rbcop-bin" >> "$GITHUB_PATH"
+    # The result cache: entries live under <root>/rbcop_cache/<build>/<context>, where <build> digests
+    # the binary itself (src/cache.rs), so entries of another build are never read and the key
+    # only has to keep them apart to save space. A new key every commit, restored from the newest
+    # entry with the same config, then any: files and config left unchanged since then hit.
+    # MaxFilesInCache prunes the oldest entries as usual (tar keeps their mtimes). Restore and
+    # save are separate steps so a run with offenses (a failing step) still saves.
+    - id: results
+      if: inputs.args != '' && inputs.cache == 'true'
+      uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: ${{ runner.temp }}/rbcop-results
+        key: rbcop-results-${{ steps.version.outputs.version }}-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.rubocop*.yml', 'Gemfile.lock') }}-${{ github.sha }}
+        restore-keys: |
+          rbcop-results-${{ steps.version.outputs.version }}-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.rubocop*.yml', 'Gemfile.lock') }}-
+          rbcop-results-${{ steps.version.outputs.version }}-${{ runner.os }}-${{ runner.arch }}-
     - if: inputs.args != ''
       shell: bash
       env:
         ARGS: ${{ inputs.args }}
         RBCOP_FALLBACK: ${{ inputs.fallback == 'true' && '1' || inputs.fallback == 'false' && '0' || '' }}
         RBCOP_RUBOCOP: ${{ inputs.rubocop }}
+        RESULTS: ${{ inputs.cache == 'true' && format('{0}/rbcop-results', runner.temp) || '' }}
       run: |
         set -f
+        # Only when caching: an empty RUBOCOP_CACHE_ROOT would be a root of its own.
+        if [ -n "$RESULTS" ]; then export RUBOCOP_CACHE_ROOT="$RESULTS"; fi
         rbcop $ARGS
+    - if: "!cancelled() && inputs.args != '' && inputs.cache == 'true' && steps.results.outputs.cache-hit != 'true'"
+      uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: ${{ runner.temp }}/rbcop-results
+        key: ${{ steps.results.outputs.cache-primary-key }}
