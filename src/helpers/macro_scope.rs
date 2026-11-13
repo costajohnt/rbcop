@@ -1,7 +1,7 @@
 //! rubocop-ast `in_macro_scope?` / `macro?` / `class_constructor?` on Prism ancestors: the one port.
 
-use crate::helpers::node_types::range as span;
 use crate::ast::method_name;
+use crate::helpers::node_types::range as span;
 use crate::node_kind as kind;
 use ruby_prism::{CallNode, Node};
 use std::borrow::Borrow;

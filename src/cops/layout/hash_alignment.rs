@@ -1,5 +1,5 @@
-use crate::helpers::node_types::range as span;
 use crate::helpers::alignment::enabled_cop_str;
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 use crate::source::Source;
 

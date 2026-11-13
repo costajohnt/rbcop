@@ -1,6 +1,6 @@
-use crate::helpers::node_types::range as span;
 use crate::helpers::alignment as alignment;
 use crate::helpers::multiline_expression_indentation::{Ctx, indentation};
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 
 pub const NAME: &str = "Layout/MultilineOperationIndentation";

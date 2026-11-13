@@ -1,5 +1,5 @@
-use crate::helpers::node_types::range;
 use crate::helpers::if_node::parser_end;
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use ruby_prism::{CallNode, StatementsNode};
 

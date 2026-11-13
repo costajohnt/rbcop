@@ -1,6 +1,6 @@
-use crate::helpers::node_types::range;
 use crate::helpers::node_equality::same;
 use crate::helpers::node_types::is_operator_method;
+use crate::helpers::node_types::range;
 use crate::helpers::parser_parent::parser_parent;
 use crate::prelude::*;
 use ruby_prism::{CallNode, StatementsNode};

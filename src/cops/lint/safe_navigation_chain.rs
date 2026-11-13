@@ -1,6 +1,6 @@
-use crate::helpers::node_types::range;
 use crate::helpers::nil_methods::nil_method;
 use crate::helpers::node_equality::same;
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use ruby_prism::CallNode;
 

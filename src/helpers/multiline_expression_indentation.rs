@@ -1,8 +1,8 @@
 //! RuboCop's MultilineExpressionIndentation mixin over a parser-gem-shaped view of the ancestors.
 
-use crate::helpers::node_types::range as span;
 use crate::ast::*;
 use crate::cop::Cx;
+use crate::helpers::node_types::range as span;
 use crate::node_kind as kind;
 use ruby_prism::{CallNode, Node};
 

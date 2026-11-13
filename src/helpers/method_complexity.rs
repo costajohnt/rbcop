@@ -2,9 +2,9 @@
 //! and the CyclomaticComplexity / PerceivedComplexity scores (Metrics/AbcSize uses
 //! `helpers::abc_size_calculator`).
 
-use crate::helpers::node_types::range;
 use crate::cop::Cx;
 use crate::helpers::allowed::{allowed_method, matches_allowed_pattern};
+use crate::helpers::node_types::range;
 use crate::node_kind as kind;
 use ruby_prism::{CallNode, Node, Visit};
 use std::collections::HashMap;

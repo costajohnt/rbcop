@@ -1,5 +1,5 @@
-use crate::helpers::node_types::range;
 use crate::helpers::if_node::{Else, is_elsif, parts};
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 
 pub const NAME: &str = "Style/NegatedIfElseCondition";

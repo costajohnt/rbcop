@@ -1,5 +1,5 @@
-use crate::helpers::node_types::range;
 use crate::helpers::configurable_naming as naming;
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 
 pub const NAME: &str = "Naming/MethodName";

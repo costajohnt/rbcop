@@ -1,9 +1,9 @@
 //! RuboCop's PercentArray mixin, PercentLiteralCorrector and the Util string helpers they use
 //! (shared by Style/SymbolArray and Style/WordArray).
 
-use crate::helpers::node_types::range;
 use crate::config::value::Num;
 use crate::cop::Cx;
+use crate::helpers::node_types::range;
 use crate::helpers::ruby_string::inspect;
 use crate::source::Source;
 use ruby_prism::{ArrayNode, Node};
