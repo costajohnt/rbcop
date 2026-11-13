@@ -105,9 +105,11 @@ In the same change as the ports and recordings:
 - `RUBOCOP_VERSION` in `src/config/mod.rs` (`rbcop -v`, `-V`, the JSON/HTML formatters,
   `--auto-gen-config`, LSP, the remote-config shim).
 - `config/default.yml`: copy the new release's file verbatim.
-- The version named in prose and comments: `git grep -n '<old>'` (README.md, CLAUDE.md, action.yml,
-  packaging/gem/rbcop.gemspec, packaging/homebrew/rbcop.rb.in, docs/*.md, script headers). Comments
-  that describe what the old release did stay as history only where they explain a known gap.
+- The version named in prose and comments: grep every past target, not only the previous one
+  (`git grep -nE '1\.91\.0|1\.92\.1|<old>'`; earlier upgrades left older ones behind) in README.md,
+  CLAUDE.md, action.yml, packaging/gem/rbcop.gemspec, packaging/homebrew/rbcop.rb.in, docs/*.md and
+  script headers. Comments that describe what the old release did stay as history only where they
+  explain a known gap.
 - docs/plugins.md if a plugin pin moved, and its "newest release that supports RuboCop X.Y.Z" text.
 
 ## 6. Gate

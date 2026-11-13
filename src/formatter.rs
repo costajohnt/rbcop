@@ -1,4 +1,4 @@
-//! Output formats. Each is byte-identical to the RuboCop 1.91.0 formatter of the same name.
+//! Output formats. Each is byte-identical to the RuboCop 1.92.2 formatter of the same name.
 //!
 //! Formatters receive RuboCop's events (started / file_started / file_finished / finished) and
 //! write into a String per event; `Set` forwards that text to each formatter's sink, so several
