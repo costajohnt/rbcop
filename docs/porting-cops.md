@@ -532,6 +532,31 @@ cop and config variant. `tests/spec_corpus.rs` checks rbcop against it, no Ruby 
 `scripts/record-spec-corpus.sh <rubocop-src>` re-records it; examples left out are listed with
 their reason (known gap or issue number) in `tests/spec_corpus/skip.txt`.
 
+### Recorded fixtures (cargo test)
+
+The other recorded expectations come from one recorder each (its header gives the arguments):
+`scripts/scenarios.sh` (`tests/scenarios`), `scripts/formatters.sh` (`tests/formatters`),
+`scripts/show-cops.sh` (`tests/show_cops`), `scripts/lsp.sh` (`tests/lsp`), `scripts/mcp.sh`
+(`tests/mcp`), `tests/autocorrect/record.sh` and `tests/auto_gen/record.sh`. They record with
+RuboCop 1.92.2, the plugin pins, and mcp 0.25.0 and rubydex 0.4.1 on the gem path (without
+rubydex the project-index scenarios lose their offenses). Never write or edit an expectation by
+hand. `~/rubocop-1.92.2/bin/rubocop` on the CI host resets `GEM_PATH`, so record (and check) with
+the extra gem home first:
+
+```sh
+g=~/rubocop-1.92.2
+RUBOCOP="env GEM_HOME=$g/gems GEM_PATH=$g/extra-gems:$g/gems RBENV_VERSION=4.0.6 \
+  $HOME/.rbenv/versions/4.0.6/bin/ruby $g/gems/bin/rubocop" scripts/check-fixtures.sh
+```
+
+`scripts/check-fixtures.sh` re-records every one of them into the working tree (tests/ must be
+clean first) and fails with the changed files and `git diff --stat` when anything differs, leaving
+the re-recorded files in place. GitHub CI runs it in the `fixtures` job, beside the fast tier; it
+takes 8 to 13 minutes on the CI host. A failure means a fixture is not what RuboCop 1.92.2 prints:
+re-record it with its recorder and commit the result. The spec corpus is not part of the check:
+re-recording it needs the RuboCop and plugin source checkouts at their tags and takes over half an
+hour (`scripts/record-spec-corpus.sh`).
+
 ### Cold cops
 
 Cops with almost no offenses on the corpora (Gemfile/gemspec-only cops, low-target cops, specs whose
