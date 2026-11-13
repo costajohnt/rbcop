@@ -159,7 +159,8 @@ Re-check `scripts/autocorrect-skip.txt` with the new release: run each entry's f
 `check-autocorrect-all.sh` does (a copy for each tool, `-A --only` the rbcop cops,
 `--force-default-config`). Drop entries where RuboCop no longer crashes or writes the syntax error
 the comment above them names (the gate must still pass without them), and stamp the header with
-the release that confirmed the rest.
+the release that confirmed the rest. Then run a differential fuzz round (docs/porting-cops.md,
+"Differential fuzzing").
 
 ## Gate environment for a new release
 

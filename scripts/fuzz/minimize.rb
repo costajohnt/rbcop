@@ -1,12 +1,16 @@
 # Delta-debug a fuzz variant: drop lines (then characters, for short files) while RuboCop and rbcop
 # still disagree. The file is only parsed by both tools, never executed.
-# usage: RBENV_VERSION=4.0.6 rbenv exec ruby scripts/fuzz/minimize.rb <file> <Cop/Name> [--all]
+# usage: RUBOCOP=... RBENV_VERSION=4.0.6 rbenv exec ruby scripts/fuzz/minimize.rb <file> <Cop/Name> [--all]
 #        RBENV_VERSION=4.0.6 rbenv exec ruby scripts/fuzz/minimize.rb <file> --autocorrect
 #   default: diff the cop's offenses (all-cops config, --only the cop; --all runs every cop).
 #   --autocorrect: diff `-A --force-default-config` reports and rewritten files.
 # Writes <file>.min next to the input and prints it.
 require 'fileutils'
 require 'open3'
+require 'shellwords'
+
+# RuboCop is $RUBOCOP (default `rubocop` on PATH), word-split like scripts/rubocop.sh.
+RUBOCOP = Shellwords.split(ENV.fetch('RUBOCOP', 'rubocop'))
 
 file, cop, flag = ARGV
 root = File.expand_path('../..', __dir__)
@@ -29,10 +33,10 @@ run = lambda do |side, src, cmd|
 end
 differs = lambda do |src|
   if autocorrect
-    run.('a', src, %w[rubocop -A --force-default-config --cache false --format emacs]) !=
+    run.('a', src, [*RUBOCOP, *%w[-A --force-default-config --cache false --format emacs]]) !=
       run.('b', src, [bin, '-A', '--force-default-config', '--format', 'emacs'])
   else
-    run.('a', src, ['rubocop', '--config', cfg, '--cache', 'false', '-r', fmt, '-f', 'RuboCop::Formatter::RbcopOracleFormatter', *only]) !=
+    run.('a', src, [*RUBOCOP, '--config', cfg, '--cache', 'false', '-r', fmt, '-f', 'RuboCop::Formatter::RbcopOracleFormatter', *only]) !=
       run.('b', src, [bin, '--config', cfg, '--format', 'rbcop-oracle', *only])
   end
 end
