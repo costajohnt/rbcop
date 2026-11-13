@@ -1,12 +1,9 @@
+use crate::helpers::node_types::is_hash;
 use crate::prelude::*;
 
 pub const NAME: &str = "Lint/ErbNewArguments";
 pub static COP: ErbNewArguments = ErbNewArguments;
 pub struct ErbNewArguments;
-
-fn is_hash(n: &Node) -> bool {
-    n.as_hash_node().is_some() || n.as_keyword_hash_node().is_some()
-}
 
 /// Source of a pair key as parser sees it (a label `a:` is the symbol `a`).
 fn key_source<'pr>(key: &Node<'pr>) -> &'pr str {

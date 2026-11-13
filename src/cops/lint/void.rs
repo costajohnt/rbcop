@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 use helpers::range_help::{range_with_surrounding_space, Side, Surrounding};
 
@@ -95,11 +96,6 @@ fn is_plain_kwbegin(node: &Node) -> bool {
     node.as_begin_node().is_some_and(|b| {
         b.begin_keyword_loc().is_some() && b.rescue_clause().is_none() && b.ensure_clause().is_none()
     })
-}
-
-fn span(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
 }
 
 /// What the checks need to know about a node's surroundings.

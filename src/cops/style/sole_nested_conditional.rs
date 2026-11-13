@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 use crate::source::Source;
 use helpers::node_types::is_assignment;
@@ -9,10 +10,6 @@ use std::collections::HashSet;
 pub const NAME: &str = "Style/SoleNestedConditional";
 pub static COP: SoleNestedConditional = SoleNestedConditional;
 pub struct SoleNestedConditional;
-
-fn span(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// rubocop-ast IfNode view of a Prism IfNode / UnlessNode.
 struct If<'pr> {

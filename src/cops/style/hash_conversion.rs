@@ -1,4 +1,5 @@
 use crate::helpers::add_parentheses;
+use crate::helpers::node_types::plain_call;
 use crate::helpers::parser_parent::{is_operator_keyword, is_top_const, parser_parent_index};
 use crate::prelude::*;
 
@@ -13,11 +14,6 @@ const MSG_SPLAT: &str = "Prefer `array_of_pairs.to_h` to `Hash[*array]`.";
 
 fn parenthesized(call: &ruby_prism::CallNode) -> bool {
     call.closing_loc().is_some_and(|l| l.as_slice() == b")")
-}
-
-/// rubocop-ast `call_type?` without an attached block (that is a parser `block`).
-fn plain_call<'pr>(node: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
-    node.as_call_node().filter(|c| c.block().is_none_or(|b| b.as_block_node().is_none()))
 }
 
 fn requires_parens(node: &Node) -> bool {

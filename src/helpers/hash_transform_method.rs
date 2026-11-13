@@ -1,14 +1,11 @@
 //! RuboCop's HashTransformMethod mixin (Style/HashTransformKeys, Style/HashTransformValues).
 
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use ruby_prism::{BlockNode, CallNode, Visit};
 
 fn name_of(bytes: &[u8]) -> String {
     String::from_utf8_lossy(bytes).into_owned()
-}
-
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
 }
 
 /// The parameters node of a block when it has only required parameters (and no block locals).

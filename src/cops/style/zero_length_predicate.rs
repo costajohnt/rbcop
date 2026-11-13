@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 use helpers::select_by::plain_send;
 use helpers::parser_parent::{is_top_const, parser_parent};
@@ -6,10 +7,6 @@ use ruby_prism::CallNode;
 pub const NAME: &str = "Style/ZeroLengthPredicate";
 pub static COP: ZeroLengthPredicate = ZeroLengthPredicate;
 pub struct ZeroLengthPredicate;
-
-fn span(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// `(int n)` with `n` 0 or 1.
 fn int_is(node: &Node, v: i32) -> bool {

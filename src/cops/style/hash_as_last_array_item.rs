@@ -1,12 +1,9 @@
+use crate::helpers::node_types::is_hash;
 use crate::prelude::*;
 
 pub const NAME: &str = "Style/HashAsLastArrayItem";
 pub static COP: HashAsLastArrayItem = HashAsLastArrayItem;
 pub struct HashAsLastArrayItem;
-
-fn is_hash(node: &Node) -> bool {
-    node.as_hash_node().is_some() || node.as_keyword_hash_node().is_some()
-}
 
 impl Cop for HashAsLastArrayItem {
     fn correctable(&self) -> bool {

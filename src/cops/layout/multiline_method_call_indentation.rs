@@ -1,5 +1,6 @@
 use crate::helpers::alignment as alignment;
 use crate::helpers::multiline_expression_indentation::{Ctx, PAnc, PK, SELF, block_of, indentation, within};
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 use ruby_prism::{CallNode, Visit};
 
@@ -19,11 +20,6 @@ struct State {
 }
 
 type Range = (usize, usize);
-
-fn span(n: &Node) -> Range {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
-}
 
 /// `loc.dot.join(loc.selector)` (None without a dot or selector).
 fn dot_sel(call: &CallNode) -> Option<Range> {

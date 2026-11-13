@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use helpers::parentheses_corrector;
 use helpers::parser_parent::parser_parent;
@@ -10,11 +11,6 @@ const OPERATORS: &[&str] = &[
     "|", "^", "&", "<=>", "==", "===", "=~", ">", ">=", "<", "<=", "<<", ">>", "+", "-", "*", "/", "%", "**", "~", "!",
     "!=", "!~",
 ];
-
-fn range(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
-}
 
 /// Parser `node.children.first` is truthy (not nil and not a missing child).
 fn first_child_truthy(n: &Node) -> bool {

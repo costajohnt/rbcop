@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 
 pub const NAME: &str = "Layout/HeredocArgumentClosingParenthesis";
@@ -6,11 +7,6 @@ pub struct HeredocArgumentClosingParenthesis;
 
 const MSG: &str =
     "Put the closing parenthesis for a method call with a HEREDOC parameter on the same line as the HEREDOC opening.";
-
-fn range(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
-}
 
 /// `extract_heredoc(node)` is truthy.
 fn has_heredoc(node: &Node) -> bool {

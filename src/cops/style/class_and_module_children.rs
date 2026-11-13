@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 use crate::source::Source;
 use helpers::alignment_corrector::{self, Settings};
@@ -10,10 +11,6 @@ pub struct ClassAndModuleChildren;
 
 const NESTED_MSG: &str = "Use nested module/class definitions instead of compact style.";
 const COMPACT_MSG: &str = "Use compact module/class definition instead of nested style.";
-
-fn span(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// A class or module: (is_class, keyword, identifier, superclass?, body, end keyword).
 struct Def<'pr> {

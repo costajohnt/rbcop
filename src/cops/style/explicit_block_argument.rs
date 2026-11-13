@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use std::collections::HashSet;
 
@@ -30,11 +31,6 @@ fn param_name<'pr>(node: &Node<'pr>) -> Option<&'pr [u8]> {
         Node::BlockLocalVariableNode { .. } => Some(node.as_block_local_variable_node().unwrap().name().as_slice()),
         _ => None,
     }
-}
-
-fn range(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
 }
 
 /// One `add_block_argument` edit, computed up front.

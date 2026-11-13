@@ -1,13 +1,10 @@
 use crate::helpers::if_node::{Else, is_elsif, parts};
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 
 pub const NAME: &str = "Style/NegatedIfElseCondition";
 pub static COP: NegatedIfElseCondition = NegatedIfElseCondition;
 pub struct NegatedIfElseCondition;
-
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// `node = node.children.first while node&.type?(:begin, :kwbegin)`
 fn unwrap_begin(node: Node) -> Option<Node> {

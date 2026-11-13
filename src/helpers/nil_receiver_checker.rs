@@ -3,6 +3,7 @@
 //! small parser-shaped tree built from the Prism AST.
 
 use crate::ast::{method_name, send_range};
+use crate::helpers::node_types::range;
 use crate::source::Source;
 use ruby_prism::{CallNode, Node, Visit};
 use std::collections::HashSet;
@@ -137,11 +138,6 @@ impl Tree {
         self.nodes.len() - 1
     }
 
-    fn span(node: &Node) -> (usize, usize) {
-        let l = node.location();
-        (l.start_offset(), l.end_offset())
-    }
-
     /// A body: one statement is itself, several are a `begin`.
     fn body(&mut self, node: Option<Node>, parent: Option<usize>) -> Option<usize> {
         let node = node?;
@@ -151,7 +147,7 @@ impl Tree {
             0 => None,
             1 => self.conv(&stmts[0], parent),
             _ => {
-                let (a, b) = Self::span(&node);
+                let (a, b) = range(&node);
                 let i = self.push(Ty::Begin, a, b, parent);
                 let children = stmts.iter().filter_map(|c| self.conv(c, Some(i))).collect();
                 self.nodes[i].children = children;
@@ -182,7 +178,7 @@ impl Tree {
     }
 
     fn generic(&mut self, ty: Ty, node: &Node, parent: Option<usize>) -> usize {
-        let (a, b) = Self::span(node);
+        let (a, b) = range(node);
         let i = self.push(ty, a, b, parent);
         let children = self.flatten(prism_children(node), i);
         self.nodes[i].children = children;
@@ -190,7 +186,7 @@ impl Tree {
     }
 
     fn conv(&mut self, node: &Node, parent: Option<usize>) -> Option<usize> {
-        let (start, end) = Self::span(node);
+        let (start, end) = range(node);
         Some(match node {
             Node::ProgramNode { .. } => {
                 return self.body(Some(node.as_program_node().unwrap().statements().as_node()), parent);
@@ -324,7 +320,7 @@ impl Tree {
                 let m = node.as_rescue_modifier_node().unwrap();
                 let i = self.push(Ty::Rescue, start, end, parent);
                 let expr = self.conv(&m.expression(), Some(i));
-                let (s, e) = Self::span(&m.rescue_expression());
+                let (s, e) = range(&m.rescue_expression());
                 let rb = self.push(Ty::Resbody, m.keyword_loc().start_offset(), e.max(s), Some(i));
                 let rescued = self.conv(&m.rescue_expression(), Some(rb));
                 self.nodes[rb].children = rescued.into_iter().collect();
@@ -340,7 +336,7 @@ impl Tree {
     }
 
     fn begin(&mut self, b: &ruby_prism::BeginNode, parent: Option<usize>) -> usize {
-        let (start, end) = Self::span(&b.as_node());
+        let (start, end) = range(&b.as_node());
         let kw = b.begin_keyword_loc().is_some();
         let outer = if kw { Some(self.push(Ty::Kwbegin, start, end, parent)) } else { None };
         let holder = outer.or(parent);
@@ -363,7 +359,7 @@ impl Tree {
             let mut clause = b.rescue_clause();
             while let Some(rc) = clause {
                 let rb = rc.as_node();
-                let (s, e) = Self::span(&rb);
+                let (s, e) = range(&rb);
                 let i = self.push(Ty::Resbody, s, e, Some(r));
                 let mut kids = Vec::new();
                 let exceptions: Vec<Node> = rc.exceptions().iter().collect();
@@ -430,7 +426,7 @@ impl Tree {
             }
             Some(Node::ItParametersNode { .. }) => self.nodes[bi].arg_names = vec!["it".into()],
             Some(p) => {
-                let (ps, pe) = Self::span(&p);
+                let (ps, pe) = range(&p);
                 let args_node = self.push(Ty::Other, ps, pe, Some(bi));
                 children.push(args_node);
                 self.nodes[bi].arg_names = param_names(&p);

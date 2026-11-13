@@ -4,6 +4,8 @@ use ruby_prism::Visit;
 
 use crate::ast::{is_csend, node_text, send_args, send_range};
 use crate::helpers::allowed;
+use crate::helpers::const_name::const_name;
+use crate::helpers::node_types::plain_call;
 use crate::prelude::*;
 
 pub const NAME: &str = "Lint/NumberConversion";
@@ -112,11 +114,6 @@ fn handle_as_symbol(cx: &mut Cx, call: &ruby_prism::CallNode, arg: &Node) {
     });
 }
 
-/// A parser `send` (a Prism call that owns no `do`/`{}` block).
-fn plain_call<'pr>(node: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
-    node.as_call_node().filter(|c| c.block().is_none_or(|b| b.as_block_node().is_none()))
-}
-
 fn allow_receiver(cx: &Cx, receiver: &Node) -> bool {
     if matches!(
         receiver,
@@ -147,19 +144,6 @@ fn top_const_name(node: &Node) -> Option<String> {
         Some(n) => top_const_name(&n),
         None => const_name(node),
     }
-}
-
-/// rubocop-ast `const_name` of a const node.
-fn const_name(node: &Node) -> Option<String> {
-    if let Some(c) = node.as_constant_read_node() {
-        return Some(String::from_utf8_lossy(c.name().as_slice()).into_owned());
-    }
-    let p = node.as_constant_path_node()?;
-    let name = String::from_utf8_lossy(p.name()?.as_slice()).into_owned();
-    Some(match p.parent() {
-        None => name,
-        Some(parent) => format!("{}::{name}", const_name(&parent).unwrap_or_default()),
-    })
 }
 
 struct Csend(bool);

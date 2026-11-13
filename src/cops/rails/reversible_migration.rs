@@ -1,3 +1,4 @@
+use crate::helpers::node_types::is_hash;
 use crate::prelude::*;
 
 pub const NAME: &str = "Rails/ReversibleMigration";
@@ -9,10 +10,6 @@ fn all_hash_key(args: Option<&Node>, keys: &[&str]) -> bool {
     let Some(h) = args.filter(|a| helpers::rails::hash_elements(a).is_some()) else { return false };
     let names: Vec<String> = helpers::rails::hash_pairs(h).iter().filter_map(|p| helpers::rails::str_or_sym(&p.key())).collect();
     keys.iter().all(|k| names.iter().any(|n| n == k))
-}
-
-fn is_hash(n: &Node) -> bool {
-    helpers::rails::hash_elements(n).is_some()
 }
 
 /// reversible_change_table_call?

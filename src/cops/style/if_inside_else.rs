@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use crate::source::Source;
 use helpers::whole_lines::range_by_whole_lines;
@@ -7,10 +8,6 @@ use std::cell::Cell;
 pub const NAME: &str = "Style/IfInsideElse";
 pub static COP: IfInsideElse = IfInsideElse;
 pub struct IfInsideElse;
-
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// Parser `else_branch` of an if node: an elsif IfNode, or the else body (None when empty).
 fn else_body<'pr>(n: &IfNode<'pr>) -> Option<Node<'pr>> {

@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use crate::source::Source;
 use helpers::node_equality::same;
@@ -18,10 +19,6 @@ struct Pending {
 #[derive(Default)]
 struct State {
     pending: Vec<Pending>,
-}
-
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
 }
 
 /// Children of a parser `begin` (parentheses, a statement list, an interpolation).

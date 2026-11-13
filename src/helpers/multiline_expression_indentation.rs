@@ -2,6 +2,7 @@
 
 use crate::ast::*;
 use crate::cop::Cx;
+use crate::helpers::node_types::range as span;
 use crate::node_kind as kind;
 use ruby_prism::{CallNode, Node};
 
@@ -57,11 +58,6 @@ fn block_kind(block: &Node) -> PK {
 /// The call's `{}`/`do end` block, if any (not a `&blk` argument).
 pub fn block_of<'pr>(call: &CallNode<'pr>) -> Option<ruby_prism::BlockNode<'pr>> {
     call.block().and_then(|b| b.as_block_node())
-}
-
-fn span(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
 }
 
 /// Parser-gem ancestors of `node` (whose Prism ancestors are `ancestors`), nearest first.

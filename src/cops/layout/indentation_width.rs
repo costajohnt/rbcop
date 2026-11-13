@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 use helpers::check_assignment::{KINDS, extract_rhs, first_part_of_call_chain};
 use helpers::end_keyword_alignment::{begins_its_line, effective_column};
@@ -16,11 +17,6 @@ struct State {
     patterns: Option<Vec<crate::config::value::RubyRegex>>,
     /// `@offense_ranges` (`other_offense_in_same_range?`, only consulted when autocorrecting).
     offense_ranges: Vec<(usize, usize)>,
-}
-
-fn span(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
 }
 
 fn lstart(l: Location) -> usize {

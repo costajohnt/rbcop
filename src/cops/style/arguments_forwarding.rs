@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use helpers::add_parentheses as parens;
 use ruby_prism::Visit;
@@ -13,11 +14,6 @@ const KWARGS_MSG: &str = "Use anonymous keyword arguments forwarding (`**`).";
 const BLOCK_MSG: &str = "Use anonymous block arguments forwarding (`&`).";
 
 type Range = (usize, usize);
-
-fn range(n: &Node) -> Range {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
-}
 
 /// A parser `any_block` at or around the node (a call owning a `{}`/`do` block is inside it).
 fn block_like(node: &Node) -> bool {

@@ -1,4 +1,5 @@
 use crate::helpers::configurable_naming as naming;
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 
 pub const NAME: &str = "Naming/MethodName";
@@ -14,11 +15,6 @@ fn literal_name(node: &Node) -> Option<String> {
         }
         _ => None,
     }
-}
-
-fn range(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
 }
 
 /// `(send (const {nil? cbase} :Name) ...)`

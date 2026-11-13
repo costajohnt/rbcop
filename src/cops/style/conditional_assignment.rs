@@ -1,3 +1,5 @@
+use crate::helpers::const_name::const_name;
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use crate::source::Source;
 use helpers::if_node::{is_elsif, parts, Body, Else};
@@ -35,10 +37,6 @@ fn apply(c: &mut Corrector, edits: &[Edit]) {
     }
 }
 
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
-
 /// A plain `send` (not csend, no block literal).
 fn send<'pr>(n: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
     n.as_call_node().filter(|c| !is_csend(c) && c.block().is_none_or(|b| b.as_block_node().is_none()))
@@ -67,19 +65,6 @@ fn asg_type(n: &Node) -> Option<&'static str> {
             }
         }
         _ => return None,
-    })
-}
-
-/// rubocop-ast `const_name` of a namespace node.
-fn const_name(n: &Node) -> Option<String> {
-    if let Some(c) = n.as_constant_read_node() {
-        return Some(String::from_utf8_lossy(c.name().as_slice()).into_owned());
-    }
-    let p = n.as_constant_path_node()?;
-    let name = String::from_utf8_lossy(p.name()?.as_slice()).into_owned();
-    Some(match p.parent() {
-        None => name,
-        Some(ns) => format!("{}::{name}", const_name(&ns).unwrap_or_default()),
     })
 }
 

@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::helpers::parser_parent::is_top_const;
 use crate::prelude::*;
 
@@ -11,10 +12,6 @@ fn keyword_init_value<'pr>(n: &Node<'pr>) -> Option<Node<'pr>> {
     let sym = pair.key();
     let sym = sym.as_symbol_node()?;
     (sym.unescaped() == b"keyword_init").then(|| pair.value())
-}
-
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
 }
 
 impl Cop for RedundantStructKeywordInit {

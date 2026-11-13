@@ -1,10 +1,7 @@
 //! RuboCop's PatternMatchingHelp mixin (1.92): whether a node is used as (part of) a pattern.
 
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
-
-fn span(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// A pattern guard (`in pat if cond`): Prism wraps the pattern in an IfNode/UnlessNode that parser
 /// does not have. Returns the pattern it guards.

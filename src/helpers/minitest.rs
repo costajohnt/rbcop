@@ -32,10 +32,7 @@ pub fn receiverless<'pr>(call: &CallNode<'pr>, names: &[&str]) -> Option<Vec<Nod
     (call.receiver().is_none() && names.contains(&method_name(call))).then(|| send_args(call))
 }
 
-pub fn range(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
-}
+pub use crate::helpers::node_types::range;
 
 /// ArgumentRangeHelper#first_and_second_arguments_range.
 pub fn first_and_second(args: &[Node]) -> (usize, usize) {

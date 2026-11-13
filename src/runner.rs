@@ -572,165 +572,7 @@ fn investigate(
             file_error(format!("rbcop: {display}: nested more than {MAX_AST_DEPTH} levels deep, not inspected."));
             return (Vec::new(), None, Vec::new());
         }
-        let kept = |e: &ruby_prism::Diagnostic| !tolerated(e, parser_gem, cfg.target_ruby, text, &sclass_returns);
-        // A stray backslash is the parser gem's lexer error: reported, then skipped (no recovery).
-        let bare_backslash = |e: &ruby_prism::Diagnostic| {
-            let loc = e.location();
-            e.type_name() == "unexpected_token_ignore" && text.get(loc.start_offset()..loc.end_offset()) == Some("\\")
-        };
-        // `@`, `@@` or `$` without a name: the lexer's fatal "unexpected `@'" ends the parse there.
-        let fatal = |e: &ruby_prism::Diagnostic| {
-            let s = e.location().start_offset();
-            // Bytes: Prism can place an error inside a multibyte character (#250).
-            let after = text.as_bytes()[s..].iter().find(|b| !matches!(b, b'@' | b'$'));
-            match e.type_name().trim_end_matches("_3_3") {
-                "incomplete_variable_instance" | "incomplete_variable_class" => {
-                    !after.is_some_and(|c| c.is_ascii_digit())
-                }
-                "invalid_variable_global"
-                | "instance_variable_bare"
-                | "class_variable_bare"
-                | "global_variable_bare" => true,
-                _ => false,
-            }
-        };
-        let fatal_at = result.errors().filter(|e| kept(e) && fatal(e)).map(|e| e.location().start_offset()).min();
-        // A string left open at the end of the file: the lexer's fatal string_eof at its opener,
-        // whatever the parser reported before.
-        let open_literal = crate::legacy_syntax::unterminated_literal(result.errors().map(|e| e.type_name()), &tokens);
-        let open_string = open_literal.map(|o| o.1);
-        let semantic_kind = |e: &ruby_prism::Diagnostic| {
-            let (k, l) = (e.type_name(), e.location());
-            // Up to 2.5 a lonely `else` left after `useless_elses` (a second one) fails the grammar.
-            (crate::syntax::is_semantic(k)
-                && k != "string_literal_eof"
-                && !(k == "begin_lonely_else" && cfg.target_ruby < 2.6)
-                && crate::legacy_syntax::class_name_failure(k, l.start_offset(), l.end_offset(), &tokens).is_none())
-                || bare_backslash(e)
-        };
-        let seed = result
-            .errors()
-            .filter(|e| kept(e) && !semantic_kind(e) && !fatal(e) && e.type_name() != "string_literal_eof")
-            .map(|e| {
-                crate::legacy_syntax::failure_offset(
-                    e.type_name(),
-                    e.location().start_offset(),
-                    e.location().end_offset(),
-                    &tokens,
-                )
-            })
-            .min();
-        // The parser gem reports semantic errors as it reduces, so only those before its first
-        // grammar failure on Prism's syntax error.
-        let cut = seed.unwrap_or(usize::MAX);
-        let mut actions: Vec<usize> = Vec::new();
-        // Circular argument references: the simulation reports them where the parser reads them.
-        let mut circular: Vec<(usize, usize)> = Vec::new();
-        // Numbered parameters (2.7+): the parser gem's per-identifier errors come from the tree
-        // walk below, in place of Prism's; Prism's reserved-name errors stay where the walk has
-        // nothing (parameters named `_1`).
-        let numbered = if cfg.target_ruby >= 2.7 {
-            crate::syntax::numbered_parameter_errors(&result.node(), cfg.target_ruby)
-        } else {
-            Vec::new()
-        };
-        let numbered_kind = |e: &ruby_prism::Diagnostic| {
-            let k = e.type_name();
-            k.starts_with("numbered_parameter_")
-                || k == "expression_not_writable_numbered"
-                || (k == "parameter_numbered_reserved" && numbered.iter().any(|n| n.0 == e.location().start_offset()))
-        };
-        let mut semantic: Vec<_> = result
-            .errors()
-            .filter(|e| {
-                kept(e) && semantic_kind(e) && !fatal(e) && !numbered_kind(e) && e.location().start_offset() < cut
-            })
-            .filter_map(|e| {
-                let (s, end) = crate::legacy_syntax::semantic_location(
-                    e.type_name(),
-                    e.location().start_offset(),
-                    e.location().end_offset(),
-                    &tokens,
-                    text,
-                );
-                if bare_backslash(&e) {
-                    return Some((s, end, "bare backslash only allowed before newline".to_string()));
-                }
-                if e.type_name() == "parameter_circular" {
-                    circular.push((s, end));
-                    return None;
-                }
-                if e.type_name() == "regexp_parse_error"
-                    && let Some(t) = crate::legacy_syntax::invalid_regexp(e.message(), s, &tokens, text)
-                {
-                    actions.push(t.1);
-                    return Some(t);
-                }
-                let kind = crate::syntax::parser_gem_kind(e.type_name());
-                let t = crate::syntax::translate(kind, e.message(), s, end, text);
-                actions.push(t.1);
-                Some(t)
-            })
-            .collect();
-        for e in numbered.into_iter().filter(|e| e.0 < cut) {
-            actions.push(e.1);
-            semantic.push(e);
-        }
-        // Onigmo compile errors of static regexps: semantic errors too (the builder's diagnostic).
-        for e in crate::syntax::regexp_compile_errors(&result.node(), text).into_iter().filter(|e| e.0 < cut) {
-            actions.push(e.1);
-            semantic.push(e);
-        }
-        actions.sort_unstable();
-        let diags = crate::legacy_syntax::diagnostics(
-            &result.node(),
-            &tokens,
-            text,
-            cfg.target_ruby,
-            seed,
-            &actions,
-            &circular,
-        );
-        // Where racc gave up (an empty message): the lexer never gets further.
-        let stopped = diags.iter().find(|d| d.2.is_empty()).map(|d| d.0);
-        let lexed = |o: &usize| stopped.is_none_or(|s| *o <= s);
-        let (fatal_at, open_string) = (fatal_at.filter(lexed), open_string.filter(lexed));
-        // A tolerated `<<''` (ended by the end of the file) counts only on a last line without a
-        // newline, where the parser gem never starts the heredoc.
-        let heredoc_term: Vec<usize> = result
-            .errors()
-            .filter(|e| e.type_name() == "heredoc_term")
-            .filter(|e| kept(e) || !text.as_bytes()[e.location().end_offset()..].contains(&b'\n'))
-            .map(|e| e.location().start_offset())
-            .collect();
-        let heredoc = crate::legacy_syntax::unterminated_heredoc(&tokens, text, &heredoc_term).filter(|h| lexed(&h.0));
-        errors = diags
-            .into_iter()
-            .filter(|d| !d.2.is_empty())
-            .map(|(s, e, msg)| crate::syntax::translate("", &msg, s, e, text))
-            .chain(semantic)
-            .collect();
-        // Whichever stops the parser gem's lexer first (an open string before an `@` on its offset).
-        let first = [open_string.map(|s| (s, 0)), fatal_at.map(|f| (f, 1)), heredoc.as_ref().map(|h| (h.0, 2))]
-            .into_iter()
-            .flatten()
-            .min();
-        match first {
-            Some((f, 1)) => {
-                errors.retain(|e| e.0 < f);
-                errors.push((f, f + 1, format!("unexpected `{}'", text.get(f..f + 1).unwrap_or(""))));
-            }
-            Some((s, 0)) => {
-                let outer = open_literal.map_or(s, |o| o.0);
-                errors.retain(|e| e.0 < outer);
-                errors.push((s, s + 1, "unterminated string meets end of file".to_string()));
-            }
-            Some((s, _)) => {
-                errors.retain(|e| e.0 < s);
-                errors.extend(heredoc.into_iter().flat_map(|h| h.1));
-            }
-            None => {}
-        }
+        errors = parser_gem_errors(&result, &tokens, text, cfg.target_ruby, &sclass_returns);
     }
     // Pattern variable names the parser gem's builder rejects, only reached when Prism found no
     // error (a tree walk, so only on trees the depth check below accepts; patterns need `in`/`=>`).
@@ -782,57 +624,7 @@ fn investigate(
     // (it reuses the processed source).
     let warn = !matches!(redundant, Redundant::Only(_));
     if !errors.is_empty() {
-        // ponytail: without a tree there are no statement bounds, so a detached disable-next or
-        // enable-next warns here where RuboCop's would not.
-        if warn && src.text.contains("rubocop") {
-            for c in &src.comments {
-                if let Some(d) = directives::parse(src.slice(c.start, c.end)).filter(|d| d.mode != "pop") {
-                    directives::warn_unqualified(&src, &d);
-                }
-            }
-        }
-        // RuboCop runs only Lint/Syntax on a file that does not parse, one offense per diagnostic,
-        // and does so even under --only (which always lists it); not under -x or the style-guide
-        // filter, which leave it out.
-        if !selected("Lint/Syntax") || !cfg.relevant(cfg.cop("Lint/Syntax"), path) {
-            return (Vec::new(), None, Vec::new());
-        }
-        let ruby = format_ruby_version(cfg.target_ruby);
-        // --disable-uncorrectable: status :corrected_with_todo (no corrector applies to a file that does
-        // not parse).
-        let todo = autocorrect::todo(false, cfg.cop("Lint/Syntax"), mode);
-        let mut out: Vec<Offense> = errors
-            .into_iter()
-            .map(|(start, end, msg)| Offense {
-                start,
-                end,
-                cop: "Lint/Syntax",
-                // Lint/Syntax#add_offense_from_diagnostic: no parser line under LSP (--editor-mode).
-                message: if crate::helpers::lsp::enabled() {
-                    msg
-                } else {
-                    format!(
-                        "{msg}\n(Using Ruby {ruby} parser; configure using `TargetRubyVersion` parameter, under `AllCops`)"
-                    )
-                },
-                severity: Severity::Fatal,
-                correctable: false,
-                global: false,
-                corrected: todo,
-                source: None,
-                disabled: false,
-                justification: None,
-                todo,
-                edits: None,
-            })
-            .collect();
-        // The parser translation layer reports one diagnostic per range; Prism can stack two
-        // (`unexpected '+'` and `expected a receiver for unary +`), and only the first survives.
-        let mut seen = std::collections::HashSet::new();
-        out.retain(|o| seen.insert((o.start, o.end)));
-        // Then Runner's uniq (same position and message, any range), as for every cop.
-        dedup(&mut out);
-        return (out, None, Vec::new());
+        return (lint_syntax_offenses(errors, &src, warn, selected, cfg, path, mode), None, Vec::new());
     }
 
     // Team#roundup_relevant_cops asks CommentConfig#opt_in_cops before any cop runs; its `no
@@ -1114,6 +906,227 @@ fn investigate(
         });
     }
     (out, corrector, disabled)
+}
+
+/// Lint/Syntax on a file that does not parse: RuboCop runs only it, one offense per diagnostic.
+fn lint_syntax_offenses(
+    errors: Vec<(usize, usize, String)>,
+    src: &Source,
+    warn: bool,
+    selected: &dyn Fn(&str) -> bool,
+    cfg: &Resolved,
+    path: &Path,
+    mode: Option<Mode>,
+) -> Vec<Offense> {
+    // ponytail: without a tree there are no statement bounds, so a detached disable-next or
+    // enable-next warns here where RuboCop's would not.
+    if warn && src.text.contains("rubocop") {
+        for c in &src.comments {
+            if let Some(d) = directives::parse(src.slice(c.start, c.end)).filter(|d| d.mode != "pop") {
+                directives::warn_unqualified(src, &d);
+            }
+        }
+    }
+    // RuboCop runs only Lint/Syntax on a file that does not parse, one offense per diagnostic,
+    // and does so even under --only (which always lists it); not under -x or the style-guide
+    // filter, which leave it out.
+    if !selected("Lint/Syntax") || !cfg.relevant(cfg.cop("Lint/Syntax"), path) {
+        return Vec::new();
+    }
+    let ruby = format_ruby_version(cfg.target_ruby);
+    // --disable-uncorrectable: status :corrected_with_todo (no corrector applies to a file that does
+    // not parse).
+    let todo = autocorrect::todo(false, cfg.cop("Lint/Syntax"), mode);
+    let mut out: Vec<Offense> = errors
+        .into_iter()
+        .map(|(start, end, msg)| Offense {
+            start,
+            end,
+            cop: "Lint/Syntax",
+            // Lint/Syntax#add_offense_from_diagnostic: no parser line under LSP (--editor-mode).
+            message: if crate::helpers::lsp::enabled() {
+                msg
+            } else {
+                format!(
+                    "{msg}\n(Using Ruby {ruby} parser; configure using `TargetRubyVersion` parameter, under `AllCops`)"
+                )
+            },
+            severity: Severity::Fatal,
+            correctable: false,
+            global: false,
+            corrected: todo,
+            source: None,
+            disabled: false,
+            justification: None,
+            todo,
+            edits: None,
+        })
+        .collect();
+    // The parser translation layer reports one diagnostic per range; Prism can stack two
+    // (`unexpected '+'` and `expected a receiver for unary +`), and only the first survives.
+    let mut seen = std::collections::HashSet::new();
+    out.retain(|o| seen.insert((o.start, o.end)));
+    // Then Runner's uniq (same position and message, any range), as for every cop.
+    dedup(&mut out);
+    out
+}
+
+/// The parser gem's syntax errors on a source Prism parsed (below Ruby 3.3): the grammar failure
+/// the parser gem reaches, the semantic errors before it, and where its lexer stops.
+fn parser_gem_errors(
+    result: &ruby_prism::ParseResult,
+    tokens: &[ruby_prism::Token],
+    text: &str,
+    target_ruby: f64,
+    sclass_returns: &[usize],
+) -> Vec<(usize, usize, String)> {
+    let kept = |e: &ruby_prism::Diagnostic| !tolerated(e, true, target_ruby, text, sclass_returns);
+    // A stray backslash is the parser gem's lexer error: reported, then skipped (no recovery).
+    let bare_backslash = |e: &ruby_prism::Diagnostic| {
+        let loc = e.location();
+        e.type_name() == "unexpected_token_ignore" && text.get(loc.start_offset()..loc.end_offset()) == Some("\\")
+    };
+    // `@`, `@@` or `$` without a name: the lexer's fatal "unexpected `@'" ends the parse there.
+    let fatal = |e: &ruby_prism::Diagnostic| {
+        let s = e.location().start_offset();
+        // Bytes: Prism can place an error inside a multibyte character (#250).
+        let after = text.as_bytes()[s..].iter().find(|b| !matches!(b, b'@' | b'$'));
+        match e.type_name().trim_end_matches("_3_3") {
+            "incomplete_variable_instance" | "incomplete_variable_class" => !after.is_some_and(|c| c.is_ascii_digit()),
+            "invalid_variable_global" | "instance_variable_bare" | "class_variable_bare" | "global_variable_bare" => {
+                true
+            }
+            _ => false,
+        }
+    };
+    let fatal_at = result.errors().filter(|e| kept(e) && fatal(e)).map(|e| e.location().start_offset()).min();
+    // A string left open at the end of the file: the lexer's fatal string_eof at its opener,
+    // whatever the parser reported before.
+    let open_literal = crate::legacy_syntax::unterminated_literal(result.errors().map(|e| e.type_name()), tokens);
+    let open_string = open_literal.map(|o| o.1);
+    let semantic_kind = |e: &ruby_prism::Diagnostic| {
+        let (k, l) = (e.type_name(), e.location());
+        // Up to 2.5 a lonely `else` left after `useless_elses` (a second one) fails the grammar.
+        (crate::syntax::is_semantic(k)
+            && k != "string_literal_eof"
+            && !(k == "begin_lonely_else" && target_ruby < 2.6)
+            && crate::legacy_syntax::class_name_failure(k, l.start_offset(), l.end_offset(), tokens).is_none())
+            || bare_backslash(e)
+    };
+    let seed = result
+        .errors()
+        .filter(|e| kept(e) && !semantic_kind(e) && !fatal(e) && e.type_name() != "string_literal_eof")
+        .map(|e| {
+            crate::legacy_syntax::failure_offset(
+                e.type_name(),
+                e.location().start_offset(),
+                e.location().end_offset(),
+                tokens,
+            )
+        })
+        .min();
+    // The parser gem reports semantic errors as it reduces, so only those before its first
+    // grammar failure on Prism's syntax error.
+    let cut = seed.unwrap_or(usize::MAX);
+    let mut actions: Vec<usize> = Vec::new();
+    // Circular argument references: the simulation reports them where the parser reads them.
+    let mut circular: Vec<(usize, usize)> = Vec::new();
+    // Numbered parameters (2.7+): the parser gem's per-identifier errors come from the tree
+    // walk below, in place of Prism's; Prism's reserved-name errors stay where the walk has
+    // nothing (parameters named `_1`).
+    let numbered = if target_ruby >= 2.7 {
+        crate::syntax::numbered_parameter_errors(&result.node(), target_ruby)
+    } else {
+        Vec::new()
+    };
+    let numbered_kind = |e: &ruby_prism::Diagnostic| {
+        let k = e.type_name();
+        k.starts_with("numbered_parameter_")
+            || k == "expression_not_writable_numbered"
+            || (k == "parameter_numbered_reserved" && numbered.iter().any(|n| n.0 == e.location().start_offset()))
+    };
+    let mut semantic: Vec<_> = result
+        .errors()
+        .filter(|e| kept(e) && semantic_kind(e) && !fatal(e) && !numbered_kind(e) && e.location().start_offset() < cut)
+        .filter_map(|e| {
+            let (s, end) = crate::legacy_syntax::semantic_location(
+                e.type_name(),
+                e.location().start_offset(),
+                e.location().end_offset(),
+                tokens,
+                text,
+            );
+            if bare_backslash(&e) {
+                return Some((s, end, "bare backslash only allowed before newline".to_string()));
+            }
+            if e.type_name() == "parameter_circular" {
+                circular.push((s, end));
+                return None;
+            }
+            if e.type_name() == "regexp_parse_error"
+                && let Some(t) = crate::legacy_syntax::invalid_regexp(e.message(), s, tokens, text)
+            {
+                actions.push(t.1);
+                return Some(t);
+            }
+            let kind = crate::syntax::parser_gem_kind(e.type_name());
+            let t = crate::syntax::translate(kind, e.message(), s, end, text);
+            actions.push(t.1);
+            Some(t)
+        })
+        .collect();
+    for e in numbered.into_iter().filter(|e| e.0 < cut) {
+        actions.push(e.1);
+        semantic.push(e);
+    }
+    // Onigmo compile errors of static regexps: semantic errors too (the builder's diagnostic).
+    for e in crate::syntax::regexp_compile_errors(&result.node(), text).into_iter().filter(|e| e.0 < cut) {
+        actions.push(e.1);
+        semantic.push(e);
+    }
+    actions.sort_unstable();
+    let diags = crate::legacy_syntax::diagnostics(&result.node(), tokens, text, target_ruby, seed, &actions, &circular);
+    // Where racc gave up (an empty message): the lexer never gets further.
+    let stopped = diags.iter().find(|d| d.2.is_empty()).map(|d| d.0);
+    let lexed = |o: &usize| stopped.is_none_or(|s| *o <= s);
+    let (fatal_at, open_string) = (fatal_at.filter(lexed), open_string.filter(lexed));
+    // A tolerated `<<''` (ended by the end of the file) counts only on a last line without a
+    // newline, where the parser gem never starts the heredoc.
+    let heredoc_term: Vec<usize> = result
+        .errors()
+        .filter(|e| e.type_name() == "heredoc_term")
+        .filter(|e| kept(e) || !text.as_bytes()[e.location().end_offset()..].contains(&b'\n'))
+        .map(|e| e.location().start_offset())
+        .collect();
+    let heredoc = crate::legacy_syntax::unterminated_heredoc(tokens, text, &heredoc_term).filter(|h| lexed(&h.0));
+    let mut errors: Vec<(usize, usize, String)> = diags
+        .into_iter()
+        .filter(|d| !d.2.is_empty())
+        .map(|(s, e, msg)| crate::syntax::translate("", &msg, s, e, text))
+        .chain(semantic)
+        .collect();
+    // Whichever stops the parser gem's lexer first (an open string before an `@` on its offset).
+    let first = [open_string.map(|s| (s, 0)), fatal_at.map(|f| (f, 1)), heredoc.as_ref().map(|h| (h.0, 2))]
+        .into_iter()
+        .flatten()
+        .min();
+    match first {
+        Some((f, 1)) => {
+            errors.retain(|e| e.0 < f);
+            errors.push((f, f + 1, format!("unexpected `{}'", text.get(f..f + 1).unwrap_or(""))));
+        }
+        Some((s, 0)) => {
+            let outer = open_literal.map_or(s, |o| o.0);
+            errors.retain(|e| e.0 < outer);
+            errors.push((s, s + 1, "unterminated string meets end of file".to_string()));
+        }
+        Some((s, _)) => {
+            errors.retain(|e| e.0 < s);
+            errors.extend(heredoc.into_iter().flat_map(|h| h.1));
+        }
+        None => {}
+    }
+    errors
 }
 
 thread_local! {

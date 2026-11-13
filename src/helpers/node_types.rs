@@ -2,6 +2,22 @@
 
 use crate::prelude::*;
 
+/// A node's `(start_offset, end_offset)`: parser's `node.source_range`.
+pub fn range(node: &Node) -> (usize, usize) {
+    let l = node.location();
+    (l.start_offset(), l.end_offset())
+}
+
+/// rubocop-ast `hash_type?`: a `{}` hash or keyword arguments (both parser `hash`).
+pub fn is_hash(node: &Node) -> bool {
+    matches!(kind::of(node), kind::HASH_NODE | kind::KEYWORD_HASH_NODE)
+}
+
+/// A parser `send`/`csend`: a call without a literal `{}`/`do` block (that is a parser `block`).
+pub fn plain_call<'pr>(node: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
+    node.as_call_node().filter(|c| c.block().is_none_or(|b| b.as_block_node().is_none()))
+}
+
 /// rubocop-ast `assignment?`: (lvasgn ivasgn cvasgn gvasgn casgn masgn op_asgn or_asgn and_asgn),
 /// plus `setter_method?` (its alias on send nodes: `a.b = x`, `a[i] = x`).
 pub fn is_assignment(node: &Node) -> bool {

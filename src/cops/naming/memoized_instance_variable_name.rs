@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 
 pub const NAME: &str = "Naming/MemoizedInstanceVariableName";
@@ -5,11 +6,6 @@ pub static COP: MemoizedInstanceVariableName = MemoizedInstanceVariableName;
 pub struct MemoizedInstanceVariableName;
 
 const INITIALIZE_METHODS: &[&str] = &["initialize", "initialize_clone", "initialize_copy", "initialize_dup"];
-
-fn range(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
-}
 
 /// find_definition: the nearest `def`/`defs`/`define_method(:x) do` ancestor: (method name, body).
 fn find_definition<'pr>(ancestors: &[Node<'pr>]) -> Option<(String, Option<Node<'pr>>)> {

@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use helpers::node_equality::same;
 use helpers::parser_parent::parser_parent_index;
@@ -9,11 +10,6 @@ pub static COP: PartitionInsteadOfDoubleSelect = PartitionInsteadOfDoubleSelect;
 pub struct PartitionInsteadOfDoubleSelect;
 
 const SELECT: &[&str] = &["select", "filter", "find_all"];
-
-fn range(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
-}
 
 #[derive(Clone, Copy, PartialEq, Eq)]
 enum BlockType {

@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
 use crate::prelude::*;
 use ruby_prism::Visit;
@@ -7,10 +8,6 @@ pub static COP: CombinableDefined = CombinableDefined;
 pub struct CombinableDefined;
 
 type R = (usize, usize);
-
-fn range(n: &Node) -> R {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// A term: (its range, whether it is `defined?`, the defined subject (const or call) range and
 /// its namespace/receiver range, whether it is the last child of its `and` parent).

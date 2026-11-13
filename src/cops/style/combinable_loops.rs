@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
 use crate::prelude::*;
 use crate::source::Source;
@@ -11,10 +12,6 @@ type R = (usize, usize);
 
 /// Corrector edits: a removal (empty text) or an insertion before the range.
 type Edits = Vec<(R, &'static str)>;
-
-fn range(n: &Node) -> R {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 fn loc(l: &ruby_prism::Location) -> R {
     (l.start_offset(), l.end_offset())

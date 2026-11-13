@@ -1,4 +1,5 @@
 use crate::helpers::const_name::const_name;
+use crate::helpers::node_types::is_hash;
 use crate::helpers::parser_parent::{is_operator_keyword, is_ternary, parser_parent};
 use crate::prelude::*;
 use helpers::select_by::plain_send;
@@ -143,10 +144,6 @@ impl Cop for RaiseArgs {
 /// `ignore_node`d (corrected) raise calls.
 #[derive(Default)]
 struct Ignored(Vec<(usize, usize)>);
-
-fn is_hash(node: &Node) -> bool {
-    matches!(kind::of(node), kind::HASH_NODE | kind::KEYWORD_HASH_NODE)
-}
 
 /// `use_new_method?`: a `send` of `new` with a receiver, and that receiver.
 fn new_call<'pr>(node: &Node<'pr>) -> Option<(ruby_prism::CallNode<'pr>, Node<'pr>)> {

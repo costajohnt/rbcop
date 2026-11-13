@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 
 pub const NAME: &str = "Style/MinMax";
@@ -11,10 +12,6 @@ fn receiver<'pr>(n: &Node<'pr>, name: &str) -> Option<Node<'pr>> {
         return None;
     }
     c.receiver()
-}
-
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
 }
 
 impl Cop for MinMax {

@@ -1,4 +1,5 @@
 use crate::helpers::alignment::enabled_cop_str;
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 use crate::source::Source;
 
@@ -35,11 +36,6 @@ struct Elem {
     key: (usize, usize),
     op: (usize, usize),
     value: (usize, usize),
-}
-
-fn span(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
 }
 
 fn elem(n: &Node) -> Elem {

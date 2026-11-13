@@ -1,5 +1,6 @@
 use crate::helpers::alignment as alignment;
 use crate::helpers::multiline_expression_indentation::{Ctx, indentation};
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 
 pub const NAME: &str = "Layout/MultilineOperationIndentation";
@@ -10,11 +11,6 @@ const OPERATORS: &[&str] = &[
     "|", "^", "&", "<=>", "==", "===", "=~", ">", ">=", "<", "<=", "<<", ">>", "+", "-", "*", "/", "%", "**", "~",
     "+@", "-@", "!@", "~@", "[]", "[]=", "!", "!=", "!~", "`",
 ];
-
-fn span(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
-}
 
 impl Cop for MultilineOperationIndentation {
     fn correctable(&self) -> bool {

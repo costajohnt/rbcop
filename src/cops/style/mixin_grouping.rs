@@ -1,13 +1,10 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use ruby_prism::CallNode;
 
 pub const NAME: &str = "Style/MixinGrouping";
 pub static COP: MixinGrouping = MixinGrouping;
 pub struct MixinGrouping;
-
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// A direct-child `send` macro (receiver nil, no literal block).
 fn macro_send<'pr>(n: &Node<'pr>) -> Option<CallNode<'pr>> {

@@ -1,4 +1,5 @@
 use crate::helpers::node_types::is_operator_method;
+use crate::helpers::node_types::plain_call;
 use crate::prelude::*;
 
 pub const NAME: &str = "Style/TernaryParentheses";
@@ -15,11 +16,6 @@ fn paren_children<'pr>(node: &Node<'pr>) -> Option<Vec<Node<'pr>>> {
             None => vec![b],
         },
     })
-}
-
-/// A call that is a parser send/csend (not a block).
-fn plain_call<'pr>(node: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
-    node.as_call_node().filter(|c| c.block().is_none_or(|b| b.as_block_node().is_none()))
 }
 
 /// SafeAssignment#safe_assignment?: `(begin {equals_asgn? #setter_method?})`.

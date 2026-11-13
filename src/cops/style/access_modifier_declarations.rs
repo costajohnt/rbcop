@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 use ruby_prism::CallNode;
 
@@ -30,10 +31,6 @@ fn bound(src: &crate::source::Source, stmts: &[Node], i: usize, header: Bound) -
     }
     let prev_end = stmts[i - 1].location().end_offset();
     (prev_end, Some(src.line_of(prev_end)))
-}
-
-fn span(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
 }
 
 /// Where comments leading the first statement of a body may start: after the header line.

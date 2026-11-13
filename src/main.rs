@@ -1833,68 +1833,13 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     store.set_color(global);
     let cwd = store.cwd().to_path_buf();
     let pwd = cwd.display().to_string();
-    // CLI#warn_if_cache_root_changed: remote configs loaded so far were cached under the early root
-    // (the top-level config's, or the `-c` file's without `--cache-root`), not the one the resolved
-    // config names, which later remote configs use.
     let configured_root =
         cli.cache_root.clone().or_else(|| pwd_config.all_cops().get("CacheRootDirectory")?.as_string());
     store.set_cache_root(configured_root.clone());
-    if let (Some(early), Some(desired)) = (cache::root_dir(early_root), cache::root_dir(configured_root.clone())) {
-        let (early, desired) = (early.join("rubocop_cache"), desired.join("rubocop_cache"));
-        let same =
-            |a: &Path, b: &Path| a.exists() && b.exists() && fs::canonicalize(a).ok() == fs::canonicalize(b).ok();
-        if early != desired && !same(&early, &desired) {
-            eprintln!(
-                "{}",
-                formatter::Paint(parse_color).yellow(&format!(
-                    "Warning: Remote configuration cache files were stored in `{}` because a desired cache root \
-                     (`{}`) was not set at the top level. Consider setting `AllCops: CacheRootDirectory` in your \
-                     toplevel configuration file, using the `RUBOCOP_CACHE_ROOT` environment variable, or using \
-                     CLI options.",
-                    early.display(),
-                    desired.display()
-                ))
-            );
-        }
-    }
+    warn_if_cache_root_changed(parse_color, early_root, configured_root.clone());
 
-    // CLI#handle_exiting_options
-    if cli.version {
-        println!("{RUBOCOP_VERSION}");
-        return Ok(0);
-    }
-    if cli.verbose_version {
-        store.debug_pwd_yaml();
-        print!("{}", rbcop::config::take_debug());
-        println!("{}", verbose_version(&pwd_config));
-        for line in store.extension_versions() {
-            println!("{line}");
-        }
-        return Ok(0);
-    }
-    if let Some(patterns) = &cli.show_cops {
-        show_cops(patterns, &pwd_config, &pwd);
-        // Checked after printing; a wildcard is a pattern, not a name.
-        explain::validate_cop_names(patterns.iter().map(String::as_str).filter(|p| !p.contains('*')))?;
-        return Ok(0);
-    }
-    if let Some(path) = &cli.list_enabled_for {
-        // ConfigStore#for: a directory's own config, else the file's directory's.
-        let abs = expand_path(Path::new(path), &cwd);
-        let dir = if abs.is_dir() { abs } else { abs.parent().map_or(cwd.clone(), Path::to_path_buf) };
-        list_enabled_cops_for(&*store.for_dir(&dir)?);
-        return Ok(0);
-    }
-    if let Some(cops) = &cli.show_docs_url {
-        show_docs_url(cops, &pwd_config);
-        explain::validate_cop_names(cops.iter().map(String::as_str))?;
-        return Ok(0);
-    }
-    if let Some(cops) = &cli.explain {
-        let (text, checked) = explain::explain(cops, &pwd_config, &cwd);
-        print!("{text}");
-        checked?;
-        return Ok(0);
+    if let Some(status) = handle_exiting_options(&cli, &mut store, &pwd_config, &cwd, &pwd)? {
+        return Ok(status);
     }
     if cli.lsp {
         return lsp::serve(store, pwd_config);
@@ -1902,51 +1847,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     if cli.mcp {
         return mcp::serve(store, pwd_config);
     }
-    // CLI#validate_options_vs_config
-    if cli.parallel == Some(true) && !pwd_config.all_cops().truthy("UseCache") {
-        return Err("-P/--parallel uses caching to speed up execution, so combining with AllCops: UseCache: false \
-                    is not allowed."
-            .into());
-    }
-    // CLI#parallel_by_default!: with only these options given, RuboCop inspects in parallel.
-    const DEFAULT_PARALLEL_OPTIONS: &[&str] = &[
-        "color",
-        "config",
-        "debug",
-        "display_style_guide",
-        "display_time",
-        "display_only_fail_level_offenses",
-        "display_only_failed",
-        "editor_mode",
-        "except",
-        "extra_details",
-        "fail_level",
-        "fix_layout",
-        "format",
-        "formatters",
-        "ignore_disable_comments",
-        "lint",
-        "max_offenses_per_cop",
-        "only",
-        "only_guide_cops",
-        "out",
-        "preview",
-        "require",
-        "safe",
-        "autocorrect",
-        "safe_autocorrect",
-        "autocorrect_all",
-    ];
-    let mut parallel = cli.parallel == Some(true);
-    if !parallel
-        && cli.keys.iter().all(|k| DEFAULT_PARALLEL_OPTIONS.contains(&k.as_str()))
-        && pwd_config.all_cops().get("UseCache") != Some(&rbcop::config::value::Value::Bool(false))
-    {
-        if cli.debug {
-            println!("Use parallel by default.");
-        }
-        parallel = true;
-    }
+    let parallel = parallel_by_default(&cli, &pwd_config)?;
     // AutoGenerateConfig runs after CLI#report_pending_cops.
     if phase.is_none() && !cli.opts.disable_pending_cops && !cli.opts.enable_pending_cops {
         report_pending_cops(&pwd_config, global);
@@ -1975,60 +1876,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
         rbcop::cop::record_edits();
     }
 
-    // Runner#find_target_files. Paths that do not exist are kept, as RuboCop keeps them, and fail
-    // when their turn to be inspected comes.
-    let mut files: Vec<PathBuf> = Vec::new();
-    let stdin_text = match &cli.stdin {
-        Some(name) => {
-            let mut buf = Vec::new();
-            std::io::stdin().read_to_end(&mut buf).map_err(|e| e.to_string())?;
-            let abs = expand_path(Path::new(name), &cwd);
-            let excluded = cli.force_exclusion && store.for_exclusion(&abs)?.file_to_exclude(&abs);
-            if !excluded {
-                files.push(abs);
-            }
-            Some(buf)
-        }
-        None => {
-            let args = if cli.paths.is_empty() { vec![PathBuf::new()] } else { cli.paths.clone() };
-            for arg in args {
-                let abs = expand_path(&arg, &cwd);
-                // A quoted glob, and a missing file under --force-exclusion or
-                // --only-recognized-file-types, go through TargetFinder (which may drop them).
-                if !arg.as_os_str().is_empty()
-                    && !abs.exists()
-                    && !arg.to_string_lossy().contains('*')
-                    && !(cli.force_exclusion || cli.only_recognized)
-                {
-                    files.push(abs);
-                    continue;
-                }
-                let one = if arg.as_os_str().is_empty() { vec![] } else { vec![arg] };
-                let mut found = targets::find(&mut store, &one, cli.force_exclusion, cli.only_recognized)?;
-                if cli.fail_fast && abs.is_dir() {
-                    // TargetFinder#order under --fail-fast: most recently modified (whole seconds) first.
-                    // ponytail: ties keep path order; Ruby's unstable sort_by may order them differently.
-                    let secs = |p: &PathBuf| {
-                        fs::metadata(p)
-                            .and_then(|m| m.modified())
-                            .ok()
-                            .and_then(|t| t.duration_since(std::time::UNIX_EPOCH).ok())
-                            .map_or(0, |d| d.as_secs())
-                    };
-                    found.sort_by_key(|p| std::cmp::Reverse(secs(p)));
-                }
-                files.extend(found);
-            }
-            let mut seen = std::collections::HashSet::new();
-            files.retain(|f| seen.insert(f.clone()));
-            // Runner#only_changed
-            if let Some(revision) = &cli.changed {
-                let changed = targets::changed(revision).map_err(|e| format!("Error: {e}"))?;
-                files.retain(|f| changed.contains(f));
-            }
-            None
-        }
-    };
+    let (files, stdin_text) = find_target_files(&cli, &mut store, &cwd)?;
     // Config loading while finding the targets (a directory's config), then each file's, printed
     // when that file's turn comes (`-d`).
     print!("{}", rbcop::config::take_debug());
@@ -2784,6 +2632,187 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
         print!("{suggestions}");
     }
     Ok(status)
+}
+
+/// CLI#warn_if_cache_root_changed: remote configs loaded so far were cached under the early root
+/// (the top-level config's, or the `-c` file's without `--cache-root`), not the one the resolved
+/// config names, which later remote configs use.
+fn warn_if_cache_root_changed(parse_color: bool, early_root: Option<String>, configured_root: Option<String>) {
+    if let (Some(early), Some(desired)) = (cache::root_dir(early_root), cache::root_dir(configured_root)) {
+        let (early, desired) = (early.join("rubocop_cache"), desired.join("rubocop_cache"));
+        let same =
+            |a: &Path, b: &Path| a.exists() && b.exists() && fs::canonicalize(a).ok() == fs::canonicalize(b).ok();
+        if early != desired && !same(&early, &desired) {
+            eprintln!(
+                "{}",
+                formatter::Paint(parse_color).yellow(&format!(
+                    "Warning: Remote configuration cache files were stored in `{}` because a desired cache root \
+                     (`{}`) was not set at the top level. Consider setting `AllCops: CacheRootDirectory` in your \
+                     toplevel configuration file, using the `RUBOCOP_CACHE_ROOT` environment variable, or using \
+                     CLI options.",
+                    early.display(),
+                    desired.display()
+                ))
+            );
+        }
+    }
+}
+
+/// CLI#handle_exiting_options: the options that print and exit before any file is inspected
+/// (`--lsp` and `--mcp` are dispatched by the caller). `Some(status)` ends the run.
+fn handle_exiting_options(
+    cli: &Cli,
+    store: &mut Store,
+    pwd_config: &Resolved,
+    cwd: &Path,
+    pwd: &str,
+) -> Result<Option<u8>, String> {
+    if cli.version {
+        println!("{RUBOCOP_VERSION}");
+        return Ok(Some(0));
+    }
+    if cli.verbose_version {
+        store.debug_pwd_yaml();
+        print!("{}", rbcop::config::take_debug());
+        println!("{}", verbose_version(pwd_config));
+        for line in store.extension_versions() {
+            println!("{line}");
+        }
+        return Ok(Some(0));
+    }
+    if let Some(patterns) = &cli.show_cops {
+        show_cops(patterns, pwd_config, pwd);
+        // Checked after printing; a wildcard is a pattern, not a name.
+        explain::validate_cop_names(patterns.iter().map(String::as_str).filter(|p| !p.contains('*')))?;
+        return Ok(Some(0));
+    }
+    if let Some(path) = &cli.list_enabled_for {
+        // ConfigStore#for: a directory's own config, else the file's directory's.
+        let abs = expand_path(Path::new(path), cwd);
+        let dir = if abs.is_dir() { abs } else { abs.parent().map_or(cwd.to_path_buf(), Path::to_path_buf) };
+        list_enabled_cops_for(&*store.for_dir(&dir)?);
+        return Ok(Some(0));
+    }
+    if let Some(cops) = &cli.show_docs_url {
+        show_docs_url(cops, pwd_config);
+        explain::validate_cop_names(cops.iter().map(String::as_str))?;
+        return Ok(Some(0));
+    }
+    if let Some(cops) = &cli.explain {
+        let (text, checked) = explain::explain(cops, pwd_config, cwd);
+        print!("{text}");
+        checked?;
+        return Ok(Some(0));
+    }
+    Ok(None)
+}
+
+/// CLI#validate_options_vs_config, then CLI#parallel_by_default!: whether to inspect in parallel.
+fn parallel_by_default(cli: &Cli, pwd_config: &Resolved) -> Result<bool, String> {
+    // CLI#validate_options_vs_config
+    if cli.parallel == Some(true) && !pwd_config.all_cops().truthy("UseCache") {
+        return Err("-P/--parallel uses caching to speed up execution, so combining with AllCops: UseCache: false \
+                    is not allowed."
+            .into());
+    }
+    // CLI#parallel_by_default!: with only these options given, RuboCop inspects in parallel.
+    const DEFAULT_PARALLEL_OPTIONS: &[&str] = &[
+        "color",
+        "config",
+        "debug",
+        "display_style_guide",
+        "display_time",
+        "display_only_fail_level_offenses",
+        "display_only_failed",
+        "editor_mode",
+        "except",
+        "extra_details",
+        "fail_level",
+        "fix_layout",
+        "format",
+        "formatters",
+        "ignore_disable_comments",
+        "lint",
+        "max_offenses_per_cop",
+        "only",
+        "only_guide_cops",
+        "out",
+        "preview",
+        "require",
+        "safe",
+        "autocorrect",
+        "safe_autocorrect",
+        "autocorrect_all",
+    ];
+    let mut parallel = cli.parallel == Some(true);
+    if !parallel
+        && cli.keys.iter().all(|k| DEFAULT_PARALLEL_OPTIONS.contains(&k.as_str()))
+        && pwd_config.all_cops().get("UseCache") != Some(&rbcop::config::value::Value::Bool(false))
+    {
+        if cli.debug {
+            println!("Use parallel by default.");
+        }
+        parallel = true;
+    }
+    Ok(parallel)
+}
+
+/// Runner#find_target_files, plus the `--stdin` source when given. Paths that do not exist are
+/// kept, as RuboCop keeps them, and fail when their turn to be inspected comes.
+fn find_target_files(cli: &Cli, store: &mut Store, cwd: &Path) -> Result<(Vec<PathBuf>, Option<Vec<u8>>), String> {
+    let mut files: Vec<PathBuf> = Vec::new();
+    let stdin_text = match &cli.stdin {
+        Some(name) => {
+            let mut buf = Vec::new();
+            std::io::stdin().read_to_end(&mut buf).map_err(|e| e.to_string())?;
+            let abs = expand_path(Path::new(name), cwd);
+            let excluded = cli.force_exclusion && store.for_exclusion(&abs)?.file_to_exclude(&abs);
+            if !excluded {
+                files.push(abs);
+            }
+            Some(buf)
+        }
+        None => {
+            let args = if cli.paths.is_empty() { vec![PathBuf::new()] } else { cli.paths.clone() };
+            for arg in args {
+                let abs = expand_path(&arg, cwd);
+                // A quoted glob, and a missing file under --force-exclusion or
+                // --only-recognized-file-types, go through TargetFinder (which may drop them).
+                if !arg.as_os_str().is_empty()
+                    && !abs.exists()
+                    && !arg.to_string_lossy().contains('*')
+                    && !(cli.force_exclusion || cli.only_recognized)
+                {
+                    files.push(abs);
+                    continue;
+                }
+                let one = if arg.as_os_str().is_empty() { vec![] } else { vec![arg] };
+                let mut found = targets::find(store, &one, cli.force_exclusion, cli.only_recognized)?;
+                if cli.fail_fast && abs.is_dir() {
+                    // TargetFinder#order under --fail-fast: most recently modified (whole seconds) first.
+                    // ponytail: ties keep path order; Ruby's unstable sort_by may order them differently.
+                    let secs = |p: &PathBuf| {
+                        fs::metadata(p)
+                            .and_then(|m| m.modified())
+                            .ok()
+                            .and_then(|t| t.duration_since(std::time::UNIX_EPOCH).ok())
+                            .map_or(0, |d| d.as_secs())
+                    };
+                    found.sort_by_key(|p| std::cmp::Reverse(secs(p)));
+                }
+                files.extend(found);
+            }
+            let mut seen = std::collections::HashSet::new();
+            files.retain(|f| seen.insert(f.clone()));
+            // Runner#only_changed
+            if let Some(revision) = &cli.changed {
+                let changed = targets::changed(revision).map_err(|e| format!("Error: {e}"))?;
+                files.retain(|f| changed.contains(f));
+            }
+            None
+        }
+    };
+    Ok((files, stdin_text))
 }
 
 /// `--report-unused-todo-entries`: TodoAudit. Each `Exclude` entry of `.rubocop_todo.yml` whose

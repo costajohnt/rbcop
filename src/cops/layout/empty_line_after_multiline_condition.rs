@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use helpers::rspec::right_sibling;
 
@@ -6,11 +7,6 @@ pub static COP: EmptyLineAfterMultilineCondition = EmptyLineAfterMultilineCondit
 pub struct EmptyLineAfterMultilineCondition;
 
 const MSG: &str = "Use empty line after multiline condition.";
-
-fn range(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
-}
 
 /// `processed_source[line].blank?` (`line` is 1-based, so this is the following line).
 fn next_line_empty(cx: &Cx, line: usize) -> bool {

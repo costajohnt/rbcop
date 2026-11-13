@@ -1,4 +1,6 @@
 use crate::helpers::node_equality::same;
+use crate::helpers::node_types::plain_call;
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use ruby_prism::{CallNode, Visit};
 
@@ -8,19 +10,9 @@ pub struct HashEachMethods;
 
 const ARRAY_CONVERTER_METHODS: &[&str] = &["assoc", "chunk", "flatten", "rassoc", "sort", "sort_by", "to_a"];
 
-fn range(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
-}
-
 /// rubocop-ast `receiver` on any node: only calls (and blocks, via their call) have one.
 fn parser_receiver<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
     node.as_call_node()?.receiver()
-}
-
-/// A call without an attached `{}`/`do` block (a parser `send`/`csend`, not a `block`).
-fn plain_call<'pr>(node: &Node<'pr>) -> Option<CallNode<'pr>> {
-    node.as_call_node().filter(|c| c.block().is_none_or(|b| b.as_block_node().is_none()))
 }
 
 /// `(call _ ${:keys :values})` with no arguments: the method name.

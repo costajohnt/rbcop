@@ -1,3 +1,5 @@
+use crate::helpers::node_types::is_hash;
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 
 pub const NAME: &str = "Rails/RedundantPresenceValidationOnBelongsTo";
@@ -5,10 +7,6 @@ pub static COP: RedundantPresenceValidationOnBelongsTo = RedundantPresenceValida
 pub struct RedundantPresenceValidationOnBelongsTo;
 
 const NON_VALIDATION_OPTIONS: &[&str] = &["if", "unless", "on", "allow_blank", "allow_nil", "strict"];
-
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// A pair `(pair (sym key) _)`'s key name.
 fn pair_key(p: &ruby_prism::AssocNode) -> Option<String> {
@@ -19,10 +17,6 @@ fn pair_key(p: &ruby_prism::AssocNode) -> Option<String> {
 fn belongs_to<'pr>(n: &Node<'pr>) -> Option<Vec<Node<'pr>>> {
     let c = helpers::rails::send_node(n)?;
     helpers::rails::is_command(&c, "belongs_to").then(|| send_args(&c))
-}
-
-fn is_hash(n: &Node) -> bool {
-    helpers::rails::hash_elements(n).is_some()
 }
 
 fn has_pair(hash: &Node, f: impl Fn(&str, &Node) -> bool) -> bool {

@@ -1,5 +1,6 @@
 use crate::helpers::documentation_comment::{comments_taken_by_ancestor, documentation_comment, enclosing_start};
 use crate::helpers::comment_association::leading;
+use crate::helpers::node_types::range;
 use crate::helpers::parser_parent::parser_parent_index;
 use crate::prelude::*;
 use crate::source::Source;
@@ -32,10 +33,6 @@ type NodeSpans = (Vec<usize>, Vec<(usize, usize)>);
 #[derive(Default)]
 struct State {
     ranges: Option<NodeSpans>,
-}
-
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
 }
 
 /// Comment::Associator, approximated from node ranges: the comments of the node at `r` that a

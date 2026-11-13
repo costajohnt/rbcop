@@ -59,9 +59,11 @@ impl Cop for Example {
 - Severity, Enabled, Include/Exclude, `# rubocop:disable` and `--only` are handled by the runner.
 - Regexes go in `static X: LazyLock<Regex>`; never compile in a loop. Keep `kinds()` narrow.
 - Shared logic from RuboCop mixins goes in `src/helpers/<mixin_snake>.rs` (auto-registered; use as
-  `helpers::<file>::fn`). Check what exists there first. Add new files freely; in an existing helper
-  file only append functions. Do not edit runner, config, cop.rs, other cops, or build.rs; if you need
-  infrastructure, put it in your cop or a helper and say so in your report.
+  `helpers::<file>::fn`). Check what exists there first and reuse it rather than copying it into
+  your cop: `helpers::node_types` has `range` (a node's offsets), `is_hash` and `plain_call`,
+  `helpers::const_name` has `const_name`. When two cops need the same small function, move it to a
+  helper and have both use it. Changes to runner, config or cop.rs belong in their own commit with a
+  reason in the message.
 
 ## Autocorrect
 

@@ -1,4 +1,5 @@
 use crate::helpers::format_string::{format_sequences, sequence_parts};
+use crate::helpers::node_types::is_hash;
 use crate::helpers::parser_parent::is_top_const;
 use crate::helpers::ruby_string::float_to_s;
 use crate::prelude::*;
@@ -139,10 +140,6 @@ fn splatted(node: &Node) -> bool {
         }
         _ => false,
     }
-}
-
-fn is_hash(node: &Node) -> bool {
-    matches!(node, Node::HashNode { .. } | Node::KeywordHashNode { .. })
 }
 
 /// `node.each_descendant(:dstr, :dsym).any?` over the parser send node.
