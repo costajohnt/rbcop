@@ -207,9 +207,7 @@ mod omit {
         }
     }
 
-    fn span(n: &Node) -> (usize, usize) {
-        (n.location().start_offset(), n.location().end_offset())
-    }
+    use crate::helpers::node_types::range as span;
 
     fn is_conditional(k: usize) -> bool {
         matches!(

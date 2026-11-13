@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use helpers::parser_parent::parser_parent_index;
 
@@ -20,10 +21,6 @@ const RAISING_FINDER_METHODS: &[&str] = &["find", "find_by!", "find_sole_by"];
 /// Ranges of the nodes already reported (ignore_node); their descendants are skipped.
 #[derive(Default)]
 struct Ignored(Vec<(usize, usize)>);
-
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// (send nil? :params)
 fn is_params(n: &Node) -> bool {

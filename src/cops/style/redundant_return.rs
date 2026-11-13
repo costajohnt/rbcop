@@ -1,14 +1,10 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
 
 pub const NAME: &str = "Style/RedundantReturn";
 pub static COP: RedundantReturn = RedundantReturn;
 pub struct RedundantReturn;
-
-fn range(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
-}
 
 impl Cop for RedundantReturn {
     fn correctable(&self) -> bool {

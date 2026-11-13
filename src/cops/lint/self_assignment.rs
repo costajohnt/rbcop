@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use crate::helpers::comment_association;
 use crate::source::Source;
@@ -105,11 +106,6 @@ fn annotation_target(node: &Node) -> (Option<(usize, usize)>, bool) {
         Node::CallOrWriteNode { .. } | Node::CallAndWriteNode { .. } | Node::IndexOrWriteNode { .. } | Node::IndexAndWriteNode { .. } => (None, false),
         _ => (assignment_parts(node).map(|(_, v)| range(&v)), false),
     }
-}
-
-fn range(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
 }
 
 /// Optional nodes compared structurally (`nil == nil`).

@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use helpers::select_by::plain_send;
 
@@ -19,11 +20,6 @@ fn is_const(node: &Node, name: &str) -> bool {
         }
         _ => false,
     }
-}
-
-fn range(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
 }
 
 /// Ruby `str.split('/')` (trailing empty fields dropped).

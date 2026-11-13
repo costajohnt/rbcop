@@ -12,11 +12,7 @@ fn report(cx: &mut Cx, (s, e): (usize, usize), msg: &str) {
     cx.add_fix(s, e, msg, |c| c.insert_before(s, e, "\n"));
 }
 
-/// Parser node range of a Prism node.
-pub fn range(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
-}
+pub use crate::helpers::node_types::range;
 
 /// `check_method_line_break(node, children)`: `node_start` is the send/def start.
 pub fn check_method_line_break(cx: &mut Cx, node_start: usize, children: &[(usize, usize)], ignore_last: bool, msg: &str) {

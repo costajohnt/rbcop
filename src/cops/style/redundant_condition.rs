@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::helpers::node_equality::same;
 use crate::helpers::node_types::is_operator_method;
 use crate::helpers::parser_parent::parser_parent;
@@ -10,11 +11,6 @@ pub struct RedundantCondition;
 
 const MSG: &str = "Use double pipes `||` instead.";
 const REDUNDANT_CONDITION: &str = "This condition is not needed.";
-
-fn range(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
-}
 
 /// A parser branch: the single statement, a `begin` (the StatementsNode) for several, or nil.
 fn branch<'pr>(stmts: Option<StatementsNode<'pr>>) -> Option<Node<'pr>> {

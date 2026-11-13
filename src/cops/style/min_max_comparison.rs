@@ -1,13 +1,10 @@
+use crate::helpers::node_types::range;
 use crate::helpers::if_node::{Else, is_elsif, parts};
 use crate::prelude::*;
 
 pub const NAME: &str = "Style/MinMaxComparison";
 pub static COP: MinMaxComparison = MinMaxComparison;
 pub struct MinMaxComparison;
-
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 impl Cop for MinMaxComparison {
     fn correctable(&self) -> bool {

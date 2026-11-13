@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::helpers::heredoc;
 use crate::helpers::node_equality;
 use crate::helpers::parser_parent::{parser_parent, parser_parent_index};
@@ -18,11 +19,6 @@ const MSG_USE_NORMAL: &str = "Modifier form of `%s` makes the line too long.";
 
 #[derive(Default)]
 struct Ignored(Vec<(usize, usize)>);
-
-fn range(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
-}
 
 /// A guard `in pat if cond`: Prism's IfNode/UnlessNode wrapping the pattern (parser `if_guard`).
 fn guard_parts<'pr>(pattern: &Node<'pr>) -> Option<(Node<'pr>, Option<ruby_prism::StatementsNode<'pr>>)> {

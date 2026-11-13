@@ -928,11 +928,7 @@ pub fn align_let_brace(cx: &Cx, program: &Node, left: bool) -> Vec<((usize, usiz
     out
 }
 
-/// A node's byte range.
-pub fn node_range(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
-}
+pub use crate::helpers::node_types::range as node_range;
 
 /// `(const {nil? cbase} :RSpec)`
 pub fn is_explicit_rspec(node: &Node) -> bool {

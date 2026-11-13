@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use helpers::parser_path::{self, Frame};
 use ruby_prism::{CallNode, Visit};
@@ -7,11 +8,6 @@ pub static COP: RedundantDoubleSplatHashBraces = RedundantDoubleSplatHashBraces;
 pub struct RedundantDoubleSplatHashBraces;
 
 const MSG: &str = "Remove the redundant double splat and braces, use keyword arguments directly.";
-
-fn range(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
-}
 
 fn is_merge(name: &str) -> bool {
     matches!(name, "merge" | "merge!")

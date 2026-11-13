@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use crate::source::Source;
 use helpers::if_node::{is_elsif, parts, Body, Else};
@@ -33,10 +34,6 @@ fn apply(c: &mut Corrector, edits: &[Edit]) {
             Edit::InsertBefore(s, e, t) => c.insert_before(*s, *e, t),
         }
     }
-}
-
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
 }
 
 /// A plain `send` (not csend, no block literal).

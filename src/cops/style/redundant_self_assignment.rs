@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 
 pub const NAME: &str = "Style/RedundantSelfAssignment";
@@ -9,11 +10,6 @@ const METHODS_RETURNING_SELF: &[&str] = &[
     "keep_if", "map!", "merge!", "prepend", "push", "rehash", "replace", "reverse!", "rotate!", "shuffle!", "sort!",
     "sort_by!", "transform_keys!", "transform_values!", "unshift", "update",
 ];
-
-fn range(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
-}
 
 impl Cop for RedundantSelfAssignment {
     fn correctable(&self) -> bool {

@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 use helpers::parentheses_corrector::{self, ParenFix};
 use helpers::parser_parent::parser_parent;
@@ -7,10 +8,6 @@ use std::collections::HashSet;
 pub const NAME: &str = "Style/RescueModifier";
 pub static COP: RescueModifier = RescueModifier;
 pub struct RescueModifier;
-
-fn span(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// ParenthesesCorrector plan for the parser parent at `ancestors[idx]` when it ends with `)`.
 fn paren_fix(cx: &Cx, idx: usize) -> Option<ParenFix> {

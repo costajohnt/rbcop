@@ -1,16 +1,12 @@
 //! RuboCop's PercentArray mixin, PercentLiteralCorrector and the Util string helpers they use
 //! (shared by Style/SymbolArray and Style/WordArray).
 
+use crate::helpers::node_types::range;
 use crate::config::value::Num;
 use crate::cop::Cx;
 use crate::helpers::ruby_string::inspect;
 use crate::source::Source;
 use ruby_prism::{ArrayNode, Node};
-
-fn range(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
-}
 
 /// Util#double_quotes_required?: a `'`, or an odd run of backslashes not followed by `"`.
 pub fn double_quotes_required(s: &str) -> bool {

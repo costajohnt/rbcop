@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::helpers::nil_methods::nil_method;
 use crate::helpers::node_equality::same;
 use crate::prelude::*;
@@ -9,11 +10,6 @@ pub struct SafeNavigationChain;
 
 const MSG: &str = "Do not chain ordinary method call after safe navigation operator.";
 const COMPARISON: [&str; 7] = ["==", "===", "!=", "<=", ">=", ">", "<"];
-
-fn range(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
-}
 
 /// `bad_method?` receiver capture: a csend (with or without a block), or `(csend)` in parentheses.
 fn safe_nav(recv: &Node) -> Option<(usize, usize)> {

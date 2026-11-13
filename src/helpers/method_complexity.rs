@@ -2,6 +2,7 @@
 //! and the CyclomaticComplexity / PerceivedComplexity scores (Metrics/AbcSize uses
 //! `helpers::abc_size_calculator`).
 
+use crate::helpers::node_types::range;
 use crate::cop::Cx;
 use crate::helpers::allowed::{allowed_method, matches_allowed_pattern};
 use crate::node_kind as kind;
@@ -157,11 +158,6 @@ struct Counter {
     pattern: usize,
     /// Range of the `in pat if guard` IfNode/UnlessNode (parser `if_guard`).
     guard: Option<(usize, usize)>,
-}
-
-fn range(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
 }
 
 /// rubocop-ast `literal?` (or `const_type?`) for a pattern: PerceivedComplexity's simple `in`.

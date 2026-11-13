@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use std::cell::Cell;
 
@@ -83,11 +84,6 @@ fn else_of_if<'pr>(i: &ruby_prism::IfNode<'pr>) -> Branch<'pr> {
             None => Branch::One(s),
         },
     }
-}
-
-fn range(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
 }
 
 fn is_variable(node: &Node) -> bool {

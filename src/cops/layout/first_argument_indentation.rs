@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 use crate::source::Source;
 use helpers::alignment::{
@@ -36,10 +37,6 @@ fn parser_parent<'a, 'pr>(node: &Node<'pr>, ancestors: &'a [Node<'pr>]) -> Optio
         return None;
     }
     helpers::parser_parent::parser_parent(ancestors)
-}
-
-fn span(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
 }
 
 struct Ctx<'a, 'b, 'pr> {

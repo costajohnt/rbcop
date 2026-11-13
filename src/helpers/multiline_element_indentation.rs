@@ -1,5 +1,6 @@
 //! RuboCop's MultilineElementIndentation mixin (FirstArrayElementIndentation, FirstHashElementIndentation).
 
+use crate::helpers::node_types::range as span;
 use crate::ast::{is_csend, send_args};
 use crate::cop::Cx;
 use crate::helpers::alignment::{configured_indentation_width, first_non_space};
@@ -7,10 +8,6 @@ use crate::helpers::alignment_corrector::{Settings, correct};
 use crate::node_kind as kind;
 use crate::source::Source;
 use ruby_prism::Node;
-
-fn span(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// The `(` of the outermost call whose `on_send` would check this array/hash (via
 /// `each_argument_node`): the literal sits in that call's arguments, its opening bracket is on the

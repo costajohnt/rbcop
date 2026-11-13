@@ -1,13 +1,10 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use helpers::range_help::{range_with_surrounding_space, Side, Surrounding};
 
 pub const NAME: &str = "Style/KeywordParametersOrder";
 pub static COP: KeywordParametersOrder = KeywordParametersOrder;
 pub struct KeywordParametersOrder;
-
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 impl Cop for KeywordParametersOrder {
     fn correctable(&self) -> bool {

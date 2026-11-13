@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 
 pub const NAME: &str = "Rails/RedundantPresenceValidationOnBelongsTo";
@@ -5,10 +6,6 @@ pub static COP: RedundantPresenceValidationOnBelongsTo = RedundantPresenceValida
 pub struct RedundantPresenceValidationOnBelongsTo;
 
 const NON_VALIDATION_OPTIONS: &[&str] = &["if", "unless", "on", "allow_blank", "allow_nil", "strict"];
-
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// A pair `(pair (sym key) _)`'s key name.
 fn pair_key(p: &ruby_prism::AssocNode) -> Option<String> {

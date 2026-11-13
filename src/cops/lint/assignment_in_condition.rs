@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use ruby_prism::Visit;
 
@@ -66,11 +67,6 @@ impl Walk {
         };
         self.allow_safe && stmts.len() == 1 && (equals_asgn(&stmts[0]).is_some() || setter_call(&stmts[0]))
     }
-}
-
-fn range(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
 }
 
 impl<'pr> Visit<'pr> for Walk {

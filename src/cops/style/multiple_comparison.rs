@@ -1,13 +1,10 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use crate::source::Source;
 
 pub const NAME: &str = "Style/MultipleComparison";
 pub static COP: MultipleComparison = MultipleComparison;
 pub struct MultipleComparison;
-
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// parser `call`: send/csend (a call with a literal block is a `block`; a folded `- 1` an `int`).
 fn is_call(n: &Node) -> bool {

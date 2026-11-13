@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range as span;
 use crate::helpers::macro_scope::in_macro_scope_of_child as in_macro_scope;
 use crate::prelude::*;
 use crate::source::Source;
@@ -5,11 +6,6 @@ use crate::source::Source;
 pub const NAME: &str = "Layout/RescueEnsureAlignment";
 pub static COP: RescueEnsureAlignment = RescueEnsureAlignment;
 pub struct RescueEnsureAlignment;
-
-fn span(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
-}
 
 /// Offset of the first non-blank character on the line holding `off` (`line =~ /\S/`).
 fn first_non_space(src: &Source, off: usize) -> usize {

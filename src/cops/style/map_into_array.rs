@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::helpers::range_help::{Side, Surrounding, range_with_surrounding_space};
 use crate::helpers::variable_force::{self as vf, T, Tree};
 use crate::prelude::*;
@@ -21,10 +22,6 @@ struct Var {
 
 #[derive(Default)]
 struct Vars(Vec<Var>);
-
-fn range(n: &Node) -> R {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 fn single<'pr>(s: Option<ruby_prism::StatementsNode<'pr>>) -> Option<Node<'pr>> {
     let v: Vec<Node> = s?.body().iter().collect();

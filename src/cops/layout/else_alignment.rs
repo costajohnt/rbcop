@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 use helpers::check_assignment::{KINDS, extract_rhs, first_part_of_call_chain};
 use helpers::end_keyword_alignment::{begins_its_line, column_offset_between, start_line_range};
@@ -11,11 +12,6 @@ pub struct ElseAlignment;
 /// `ignore_node`d if nodes (checked through an assignment or an enclosing if), by span.
 #[derive(Default)]
 struct Ignored(HashSet<(usize, usize)>);
-
-fn span(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
-}
 
 fn lspan(l: Location) -> (usize, usize) {
     (l.start_offset(), l.end_offset())

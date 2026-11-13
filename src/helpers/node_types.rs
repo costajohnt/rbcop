@@ -2,6 +2,12 @@
 
 use crate::prelude::*;
 
+/// A node's `(start_offset, end_offset)`: parser's `node.source_range`.
+pub fn range(node: &Node) -> (usize, usize) {
+    let l = node.location();
+    (l.start_offset(), l.end_offset())
+}
+
 /// rubocop-ast `assignment?`: (lvasgn ivasgn cvasgn gvasgn casgn masgn op_asgn or_asgn and_asgn),
 /// plus `setter_method?` (its alias on send nodes: `a.b = x`, `a[i] = x`).
 pub fn is_assignment(node: &Node) -> bool {

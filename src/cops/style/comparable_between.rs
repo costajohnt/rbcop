@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 
 pub const NAME: &str = "Style/ComparableBetween";
@@ -5,10 +6,6 @@ pub static COP: ComparableBetween = ComparableBetween;
 pub struct ComparableBetween;
 
 type R = (usize, usize);
-
-fn range(n: &Node) -> R {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// A plain binary send `recv op arg`: (op, recv, arg).
 fn comparison(node: &Node) -> Option<(&'static str, R, R)> {

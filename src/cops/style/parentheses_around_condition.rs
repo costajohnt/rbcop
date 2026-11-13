@@ -1,13 +1,10 @@
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 use helpers::parentheses_corrector;
 
 pub const NAME: &str = "Style/ParenthesesAroundCondition";
 pub static COP: ParenthesesAroundCondition = ParenthesesAroundCondition;
 pub struct ParenthesesAroundCondition;
-
-fn span(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// `modifier_op?`: a modifier if/unless/while/until or a modifier rescue (not a ternary).
 fn modifier_op(n: &Node) -> bool {

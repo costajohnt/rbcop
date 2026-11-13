@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use helpers::select_by::plain_send;
 use ruby_prism::{IfNode, Visit};
@@ -71,11 +72,6 @@ fn single_begin_child<'pr>(n: &Node<'pr>) -> Option<Node<'pr>> {
         }
         None => Some(body),
     }
-}
-
-fn range(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
 }
 
 fn msg(src: &str) -> String {

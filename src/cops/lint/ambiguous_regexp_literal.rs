@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use helpers::add_parentheses::{self as parens, ParenFix};
 
@@ -13,10 +14,6 @@ struct State(Vec<(usize, Option<ParenFix>)>);
 
 fn is_regexp(n: &Node) -> bool {
     matches!(kind::of(n), kind::REGULAR_EXPRESSION_NODE | kind::INTERPOLATED_REGULAR_EXPRESSION_NODE)
-}
-
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
 }
 
 impl Cop for AmbiguousRegexpLiteral {

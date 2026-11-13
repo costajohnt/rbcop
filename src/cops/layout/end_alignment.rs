@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 use helpers::check_assignment::{KINDS, extract_rhs, first_part_of_call_chain};
 use helpers::end_keyword_alignment::{detect, misalignment, start_line_range};
@@ -13,11 +14,6 @@ pub struct EndAlignment;
 /// the `[Correctable]` flag).
 #[derive(Default)]
 struct Ignored(HashSet<(usize, usize)>, HashMap<(usize, usize), ((usize, usize), String)>);
-
-fn span(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
-}
 
 fn lspan(l: Location) -> (usize, usize) {
     (l.start_offset(), l.end_offset())

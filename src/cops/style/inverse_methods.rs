@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::helpers::parser_parent::parser_parent;
 use crate::prelude::*;
 use ruby_prism::{CallNode, Visit};
@@ -7,10 +8,6 @@ pub static COP: InverseMethods = InverseMethods;
 pub struct InverseMethods;
 
 static CAMEL_CASE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[A-Z]+[a-z]+").unwrap());
-
-fn range(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// `cop_config[key].merge(cop_config[key].invert)` lookup. Keys are YAML symbols (`:any?`).
 fn inverse_of(cx: &Cx, key: &str, method: &str) -> Option<String> {

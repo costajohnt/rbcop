@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 use ruby_prism::Visit;
 
@@ -24,11 +25,6 @@ fn each_node<'pr>(node: &Node<'pr>) -> Vec<Node<'pr>> {
     let mut all = All::default();
     all.visit(node);
     all.0
-}
-
-fn span(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
 }
 
 /// A parser `send` (not `csend`, no literal block of its own).

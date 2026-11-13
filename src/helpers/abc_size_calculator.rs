@@ -4,6 +4,7 @@
 //! Prism tree in the same order, processing the parser nodes Prism folds into other nodes (the
 //! `send` of an `a.b ||= c`, a `lambda` send, the `lvasgn` of `x += 1`) where parser has them.
 
+use crate::helpers::node_types::range;
 use crate::helpers::method_complexity::{CsendDiscount, iterating_method, lvar_name, plain_block};
 use crate::node_kind as kind;
 use ruby_prism::{CallNode, Node, Visit};
@@ -47,11 +48,6 @@ struct Abc {
     pattern: usize,
     guard: Option<(usize, usize)>,
     legacy_numbered: Vec<usize>,
-}
-
-fn range(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
 }
 
 fn name(c: &ruby_prism::ConstantId) -> String {

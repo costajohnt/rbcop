@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range as span;
 use crate::helpers::parser_tokens::translated;
 use crate::prelude::*;
 use ruby_prism::Visit;
@@ -28,11 +29,6 @@ struct Facts {
     hash_braces: HashSet<usize>,
     /// Keyword hash argument start -> the arguments of its call, super or yield.
     call_sel: HashMap<usize, Args>,
-}
-
-fn span(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
 }
 
 impl<'pr> Visit<'pr> for Facts {

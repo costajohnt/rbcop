@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 
 pub const NAME: &str = "Layout/ArgumentAlignment";
@@ -16,11 +17,6 @@ fn pairs<'pr>(hash: &Node<'pr>) -> Vec<Node<'pr>> {
         _ => return Vec::new(),
     };
     elements.iter().filter(|e| kind::of(e) == kind::ASSOC_NODE).collect()
-}
-
-fn range(node: &Node) -> (usize, usize) {
-    let loc = node.location();
-    (loc.start_offset(), loc.end_offset())
 }
 
 fn is_hash(node: &Node) -> bool {

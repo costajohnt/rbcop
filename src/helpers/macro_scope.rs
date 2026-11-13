@@ -1,14 +1,10 @@
 //! rubocop-ast `in_macro_scope?` / `macro?` / `class_constructor?` on Prism ancestors: the one port.
 
+use crate::helpers::node_types::range as span;
 use crate::ast::method_name;
 use crate::node_kind as kind;
 use ruby_prism::{CallNode, Node};
 use std::borrow::Borrow;
-
-fn span(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
-}
 
 /// `class_constructor?` on a call (or the call owning a block): `Class.new`, `Module.new`,
 /// `Struct.new`, `Data.define` with a global (`X` or `::X`) constant receiver; a `send`, so not

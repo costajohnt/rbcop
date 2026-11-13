@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 use crate::source::Source;
 use helpers::node_equality::same;
@@ -6,10 +7,6 @@ use ruby_prism::Visit;
 pub const NAME: &str = "Style/ParallelAssignment";
 pub static COP: ParallelAssignment = ParallelAssignment;
 pub struct ParallelAssignment;
-
-fn span(n: &Node) -> (usize, usize) {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 /// A left-hand side as AssignmentSorter sees it.
 enum Lhs {

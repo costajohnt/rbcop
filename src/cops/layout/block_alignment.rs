@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range as span;
 use crate::prelude::*;
 use crate::source::Source;
 
@@ -24,11 +25,6 @@ struct P {
     start: usize,
     end: usize,
     kind: Kind,
-}
-
-fn span(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
 }
 
 fn is_literal_block(b: Option<Node>) -> bool {

@@ -28,10 +28,7 @@ impl Subject {
     }
 }
 
-pub fn range(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
-}
+pub use crate::helpers::node_types::range;
 
 static AFTER_LAST: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\A,?[ \t\r\n\x0c\x0b]*(#.*)?\n").unwrap());
 

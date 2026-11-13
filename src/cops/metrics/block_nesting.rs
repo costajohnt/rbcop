@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use ruby_prism::Visit;
 use std::cell::Cell;
@@ -29,11 +30,6 @@ struct Nesting<'a, 'b, 'c> {
     level: i64,
     ignored: Vec<(usize, usize)>,
     guard: Option<(usize, usize)>,
-}
-
-fn range(node: &Node) -> (usize, usize) {
-    let l = node.location();
-    (l.start_offset(), l.end_offset())
 }
 
 /// Parser range of an `elsif` if-node: from the keyword to the end of its last branch.

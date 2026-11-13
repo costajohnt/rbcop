@@ -1,14 +1,10 @@
+use crate::helpers::node_types::range;
 use crate::prelude::*;
 use helpers::parser_parent::parser_parent;
 
 pub const NAME: &str = "Style/RedundantEach";
 pub static COP: RedundantEach = RedundantEach;
 pub struct RedundantEach;
-
-fn range(n: &Node) -> (usize, usize) {
-    let l = n.location();
-    (l.start_offset(), l.end_offset())
-}
 
 fn has_block_node(call: &ruby_prism::CallNode) -> bool {
     call.block().is_some_and(|b| b.as_block_node().is_some())

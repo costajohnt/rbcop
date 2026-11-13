@@ -1,3 +1,4 @@
+use crate::helpers::node_types::range;
 use crate::helpers::if_node::parser_end;
 use crate::prelude::*;
 use ruby_prism::{CallNode, StatementsNode};
@@ -12,10 +13,6 @@ const OPERATOR_METHODS: &[&str] = &[
     "|", "^", "&", "<=>", "==", "===", "=~", ">", ">=", "<", "<=", "<<", ">>", "+", "-", "*", "/", "%", "**", "~",
     "+@", "-@", "!@", "~@", "[]", "[]=", "!", "!=", "!~", "`",
 ];
-
-fn range(n: &Node) -> R {
-    (n.location().start_offset(), n.location().end_offset())
-}
 
 fn single(stmts: Option<StatementsNode>) -> Option<Node> {
     let mut it = stmts?.body().iter();
