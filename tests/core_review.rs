@@ -168,6 +168,22 @@ fn stopped_run_prints_no_summaries() {
     }
 }
 
+/// Cop errors raised on the parallel workers all reach the summary: each worker hands a file's
+/// errors to the reporting loop (#720).
+#[test]
+fn parallel_cop_errors_all_reach_the_summary() {
+    let dir = scratch("parallel-errors");
+    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  NewCops: disable\nStyle/GuardClause:\n  MinBodyLength: 0\n")
+        .unwrap();
+    for i in 0..40 {
+        fs::write(dir.join(format!("f{i}.rb")), "def f\n  if x\n    y\n  end\nend\n").unwrap();
+    }
+    let out = rbcop(&dir, &["--only", "Style/GuardClause", "-f", "e"]);
+    assert!(text(&out.stderr).contains("\n40 errors occurred:\n"), "{}", text(&out.stderr));
+    assert_eq!(out.status.code(), Some(1), "{}", text(&out.stderr));
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// A file -a refuses to correct (it resolves outside the project) is inspected twice; only the
 /// inspection it is reported from counts its cop errors for the summary (#720).
 #[test]
