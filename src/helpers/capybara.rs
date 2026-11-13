@@ -93,11 +93,6 @@ pub fn attr<'a>(attrs: &'a [(Option<String>, AttrValue)], key: &str) -> Option<&
     attrs.iter().find(|(k, _)| k.as_deref() == Some(key)).map(|(_, v)| v)
 }
 
-/// CssSelector.id?
-pub fn is_id(selector: &str) -> bool {
-    id(selector).is_some()
-}
-
 /// CssSelector.id: `selector[ID_PATTERN, 1]`.
 pub fn id(selector: &str) -> Option<String> {
     static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\A#((?:[A-Za-z0-9_-]|\\[.>,+~])+)(?:\.|\z)").unwrap());

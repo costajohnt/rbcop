@@ -1,5 +1,7 @@
 # Benchmarks
 
+These numbers are from the RuboCop 1.91.0 era and were not rerun for later targets.
+
 How fast rbcop is against RuboCop 1.91 in the setting most users care about: a CI step on a
 GitHub-hosted runner, which starts with no RuboCop result cache unless the workflow restores one.
 Tracking issue: #388.

@@ -1,4 +1,4 @@
-//! RuboCop::UnifiedDiff (RuboCop 1.91.0 lib/rubocop/unified_diff.rb): the `--diff` output, a
+//! RuboCop::UnifiedDiff (RuboCop 1.92.2 lib/rubocop/unified_diff.rb): the `--diff` output, a
 //! unified diff of a file's source before and after autocorrection. Ported step for step (Myers'
 //! algorithm, its tie-breaking and the fallback past MAX_EDIT_DISTANCE), since it is not meant to
 //! match `diff -u` and only reproducing it gives RuboCop's hunks.
