@@ -1,0 +1,55 @@
+assign.rb:3:19: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 14) spaces for indenting an expression in an assignment spanning multiple lines.
+oneline.rb:3:15: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 14) spaces for indenting an expression spanning multiple lines.
+oneline.rb:10:19: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 18) spaces for indenting an expression spanning multiple lines.
+oneline.rb:19:7: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression in an assignment spanning multiple lines.
+pair.rb:4:24: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 16) spaces for indenting an expression in an assignment spanning multiple lines.
+pair.rb:5:24: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 16) spaces for indenting an expression in an assignment spanning multiple lines.
+
+--- a/assign.rb
++++ b/assign.rb
+@@ -1,6 +1,6 @@
+ x = case v
+     in Integer if Some::Long::Module::Name::Checker ===
+-                  v
++      v
+       1
+     end
+ 
+--- a/oneline.rb
++++ b/oneline.rb
+@@ -1,13 +1,13 @@
+ case v
+ in Integer if foo &&
+-              bar then 1
++  bar then 1
+ in String if baz ||
+   qux then 2
+ end
+ 
+ case v
+ when Integer then foo &&
+-                  bar
++  bar
+ when String
+   baz ||
+     qux
+@@ -16,5 +16,5 @@
+ w = case v
+     when Integer
+       foo +
+-      bar
++        bar
+     end
+--- a/pair.rb
++++ b/pair.rb
+@@ -1,8 +1,8 @@
+ h = {
+   key: case v
+        in Integer if foo
+-                       .bar
+-                       .baz
++         .bar
++         .baz
+          1
+        end,
+   other: case v

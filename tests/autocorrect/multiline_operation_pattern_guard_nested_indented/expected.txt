@@ -1,0 +1,6 @@
+assign.rb:3:19: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 14) spaces for indenting an expression in an assignment spanning multiple lines.
+oneline.rb:3:15: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 14) spaces for indenting an expression spanning multiple lines.
+oneline.rb:10:19: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 18) spaces for indenting an expression spanning multiple lines.
+oneline.rb:19:7: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 0) spaces for indenting an expression in an assignment spanning multiple lines.
+pair.rb:4:24: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 16) spaces for indenting an expression in an assignment spanning multiple lines.
+pair.rb:5:24: C: [Corrected] Layout/MultilineMethodCallIndentation: Use 2 (not 16) spaces for indenting an expression in an assignment spanning multiple lines.
