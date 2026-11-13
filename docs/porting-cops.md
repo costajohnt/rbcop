@@ -15,7 +15,7 @@ The bar is **identical output to RuboCop 1.92.2**: same offenses, same ranges, s
   or is not the release rbcop targets (`RUBOCOP_VERSION` in `src/config/mod.rs`):
   `RUBOCOP=~/rubocop-1.92.2/bin/rubocop scripts/check-autocorrect.sh ...`.
 - Pre-merge gate: `scripts/ci.sh` (fmt, clippy, tests; with `RBCOP_CORPUS` and `RBCOP_ORACLE` set,
-  also `check-cops.sh all` and `check-cold.sh`). Prints `ci: ok at <sha>`.
+  also `check-cops.sh all`, `check-cold.sh` and `check-plugins.sh`). Prints `ci: ok at <sha>`.
 
 ## Writing the cop
 
