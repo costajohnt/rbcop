@@ -133,7 +133,7 @@ pub fn pancestors(ancestors: &[Node], node: &Node) -> Vec<PAnc> {
             // `in PATTERN if COND`: Prism wraps the pattern in an if/unless node, the parser gem
             // has an `if_guard`/`unless_guard` (`if COND`) beside the pattern, which is no
             // keyword ancestor.
-            kind::IF_NODE | kind::UNLESS_NODE if parent.is_some_and(|p| kind::of(p) == kind::IN_NODE) => {
+            kind::IF_NODE | kind::UNLESS_NODE if is_pattern_guard(a, &ancestors[..i]) => {
                 let predicate = match a.as_if_node() {
                     Some(n) => n.predicate(),
                     None => a.as_unless_node().unwrap().predicate(),

@@ -1,0 +1,6 @@
+assign.rb:16:7: C: [Corrected] Layout/MultilineOperationIndentation: Align the operands of an expression in an assignment spanning multiple lines.
+oneline.rb:3:15: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 14) spaces for indenting an expression spanning multiple lines.
+oneline.rb:10:19: C: [Corrected] Layout/MultilineOperationIndentation: Use 2 (not 18) spaces for indenting an expression spanning multiple lines.
+pair.rb:4:24: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.bar` with `foo` on line 3.
+pair.rb:5:24: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.baz` with `foo` on line 3.
+pair.rb:10:12: C: [Corrected] Layout/MultilineMethodCallIndentation: Align `.bar` with `foo` on line 9.
