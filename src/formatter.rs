@@ -514,12 +514,10 @@ impl Ctx {
     }
 }
 
-/// Cop.support_autocorrect?: the cop extends AutoCorrector in RuboCop (per docs/cop-inventory.tsv),
+/// Cop.support_autocorrect?: the cop extends AutoCorrector in RuboCop (per src/autocorrect/registry.tsv),
 /// whether or not rbcop marks every offense of it correctable (LineLength only sometimes is).
 pub fn supports_autocorrect(cop: &str) -> bool {
-    include_str!("../docs/cop-inventory.tsv")
-        .lines()
-        .any(|l| l.split('\t').next() == Some(cop) && l.split('\t').nth(3).is_some_and(|m| m.contains("AutoCorrector")))
+    crate::autocorrect::registry_supports_autocorrect(cop)
         || crate::cops::ALL.iter().any(|r| r.name == cop && r.cop.correctable())
         || crate::helpers::cop_registry::foreign_autocorrect(cop)
 }

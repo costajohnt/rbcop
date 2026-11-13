@@ -22,22 +22,32 @@ pub enum Mode {
     All,
 }
 
-/// RuboCop's registry order and `autocorrect_incompatible_with`, from scripts/autocorrect_registry.rb.
+/// RuboCop's registry order, Cop.support_autocorrect? and `autocorrect_incompatible_with`, from
+/// scripts/autocorrect_registry.rb.
 struct Registry {
     order: HashMap<&'static str, usize>,
+    supports_autocorrect: HashSet<&'static str>,
     incompatible: HashMap<&'static str, Vec<&'static str>>,
 }
 
 static REGISTRY: LazyLock<Registry> = LazyLock::new(|| {
-    let mut r = Registry { order: HashMap::new(), incompatible: HashMap::new() };
+    let mut r = Registry { order: HashMap::new(), supports_autocorrect: HashSet::new(), incompatible: HashMap::new() };
     for (i, line) in include_str!("registry.tsv").lines().enumerate() {
         let mut fields = line.split('\t');
         let name = fields.next().unwrap();
         r.order.insert(name, i);
+        if fields.next() == Some("1") {
+            r.supports_autocorrect.insert(name);
+        }
         r.incompatible.insert(name, fields.collect());
     }
     r
 });
+
+/// Cop.support_autocorrect? in RuboCop for its own cops and the native plugins' (registry.tsv).
+pub fn registry_supports_autocorrect(name: &str) -> bool {
+    REGISTRY.supports_autocorrect.contains(name)
+}
 
 /// A cop's line in registry.tsv (RuboCop's registration order, plugins after RuboCop's own cops).
 pub fn registry_position(name: &str) -> Option<usize> {
