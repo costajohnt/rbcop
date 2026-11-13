@@ -47,7 +47,7 @@ jobs:
         with:
           persist-credentials: false
       # Ruby from .ruby-version, the CI host's.
-      - uses: ruby/setup-ruby@824c0e29fdfc7d689c191c27acc969d2d04b7dd8 # v1.331.0
+      - uses: ruby/setup-ruby@b3aaceaef7e0ee231b499e7b5f49c03fc1d32199 # v1.338.0
       # Rust from rust-toolchain.toml (with no argument, rustup installs that file's toolchain).
       - name: Toolchain
         run: |
@@ -106,7 +106,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: ruby/setup-ruby@824c0e29fdfc7d689c191c27acc969d2d04b7dd8 # v1.331.0
+      - uses: ruby/setup-ruby@b3aaceaef7e0ee231b499e7b5f49c03fc1d32199 # v1.338.0
       - name: RuboCop 1.92.2, plugin pins, mcp and rubydex
         env:
           FIXTURE_GEMS: hana:1.3.7 simpleidn:0.3.0 json_schemer:2.5.0 mcp:0.25.0 rubydex:0.4.1
