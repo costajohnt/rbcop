@@ -78,3 +78,18 @@ jobs:
           rustup toolchain install "$msrv" --profile minimal
           cargo "+$msrv" check --locked
 
+  # RustSec advisories for Cargo.lock (deny.toml).
+  advisories:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CARGO_DENY_VERSION: 0.20.2
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: |
+          set -eu
+          rustup toolchain install
+          cargo install --locked "cargo-deny@$CARGO_DENY_VERSION"
+          cargo deny check advisories
