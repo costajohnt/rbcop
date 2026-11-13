@@ -697,7 +697,8 @@ impl Server {
         if real.is_file() && std::fs::read(&real).is_ok_and(|b| b == content.as_bytes()) {
             return Ok(());
         }
-        autocorrect::write_source(&real, content, &self.roots).map_err(|e| match e.raw_os_error() {
+        let _synced = autocorrect::SyncWrittenDirs;
+        autocorrect::write_source(&real, content, None, &self.roots).map(drop).map_err(|e| match e.raw_os_error() {
             Some(libc::EPERM) => ToolFail::Rubo(format!("Operation not permitted: {path}")),
             Some(libc::EACCES) => ToolFail::Rubo(format!("Permission denied: {path}")),
             Some(libc::ENOSPC) => ToolFail::Rubo(format!("No space left on device: {path}")),
