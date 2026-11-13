@@ -18,6 +18,13 @@ pub const DEFAULT_YML: &str = include_str!("../../config/default.yml");
 const BUILT_IN: &str = "<rbcop built-in>";
 const BUILT_IN_DEFAULT: &str = "<rbcop built-in>/rubocop/config/default.yml";
 pub const RUBOCOP_VERSION: &str = "1.92.2";
+/// The gem versions `-V` reports beside RUBOCOP_VERSION: the oracle host's gem set, which recorded
+/// every fixture. scripts/rubocop.sh checks the live RuboCop against them, and a test checks that
+/// .github/workflows/ci.yml installs them (and .ruby-version names RUBY_VERSION).
+pub const PARSER_VERSION: &str = "3.3.12.0";
+pub const PRISM_VERSION: &str = "1.9.0";
+pub const RUBOCOP_AST_VERSION: &str = "1.50.0";
+pub const RUBY_VERSION: &str = "4.0.6";
 const DOTFILE: &str = ".rubocop.yml";
 
 /// Command-line switches that change how configs resolve.

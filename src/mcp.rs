@@ -521,8 +521,16 @@ impl Server {
     ) -> Result<String, ToolFail> {
         let file = path.unwrap_or("example.rb");
         let real = self.contain(file)?;
-        if path.is_some() && !request.dry_run && runs_code_when_loaded(&real) {
-            return Err(refuse_evaluated(file, &real));
+        if path.is_some() && !request.dry_run {
+            if runs_code_when_loaded(&real) {
+                return Err(refuse_evaluated(file, &real));
+            }
+            if !self.ruby_target(&real) {
+                return Err(ToolFail::Rubo(format!(
+                    "{file} resolves to {}, not an existing file rbcop would inspect as Ruby; not written",
+                    real.display()
+                )));
+            }
         }
         let options = request.runtime_options(scope);
         let run = self.runtime.format_run(file, source.to_string(), request.safety, &options)?;
@@ -535,6 +543,14 @@ impl Server {
         if let Some(path) = path
             && !request.dry_run
         {
+            // A `#!` line names what runs the file: a write may not add, drop or change one.
+            let (old, new) = (first_line(&real), corrected.lines().next().unwrap_or("").to_string());
+            if old != new && (old.starts_with("#!") || new.starts_with("#!")) {
+                return Err(ToolFail::Rubo(format!(
+                    "{path} resolves to {}, and the corrected code changes its #! line; not written",
+                    real.display()
+                )));
+            }
             self.write_file(path, &corrected)?;
         }
         Ok(corrected)
@@ -609,6 +625,31 @@ impl Server {
         }
     }
 
+    /// Deliberate difference: inline code is written only over an existing regular file that is
+    /// Ruby by default.yml alone (its extension, an exact `RubyFilenames` name, or a `#!` line
+    /// whose interpreter is exactly one of `RubyInterpreters`), never a new file and never one
+    /// like `.envrc`, `.bundle/config` or a shell `bin/setup`, which other tools run or read as
+    /// configuration. The project's own config is not asked: the client may have written it, and
+    /// TargetFinder's substring shebang test (empty list: any `#!`) selects files to lint, not to
+    /// overwrite. The client wrote that code, possibly following text from the code it reads.
+    fn ruby_target(&self, real: &Path) -> bool {
+        if !real.is_file() {
+            return false;
+        }
+        let defaults = self.runtime.store.default_config();
+        let (exts, names) = defaults.ruby_extensions_and_names();
+        let name = real.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
+        let ext = real.extension().map(|e| format!(".{}", e.to_string_lossy()));
+        let named = names.contains(&name) || ext.as_ref().is_some_and(|e| exts.contains(e));
+        let line = first_line(real);
+        if !line.starts_with("#!") {
+            return named;
+        }
+        // A `#!` line decides, whatever the name: `deploy.rb` starting `#!/bin/sh` is a shell script.
+        (named || ext.is_none())
+            && shebang_interpreter(&line).is_some_and(|i| defaults.ruby_interpreters().contains(&i))
+    }
+
     /// TargetFinder#find(path ? [path] : [], :only_recognized_file_types), then Scope#select_files.
     fn targets(&mut self, path: Option<&str>, scope: &Scope) -> Result<Vec<PathBuf>, ToolFail> {
         if let Some(path) = path {
@@ -645,8 +686,9 @@ impl Server {
     }
 
     /// SourceFiles.write: nothing when the file already holds `content` (its modification time
-    /// stays), else Util.replace_file_contents, which creates a missing file; its likely errors
-    /// are RuboCop::Errors. Through autocorrect::write_source as `-a` writes, never via a symlink.
+    /// stays), else Util.replace_file_contents; its likely errors are RuboCop::Errors. Through
+    /// autocorrect::write_source as `-a` writes, never via a symlink. Deliberate difference: a
+    /// missing file is not created (RuboCop creates it); every caller writes an existing file.
     fn write_file(&self, path: &str, content: &str) -> Result<(), ToolFail> {
         let real = self.contain(path)?;
         if runs_code_when_loaded(&real) {
@@ -655,16 +697,8 @@ impl Server {
         if real.is_file() && std::fs::read(&real).is_ok_and(|b| b == content.as_bytes()) {
             return Ok(());
         }
-        let written = (|| {
-            if !real.exists() {
-                use std::os::unix::fs::OpenOptionsExt;
-                // O_EXCL: never an existing file, nor a symlink planted since.
-                std::fs::OpenOptions::new().write(true).create_new(true).custom_flags(libc::O_NOFOLLOW).open(&real)?;
-            }
-            let _synced = autocorrect::SyncWrittenDirs;
-            autocorrect::write_source(&real, content, None, &self.roots).map(drop)
-        })();
-        written.map_err(|e| match e.raw_os_error() {
+        let _synced = autocorrect::SyncWrittenDirs;
+        autocorrect::write_source(&real, content, None, &self.roots).map(drop).map_err(|e| match e.raw_os_error() {
             Some(libc::EPERM) => ToolFail::Rubo(format!("Operation not permitted: {path}")),
             Some(libc::EACCES) => ToolFail::Rubo(format!("Permission denied: {path}")),
             Some(libc::ENOSPC) => ToolFail::Rubo(format!("No space left on device: {path}")),
@@ -684,6 +718,45 @@ impl Server {
 fn runs_code_when_loaded(path: &Path) -> bool {
     let name = path.file_name().map(|n| n.to_string_lossy().to_ascii_lowercase()).unwrap_or_default();
     name.ends_with(".yml") || name.ends_with(".yaml") || name == ".rubocop"
+}
+
+/// The file's first line without its line break ("" when unreadable or empty).
+fn first_line(path: &Path) -> String {
+    use std::io::BufRead;
+    let mut line = Vec::new();
+    if let Ok(f) = std::fs::File::open(path) {
+        let _ = std::io::BufReader::new(f).read_until(b'\n', &mut line);
+    }
+    String::from_utf8_lossy(&line).trim_end_matches(['\n', '\r']).to_string()
+}
+
+/// The program a `#!` line runs: the basename of its first word, or for `env` the first word
+/// after it, past `NAME=value` assignments and `-S` (also `-Sprogram`). Any other `env` option
+/// (`-u NAME`, `-C DIR`, ...) may take the next word as its argument, so it gives None: the
+/// program cannot be told, and the caller refuses. None without a `#!` at the start.
+fn shebang_interpreter(line: &str) -> Option<String> {
+    let mut words = line.strip_prefix("#!")?.split_whitespace();
+    // `env -S` reads quotes, `\` escapes, `${VAR}` and `#` comments in its string: a word with any
+    // character beyond these may not be the program it looks like.
+    let base = |w: &str| {
+        w.bytes()
+            .all(|b| b.is_ascii_alphanumeric() || b"_./+-".contains(&b))
+            .then(|| w.rsplit('/').next().unwrap_or(w).to_string())
+    };
+    let first = base(words.next()?)?;
+    if first != "env" {
+        return Some(first);
+    }
+    for w in words {
+        match w.strip_prefix("-S") {
+            Some("") => continue,
+            Some(program) if !program.starts_with('-') => return base(program),
+            _ if w.starts_with('-') => return None,
+            _ if w.contains('=') => continue,
+            _ => return base(w),
+        }
+    }
+    None
 }
 
 fn refuse_evaluated(path: &str, real: &Path) -> ToolFail {

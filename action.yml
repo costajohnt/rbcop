@@ -68,18 +68,22 @@ runs:
     # The result cache: entries live under <root>/rbcop_cache/<build>/<context>, where <build> digests
     # the binary itself (src/cache.rs), so entries of another build are never read and the key
     # only has to keep them apart to save space. A new key every commit, restored from the newest
-    # entry with the same config, then any: files and config left unchanged since then hit.
-    # MaxFilesInCache prunes the oldest entries as usual (tar keeps their mtimes). Restore and
-    # save are separate steps so a run with offenses (a failing step) still saves.
+    # entry with the same config: files left unchanged since then hit. MaxFilesInCache prunes the
+    # oldest entries as usual (tar keeps their mtimes). Restore and save are separate steps so a
+    # run with offenses (a failing step) still saves.
+    # Only <root>/rbcop_cache is kept: <root>/rubocop_cache holds remote inherit_from downloads and
+    # the fallback RuboCop's own cache, which must not be restored into a later run. Nothing is
+    # saved from pull_request_target or workflow_run, which run in the base branch's cache scope
+    # and are where PR code is most often linted, so a PR cannot plant entries the default branch
+    # later reads.
     - id: results
       if: inputs.args != '' && inputs.cache == 'true'
       uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
-        path: ${{ runner.temp }}/rbcop-results
+        path: ${{ runner.temp }}/rbcop-results/rbcop_cache
         key: rbcop-results-${{ steps.version.outputs.version }}-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.rubocop*.yml', 'Gemfile.lock') }}-${{ github.sha }}
         restore-keys: |
           rbcop-results-${{ steps.version.outputs.version }}-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.rubocop*.yml', 'Gemfile.lock') }}-
-          rbcop-results-${{ steps.version.outputs.version }}-${{ runner.os }}-${{ runner.arch }}-
     - if: inputs.args != ''
       shell: bash
       env:
@@ -92,8 +96,11 @@ runs:
         # Only when caching: an empty RUBOCOP_CACHE_ROOT would be a root of its own.
         if [ -n "$RESULTS" ]; then export RUBOCOP_CACHE_ROOT="$RESULTS"; fi
         rbcop $ARGS
-    - if: "!cancelled() && inputs.args != '' && inputs.cache == 'true' && steps.results.outputs.cache-hit != 'true'"
+    - if: >-
+        !cancelled() && inputs.args != '' && inputs.cache == 'true'
+        && steps.results.outputs.cache-hit != 'true'
+        && github.event_name != 'pull_request_target' && github.event_name != 'workflow_run'
       uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
-        path: ${{ runner.temp }}/rbcop-results
+        path: ${{ runner.temp }}/rbcop-results/rbcop_cache
         key: ${{ steps.results.outputs.cache-primary-key }}

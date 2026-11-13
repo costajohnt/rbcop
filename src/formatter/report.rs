@@ -2,14 +2,13 @@
 
 use super::text::Bar;
 use super::{Ctx, FileOut, Formatter, Off, Paint, blank, minimum_to_fail, pluralize, sub_backticks};
-use crate::config::{RUBOCOP_VERSION, relative_path};
+use crate::config::{RUBOCOP_VERSION, RUBY_VERSION, relative_path};
 use std::collections::HashMap;
 use std::fmt::Write as _;
 use std::path::{Path, PathBuf};
 
-/// RUBY_ENGINE / RUBY_VERSION / RUBY_PATCHLEVEL of the Ruby rbcop's RuboCop recordings use (the
-/// repo's .ruby-version; docs/known-gaps.md).
-const RUBY_VERSION: &str = "4.0.6";
+/// RUBY_PATCHLEVEL of the Ruby rbcop's RuboCop recordings use (RUBY_VERSION, the repo's
+/// .ruby-version; docs/known-gaps.md).
 const RUBY_PATCHLEVEL: &str = "0";
 
 /// RUBY_PLATFORM, e.g. `arm64-darwin25` or `x86_64-linux`.
