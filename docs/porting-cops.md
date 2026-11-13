@@ -356,8 +356,8 @@ More traps found while porting:
 - `Module#<=>` is 0 for the same class (truthy); `nil <=> nil` is 0, nil vs class is nil.
 - Prism nests subsequent `rescue` clauses; parser makes them siblings. Treat a RescueNode whose child
   is the next RescueNode as transparent in parser-ancestor walks.
-- Constants Ruby resolves at runtime: `helpers::ruby_exceptions` (regenerate with
-  `scripts/dump-ruby-exceptions.rb`). Paths in messages go through PathUtil.smart_path semantics.
+- Constants Ruby resolves at runtime: `helpers::ruby_exceptions`, one table per platform because Errno
+  codes and aliases differ (`scripts/dump-ruby-exceptions.rb` writes the one for the platform it runs on). Paths in messages go through PathUtil.smart_path semantics.
 - Ruby `format('%.4g')` is not correctly rounded (dtoa half-even on near-halfway values): use
   `method_complexity::format_g4`.
 - A ternary has no `loc.else`; an empty `else` gives `else_branch` nil. `String#blank?` counts NUL as

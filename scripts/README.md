@@ -23,7 +23,7 @@ One line per script; each header documents its arguments. Gates take RuboCop fro
 ## Generated tables
 - `autocorrect_registry.rb`: src/autocorrect/registry.tsv (registry order, `support_autocorrect?`, `autocorrect_incompatible_with`).
 - `dump-cop-docs.rb`: src/cop_docs.txt (`--explain`).
-- `dump-ruby-exceptions.rb`: src/helpers/ruby_exceptions.rs.
+- `dump-ruby-exceptions.rb`: src/helpers/ruby_exceptions/<linux|darwin>.rs, for the platform it runs on.
 - `display_widths.rb`: the display width table in src/helpers/alignment.rs.
 - `encodings.rb`: src/encodings.bin.
 - `gen_node_kinds.py`: src/node_kind.rs.
