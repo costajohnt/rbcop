@@ -12,7 +12,7 @@ for name in $names; do
   [ -d "$dir" ] || continue
   args=$(cat "$dir/args" 2>/dev/null || true)
   # emacs prints absolute paths (and some messages hold them); store them relative to the scenario root.
-  # A scenario with a stderr.txt also records stderr there (e.g. the pending-cops notice), verbatim.
+  # A scenario with a stderr.txt also records stderr there (e.g. the pending-cops notice).
   # The exit status always goes to status.
   err=/dev/null
   [ -f "$dir/stderr.txt" ] && err=$dir/stderr.txt
@@ -22,8 +22,10 @@ for name in $names; do
   echo "$status" > "$dir/status"
   sed "s|$dir/project/||g" "$out" | LC_ALL=C sort > "$dir/expected.txt"
   # Absolute paths in messages (config file paths) are stored relative to the scenario root too.
+  # A failing `require` prints the host's Ruby backtrace (require_unloadable_after_plugin): keep
+  # the message only, so a re-record on another host matches.
   if [ -f "$dir/stderr.txt" ]; then
-    sed "s|$dir/project/||g" "$dir/stderr.txt" > "$out"
+    sed "s|$dir/project/||g" "$dir/stderr.txt" | { grep -vE "^/.*:[0-9]+:in '" || true; } > "$out"
     cat "$out" > "$dir/stderr.txt"
   fi
   rm -f "$out"

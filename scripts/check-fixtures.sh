@@ -25,12 +25,6 @@ jobs=${JOBS:-$(getconf _NPROCESSORS_ONLN)}
 # shellcheck disable=SC2011 # case names are plain words
 batch() { d=$1; shift; ls "$d" | xargs -n 10 -P "$jobs" "$@" > /dev/null; }
 batch tests/scenarios scripts/scenarios.sh
-# A failing `require` prints the host's Ruby backtrace; the committed stderr.txt keep the message
-# only (require_unloadable_after_plugin), so drop the frames.
-for f in $(grep -lE "^/.*:[0-9]+:in '" tests/scenarios/*/stderr.txt || true); do
-  grep -vE "^/.*:[0-9]+:in '" "$f" > "$f.tmp" || true
-  mv "$f.tmp" "$f"
-done
 batch tests/lsp scripts/lsp.sh
 batch tests/mcp scripts/mcp.sh
 batch tests/auto_gen sh tests/auto_gen/record.sh
