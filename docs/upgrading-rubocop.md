@@ -101,7 +101,10 @@ corpus (step 4) and targeted cases to catch. Commit the final `delta.tsv` and `d
   their gems move, and `src/cop_docs.txt` (what `--explain` prints: `LC_ALL=C.UTF-8 ruby
   scripts/dump-cop-docs.rb > src/cop_docs.txt` with the new release and the plugin pins of
   docs/plugins.md on the load path). 1.92.2 changed only the docs of Lint/PercentStringArray and
-  Style/CaseEquality, and the 1.92.2 upgrade missed them.
+  Style/CaseEquality, and the 1.92.2 upgrade missed them. `scripts/check-generated.sh` (in the
+  corpus tier of `scripts/ci.sh`) reruns every generator and the vendored config copies with the
+  new gem home and rewrites what is stale; its header lists what it does not cover
+  (`ruby_exceptions.rs` is platform-dependent).
 - Behaviour the new release drops on purpose may already be listed in docs/known-gaps.md as a
   difference from the old one: re-check every entry that names the old version.
 
