@@ -551,10 +551,11 @@ RUBOCOP="env GEM_HOME=$g/gems GEM_PATH=$g/extra-gems:$g/gems RBENV_VERSION=4.0.6
 
 `scripts/check-fixtures.sh` re-records every one of them into the working tree (tests/ must be
 clean first) and fails with the changed files and `git diff --stat` when anything differs, leaving
-the re-recorded files in place. GitHub CI runs it in the `fixtures` job, beside the fast tier
-(about N minutes). A failure means a fixture is not what RuboCop 1.92.2 prints: re-record it with
-its recorder and commit the result. The spec corpus is not part of the check (re-recording it needs
-the RuboCop and plugin source checkouts at their tags); `scripts/record-spec-corpus.sh` re-records it.
+the re-recorded files in place. GitHub CI runs it in the `fixtures` job, beside the fast tier; it
+takes 8 to 13 minutes on the CI host. A failure means a fixture is not what RuboCop 1.92.2 prints:
+re-record it with its recorder and commit the result. The spec corpus is not part of the check:
+re-recording it needs the RuboCop and plugin source checkouts at their tags and takes over half an
+hour (`scripts/record-spec-corpus.sh`).
 
 ### Cold cops
 
