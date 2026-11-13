@@ -12,7 +12,7 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   rubocop-erb), and for `-r`/`--require`, `--plugin` and custom formatter classes. It runs RuboCop
   (`RBCOP_RUBOCOP`, else `bundle exec rubocop`, else `rubocop` on PATH), which loads the project's
   Gemfile, plugins and cop files. Each run prints `rbcop: running <command> for <what>; set
-  RBCOP_FALLBACK=0 to never run Ruby` on stderr first (not under `RBCOP_FALLBACK=1`, which asked for
+  RBCOP_FALLBACK=0 to skip RuboCop` on stderr first (not under `RBCOP_FALLBACK=1`, which asked for
   it). Under `--lsp`, `--mcp`, the server options, `--editor-mode` or `--stdin` (an editor opening
   a project), given anywhere (command line, `.rubocop`, `RUBOCOP_OPTS`, abbreviated), it runs only
   with `RBCOP_FALLBACK=1`; the language and MCP servers lint natively and never start RuboCop for a file. Turn it off with `RBCOP_FALLBACK=0`: the fallback then starts no Ruby at all,
@@ -55,6 +55,20 @@ rbcop pins and refuses there (and nothing beyond it):
   `.yaml` file (a `.rubocop.yml`, or anything one inherits from, has its ERB rendered by `ruby`)
   and the `.rubocop` options file (`tests/mcp.rs`). Ruby files, Gemfile and gemspecs included, are
   written as RuboCop writes them.
+- `rubocop_autocorrection` with `source_code` and a `path` writes the corrected code only over an
+  existing regular file that is Ruby by RuboCop's defaults alone: its extension or exact file name
+  is in default.yml's `AllCops: Include`, or it has no extension and a `#!` line. A file with a
+  `#!` line, whatever its name, also needs that line's program (after `env`, the first word past
+  `NAME=value` assignments and `-S`; any other `env` option refuses) to be exactly one of the
+  default `RubyInterpreters`, spelled only with letters, digits and `_./+-` (so nothing `env -S`
+  would expand, unquote or unescape). The project's config is not consulted for this, so a
+  `RubyInterpreters: []` or an `Include` cannot widen it. Never a new file, and never a file such
+  as `.envrc`, `.bundle/config` or a shell `bin/setup` that other tools run or read: the tool
+  error is `<path> resolves to <real path>, not an existing file rbcop would inspect as Ruby; not
+  written`. Nor may the corrected code add, drop or change a `#!` line (`..., and the corrected
+  code changes its #! line; not written`). RuboCop writes any path, creating it if missing.
+  Without a `path`, or with `dry_run`, nothing is written and the corrected code comes back as in
+  RuboCop (#721).
 - `--changed` on the command line (the user's own repository) stays best effort: it is not pinned,
   needs no particular git version and does not read attributes from the empty tree.
 
@@ -275,9 +289,9 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
   Except: RuboCop's tools read and write any path the client names, while rbcop's refuse one that
   resolves outside the working directory (an absolute path, `..`, or a symlink pointing out,
   including one met while walking a directory) with the tool error `<path> resolves to <real
-  path>, outside the project`, and write as `-a` does (never through a symlink, a new file created
-  exclusively); `rubocop_explain` refuses such a `path` too rather than read the configuration
-  that applies there. An MCP client may be a model following text from the code it reads.
+  path>, outside the project`, and write as `-a` does (never through a symlink, never a new
+  file); `rubocop_explain` refuses such a `path` too rather than read the configuration that
+  applies there. An MCP client may be a model following text from the code it reads.
 - `--explain` prints the sections of a cop's documentation comment from src/cop_docs.txt
   (scripts/dump-cop-docs.rb, RuboCop's and the native plugins' cops), since rbcop has no Ruby
   sources to read. A cop of a plugin rbcop does not implement, or of a `require:`d local file, is

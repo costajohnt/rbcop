@@ -36,12 +36,13 @@ fi
 
 (cd "$root" && cargo build --release -q)
 cops=${*:-$(cd "$corpus" && ls)}
-list=$(echo $cops | tr ' ' '\n' | sed 's|_|/|' | paste -sd, -)
+list=$(echo $cops | tr ' ' '\n' | sed 's|_|/|g' | paste -sd, -)
 pattern=": [CWEFRI]: (\[Correctable\] )?($(echo "$list" | tr , '|')): "
 rm -rf "$out"
 mkdir -p "$out"
 # Files hitting a documented gap (docs/known-gaps.md), relative to the cold corpus.
-grep -v '^#' "$root/scripts/cold-skip.txt" > "$out/skip.rel" || true
+# Blank lines would become the bare prefix "$corpus/" and drop every line on both sides.
+grep -v -e '^#' -e '^[[:space:]]*$' "$root/scripts/cold-skip.txt" > "$out/skip.rel" || true
 sed "s|^|$corpus/|" "$out/skip.rel" > "$out/skip"
 
 # Offenses: every cop on (like the oracle), compared for the cold cops only.
@@ -57,6 +58,12 @@ awk -F'\t' 'FILENAME == ARGV[1] { skip[$1 "\t" $2] = 1; next }
 grep -E "$pattern" "$oracle" | grep -vF -f "$out/skip" | LC_ALL=C sort > "$out/rubocop" || true
 LC_ALL=C comm -23 "$out/rubocop" "$out/rbcop" | sed 's/^/< /' > "$out/offenses.diff"
 LC_ALL=C comm -13 "$out/rubocop" "$out/rbcop" | sed 's/^/> /' >> "$out/offenses.diff"
+# Every cold cop has spec offenses: an oracle filtered to nothing means the pattern or the oracle
+# is broken, not a match (as check-cops.sh, #163).
+if [ ! -s "$out/rubocop" ]; then
+  echo "check-cold: no oracle offenses in $oracle match the cop list" >&2
+  exit 1
+fi
 status=0
 n=$(wc -l < "$out/offenses.diff" | tr -d ' ')
 printf 'offenses   rubocop %6s  rbcop %6s  diff %5s\n' "$(wc -l < "$out/rubocop" | tr -d ' ')" "$(wc -l < "$out/rbcop" | tr -d ' ')" "$n"
@@ -64,7 +71,7 @@ printf 'offenses   rubocop %6s  rbcop %6s  diff %5s\n' "$(wc -l < "$out/rubocop"
 
 # Autocorrect: each variant with only its own cop, both tools on copies.
 for c in $cops; do
-  cop=$(echo "$c" | sed 's|_|/|')
+  cop=$(echo "$c" | sed 's|_|/|g')
   for v in $(variants "$c"); do
     rel=${v#"$corpus"/}
     for side in rubocop rbcop; do
@@ -83,7 +90,8 @@ done
 (cd "$out/ac" && for f in rubocop.*.out; do diff "$f" "rbcop.${f#rubocop.}" | sed "s|^|$f: |"; done) > "$out/ac-report.diff" || true
 diff -r "$out/ac/rubocop" "$out/ac/rbcop" > "$out/ac-files.diff" || true
 rd=$(grep -c ': [<>]' "$out/ac-report.diff" || true)
-fd=$(grep -c '^diff ' "$out/ac-files.diff" || true)
+# Created/deleted ("Only in") and binary files have no "diff " header (as check-autocorrect.sh).
+fd=$(grep -cE '^(diff |Only in |Binary files )' "$out/ac-files.diff" || true)
 printf 'autocorrect report diff %4s  files differing %4s\n' "$rd" "$fd"
 if [ "$rd" != 0 ] || [ "$fd" != 0 ]; then status=1; fi
 [ $status = 0 ] && echo "cold corpus matches" || echo "diffs in $out/{offenses,ac-report,ac-files}.diff (< rubocop, > rbcop)"

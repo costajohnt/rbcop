@@ -1,7 +1,10 @@
 //! The `rubocop` command line: options, formatters and exit status as RuboCop 1.92.2 has them
 //! (lib/rubocop/cli.rb, options.rb, runner.rb, cli/command/*.rb).
 
-use rbcop::config::{Options, RUBOCOP_VERSION, Resolved, Store, expand_path};
+use rbcop::config::{
+    Options, PARSER_VERSION, PRISM_VERSION, RUBOCOP_AST_VERSION, RUBOCOP_VERSION, RUBY_VERSION, Resolved, Store,
+    expand_path,
+};
 use rbcop::cop::Severity;
 use rbcop::formatter::{self, Annotate, Ctx, FailLevel, FileOut, Opts};
 use rbcop::runner::{self, FileReport};
@@ -1611,12 +1614,12 @@ fn verbose_version(cfg: &Resolved) -> String {
     let target = cfg.target_ruby;
     let parser = if target >= 3.3 {
         let engine = cfg.all_cops().str("ParserEngine").map(|e| format!(", {e}")).unwrap_or_default();
-        format!("Parser 3.3.12.0, Prism 1.9.0{engine}")
+        format!("Parser {PARSER_VERSION}, Prism {PRISM_VERSION}{engine}")
     } else {
-        "Parser 3.3.12.0".to_string()
+        format!("Parser {PARSER_VERSION}")
     };
     format!(
-        "{RUBOCOP_VERSION} (using {parser}, rubocop-ast 1.50.0, analyzing as Ruby {}, running on ruby 4.0.6){} [{}]",
+        "{RUBOCOP_VERSION} (using {parser}, rubocop-ast {RUBOCOP_AST_VERSION}, analyzing as Ruby {}, running on ruby {RUBY_VERSION}){} [{}]",
         ruby_version_string(target),
         // Version.rubydex_indicator: rbcop always has the index (vendor/rubydex).
         if cfg.all_cops().truthy("UseProjectIndex") { " +Rubydex" } else { "" },

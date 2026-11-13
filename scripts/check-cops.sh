@@ -62,7 +62,7 @@ for c in $corpora; do
   fi
   if [ "$n" != 0 ]; then
     status=1
-    sed -E 's/^([<>]).*: [CWEFRI]: (\[Correctable\] )?([A-Za-z]+\/[A-Za-z0-9]+):.*/   \1 \3/' "$out/$c.diff" | sort | uniq -c | sort -rn | head -20
+    sed -E 's/^([<>]).*: [CWEFRI]: (\[Correctable\] )?([A-Za-z]+\/[A-Za-z0-9\/]+):.*/   \1 \3/' "$out/$c.diff" | sort | uniq -c | sort -rn | head -20
   fi
 done
 if [ $status = 0 ]; then
