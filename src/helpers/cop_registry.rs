@@ -77,6 +77,14 @@ pub const NATIVE_PLUGINS: &[NativePlugin] = &[
         default_yml: include_str!("../../config/plugins/rubocop-capybara.yml"),
         obsoletion: None,
     },
+    NativePlugin {
+        gem: "rubocop-thread_safety",
+        version: "0.8.0",
+        plugin_class: "RuboCop::ThreadSafety::Plugin",
+        departments: &["ThreadSafety"],
+        default_yml: include_str!("../../config/plugins/rubocop-thread_safety.yml"),
+        obsoletion: Some(include_str!("../../config/plugins/rubocop-thread_safety-obsoletion.yml")),
+    },
 ];
 
 pub fn native_plugin(gem: &str) -> Option<&'static NativePlugin> {

@@ -8,7 +8,7 @@ Drop-in replacement for RuboCop 1.92.2. Same config, same command line, same out
 
 A reimplementation of [RuboCop](https://github.com/rubocop/rubocop) 1.92.2 in Rust, built on [Prism](https://github.com/ruby/prism) (`ruby-prism` crate).
 
-The target is byte-identical output: same offenses, ranges, messages, `[Correctable]` flags, autocorrections, formatter output and exit status as RuboCop 1.92.2 for the same files and configuration. All 613 cops in RuboCop's `config/default.yml` are implemented. rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot and rubocop-capybara run natively ([docs/plugins.md](docs/plugins.md)). Other plugins (rubocop-sorbet and so on) and custom cops do not; rbcop hands them to RuboCop when one is installed, and otherwise says which cops it skips (see [Plugins and custom cops](#plugins-and-custom-cops)).
+The target is byte-identical output: same offenses, ranges, messages, `[Correctable]` flags, autocorrections, formatter output and exit status as RuboCop 1.92.2 for the same files and configuration. All 613 cops in RuboCop's `config/default.yml` are implemented. rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot, rubocop-capybara and rubocop-thread_safety run natively ([docs/plugins.md](docs/plugins.md)). Other plugins (rubocop-sorbet and so on) and custom cops do not; rbcop hands them to RuboCop when one is installed, and otherwise says which cops it skips (see [Plugins and custom cops](#plugins-and-custom-cops)).
 
 ## Install
 
@@ -43,16 +43,16 @@ All builtin formatters are supported, as are the display options, `--fail-level`
 
 ## Plugins and custom cops
 
-rbcop reads plugin configuration (`plugins:` and `require:` gems contribute their `config/default.yml`), and runs natively the cops it implements: RuboCop's own and those of the plugins in [docs/plugins.md](docs/plugins.md) (rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot, rubocop-capybara). Cops it cannot run (other plugins such as rubocop-sorbet, custom cops from `require: ./lib/cops/my_cop.rb`) go to RuboCop: the fallback.
+rbcop reads plugin configuration (`plugins:` and `require:` gems contribute their `config/default.yml`), and runs natively the cops it implements: RuboCop's own and those of the plugins in [docs/plugins.md](docs/plugins.md) (rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot, rubocop-capybara, rubocop-thread_safety). Cops it cannot run (other plugins such as rubocop-sorbet, custom cops from `require: ./lib/cops/my_cop.rb`) go to RuboCop: the fallback.
 
 The fallback is on by default and needs a RuboCop. rbcop uses `RBCOP_RUBOCOP` when set (for example `RBCOP_RUBOCOP="bin/rubocop"`), else `bundle exec rubocop` when the project's `Gemfile.lock` has the rubocop gem, else `rubocop` on `PATH`. It runs RuboCop once more for exactly the cops rbcop cannot run (`--except` every cop rbcop implements) on the same files with the same configuration and options, and merges its offenses into its own report, so formatters, `--fail-level` and the exit status see one run. The saving is smaller, since RuboCop still parses every file, but core cops no longer run in Ruby. A project that needs no fallback never starts RuboCop. If RuboCop fails to run (say `bundle exec` outside an installed bundle), rbcop exits 2 with its error.
 
-RuboCop loads the project's Ruby (its Gemfile, plugins, cop files), as it would if you ran it, so rbcop says so first on stderr: `rbcop: running bundle exec rubocop for 4 cops it does not implement (ThreadSafety: 4); set RBCOP_FALLBACK=0 to skip RuboCop` (stdout is unchanged; no line under `RBCOP_FALLBACK=1`, which asked for it). Under `--lsp`, `--mcp`, the server options, `--editor-mode` or `--stdin` (an editor opening a project), wherever they come from (command line, `.rubocop`, `RUBOCOP_OPTS`), the fallback and the hand-off run only with `RBCOP_FALLBACK=1`. `RBCOP_FALLBACK=0` turns it off: no Ruby is started for it at all. rbcop also runs `ruby` to render ERB in config files and to fetch remote `inherit_from` URLs, only when the config has them; [docs/known-gaps.md](docs/known-gaps.md) ("Security: when rbcop runs Ruby") lists every case and how to avoid each.
+RuboCop loads the project's Ruby (its Gemfile, plugins, cop files), as it would if you ran it, so rbcop says so first on stderr: `rbcop: running bundle exec rubocop for 41 cops it does not implement (Sorbet: 41); set RBCOP_FALLBACK=0 to skip RuboCop` (stdout is unchanged; no line under `RBCOP_FALLBACK=1`, which asked for it). Under `--lsp`, `--mcp`, the server options, `--editor-mode` or `--stdin` (an editor opening a project), wherever they come from (command line, `.rubocop`, `RUBOCOP_OPTS`), the fallback and the hand-off run only with `RBCOP_FALLBACK=1`. `RBCOP_FALLBACK=0` turns it off: no Ruby is started for it at all. rbcop also runs `ruby` to render ERB in config files and to fetch remote `inherit_from` URLs, only when the config has them; [docs/known-gaps.md](docs/known-gaps.md) ("Security: when rbcop runs Ruby") lists every case and how to avoid each.
 
 With no RuboCop found, or with `RBCOP_FALLBACK=0`, rbcop skips those cops and says so on stderr instead of skipping them silently:
 
 ```
-rbcop: not running 45 cops it does not implement (Sorbet: 41, ThreadSafety: 4); set RBCOP_FALLBACK=1 to run them with RuboCop
+rbcop: not running 41 cops it does not implement (Sorbet: 41); set RBCOP_FALLBACK=1 to run them with RuboCop
 rbcop: RuboCop runs them when one is found: add the rubocop gem to the bundle, put rubocop on PATH, or set RBCOP_RUBOCOP
 ```
 

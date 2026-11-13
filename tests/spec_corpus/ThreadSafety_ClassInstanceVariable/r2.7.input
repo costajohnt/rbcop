@@ -1,0 +1,420 @@
+==> .rubocop.yml 141 <==
+---
+plugins:
+- rubocop-thread_safety
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 73 <==
+class Test
+  def self.some_method(params)
+    @params = params
+  end
+end
+
+==> 001/001.rb 136 <==
+class Test
+  SEMAPHORE = Mutex.new
+  def self.some_method(params)
+    SEMAPHORE.synchronize do
+      @params = params
+    end
+  end
+end
+
+==> 002/002.rb 129 <==
+class Test
+  SEMAPHORE = Mutex.new
+  def self.types
+    SEMAPHORE
+      .synchronize { @all_types ||= type_class.all }
+  end
+end
+
+==> 003/003.rb 122 <==
+class Test
+  def self.factory_method
+    define_method(:some_method) do |params|
+      @params = params
+    end
+  end
+end
+
+==> 004/004.rb 148 <==
+class Test
+  def self.factory_method
+    Struct.new(:width, :height) do
+      def area
+        @area ||= width * height
+      end
+    end
+  end
+end
+
+==> 005/005.rb 149 <==
+class Test
+  def self.factory_method
+    Data.define(:width, :height) do
+      def area
+        @area ||= width * height
+      end
+    end
+  end
+end
+
+==> 006/006.rb 132 <==
+class Test
+  def self.factory_method
+    Class.new do
+      def area
+        @area ||= some_computation
+      end
+    end
+  end
+end
+
+==> 007/007.rb 135 <==
+class Test
+  def self.factory_method
+    Class.new do
+      def area
+        instance_variable_get(:@area)
+      end
+    end
+  end
+end
+
+==> 008/008.rb 150 <==
+class Test
+  define_method :generate_new_class do
+    Class.new do
+      def self.area
+        @area ||= some_computation
+      end
+    end
+  end
+end
+
+==> 009/009.rb 65 <==
+class Test
+  def self.some_method
+    do_work(@params)
+  end
+end
+
+==> 010/010.rb 77 <==
+module ClassMethods
+  def some_method(params)
+    @params = params
+  end
+end
+
+==> 011/011.rb 100 <==
+module Test
+  class_methods do
+    def some_method(params)
+      @params = params
+    end
+  end
+end
+
+==> 012/012.rb 123 <==
+module Test
+  class_methods do
+    ->() {
+      def some_method(params)
+        @params = params
+      end
+    }
+  end
+end
+
+==> 013/013.rb 96 <==
+class Test
+  class << self
+    def some_method(params)
+      @params = params
+    end
+  end
+end
+
+==> 014/014.rb 94 <==
+class Test
+  define_singleton_method(:some_method) do |params|
+    @params = params
+  end
+end
+
+==> 015/015.rb 89 <==
+class Test
+  def self.some_method
+    do_work(instance_variable_get(:@params))
+  end
+end
+
+==> 016/016.rb 128 <==
+class Test
+  class << self
+    def some_method(name, params)
+      instance_variable_set(:"@#{name}", params)
+    end
+  end
+end
+
+==> 017/017.rb 100 <==
+module ClassMethods
+  def some_method(params)
+    instance_variable_set(:@params, params)
+  end
+end
+
+==> 018/018.rb 123 <==
+module Test
+  class_methods do
+    def some_method(params)
+      instance_variable_set(:@params, params)
+    end
+  end
+end
+
+==> 019/019.rb 117 <==
+class Test
+  define_singleton_method(:some_method) do |params|
+    instance_variable_set(:@params, params)
+  end
+end
+
+==> 020/020.rb 111 <==
+module Test
+  module_function
+
+  def some_method(params)
+    instance_variable_set(:@params, params)
+  end
+end
+
+==> 021/021.rb 124 <==
+module Test
+  def some_method(params)
+    instance_variable_set(:@params, params)
+  end
+
+  module_function :some_method
+end
+
+==> 022/022.rb 160 <==
+module Test
+  def some_method(params)
+    $mutex.synchronize do
+      instance_variable_set(:@params, params)
+    end
+  end
+
+  module_function :some_method
+end
+
+==> 023/023.rb 88 <==
+module Test
+  module_function
+
+  def some_method(params)
+    @params = params
+  end
+end
+
+==> 024/024.rb 101 <==
+module Test
+  def some_method(params)
+    @params = params
+  end
+
+  module_function :some_method
+end
+
+==> 025/025.rb 90 <==
+def separate_with(separator)
+  Example.class_eval do
+    @separator = separator
+  end
+end
+
+==> 026/026.rb 92 <==
+def separate_with(separator)
+  ::Example.class_eval do
+    @separator = separator
+  end
+end
+
+==> 027/027.rb 90 <==
+def separate_with(separator)
+  Example.class_exec do
+    @separator = separator
+  end
+end
+
+==> 028/028.rb 145 <==
+class Test
+  def self.factory_method
+    define_method(:some_method) do |params|
+      instance_variable_set(:@params, params)
+    end
+  end
+end
+
+==> 029/029.rb 97 <==
+class Test
+  def self.some_method(obj, params)
+    obj.instance_variable_get(:@params)
+  end
+end
+
+==> 030/030.rb 128 <==
+class Test
+  class << self
+    def some_method(obj, params)
+      obj.instance_variable_set(:@params, params)
+    end
+  end
+end
+
+==> 031/031.rb 89 <==
+class Test
+  def some_method(params)
+    @params = params
+    do_work(@params)
+  end
+end
+
+==> 032/032.rb 136 <==
+class Test
+  def some_method(params)
+    instance_variable_set(:@params, params)
+    do_work(instance_variable_get(:@params))
+  end
+end
+
+==> 033/033.rb 104 <==
+module ClassMethods
+  module Other
+    def some_method(params)
+      @params = params
+    end
+  end
+end
+
+==> 034/034.rb 88 <==
+module Test
+  def some_method(params)
+    @params = params
+  end
+
+  module_function
+end
+
+==> 035/035.rb 156 <==
+module Test
+  def some_method(params)
+    @params = params
+  end
+
+  def another_method(params)
+    puts params
+  end
+
+  module_function :another_method
+end
+
+==> 036/036.rb 93 <==
+def separate_with(separator)
+  Utilities.module_eval do
+    @separator = separator
+  end
+end
+
+==> 037/037.rb 93 <==
+def separate_with(separator)
+  Utilities.module_exec do
+    @separator = separator
+  end
+end
+
+==> 038/038.rb 106 <==
+def separate_with(separator)
+  Example.class_eval do
+    def separator
+      @separator
+    end
+  end
+end
+
+==> 039/039.rb 73 <==
+def separate_with(separator)
+  Example.class_eval "@f = Kernel.exit"
+end
+
+==> 040/040.rb 75 <==
+def self.foo
+  prepend_around_action do
+    @language = :haskell
+  end
+end
+
+==> 041/041.rb 75 <==
+def self.foo
+  prepend_before_action do
+    @language = :haskell
+  end
+end
+
+==> 042/042.rb 67 <==
+def self.foo
+  before_action do
+    @language = :haskell
+  end
+end
+
+==> 043/043.rb 74 <==
+def self.foo
+  append_before_action do
+    @language = :haskell
+  end
+end
+
+==> 044/044.rb 67 <==
+def self.foo
+  around_action do
+    @language = :haskell
+  end
+end
+
+==> 045/045.rb 74 <==
+def self.foo
+  append_around_action do
+    @language = :haskell
+  end
+end
+
+==> 046/046.rb 73 <==
+def self.foo
+  append_after_action do
+    @language = :haskell
+  end
+end
+
+==> 047/047.rb 66 <==
+def self.foo
+  after_action do
+    @language = :haskell
+  end
+end
+
+==> 048/048.rb 74 <==
+def self.foo
+  prepend_after_action do
+    @language = :haskell
+  end
+end
+

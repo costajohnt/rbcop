@@ -688,3 +688,12 @@ Style/WordArray
 Style/YAMLFileRead
 Style/YodaCondition
 Style/ZeroLengthPredicate
+ThreadSafety/ActiveSupportCallbacks
+ThreadSafety/ClassAndModuleAttributes
+ThreadSafety/ClassInstanceVariable
+ThreadSafety/DirChdir
+ThreadSafety/LazySynchronizationPrimitive
+ThreadSafety/MethodRedefinition
+ThreadSafety/MutableClassInstanceVariable
+ThreadSafety/NewThread
+ThreadSafety/RackMiddlewareInstanceVariable

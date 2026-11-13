@@ -1,4 +1,4 @@
-# Available cops (753) + config for <project>: 
+# Available cops (763) + config for <project>: 
 # Department 'Bundler' (7):
 Bundler/DuplicatedGem:
   Description: Checks for duplicate gem entries in Gemfile.
@@ -7062,4 +7062,65 @@ Style/ZeroLengthPredicate:
   Safe: false
   VersionAdded: '0.37'
   VersionChanged: '0.39'
+
+# Department 'ThreadSafety' (10):
+ThreadSafety/ActiveSupportCallbacks:
+  Description: Avoid mutating ActiveSupport callback chains at runtime.
+  Enabled: pending
+  VersionAdded: '0.8'
+
+ThreadSafety/ClassAndModuleAttributes:
+  Description: Avoid mutating class and module attributes.
+  Enabled: true
+  ActiveSupportClassAttributeAllowed: false
+
+ThreadSafety/ClassInstanceVariable:
+  Description: Avoid class instance variables.
+  Enabled: true
+
+ThreadSafety/DirChdir:
+  Description: Avoid using `Dir.chdir` due to its process-wide effect.
+  Enabled: true
+  AllowCallWithBlock: false
+
+ThreadSafety/EnvMutation:
+  Description: Avoid mutating `ENV` due to its process-wide effect.
+  Enabled: false
+  VersionAdded: '0.8'
+
+ThreadSafety/LazySynchronizationPrimitive:
+  Description: Do not lazily initialize synchronization primitives with `||=`.
+  Enabled: pending
+  VersionAdded: '0.8'
+
+ThreadSafety/MethodRedefinition:
+  Description: Do not use `remove_method` followed by method definition.
+  Enabled: pending
+  VersionAdded: '0.8'
+  References:
+  - https://bugs.ruby-lang.org/issues/13574
+
+# Supports --autocorrect
+ThreadSafety/MutableClassInstanceVariable:
+  Description: Do not assign mutable objects to class instance variables.
+  Enabled: true
+  EnforcedStyle: literals
+  SafeAutoCorrect: false
+  SupportedStyles:
+  - literals
+  - strict
+
+ThreadSafety/NewThread:
+  Description: Avoid starting new threads. Let a framework like Sidekiq handle the threads.
+  Enabled: true
+
+ThreadSafety/RackMiddlewareInstanceVariable:
+  Description: Avoid instance variables in Rack middleware.
+  Enabled: true
+  Include:
+  - app/middleware/**/*.rb
+  - lib/middleware/**/*.rb
+  - app/middlewares/**/*.rb
+  - lib/middlewares/**/*.rb
+  AllowedIdentifiers: []
 

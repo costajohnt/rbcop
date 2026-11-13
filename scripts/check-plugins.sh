@@ -26,7 +26,7 @@ corpus=${RBCOP_CORPUS:?set RBCOP_CORPUS}
 # Resolved: check-autocorrect.sh strips "$RBCOP_CORPUS/<corpus>/" from the oracles' paths.
 corpus2=$(cd "${RBCOP_CORPUS2:-$corpus/../corpus2}" && pwd)
 status=0
-for spec in performance:Performance rails:Rails minitest:Minitest rspec:RSpec,RSpecRails,FactoryBot,Capybara; do
+for spec in performance:Performance rails:Rails minitest:Minitest rspec:RSpec,RSpecRails,FactoryBot,Capybara thread_safety:ThreadSafety; do
   plugin=${spec%%:*} dept=${spec#*:}
   oracle=${RBCOP_PLUGIN_ORACLE:-${RBCOP_ORACLE:?set RBCOP_ORACLE}/../oracle-$plugin}
   [ -d "$oracle" ] || { echo "check-plugins: no oracles for rubocop-$plugin in $oracle" >&2; exit 1; }

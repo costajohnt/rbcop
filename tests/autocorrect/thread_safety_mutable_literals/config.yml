@@ -1,0 +1,10 @@
+# ThreadSafety/MutableClassInstanceVariable, EnforcedStyle: literals: the gem's shared spec examples
+# (mutable and immutable values, = and ||=, masgn, splats, ranges, operators), expanded by hand.
+plugins:
+  - rubocop-thread_safety
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.3
+ThreadSafety/MutableClassInstanceVariable:
+  EnforcedStyle: literals

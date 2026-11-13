@@ -1,0 +1,52 @@
+==> offenses exit=1 2412 <==
+000/000.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.
+001/001.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.
+002/002.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.
+003/003.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.
+004/004.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.
+005/005.rb:2:3: C: ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.
+006/006.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir&.chdir` due to its process-wide effect.
+007/007.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir&.chdir` due to its process-wide effect.
+008/008.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir&.chdir` due to its process-wide effect.
+009/009.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir&.chdir` due to its process-wide effect.
+010/010.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir&.chdir` due to its process-wide effect.
+011/011.rb:2:3: C: ThreadSafety/DirChdir: Avoid using `Dir&.chdir` due to its process-wide effect.
+012/012.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.chdir` due to its process-wide effect.
+013/013.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.chdir` due to its process-wide effect.
+014/014.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.chdir` due to its process-wide effect.
+015/015.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.chdir` due to its process-wide effect.
+016/016.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.chdir` due to its process-wide effect.
+017/017.rb:2:3: C: ThreadSafety/DirChdir: Avoid using `FileUtils.chdir` due to its process-wide effect.
+018/018.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.cd` due to its process-wide effect.
+019/019.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.cd` due to its process-wide effect.
+020/020.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.cd` due to its process-wide effect.
+021/021.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.cd` due to its process-wide effect.
+022/022.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.cd` due to its process-wide effect.
+023/023.rb:2:3: C: ThreadSafety/DirChdir: Avoid using `FileUtils.cd` due to its process-wide effect.
+
+==> autocorrect exit=1 2412 <==
+000/000.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.
+001/001.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.
+002/002.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.
+003/003.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.
+004/004.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.
+005/005.rb:2:3: C: ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.
+006/006.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir&.chdir` due to its process-wide effect.
+007/007.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir&.chdir` due to its process-wide effect.
+008/008.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir&.chdir` due to its process-wide effect.
+009/009.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir&.chdir` due to its process-wide effect.
+010/010.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir&.chdir` due to its process-wide effect.
+011/011.rb:2:3: C: ThreadSafety/DirChdir: Avoid using `Dir&.chdir` due to its process-wide effect.
+012/012.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.chdir` due to its process-wide effect.
+013/013.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.chdir` due to its process-wide effect.
+014/014.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.chdir` due to its process-wide effect.
+015/015.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.chdir` due to its process-wide effect.
+016/016.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.chdir` due to its process-wide effect.
+017/017.rb:2:3: C: ThreadSafety/DirChdir: Avoid using `FileUtils.chdir` due to its process-wide effect.
+018/018.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.cd` due to its process-wide effect.
+019/019.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.cd` due to its process-wide effect.
+020/020.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.cd` due to its process-wide effect.
+021/021.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.cd` due to its process-wide effect.
+022/022.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.cd` due to its process-wide effect.
+023/023.rb:2:3: C: ThreadSafety/DirChdir: Avoid using `FileUtils.cd` due to its process-wide effect.
+

@@ -1,0 +1,34 @@
+==> offenses exit=1 1470 <==
+000/000.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+001/001.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+002/002.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+003/003.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+004/004.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+005/005.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+006/006.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+007/007.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+008/008.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+009/009.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+010/010.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+011/011.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+012/012.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+013/013.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+014/014.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+
+==> autocorrect exit=1 1470 <==
+000/000.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+001/001.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+002/002.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+003/003.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+004/004.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+005/005.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+006/006.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+007/007.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+008/008.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+009/009.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+010/010.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+011/011.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+012/012.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+013/013.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+014/014.rb:1:1: C: ThreadSafety/EnvMutation: Avoid mutating `ENV` due to its process-wide effect.
+

@@ -1,0 +1,107 @@
+==> offenses exit=1 1518 <==
+002/002.rb:3:18: C: [Correctable] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+003/003.rb:3:18: C: [Correctable] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+004/004.rb:3:18: C: [Correctable] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+005/005.rb:6:22: C: [Correctable] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+008/008.rb:3:18: C: [Correctable] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+009/009.rb:3:18: C: [Correctable] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+010/010.rb:3:18: C: [Correctable] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+011/011.rb:6:22: C: [Correctable] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+012/012.rb:3:18: C: [Correctable] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+013/013.rb:2:13: C: [Correctable] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+014/014.rb:2:13: C: [Correctable] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+
+==> autocorrect exit=0 1496 <==
+002/002.rb:3:18: C: [Corrected] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+003/003.rb:3:18: C: [Corrected] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+004/004.rb:3:18: C: [Corrected] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+005/005.rb:6:22: C: [Corrected] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+008/008.rb:3:18: C: [Corrected] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+009/009.rb:3:18: C: [Corrected] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+010/010.rb:3:18: C: [Corrected] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+011/011.rb:6:22: C: [Corrected] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+012/012.rb:3:18: C: [Corrected] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+013/013.rb:2:13: C: [Corrected] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+014/014.rb:2:13: C: [Corrected] ThreadSafety/MutableClassInstanceVariable: Freeze mutable objects assigned to class instance variables.
+
+==> corrected/002/002.rb 70 <==
+class FooTest
+  setup do
+    @something = { a: "A" }.freeze
+  end
+end
+
+==> corrected/003/003.rb 79 <==
+class FooTest < MyTest
+  setup do
+    @something = { a: "A" }.freeze
+  end
+end
+
+==> corrected/004/004.rb 67 <==
+module Foo
+  setup do
+    @something = { a: "A" }.freeze
+  end
+end
+
+==> corrected/005/005.rb 149 <==
+module RotationCoordinatorTests
+  extend ActiveSupport::Concern
+
+  included do
+    setup do
+      @coordinator = { a: "A" }.freeze
+    end
+  end
+end
+
+==> corrected/008/008.rb 73 <==
+class FooTest
+  teardown do
+    @something = { a: "A" }.freeze
+  end
+end
+
+==> corrected/009/009.rb 82 <==
+class FooTest < MyTest
+  teardown do
+    @something = { a: "A" }.freeze
+  end
+end
+
+==> corrected/010/010.rb 70 <==
+module Foo
+  teardown do
+    @something = { a: "A" }.freeze
+  end
+end
+
+==> corrected/011/011.rb 152 <==
+module RotationCoordinatorTests
+  extend ActiveSupport::Concern
+
+  included do
+    teardown do
+      @coordinator = { a: "A" }.freeze
+    end
+  end
+end
+
+==> corrected/012/012.rb 80 <==
+class FooTest < MyTest
+  set_up do
+    @something = { a: "A" }.freeze
+  end
+end
+
+==> corrected/013/013.rb 55 <==
+class M
+  @foobar = (ClassA.new foo: 'bar').freeze
+end
+
+==> corrected/014/014.rb 56 <==
+module M
+  @foobar = (ClassA.new foo: 'bar').freeze
+end
+
