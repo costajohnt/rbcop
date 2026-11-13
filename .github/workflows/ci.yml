@@ -63,3 +63,29 @@ jobs:
           rubocop --version
       - name: Fast tier
         run: scripts/ci.sh
+
+  # Every recorded fixture under tests/ re-records unchanged with RuboCop 1.92.2 (#728). Its own
+  # job, beside the fast tier: it needs no Rust, and RuboCop runs take minutes. The recordings also
+  # had mcp and rubydex (and their dependencies) on the gem path; they go into a gem home of their
+  # own, as on the CI host (docs/history/rubocop-upgrades.md).
+  fixtures:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ruby/setup-ruby@824c0e29fdfc7d689c191c27acc969d2d04b7dd8 # v1.331.0
+      - name: RuboCop 1.92.2, plugin pins, mcp and rubydex
+        env:
+          FIXTURE_GEMS: hana:1.3.7 simpleidn:0.3.0 json_schemer:2.5.0 mcp:0.25.0 rubydex:0.4.1
+        run: |
+          set -eu
+          for g in $GEMS; do
+            gem install --no-document --ignore-dependencies "${g%%:*}" -v "${g#*:}"
+          done
+          for g in $FIXTURE_GEMS; do
+            gem install --no-document --ignore-dependencies --install-dir "$RUNNER_TEMP/fixture-gems" "${g%%:*}" -v "${g#*:}"
+          done
+      - name: Fixtures match RuboCop 1.92.2
+        run: GEM_PATH="$RUNNER_TEMP/fixture-gems:$(gem env gempath)" scripts/check-fixtures.sh
