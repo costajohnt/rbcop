@@ -396,6 +396,12 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
     follow-up `unterminated string meets end of file`; the `{{` template above):
     `scripts/check-skip.txt` leaves them out of check-cops.sh, and they and two RuboCop -A outputs
     with the same differences are in `scripts/autocorrect-skip.txt`.
+  - After recovery resumes, the next failure comes from re-parsing the rest of the file, but it is
+    looked up in (and the walk goes on over) the tokens and constructs of Prism's whole-file parse.
+    Where the two lexes differ after the resume point (` %>` after an identifier is a percent
+    literal for the parser gem, not in Prism's error-recovered lex), the follow-ups differ (#753).
+    corpus2's devise ERB migration templates (target 2.7, 13 diff lines) are in
+    `scripts/check-skip.txt` for this.
 - `-d/--debug` (#297, tests/debug.rs) prints RuboCop's lines: each config file as it loads
   (`For <dir>: `, `configuration from`, `Inheriting `, `AllCops/Exclude `, `Plugin `, `Ignoring
   AllCops/Exclude from parent folders`), a setting an inherited file's overrides, `Use parallel by
