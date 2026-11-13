@@ -1,4 +1,5 @@
 use crate::helpers::node_types::range;
+use crate::helpers::const_name::const_name;
 use crate::prelude::*;
 use crate::source::Source;
 use helpers::if_node::{is_elsif, parts, Body, Else};
@@ -64,19 +65,6 @@ fn asg_type(n: &Node) -> Option<&'static str> {
             }
         }
         _ => return None,
-    })
-}
-
-/// rubocop-ast `const_name` of a namespace node.
-fn const_name(n: &Node) -> Option<String> {
-    if let Some(c) = n.as_constant_read_node() {
-        return Some(String::from_utf8_lossy(c.name().as_slice()).into_owned());
-    }
-    let p = n.as_constant_path_node()?;
-    let name = String::from_utf8_lossy(p.name()?.as_slice()).into_owned();
-    Some(match p.parent() {
-        None => name,
-        Some(ns) => format!("{}::{name}", const_name(&ns).unwrap_or_default()),
     })
 }
 
