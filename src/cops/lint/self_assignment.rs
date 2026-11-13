@@ -1,3 +1,4 @@
+use crate::helpers::node_types::plain_call;
 use crate::helpers::node_types::range;
 use crate::prelude::*;
 use crate::helpers::comment_association;
@@ -119,11 +120,6 @@ fn same_opt(src: &Source, a: Option<Node>, b: Option<Node>) -> bool {
 
 fn same_list(src: &Source, a: &[Node], b: &[Node]) -> bool {
     a.len() == b.len() && a.iter().zip(b).all(|(x, y)| helpers::node_equality::same(src, range(x), range(y)))
-}
-
-/// A parser `send`/`csend` (a call carrying a `{}`/`do` block is a parser `block`).
-fn plain_call<'pr>(node: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
-    node.as_call_node().filter(|c| !c.block().is_some_and(|b| b.as_block_node().is_some()))
 }
 
 /// Parser arguments of a call: positional ones plus a `&blk` block pass.

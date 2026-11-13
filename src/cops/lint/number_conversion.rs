@@ -5,6 +5,7 @@ use ruby_prism::Visit;
 use crate::ast::{is_csend, node_text, send_args, send_range};
 use crate::helpers::allowed;
 use crate::helpers::const_name::const_name;
+use crate::helpers::node_types::plain_call;
 use crate::prelude::*;
 
 pub const NAME: &str = "Lint/NumberConversion";
@@ -111,11 +112,6 @@ fn handle_as_symbol(cx: &mut Cx, call: &ruby_prism::CallNode, arg: &Node) {
         }
         c.replace(sym_start, sym_end, &replacement);
     });
-}
-
-/// A parser `send` (a Prism call that owns no `do`/`{}` block).
-fn plain_call<'pr>(node: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
-    node.as_call_node().filter(|c| c.block().is_none_or(|b| b.as_block_node().is_none()))
 }
 
 fn allow_receiver(cx: &Cx, receiver: &Node) -> bool {
