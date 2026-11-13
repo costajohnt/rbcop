@@ -43,3 +43,22 @@ fn html_escapes_messages_and_paths() {
     assert!(html.contains("x&lt;b&gt;.rb"));
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// -a/-A writes each corrected file after the whole run is inspected; a file that changed on disk
+/// since it was read and corrected (an editor save mid-run) is left alone, not overwritten with the
+/// correction of its old content (#722).
+#[test]
+fn autocorrect_write_skips_a_file_changed_since_read() {
+    let dir = scratch("changed-since-read");
+    let file = dir.join("a.rb");
+    fs::write(&file, "edited\n").unwrap();
+    let roots = [fs::canonicalize(&dir).unwrap()];
+    // Same length, other bytes; then another length.
+    for read in [&b"before\n"[..], b"x\n"] {
+        assert!(!rbcop::autocorrect::write_source(&file, "corrected\n", Some(read), &roots).unwrap());
+        assert_eq!(fs::read_to_string(&file).unwrap(), "edited\n");
+    }
+    assert!(rbcop::autocorrect::write_source(&file, "corrected\n", Some(b"edited\n"), &roots).unwrap());
+    assert_eq!(fs::read_to_string(&file).unwrap(), "corrected\n");
+    fs::remove_dir_all(&dir).unwrap();
+}

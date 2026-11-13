@@ -1684,13 +1684,19 @@ pub(crate) fn qualify_cop_lists(
 /// errors printed for the file, what the result cache needs to save it, and the file's
 /// `--auto-gen-config` updates (rbcop::autogen).
 type Linted = Result<
-    (FileReport, Option<String>, Option<String>, Vec<String>, Vec<(String, bool)>, Saving, rbcop::autogen::Updates),
+    (FileReport, Option<Rewrite>, Option<String>, Vec<String>, Vec<(String, bool)>, Saving, rbcop::autogen::Updates),
     String,
 >;
 
+/// Why -a/-A left a corrected file alone: another write since it was read (#722).
+const CHANGED_SINCE_READ: &str = "it changed on disk after it was read";
+
+/// A corrected source, with the bytes read from the file it replaces (autocorrect::Corrected::read).
+type Rewrite = (String, Option<Vec<u8>>);
+
 /// What `lint` returns for one file: the report, the corrected source, the correction loop's
 /// error, the result cache key to save the report under, and the cache entry it was loaded from.
-type LintResult = Result<(FileReport, Option<String>, Option<String>, Option<String>, Option<PathBuf>), String>;
+type LintResult = Result<(FileReport, Option<Rewrite>, Option<String>, Option<String>, Option<PathBuf>), String>;
 
 /// A file that was inspected with the result cache on: its cache key, and whether an error was
 /// recorded while inspecting it (Runner#errors).
@@ -2269,7 +2275,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             // --stdin with -a/-A: the corrected source is printed after the report (@options[:stdin]).
             if let Some(mode) = mode {
                 let c = rbcop::autocorrect::correct_bytes(path, &display, bytes.clone(), cfg, &selected, mode);
-                return Ok((c.report, c.source, c.error, None, None));
+                return Ok((c.report, c.source.map(|s| (s, None)), c.error, None, None));
             }
             return Ok((runner::inspect_bytes(path, &display, bytes.clone(), cfg, &selected), None, None, None, None));
         }
@@ -2294,7 +2300,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
         }
         if let Some(mode) = mode {
             let c = rbcop::autocorrect::correct_file(path, &display, cfg, &selected, mode)?;
-            return Ok((c.report, c.source, c.error, key, None));
+            return Ok((c.report, c.source.map(|s| (s, c.read)), c.error, key, None));
         }
         let bytes = fs::read(path).map_err(|e| runner::io_error(&e, path))?;
         Ok((runner::inspect_bytes(path, &display, bytes, cfg, &selected), None, None, None, None))
@@ -2433,6 +2439,8 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     let mut cache_dirty = false;
     if error.is_none() {
         let mut cop_notes = Some((cop_warnings, cop_error));
+        // The directories of the files written below are synced once, at the end of the run.
+        let _synced = rbcop::autocorrect::SyncWrittenDirs;
         let mut stopped = false;
         let mut similar_view: Option<Option<usize>> = None;
         for (idx, ((path, cfg), linted)) in jobs.iter().zip(reports.iter_mut()).enumerate() {
@@ -2478,19 +2486,25 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             // Deliberate difference: under -a/-A a file that resolves outside the project (the
             // working directory and the command-line paths) is not written; it is reported as
             // without -a/-A. write_source checks again right before writing. (`--diff` writes nothing.)
+            // Likewise a file that no longer holds what was read and corrected (#722).
             let refused = match &linted {
-                Ok((_, Some(_), _, _, _, _, _)) if stdin_text.is_none() && !cli.diff => {
-                    fs::canonicalize(path).ok().filter(|real| rbcop::autocorrect::outside_roots(real, &write_roots))
+                Ok((_, Some((_, read)), _, _, _, _, _)) if stdin_text.is_none() && !cli.diff => {
+                    match fs::canonicalize(path) {
+                        Ok(real) if rbcop::autocorrect::outside_roots(&real, &write_roots) => {
+                            Some(format!("it resolves to {}, outside the project", real.display()))
+                        }
+                        Ok(real) if read.as_deref().is_some_and(|r| !rbcop::autocorrect::unchanged(&real, r)) => {
+                            Some(CHANGED_SINCE_READ.to_string())
+                        }
+                        _ => None,
+                    }
                 }
                 _ => None,
             };
             let linted = match refused {
-                Some(real) => {
+                Some(why) => {
                     let display = rbcop::config::relative_path(path, &cwd);
-                    eprintln!(
-                        "rbcop: not autocorrecting {display}: it resolves to {}, outside the project",
-                        real.display()
-                    );
+                    eprintln!("rbcop: not autocorrecting {display}: {why}");
                     thread::scope(|s| {
                         big_stack().spawn_scoped(s, || lint_one(path, cfg, None)).unwrap().join().unwrap()
                     })
@@ -2585,13 +2599,21 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                     }
                 }
             } else if stdin_text.is_some() {
-                stdin_corrected = corrected;
-            } else if let Some(new) = &corrected
-                && let Err(e) = rbcop::autocorrect::write_source(path, new, &write_roots)
-            {
-                error = Some(runner::io_error(&e, path));
-                stopped = true;
-                break;
+                stdin_corrected = corrected.map(|(new, _)| new);
+            } else if let Some((new, read)) = &corrected {
+                match rbcop::autocorrect::write_source(path, new, read.as_deref(), &write_roots) {
+                    Ok(true) => {}
+                    // Changed since the check above: left alone, though reported as corrected.
+                    Ok(false) => eprintln!(
+                        "rbcop: not autocorrecting {}: {CHANGED_SINCE_READ}",
+                        rbcop::config::relative_path(path, &cwd)
+                    ),
+                    Err(e) => {
+                        error = Some(runner::io_error(&e, path));
+                        stopped = true;
+                        break;
+                    }
+                }
             }
             // Runner#process_file: `errors << e`, so the summary lists it and the run fails.
             if let Some(e) = loop_error {

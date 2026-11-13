@@ -192,6 +192,9 @@ pub struct Corrected {
     pub source: Option<String>,
     /// `Infinite loop detected in <path> and caused by <cops>`, if the loop gave up.
     pub error: Option<String>,
+    /// With a correction from `correct_file`: the bytes read, for `write_source` to check that the
+    /// file still holds them.
+    pub read: Option<Vec<u8>>,
 }
 
 /// What the next ProcessedSource makes of a corrected source: the text, or Lint/Syntax's message.
@@ -293,7 +296,7 @@ fn correct(
         abort: runner::take_abort(),
         diffs,
     };
-    Corrected { source: changed.then(|| written.to_string()), report, error: pass.error }
+    Corrected { source: changed.then(|| written.to_string()), report, error: pass.error, read: None }
 }
 
 /// parser's Source::Buffer#source: CRLF normalised to LF (what cops see and corrections apply to).
@@ -393,7 +396,11 @@ pub fn correct_file(
     mode: Mode,
 ) -> Result<Corrected, String> {
     let bytes = std::fs::read(path).map_err(|e| runner::io_error(&e, path))?;
-    Ok(correct_bytes(path, display, bytes, cfg, selected, mode))
+    let mut c = correct_bytes(path, display, bytes.clone(), cfg, selected, mode);
+    if c.source.is_some() {
+        c.read = Some(bytes);
+    }
+    Ok(c)
 }
 
 /// `correct` for a source already decoded (`--lsp` buffers: Ruby strings from JSON are UTF-8, so
@@ -424,6 +431,7 @@ pub fn correct_bytes(
         report: runner::inspect_bytes(path, display, bytes, cfg, selected),
         source: None,
         error: None,
+        read: None,
     };
     match crate::source::reencode(bytes.clone()) {
         crate::source::Reencoded::Text(text) => {
@@ -453,8 +461,13 @@ pub fn correct_bytes(
 /// write. The directories from that root down to the file are then opened one by one without
 /// following symlinks, and every later step works relative to the last one (`openat`, `renameat`),
 /// so a directory swapped for a symlink after the check fails the write instead of redirecting it.
+///
+/// Deliberate difference: given the bytes the file held when it was `read`, a file that no longer
+/// holds them (changed since, by an editor or another tool during a long run) is left alone and
+/// `Ok(false)` returned. Ok(true): written.
 // ponytail: extended attributes and ACLs are not copied to the renamed file.
-pub fn write_source(path: &Path, new: &str, roots: &[PathBuf]) -> std::io::Result<()> {
+// ponytail: a change between this check and the rename is still overwritten (microseconds, not the run).
+pub fn write_source(path: &Path, new: &str, read: Option<&[u8]>, roots: &[PathBuf]) -> std::io::Result<bool> {
     use std::fs;
     use std::io::Write;
     use std::os::unix::fs::MetadataExt;
@@ -476,8 +489,14 @@ pub fn write_source(path: &Path, new: &str, roots: &[PathBuf]) -> std::io::Resul
         dir = at::open(&dir, c.as_os_str(), at::DIR | libc::O_NOFOLLOW, 0)?;
     }
     // File.open(path, 'w') fails on a file that is not writable; the rename must not get round that.
-    let mut file = at::open(&dir, name, libc::O_WRONLY | libc::O_NOFOLLOW, 0)?;
+    let access = if read.is_some() { libc::O_RDWR } else { libc::O_WRONLY };
+    let file = at::open(&dir, name, access | libc::O_NOFOLLOW, 0)?;
     let meta = file.metadata()?;
+    if let Some(read) = read
+        && !holds(&file, read)?
+    {
+        return Ok(false);
+    }
     // SAFETY: geteuid has no preconditions.
     if meta.nlink() == 1 && meta.uid() == unsafe { libc::geteuid() } {
         // An unguessable name, created exclusively (O_EXCL: never an existing file or symlink) and
@@ -499,14 +518,64 @@ pub fn write_source(path: &Path, new: &str, roots: &[PathBuf]) -> std::io::Resul
                 if written.is_err() {
                     let _ = at::unlink(&dir, tmp);
                 }
-                return written;
+                written?;
+                WRITTEN_DIRS.lock().unwrap_or_else(std::sync::PoisonError::into_inner).insert(parent.to_path_buf());
+                return Ok(true);
             }
             drop(f);
             let _ = at::unlink(&dir, tmp);
         }
     }
-    file.set_len(0)?;
-    file.write_all(new.as_bytes())
+    // In place: the new content over the old before the file is cut to its length, so a full disk
+    // or a kill leaves the old content's tail rather than an empty or short file.
+    use std::os::unix::fs::FileExt;
+    file.write_all_at(new.as_bytes(), 0)?;
+    file.set_len(new.len() as u64)?;
+    file.sync_all()?;
+    Ok(true)
+}
+
+/// Whether `file` is a regular file holding exactly `read` (no more than one byte past it is read).
+fn holds(file: &std::fs::File, read: &[u8]) -> std::io::Result<bool> {
+    use std::io::Read;
+    if !file.metadata()?.is_file() {
+        return Ok(false);
+    }
+    let mut now = Vec::with_capacity(read.len() + 1);
+    Read::take(file, read.len() as u64 + 1).read_to_end(&mut now)?;
+    Ok(now == read)
+}
+
+/// Whether the file at `real` (a canonical path) still holds `read`, for the check before
+/// `write_source`. Never follows a symlink or blocks on a FIFO; a file that cannot be opened or
+/// read, or is not a regular file, counts as unchanged, so `write_source` reports it as it did.
+pub fn unchanged(real: &Path, read: &[u8]) -> bool {
+    use std::os::unix::fs::OpenOptionsExt;
+    let file = std::fs::OpenOptions::new().read(true).custom_flags(libc::O_NOFOLLOW | libc::O_NONBLOCK).open(real);
+    match file {
+        Ok(f) if f.metadata().is_ok_and(|m| m.is_file()) => holds(&f, read).unwrap_or(true),
+        _ => true,
+    }
+}
+
+/// Directories `write_source` renamed a file in, not yet synced.
+static WRITTEN_DIRS: std::sync::Mutex<std::collections::BTreeSet<PathBuf>> =
+    std::sync::Mutex::new(std::collections::BTreeSet::new());
+
+/// Syncs, when dropped, each directory `write_source` renamed a file in, once (a sync per file made
+/// `-a` on thousands of files several times slower), so the renames survive a power loss.
+// ponytail: best effort: a directory that cannot be opened or synced is skipped.
+pub struct SyncWrittenDirs;
+
+impl Drop for SyncWrittenDirs {
+    fn drop(&mut self) {
+        let dirs = std::mem::take(&mut *WRITTEN_DIRS.lock().unwrap_or_else(std::sync::PoisonError::into_inner));
+        for d in dirs {
+            if let Ok(f) = std::fs::File::open(&d) {
+                let _ = f.sync_all();
+            }
+        }
+    }
 }
 
 /// Create or replace (`append`: append to) `path` with `content`, refusing a file whose directory
@@ -566,7 +635,9 @@ pub fn write_contained(path: &Path, content: &[u8], roots: &[PathBuf], append: b
     let written = (|| {
         f.set_permissions(meta.permissions())?;
         f.write_all(content)?;
-        at::rename(&dir, tmp, name)
+        f.sync_all()?;
+        at::rename(&dir, tmp, name)?;
+        at::sync_dir(&dir)
     })();
     if let Err(e) = written {
         let _ = at::unlink(&dir, tmp);
@@ -638,6 +709,19 @@ mod at {
         let d = dir.as_raw_fd();
         // SAFETY: an open descriptor and two NUL-terminated strings, all alive for the call.
         check(unsafe { libc::renameat(d, from.as_ptr(), d, to.as_ptr()) }).map(drop)
+    }
+
+    /// fsync the directory `dir` (a search-only descriptor cannot be synced on Linux, so `.` is
+    /// opened again for reading), making a rename in it durable. Skipped where the directory cannot
+    /// be read or its filesystem does not sync directories.
+    pub fn sync_dir(dir: &File) -> Result<()> {
+        let Ok(d) = open(dir, OsStr::new("."), libc::O_RDONLY | libc::O_DIRECTORY | libc::O_NOFOLLOW, 0) else {
+            return Ok(());
+        };
+        match d.sync_all() {
+            Err(e) if matches!(e.raw_os_error(), Some(libc::EINVAL | libc::ENOTSUP | libc::EROFS)) => Ok(()),
+            r => r,
+        }
     }
 
     pub fn unlink(dir: &File, name: &OsStr) -> Result<()> {
@@ -786,15 +870,24 @@ mod tests {
         std::fs::write(&file, "old\n").unwrap();
         std::fs::set_permissions(&file, std::fs::Permissions::from_mode(0o640)).unwrap();
         let root = std::fs::canonicalize(&dir).unwrap();
-        write_source(&file, "new\n", std::slice::from_ref(&root)).unwrap();
+        write_source(&file, "new\n", None, std::slice::from_ref(&root)).unwrap();
         assert_eq!(std::fs::read_to_string(&file).unwrap(), "new\n");
         assert_eq!(std::fs::metadata(&file).unwrap().permissions().mode() & 0o777, 0o640);
         assert_eq!(std::fs::read_dir(&sub).unwrap().count(), 1, "temp file left behind");
         // A file argument is its own root.
-        write_source(&file, "again\n", &[std::fs::canonicalize(&file).unwrap()]).unwrap();
+        write_source(&file, "again\n", None, &[std::fs::canonicalize(&file).unwrap()]).unwrap();
         assert_eq!(std::fs::read_to_string(&file).unwrap(), "again\n");
-        let err = write_source(&file, "no\n", &[root.join("elsewhere")]).unwrap_err();
+        let err = write_source(&file, "no\n", None, &[root.join("elsewhere")]).unwrap_err();
         assert_eq!(err.kind(), std::io::ErrorKind::PermissionDenied);
+        // A hard-linked file is written in place: both names see the new, shorter content.
+        let link = sub.join("y.rb");
+        std::fs::hard_link(&file, &link).unwrap();
+        write_source(&file, "z\n", None, std::slice::from_ref(&root)).unwrap();
+        assert_eq!(std::fs::read_to_string(&link).unwrap(), "z\n");
+        // Checked against what was read (which reads the file), then written from the start.
+        std::fs::write(&file, "longer old\n").unwrap();
+        assert!(write_source(&file, "s\n", Some(b"longer old\n"), std::slice::from_ref(&root)).unwrap());
+        assert_eq!(std::fs::read(&link).unwrap(), b"s\n");
         std::fs::remove_dir_all(&dir).unwrap();
     }
 }
