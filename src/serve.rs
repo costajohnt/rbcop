@@ -199,6 +199,8 @@ impl Runtime {
         }
         let errors: Vec<String> = entries.into_iter().filter(|e| !e.1).map(|e| e.0).collect();
         let errored = runner::take_errored();
+        // Runner#errors has no summary here; drained so a long session's thread stays bounded.
+        let _ = runner::take_errors();
         rbcop::autogen::take_file();
         let (report, corrected, loop_error) =
             linted.map_err(|_| format!("rbcop: internal error while inspecting {}", abs.display()))?;

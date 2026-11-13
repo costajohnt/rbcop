@@ -1703,6 +1703,8 @@ type LintResult = Result<(FileReport, Option<Rewrite>, Option<String>, Option<St
 struct Saving {
     key: Option<String>,
     errored: bool,
+    /// The file's Runner#errors (runner::take_errors on the thread that linted it).
+    errors: Vec<String>,
     /// The cache entry the report was loaded from.
     loaded: Option<PathBuf>,
 }
@@ -2316,6 +2318,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
         .unwrap_or_else(|_| Err(format!("rbcop: internal error while inspecting {}", path.display())));
         let errors = runner::take_file_errors();
         let errored = runner::take_errored();
+        let run_errors = runner::take_errors();
         runner::flush_profile();
         let updates = rbcop::autogen::take_file();
         linted.map(|(report, corrected, loop_error, key, loaded)| {
@@ -2325,7 +2328,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                 loop_error,
                 runner::take_file_warnings(),
                 errors,
-                Saving { key, errored, loaded },
+                Saving { key, errored, errors: run_errors, loaded },
                 updates,
             )
         })
@@ -2435,7 +2438,6 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     let mut inspected: Vec<PathBuf> = Vec::new();
     let mut config_failure = None;
     let mut cop_warnings_raised: Vec<String> = Vec::new();
-    let mut aborted = false;
     let mut cache_dirty = false;
     if error.is_none() {
         let mut cop_notes = Some((cop_warnings, cop_error));
@@ -2526,6 +2528,8 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                 }
             };
             rbcop::autogen::replay(updates);
+            // Runner#errors: only the files the loop reaches count, each once.
+            runner::keep_errors(saving.errors);
             // Runner#save_in_cache: nothing is saved for a file that warned, nor once a cop has
             // raised an error or a warning in this run. Saved here, before anything below
             // changes the report; what RuboCop prints in between, it prints only for files it
@@ -2578,7 +2582,6 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             // (nothing written, no summaries).
             if let Some(e) = report.abort.take() {
                 error = Some(e);
-                aborted = true;
                 stopped = true;
                 break;
             }
@@ -2698,8 +2701,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
         warn_red(global, &e);
         return Ok(ERROR);
     }
-    // An error raised out of Runner#run skips ExecuteRunner#display_summary.
-    if aborted && let Some(e) = error {
+    // An error raised out of Runner#run (a read, write or formatter error, an error while
+    // inspecting) skips ExecuteRunner#display_summary.
+    if let Some(e) = error {
         eprintln!("{}", red(global, e.trim_end()));
         return Ok(ERROR);
     }
@@ -2725,10 +2729,6 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
              triggered it.\nMention the following information in the issue report:\nrbcop {}",
             env!("CARGO_PKG_VERSION")
         );
-    }
-    if let Some(e) = error {
-        eprintln!("{}", red(global, e.trim_end()));
-        return Ok(ERROR);
     }
     let integration =
         matches!(cli.format.as_deref(), Some("h" | "html" | "j" | "json" | "ju" | "junit" | "sa" | "sarif"));

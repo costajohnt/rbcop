@@ -1123,8 +1123,13 @@ thread_local! {
     static VISITING: std::cell::Cell<Option<usize>> = const { std::cell::Cell::new(None) };
 }
 
-/// Runner#errors: every cop error of the run, for the end-of-run summary and the exit status.
-static ERRORS: std::sync::Mutex<Vec<String>> = std::sync::Mutex::new(Vec::new());
+thread_local! {
+    /// Runner#errors: the cop errors recorded on this thread, for the end-of-run summary and the
+    /// exit status. A worker hands a file's errors over with its result (`take_errors`), and the
+    /// reporting loop keeps them (`keep_errors`) only for the result it reports: RuboCop never
+    /// inspects the files after the one a run stops at, nor a file twice.
+    static ERRORS: std::cell::RefCell<Vec<String>> = const { std::cell::RefCell::new(Vec::new()) };
+}
 
 /// Print a cop error now (Commissioner) and keep it for the summary.
 pub fn cop_error(cop: &str, src: &Source, at: usize) {
@@ -1221,7 +1226,7 @@ thread_local! {
 pub fn take_file_errors() -> Vec<(String, bool)> {
     let entries = FILE_ERRORS.with(|e| std::mem::take(&mut *e.borrow_mut()));
     let errors = entries.iter().filter(|e| !e.2).map(|e| e.1.clone());
-    ERRORS.lock().unwrap_or_else(|e| e.into_inner()).extend(errors);
+    ERRORS.with(|e| e.borrow_mut().extend(errors));
     entries.into_iter().map(|e| (e.1, e.2)).collect()
 }
 
@@ -1246,7 +1251,7 @@ fn record_error(cop: Option<&str>, msg: String) {
         None => false,
     });
     if deferred {
-        ERRORS.lock().unwrap_or_else(|e| e.into_inner()).push(msg);
+        ERRORS.with(|e| e.borrow_mut().push(msg));
     } else {
         FILE_ERRORS.with(|e| e.borrow_mut().push((cop.map(String::from), msg, false)));
     }
@@ -1440,12 +1445,17 @@ pub fn aborting() -> bool {
 /// ran in the default 2 MiB thread stack; main.rs gives worker threads 64 MiB of headroom.
 pub const MAX_AST_DEPTH: usize = 1000;
 
-/// The run's cop errors, in file order.
+/// The cop errors recorded on this thread (the run's, on the reporting thread), sorted.
 pub fn take_errors() -> Vec<String> {
-    let mut errors = std::mem::take(&mut *ERRORS.lock().unwrap_or_else(|e| e.into_inner()));
+    let mut errors = ERRORS.with(|e| std::mem::take(&mut *e.borrow_mut()));
     // ExecuteRunner#display_error_summary lists one entry per raise, duplicates included.
     errors.sort();
     errors
+}
+
+/// Keep errors another thread recorded (`take_errors` there) for this thread's summary.
+pub fn keep_errors(errors: Vec<String>) {
+    ERRORS.with(|e| e.borrow_mut().extend(errors));
 }
 
 /// Whether this thread is running a cop callback (its panics are reported by `guarded`).
