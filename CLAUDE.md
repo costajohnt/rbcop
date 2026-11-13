@@ -10,7 +10,7 @@ exit status). `README.md` covers install, usage, parity and speed.
 - `scripts/ci.sh` is the gate: `cargo fmt --check`,
   `cargo clippy --release --all-targets -- -D warnings`, `cargo build --release`,
   `cargo test --release`. With `RBCOP_CORPUS` and `RBCOP_ORACLE` set it also runs
-  `check-cops.sh all`, `check-cold.sh` and `check-plugins.sh`. Prints `ci: ok at <sha>`.
+  `check-cops.sh all`, `check-cold.sh`, `check-plugins.sh` and `check-generated.sh`. Prints `ci: ok at <sha>`.
 - `.github/workflows/ci.yml` runs the fast tier of `scripts/ci.sh` on pull requests and pushes
   to master; the corpus tier runs only on the CI host. `.github/workflows/release.yml` is
   `workflow_dispatch` only. Run `scripts/ci.sh` before pushing.
