@@ -45,7 +45,7 @@ rebuild between committing the checksums and uploading.
    it from the default branch's tip, not the checksums commit), `gem push` each gem, and copy
    `dist/rbcop.rb` into the tap.
 
-With the workflow (once public): run it with stage `build`; it attaches everything and a
+With the workflow: run it with stage `build`; it attaches everything and a
 `SHA256SUMS` to a draft release. Commit that `SHA256SUMS` as `packaging/checksums/X.Y.Z.sha256`,
 point the draft at that commit (`gh release edit vX.Y.Z --target <sha>`: the workflow creates it
 against the default branch, whose tip can be another commit by then), publish it (which creates the

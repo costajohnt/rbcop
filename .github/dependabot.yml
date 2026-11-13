@@ -1,0 +1,23 @@
+# Weekly update PRs, one per ecosystem (grouped). Workflow actions stay pinned to commit SHAs;
+# Dependabot bumps the SHA and its version comment together.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
+  - package-ecosystem: cargo
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      cargo:
+        patterns: ["*"]
+    ignore:
+      # ruby-prism is [patch]ed to vendor/ruby-prism (with rbcop's changes) and ruby-prism-sys must
+      # match it: both move with a Prism upgrade, by hand. rubydex is a path crate (vendor/rubydex).
+      - dependency-name: ruby-prism
+      - dependency-name: ruby-prism-sys
