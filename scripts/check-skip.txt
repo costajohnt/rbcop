@@ -11,3 +11,9 @@ chef/spec/data/cookbooks/borken/recipes/default.rb
 chef/spec/data/cookbooks/ignorken/files/default/not_me.rb
 chef/spec/data/cookbooks/ignorken/recipes/ignoreme.rb
 chef/spec/data/cookbooks/ignorken/templates/ubuntu-12.10/not_me.rb
+#
+# The same approximation in corpus2's devise ERB migration templates linted as Ruby (target 2.7):
+# the first error matches, but the follow-up diagnostics are looked up in Prism's whole-file tokens,
+# which lex the text after the resume point differently from the parser gem (#753).
+devise/lib/generators/active_record/templates/migration.rb
+devise/lib/generators/active_record/templates/migration_existing.rb
