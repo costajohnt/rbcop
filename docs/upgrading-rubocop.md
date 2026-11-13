@@ -96,7 +96,7 @@ corpus (step 4) and targeted cases to catch. Commit the final `delta.tsv` and `d
   `src/formatter*`, `src/config/`, `src/lsp.rs`, `src/mcp.rs`. New options go in the option table in
   `src/main.rs`, and `rubocop -h` is re-recorded verbatim there.
 - Regenerated tables: `src/autocorrect/registry.tsv` (`scripts/autocorrect_registry.rb`, registry
-  order and `autocorrect_incompatible_with`), `src/helpers/ruby_exceptions.rs`
+  order, `support_autocorrect?` and `autocorrect_incompatible_with`), `src/helpers/ruby_exceptions.rs`
   (`scripts/dump-ruby-exceptions.rb`), `src/helpers/nil_methods.rs` and the display width table when
   their gems move, and `src/cop_docs.txt` (what `--explain` prints: `LC_ALL=C.UTF-8 ruby
   scripts/dump-cop-docs.rb > src/cop_docs.txt` with the new release and the plugin pins of
@@ -142,9 +142,11 @@ In the same change as the ports and recordings:
 - `.github/workflows/ci.yml` `GEMS`: the new gem home's versions (`cargo test` checks the `-V` ones
   and the plugin pins against `src/config/mod.rs` and docs/plugins.md).
 - `config/default.yml`: copy the new release's file verbatim.
-- The version named in prose and comments: `git grep -n '<old>'` (README.md, CLAUDE.md, action.yml,
-  packaging/gem/rbcop.gemspec, packaging/homebrew/rbcop.rb.in, docs/*.md, script headers). Comments
-  that describe what the old release did stay as history only where they explain a known gap.
+- The version named in prose and comments: grep every past target, not only the previous one
+  (`git grep -nE '1\.91\.0|1\.92\.1|<old>'`; earlier upgrades left older ones behind) in README.md,
+  CLAUDE.md, action.yml, packaging/gem/rbcop.gemspec, packaging/homebrew/rbcop.rb.in, docs/*.md and
+  script headers. Comments that describe what the old release did stay as history only where they
+  explain a known gap.
 - docs/plugins.md if a plugin pin moved, and its "newest release that supports RuboCop X.Y.Z" text.
 
 ## 6. Gate

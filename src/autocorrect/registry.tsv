@@ -1,1019 +1,1019 @@
-Bundler/DuplicatedGem
-Bundler/DuplicatedGroup
-Bundler/GemComment
-Bundler/GemFilename
-Bundler/GemVersion
-Bundler/InsecureProtocolSource
-Bundler/OrderedGems
-Gemspec/AddRuntimeDependency
-Gemspec/AttributeAssignment
-Gemspec/DependencyVersion
-Gemspec/DeprecatedAttributeAssignment
-Gemspec/DevelopmentDependencies
-Gemspec/DuplicatedAssignment
-Gemspec/OrderedDependencies
-Gemspec/RequireMFA
-Gemspec/RequiredRubyVersion
-Gemspec/RubyVersionGlobalsUsage
-Layout/AccessModifierIndentation
-Layout/ArgumentAlignment
-Layout/ArrayAlignment
-Layout/AssignmentIndentation
-Layout/BeginEndAlignment
-Layout/BlockAlignment
-Layout/BlockEndNewline
-Layout/CaseIndentation
-Layout/ClassStructure	Layout/EmptyLines	Layout/EmptyLinesAroundAccessModifier	Layout/EmptyLinesAroundClassBody
-Layout/ClosingHeredocIndentation
-Layout/ClosingParenthesisIndentation
-Layout/CommentIndentation
-Layout/ConditionPosition
-Layout/DefEndAlignment
-Layout/DotPosition
-Layout/ElseAlignment
-Layout/EmptyComment
-Layout/EmptyLineAfterGuardClause
-Layout/EmptyLineAfterMagicComment
-Layout/EmptyLineAfterMultilineCondition
-Layout/EmptyLineBetweenDefs	Layout/EmptyLines
-Layout/EmptyLinesAfterModuleInclusion
-Layout/EmptyLinesAroundAccessModifier
-Layout/EmptyLinesAroundArguments
-Layout/EmptyLinesAroundAttributeAccessor
-Layout/EmptyLinesAroundBeginBody
-Layout/EmptyLinesAroundBlockBody
-Layout/EmptyLinesAroundClassBody
-Layout/EmptyLinesAroundExceptionHandlingKeywords
-Layout/EmptyLinesAroundMethodBody
-Layout/EmptyLinesAroundModuleBody
-Layout/EmptyLines
-Layout/EndAlignment
-Layout/EndOfLine
-Layout/ExtraSpacing	Layout/RedundantLineBreak	Style/SelfAssignment	RSpec/AlignLeftLetBrace	RSpec/AlignRightLetBrace
-Layout/FirstArgumentIndentation	Layout/ArgumentAlignment	Layout/HashAlignment
-Layout/FirstArrayElementIndentation
-Layout/FirstArrayElementLineBreak
-Layout/FirstHashElementIndentation
-Layout/FirstHashElementLineBreak
-Layout/FirstMethodArgumentLineBreak	Style/MethodCallWithArgsParentheses
-Layout/FirstMethodParameterLineBreak	Style/MethodDefParentheses
-Layout/FirstParameterIndentation
-Layout/HashAlignment
-Layout/HeredocArgumentClosingParenthesis	Layout/MultilineMethodCallBraceLayout	Style/TrailingCommaInArguments
-Layout/HeredocIndentation
-Layout/IndentationConsistency
-Layout/IndentationStyle
-Layout/IndentationWidth
-Layout/InitialIndentation
-Layout/LeadingCommentSpace
-Layout/LeadingEmptyLines
-Layout/LineContinuationLeadingSpace	Style/StringLiterals
-Layout/LineContinuationSpacing
-Layout/LineEndStringConcatenationIndentation
-Layout/LineLength	Style/MethodCallWithArgsParentheses	Style/MethodDefParentheses
-Layout/MultilineArrayBraceLayout	Layout/MultilineHashBraceLayout	Layout/MultilineMethodCallBraceLayout	Style/ConcatArrayLiterals
-Layout/MultilineArrayLineBreaks
-Layout/MultilineAssignmentLayout
-Layout/MultilineBlockLayout	Style/HashEachMethods	Style/ItBlockParameter	Style/Lambda
-Layout/MultilineHashBraceLayout	Layout/MultilineMethodCallBraceLayout	Style/HashAsLastArrayItem	Style/RedundantDoubleSplatHashBraces
-Layout/MultilineHashKeyLineBreaks
-Layout/MultilineMethodArgumentLineBreaks
-Layout/MultilineMethodCallBraceLayout	Style/MethodCallWithArgsParentheses
-Layout/MultilineMethodCallIndentation
-Layout/MultilineMethodDefinitionBraceLayout	Style/MultilineMethodSignature
-Layout/MultilineMethodParameterLineBreaks
-Layout/MultilineOperationIndentation
-Layout/ParameterAlignment
-Layout/RedundantLineBreak
-Layout/RescueEnsureAlignment
-Layout/SingleLineBlockChain	Style/FloatDivision	Style/MapToHash	Style/MapToSet	Style/NilComparison	Style/RedundantSort
-Layout/SpaceAfterColon
-Layout/SpaceAfterComma
-Layout/SpaceAfterMethodName
-Layout/SpaceAfterNot
-Layout/SpaceAfterSemicolon
-Layout/SpaceAroundBlockParameters
-Layout/SpaceAroundEqualsInParameterDefault
-Layout/SpaceAroundKeyword
-Layout/SpaceAroundMethodCallOperator
-Layout/SpaceAroundOperators	Style/SelfAssignment
-Layout/SpaceBeforeBlockBraces	Style/BlockDelimiters	Style/SymbolProc
-Layout/SpaceBeforeBrackets
-Layout/SpaceBeforeComma
-Layout/SpaceBeforeComment
-Layout/SpaceBeforeFirstArg	Style/MethodCallWithArgsParentheses
-Layout/SpaceBeforeSemicolon
-Layout/SpaceInLambdaLiteral
-Layout/SpaceInsideArrayPercentLiteral
-Layout/SpaceInsideArrayLiteralBrackets
-Layout/SpaceInsideBlockBraces	Layout/BlockAlignment	Style/BlockDelimiters
-Layout/SpaceInsideHashLiteralBraces
-Layout/SpaceInsideParens
-Layout/SpaceInsidePercentLiteralDelimiters
-Layout/SpaceInsideRangeLiteral
-Layout/SpaceInsideReferenceBrackets
-Layout/SpaceInsideStringInterpolation
-Layout/TrailingEmptyLines
-Layout/TrailingWhitespace
-Lint/AmbiguousAssignment
-Lint/AmbiguousBlockAssociation
-Lint/AmbiguousOperator	Naming/BlockForwarding	Style/ArgumentsForwarding
-Lint/AmbiguousOperatorPrecedence
-Lint/AmbiguousRange
-Lint/AmbiguousRegexpLiteral
-Lint/ArgumentMismatch
-Lint/ArrayLiteralInRegexp
-Lint/AssignmentInCondition
-Lint/BigDecimalNew
-Lint/BinaryOperatorWithIdenticalOperands
-Lint/BooleanSymbol
-Lint/CircularArgumentReference
-Lint/ConstantDefinitionInBlock
-Lint/ConstantOverwrittenInRescue	Naming/RescuedExceptionsVariableName	Style/RescueStandardError
-Lint/ConstantReassignment
-Lint/ConstantResolution
-Lint/CopDirectiveSyntax
-Lint/DataDefineOverride
-Lint/Debugger
-Lint/DeprecatedClassMethods
-Lint/DeprecatedConstants
-Lint/DeprecatedOpenSSLConstant
-Lint/DeprecatedReference
-Lint/DisjunctiveAssignmentInConstructor
-Lint/DuplicateBranch
-Lint/DuplicateCaseCondition
-Lint/DuplicateElsifCondition
-Lint/DuplicateHashKey
-Lint/DuplicateMagicComment
-Lint/DuplicateMatchPattern
-Lint/DuplicateMethods
-Lint/DuplicateRegexpCharacterClassElement
-Lint/DuplicateRequire
-Lint/DuplicateRescueException
-Lint/DuplicateSetElement
-Lint/EachWithObjectArgument
-Lint/ElseLayout
-Lint/EmptyBlock
-Lint/EmptyClass
-Lint/EmptyConditionalBody
-Lint/EmptyEnsure
-Lint/EmptyExpression
-Lint/EmptyFile
-Lint/EmptyInPattern
-Lint/EmptyInterpolation
-Lint/EmptyWhen
-Lint/EnsureReturn
-Lint/SharedMutableDefault
-Lint/ErbNewArguments
-Lint/FlipFlop
-Lint/FloatComparison
-Lint/FloatOutOfRange
-Lint/FormatParameterMismatch
-Lint/HashCompareByIdentity
-Lint/HashNewWithKeywordArgumentsAsDefault
-Lint/HeredocMethodCallPosition	Style/MethodCallWithArgsParentheses
-Lint/IdentityComparison
-Lint/ImplicitStringConcatenation
-Lint/IncompatibleIoSelectWithFiberScheduler
-Lint/IneffectiveAccessModifier
-Lint/InheritException
-Lint/InterpolationCheck
-Lint/ItWithoutArgumentsInBlock
-Lint/LambdaWithoutLiteralBlock
-Lint/LiteralAsCondition
-Lint/LiteralAssignmentInCondition
-Lint/LiteralInInterpolation
-Lint/Loop
-Lint/MisplacedMagicComment
-Lint/MissingCopEnableDirective
-Lint/MissingSuper
-Lint/MixedCaseRange
-Lint/MixedRegexpCaptureTypes
-Lint/MultipleComparison
-Lint/NameTypo
-Lint/NestedMethodDefinition
-Lint/NestedPercentLiteral
-Lint/NextWithoutAccumulator
-Lint/NoReturnInBeginEndBlocks
-Lint/NonAtomicFileOperation
-Lint/NonDeterministicRequireOrder
-Lint/NonLocalExitFromIterator
-Lint/NumberConversion
-Lint/NumberedParameterAssignment
-Lint/NumericOperationWithConstantResult
-Lint/OrAssignmentToConstant
-Lint/OrderedMagicComments
-Lint/OutOfRangeRegexpRef
-Lint/ParenthesesAsGroupedExpression
-Lint/PercentStringArray
-Lint/PercentSymbolArray
-Lint/RaiseException
-Lint/RandOne
-Lint/RedundantCopDisableDirective
-Lint/RedundantCopEnableDirective
-Lint/RedundantDirGlobSort
-Lint/RedundantRegexpQuantifiers
-Lint/RedundantRequireStatement
-Lint/RedundantSafeNavigation
-Lint/RedundantSplatExpansion
-Lint/RedundantStringCoercion
-Lint/RedundantTypeConversion
-Lint/RedundantWithIndex
-Lint/RedundantWithObject
-Lint/RefinementImportMethods
-Lint/RegexpAsCondition
-Lint/RequireParentheses
-Lint/RequireRangeParentheses
-Lint/RequireRelativeSelfPath
-Lint/RescueException
-Lint/RescueType
-Lint/ReturnInVoidContext
-Lint/SafeNavigationConsistency
-Lint/SafeNavigationChain
-Lint/SafeNavigationWithEmpty
-Lint/ScriptPermission
-Lint/SelfAssignment
-Lint/SendWithMixinArgument
-Lint/ShadowedArgument
-Lint/ShadowedException
-Lint/ShadowingOuterLocalVariable
-Lint/StructNewOverride
-Lint/SuperArgumentMismatch
-Lint/SuppressedException
-Lint/SuppressedExceptionInNumberConversion
-Lint/SymbolConversion
-Lint/Syntax
-Lint/ToEnumArguments
-Lint/ToJSON
-Lint/TopLevelReturnWithArgument
-Lint/TrailingCommaInAttributeDeclaration
-Lint/TripleQuotes
-Lint/UnderscorePrefixedVariableName
-Lint/UnescapedBracketInRegexp
-Lint/UnexpectedBlockArity
-Lint/UnifiedInteger
-Lint/UnmodifiedReduceAccumulator
-Lint/UnreachableCode
-Lint/UnreachableLoop
-Lint/UnreachablePatternBranch
-Lint/UnusedBlockArgument
-Lint/UnusedMethodArgument	Style/ExplicitBlockArgument	Performance/BlockGivenWithExplicitBlock
-Lint/UnusedPrivateMethod
-Lint/UriEscapeUnescape
-Lint/UriRegexp
-Lint/UselessAccessModifier
-Lint/UselessAssignment
-Lint/UselessConstantScoping
-Lint/UselessDefaultValueArgument
-Lint/UselessDefined
-Lint/UselessElseWithoutRescue
-Lint/UselessMethodDefinition
-Lint/UselessNumericOperation
-Lint/UselessOr
-Lint/UselessRescue
-Lint/UselessRuby2Keywords
-Lint/UselessSetterCall
-Lint/UselessTimes
-Lint/Void
-Metrics/CyclomaticComplexity
-Metrics/AbcSize
-Metrics/BlockLength
-Metrics/BlockNesting
-Metrics/ClassLength
-Metrics/CollectionLiteralLength
-Metrics/MethodLength
-Metrics/ModuleLength
-Metrics/ParameterLists
-Metrics/PerceivedComplexity
-Migration/DepartmentName
-Naming/AccessorMethodName
-Naming/AsciiIdentifiers
-Naming/BlockForwarding	Lint/AmbiguousOperator	Style/ArgumentsForwarding	Style/EndlessMethod	Style/ExplicitBlockArgument	Style/MethodDefParentheses	Performance/BlockGivenWithExplicitBlock
-Naming/BlockParameterName
-Naming/ClassAndModuleCamelCase
-Naming/ConstantName
-Naming/FileName
-Naming/HeredocDelimiterCase
-Naming/HeredocDelimiterNaming
-Naming/InclusiveLanguage
-Naming/MemoizedInstanceVariableName
-Naming/MethodName
-Naming/MethodParameterName
-Naming/BinaryOperatorParameterName
-Naming/PredicateMethod
-Naming/PredicatePrefix
-Naming/RescuedExceptionsVariableName
-Naming/VariableName
-Naming/VariableNumber
-Security/CompoundHash
-Security/Eval
-Security/IoMethods
-Security/JSONLoad
-Security/MarshalLoad
-Security/Open
-Security/YAMLLoad
-Style/AccessModifierDeclarations	Style/EndlessMethod	Style/SingleLineMethods
-Style/AccessorGrouping
-Style/Alias
-Style/AmbiguousEndlessMethodDefinition
-Style/AndOr	Style/MethodCallWithArgsParentheses	Style/ReturnNil	Style/ReturnNilInPredicateMethodDefinition
-Style/ArgumentsForwarding	Naming/BlockForwarding	Style/EndlessMethod	Style/MethodDefParentheses
-Style/ArrayCoercion
-Style/ArrayFirstLast
-Style/ArrayIntersect
-Style/ArrayIntersectWithSingleElement
-Style/ArrayJoin
-Style/AsciiComments
-Style/Attr
-Style/AutoResourceCleanup
-Style/BarePercentLiterals
-Style/BeginBlock
-Style/BisectedAttrAccessor
-Style/BitwisePredicate
-Style/BlockComments
-Style/BlockDelimiters	Layout/SpaceBeforeBlockBraces	Style/MethodCallWithArgsParentheses	Style/RedundantBegin
-Style/CaseEquality
-Style/CaseLikeIf	Style/IfInsideElse
-Style/CharacterLiteral
-Style/ClassAndModuleChildren	Style/DataInheritance	Style/StructInheritance
-Style/ClassCheck
-Style/ClassEqualityComparison
-Style/ClassMethods
-Style/ClassMethodsDefinitions
-Style/ClassVars
-Style/CollectionCompact
-Style/CollectionMethods
-Style/CollectionQuerying
-Style/ColonMethodCall	Style/RedundantSelf
-Style/ColonMethodDefinition
-Style/CombinableDefined
-Style/CombinableLoops	Layout/BlockEndNewline	Layout/RedundantLineBreak
-Style/CommandLiteral
-Style/CommentAnnotation
-Style/CommentedKeyword
-Style/ComparableBetween
-Style/ComparableClamp
-Style/ConcatArrayLiterals	Style/MethodCallWithArgsParentheses	Style/TrailingCommaInArguments
-Style/ConditionalAssignment	Style/MethodCallWithArgsParentheses
-Style/ConstantVisibility
-Style/Copyright
-Style/DataInheritance
-Style/DateTime
-Style/DefWithParentheses
-Style/DigChain
-Style/Dir
-Style/DirEmpty
-Style/DirectiveScope
-Style/DisableCopsWithinSourceCodeDirective
-Style/DocumentationMethod
-Style/Documentation
-Style/DocumentDynamicEvalDefinition
-Style/DoubleNegation
-Style/EachForSimpleLoop
-Style/EachWithObject
-Style/EmptyBlockParameter
-Style/EmptyCaseCondition
-Style/EmptyClassDefinition
-Style/EmptyElse
-Style/EmptyHeredoc
-Style/EmptyLambdaParameter
-Style/EmptyLiteral
-Style/EmptyMethod
-Style/EmptyStringInsideInterpolation
-Style/EndlessMethod	Style/GuardClause	Style/IfUnlessModifier	Style/MethodCallWithArgsParentheses	Style/MethodDefParentheses	Style/RaiseArgs	Style/WhileUntilModifier
-Style/Encoding
-Style/EndBlock
-Style/EnvHome
-Style/EvalWithLocation
-Style/EvenOdd
-Style/ExactRegexpMatch
-Style/ExpandPathArguments
-Style/ExplicitBlockArgument	Lint/UnusedMethodArgument	Style/LambdaCall	Style/TrailingCommaInArguments
-Style/ExponentialNotation
-Style/FetchEnvVar
-Style/FileEmpty
-Style/FileNull
-Style/FileOpen
-Style/FileRead
-Style/FileTouch
-Style/FileWrite
-Style/FloatDivision
-Style/For	Style/RedundantBegin	Style/ItBlockParameter
-Style/FormatString
-Style/FormatStringToken
-Style/FrozenStringLiteralComment
-Style/GlobalStdStream
-Style/GlobalVars
-Style/GuardClause	Style/MissingElse
-Style/HashAsLastArrayItem	Layout/MultilineArrayBraceLayout	Style/TrailingCommaInArrayLiteral
-Style/HashConversion	Style/MethodCallWithArgsParentheses
-Style/HashEachMethods
-Style/HashExcept
-Style/HashFetchChain
-Style/HashLikeCase
-Style/HashLookupMethod
-Style/HashSlice
-Style/HashSyntax	Style/MethodCallWithArgsParentheses	Style/SuperWithArgsParentheses
-Style/HashTransformKeys
-Style/HashTransformValues
-Style/IdenticalConditionalBranches
-Style/IfInsideElse
-Style/IfUnlessModifier	Style/Next	Style/SoleNestedConditional
-Style/IfUnlessModifierOfIfUnless	Style/SoleNestedConditional
-Style/IfWithBooleanLiteralBranches
-Style/IfWithSemicolon
-Style/ImplicitRuntimeError
-Style/InPatternThen
-Style/InfiniteLoop
-Style/ReduceToHash
-Style/InverseMethods	Style/Not	Style/SymbolProc	Rails/NegateInclude
-Style/InlineComment
-Style/InvertibleUnlessCondition
-Style/IpAddresses
-Style/ItAssignment
-Style/ItBlockParameter	Style/Lambda	Style/StabbyLambdaParentheses
-Style/KeywordArgumentsMerging
-Style/KeywordParametersOrder
-Style/Lambda	Style/SymbolProc
-Style/LambdaCall
-Style/LineEndConcatenation	Style/RedundantInterpolation
-Style/MagicCommentFormat
-Style/MapIntoArray
-Style/MapJoin
-Style/MapToHash	Layout/SingleLineBlockChain
-Style/MapToSet
-Style/MethodCallWithoutArgsParentheses
-Style/MethodCallWithArgsParentheses	Layout/HeredocArgumentClosingParenthesis	Style/NestedParenthesizedCalls	Style/RedundantParentheses	Style/RescueModifier	Style/TernaryParentheses	Style/TrailingCommaInArguments	Rails/EagerEvaluationLogMessage
-Style/MinMaxComparison
-Style/ModuleMemberExistenceCheck
-Style/MultilineInPatternThen
-Style/NumberedParameters
-Style/OneClassPerFile
-Style/OpenStructUse
-Style/OperatorMethodCall
-Style/PartitionInsteadOfDoubleSelect
-Style/RedundantArrayConstructor
-Style/RedundantArrayFlatten
-Style/RedundantAssignment
-Style/RedundantConstantBase
-Style/RedundantCurrentDirectoryInPath
-Style/RedundantDoubleSplatHashBraces	Style/TrailingCommaInHashLiteral
-Style/RedundantEach
-Style/RedundantFetchBlock
-Style/RedundantFileExtensionInRequire
-Style/RedundantFilterChain
-Style/RedundantFormat
-Style/RedundantHeredocDelimiterQuotes
-Style/RedundantInitialize
-Style/RedundantInterpolationUnfreeze	Layout/MultilineMethodCallBraceLayout
-Style/RedundantLineContinuation
-Style/RedundantMinMaxBy
-Style/RedundantRegexpArgument
-Style/RedundantRegexpConstructor
-Style/RedundantSelfAssignment
-Style/RedundantSelfAssignmentBranch
-Style/RedundantStructKeywordInit
-Style/RequireOrder
-Style/ReverseFind
-Style/SafeNavigationChainLength
-Style/SingleLineDoEndBlock
-Style/SoleNestedConditional	Style/NegatedIf	Style/NegatedUnless
-Style/StaticClass
-Style/MapCompactWithConditionalBlock
-Style/MethodCalledOnDoEndBlock
-Style/MethodDefParentheses	Style/ArgumentsForwarding
-Style/MinMax
-Style/MissingElse
-Style/MissingRespondToMissing
-Style/MixinGrouping
-Style/MixinUsage
-Style/ModuleFunction
-Style/MultilineBlockChain
-Style/MultilineIfThen
-Style/MultilineIfModifier
-Style/MultilineMethodSignature
-Style/MultilineMemoization
-Style/MultilineTernaryOperator
-Style/MultilineWhenThen
-Style/MultipleComparison
-Style/MutableConstant	Style/HashAsLastArrayItem	Style/TrailingCommaInArrayLiteral	Style/TrailingCommaInHashLiteral
-Style/NegatedIf
-Style/NegatedIfElseCondition	Style/InverseMethods	Style/Not
-Style/NegatedUnless
-Style/NegatedWhile
-Style/NegativeArrayIndex
-Style/NestedFileDirname
-Style/NestedModifier
-Style/NestedParenthesizedCalls	Style/MethodCallWithArgsParentheses
-Style/NestedTernaryOperator
-Style/Next	Style/SafeNavigation
-Style/NilComparison
-Style/NilLambda
-Style/NonNilCheck
-Style/Not
-Style/NumberedParametersLimit
-Style/NumericLiterals
-Style/NumericLiteralPrefix
-Style/NumericPredicate
-Style/ObjectThen
-Style/OneLineConditional
-Style/OrAssignment
-Style/OptionHash
-Style/OptionalArguments
-Style/OptionalBooleanParameter
-Style/ParallelAssignment
-Style/ParenthesesAroundCondition
-Style/PercentLiteralDelimiters
-Style/PercentQLiterals
-Style/PerlBackrefs
-Style/PredicateWithKind
-Style/PreferredHashMethods
-Style/Proc
-Style/QuotedSymbols
-Style/RaiseArgs
-Style/RandomWithOffset
-Style/RedundantArgument
-Style/RedundantBegin	Style/BlockDelimiters
-Style/RedundantCapitalW
-Style/RedundantCondition
-Style/RedundantConditional
-Style/RedundantException
-Style/RedundantFreeze
-Style/RedundantInterpolation	Style/LineEndConcatenation
-Style/RedundantParentheses
-Style/RedundantPercentQ
-Style/RedundantRegexpCharacterClass
-Style/RedundantRegexpEscape	Style/RegexpLiteral
-Style/RedundantReturn
-Style/RedundantSelf	Style/ColonMethodCall	Layout/DotPosition	Rails/SafeNavigation
-Style/RedundantSort
-Style/RedundantSortBy
-Style/RedundantStringEscape
-Style/RegexpLiteral
-Style/RescueModifier	Style/MethodCallWithArgsParentheses
-Style/RescueStandardError
-Style/ReturnNil
-Style/ReturnNilInPredicateMethodDefinition
-Style/SafeNavigation
-Style/Sample
-Style/SelectByKind
-Style/SelectByRange
-Style/SelectByRegexp
-Style/SelfAssignment	Layout/SpaceAroundOperators
-Style/Semicolon	Style/SingleLineMethods
-Style/Send
-Style/SendWithLiteralMethodName	Layout/MultilineMethodArgumentLineBreaks
-Style/SignalException
-Style/SingleArgumentDig
-Style/SingleLineBlockParams
-Style/SingleLineMethods
-Style/SlicingWithRange
-Style/SpecialGlobalVars
-Style/StabbyLambdaParentheses
-Style/StderrPuts
-Style/StringChars
-Style/StringConcatenation
-Style/StringHashKeys
-Style/StringLiterals
-Style/StringLiteralsInInterpolation
-Style/StringMethods
-Style/Strip
-Style/StructInheritance	Style/MethodCallWithArgsParentheses
-Style/SuperArguments
-Style/SuperWithArgsParentheses
-Style/SwapValues
-Style/SymbolArray
-Style/SymbolLiteral
-Style/SymbolProc	Layout/SpaceBeforeBlockBraces	Style/TrailingCommaInArguments
-Style/TallyMethod
-Style/TernaryParentheses
-Style/TimeNow
-Style/TopLevelMethodDefinition
-Style/TrailingBodyOnClass
-Style/TrailingBodyOnMethodDefinition
-Style/TrailingBodyOnModule
-Style/TrailingCommaInArguments	Layout/HeredocArgumentClosingParenthesis	Rails/LinkToBlank	Capybara/RSpec/CurrentPathExpectation	Capybara/RSpec/CurrentUrlExpectation
-Style/TrailingCommaInArrayLiteral
-Style/TrailingCommaInBlockArgs
-Style/TrailingCommaInHashLiteral
-Style/TrailingMethodEndStatement
-Style/TrailingUnderscoreVariable
-Style/TrivialAccessors
-Style/UnlessElse
-Style/UnlessLogicalOperators
-Style/UnpackFirst
-Style/VariableInterpolation
-Style/WhenThen
-Style/WhileUntilDo
-Style/WhileUntilModifier
-Style/WordArray
-Style/YAMLFileRead
-Style/YodaCondition
-Style/YodaExpression
-Style/ZeroLengthPredicate
-Performance/AncestorsInclude
-Performance/ArraySemiInfiniteRangeSlice
-Performance/BigDecimalWithNumericArgument
-Performance/BindCall
-Performance/BlockGivenWithExplicitBlock	Lint/UnusedMethodArgument	Naming/BlockForwarding
-Performance/Caller
-Performance/CaseWhenSplat
-Performance/Casecmp
-Performance/CollectionLiteralInLoop
-Performance/CompareWithBlock
-Performance/ConcurrentMonotonicTime
-Performance/ConstantRegexp	Performance/RegexpMatch
-Performance/Count
-Performance/DeletePrefix
-Performance/DeleteSuffix
-Performance/Detect
-Performance/DoubleStartEndWith
-Performance/EndWith
-Performance/FixedSize
-Performance/FlatMap
-Performance/InefficientHashSearch
-Performance/MapCompact
-Performance/MapMethodChain
-Performance/MethodObjectAsBlock
-Performance/OpenStruct
-Performance/RangeInclude
-Performance/IoReadlines
-Performance/RedundantBlockCall
-Performance/RedundantEqualityComparisonBlock
-Performance/RedundantMatch
-Performance/RedundantMerge
-Performance/RedundantSortBlock
-Performance/RedundantSplitRegexpArgument
-Performance/RedundantStringChars
-Performance/RegexpMatch	Performance/ConstantRegexp
-Performance/ReverseEach
-Performance/ReverseFirst
-Performance/SelectMap
-Performance/Size
-Performance/SortReverse
-Performance/Squeeze
-Performance/StringBytesize
-Performance/StartWith
-Performance/StringIdentifierArgument
-Performance/StringInclude
-Performance/StringReplacement
-Performance/Sum
-Performance/TimesMap
-Performance/UnfreezeString
-Performance/UriDefaultParser
-Performance/ChainArrayAllocation
-Performance/ZipWithoutBlock
-Rails/ActionControllerFlashBeforeRender
-Rails/StrongParametersExpect
-Rails/ActionControllerTestCase
-Rails/ActionFilter
-Rails/ActionOrder
-Rails/ActiveRecordAliases
-Rails/ActiveRecordCallbacksOrder
-Rails/ActiveRecordOverride
-Rails/ActiveSupportAliases
-Rails/ActiveSupportOnLoad
-Rails/AddColumnIndex
-Rails/AfterCommitOverride
-Rails/ApplicationController
-Rails/ApplicationJob
-Rails/ApplicationMailer
-Rails/ApplicationRecord
-Rails/ArelStar
-Rails/AssertNot
-Rails/AttributeDefaultBlockValue
-Rails/BelongsTo
-Rails/Blank
-Rails/BulkChangeTable
-Rails/CompactBlank
-Rails/ContentTag
-Rails/CreateTableWithTimestamps
-Rails/DangerousColumnNames
-Rails/Date
-Rails/DefaultScope
-Rails/Delegate
-Rails/DelegateAllowBlank
-Rails/DeprecatedActiveModelErrorsMethods
-Rails/DotSeparatedKeys
-Rails/DuplicateAssociation
-Rails/DuplicateScope
-Rails/DurationArithmetic
-Rails/DynamicFindBy
-Rails/EagerEvaluationLogMessage	Style/MethodCallWithArgsParentheses
-Rails/EnumHash
-Rails/EnumSyntax
-Rails/EnumUniqueness
-Rails/Env
-Rails/EnvLocal
-Rails/EnvironmentComparison
-Rails/EnvironmentVariableAccess
-Rails/Exit
-Rails/ExpandedDateRange
-Rails/FilePath
-Rails/FindBy
-Rails/FindById
-Rails/FindByOrAssignmentMemoization
-Rails/FindEach
-Rails/FreezeTime
-Rails/HasAndBelongsToMany
-Rails/HasManyOrHasOneDependent
-Rails/HelperInstanceVariable
-Rails/HttpPositionalArguments
-Rails/HttpStatus
-Rails/HttpStatusNameConsistency
-Rails/I18nLazyLookup
-Rails/I18nLocaleAssignment
-Rails/I18nLocaleTexts
-Rails/IgnoredColumnsAssignment
-Rails/IgnoredSkipActionFilterOption
-Rails/IndexBy
-Rails/IndexWith
-Rails/Inquiry
-Rails/InverseOf
-Rails/LexicallyScopedActionFilter
-Rails/LinkToBlank
-Rails/MailerName
-Rails/MatchRoute
-Rails/MigrationClassName
-Rails/MultipleRoutePaths
-Rails/NegateInclude
-Rails/NotNullColumn
-Rails/OrderArguments
-Rails/OrderById
-Rails/Output
-Rails/OutputSafety
-Rails/Pick
-Rails/Pluck
-Rails/PluckId
-Rails/PluckInWhere
-Rails/PluralizationGrammar
-Rails/Presence
-Rails/Present
-Rails/RakeEnvironment
-Rails/ReadWriteAttribute
-Rails/RedundantActiveRecordAllMethod
-Rails/RedundantAllowNil
-Rails/RedundantForeignKey
-Rails/RedundantPresenceValidationOnBelongsTo
-Rails/RedundantReceiverInWithOptions
-Rails/RedundantTravelBack
-Rails/RedirectBackOrTo
-Rails/ReflectionClassName
-Rails/RefuteMethods
-Rails/RelativeDateConstant
-Rails/RenderInline
-Rails/RenderPlainText
-Rails/RequestReferer
-Rails/RequireDependency
-Rails/ResponseParsedBody
-Rails/ReversibleMigration
-Rails/ReversibleMigrationMethodDefinition
-Rails/RootJoinChain
-Rails/RootPathnameMethods
-Rails/RootPublicPath
-Rails/SafeNavigation	Style/RedundantSelf
-Rails/SafeNavigationWithBlank
-Rails/SaveBang
-Rails/SchemaComment
-Rails/ScopeArgs
-Rails/SelectMap
-Rails/ShortI18n
-Rails/SkipsModelValidations
-Rails/SquishedSQLHeredocs
-Rails/StripHeredoc
-Rails/TableNameAssignment
-Rails/ThreeStateBooleanColumn
-Rails/TimeZone
-Rails/TimeZoneAssignment
-Rails/ToFormattedS
-Rails/ToSWithArgument
-Rails/TopLevelHashWithIndifferentAccess
-Rails/TransactionExitStatement
-Rails/UniqBeforePluck
-Rails/UniqueValidationWithoutIndex
-Rails/UnknownEnv
-Rails/UnusedIgnoredColumns
-Rails/UnusedRenderContent
-Rails/Validation
-Rails/WhereEquals
-Rails/WhereExists
-Rails/WhereMissing
-Rails/WhereNot
-Rails/WhereNotWithMultipleConditions
-Rails/WhereRange
-Minitest/AssertEmpty
-Minitest/AssertEmptyLiteral
-Minitest/AssertEqual
-Minitest/AssertInDelta
-Minitest/AssertOperator
-Minitest/AssertPredicate
-Minitest/AssertRaisesCompoundBody
-Minitest/AssertRaisesWithRegexpArgument
-Minitest/AssertWithExpectedArgument
-Minitest/AssertionInLifecycleHook
-Minitest/AssertKindOf
-Minitest/AssertNil
-Minitest/AssertIncludes
-Minitest/AssertInstanceOf
-Minitest/AssertMatch
-Minitest/AssertOutput
-Minitest/AssertPathExists
-Minitest/AssertRespondTo
-Minitest/AssertSame
-Minitest/AssertSilent
-Minitest/AssertTruthy
-Minitest/DuplicateTestRun
-Minitest/EmptyLineBeforeAssertionMethods
-Minitest/Focus
-Minitest/NonExecutableTestMethod
-Minitest/RedundantMessageArgument
-Minitest/ReturnInTestMethod
-Minitest/TestFileName
-Minitest/GlobalExpectations
-Minitest/LifecycleHooksOrder
-Minitest/LiteralAsActualArgument
-Minitest/MultipleAssertions
-Minitest/NoAssertions
-Minitest/NoTestCases
-Minitest/NonPublicTestMethod
-Minitest/RefuteEmpty
-Minitest/RefuteFalse
-Minitest/RefuteEqual
-Minitest/RefuteInDelta
-Minitest/RefuteIncludes
-Minitest/RefuteInstanceOf
-Minitest/RefuteKindOf
-Minitest/RefuteMatch
-Minitest/RefuteNil
-Minitest/RefuteOperator
-Minitest/RefutePathExists
-Minitest/RefutePredicate
-Minitest/RefuteRespondTo
-Minitest/RefuteSame
-Minitest/SkipEnsure
-Minitest/SkipWithoutReason
-Minitest/TestMethodName
-Minitest/UnreachableAssertion
-Minitest/UnspecifiedException
-Minitest/UselessAssertion
-RSpec/AlignLeftLetBrace	Layout/ExtraSpacing
-RSpec/AlignRightLetBrace	Layout/ExtraSpacing
-RSpec/AnyInstance
-RSpec/AroundBlock
-RSpec/Be
-RSpec/BeEmpty
-RSpec/BeEq
-RSpec/BeEql
-RSpec/BeNil
-RSpec/BeforeAfterAll
-RSpec/ChangeByZero
-RSpec/ClassCheck
-RSpec/ContainExactly
-RSpec/ContextMethod
-RSpec/ContextWording
-RSpec/DescribeClass
-RSpec/DescribeMethod
-RSpec/DescribeSymbol
-RSpec/DescribedClass
-RSpec/DescribedClassModuleWrapping
-RSpec/Dialect
-RSpec/DiscardedMatcher
-RSpec/DuplicatedMetadata
-RSpec/EmptyExampleGroup
-RSpec/EmptyHook
-RSpec/EmptyLineAfterExample
-RSpec/EmptyLineAfterExampleGroup
-RSpec/EmptyLineAfterFinalLet
-RSpec/EmptyLineAfterHook
-RSpec/EmptyLineAfterSubject
-RSpec/EmptyMetadata
-RSpec/EmptyOutput
-RSpec/Eq
-RSpec/ExampleLength
-RSpec/ExampleWithoutDescription
-RSpec/ExampleWording
-RSpec/ExcessiveDocstringSpacing
-RSpec/ExpectActual
-RSpec/ExpectChange
-RSpec/ExpectInHook
-RSpec/ExpectInLet
-RSpec/ExpectOutput
-RSpec/Focus
-RSpec/HookArgument
-RSpec/HooksBeforeExamples
-RSpec/IdenticalEqualityAssertion
-RSpec/ImplicitBlockExpectation
-RSpec/ImplicitExpect
-RSpec/ImplicitSubject
-RSpec/IncludeExamples
-RSpec/IndexedLet
-RSpec/InstanceSpy
-RSpec/InstanceVariable
-RSpec/IsExpectedSpecify
-RSpec/ItBehavesLike
-RSpec/IteratedExpectation
-RSpec/LeadingSubject
-RSpec/LeakyConstantDeclaration
-RSpec/LeakyLocalVariable
-RSpec/LetBeforeExamples	RSpec/ScatteredLet
-RSpec/LetSetup
-RSpec/MatchArray
-RSpec/MatchWithSimpleRegex
-RSpec/MessageChain
-RSpec/MessageExpectation
-RSpec/MessageSpies
-RSpec/MetadataStyle
-RSpec/MissingExampleGroupArgument
-RSpec/MissingExpectationTargetMethod
-RSpec/MultipleDescribes
-RSpec/MultipleExpectations
-RSpec/MultipleMemoizedHelpers
-RSpec/MultipleSubjects
-RSpec/NamedSubject
-RSpec/NestedGroups
-RSpec/NoExpectationExample
-RSpec/NotToNot
-RSpec/Output
-RSpec/OverwritingSetup
-RSpec/Pending
-RSpec/PendingWithoutReason
-RSpec/PredicateMatcher
-RSpec/ReceiveCounts
-RSpec/ReceiveMessages
-RSpec/ReceiveNever
-RSpec/RedundantAround
-RSpec/RedundantPredicateMatcher
-RSpec/RemoveConst
-RSpec/RepeatedDescription
-RSpec/RepeatedExample
-RSpec/RepeatedExampleGroupBody
-RSpec/RepeatedExampleGroupDescription
-RSpec/RepeatedIncludeExample
-RSpec/RepeatedSubjectCall
-RSpec/ReturnFromStub
-RSpec/ScatteredLet
-RSpec/ScatteredSetup
-RSpec/SharedContext
-RSpec/SharedExamples
-RSpec/SingleArgumentMessageChain
-RSpec/SkipBlockInsideExample
-RSpec/SortMetadata
-RSpec/SpecFilePathFormat
-RSpec/SpecFilePathSuffix
-RSpec/StubbedMock
-RSpec/SubjectDeclaration
-RSpec/SubjectStub
-RSpec/UndescriptiveLiteralsDescription
-RSpec/UnspecifiedException
-RSpec/VariableDefinition
-RSpec/VariableName
-RSpec/VerifiedDoubleReference
-RSpec/VerifiedDoubles
-RSpec/VoidExpect
-RSpec/Yield
-RSpecRails/AvoidSetupHook
-RSpecRails/FileFixture
-RSpecRails/HaveHttpStatus
-RSpecRails/HttpStatus
-RSpecRails/HttpStatusNameConsistency
-RSpecRails/InferredSpecType
-RSpecRails/MinitestAssertions
-RSpecRails/NegationBeValid
-RSpecRails/ReceivePerformLater
-RSpecRails/TravelAround
-FactoryBot/AssociationStyle
-FactoryBot/AttributeDefinedStatically
-FactoryBot/ConsistentParenthesesStyle	Style/MethodCallWithArgsParentheses
-FactoryBot/CreateList
-FactoryBot/ExcessiveCreateList
-FactoryBot/FactoryAssociationWithStrategy
-FactoryBot/FactoryClassName
-FactoryBot/FactoryNameStyle
-FactoryBot/IdSequence
-FactoryBot/RedundantFactoryOption
-FactoryBot/SyntaxMethods
-Capybara/RSpec/CurrentPathExpectation	Style/TrailingCommaInArguments
-Capybara/RSpec/CurrentUrlExpectation	Style/TrailingCommaInArguments
-Capybara/RSpec/FindElementValueEq
-Capybara/RSpec/HaveContent
-Capybara/RSpec/HaveSelector
-Capybara/RSpec/MatchStyle
-Capybara/RSpec/NegationMatcher
-Capybara/RSpec/NegationMatcherAfterVisit
-Capybara/RSpec/PredicateMatcher
-Capybara/RSpec/SpecificMatcher
-Capybara/RSpec/VisibilityMatcher
-Capybara/AbsoluteXPathInElementScope
-Capybara/AlwaysTrueCountQuery
-Capybara/AmbiguousClick
-Capybara/AssertStyle
-Capybara/ChainedFind
-Capybara/FindAllFirst
-Capybara/IgnoredQueryOption
-Capybara/ModalMethodWithoutBlock
-Capybara/NativeAttribute
-Capybara/RedundantWithinFind
-Capybara/SpecificActions
-Capybara/SpecificFinders
-Capybara/UnorderedWindowAccess
-Capybara/VisibilityOption
+Bundler/DuplicatedGem	0
+Bundler/DuplicatedGroup	0
+Bundler/GemComment	0
+Bundler/GemFilename	0
+Bundler/GemVersion	0
+Bundler/InsecureProtocolSource	1
+Bundler/OrderedGems	1
+Gemspec/AddRuntimeDependency	1
+Gemspec/AttributeAssignment	0
+Gemspec/DependencyVersion	0
+Gemspec/DeprecatedAttributeAssignment	1
+Gemspec/DevelopmentDependencies	0
+Gemspec/DuplicatedAssignment	0
+Gemspec/OrderedDependencies	1
+Gemspec/RequireMFA	1
+Gemspec/RequiredRubyVersion	0
+Gemspec/RubyVersionGlobalsUsage	0
+Layout/AccessModifierIndentation	1
+Layout/ArgumentAlignment	1
+Layout/ArrayAlignment	1
+Layout/AssignmentIndentation	1
+Layout/BeginEndAlignment	1
+Layout/BlockAlignment	1
+Layout/BlockEndNewline	1
+Layout/CaseIndentation	1
+Layout/ClassStructure	1	Layout/EmptyLines	Layout/EmptyLinesAroundAccessModifier	Layout/EmptyLinesAroundClassBody
+Layout/ClosingHeredocIndentation	1
+Layout/ClosingParenthesisIndentation	1
+Layout/CommentIndentation	1
+Layout/ConditionPosition	1
+Layout/DefEndAlignment	1
+Layout/DotPosition	1
+Layout/ElseAlignment	1
+Layout/EmptyComment	1
+Layout/EmptyLineAfterGuardClause	1
+Layout/EmptyLineAfterMagicComment	1
+Layout/EmptyLineAfterMultilineCondition	1
+Layout/EmptyLineBetweenDefs	1	Layout/EmptyLines
+Layout/EmptyLinesAfterModuleInclusion	1
+Layout/EmptyLinesAroundAccessModifier	1
+Layout/EmptyLinesAroundArguments	1
+Layout/EmptyLinesAroundAttributeAccessor	1
+Layout/EmptyLinesAroundBeginBody	1
+Layout/EmptyLinesAroundBlockBody	1
+Layout/EmptyLinesAroundClassBody	1
+Layout/EmptyLinesAroundExceptionHandlingKeywords	1
+Layout/EmptyLinesAroundMethodBody	1
+Layout/EmptyLinesAroundModuleBody	1
+Layout/EmptyLines	1
+Layout/EndAlignment	1
+Layout/EndOfLine	0
+Layout/ExtraSpacing	1	Layout/RedundantLineBreak	Style/SelfAssignment	RSpec/AlignLeftLetBrace	RSpec/AlignRightLetBrace
+Layout/FirstArgumentIndentation	1	Layout/ArgumentAlignment	Layout/HashAlignment
+Layout/FirstArrayElementIndentation	1
+Layout/FirstArrayElementLineBreak	1
+Layout/FirstHashElementIndentation	1
+Layout/FirstHashElementLineBreak	1
+Layout/FirstMethodArgumentLineBreak	1	Style/MethodCallWithArgsParentheses
+Layout/FirstMethodParameterLineBreak	1	Style/MethodDefParentheses
+Layout/FirstParameterIndentation	1
+Layout/HashAlignment	1
+Layout/HeredocArgumentClosingParenthesis	1	Layout/MultilineMethodCallBraceLayout	Style/TrailingCommaInArguments
+Layout/HeredocIndentation	1
+Layout/IndentationConsistency	1
+Layout/IndentationStyle	1
+Layout/IndentationWidth	1
+Layout/InitialIndentation	1
+Layout/LeadingCommentSpace	1
+Layout/LeadingEmptyLines	1
+Layout/LineContinuationLeadingSpace	1	Style/StringLiterals
+Layout/LineContinuationSpacing	1
+Layout/LineEndStringConcatenationIndentation	1
+Layout/LineLength	1	Style/MethodCallWithArgsParentheses	Style/MethodDefParentheses
+Layout/MultilineArrayBraceLayout	1	Layout/MultilineHashBraceLayout	Layout/MultilineMethodCallBraceLayout	Style/ConcatArrayLiterals
+Layout/MultilineArrayLineBreaks	1
+Layout/MultilineAssignmentLayout	1
+Layout/MultilineBlockLayout	1	Style/HashEachMethods	Style/ItBlockParameter	Style/Lambda
+Layout/MultilineHashBraceLayout	1	Layout/MultilineMethodCallBraceLayout	Style/HashAsLastArrayItem	Style/RedundantDoubleSplatHashBraces
+Layout/MultilineHashKeyLineBreaks	1
+Layout/MultilineMethodArgumentLineBreaks	1
+Layout/MultilineMethodCallBraceLayout	1	Style/MethodCallWithArgsParentheses
+Layout/MultilineMethodCallIndentation	1
+Layout/MultilineMethodDefinitionBraceLayout	1	Style/MultilineMethodSignature
+Layout/MultilineMethodParameterLineBreaks	1
+Layout/MultilineOperationIndentation	1
+Layout/ParameterAlignment	1
+Layout/RedundantLineBreak	1
+Layout/RescueEnsureAlignment	1
+Layout/SingleLineBlockChain	1	Style/FloatDivision	Style/MapToHash	Style/MapToSet	Style/NilComparison	Style/RedundantSort
+Layout/SpaceAfterColon	1
+Layout/SpaceAfterComma	1
+Layout/SpaceAfterMethodName	1
+Layout/SpaceAfterNot	1
+Layout/SpaceAfterSemicolon	1
+Layout/SpaceAroundBlockParameters	1
+Layout/SpaceAroundEqualsInParameterDefault	1
+Layout/SpaceAroundKeyword	1
+Layout/SpaceAroundMethodCallOperator	1
+Layout/SpaceAroundOperators	1	Style/SelfAssignment
+Layout/SpaceBeforeBlockBraces	1	Style/BlockDelimiters	Style/SymbolProc
+Layout/SpaceBeforeBrackets	1
+Layout/SpaceBeforeComma	1
+Layout/SpaceBeforeComment	1
+Layout/SpaceBeforeFirstArg	1	Style/MethodCallWithArgsParentheses
+Layout/SpaceBeforeSemicolon	1
+Layout/SpaceInLambdaLiteral	1
+Layout/SpaceInsideArrayPercentLiteral	1
+Layout/SpaceInsideArrayLiteralBrackets	1
+Layout/SpaceInsideBlockBraces	1	Layout/BlockAlignment	Style/BlockDelimiters
+Layout/SpaceInsideHashLiteralBraces	1
+Layout/SpaceInsideParens	1
+Layout/SpaceInsidePercentLiteralDelimiters	1
+Layout/SpaceInsideRangeLiteral	1
+Layout/SpaceInsideReferenceBrackets	1
+Layout/SpaceInsideStringInterpolation	1
+Layout/TrailingEmptyLines	1
+Layout/TrailingWhitespace	1
+Lint/AmbiguousAssignment	0
+Lint/AmbiguousBlockAssociation	1
+Lint/AmbiguousOperator	1	Naming/BlockForwarding	Style/ArgumentsForwarding
+Lint/AmbiguousOperatorPrecedence	1
+Lint/AmbiguousRange	1
+Lint/AmbiguousRegexpLiteral	1
+Lint/ArgumentMismatch	0
+Lint/ArrayLiteralInRegexp	1
+Lint/AssignmentInCondition	1
+Lint/BigDecimalNew	1
+Lint/BinaryOperatorWithIdenticalOperands	0
+Lint/BooleanSymbol	1
+Lint/CircularArgumentReference	0
+Lint/ConstantDefinitionInBlock	0
+Lint/ConstantOverwrittenInRescue	1	Naming/RescuedExceptionsVariableName	Style/RescueStandardError
+Lint/ConstantReassignment	0
+Lint/ConstantResolution	0
+Lint/CopDirectiveSyntax	1
+Lint/DataDefineOverride	0
+Lint/Debugger	0
+Lint/DeprecatedClassMethods	1
+Lint/DeprecatedConstants	1
+Lint/DeprecatedOpenSSLConstant	1
+Lint/DeprecatedReference	0
+Lint/DisjunctiveAssignmentInConstructor	1
+Lint/DuplicateBranch	0
+Lint/DuplicateCaseCondition	0
+Lint/DuplicateElsifCondition	0
+Lint/DuplicateHashKey	0
+Lint/DuplicateMagicComment	1
+Lint/DuplicateMatchPattern	0
+Lint/DuplicateMethods	0
+Lint/DuplicateRegexpCharacterClassElement	1
+Lint/DuplicateRequire	1
+Lint/DuplicateRescueException	0
+Lint/DuplicateSetElement	1
+Lint/EachWithObjectArgument	0
+Lint/ElseLayout	1
+Lint/EmptyBlock	0
+Lint/EmptyClass	0
+Lint/EmptyConditionalBody	1
+Lint/EmptyEnsure	1
+Lint/EmptyExpression	0
+Lint/EmptyFile	0
+Lint/EmptyInPattern	0
+Lint/EmptyInterpolation	1
+Lint/EmptyWhen	0
+Lint/EnsureReturn	0
+Lint/SharedMutableDefault	0
+Lint/ErbNewArguments	1
+Lint/FlipFlop	0
+Lint/FloatComparison	0
+Lint/FloatOutOfRange	0
+Lint/FormatParameterMismatch	0
+Lint/HashCompareByIdentity	0
+Lint/HashNewWithKeywordArgumentsAsDefault	1
+Lint/HeredocMethodCallPosition	1	Style/MethodCallWithArgsParentheses
+Lint/IdentityComparison	1
+Lint/ImplicitStringConcatenation	1
+Lint/IncompatibleIoSelectWithFiberScheduler	1
+Lint/IneffectiveAccessModifier	0
+Lint/InheritException	1
+Lint/InterpolationCheck	1
+Lint/ItWithoutArgumentsInBlock	0
+Lint/LambdaWithoutLiteralBlock	1
+Lint/LiteralAsCondition	1
+Lint/LiteralAssignmentInCondition	0
+Lint/LiteralInInterpolation	1
+Lint/Loop	1
+Lint/MisplacedMagicComment	1
+Lint/MissingCopEnableDirective	0
+Lint/MissingSuper	0
+Lint/MixedCaseRange	1
+Lint/MixedRegexpCaptureTypes	0
+Lint/MultipleComparison	1
+Lint/NameTypo	0
+Lint/NestedMethodDefinition	0
+Lint/NestedPercentLiteral	0
+Lint/NextWithoutAccumulator	0
+Lint/NoReturnInBeginEndBlocks	0
+Lint/NonAtomicFileOperation	1
+Lint/NonDeterministicRequireOrder	1
+Lint/NonLocalExitFromIterator	0
+Lint/NumberConversion	1
+Lint/NumberedParameterAssignment	0
+Lint/NumericOperationWithConstantResult	1
+Lint/OrAssignmentToConstant	1
+Lint/OrderedMagicComments	1
+Lint/OutOfRangeRegexpRef	0
+Lint/ParenthesesAsGroupedExpression	1
+Lint/PercentStringArray	1
+Lint/PercentSymbolArray	1
+Lint/RaiseException	1
+Lint/RandOne	0
+Lint/RedundantCopDisableDirective	1
+Lint/RedundantCopEnableDirective	1
+Lint/RedundantDirGlobSort	1
+Lint/RedundantRegexpQuantifiers	1
+Lint/RedundantRequireStatement	1
+Lint/RedundantSafeNavigation	1
+Lint/RedundantSplatExpansion	1
+Lint/RedundantStringCoercion	1
+Lint/RedundantTypeConversion	1
+Lint/RedundantWithIndex	1
+Lint/RedundantWithObject	1
+Lint/RefinementImportMethods	1
+Lint/RegexpAsCondition	1
+Lint/RequireParentheses	0
+Lint/RequireRangeParentheses	0
+Lint/RequireRelativeSelfPath	1
+Lint/RescueException	0
+Lint/RescueType	1
+Lint/ReturnInVoidContext	0
+Lint/SafeNavigationConsistency	1
+Lint/SafeNavigationChain	1
+Lint/SafeNavigationWithEmpty	1
+Lint/ScriptPermission	1
+Lint/SelfAssignment	0
+Lint/SendWithMixinArgument	1
+Lint/ShadowedArgument	0
+Lint/ShadowedException	0
+Lint/ShadowingOuterLocalVariable	0
+Lint/StructNewOverride	0
+Lint/SuperArgumentMismatch	0
+Lint/SuppressedException	0
+Lint/SuppressedExceptionInNumberConversion	1
+Lint/SymbolConversion	1
+Lint/Syntax	0
+Lint/ToEnumArguments	0
+Lint/ToJSON	1
+Lint/TopLevelReturnWithArgument	1
+Lint/TrailingCommaInAttributeDeclaration	1
+Lint/TripleQuotes	1
+Lint/UnderscorePrefixedVariableName	0
+Lint/UnescapedBracketInRegexp	1
+Lint/UnexpectedBlockArity	0
+Lint/UnifiedInteger	1
+Lint/UnmodifiedReduceAccumulator	0
+Lint/UnreachableCode	0
+Lint/UnreachableLoop	0
+Lint/UnreachablePatternBranch	0
+Lint/UnusedBlockArgument	1
+Lint/UnusedMethodArgument	1	Style/ExplicitBlockArgument	Performance/BlockGivenWithExplicitBlock
+Lint/UnusedPrivateMethod	0
+Lint/UriEscapeUnescape	0
+Lint/UriRegexp	1
+Lint/UselessAccessModifier	1
+Lint/UselessAssignment	1
+Lint/UselessConstantScoping	0
+Lint/UselessDefaultValueArgument	1
+Lint/UselessDefined	0
+Lint/UselessElseWithoutRescue	0
+Lint/UselessMethodDefinition	1
+Lint/UselessNumericOperation	1
+Lint/UselessOr	1
+Lint/UselessRescue	0
+Lint/UselessRuby2Keywords	0
+Lint/UselessSetterCall	1
+Lint/UselessTimes	1
+Lint/Void	1
+Metrics/CyclomaticComplexity	0
+Metrics/AbcSize	0
+Metrics/BlockLength	0
+Metrics/BlockNesting	0
+Metrics/ClassLength	0
+Metrics/CollectionLiteralLength	0
+Metrics/MethodLength	0
+Metrics/ModuleLength	0
+Metrics/ParameterLists	0
+Metrics/PerceivedComplexity	0
+Migration/DepartmentName	1
+Naming/AccessorMethodName	0
+Naming/AsciiIdentifiers	0
+Naming/BlockForwarding	1	Lint/AmbiguousOperator	Style/ArgumentsForwarding	Style/EndlessMethod	Style/ExplicitBlockArgument	Style/MethodDefParentheses	Performance/BlockGivenWithExplicitBlock
+Naming/BlockParameterName	0
+Naming/ClassAndModuleCamelCase	0
+Naming/ConstantName	0
+Naming/FileName	0
+Naming/HeredocDelimiterCase	1
+Naming/HeredocDelimiterNaming	0
+Naming/InclusiveLanguage	1
+Naming/MemoizedInstanceVariableName	1
+Naming/MethodName	0
+Naming/MethodParameterName	0
+Naming/BinaryOperatorParameterName	1
+Naming/PredicateMethod	0
+Naming/PredicatePrefix	0
+Naming/RescuedExceptionsVariableName	1
+Naming/VariableName	0
+Naming/VariableNumber	0
+Security/CompoundHash	0
+Security/Eval	0
+Security/IoMethods	1
+Security/JSONLoad	1
+Security/MarshalLoad	0
+Security/Open	0
+Security/YAMLLoad	1
+Style/AccessModifierDeclarations	1	Style/EndlessMethod	Style/SingleLineMethods
+Style/AccessorGrouping	1
+Style/Alias	1
+Style/AmbiguousEndlessMethodDefinition	1
+Style/AndOr	1	Style/MethodCallWithArgsParentheses	Style/ReturnNil	Style/ReturnNilInPredicateMethodDefinition
+Style/ArgumentsForwarding	1	Naming/BlockForwarding	Style/EndlessMethod	Style/MethodDefParentheses
+Style/ArrayCoercion	1
+Style/ArrayFirstLast	1
+Style/ArrayIntersect	1
+Style/ArrayIntersectWithSingleElement	1
+Style/ArrayJoin	1
+Style/AsciiComments	0
+Style/Attr	1
+Style/AutoResourceCleanup	0
+Style/BarePercentLiterals	1
+Style/BeginBlock	0
+Style/BisectedAttrAccessor	1
+Style/BitwisePredicate	1
+Style/BlockComments	1
+Style/BlockDelimiters	1	Layout/SpaceBeforeBlockBraces	Style/MethodCallWithArgsParentheses	Style/RedundantBegin
+Style/CaseEquality	1
+Style/CaseLikeIf	1	Style/IfInsideElse
+Style/CharacterLiteral	1
+Style/ClassAndModuleChildren	1	Style/DataInheritance	Style/StructInheritance
+Style/ClassCheck	1
+Style/ClassEqualityComparison	1
+Style/ClassMethods	1
+Style/ClassMethodsDefinitions	1
+Style/ClassVars	0
+Style/CollectionCompact	1
+Style/CollectionMethods	1
+Style/CollectionQuerying	1
+Style/ColonMethodCall	1	Style/RedundantSelf
+Style/ColonMethodDefinition	1
+Style/CombinableDefined	1
+Style/CombinableLoops	1	Layout/BlockEndNewline	Layout/RedundantLineBreak
+Style/CommandLiteral	1
+Style/CommentAnnotation	1
+Style/CommentedKeyword	1
+Style/ComparableBetween	1
+Style/ComparableClamp	1
+Style/ConcatArrayLiterals	1	Style/MethodCallWithArgsParentheses	Style/TrailingCommaInArguments
+Style/ConditionalAssignment	1	Style/MethodCallWithArgsParentheses
+Style/ConstantVisibility	0
+Style/Copyright	1
+Style/DataInheritance	1
+Style/DateTime	1
+Style/DefWithParentheses	1
+Style/DigChain	1
+Style/Dir	1
+Style/DirEmpty	1
+Style/DirectiveScope	1
+Style/DisableCopsWithinSourceCodeDirective	1
+Style/DocumentationMethod	0
+Style/Documentation	0
+Style/DocumentDynamicEvalDefinition	0
+Style/DoubleNegation	1
+Style/EachForSimpleLoop	1
+Style/EachWithObject	1
+Style/EmptyBlockParameter	1
+Style/EmptyCaseCondition	1
+Style/EmptyClassDefinition	1
+Style/EmptyElse	1
+Style/EmptyHeredoc	1
+Style/EmptyLambdaParameter	1
+Style/EmptyLiteral	1
+Style/EmptyMethod	1
+Style/EmptyStringInsideInterpolation	1
+Style/EndlessMethod	1	Style/GuardClause	Style/IfUnlessModifier	Style/MethodCallWithArgsParentheses	Style/MethodDefParentheses	Style/RaiseArgs	Style/WhileUntilModifier
+Style/Encoding	1
+Style/EndBlock	1
+Style/EnvHome	1
+Style/EvalWithLocation	1
+Style/EvenOdd	1
+Style/ExactRegexpMatch	1
+Style/ExpandPathArguments	1
+Style/ExplicitBlockArgument	1	Lint/UnusedMethodArgument	Style/LambdaCall	Style/TrailingCommaInArguments
+Style/ExponentialNotation	0
+Style/FetchEnvVar	1
+Style/FileEmpty	1
+Style/FileNull	1
+Style/FileOpen	0
+Style/FileRead	1
+Style/FileTouch	1
+Style/FileWrite	1
+Style/FloatDivision	1
+Style/For	1	Style/RedundantBegin	Style/ItBlockParameter
+Style/FormatString	1
+Style/FormatStringToken	1
+Style/FrozenStringLiteralComment	1
+Style/GlobalStdStream	1
+Style/GlobalVars	0
+Style/GuardClause	1	Style/MissingElse
+Style/HashAsLastArrayItem	1	Layout/MultilineArrayBraceLayout	Style/TrailingCommaInArrayLiteral
+Style/HashConversion	1	Style/MethodCallWithArgsParentheses
+Style/HashEachMethods	1
+Style/HashExcept	1
+Style/HashFetchChain	1
+Style/HashLikeCase	0
+Style/HashLookupMethod	1
+Style/HashSlice	1
+Style/HashSyntax	1	Style/MethodCallWithArgsParentheses	Style/SuperWithArgsParentheses
+Style/HashTransformKeys	1
+Style/HashTransformValues	1
+Style/IdenticalConditionalBranches	1
+Style/IfInsideElse	1
+Style/IfUnlessModifier	1	Style/Next	Style/SoleNestedConditional
+Style/IfUnlessModifierOfIfUnless	1	Style/SoleNestedConditional
+Style/IfWithBooleanLiteralBranches	1
+Style/IfWithSemicolon	1
+Style/ImplicitRuntimeError	0
+Style/InPatternThen	1
+Style/InfiniteLoop	1
+Style/ReduceToHash	1
+Style/InverseMethods	1	Style/Not	Style/SymbolProc	Rails/NegateInclude
+Style/InlineComment	0
+Style/InvertibleUnlessCondition	1
+Style/IpAddresses	0
+Style/ItAssignment	0
+Style/ItBlockParameter	1	Style/Lambda	Style/StabbyLambdaParentheses
+Style/KeywordArgumentsMerging	1
+Style/KeywordParametersOrder	1
+Style/Lambda	1	Style/SymbolProc
+Style/LambdaCall	1
+Style/LineEndConcatenation	1	Style/RedundantInterpolation
+Style/MagicCommentFormat	1
+Style/MapIntoArray	1
+Style/MapJoin	1
+Style/MapToHash	1	Layout/SingleLineBlockChain
+Style/MapToSet	1
+Style/MethodCallWithoutArgsParentheses	1
+Style/MethodCallWithArgsParentheses	1	Layout/HeredocArgumentClosingParenthesis	Style/NestedParenthesizedCalls	Style/RedundantParentheses	Style/RescueModifier	Style/TernaryParentheses	Style/TrailingCommaInArguments	Rails/EagerEvaluationLogMessage
+Style/MinMaxComparison	1
+Style/ModuleMemberExistenceCheck	1
+Style/MultilineInPatternThen	1
+Style/NumberedParameters	0
+Style/OneClassPerFile	0
+Style/OpenStructUse	0
+Style/OperatorMethodCall	1
+Style/PartitionInsteadOfDoubleSelect	1
+Style/RedundantArrayConstructor	1
+Style/RedundantArrayFlatten	1
+Style/RedundantAssignment	1
+Style/RedundantConstantBase	1
+Style/RedundantCurrentDirectoryInPath	1
+Style/RedundantDoubleSplatHashBraces	1	Style/TrailingCommaInHashLiteral
+Style/RedundantEach	1
+Style/RedundantFetchBlock	1
+Style/RedundantFileExtensionInRequire	1
+Style/RedundantFilterChain	1
+Style/RedundantFormat	1
+Style/RedundantHeredocDelimiterQuotes	1
+Style/RedundantInitialize	1
+Style/RedundantInterpolationUnfreeze	1	Layout/MultilineMethodCallBraceLayout
+Style/RedundantLineContinuation	1
+Style/RedundantMinMaxBy	1
+Style/RedundantRegexpArgument	1
+Style/RedundantRegexpConstructor	1
+Style/RedundantSelfAssignment	1
+Style/RedundantSelfAssignmentBranch	1
+Style/RedundantStructKeywordInit	1
+Style/RequireOrder	1
+Style/ReverseFind	1
+Style/SafeNavigationChainLength	0
+Style/SingleLineDoEndBlock	1
+Style/SoleNestedConditional	1	Style/NegatedIf	Style/NegatedUnless
+Style/StaticClass	1
+Style/MapCompactWithConditionalBlock	1
+Style/MethodCalledOnDoEndBlock	0
+Style/MethodDefParentheses	1	Style/ArgumentsForwarding
+Style/MinMax	1
+Style/MissingElse	1
+Style/MissingRespondToMissing	0
+Style/MixinGrouping	1
+Style/MixinUsage	0
+Style/ModuleFunction	1
+Style/MultilineBlockChain	0
+Style/MultilineIfThen	1
+Style/MultilineIfModifier	1
+Style/MultilineMethodSignature	1
+Style/MultilineMemoization	1
+Style/MultilineTernaryOperator	1
+Style/MultilineWhenThen	1
+Style/MultipleComparison	1
+Style/MutableConstant	1	Style/HashAsLastArrayItem	Style/TrailingCommaInArrayLiteral	Style/TrailingCommaInHashLiteral
+Style/NegatedIf	1
+Style/NegatedIfElseCondition	1	Style/InverseMethods	Style/Not
+Style/NegatedUnless	1
+Style/NegatedWhile	1
+Style/NegativeArrayIndex	1
+Style/NestedFileDirname	1
+Style/NestedModifier	1
+Style/NestedParenthesizedCalls	1	Style/MethodCallWithArgsParentheses
+Style/NestedTernaryOperator	1
+Style/Next	1	Style/SafeNavigation
+Style/NilComparison	1
+Style/NilLambda	1
+Style/NonNilCheck	1
+Style/Not	1
+Style/NumberedParametersLimit	0
+Style/NumericLiterals	1
+Style/NumericLiteralPrefix	1
+Style/NumericPredicate	1
+Style/ObjectThen	1
+Style/OneLineConditional	1
+Style/OrAssignment	1
+Style/OptionHash	0
+Style/OptionalArguments	0
+Style/OptionalBooleanParameter	0
+Style/ParallelAssignment	1
+Style/ParenthesesAroundCondition	1
+Style/PercentLiteralDelimiters	1
+Style/PercentQLiterals	1
+Style/PerlBackrefs	1
+Style/PredicateWithKind	1
+Style/PreferredHashMethods	1
+Style/Proc	1
+Style/QuotedSymbols	1
+Style/RaiseArgs	1
+Style/RandomWithOffset	1
+Style/RedundantArgument	1
+Style/RedundantBegin	1	Style/BlockDelimiters
+Style/RedundantCapitalW	1
+Style/RedundantCondition	1
+Style/RedundantConditional	1
+Style/RedundantException	1
+Style/RedundantFreeze	1
+Style/RedundantInterpolation	1	Style/LineEndConcatenation
+Style/RedundantParentheses	1
+Style/RedundantPercentQ	1
+Style/RedundantRegexpCharacterClass	1
+Style/RedundantRegexpEscape	1	Style/RegexpLiteral
+Style/RedundantReturn	1
+Style/RedundantSelf	1	Style/ColonMethodCall	Layout/DotPosition	Rails/SafeNavigation
+Style/RedundantSort	1
+Style/RedundantSortBy	1
+Style/RedundantStringEscape	1
+Style/RegexpLiteral	1
+Style/RescueModifier	1	Style/MethodCallWithArgsParentheses
+Style/RescueStandardError	1
+Style/ReturnNil	1
+Style/ReturnNilInPredicateMethodDefinition	1
+Style/SafeNavigation	1
+Style/Sample	1
+Style/SelectByKind	1
+Style/SelectByRange	1
+Style/SelectByRegexp	1
+Style/SelfAssignment	1	Layout/SpaceAroundOperators
+Style/Semicolon	1	Style/SingleLineMethods
+Style/Send	0
+Style/SendWithLiteralMethodName	1	Layout/MultilineMethodArgumentLineBreaks
+Style/SignalException	1
+Style/SingleArgumentDig	1
+Style/SingleLineBlockParams	1
+Style/SingleLineMethods	1
+Style/SlicingWithRange	1
+Style/SpecialGlobalVars	1
+Style/StabbyLambdaParentheses	1
+Style/StderrPuts	1
+Style/StringChars	1
+Style/StringConcatenation	1
+Style/StringHashKeys	1
+Style/StringLiterals	1
+Style/StringLiteralsInInterpolation	1
+Style/StringMethods	1
+Style/Strip	1
+Style/StructInheritance	1	Style/MethodCallWithArgsParentheses
+Style/SuperArguments	1
+Style/SuperWithArgsParentheses	1
+Style/SwapValues	1
+Style/SymbolArray	1
+Style/SymbolLiteral	1
+Style/SymbolProc	1	Layout/SpaceBeforeBlockBraces	Style/TrailingCommaInArguments
+Style/TallyMethod	1
+Style/TernaryParentheses	1
+Style/TimeNow	1
+Style/TopLevelMethodDefinition	0
+Style/TrailingBodyOnClass	1
+Style/TrailingBodyOnMethodDefinition	1
+Style/TrailingBodyOnModule	1
+Style/TrailingCommaInArguments	1	Layout/HeredocArgumentClosingParenthesis	Rails/LinkToBlank	Capybara/RSpec/CurrentPathExpectation	Capybara/RSpec/CurrentUrlExpectation
+Style/TrailingCommaInArrayLiteral	1
+Style/TrailingCommaInBlockArgs	1
+Style/TrailingCommaInHashLiteral	1
+Style/TrailingMethodEndStatement	1
+Style/TrailingUnderscoreVariable	1
+Style/TrivialAccessors	1
+Style/UnlessElse	1
+Style/UnlessLogicalOperators	0
+Style/UnpackFirst	1
+Style/VariableInterpolation	1
+Style/WhenThen	1
+Style/WhileUntilDo	1
+Style/WhileUntilModifier	1
+Style/WordArray	1
+Style/YAMLFileRead	1
+Style/YodaCondition	1
+Style/YodaExpression	1
+Style/ZeroLengthPredicate	1
+Performance/AncestorsInclude	1
+Performance/ArraySemiInfiniteRangeSlice	1
+Performance/BigDecimalWithNumericArgument	1
+Performance/BindCall	1
+Performance/BlockGivenWithExplicitBlock	1	Lint/UnusedMethodArgument	Naming/BlockForwarding
+Performance/Caller	1
+Performance/CaseWhenSplat	1
+Performance/Casecmp	1
+Performance/CollectionLiteralInLoop	0
+Performance/CompareWithBlock	1
+Performance/ConcurrentMonotonicTime	1
+Performance/ConstantRegexp	1	Performance/RegexpMatch
+Performance/Count	1
+Performance/DeletePrefix	1
+Performance/DeleteSuffix	1
+Performance/Detect	1
+Performance/DoubleStartEndWith	1
+Performance/EndWith	1
+Performance/FixedSize	0
+Performance/FlatMap	1
+Performance/InefficientHashSearch	1
+Performance/MapCompact	1
+Performance/MapMethodChain	0
+Performance/MethodObjectAsBlock	0
+Performance/OpenStruct	0
+Performance/RangeInclude	1
+Performance/IoReadlines	1
+Performance/RedundantBlockCall	1
+Performance/RedundantEqualityComparisonBlock	1
+Performance/RedundantMatch	1
+Performance/RedundantMerge	1
+Performance/RedundantSortBlock	1
+Performance/RedundantSplitRegexpArgument	1
+Performance/RedundantStringChars	1
+Performance/RegexpMatch	1	Performance/ConstantRegexp
+Performance/ReverseEach	1
+Performance/ReverseFirst	1
+Performance/SelectMap	0
+Performance/Size	1
+Performance/SortReverse	1
+Performance/Squeeze	1
+Performance/StringBytesize	1
+Performance/StartWith	1
+Performance/StringIdentifierArgument	1
+Performance/StringInclude	1
+Performance/StringReplacement	1
+Performance/Sum	1
+Performance/TimesMap	1
+Performance/UnfreezeString	1
+Performance/UriDefaultParser	1
+Performance/ChainArrayAllocation	0
+Performance/ZipWithoutBlock	1
+Rails/ActionControllerFlashBeforeRender	1
+Rails/StrongParametersExpect	1
+Rails/ActionControllerTestCase	1
+Rails/ActionFilter	1
+Rails/ActionOrder	1
+Rails/ActiveRecordAliases	1
+Rails/ActiveRecordCallbacksOrder	1
+Rails/ActiveRecordOverride	0
+Rails/ActiveSupportAliases	1
+Rails/ActiveSupportOnLoad	1
+Rails/AddColumnIndex	1
+Rails/AfterCommitOverride	0
+Rails/ApplicationController	1
+Rails/ApplicationJob	1
+Rails/ApplicationMailer	1
+Rails/ApplicationRecord	1
+Rails/ArelStar	1
+Rails/AssertNot	1
+Rails/AttributeDefaultBlockValue	1
+Rails/BelongsTo	1
+Rails/Blank	1
+Rails/BulkChangeTable	0
+Rails/CompactBlank	1
+Rails/ContentTag	1
+Rails/CreateTableWithTimestamps	0
+Rails/DangerousColumnNames	0
+Rails/Date	1
+Rails/DefaultScope	0
+Rails/Delegate	1
+Rails/DelegateAllowBlank	1
+Rails/DeprecatedActiveModelErrorsMethods	1
+Rails/DotSeparatedKeys	1
+Rails/DuplicateAssociation	1
+Rails/DuplicateScope	0
+Rails/DurationArithmetic	1
+Rails/DynamicFindBy	1
+Rails/EagerEvaluationLogMessage	1	Style/MethodCallWithArgsParentheses
+Rails/EnumHash	1
+Rails/EnumSyntax	1
+Rails/EnumUniqueness	0
+Rails/Env	0
+Rails/EnvLocal	1
+Rails/EnvironmentComparison	1
+Rails/EnvironmentVariableAccess	0
+Rails/Exit	0
+Rails/ExpandedDateRange	1
+Rails/FilePath	1
+Rails/FindBy	1
+Rails/FindById	1
+Rails/FindByOrAssignmentMemoization	1
+Rails/FindEach	1
+Rails/FreezeTime	1
+Rails/HasAndBelongsToMany	0
+Rails/HasManyOrHasOneDependent	0
+Rails/HelperInstanceVariable	0
+Rails/HttpPositionalArguments	1
+Rails/HttpStatus	1
+Rails/HttpStatusNameConsistency	1
+Rails/I18nLazyLookup	1
+Rails/I18nLocaleAssignment	0
+Rails/I18nLocaleTexts	0
+Rails/IgnoredColumnsAssignment	1
+Rails/IgnoredSkipActionFilterOption	1
+Rails/IndexBy	1
+Rails/IndexWith	1
+Rails/Inquiry	0
+Rails/InverseOf	0
+Rails/LexicallyScopedActionFilter	0
+Rails/LinkToBlank	1
+Rails/MailerName	1
+Rails/MatchRoute	1
+Rails/MigrationClassName	1
+Rails/MultipleRoutePaths	1
+Rails/NegateInclude	1
+Rails/NotNullColumn	0
+Rails/OrderArguments	1
+Rails/OrderById	0
+Rails/Output	1
+Rails/OutputSafety	0
+Rails/Pick	1
+Rails/Pluck	1
+Rails/PluckId	1
+Rails/PluckInWhere	1
+Rails/PluralizationGrammar	1
+Rails/Presence	1
+Rails/Present	1
+Rails/RakeEnvironment	1
+Rails/ReadWriteAttribute	1
+Rails/RedundantActiveRecordAllMethod	1
+Rails/RedundantAllowNil	1
+Rails/RedundantForeignKey	1
+Rails/RedundantPresenceValidationOnBelongsTo	1
+Rails/RedundantReceiverInWithOptions	1
+Rails/RedundantTravelBack	1
+Rails/RedirectBackOrTo	1
+Rails/ReflectionClassName	1
+Rails/RefuteMethods	1
+Rails/RelativeDateConstant	1
+Rails/RenderInline	0
+Rails/RenderPlainText	1
+Rails/RequestReferer	1
+Rails/RequireDependency	0
+Rails/ResponseParsedBody	1
+Rails/ReversibleMigration	0
+Rails/ReversibleMigrationMethodDefinition	0
+Rails/RootJoinChain	1
+Rails/RootPathnameMethods	1
+Rails/RootPublicPath	1
+Rails/SafeNavigation	1	Style/RedundantSelf
+Rails/SafeNavigationWithBlank	1
+Rails/SaveBang	1
+Rails/SchemaComment	0
+Rails/ScopeArgs	1
+Rails/SelectMap	1
+Rails/ShortI18n	1
+Rails/SkipsModelValidations	0
+Rails/SquishedSQLHeredocs	1
+Rails/StripHeredoc	1
+Rails/TableNameAssignment	0
+Rails/ThreeStateBooleanColumn	0
+Rails/TimeZone	1
+Rails/TimeZoneAssignment	0
+Rails/ToFormattedS	1
+Rails/ToSWithArgument	1
+Rails/TopLevelHashWithIndifferentAccess	1
+Rails/TransactionExitStatement	0
+Rails/UniqBeforePluck	1
+Rails/UniqueValidationWithoutIndex	0
+Rails/UnknownEnv	0
+Rails/UnusedIgnoredColumns	0
+Rails/UnusedRenderContent	0
+Rails/Validation	1
+Rails/WhereEquals	1
+Rails/WhereExists	1
+Rails/WhereMissing	1
+Rails/WhereNot	1
+Rails/WhereNotWithMultipleConditions	0
+Rails/WhereRange	1
+Minitest/AssertEmpty	1
+Minitest/AssertEmptyLiteral	1
+Minitest/AssertEqual	1
+Minitest/AssertInDelta	1
+Minitest/AssertOperator	1
+Minitest/AssertPredicate	1
+Minitest/AssertRaisesCompoundBody	0
+Minitest/AssertRaisesWithRegexpArgument	0
+Minitest/AssertWithExpectedArgument	0
+Minitest/AssertionInLifecycleHook	0
+Minitest/AssertKindOf	1
+Minitest/AssertNil	1
+Minitest/AssertIncludes	1
+Minitest/AssertInstanceOf	1
+Minitest/AssertMatch	1
+Minitest/AssertOutput	0
+Minitest/AssertPathExists	1
+Minitest/AssertRespondTo	1
+Minitest/AssertSame	1
+Minitest/AssertSilent	1
+Minitest/AssertTruthy	1
+Minitest/DuplicateTestRun	0
+Minitest/EmptyLineBeforeAssertionMethods	1
+Minitest/Focus	1
+Minitest/NonExecutableTestMethod	0
+Minitest/RedundantMessageArgument	1
+Minitest/ReturnInTestMethod	1
+Minitest/TestFileName	0
+Minitest/GlobalExpectations	1
+Minitest/LifecycleHooksOrder	1
+Minitest/LiteralAsActualArgument	1
+Minitest/MultipleAssertions	0
+Minitest/NoAssertions	0
+Minitest/NoTestCases	0
+Minitest/NonPublicTestMethod	0
+Minitest/RefuteEmpty	1
+Minitest/RefuteFalse	1
+Minitest/RefuteEqual	1
+Minitest/RefuteInDelta	1
+Minitest/RefuteIncludes	1
+Minitest/RefuteInstanceOf	1
+Minitest/RefuteKindOf	1
+Minitest/RefuteMatch	1
+Minitest/RefuteNil	1
+Minitest/RefuteOperator	1
+Minitest/RefutePathExists	1
+Minitest/RefutePredicate	1
+Minitest/RefuteRespondTo	1
+Minitest/RefuteSame	1
+Minitest/SkipEnsure	0
+Minitest/SkipWithoutReason	0
+Minitest/TestMethodName	1
+Minitest/UnreachableAssertion	0
+Minitest/UnspecifiedException	0
+Minitest/UselessAssertion	0
+RSpec/AlignLeftLetBrace	1	Layout/ExtraSpacing
+RSpec/AlignRightLetBrace	1	Layout/ExtraSpacing
+RSpec/AnyInstance	0
+RSpec/AroundBlock	0
+RSpec/Be	0
+RSpec/BeEmpty	1
+RSpec/BeEq	1
+RSpec/BeEql	1
+RSpec/BeNil	1
+RSpec/BeforeAfterAll	0
+RSpec/ChangeByZero	1
+RSpec/ClassCheck	1
+RSpec/ContainExactly	1
+RSpec/ContextMethod	1
+RSpec/ContextWording	0
+RSpec/DescribeClass	0
+RSpec/DescribeMethod	0
+RSpec/DescribeSymbol	0
+RSpec/DescribedClass	1
+RSpec/DescribedClassModuleWrapping	0
+RSpec/Dialect	1
+RSpec/DiscardedMatcher	0
+RSpec/DuplicatedMetadata	1
+RSpec/EmptyExampleGroup	1
+RSpec/EmptyHook	1
+RSpec/EmptyLineAfterExample	1
+RSpec/EmptyLineAfterExampleGroup	1
+RSpec/EmptyLineAfterFinalLet	1
+RSpec/EmptyLineAfterHook	1
+RSpec/EmptyLineAfterSubject	1
+RSpec/EmptyMetadata	1
+RSpec/EmptyOutput	1
+RSpec/Eq	1
+RSpec/ExampleLength	0
+RSpec/ExampleWithoutDescription	0
+RSpec/ExampleWording	1
+RSpec/ExcessiveDocstringSpacing	1
+RSpec/ExpectActual	1
+RSpec/ExpectChange	1
+RSpec/ExpectInHook	0
+RSpec/ExpectInLet	0
+RSpec/ExpectOutput	0
+RSpec/Focus	1
+RSpec/HookArgument	1
+RSpec/HooksBeforeExamples	1
+RSpec/IdenticalEqualityAssertion	0
+RSpec/ImplicitBlockExpectation	0
+RSpec/ImplicitExpect	1
+RSpec/ImplicitSubject	1
+RSpec/IncludeExamples	1
+RSpec/IndexedLet	0
+RSpec/InstanceSpy	1
+RSpec/InstanceVariable	0
+RSpec/IsExpectedSpecify	1
+RSpec/ItBehavesLike	1
+RSpec/IteratedExpectation	1
+RSpec/LeadingSubject	1
+RSpec/LeakyConstantDeclaration	0
+RSpec/LeakyLocalVariable	0
+RSpec/LetBeforeExamples	1	RSpec/ScatteredLet
+RSpec/LetSetup	0
+RSpec/MatchArray	1
+RSpec/MatchWithSimpleRegex	1
+RSpec/MessageChain	0
+RSpec/MessageExpectation	0
+RSpec/MessageSpies	0
+RSpec/MetadataStyle	1
+RSpec/MissingExampleGroupArgument	0
+RSpec/MissingExpectationTargetMethod	0
+RSpec/MultipleDescribes	0
+RSpec/MultipleExpectations	0
+RSpec/MultipleMemoizedHelpers	0
+RSpec/MultipleSubjects	1
+RSpec/NamedSubject	0
+RSpec/NestedGroups	0
+RSpec/NoExpectationExample	0
+RSpec/NotToNot	1
+RSpec/Output	1
+RSpec/OverwritingSetup	0
+RSpec/Pending	0
+RSpec/PendingWithoutReason	0
+RSpec/PredicateMatcher	1
+RSpec/ReceiveCounts	1
+RSpec/ReceiveMessages	1
+RSpec/ReceiveNever	1
+RSpec/RedundantAround	1
+RSpec/RedundantPredicateMatcher	1
+RSpec/RemoveConst	0
+RSpec/RepeatedDescription	0
+RSpec/RepeatedExample	0
+RSpec/RepeatedExampleGroupBody	0
+RSpec/RepeatedExampleGroupDescription	0
+RSpec/RepeatedIncludeExample	0
+RSpec/RepeatedSubjectCall	0
+RSpec/ReturnFromStub	1
+RSpec/ScatteredLet	1
+RSpec/ScatteredSetup	1
+RSpec/SharedContext	1
+RSpec/SharedExamples	1
+RSpec/SingleArgumentMessageChain	1
+RSpec/SkipBlockInsideExample	0
+RSpec/SortMetadata	1
+RSpec/SpecFilePathFormat	0
+RSpec/SpecFilePathSuffix	0
+RSpec/StubbedMock	0
+RSpec/SubjectDeclaration	1
+RSpec/SubjectStub	0
+RSpec/UndescriptiveLiteralsDescription	0
+RSpec/UnspecifiedException	0
+RSpec/VariableDefinition	1
+RSpec/VariableName	0
+RSpec/VerifiedDoubleReference	1
+RSpec/VerifiedDoubles	0
+RSpec/VoidExpect	0
+RSpec/Yield	1
+RSpecRails/AvoidSetupHook	1
+RSpecRails/FileFixture	0
+RSpecRails/HaveHttpStatus	1
+RSpecRails/HttpStatus	1
+RSpecRails/HttpStatusNameConsistency	1
+RSpecRails/InferredSpecType	1
+RSpecRails/MinitestAssertions	1
+RSpecRails/NegationBeValid	1
+RSpecRails/ReceivePerformLater	0
+RSpecRails/TravelAround	1
+FactoryBot/AssociationStyle	1
+FactoryBot/AttributeDefinedStatically	1
+FactoryBot/ConsistentParenthesesStyle	1	Style/MethodCallWithArgsParentheses
+FactoryBot/CreateList	1
+FactoryBot/ExcessiveCreateList	0
+FactoryBot/FactoryAssociationWithStrategy	0
+FactoryBot/FactoryClassName	1
+FactoryBot/FactoryNameStyle	1
+FactoryBot/IdSequence	1
+FactoryBot/RedundantFactoryOption	1
+FactoryBot/SyntaxMethods	1
+Capybara/RSpec/CurrentPathExpectation	1	Style/TrailingCommaInArguments
+Capybara/RSpec/CurrentUrlExpectation	1	Style/TrailingCommaInArguments
+Capybara/RSpec/FindElementValueEq	1
+Capybara/RSpec/HaveContent	1
+Capybara/RSpec/HaveSelector	1
+Capybara/RSpec/MatchStyle	1
+Capybara/RSpec/NegationMatcher	1
+Capybara/RSpec/NegationMatcherAfterVisit	0
+Capybara/RSpec/PredicateMatcher	1
+Capybara/RSpec/SpecificMatcher	0
+Capybara/RSpec/VisibilityMatcher	1
+Capybara/AbsoluteXPathInElementScope	0
+Capybara/AlwaysTrueCountQuery	0
+Capybara/AmbiguousClick	0
+Capybara/AssertStyle	1
+Capybara/ChainedFind	1
+Capybara/FindAllFirst	1
+Capybara/IgnoredQueryOption	1
+Capybara/ModalMethodWithoutBlock	0
+Capybara/NativeAttribute	1
+Capybara/RedundantWithinFind	1
+Capybara/SpecificActions	0
+Capybara/SpecificFinders	1
+Capybara/UnorderedWindowAccess	0
+Capybara/VisibilityOption	1

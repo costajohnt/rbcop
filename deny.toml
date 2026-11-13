@@ -1,0 +1,8 @@
+# `cargo deny check advisories` (.github/workflows/ci.yml); only the advisories section is used.
+[advisories]
+ignore = [
+  # unsafe-libyaml is unmaintained (no vulnerability). It reaches rbcop only as a build dependency
+  # (serde_yaml) of ruby-rbs, which vendor/rubydex uses, so it runs at build time only. Drop this
+  # when that chain moves off serde_yaml.
+  { id = "RUSTSEC-2024-0449", reason = "unmaintained build-time dependency of vendor/rubydex" },
+]

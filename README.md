@@ -21,7 +21,7 @@ The target is byte-identical output: same offenses, ranges, messages, `[Correcta
 ## Build
 
 ```sh
-cargo build --release   # needs Rust 1.89 or newer and libclang (e.g. libclang-dev), for bindgen
+cargo build --release   # needs Rust 1.95 or newer and libclang (e.g. libclang-dev), for bindgen
 ```
 
 The binary is `target/release/rbcop`. The crate is not published to crates.io: it builds against a patched copy of `ruby-prism` in `vendor/ruby-prism`.
