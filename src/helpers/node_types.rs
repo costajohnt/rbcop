@@ -8,6 +8,11 @@ pub fn range(node: &Node) -> (usize, usize) {
     (l.start_offset(), l.end_offset())
 }
 
+/// rubocop-ast `hash_type?`: a `{}` hash or keyword arguments (both parser `hash`).
+pub fn is_hash(node: &Node) -> bool {
+    matches!(kind::of(node), kind::HASH_NODE | kind::KEYWORD_HASH_NODE)
+}
+
 /// rubocop-ast `assignment?`: (lvasgn ivasgn cvasgn gvasgn casgn masgn op_asgn or_asgn and_asgn),
 /// plus `setter_method?` (its alias on send nodes: `a.b = x`, `a[i] = x`).
 pub fn is_assignment(node: &Node) -> bool {

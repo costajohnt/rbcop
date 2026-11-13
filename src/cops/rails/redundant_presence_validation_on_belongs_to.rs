@@ -1,3 +1,4 @@
+use crate::helpers::node_types::is_hash;
 use crate::helpers::node_types::range;
 use crate::prelude::*;
 
@@ -16,10 +17,6 @@ fn pair_key(p: &ruby_prism::AssocNode) -> Option<String> {
 fn belongs_to<'pr>(n: &Node<'pr>) -> Option<Vec<Node<'pr>>> {
     let c = helpers::rails::send_node(n)?;
     helpers::rails::is_command(&c, "belongs_to").then(|| send_args(&c))
-}
-
-fn is_hash(n: &Node) -> bool {
-    helpers::rails::hash_elements(n).is_some()
 }
 
 fn has_pair(hash: &Node, f: impl Fn(&str, &Node) -> bool) -> bool {

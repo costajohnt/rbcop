@@ -1,3 +1,4 @@
+use crate::helpers::node_types::is_hash;
 use crate::helpers::node_types::range;
 use crate::prelude::*;
 
@@ -17,10 +18,6 @@ fn pairs<'pr>(hash: &Node<'pr>) -> Vec<Node<'pr>> {
         _ => return Vec::new(),
     };
     elements.iter().filter(|e| kind::of(e) == kind::ASSOC_NODE).collect()
-}
-
-fn is_hash(node: &Node) -> bool {
-    matches!(kind::of(node), kind::HASH_NODE | kind::KEYWORD_HASH_NODE)
 }
 
 /// `enforce_hash_argument_with_separator?`
