@@ -44,6 +44,6 @@ if [ ! -s "$out/diff.txt" ]; then
   exit 0
 fi
 echo "only in rubocop (<): $(grep -c '^<' "$out/diff.txt" || true)   only in rbcop (>): $(grep -c '^>' "$out/diff.txt" || true)"
-sed -E 's/^([<>]).*: [CWEFRI]: (\[Correctable\] )?([A-Za-z]+\/[A-Za-z0-9]+):.*/\1 \3/' "$out/diff.txt" | sort | uniq -c | sort -rn | head -40
+sed -E 's/^([<>]).*: [CWEFRI]: (\[Correctable\] )?([A-Za-z]+\/[A-Za-z0-9\/]+):.*/\1 \3/' "$out/diff.txt" | sort | uniq -c | sort -rn | head -40
 echo "details: $out/diff.txt"
 exit 1

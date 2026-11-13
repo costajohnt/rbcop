@@ -80,7 +80,9 @@ for c in $corpora; do
   diff -r "$dir/rubocop" "$dir/rbcop" > "$dir/files.diff" || true
   files=$(wc -l < "$dir/files" | tr -d ' ')
   rd=$(grep -c '^[<>]' "$dir/report.diff" || true)
-  fd=$(grep -c '^diff ' "$dir/files.diff" || true)
+  # diff -r reports a file only one side has as "Only in" and NUL-containing files as "Binary
+  # files ... differ", neither with a "diff " header: count all three, one line per file.
+  fd=$(grep -cE '^(diff |Only in |Binary files )' "$dir/files.diff" || true)
   printf '%-10s files %5s  offenses %6s  report diff %4s  files differing %4s\n' \
     "$c" "$files" "$(wc -l < "$dir/rubocop.norm" | tr -d ' ')" "$rd" "$fd"
   if [ "$rd" != 0 ] || [ "$fd" != 0 ]; then status=1; fi

@@ -21,7 +21,7 @@ end
 
 CRASH = /^An error occurred while (\S+) cop was inspecting (.*):\d+:\d+\.$/
 def crashes(err) = err.scan(CRASH).to_set { |cop, file| [cop, File.basename(file)] }
-def cop_of(line) = line[/: [CWEFRI]: (?:\[Correctable\] )?([A-Za-z]+\/[A-Za-z0-9]+)/, 1] || line[/: [CWEFRI]: ([^:]+)/, 1]
+def cop_of(line) = line[/: [CWEFRI]: (?:\[Correctable\] )?([A-Za-z]+\/[A-Za-z0-9\/]+)/, 1] || line[/: [CWEFRI]: ([^:]+)/, 1]
 def file_of(line) = line[/\A(.*?\.rb):\d+:/, 1]
 
 def compare(name, dir, rubo, rb)

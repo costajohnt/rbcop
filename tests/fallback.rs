@@ -726,7 +726,7 @@ fn fallback_is_the_default() {
     Command::new("chmod").arg("755").arg(bin.join("bundle")).status().unwrap();
     // Each run names the RuboCop it starts on stderr (stdout stays RuboCop's).
     let running =
-        |what: &str| format!("rbcop: running bundle exec rubocop for {what}; set RBCOP_FALLBACK=0 to never run Ruby\n");
+        |what: &str| format!("rbcop: running bundle exec rubocop for {what}; set RBCOP_FALLBACK=0 to skip RuboCop\n");
     let out = run(&[], &["-f", "e"]);
     assert_eq!(text(&out.stderr), running("cops from Ruby code the config requires"));
     assert!(text(&out.stdout).starts_with("from-a-cop\n"), "{}", text(&out.stdout));
