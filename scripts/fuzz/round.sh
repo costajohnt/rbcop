@@ -1,6 +1,6 @@
 #!/bin/sh
 # One differential-fuzz round: <batches> batches of <size> variants, each mutated and compared.
-# usage: RBCOP_CORPUS=... scripts/fuzz/round.sh <out-base-dir> <name> <rng-seed> [batches] [size]
+# usage: RBCOP_CORPUS=... RUBOCOP=... scripts/fuzz/round.sh <out-base-dir> <name> <rng-seed> [batches] [size]
 # Batch i goes to <out-base-dir>/<name>-<i> (rng seed <rng-seed>+i); summaries to <out-base-dir>/<name>.log.
 set -eu
 here=$(cd "$(dirname "$0")" && pwd)
@@ -10,6 +10,10 @@ seed=$3
 batches=${4:-4}
 size=${5:-500}
 export RBENV_VERSION=4.0.6
+# Checks $RUBOCOP is the targeted release; run.rb runs the same command.
+. "$here/../rubocop.sh"
+export RUBOCOP="$rubocop_cmd"
+mkdir -p "$base"
 log=$base/$name.log
 : > "$log"
 i=1

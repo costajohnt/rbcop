@@ -1,7 +1,8 @@
 #!/bin/sh
 # Run `rubocop -A` and `rbcop -A` (default config) on copies of one file; diff reports and results.
-# usage: scripts/fuzz/acdiff.sh <file>   (run with RBENV_VERSION=4.0.6)
+# usage: scripts/fuzz/acdiff.sh <file>   (RuboCop from $RUBOCOP, see scripts/rubocop.sh)
 set -eu
+. "$(dirname "$0")/../rubocop.sh"
 root=$(cd "$(dirname "$0")/../.." && pwd)
 w=$(mktemp -d)
 mkdir "$w/a" "$w/b"

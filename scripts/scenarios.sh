@@ -12,14 +12,14 @@ for name in $names; do
   [ -d "$dir" ] || continue
   args=$(cat "$dir/args" 2>/dev/null || true)
   # emacs prints absolute paths (and some messages hold them); store them relative to the scenario root.
-  # A scenario with a stderr.txt also records stderr there (e.g. the pending-cops notice), verbatim,
-  # and with a status file the exit status there.
+  # A scenario with a stderr.txt also records stderr there (e.g. the pending-cops notice), verbatim.
+  # The exit status always goes to status.
   err=/dev/null
   [ -f "$dir/stderr.txt" ] && err=$dir/stderr.txt
   out=$(mktemp)
   status=0
   (cd "$dir/project" && rubocop --cache false --format emacs $args 2>"$err") > "$out" || status=$?
-  [ -f "$dir/status" ] && echo "$status" > "$dir/status"
+  echo "$status" > "$dir/status"
   sed "s|$dir/project/||g" "$out" | LC_ALL=C sort > "$dir/expected.txt"
   # Absolute paths in messages (config file paths) are stored relative to the scenario root too.
   if [ -f "$dir/stderr.txt" ]; then
