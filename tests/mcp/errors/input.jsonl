@@ -12,7 +12,7 @@
 {"jsonrpc":"2.0","id":12,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"source_code":"# frozen_string_literal: true\n\n# rubocop:disable Output\nputs( 1)\n"}}}
 {"jsonrpc":"2.0","id":13,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"path":"amb/a.rb","safety":false}}}
 {"jsonrpc":"2.0","id":14,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"source_code":"# frozen_string_literal: true\n\n# rubocop:disable Output\nputs( 1)\n","safety":true}}}
-{"jsonrpc":"2.0","id":15,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"source_code":"puts( 3)\n","safety":true,"path":"d.rb"}}}
+{"jsonrpc":"2.0","id":15,"method":"tools/call","params":{"name":"rubocop_autocorrection","arguments":{"source_code":"puts( 3)\n","safety":true,"path":"b.rb"}}}
 {"jsonrpc":"2.0","id":16,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":["Rails/Output","RSpec/Output","Output"]}}}
 {"jsonrpc":"2.0","id":17,"method":"tools/call","params":{"name":"rubocop_explain","arguments":{"cop_names":["Rails/Output"],"path":"app/x.rb"}}}
 {"jsonrpc":"2.0","id":18,"method":"tools/call","params":{"name":"rubocop_inspection","arguments":{"path":"lib/b.rb","only":["Output"]}}}

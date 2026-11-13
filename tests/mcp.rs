@@ -55,9 +55,9 @@ fn mcp_tools_stay_inside_the_project() {
         call(10, "autocorrection", "{\"safety\":true}"),
         call(11, "explain", "{\"cop_names\":[\"Style/StringLiterals\"],\"path\":\"../outside/o.rb\"}"),
     ];
-    // Inside the project a new file is still written.
+    // Inside the project a Ruby file is still written.
     let input = refused.concat()
-        + &call(12, "autocorrection", "{\"path\":\"lib/new.rb\",\"source_code\":\"puts( 2)\\n\",\"safety\":true}");
+        + &call(12, "autocorrection", "{\"path\":\"lib/a.rb\",\"source_code\":\"puts( 2)\\n\",\"safety\":true}");
     let mut child = common::command(env!("CARGO_BIN_EXE_rbcop"))
         .arg("--mcp")
         .current_dir(&project)
@@ -75,7 +75,7 @@ fn mcp_tools_stay_inside_the_project() {
         assert!(line.contains("\"isError\":true") && line.contains("outside the project"), "{line}");
     }
     assert!(lines[11].contains("\"isError\":false"), "{}", lines[11]);
-    assert_eq!(std::fs::read_to_string(project.join("lib/new.rb")).unwrap(), "puts(2)\n");
+    assert_eq!(std::fs::read_to_string(project.join("lib/a.rb")).unwrap(), "puts(2)\n");
     assert_eq!(std::fs::read_to_string(outside.join("o.rb")).unwrap(), "puts( 9)\n");
     assert!(!outside.join("new.rb").exists());
     assert!(std::fs::symlink_metadata(project.join("lib/evil.rb")).unwrap().file_type().is_symlink());
@@ -152,6 +152,7 @@ fn mcp_tools_refuse_to_write_evaluated_config() {
     let _ = std::fs::remove_dir_all(&dir);
     std::fs::create_dir_all(dir.join("spec")).unwrap();
     let dir = dir.canonicalize().unwrap();
+    std::fs::write(dir.join("spec/a.rb"), "").unwrap();
     let erb = r#""x: <%= File.write('pwned', '') %>\n""#;
     let paths = ["spec/.rubocop.yml", ".rubocop_todo.yml", "config/base.YAML", ".rubocop"];
     let mut requests: Vec<String> = paths
@@ -174,6 +175,109 @@ fn mcp_tools_refuse_to_write_evaluated_config() {
     assert!(!dir.join("pwned").exists() && !dir.join("spec/pwned").exists());
     assert!(!lines[paths.len()].contains("\"isError\":true"), "{}", lines[paths.len()]);
     assert_eq!(std::fs::read_to_string(dir.join("spec/a.rb")).unwrap(), "puts(1)\n");
+    std::fs::remove_dir_all(&dir).unwrap();
+}
+
+/// Deliberate difference (#721): inline code given a `path` is written only over an existing
+/// regular file that is Ruby by default.yml alone (extension, exact filename, or a `#!` line whose
+/// interpreter is exactly a default Ruby interpreter; a `#!` line must pass even on `x.rb`, and an
+/// `env` option other than `-S` refuses), so a client cannot create a file, nor write one other
+/// tools run or read (`.envrc`, `.bundle/config`, a shell `bin/setup`), even when the project
+/// config says `RubyInterpreters: []`; nor can it add, drop or change a `#!` line. A dry run
+/// writes nothing and is still answered.
+#[test]
+fn mcp_inline_writes_only_existing_ruby_files() {
+    use std::os::unix::fs::symlink;
+    let dir = std::env::temp_dir().join(format!("rbcop-mcp-inline-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    for d in ["lib", "bin", ".bundle", "exe"] {
+        std::fs::create_dir_all(dir.join(d)).unwrap();
+    }
+    let dir = dir.canonicalize().unwrap();
+    let files = [
+        (".rubocop.yml", "AllCops:\n  RubyInterpreters: []\n"),
+        (".envrc", "export A=1\n"),
+        (".bundle/config", "---\nBUNDLE_PATH: \"vendor\"\n"),
+        ("bin/setup", "#!/bin/sh\nexit 0\n"),
+        ("bin/sub", "#!/bin/sh -c 'echo notruby'\n"),
+        ("bin/env", "#!/usr/bin/env bash # ruby\n"),
+        ("bin/unset", "#!/usr/bin/env -u ruby bash\n"),
+        ("bin/chdir", "#!/usr/bin/env -C ruby bash\n"),
+        ("bin/expand", "#!/usr/bin/env -S ${X}/ruby\n"),
+        ("lib/deploy.rb", "#!/bin/sh\nputs( 1)\n"),
+        (".ruby-version", "3.3.0\n"),
+        ("Gemfile", "source 'https://rubygems.org'\n"),
+        ("exe/tool", "#!/usr/bin/env ruby\nputs 1\n"),
+        ("bin/console", "#!/usr/bin/env -S RUBYOPT=-w ruby\nputs 1\n"),
+        ("bin/joined", "#!/usr/bin/env -Sruby\nputs 1\n"),
+        ("lib/a.rb", "puts( 1)\n"),
+        ("lib/b.rb", "puts( 1)\n"),
+    ];
+    for (p, text) in files {
+        std::fs::write(dir.join(p), text).unwrap();
+    }
+    for p in ["exe/tool", "bin/console", "bin/joined"] {
+        use std::os::unix::fs::PermissionsExt;
+        std::fs::set_permissions(dir.join(p), std::fs::Permissions::from_mode(0o755)).unwrap();
+    }
+    symlink(dir.join(".envrc"), dir.join("lib/env.rb")).unwrap();
+    let call = |id: u32, p: &str, src: &str, extra: &str| {
+        let src = format!("{src:?}");
+        tool_call(id, "autocorrection", &format!(r#"{{"path":"{p}","source_code":{src},"safety":true{extra}}}"#))
+    };
+    let plain = "puts( 2)\n";
+    let not_ruby = [
+        ".envrc",
+        ".bundle/config",
+        "bin/setup",
+        "bin/sub",
+        "bin/env",
+        "bin/unset",
+        "bin/chdir",
+        "bin/expand",
+        "lib/deploy.rb",
+        ".ruby-version",
+        "lib/env.rb",
+        "lib/new.rb",
+        "lib",
+    ];
+    let shebang = [("exe/tool", "#!/bin/sh\necho pwned\n"), ("exe/tool", plain), ("lib/b.rb", "#!/bin/sh\nputs( 2)\n")];
+    let written = [
+        ("lib/a.rb", plain),
+        ("Gemfile", plain),
+        ("exe/tool", "#!/usr/bin/env ruby\nputs( 2)\n"),
+        ("bin/console", "#!/usr/bin/env -S RUBYOPT=-w ruby\nputs( 2)\n"),
+        ("bin/joined", "#!/usr/bin/env -Sruby\nputs( 2)\n"),
+    ];
+    let mut requests: Vec<String> = not_ruby.iter().map(|p| call(1, p, plain, "")).collect();
+    requests.extend(shebang.iter().map(|(p, src)| call(2, p, src, "")));
+    requests.extend(written.iter().map(|(p, src)| call(3, p, src, "")));
+    requests.push(call(4, "lib/new.rb", plain, r#","dry_run":true"#));
+    let lines = mcp(&dir, &[], &requests);
+    assert_eq!(lines.len(), requests.len(), "{lines:?}");
+    let (refused, rest) = lines.split_at(not_ruby.len());
+    for line in refused {
+        assert!(
+            line.contains("\"isError\":true") && line.contains("rbcop would inspect as Ruby; not written"),
+            "{line}"
+        );
+    }
+    let (refused, rest) = rest.split_at(shebang.len());
+    for line in refused {
+        assert!(line.contains("\"isError\":true") && line.contains("changes its #! line; not written"), "{line}");
+    }
+    for line in rest {
+        assert!(line.contains("\"isError\":false") && line.contains("puts(2)"), "{line}");
+    }
+    for (p, text) in &files[..11] {
+        assert_eq!(&std::fs::read_to_string(dir.join(p)).unwrap(), text, "{p} was written");
+    }
+    assert_eq!(std::fs::read_to_string(dir.join("lib/b.rb")).unwrap(), "puts( 1)\n");
+    assert!(std::fs::symlink_metadata(dir.join("lib/env.rb")).unwrap().file_type().is_symlink());
+    assert!(!dir.join("lib/new.rb").exists());
+    for (p, src) in written {
+        assert_eq!(std::fs::read_to_string(dir.join(p)).unwrap(), src.replace("( 2)", "(2)"), "{p}");
+    }
     std::fs::remove_dir_all(&dir).unwrap();
 }
 
