@@ -28,8 +28,8 @@ impl Cop for ActiveSupportCallbacks {
             return;
         }
         let Some(recv) = call.receiver() else { return };
-        // requires_gem 'activesupport'
-        if !constant_receiver(&recv) || !cx.config.gem_at_least("activesupport", "0") {
+        // requires_gem 'activesupport' (`>= 0`, which a prerelease satisfies too)
+        if !constant_receiver(&recv) || !cx.config.gem_versions_in_target().is_some_and(|g| g.contains_key("activesupport")) {
             return;
         }
         let Some(sel) = call.message_loc() else { return };

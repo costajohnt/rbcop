@@ -1,5 +1,5 @@
-use crate::helpers::node_types::plain_block_params;
 use crate::helpers::parser_parent::is_top_const;
+use crate::helpers::thread_safety as ts;
 use crate::prelude::*;
 
 pub const NAME: &str = "ThreadSafety/LazySynchronizationPrimitive";
@@ -34,12 +34,11 @@ impl Cop for LazySynchronizationPrimitive {
         if !synchronization_primitive(&value) || !cx.ancestors.iter().any(|a| a.as_def_node().is_some()) {
             return;
         }
-        // synchronized?: a `block` ancestor whose method is `synchronize`.
-        let synchronized = cx.ancestors.iter().enumerate().any(|(i, a)| {
-            a.as_block_node().is_some_and(|b| plain_block_params(b.parameters()))
-                && i > 0
-                && cx.ancestors[i - 1].as_call_node().is_some_and(|c| method_name(&c) == "synchronize")
-        });
+        // synchronized?: a `block` ancestor whose method is `synchronize` (parser's block also wraps
+        // its send's receiver: `(@m ||= Monitor.new).synchronize do`).
+        let synchronized = ts::parser_ancestors(cx.ancestors)
+            .iter()
+            .any(|a| a.is_block() && a.block_call().is_some_and(|c| method_name(&c) == "synchronize"));
         if !synchronized {
             let l = node.location();
             cx.add(l.start_offset(), l.end_offset(), "Do not lazily initialize synchronization primitives with `||=`.");
