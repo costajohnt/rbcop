@@ -1708,10 +1708,32 @@ fn gate_scripts_fail_without_a_binary_or_cops() {
     fs::create_dir_all(stubs.join("release")).unwrap();
     fs::write(stubs.join("cargo"), "#!/bin/sh\nexit 0\n").unwrap();
     fs::set_permissions(stubs.join("cargo"), fs::Permissions::from_mode(0o755)).unwrap();
-    // compare.sh checks RuboCop before the binary: a stub of the targeted release keeps the test
-    // independent of whether RuboCop is installed.
+    // compare.sh checks RuboCop before the binary: a stub of the targeted release and its pinned
+    // gems (`-V`, scripts/rubocop.sh) keeps the test independent of whether RuboCop is installed.
     let stub_rubocop = stubs.join("rubocop-stub");
-    fs::write(&stub_rubocop, format!("#!/bin/sh\necho {}\n", rbcop::config::RUBOCOP_VERSION)).unwrap();
+    let verbose = stubs.join("verbose.txt");
+    let write_verbose = |rails: Option<&str>| {
+        use rbcop::config::*;
+        let mut v = format!(
+            "{RUBOCOP_VERSION} (using Parser {PARSER_VERSION}, Prism {PRISM_VERSION}, rubocop-ast \
+             {RUBOCOP_AST_VERSION}, analyzing as Ruby 3.4, running on ruby {RUBY_VERSION}) [x86_64-linux]\n"
+        );
+        for p in rbcop::helpers::cop_registry::NATIVE_PLUGINS {
+            let version = rails.filter(|_| p.gem == "rubocop-rails").unwrap_or(p.version);
+            v += &format!("  - {} {version}\n", p.gem);
+        }
+        fs::write(&verbose, v).unwrap();
+    };
+    write_verbose(None);
+    fs::write(
+        &stub_rubocop,
+        format!(
+            "#!/bin/sh\n[ \"$1\" = -V ] && exec cat {}\necho {}\n",
+            verbose.display(),
+            rbcop::config::RUBOCOP_VERSION
+        ),
+    )
+    .unwrap();
     fs::set_permissions(&stub_rubocop, fs::Permissions::from_mode(0o755)).unwrap();
     let path = format!("{}:{}", stubs.display(), std::env::var("PATH").unwrap_or_default());
     let run = |script: &str, args: &[&str]| {
@@ -1747,7 +1769,47 @@ fn gate_scripts_fail_without_a_binary_or_cops() {
     let (code, _, err) = run("check-cops.sh", &["", "specs"]);
     assert_eq!(code, Some(1), "{err}");
     assert!(err.contains("empty cop list"), "{err}");
+    // A RuboCop whose plugin (or Parser, Prism, rubocop-ast) differs from the pins (#726).
+    write_verbose(Some("2.37.0"));
+    let (code, _, err) = run("compare.sh", &["."]);
+    assert_eq!(code, Some(1), "{err}");
+    assert!(err.contains("-V does not match the pinned gems"), "{err}");
+    assert!(err.contains("found:    parser:") && err.contains("rubocop-rails:2.37.0"), "{err}");
     let _ = fs::remove_dir_all(&dir);
+}
+
+/// The gem set GitHub CI installs (.github/workflows/ci.yml GEMS) and its Ruby (.ruby-version) are
+/// the ones `-V` names (src/config/mod.rs) and docs/plugins.md pins, which the oracle host's
+/// scripts/rubocop.sh checks (#726).
+#[test]
+fn ci_gems_match_the_pinned_versions() {
+    use rbcop::config::*;
+    let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+    let ci = fs::read_to_string(root.join(".github/workflows/ci.yml")).unwrap();
+    let gems: Vec<&str> = ci
+        .split("GEMS: >-\n")
+        .nth(1)
+        .unwrap()
+        .lines()
+        .take_while(|l| l.starts_with("    "))
+        .flat_map(str::split_whitespace)
+        .collect();
+    let docs = fs::read_to_string(root.join("docs/plugins.md")).unwrap();
+    let mut pins = vec![
+        ("rubocop".to_string(), RUBOCOP_VERSION),
+        ("parser".to_string(), PARSER_VERSION),
+        ("prism".to_string(), PRISM_VERSION),
+        ("rubocop-ast".to_string(), RUBOCOP_AST_VERSION),
+    ];
+    for p in rbcop::helpers::cop_registry::NATIVE_PLUGINS {
+        assert!(docs.contains(&format!("\n| {} | {} |", p.gem, p.version)), "docs/plugins.md: {}", p.gem);
+        pins.push((p.gem.to_string(), p.version));
+    }
+    for (gem, version) in pins {
+        assert!(gems.contains(&format!("{gem}:{version}").as_str()), "ci.yml GEMS lacks {gem}:{version}: {gems:?}");
+    }
+    let ruby = fs::read_to_string(root.join(".ruby-version")).unwrap();
+    assert_eq!(ruby.trim(), RUBY_VERSION);
 }
 
 /// Deliberate difference: -a/-A never writes a file that resolves outside the project (the working

@@ -1,0 +1,35 @@
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -144,6 +144,12 @@
+         Node::new(self.parser, node)
+     }
+ 
++    /// rbcop patch: the element at `index` in O(1) (the iterator's `nth` walks the list).
++    #[must_use]
++    pub fn get(&self, index: usize) -> Option<Node<'pr>> {
++        (index < self.len()).then(|| unsafe { self.at(index) })
++    }
++
+     /// Returns an iterator over the nodes.
+     #[must_use]
+     pub const fn iter(&self) -> NodeListIter<'pr> {
+@@ -415,6 +421,19 @@
+     pub const fn location(&self) -> Location<'pr> {
+         Location::new(self.parser, unsafe { &self.diag.as_ref().location })
+     }
++
++    /// rbcop patch: the diagnostic's type name, as Ruby's `Prism::ParseError#type` reports it
++    /// (e.g. `"unexpected_token_ignore"`).
++    #[must_use]
++    pub fn type_name(&self) -> &'static str {
++        extern "C" {
++            fn pm_diagnostic_id_human(diag_id: ruby_prism_sys::pm_diagnostic_id_t) -> *const c_char;
++        }
++        unsafe {
++            let name = pm_diagnostic_id_human(self.diag.as_ref().diag_id);
++            CStr::from_ptr(name).to_str().unwrap_or("")
++        }
++    }
+ }
+ 
+ /// A comment that was found during parsing.

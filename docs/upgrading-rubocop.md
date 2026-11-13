@@ -16,15 +16,45 @@ Keep the current release as the default `rubocop` (other gates still need it) an
 in a scratch gem home:
 
     S=~/scratch/rubocop-X.Y.Z; mkdir -p $S
-    GEM_HOME=$S/gems gem install rubocop -v X.Y.Z --no-document
+    GEM_HOME=$S/gems gem install rubocop -v X.Y.Z --no-document --ignore-dependencies
+    GEM_HOME=$S/gems gem install rubocop-ast -v 1.50.0 --no-document --ignore-dependencies
+    GEM_HOME=$S/gems gem install prism -v 1.9.0 --no-document --ignore-dependencies
     export NEW="env GEM_PATH=$S/gems:$(gem env gempath) rubocop _X.Y.Z_"
     $NEW -V
+
+Install every gem with `--ignore-dependencies` at an exact version, as `.github/workflows/ci.yml`
+does (its `GEMS` list is the current set): a plain `gem install rubocop` resolves the newest
+rubocop-ast its gemspec allows, and since rubocop-ast 1.51.0 accepts `prism >= 1.7`, that pulls in
+Prism 2.x, which rbcop does not parse with. `rubocop-ast 1.50.0` and `prism 1.9.0` stay pinned until
+the Prism port below. `$NEW -V` must name the versions in `src/config/mod.rs`
+(`scripts/rubocop.sh` refuses any other).
 
 Check its gemspec: a new minimum for `rubocop-ast`, `parser` or `unicode-display_width` means
 those move too (`rbcop -V` prints the rubocop-ast version, `src/helpers/alignment.rs` is generated
 from unicode-display_width by `scripts/display_widths.rb`). For each native plugin
 (docs/plugins.md), find the newest release whose gemspec accepts X.Y.Z and install it in the same
 gem home; a plugin bump is its own port (docs/plugins.md, "Porting a plugin").
+
+### Prism and rubydex
+
+rbcop parses with the `ruby-prism` crate at the version of the `prism` gem RuboCop runs on
+(`PRISM_VERSION`), and `vendor/rubydex` is the Rust core of the `rubydex` gem RuboCop's project
+index uses. Neither moves unless the new release needs it, but check both:
+
+- Prism: read the new release's rubocop-ast requirement and that rubocop-ast's `prism` requirement.
+  If it no longer accepts the pinned Prism (or needs a fix from a newer one), the Prism upgrade is
+  its own port: `vendor/ruby-prism` is the crates.io crate plus `vendor/ruby-prism.patches/*.diff`
+  (every hunk marked `rbcop patch`). `scripts/prism-patch.sh <version> <dir>` downloads the
+  pristine crate and applies them; a patch that does not apply leaves `.rej` hunks to port by hand.
+  Once it builds, replace `vendor/ruby-prism` with the result (`Cargo.toml` pins `ruby-prism` and
+  `ruby-prism-sys` to the same version), re-extract each changed patch (`diff -u` against the
+  pristine crate, labels `a/src/lib.rs` and `b/src/lib.rs`, one file per group as now), rerun
+  `scripts/gen_node_kinds.py` (usage in its header), and bump `PRISM_VERSION` and the `prism` entry of ci.yml `GEMS`.
+  At the vendored version, `scripts/prism-patch.sh 1.9.0 $S/prism` reproduces `vendor/ruby-prism`
+  exactly (`diff -r` prints nothing).
+- rubydex: `vendor/rubydex/Cargo.toml` names the gem version it came from (0.4.1). If the gem home
+  the recordings use holds another rubydex, copy that gem's `rust/rubydex` crate over it, redo the
+  `rbcop patch` removals listed at the top of that Cargo.toml, and rerun the project-index tests.
 
 ## 2. Inventory the delta
 
@@ -79,7 +109,10 @@ corpus (step 4) and targeted cases to catch. Commit the final `delta.tsv` and `d
 
 All with `RUBOCOP="$NEW"` (and `RUBOCOP_EXPECTED=X.Y.Z` until `RUBOCOP_VERSION` in
 `src/config/mod.rs` names the new release: `scripts/rubocop.sh` refuses any other version), so
-nothing records with the old release by accident:
+nothing records with the old release by accident. `scripts/rubocop.sh` also compares the gems
+`-V` names (Parser, Prism, rubocop-ast, ruby, each plugin) with the constants beside
+`RUBOCOP_VERSION` and the docs/plugins.md pins; until those are bumped too, list the moved ones in
+`RUBOCOP_EXPECTED_DEPS` (`"rubocop-ast:1.51.0 rubocop-rails:2.39.0"`):
 
 - `tests/spec_corpus`: `scripts/record-spec-corpus.sh <rubocop-src checkout at vX.Y.Z>` (clone into
   scratch, `git -C <dir> checkout vX.Y.Z`; the corpus copy of rubocop-src stays as it is).
@@ -103,7 +136,11 @@ row is a recording problem (wrong version, locale, plugin version) until shown o
 In the same change as the ports and recordings:
 
 - `RUBOCOP_VERSION` in `src/config/mod.rs` (`rbcop -v`, `-V`, the JSON/HTML formatters,
-  `--auto-gen-config`, LSP, the remote-config shim).
+  `--auto-gen-config`, LSP, the remote-config shim), and beside it `PARSER_VERSION`,
+  `PRISM_VERSION`, `RUBOCOP_AST_VERSION` and `RUBY_VERSION` if the new gem home moved them (`-V`
+  prints them; `scripts/rubocop.sh` checks them).
+- `.github/workflows/ci.yml` `GEMS`: the new gem home's versions (`cargo test` checks the `-V` ones
+  and the plugin pins against `src/config/mod.rs` and docs/plugins.md).
 - `config/default.yml`: copy the new release's file verbatim.
 - The version named in prose and comments: grep every past target, not only the previous one
   (`git grep -nE '1\.91\.0|1\.92\.1|<old>'`; earlier upgrades left older ones behind) in README.md,
