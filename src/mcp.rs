@@ -661,6 +661,7 @@ impl Server {
                 // O_EXCL: never an existing file, nor a symlink planted since.
                 std::fs::OpenOptions::new().write(true).create_new(true).custom_flags(libc::O_NOFOLLOW).open(&real)?;
             }
+            let _synced = autocorrect::SyncWrittenDirs;
             autocorrect::write_source(&real, content, None, &self.roots).map(drop)
         })();
         written.map_err(|e| match e.raw_os_error() {

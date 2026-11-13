@@ -2436,6 +2436,8 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     let mut cache_dirty = false;
     if error.is_none() {
         let mut cop_notes = Some((cop_warnings, cop_error));
+        // The directories of the files written below are synced once, at the end of the run.
+        let _synced = rbcop::autocorrect::SyncWrittenDirs;
         let mut stopped = false;
         let mut similar_view: Option<Option<usize>> = None;
         for (idx, ((path, cfg), linted)) in jobs.iter().zip(reports.iter_mut()).enumerate() {
@@ -2488,7 +2490,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                         Ok(real) if rbcop::autocorrect::outside_roots(&real, &write_roots) => {
                             Some(format!("it resolves to {}, outside the project", real.display()))
                         }
-                        _ if read.as_deref().is_some_and(|r| fs::read(path).ok().as_deref() != Some(r)) => {
+                        Ok(real) if read.as_deref().is_some_and(|r| !rbcop::autocorrect::unchanged(&real, r)) => {
                             Some(CHANGED_SINCE_READ.to_string())
                         }
                         _ => None,
