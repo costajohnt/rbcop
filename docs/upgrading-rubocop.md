@@ -96,15 +96,15 @@ corpus (step 4) and targeted cases to catch. Commit the final `delta.tsv` and `d
   `src/formatter*`, `src/config/`, `src/lsp.rs`, `src/mcp.rs`. New options go in the option table in
   `src/main.rs`, and `rubocop -h` is re-recorded verbatim there.
 - Regenerated tables: `src/autocorrect/registry.tsv` (`scripts/autocorrect_registry.rb`, registry
-  order, `support_autocorrect?` and `autocorrect_incompatible_with`), `src/helpers/ruby_exceptions.rs`
-  (`scripts/dump-ruby-exceptions.rb`), `src/helpers/nil_methods.rs` and the display width table when
+  order, `support_autocorrect?` and `autocorrect_incompatible_with`), `src/helpers/ruby_exceptions/{linux,darwin}.rs`
+  (`scripts/dump-ruby-exceptions.rb`, run on each platform), `src/helpers/nil_methods.rs` and the display width table when
   their gems move, and `src/cop_docs.txt` (what `--explain` prints: `LC_ALL=C.UTF-8 ruby
   scripts/dump-cop-docs.rb > src/cop_docs.txt` with the new release and the plugin pins of
   docs/plugins.md on the load path). 1.92.2 changed only the docs of Lint/PercentStringArray and
   Style/CaseEquality, and the 1.92.2 upgrade missed them. `scripts/check-generated.sh` (in the
   corpus tier of `scripts/ci.sh`) reruns every generator and the vendored config copies with the
   new gem home and rewrites what is stale; its header lists what it does not cover
-  (`ruby_exceptions.rs` is platform-dependent).
+  (the `ruby_exceptions` table of the platform it does not run on).
 - Behaviour the new release drops on purpose may already be listed in docs/known-gaps.md as a
   difference from the old one: re-check every entry that names the old version.
 

@@ -9,11 +9,11 @@
 #   src/encodings.bin              scripts/encodings.rb
 #   src/node_kind.rs               scripts/gen_node_kinds.py on the release build's ruby-prism bindings
 #   src/help.txt                   `rubocop -h`
+#   src/helpers/ruby_exceptions/<linux|darwin>.rs, the one for this host's platform:
+#                                  scripts/dump-ruby-exceptions.rb (Errno codes and aliases differ)
 #   config/default.yml, config/obsoletion.yml, config/plugins/<gem>.yml, <gem>-obsoletion.yml:
 #                                  verbatim copies of the pinned gems' config files
-# Not checked: src/helpers/ruby_exceptions.rs (scripts/dump-ruby-exceptions.rb) depends on the
-# platform it runs on (Errno codes and aliases), and the committed table is from arm64-darwin, not
-# the CI host; src/helpers/nil_methods.rs is written by hand.
+# Not checked: the other platform's ruby_exceptions table; src/helpers/nil_methods.rs is written by hand.
 # usage: scripts/check-generated.sh
 # env: RUBOCOP as for every RuboCop script, and a `ruby` that loads the same pinned gems (on the CI
 #   host GEM_HOME=GEM_PATH=~/rubocop-1.92.2/gems, RBENV_VERSION=4.0.6, as ci-run.sh exports).
@@ -71,6 +71,7 @@ gen src/helpers/alignment.rs awk -v t="$tmp/widths" \
 bindings=$(ls -t "${CARGO_TARGET_DIR:-$root/target}"/release/build/ruby-prism-*/out/bindings.rs | head -n 1)
 gen src/node_kind.rs python3 -I scripts/gen_node_kinds.py "$bindings"
 gen src/help.txt rubocop -h
+gen "src/helpers/ruby_exceptions/$(uname -s | tr '[:upper:]' '[:lower:]').rs" ruby scripts/dump-ruby-exceptions.rb -
 d=$(gem_dir rubocop)
 gen config/default.yml cat "$d/config/default.yml"
 gen config/obsoletion.yml cat "$d/config/obsoletion.yml"
