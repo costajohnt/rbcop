@@ -75,7 +75,10 @@ for p in "$@"; do
     run "$out/w" after-warm --cache-root "$out/cache"
     same after-base after-warm "$name after $mode"
   done
-  echo "$name: $(find "$out/cache" -type f | wc -l | tr -d ' ') cache entries checked"
+  entries=$(find "$out/cache" -type f 2> /dev/null | wc -l | tr -d ' ')
+  echo "$name: $entries cache entries checked"
+  # No entries: every run failed before inspecting (e.g. a config rbcop rejects), so nothing was checked.
+  [ "$entries" != 0 ] || { echo "FAIL $name: no cache entries written (see $out/cold.err)"; status=1; }
 done
 [ "$status" = 0 ] && echo "cache: all match"
 exit "$status"

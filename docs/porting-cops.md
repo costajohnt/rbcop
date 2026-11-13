@@ -515,7 +515,8 @@ Corpora (shallow clones in `$RBCOP_CORPUS`, oracles in `$RBCOP_ORACLE/<name>.txt
 `fastlane` (fastlane/fastlane 511c0726), `brew` (Library/Homebrew of Homebrew/brew 16f166d3),
 `mastodon` (mastodon/mastodon 9e3fab27). Each of the last six adds under a minute to `check-cops.sh all`. Files
 whose differences are documented gaps are listed in `scripts/check-skip.txt`. The autocorrect
-gates still default to specs, rails and discourse; a cross-cop pass over the other corpora takes
+gates still default to specs, rails and discourse (the corpus tier of `scripts/ci.sh` runs
+`check-autocorrect-all.sh` on their first 100 offending files each); a cross-cop pass over the other corpora takes
 5-25 minutes each:
 `LIMIT=1500 OUT=<dir> scripts/check-autocorrect-all.sh rubocop-src jekyll chef fastlane brew mastodon`.
 
