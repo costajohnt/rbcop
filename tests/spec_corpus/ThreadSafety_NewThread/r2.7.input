@@ -1,0 +1,79 @@
+==> .rubocop.yml 141 <==
+---
+plugins:
+- rubocop-thread_safety
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 23 <==
+Thread.new { do_work }
+
+==> 001/001.rb 26 <==
+Thread.new(1) { do_work }
+
+==> 002/002.rb 30 <==
+Thread.new(a: 42) { do_work }
+
+==> 003/003.rb 32 <==
+::Thread.new(a: 42) { do_work }
+
+==> 004/004.rb 31 <==
+Thread&.new(a: 42) { do_work }
+
+==> 005/005.rb 20 <==
+Thread&.new(&block)
+
+==> 006/006.rb 30 <==
+Thread&.new(1, a: 42, &block)
+
+==> 007/007.rb 21 <==
+Other.new { do_work }
+==> 008/008.rb 24 <==
+Thread.fork { do_work }
+
+==> 009/009.rb 27 <==
+Thread.fork(1) { do_work }
+
+==> 010/010.rb 31 <==
+Thread.fork(a: 42) { do_work }
+
+==> 011/011.rb 33 <==
+::Thread.fork(a: 42) { do_work }
+
+==> 012/012.rb 32 <==
+Thread&.fork(a: 42) { do_work }
+
+==> 013/013.rb 21 <==
+Thread&.fork(&block)
+
+==> 014/014.rb 31 <==
+Thread&.fork(1, a: 42, &block)
+
+==> 015/015.rb 22 <==
+Other.fork { do_work }
+==> 016/016.rb 25 <==
+Thread.start { do_work }
+
+==> 017/017.rb 28 <==
+Thread.start(1) { do_work }
+
+==> 018/018.rb 32 <==
+Thread.start(a: 42) { do_work }
+
+==> 019/019.rb 34 <==
+::Thread.start(a: 42) { do_work }
+
+==> 020/020.rb 33 <==
+Thread&.start(a: 42) { do_work }
+
+==> 021/021.rb 22 <==
+Thread&.start(&block)
+
+==> 022/022.rb 32 <==
+Thread&.start(1, a: 42, &block)
+
+==> 023/023.rb 23 <==
+Other.start { do_work }

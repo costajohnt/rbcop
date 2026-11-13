@@ -1,6 +1,7 @@
 plugins:
   - rubocop-rspec
   - rubocop-capybara
+  - rubocop-thread_safety
 AllCops:
   NewCops: enable
   SuggestExtensions: false

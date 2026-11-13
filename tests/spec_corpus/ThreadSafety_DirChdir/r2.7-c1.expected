@@ -1,0 +1,10 @@
+==> offenses exit=1 303 <==
+000/000.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.
+004/004.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.chdir` due to its process-wide effect.
+008/008.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.cd` due to its process-wide effect.
+
+==> autocorrect exit=1 303 <==
+000/000.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.
+004/004.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.chdir` due to its process-wide effect.
+008/008.rb:1:1: C: ThreadSafety/DirChdir: Avoid using `FileUtils.cd` due to its process-wide effect.
+

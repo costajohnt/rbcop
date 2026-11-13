@@ -1,0 +1,23 @@
+==> .rubocop.yml 141 <==
+---
+plugins:
+- rubocop-thread_safety
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 57 <==
+Site.skip_callback(:commit, :after, :after_owner_change)
+
+==> Gemfile.lock 77 <==
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+

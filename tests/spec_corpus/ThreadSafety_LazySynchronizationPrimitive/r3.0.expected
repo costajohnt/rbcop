@@ -1,0 +1,6 @@
+==> offenses exit=1 127 <==
+000/000.rb:1:13: C: ThreadSafety/LazySynchronizationPrimitive: Do not lazily initialize synchronization primitives with `||=`.
+
+==> autocorrect exit=1 127 <==
+000/000.rb:1:13: C: ThreadSafety/LazySynchronizationPrimitive: Do not lazily initialize synchronization primitives with `||=`.
+

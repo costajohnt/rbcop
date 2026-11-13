@@ -1,0 +1,26 @@
+==> offenses exit=1 1122 <==
+000/000.rb:3:5: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+001/001.rb:3:5: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+002/002.rb:3:5: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+004/004.rb:3:5: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+005/005.rb:3:5: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+006/006.rb:3:5: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+010/010.rb:2:3: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+011/011.rb:2:3: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+012/012.rb:2:3: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+013/013.rb:2:3: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+014/014.rb:2:3: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+
+==> autocorrect exit=1 1122 <==
+000/000.rb:3:5: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+001/001.rb:3:5: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+002/002.rb:3:5: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+004/004.rb:3:5: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+005/005.rb:3:5: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+006/006.rb:3:5: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+010/010.rb:2:3: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+011/011.rb:2:3: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+012/012.rb:2:3: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+013/013.rb:2:3: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+014/014.rb:2:3: C: ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.
+

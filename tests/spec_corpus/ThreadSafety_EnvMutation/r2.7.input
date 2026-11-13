@@ -1,0 +1,70 @@
+==> .rubocop.yml 141 <==
+---
+plugins:
+- rubocop-thread_safety
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 19 <==
+ENV["FOO"] = "bar"
+
+==> 001/001.rb 24 <==
+ENV.store("FOO", "bar")
+
+==> 002/002.rb 27 <==
+ENV.update("FOO" => "bar")
+
+==> 003/003.rb 27 <==
+ENV.merge!("FOO" => "bar")
+
+==> 004/004.rb 28 <==
+ENV.replace("FOO" => "bar")
+
+==> 005/005.rb 18 <==
+ENV.delete("FOO")
+
+==> 006/006.rb 10 <==
+ENV.shift
+
+==> 007/007.rb 10 <==
+ENV.clear
+
+==> 008/008.rb 29 <==
+::ENV.update("FOO" => "bar")
+
+==> 009/009.rb 28 <==
+ENV&.update("FOO" => "bar")
+
+==> 010/010.rb 38 <==
+ENV.delete_if { |_key, _value| true }
+
+==> 011/011.rb 36 <==
+ENV.reject! { |_key, _value| true }
+
+==> 012/012.rb 36 <==
+ENV.keep_if { |_key, _value| true }
+
+==> 013/013.rb 36 <==
+ENV.select! { |_key, _value| true }
+
+==> 014/014.rb 36 <==
+ENV.filter! { |_key, _value| true }
+
+==> 015/015.rb 86 <==
+ENV["FOO"]
+ENV.fetch("FOO", "bar")
+ENV.key?("FOO")
+ENV.to_h
+ENV.merge("FOO" => "bar")
+
+==> 016/016.rb 78 <==
+system({ "FOO" => "bar" }, "echo")
+Open3.capture3({ "FOO" => "bar" }, "echo")
+
+==> 017/017.rb 53 <==
+env["FOO"] = "bar"
+Other::ENV.update("FOO" => "bar")
+

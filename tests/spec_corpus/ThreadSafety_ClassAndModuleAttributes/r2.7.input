@@ -1,0 +1,110 @@
+==> .rubocop.yml 141 <==
+---
+plugins:
+- rubocop-thread_safety
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 55 <==
+module Test
+  class << self
+    attr :foobar
+  end
+end
+
+==> 001/001.rb 64 <==
+module Test
+  class << self
+    attr_accessor :foobar
+  end
+end
+
+==> 002/002.rb 62 <==
+module Test
+  class << self
+    attr_writer :foobar
+  end
+end
+
+==> 003/003.rb 62 <==
+module Test
+  class << self
+    attr_reader :foobar
+  end
+end
+
+==> 004/004.rb 64 <==
+module Test
+  class << self
+    attr_internal :foobar
+  end
+end
+
+==> 005/005.rb 73 <==
+module Test
+  class << self
+    attr_internal_accessor :foobar
+  end
+end
+
+==> 006/006.rb 71 <==
+module Test
+  class << self
+    attr_internal_writer :foobar
+  end
+end
+
+==> 007/007.rb 71 <==
+module Test
+  class << self
+    attr_internal_reader :foobar
+  end
+end
+
+==> 008/008.rb 64 <==
+module Test
+  DEFINE_ACCESSOR = ->{ attr_accessor :foobar }
+end
+
+==> 009/009.rb 98 <==
+module Test
+  class << self
+    def add_foobar_attr
+      attr_accessor :foobar
+    end
+  end
+end
+
+==> 010/010.rb 39 <==
+module Test
+  mattr_writer :foobar
+end
+
+==> 011/011.rb 41 <==
+module Test
+  mattr_accessor :foobar
+end
+
+==> 012/012.rb 38 <==
+class Test
+  cattr_writer :foobar
+end
+
+==> 013/013.rb 40 <==
+class Test
+  cattr_accessor :foobar
+end
+
+==> 014/014.rb 41 <==
+class Test
+  class_attribute :foobar
+end
+
+==> 015/015.rb 36 <==
+class Test
+  belongs_to :foobar
+end
+
