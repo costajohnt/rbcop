@@ -15,7 +15,7 @@ The bar is **identical output to RuboCop 1.92.2**: same offenses, same ranges, s
   or is not the release rbcop targets (`RUBOCOP_VERSION` in `src/config/mod.rs`):
   `RUBOCOP=~/rubocop-1.92.2/bin/rubocop scripts/check-autocorrect.sh ...`.
 - Pre-merge gate: `scripts/ci.sh` (fmt, clippy, tests; with `RBCOP_CORPUS` and `RBCOP_ORACLE` set,
-  also `check-cops.sh all` and `check-cold.sh`). Prints `ci: ok at <sha>`.
+  also `check-cops.sh all`, `check-cold.sh` and `check-plugins.sh`). Prints `ci: ok at <sha>`.
 
 ## Writing the cop
 
@@ -576,3 +576,34 @@ scripts/check-cold.sh [Dept_Cop...] # offenses vs the oracle, plus `-A --only <c
 `cops.txt` lists one `Dept/Cop` per line. The extractor prints snippets it cannot resolve on stderr
 (extend its evaluator rather than hand-writing files). Files hitting a documented gap are listed in
 `scripts/cold-skip.txt`. Diffs land in `$OUT` (default `$TMPDIR/rbcop-cold-<worktree>`).
+
+### Differential fuzzing
+
+`scripts/fuzz/` compares rbcop with RuboCop on mutated corpus files (odd whitespace, comments,
+heredocs, encodings, truncations), which finds differences the fixed corpora never hit. Nothing
+runs it automatically: run a round on the CI host after a RuboCop upgrade (docs/upgrading-rubocop.md)
+and after a change to a shared helper or the parser layer. With `target/release/rbcop` built:
+
+```sh
+export RBCOP_CORPUS=/path/to/corpus RUBOCOP=~/rubocop-1.92.2/bin/rubocop
+scripts/fuzz/round.sh ~/scratch/fuzz r1 1000    # 4 batches of 500 variants, rng seeds 1001-1004
+cat ~/scratch/fuzz/r1.log                       # per batch: offense counts, diff size, buckets by cop
+```
+
+`round.sh <out-base> <name> <seed> [batches] [size]` writes each batch to `<out-base>/<name>-<i>`:
+`mutate.rb` generates the variants from the specs, rails, discourse and cold corpora (`manifest.tsv`
+names each one's seed file and mutations), and `run.rb` runs both tools on them with
+`config/all-cops.yml` and with `--force-default-config`, writing `all.diff` and `default.diff`
+(`<` only RuboCop, `>` only rbcop), `errors.txt` (rbcop cop errors and panics RuboCop did not have)
+and `slow.txt` (files rbcop needed over 5 s for). To follow up a difference:
+
+- `ruby scripts/fuzz/show.rb <out-base> <name>-<i>/vNNNNN` prints a variant's diff lines, manifest
+  entry and source.
+- `scripts/fuzz/minimize.rb <file> <Cop/Name>` (or `--autocorrect`) shrinks it to `<file>.min` while
+  the tools still disagree; `scripts/fuzz/cmp1.sh` and `scripts/fuzz/acdiff.sh` re-compare one file.
+- `scripts/fuzz/ac.rb <batch-dir> [sample-size] [seed]` runs the `-A` comparison on a sample of a batch.
+
+The Ruby scripts run with `RBENV_VERSION=4.0.6 rbenv exec ruby` (usage in each header) and take
+RuboCop from `$RUBOCOP`; the shell ones check it is the targeted release (`scripts/rubocop.sh`).
+A difference that reproduces becomes a regression test like any other parity bug; one that is a
+documented gap needs nothing.

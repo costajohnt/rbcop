@@ -1,7 +1,8 @@
 #!/bin/sh
 # Compare RuboCop and rbcop on files (all cops, rbcop-oracle format); prints a diff of each report.
-# usage: scripts/fuzz/cmp1.sh [-o Cop1,Cop2] <file>...   (run with RBENV_VERSION=4.0.6)
+# usage: scripts/fuzz/cmp1.sh [-o Cop1,Cop2] <file>...   (RuboCop from $RUBOCOP, see scripts/rubocop.sh)
 set -eu
+. "$(dirname "$0")/../rubocop.sh"
 root=$(cd "$(dirname "$0")/../.." && pwd)
 only=
 if [ "${1:-}" = "-o" ]; then

@@ -59,8 +59,8 @@ fn config_scenarios_match_rubocop() {
         let mut actual: Vec<String> =
             String::from_utf8(out.stdout).unwrap().lines().map(|l| l.replace(&prefix, "")).collect();
         actual.sort();
-        let mut expected: Vec<String> = std::fs::read_to_string(dir.join("expected.txt"))
-            .unwrap()
+        let recorded = std::fs::read_to_string(dir.join("expected.txt")).unwrap();
+        let mut expected: Vec<String> = recorded
             .lines()
             // Lint/Syntax is not in --show-cops output but rbcop always reports it.
             .filter(|l| cop_of(l).is_some_and(|c| c == "Lint/Syntax" || cops.contains(c)))
@@ -84,16 +84,23 @@ fn config_scenarios_match_rubocop() {
                 String::from_utf8_lossy(&out.stderr)
             ));
         }
-        // status, when recorded, is RuboCop's exit status.
-        if let Ok(status) = std::fs::read_to_string(dir.join("status"))
-            && status.trim().parse::<i32>().ok() != out.status.code()
-        {
-            failures.push(format!(
+        // status is RuboCop's exit status; scripts/scenarios.sh always records it. When the filter
+        // above dropped offenses (cops rbcop does not run, e.g. a required Ruby cop with the fallback
+        // off), RuboCop's status counts them, so only the file's presence is checked.
+        let filtered = expected.len() != recorded.lines().count();
+        match std::fs::read_to_string(dir.join("status")) {
+            Ok(_) if filtered => {}
+            Ok(status) if status.trim().parse::<i32>().ok() == out.status.code() => {}
+            Ok(status) => failures.push(format!(
                 "{}: exit status {:?}, rubocop {}",
                 dir.file_name().unwrap().to_string_lossy(),
                 out.status.code(),
                 status.trim()
-            ));
+            )),
+            Err(_) => failures.push(format!(
+                "{}: no status file (record it with scripts/scenarios.sh)",
+                dir.file_name().unwrap().to_string_lossy()
+            )),
         }
         if actual != expected {
             let missing: Vec<_> = expected.iter().filter(|l| !actual.contains(l)).collect();

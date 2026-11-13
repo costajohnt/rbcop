@@ -1,10 +1,14 @@
 # Differential-fuzz runner: compare rbcop with RuboCop on a directory of variants (scripts/fuzz/mutate.rb).
-# usage: RBENV_VERSION=4.0.6 rbenv exec ruby scripts/fuzz/run.rb <variant-dir> [--no-default] [--no-timing]
+# usage: RUBOCOP=... RBENV_VERSION=4.0.6 rbenv exec ruby scripts/fuzz/run.rb <variant-dir> [--no-default] [--no-timing]
 # Two passes (rbcop-oracle format: range ends, scrubbed messages): config/all-cops.yml and --force-default-config.
 # Writes <dir>/{all,default}.diff ("<" only RuboCop, ">" only rbcop), <dir>/errors.txt (rbcop cop errors
 # RuboCop did not have, panics) and <dir>/slow.txt (files rbcop needed over 5 s for); prints buckets by cop.
 require 'open3'
 require 'timeout'
+require 'shellwords'
+
+# RuboCop is $RUBOCOP (default `rubocop` on PATH), word-split like scripts/rubocop.sh.
+RUBOCOP = Shellwords.split(ENV.fetch('RUBOCOP', 'rubocop'))
 
 dir = File.expand_path(ARGV[0] || abort('usage: run.rb <dir>'))
 root = File.expand_path('../..', __dir__)
@@ -50,12 +54,12 @@ end
 
 File.write(File.join(dir, 'errors.txt'), '')
 cache = "#{dir}.cache"
-rubo = run(['rubocop', '--config', cfg, '--cache', 'true', '--cache-root', cache, '--parallel', '-r', fmt,
+rubo = run([*RUBOCOP, '--config', cfg, '--cache', 'true', '--cache-root', cache, '--parallel', '-r', fmt,
             '-f', 'RuboCop::Formatter::RbcopOracleFormatter', '.'], dir)
 rb = run([bin, '--config', cfg, '--format', 'rbcop-oracle', '.'], dir)
 compare('all', dir, rubo, rb)
 unless ARGV.include?('--no-default')
-  rubo = run(['rubocop', '--force-default-config', '--cache', 'true', '--cache-root', cache, '--parallel',
+  rubo = run([*RUBOCOP, '--force-default-config', '--cache', 'true', '--cache-root', cache, '--parallel',
               '-r', fmt, '-f', 'RuboCop::Formatter::RbcopOracleFormatter', '.'], dir)
   rb = run([bin, '--force-default-config', '--format', 'rbcop-oracle', '.'], dir)
   compare('default', dir, rubo, rb)

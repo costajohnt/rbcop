@@ -1,8 +1,12 @@
 # Differential -A check on fuzz variants: copy a sample into <dir>/ac/{rubocop,rbcop}, run
 # `rubocop -A` and `rbcop -A` (default config) on each copy, diff the reports and the rewritten files.
-# usage: RBENV_VERSION=4.0.6 rbenv exec ruby scripts/fuzz/ac.rb <variant-dir> [sample-size] [rng-seed]
+# usage: RUBOCOP=... RBENV_VERSION=4.0.6 rbenv exec ruby scripts/fuzz/ac.rb <variant-dir> [sample-size] [rng-seed]
 require 'fileutils'
 require 'open3'
+require 'shellwords'
+
+# RuboCop is $RUBOCOP (default `rubocop` on PATH), word-split like scripts/rubocop.sh.
+RUBOCOP = Shellwords.split(ENV.fetch('RUBOCOP', 'rubocop'))
 
 dir = File.expand_path(ARGV[0])
 n = Integer(ARGV[1] || 150)
@@ -21,7 +25,7 @@ run = lambda do |side, cmd|
   File.binwrite(File.join(ac, "#{side}.err"), err)
   out.force_encoding('UTF-8').scrub.lines.map { _1.sub("#{File.join(ac, side)}/", '') }.sort
 end
-a = run.('rubocop', %w[rubocop -A --force-default-config --cache false --format emacs .])
+a = run.('rubocop', [*RUBOCOP, *%w[-A --force-default-config --cache false --format emacs .]])
 b = run.('rbcop', [File.join(root, 'target/release/rbcop'), '-A', '--force-default-config', '--format', 'emacs', '.'])
 # Files RuboCop crashed on mid-correction are not comparable.
 crashed = File.read(File.join(ac, 'rubocop.err')).scan(/An error occurred while \S+ cop was inspecting (?:.*\/)?([^\/]+?):\d+:\d+/).flatten.uniq
