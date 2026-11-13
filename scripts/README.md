@@ -31,6 +31,7 @@ One line per script; each header documents its arguments. Gates take RuboCop fro
 
 ## Upgrading RuboCop
 - `rubocop_delta.rb`: what changed between two RuboCop releases (docs/upgrading-rubocop.md).
+- `prism-patch.sh`: rebuild vendor/ruby-prism from the crates.io crate and vendor/ruby-prism.patches.
 
 ## Benchmarks
 - `bench-ci.sh`: the CI-shaped benchmark in docs/benchmarks.md.
