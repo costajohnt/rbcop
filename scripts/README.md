@@ -9,7 +9,8 @@ One line per script; each header documents its arguments. Gates take RuboCop fro
 - `check-cold.sh`: RuboCop's spec examples for cops too rare on the corpora.
 - `check-plugins.sh`: each native plugin's cops against oracles recorded with that plugin.
 - `check-autocorrect.sh`, `check-autocorrect-all.sh`: `-A` rewrites against RuboCop's, per cop and all cops together.
-- `check-cache.sh`: result cache parity (cold, warm, warm after edits); not wired into `ci.sh`.
+- `check-cache.sh`: result cache parity (cold, warm, warm after edits; ci.sh runs it on mastodon).
+- `check-generated.sh`: reruns every generator below (and the vendored gem configs) and fails on a stale file.
 - `compare.sh`: diff rbcop against live RuboCop on one directory.
 - `missing-correctors.sh`: cops marked correctable that never add a fix.
 - `check-skip.txt`, `cold-skip.txt`, `autocorrect-skip.txt`: files the gates skip (docs/known-gaps.md).
