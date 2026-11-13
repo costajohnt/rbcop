@@ -1,0 +1,305 @@
+==> .rubocop.yml 141 <==
+---
+plugins:
+- rubocop-thread_safety
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> app/middleware/000/000.rb 0 <==
+
+==> app/middleware/001/001.rb 66 <==
+class SomeClass
+  def initialize(user)
+    @user = user
+  end
+end
+
+==> app/middleware/002/002.rb 98 <==
+class SomeClass
+  def initialize(user, context)
+    @user = user
+    @context = context
+  end
+end
+
+==> app/middleware/003/003.rb 57 <==
+class SomeClass
+  def call(env)
+    @env = env
+  end
+end
+
+==> app/middleware/004/004.rb 138 <==
+class SomeClass
+  def initialize(user, context)
+    @user = user
+    @context = context
+  end
+
+  def call
+    [@user, @context]
+  end
+end
+
+==> app/middleware/005/005.rb 118 <==
+class SomeClass
+  def initialize(app)
+    @user = User.new
+  end
+
+  def call(env)
+    @x = TOPLEVEL_BINDING
+  end
+end
+
+==> app/middleware/006/006.rb 139 <==
+class SomeClass
+  def initialize(app)
+    @app = app
+    @user = User.new
+  end
+
+  def call(env, user)
+    @x = TOPLEVEL_BINDING
+  end
+end
+
+==> app/middleware/007/007.rb 110 <==
+class TestMiddleware
+  def initialize(app)
+    @app = app
+  end
+
+  def call(env)
+    @app.call(env)
+  end
+end
+
+==> app/middleware/008/008.rb 134 <==
+class TestMiddleware
+  def initialize(app)
+    @app = app
+    @foo = 1
+  end
+
+  def call(env)
+    @app.call(env)
+    p @foo
+  end
+end
+
+==> app/middleware/009/009.rb 154 <==
+class TestMiddleware
+  def initialize(app)
+    @app = app
+    @counter = 0
+  end
+
+  def call(env)
+    @app.call(env)
+  ensure
+    @counter += 1
+  end
+end
+
+==> app/middleware/010/010.rb 256 <==
+class TestMiddleware
+  def initialize(app)
+    @app = app
+    @counter = Concurrent::AtomicReference.new(0)
+    @unsafe_counter = 0
+  end
+
+  def call(env)
+    @app.call(env)
+  ensure
+    @unsafe_counter += 1
+    @counter.update { |ref| ref + 1 }
+  end
+end
+
+==> app/middleware/011/011.rb 121 <==
+class TestMiddleware
+  def initialize(app)
+    @foo = fsa
+    @a = app
+  end
+
+  def call(env)
+    @a.call(env)
+  end
+end
+
+==> app/middleware/012/012.rb 166 <==
+module MyMiddlewares
+  class TestMiddleware
+    def initialize(app)
+      @app = app
+      @foo = 1
+    end
+
+    def call(env)
+      @app.call(env)
+    end
+  end
+end
+
+==> app/middleware/013/013.rb 309 <==
+module MyMiddlewares
+  class TestMiddleware
+    def initialize(app)
+      @app = app
+      @foo = 1
+    end
+
+    def call(env)
+      @app.call(env)
+    end
+  end
+
+  class TestMiddleware2
+    def initialize(app)
+      @app = app
+      @foo = 1
+    end
+
+    def call(env)
+      @app.call(env)
+    end
+  end
+end
+
+==> app/middleware/014/014.rb 149 <==
+class TestMiddleware
+  def initialize(app)
+    @app = app
+  end
+
+  def call(env)
+    @app.call(env)
+    @a = 1
+  end
+
+  def foo
+    @a = 1
+  end
+end
+
+==> app/middleware/015/015.rb 138 <==
+class TestMiddleware
+  def foo
+    @a = 1
+  end
+
+  def initialize(app)
+    @app = app
+  end
+
+  def call(env)
+    @app.call(env)
+  end
+end
+
+==> app/middleware/016/016.rb 166 <==
+class TestMiddleware
+  def foo
+    @a = 1
+  end
+
+  def initialize(app)
+    @app = app
+  end
+
+  def call(env)
+    @app.call(env)
+  end
+
+  def bar
+    @b = 1
+  end
+end
+
+==> app/middleware/017/017.rb 123 <==
+class TestMiddleware
+  def call(env)
+    @app.call(env)
+  end
+
+  def initialize(app)
+    @app = app
+    @foo = 1
+  end
+end
+
+==> app/middleware/018/018.rb 187 <==
+class TestMiddleware
+  def initialize(app)
+    @app = app
+    instance_variable_set(:counter, 1)
+  end
+
+  def call(env)
+    @app.call(env)
+    instance_variable_get("@counter")
+  end
+end
+
+==> app/middleware/019/019.rb 211 <==
+class TestMiddleware
+  def initialize(app)
+    @app = app
+    foo = SomeClass.new
+    instance_variable_set(:counter, 1)
+  end
+
+  def call(env)
+    @app.call(env)
+    instance_variable_get("@counter")
+  end
+end
+
+==> app/middleware/020/020.rb 162 <==
+class TestMiddleware
+  def initialize(app)
+    @app = app
+    instance_variable_set
+  end
+
+  def call(env)
+    @app.call(env)
+    instance_variable_get
+  end
+end
+
+==> app/middleware/021/021.rb 169 <==
+class TestMiddleware
+  def initialize(app)
+    @app = app
+    instance_variable_set(1)
+  end
+
+  def call(env)
+    @app.call(env)
+    instance_variable_get({})
+  end
+end
+
+==> app/middleware/022/022.rb 203 <==
+class TestMiddleware
+  def initialize(app, options)
+    @app = app
+    @options = options
+  end
+
+  def call(env)
+    if options[:noop]
+      [200, {}, []]
+    else
+      @app.call(env)
+    end
+  end
+end
+

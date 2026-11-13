@@ -1,0 +1,67 @@
+==> .rubocop.yml 207 <==
+---
+plugins:
+- rubocop-thread_safety
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+ThreadSafety/DirChdir:
+  Enabled: true
+  AllowCallWithBlock: true
+
+==> 000/000.rb 22 <==
+Dir.chdir("/var/run")
+
+==> 001/001.rb 41 <==
+Dir.chdir("/var/run") do
+  p Dir.pwd
+end
+
+==> 002/002.rb 43 <==
+Dir.chdir("/var/run") do |dir|
+  p dir
+end
+
+==> 003/003.rb 59 <==
+def change_dir(&block)
+  Dir.chdir("/var/run", &block)
+end
+
+==> 004/004.rb 28 <==
+FileUtils.chdir("/var/run")
+
+==> 005/005.rb 47 <==
+FileUtils.chdir("/var/run") do
+  p Dir.pwd
+end
+
+==> 006/006.rb 49 <==
+FileUtils.chdir("/var/run") do |dir|
+  p dir
+end
+
+==> 007/007.rb 65 <==
+def change_dir(&block)
+  FileUtils.chdir("/var/run", &block)
+end
+
+==> 008/008.rb 25 <==
+FileUtils.cd("/var/run")
+
+==> 009/009.rb 44 <==
+FileUtils.cd("/var/run") do
+  p Dir.pwd
+end
+
+==> 010/010.rb 46 <==
+FileUtils.cd("/var/run") do |dir|
+  p dir
+end
+
+==> 011/011.rb 62 <==
+def change_dir(&block)
+  FileUtils.cd("/var/run", &block)
+end
+

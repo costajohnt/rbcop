@@ -12,6 +12,7 @@ require 'rubocop-rspec'
 require 'rubocop-rspec_rails'
 require 'rubocop-factory_bot'
 require 'rubocop-capybara'
+require 'rubocop-thread_safety'
 
 RuboCop::Cop::Registry.global.filter_by_badge { true }.cops.each do |cop|
   incompatible = cop.autocorrect_incompatible_with.map(&:cop_name)

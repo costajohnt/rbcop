@@ -1017,3 +1017,13 @@ Capybara/SpecificActions	0
 Capybara/SpecificFinders	1
 Capybara/UnorderedWindowAccess	0
 Capybara/VisibilityOption	1
+ThreadSafety/ActiveSupportCallbacks	0
+ThreadSafety/ClassInstanceVariable	0
+ThreadSafety/ClassAndModuleAttributes	0
+ThreadSafety/MutableClassInstanceVariable	1
+ThreadSafety/NewThread	0
+ThreadSafety/DirChdir	0
+ThreadSafety/EnvMutation	0
+ThreadSafety/RackMiddlewareInstanceVariable	0
+ThreadSafety/MethodRedefinition	0
+ThreadSafety/LazySynchronizationPrimitive	0

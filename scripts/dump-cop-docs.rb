@@ -10,7 +10,7 @@
 # Format, one record per line: `C name` starts a cop, `S title` a section, `L text` a body line.
 require 'rubocop'
 %w[rubocop-performance rubocop-rails rubocop-minitest rubocop-rspec rubocop-rspec_rails
-   rubocop-factory_bot rubocop-capybara].each { |gem| require gem }
+   rubocop-factory_bot rubocop-capybara rubocop-thread_safety].each { |gem| require gem }
 
 RuboCop::Cop::Registry.global.sort_by(&:cop_name).each do |cop|
   sections = RuboCop::Cop::CopDocumentation.new(cop).sections

@@ -1,0 +1,44 @@
+==> offenses exit=1 1742 <==
+000/000.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+008/008.rb:5:9: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+009/009.rb:3:13: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+010/010.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+011/011.rb:4:7: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+012/012.rb:5:9: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+013/013.rb:4:7: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+014/014.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+015/015.rb:3:13: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+016/016.rb:4:7: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+017/017.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+018/018.rb:4:7: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+019/019.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+020/020.rb:5:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+021/021.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+023/023.rb:5:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+024/024.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+025/025.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+026/026.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+027/027.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+
+==> autocorrect exit=1 1742 <==
+000/000.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+008/008.rb:5:9: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+009/009.rb:3:13: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+010/010.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+011/011.rb:4:7: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+012/012.rb:5:9: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+013/013.rb:4:7: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+014/014.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+015/015.rb:3:13: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+016/016.rb:4:7: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+017/017.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+018/018.rb:4:7: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+019/019.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+020/020.rb:5:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+021/021.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+023/023.rb:5:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+024/024.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+025/025.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+026/026.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+027/027.rb:3:5: C: ThreadSafety/ClassInstanceVariable: Avoid class instance variables.
+

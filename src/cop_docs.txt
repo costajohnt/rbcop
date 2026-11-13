@@ -34561,3 +34561,291 @@ L   array.empty?
 L   !{a: 1, b: 2}.empty?
 L   !string.empty?
 L   !hash.empty?
+C ThreadSafety/ActiveSupportCallbacks
+S Details
+L Avoid mutating ActiveSupport callback chains at runtime.
+L 
+L Calls such as `User.skip_callback` and `User.set_callback` mutate callback
+L chains at process scope.
+S Example
+L   # bad
+L   Site.skip_callback(:commit, :after, :after_owner_change)
+L 
+L   # bad
+L   Site.set_callback(
+L     :commit, :after, :after_owner_change,
+L     if: :saved_change_to_owner?
+L   )
+L 
+L   # good
+L   class User < ApplicationRecord
+L     skip_callback :commit, :after, :after_owner_change
+L   end
+C ThreadSafety/ClassAndModuleAttributes
+S Details
+L Avoid mutating class and module attributes.
+L 
+L They are implemented by class variables, which are not thread-safe.
+S Example
+L   # bad
+L   class User
+L     cattr_accessor :current_user
+L   end
+C ThreadSafety/ClassInstanceVariable
+S Details
+L Avoid class instance variables.
+S Example
+L   # bad
+L   class User
+L     def self.notify(info)
+L       @info = validate(info)
+L       Notifier.new(@info).deliver
+L     end
+L   end
+L 
+L   class Model
+L     class << self
+L       def table_name(name)
+L         @table_name = name
+L       end
+L     end
+L   end
+L 
+L   class Host
+L     %i[uri port].each do |key|
+L       define_singleton_method("#{key}=") do |value|
+L         instance_variable_set("@#{key}", value)
+L       end
+L     end
+L   end
+L 
+L   module Example
+L     module ClassMethods
+L       def test(params)
+L         @params = params
+L       end
+L     end
+L   end
+L 
+L   module Example
+L     class_methods do
+L       def test(params)
+L         @params = params
+L       end
+L     end
+L   end
+L 
+L   module Example
+L     module_function
+L 
+L     def test(params)
+L       @params = params
+L     end
+L   end
+L 
+L   module Example
+L     def test(params)
+L       @params = params
+L     end
+L 
+L     module_function :test
+L   end
+C ThreadSafety/DirChdir
+S Details
+L Avoid using `Dir.chdir` due to its process-wide effect.
+L If `AllowCallWithBlock` (disabled by default) option is enabled,
+L calling `Dir.chdir` with block will be allowed.
+S Example
+L   # bad
+L   Dir.chdir("/var/run")
+L 
+L   # bad
+L   FileUtils.chdir("/var/run")
+S Example: AllowCallWithBlock: false (default)
+L   # bad
+L   Dir.chdir("/var/run") do
+L     puts Dir.pwd
+L   end
+S Example: AllowCallWithBlock: true
+L   # good
+L   Dir.chdir("/var/run") do
+L     puts Dir.pwd
+L   end
+C ThreadSafety/EnvMutation
+S Details
+L Avoid mutating `ENV`.
+L 
+L Environment variables are process-wide. Mutating them can affect other
+L threads, requests, jobs, or subprocesses running in the same Ruby
+L process.
+S Example
+L   # bad
+L   ENV['TZ'] = 'UTC'
+L 
+L   # bad
+L   ENV.update('FOO' => 'bar')
+L 
+L   # good
+L   system({ 'TZ' => 'UTC' }, 'date')
+L 
+L   # good
+L   ENV.fetch('TZ', 'UTC')
+C ThreadSafety/LazySynchronizationPrimitive
+S Details
+L Avoid lazily initializing synchronization primitives with `||=`.
+L 
+L The check-then-set performed by `||=` is not atomic, so concurrent threads
+L can observe an uninitialized primitive or create more than one instance.
+L Eagerly assign the primitive (for example in `initialize`) or use a constant.
+S Example
+L   # bad
+L   def mutex
+L     @mutex ||= Mutex.new
+L   end
+L 
+L   # bad
+L   def mutex = @mutex ||= Mutex.new
+L 
+L   # good
+L   def initialize
+L     @mutex = Mutex.new
+L   end
+C ThreadSafety/MethodRedefinition
+S Details
+L Avoid the thread-unsafe combination of remove_method followed by defining a method with the same name.
+L This can lead to a race condition, as these two actions are not atomic.
+L As a safer alternative, consider aliasing the method to itself instead.
+S Example
+L   # bad
+L   remove_method :foo
+L   def foo; end
+L 
+L   # good
+L   alias_method :foo, :foo
+L   def foo; end
+L 
+L   # good
+L   alias foo foo
+L   def foo; end
+C ThreadSafety/MutableClassInstanceVariable
+S Details
+L Checks whether some class instance variable isn't a
+L mutable literal (e.g. array or hash).
+L 
+L It is based on Style/MutableConstant from RuboCop.
+L See https://github.com/rubocop/rubocop/blob/master/lib/rubocop/cop/style/mutable_constant.rb
+L 
+L Class instance variables are a risk to threaded code as they are shared
+L between threads. A mutable object such as an array or hash may be
+L updated via an attr_reader so would not be detected by the
+L ThreadSafety/ClassAndModuleAttributes cop.
+L 
+L Strict mode can be used to freeze all class instance variables, rather
+L than just literals.
+L Strict mode is considered an experimental feature. It has not been
+L updated with an exhaustive list of all methods that will produce frozen
+L objects so there is a decent chance of getting some false positives.
+L Luckily, there is no harm in freezing an already frozen object.
+S Example: EnforcedStyle: literals (default)
+L   # bad
+L   class Model
+L     @list = [1, 2, 3]
+L   end
+L 
+L   # good
+L   class Model
+L     @list = [1, 2, 3].freeze
+L   end
+L 
+L   # good
+L   class Model
+L     @var = <<~TESTING.freeze
+L       This is a heredoc
+L     TESTING
+L   end
+L 
+L   # good
+L   class Model
+L     @var = Something.new
+L   end
+S Example: EnforcedStyle: strict
+L   # bad
+L   class Model
+L     @var = Something.new
+L   end
+L 
+L   # bad
+L   class Model
+L     @var = Struct.new do
+L       def foo
+L         puts 1
+L       end
+L     end
+L   end
+L 
+L   # good
+L   class Model
+L     @var = Something.new.freeze
+L   end
+L 
+L   # good
+L   class Model
+L     @var = Struct.new do
+L       def foo
+L         puts 1
+L       end
+L     end.freeze
+L   end
+C ThreadSafety/NewThread
+S Details
+L Avoid starting new threads.
+L 
+L Let a framework like Sidekiq handle the threads.
+S Example
+L   # bad
+L   Thread.new { do_work }
+C ThreadSafety/RackMiddlewareInstanceVariable
+S Details
+L Avoid instance variables in rack middleware.
+L 
+L Middlewares are initialized once, meaning any instance variables are shared between executor threads.
+L To avoid potential race conditions, it's recommended to design middlewares to be stateless
+L or to implement proper synchronization mechanisms.
+S Example
+L   # bad
+L   class CounterMiddleware
+L     def initialize(app)
+L       @app = app
+L       @counter = 0
+L     end
+L 
+L     def call(env)
+L       app.call(env)
+L     ensure
+L       @counter += 1
+L     end
+L   end
+L 
+L   # good
+L   class CounterMiddleware
+L     def initialize(app)
+L       @app = app
+L       @counter = Concurrent::AtomicReference.new(0)
+L     end
+L 
+L     def call(env)
+L       app.call(env)
+L     ensure
+L       @counter.update { |ref| ref + 1 }
+L     end
+L   end
+L 
+L   class IdentityMiddleware
+L     def initialize(app)
+L       @app = app
+L     end
+L 
+L     def call(env)
+L       app.call(env)
+L     end
+L   end

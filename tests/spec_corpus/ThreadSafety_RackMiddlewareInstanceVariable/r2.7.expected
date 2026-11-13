@@ -1,0 +1,46 @@
+==> offenses exit=1 2610 <==
+app/middleware/008/008.rb:4:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/008/008.rb:9:7: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/009/009.rb:4:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/009/009.rb:10:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/010/010.rb:5:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/010/010.rb:11:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/011/011.rb:3:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/012/012.rb:5:7: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/013/013.rb:5:7: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/013/013.rb:16:7: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/014/014.rb:8:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/014/014.rb:12:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/015/015.rb:3:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/016/016.rb:3:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/016/016.rb:15:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/017/017.rb:8:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/018/018.rb:4:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/018/018.rb:9:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/019/019.rb:5:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/019/019.rb:10:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/022/022.rb:4:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+
+==> autocorrect exit=1 2610 <==
+app/middleware/008/008.rb:4:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/008/008.rb:9:7: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/009/009.rb:4:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/009/009.rb:10:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/010/010.rb:5:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/010/010.rb:11:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/011/011.rb:3:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/012/012.rb:5:7: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/013/013.rb:5:7: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/013/013.rb:16:7: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/014/014.rb:8:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/014/014.rb:12:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/015/015.rb:3:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/016/016.rb:3:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/016/016.rb:15:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/017/017.rb:8:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/018/018.rb:4:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/018/018.rb:9:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/019/019.rb:5:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/019/019.rb:10:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+app/middleware/022/022.rb:4:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+

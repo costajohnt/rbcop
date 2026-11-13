@@ -1,0 +1,138 @@
+==> .rubocop.yml 210 <==
+---
+plugins:
+- rubocop-thread_safety
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+ThreadSafety/MutableClassInstanceVariable:
+  EnforcedStyle: literals
+
+==> 000/000.rb 89 <==
+class FooTest < ActiveSupport::TestCase
+  setup do
+    @something = { a: "A" }
+  end
+end
+
+==> 001/001.rb 188 <==
+class FooTest < ActiveSupport::TestCase
+  foo do
+    do_something
+  end
+
+  def bar
+    :baz
+  end
+
+  setup do
+    @something = { a: "A" }
+  end
+
+  class << self
+    do_something
+  end
+end
+
+==> 002/002.rb 63 <==
+class FooTest
+  setup do
+    @something = { a: "A" }
+  end
+end
+
+==> 003/003.rb 72 <==
+class FooTest < MyTest
+  setup do
+    @something = { a: "A" }
+  end
+end
+
+==> 004/004.rb 60 <==
+module Foo
+  setup do
+    @something = { a: "A" }
+  end
+end
+
+==> 005/005.rb 142 <==
+module RotationCoordinatorTests
+  extend ActiveSupport::Concern
+
+  included do
+    setup do
+      @coordinator = { a: "A" }
+    end
+  end
+end
+
+==> 006/006.rb 92 <==
+class FooTest < ActiveSupport::TestCase
+  teardown do
+    @something = { a: "A" }
+  end
+end
+
+==> 007/007.rb 191 <==
+class FooTest < ActiveSupport::TestCase
+  foo do
+    do_something
+  end
+
+  def bar
+    :baz
+  end
+
+  teardown do
+    @something = { a: "A" }
+  end
+
+  class << self
+    do_something
+  end
+end
+
+==> 008/008.rb 66 <==
+class FooTest
+  teardown do
+    @something = { a: "A" }
+  end
+end
+
+==> 009/009.rb 75 <==
+class FooTest < MyTest
+  teardown do
+    @something = { a: "A" }
+  end
+end
+
+==> 010/010.rb 63 <==
+module Foo
+  teardown do
+    @something = { a: "A" }
+  end
+end
+
+==> 011/011.rb 145 <==
+module RotationCoordinatorTests
+  extend ActiveSupport::Concern
+
+  included do
+    teardown do
+      @coordinator = { a: "A" }
+    end
+  end
+end
+
+==> 012/012.rb 73 <==
+class FooTest < MyTest
+  set_up do
+    @something = { a: "A" }
+  end
+end
+
+==> 013/013.rb 27 <==
+@a, @b, @c = 'foo', [2], 3
+

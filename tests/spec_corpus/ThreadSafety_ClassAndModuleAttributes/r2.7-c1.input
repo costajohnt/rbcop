@@ -1,0 +1,17 @@
+==> .rubocop.yml 223 <==
+---
+plugins:
+- rubocop-thread_safety
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+ThreadSafety/ClassAndModuleAttributes:
+  ActiveSupportClassAttributeAllowed: true
+
+==> 000/000.rb 41 <==
+class Test
+  class_attribute :foobar
+end
+

@@ -1,0 +1,46 @@
+==> offenses exit=1 1491 <==
+000/000.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+001/001.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+002/002.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+003/003.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+004/004.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+005/005.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+006/006.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+008/008.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+009/009.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+010/010.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+011/011.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+012/012.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+013/013.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+014/014.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+016/016.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+017/017.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+018/018.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+019/019.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+020/020.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+021/021.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+022/022.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+
+==> autocorrect exit=1 1491 <==
+000/000.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+001/001.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+002/002.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+003/003.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+004/004.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+005/005.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+006/006.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+008/008.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+009/009.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+010/010.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+011/011.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+012/012.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+013/013.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+014/014.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+016/016.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+017/017.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+018/018.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+019/019.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+020/020.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+021/021.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+022/022.rb:1:1: C: ThreadSafety/NewThread: Avoid starting new threads.
+

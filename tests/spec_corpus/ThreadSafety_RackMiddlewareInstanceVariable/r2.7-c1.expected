@@ -1,0 +1,6 @@
+==> offenses exit=1 124 <==
+app/middleware/001/001.rb:8:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+
+==> autocorrect exit=1 124 <==
+app/middleware/001/001.rb:8:5: C: ThreadSafety/RackMiddlewareInstanceVariable: Avoid instance variables in Rack middleware.
+

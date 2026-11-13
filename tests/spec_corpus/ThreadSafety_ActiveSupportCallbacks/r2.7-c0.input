@@ -1,0 +1,54 @@
+==> .rubocop.yml 141 <==
+---
+plugins:
+- rubocop-thread_safety
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 57 <==
+Site.skip_callback(:commit, :after, :after_owner_change)
+
+==> 001/001.rb 85 <==
+Site.set_callback(:commit, :after, :after_owner_change, if: :saved_change_to_owner?)
+
+==> 002/002.rb 59 <==
+::Site.skip_callback(:commit, :after, :after_owner_change)
+
+==> 003/003.rb 63 <==
+Admin::Site.set_callback(:commit, :after, :after_owner_change)
+
+==> 004/004.rb 58 <==
+(Site).set_callback(:commit, :after, :after_owner_change)
+
+==> 005/005.rb 58 <==
+Site&.skip_callback(:commit, :after, :after_owner_change)
+
+==> 006/006.rb 169 <==
+class User < ApplicationRecord
+  skip_callback :commit, :after, :after_owner_change
+  set_callback :commit, :after, :after_owner_change, if: :saved_change_to_owner?
+end
+
+==> 007/007.rb 180 <==
+site.skip_callback(:commit, :after, :after_owner_change)
+callback_owner.set_callback(:commit, :after, :after_owner_change)
+self.skip_callback(:commit, :after, :after_owner_change)
+
+==> 008/008.rb 38 <==
+Site.after_commit :after_owner_change
+
+==> Gemfile.lock 119 <==
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (7.0.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activesupport
+

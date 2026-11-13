@@ -1,0 +1,16 @@
+==> offenses exit=1 814 <==
+000/000.rb:1:6: C: ThreadSafety/ActiveSupportCallbacks: Avoid process-wide ActiveSupport callback mutation with `Site.skip_callback`.
+001/001.rb:1:6: C: ThreadSafety/ActiveSupportCallbacks: Avoid process-wide ActiveSupport callback mutation with `Site.set_callback`.
+002/002.rb:1:8: C: ThreadSafety/ActiveSupportCallbacks: Avoid process-wide ActiveSupport callback mutation with `::Site.skip_callback`.
+003/003.rb:1:13: C: ThreadSafety/ActiveSupportCallbacks: Avoid process-wide ActiveSupport callback mutation with `Admin::Site.set_callback`.
+004/004.rb:1:8: C: ThreadSafety/ActiveSupportCallbacks: Avoid process-wide ActiveSupport callback mutation with `(Site).set_callback`.
+005/005.rb:1:7: C: ThreadSafety/ActiveSupportCallbacks: Avoid process-wide ActiveSupport callback mutation with `Site&.skip_callback`.
+
+==> autocorrect exit=1 814 <==
+000/000.rb:1:6: C: ThreadSafety/ActiveSupportCallbacks: Avoid process-wide ActiveSupport callback mutation with `Site.skip_callback`.
+001/001.rb:1:6: C: ThreadSafety/ActiveSupportCallbacks: Avoid process-wide ActiveSupport callback mutation with `Site.set_callback`.
+002/002.rb:1:8: C: ThreadSafety/ActiveSupportCallbacks: Avoid process-wide ActiveSupport callback mutation with `::Site.skip_callback`.
+003/003.rb:1:13: C: ThreadSafety/ActiveSupportCallbacks: Avoid process-wide ActiveSupport callback mutation with `Admin::Site.set_callback`.
+004/004.rb:1:8: C: ThreadSafety/ActiveSupportCallbacks: Avoid process-wide ActiveSupport callback mutation with `(Site).set_callback`.
+005/005.rb:1:7: C: ThreadSafety/ActiveSupportCallbacks: Avoid process-wide ActiveSupport callback mutation with `Site&.skip_callback`.
+

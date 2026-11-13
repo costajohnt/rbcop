@@ -1,0 +1,38 @@
+==> .rubocop.yml 220 <==
+---
+plugins:
+- rubocop-thread_safety
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+ThreadSafety/RackMiddlewareInstanceVariable:
+  AllowedIdentifiers:
+  - options
+
+==> app/middleware/000/000.rb 151 <==
+class TestMiddleware
+  def initialize(app)
+    @app = app
+    instance_variable_set(:@options, {})
+  end
+
+  def call(env)
+    @app.call(env)
+  end
+end
+
+==> app/middleware/001/001.rb 145 <==
+class TestMiddleware
+  def call(env)
+    @app.call(env)
+  end
+
+  def initialize(app)
+    @app = app
+    @some_var = 2
+    @options = 1
+  end
+end
+

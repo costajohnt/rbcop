@@ -1,0 +1,72 @@
+==> .rubocop.yml 141 <==
+---
+plugins:
+- rubocop-thread_safety
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 37 <==
+def mutex
+  @mutex ||= Mutex.new
+end
+
+==> 001/001.rb 42 <==
+def self.mutex
+  @mutex ||= Mutex.new
+end
+
+==> 002/002.rb 43 <==
+def monitor
+  @monitor ||= Monitor.new
+end
+
+==> 003/003.rb 45 <==
+def mutex
+  @mutex ||= Thread::Mutex.new
+end
+
+==> 004/004.rb 38 <==
+def mutex
+  @@mutex ||= Mutex.new
+end
+
+==> 005/005.rb 40 <==
+def initialize
+  @mutex = Mutex.new
+end
+
+==> 006/006.rb 41 <==
+MUTEX = Mutex.new
+
+def mutex
+  MUTEX
+end
+
+==> 007/007.rb 69 <==
+def mutex
+  LOADER.synchronize do
+    @mutex ||= Mutex.new
+  end
+end
+
+==> 008/008.rb 30 <==
+def cache
+  @cache ||= {}
+end
+
+==> 009/009.rb 36 <==
+def mutex
+  mutex ||= Mutex.new
+end
+
+==> 010/010.rb 21 <==
+@mutex ||= Mutex.new
+
+==> 011/011.rb 35 <==
+def mutex
+  @mutex = Mutex.new
+end
+
