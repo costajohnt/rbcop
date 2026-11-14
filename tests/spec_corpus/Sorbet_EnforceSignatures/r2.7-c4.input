@@ -1,0 +1,33 @@
+==> .rubocop.yml 223 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/EnforceSignatures:
+  ParameterTypePlaceholder: PARAM
+  ReturnTypePlaceholder: RET
+
+==> test/000_test.rb 73 <==
+class Foo
+  attr_reader :foo
+  attr_writer :bar
+  attr_accessor :baz
+end
+
+==> test/001_test.rb 124 <==
+def foo; end
+def bar(a, b = 2, c: Foo.new); end
+def baz(&blk); end
+
+class Foo
+  def foo
+  end
+
+  def bar(a, b, c)
+  end
+end
+

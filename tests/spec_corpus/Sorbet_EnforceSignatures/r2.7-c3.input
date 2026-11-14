@@ -1,0 +1,22 @@
+==> .rubocop.yml 236 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/EnforceSignatures:
+  Style: rbs
+  ParameterTypePlaceholder: PARAM
+  ReturnTypePlaceholder: RET
+
+==> test/000_test.rb 100 <==
+def foo(a); end
+class Foo
+  attr_reader :reader
+  attr_writer :writer
+  attr_accessor :accessor
+end
+

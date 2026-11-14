@@ -1,0 +1,10 @@
+==> offenses exit=1 115 <==
+test/000_test.rb:1:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+
+==> autocorrect exit=0 113 <==
+test/000_test.rb:1:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+
+==> corrected/test/000_test.rb 48 <==
+#: ?{ -> void } -> untyped
+def foo(&block); end
+

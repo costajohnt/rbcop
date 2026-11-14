@@ -1,0 +1,37 @@
+==> offenses exit=1 630 <==
+test/000_test.rb:1:1: C: [Correctable] Sorbet/EnforceSignatures: Use sig block signatures rather than RBS signature comments.
+test/001_test.rb:1:1: C: [Correctable] Sorbet/EnforceSignatures: Use sig block signatures rather than RBS signature comments.
+test/002_test.rb:2:1: C: [Correctable] Sorbet/EnforceSignatures: Use sig block signatures rather than RBS signature comments.
+test/003_test.rb:2:3: C: [Correctable] Sorbet/EnforceSignatures: Use sig block signatures rather than RBS signature comments.
+test/003_test.rb:9:3: C: [Correctable] Sorbet/EnforceSignatures: Use sig block signatures rather than RBS signature comments.
+
+==> autocorrect exit=0 620 <==
+test/000_test.rb:1:1: C: [Corrected] Sorbet/EnforceSignatures: Use sig block signatures rather than RBS signature comments.
+test/001_test.rb:1:1: C: [Corrected] Sorbet/EnforceSignatures: Use sig block signatures rather than RBS signature comments.
+test/002_test.rb:2:1: C: [Corrected] Sorbet/EnforceSignatures: Use sig block signatures rather than RBS signature comments.
+test/003_test.rb:2:3: C: [Corrected] Sorbet/EnforceSignatures: Use sig block signatures rather than RBS signature comments.
+test/003_test.rb:9:3: C: [Corrected] Sorbet/EnforceSignatures: Use sig block signatures rather than RBS signature comments.
+
+==> corrected/test/000_test.rb 26 <==
+sig { void }
+def foo; end
+
+==> corrected/test/001_test.rb 26 <==
+sig { void }
+def foo; end
+
+==> corrected/test/002_test.rb 59 <==
+# @abstract
+sig { abstract.returns(Integer) }
+def foo; end
+
+==> corrected/test/003_test.rb 200 <==
+class Foo
+  sig { params(x: String, y: Symbol).returns(String) }
+  sig { params(x: Integer, y: Symbol).returns(Integer) }
+  def foo(x, y = nil); end
+
+  sig { returns(String) }
+  attr_reader :name
+end
+

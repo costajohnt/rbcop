@@ -1,0 +1,131 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 84 <==
+class Foo < T::Struct
+  const :foo, Integer
+  prop :bar, String, default: "foo"
+end
+
+==> test/001_test.rb 168 <==
+class Foo
+  include T::Props
+  include T::Props::Constructor
+  include T::Props::WeakConstructor
+  prepend T::Props::Foo
+  extend T::Props::Bar
+  extend ::T::Props
+end
+
+==> test/002_test.rb 325 <==
+class Foo < T::Struct
+  CONST = 42
+
+  const :foo, Integer
+
+  @foo = 42
+
+  # Some comment
+  sig { params(x: Integer).returns(String) }
+  def foo(x)
+    "foo" * x
+  end
+
+  private
+
+  sig do
+    void
+  end
+  def self.bar; end
+
+  class << self
+    def bar; end
+  end
+
+  # Another comment
+  class Bar
+    class Baz; end
+  end
+end
+
+==> test/003_test.rb 193 <==
+class Example < T::Struct
+  def instance_method
+    const :inside_instance_method, String
+  end
+
+  def self.class_method
+    prop :inside_class_method, Integer
+  end
+
+  const :name, String
+end
+
+==> test/004_test.rb 35 <==
+class Foo < T::ImmutableStruct
+end
+
+==> test/005_test.rb 56 <==
+class Foo < T::Struct
+  class Bar < T::Struct
+  end
+end
+
+==> test/006_test.rb 146 <==
+class Outer < T::Struct
+  class Inner < T::Struct
+    extend T::Sig
+    const :name, String
+  end
+
+  prop :name, String
+  const :inner, Inner
+end
+
+==> test/007_test.rb 29 <==
+class Foo < ::T::Struct; end
+
+==> test/008_test.rb 33 <==
+class Foo < T::InexactStruct
+end
+
+==> test/009_test.rb 105 <==
+class Foo < T::Struct
+  const :foo, Integer
+  prop :bar, String, default: "foo"
+  const :baz, Symbol
+end
+
+==> test/010_test.rb 136 <==
+class Foo < T::Struct
+  const :foo, Integer
+  prop :bar, String, default: "foo"
+  const :baz, T.nilable(Symbol), factory: ->{ nil }
+end
+
+==> test/011_test.rb 92 <==
+class Foo
+end
+
+class Bar < Baz; end
+
+class Baz
+  extend T::Struct
+end
+
+class T::Struct; end
+
+==> test/012_test.rb 27 <==
+class Foo < T::Struct; end
+
+==> test/013_test.rb 26 <==
+class Foo < T::Struct
+end
+

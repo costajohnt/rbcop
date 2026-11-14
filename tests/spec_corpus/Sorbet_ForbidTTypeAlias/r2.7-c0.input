@@ -1,0 +1,102 @@
+==> .rubocop.yml 184 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/ForbidTTypeAlias:
+  AutocorrectToRBS: true
+
+==> test/000_test.rb 76 <==
+module Types
+  # café
+  MyType = T.type_alias { String } # explanation
+end
+
+==> test/001_test.rb 60 <==
+STRING_OR_INTEGER = T.type_alias { T.any(String, Integer) }
+
+==> test/002_test.rb 142 <==
+module Types
+  class Nested
+    HTTPResponse = T.type_alias do
+      T::Hash[String, T.nilable(Integer)]
+    end
+
+    def call; end
+  end
+end
+
+==> test/003_test.rb 54 <==
+MyType = T.type_alias do
+  # explanation
+  String
+end
+
+==> test/004_test.rb 24 <==
+T.type_alias { String }
+
+==> test/005_test.rb 32 <==
+value = T.type_alias { String }
+
+==> test/006_test.rb 40 <==
+Other::MyType = T.type_alias { String }
+
+==> test/007_test.rb 35 <==
+::MyType = T.type_alias { String }
+
+==> test/008_test.rb 42 <==
+consume(MyType = T.type_alias { String })
+
+==> test/009_test.rb 41 <==
+First = MyType = T.type_alias { String }
+
+==> test/010_test.rb 42 <==
+MyType = T.type_alias { String }; consume
+
+==> test/011_test.rb 42 <==
+consume; MyType = T.type_alias { String }
+
+==> test/012_test.rb 46 <==
+MyType = T.type_alias { String } if condition
+
+==> test/013_test.rb 49 <==
+class Foo; MyType = T.type_alias { String }; end
+
+==> test/014_test.rb 39 <==
+MyType = T.type_alias { |arg| String }
+
+==> test/015_test.rb 26 <==
+MyType = T.type_alias { }
+
+==> test/016_test.rb 37 <==
+MyType = T.type_alias { build_type }
+
+==> test/017_test.rb 38 <==
+MyType = T.type_alias { log; String }
+
+==> test/018_test.rb 45 <==
+MyType = T.type_alias { String } #: Existing
+
+==> test/019_test.rb 45 <==
+MyType = T.type_alias { String } #| Existing
+
+==> test/020_test.rb 69 <==
+MyType = T.type_alias { String } # rubocop:disable Layout/LineLength
+
+==> test/021_test.rb 62 <==
+if condition
+  MyType = T.type_alias { String }
+  consume
+end
+
+==> test/022_test.rb 113 <==
+MyType = T.type_alias do
+  # rubocop:disable Layout/LineLength
+  String
+  # rubocop:enable Layout/LineLength
+end
+
