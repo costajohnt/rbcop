@@ -729,9 +729,6 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
     records, literal types, `boolish`, generic bounds, untyped functions, inner `#` comments and
     sig blocks with `bind`, `checked`, `on_failure` or `override(...)` arguments are not translated.
     Those offenses are still reported `[Correctable]`, but rbcop withholds the correction.
-  - Sorbet/ForbidTStruct sorts the generated `initialize` keywords (required before optional) with a
-    stable sort; Ruby's `sort_by` is unstable above 16 elements, so a struct with more than 16 props
-    mixing required and optional ones can get its keywords in another order.
 - rubocop-rspec family:
   - RSpec/SpecFilePathFormat with `EnforcedInflector: active_support` uses
     ActiveSupport's default inflections; the project's `InflectorPath` file is not evaluated.

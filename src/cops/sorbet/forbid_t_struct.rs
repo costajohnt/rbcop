@@ -283,10 +283,9 @@ impl ForbidTStruct {
     }
 
     fn initialize_method(&self, cx: &Cx, indent: &str, props: &[Prop], rbs: bool) -> Result<String, Error> {
-        // ponytail: a stable sort; Ruby's sort_by is unstable above 16 elements, so a struct with
-        // more than 16 props mixing optional and required ones may order them differently.
+        // `props.sort_by { optional ? 1 : 0 }`: Ruby's (unstable) sort, so equal keys order as there.
         let mut sorted: Vec<&Prop> = props.iter().collect();
-        sorted.sort_by_key(|p| p.optional());
+        uniform_sort_by(&mut sorted, &|p: &&Prop| i64::from(p.optional()));
         let max = helpers::statement_modifier::max_line_length(cx);
         let fits = |line: &str| max.is_none_or(|m| line.chars().count() as f64 <= m);
         let params: Vec<String> = sorted.iter().map(|p| p.sig_param(rbs)).collect::<Result<_, _>>()?;
@@ -321,5 +320,135 @@ impl ForbidTStruct {
         }
         s.push_str(&format!("{indent}end\n"));
         Ok(s)
+    }
+}
+
+/// Ruby's `sort_by` with Integer keys (enum.c `rb_uniform_intro_sort_2`, Ruby 3.3+): an introsort
+/// with insertion sort below 17 elements, so equal keys end up in Ruby's (unstable) order.
+fn uniform_sort_by<T>(v: &mut [T], key: &dyn Fn(&T) -> i64) {
+    let n = v.len();
+    if (1..n).all(|i| key(&v[i - 1]) <= key(&v[i])) {
+        return;
+    }
+    let d = (usize::BITS - 1 - n.leading_zeros()) as usize;
+    intro(v, key, d << 1);
+}
+
+fn intro<T>(v: &mut [T], key: &dyn Fn(&T) -> i64, d: usize) {
+    let n = v.len();
+    if n <= 16 {
+        // rb_uniform_insertionsort_2
+        for index in 1..n {
+            let tmp = key(&v[index]);
+            let mut j = index;
+            if tmp < key(&v[0]) {
+                j = 0;
+            } else {
+                while tmp < key(&v[j - 1]) {
+                    j -= 1;
+                }
+            }
+            v[j..=index].rotate_right(1);
+        }
+        return;
+    }
+    if d == 0 {
+        // rb_uniform_heapsort_2
+        let down = |v: &mut [T], mut offset: usize, len: usize| loop {
+            let mut c = (offset << 1) + 1;
+            if c > len {
+                break;
+            }
+            if c < len && key(&v[c]) < key(&v[c + 1]) {
+                c += 1;
+            }
+            if key(&v[offset]) >= key(&v[c]) {
+                break;
+            }
+            v.swap(offset, c);
+            offset = c;
+        };
+        let mut offset = n >> 1;
+        while offset > 0 {
+            offset -= 1;
+            down(v, offset, n - 1);
+        }
+        let mut offset = n - 1;
+        while offset > 0 {
+            v.swap(0, offset);
+            offset -= 1;
+            down(v, 0, offset);
+        }
+        return;
+    }
+    let (a, b, c) = (key(&v[0]), key(&v[n >> 1]), key(&v[n - 1]));
+    // med3_val
+    let x = if a < b {
+        if b < c {
+            b
+        } else if c < a {
+            a
+        } else {
+            c
+        }
+    } else if c < b {
+        b
+    } else if a < c {
+        a
+    } else {
+        c
+    };
+    let (mut i, mut j) = (0isize, n as isize - 1);
+    loop {
+        while key(&v[i as usize]) < x {
+            i += 1;
+        }
+        while x < key(&v[j as usize]) {
+            j -= 1;
+        }
+        if i <= j {
+            v.swap(i as usize, j as usize);
+            i += 1;
+            j -= 1;
+        }
+        if i > j {
+            break;
+        }
+    }
+    let (i, j) = (i as usize, (j + 1) as usize);
+    if n - j > 1 {
+        intro(&mut v[j..], key, d - 1);
+    }
+    if i > 1 {
+        intro(&mut v[..i], key, d - 1);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    /// Recorded from Ruby 4.0.6: `a.sort_by { |k, _| k }` of `[key, index]` pairs.
+    #[test]
+    fn ruby_sort_by_order() {
+        let cases = [
+            ("10101111010101000", "16,15,14,12,10,8,3,1,6,7,5,9,4,11,13,2,0"),
+            ("01000110011001001100110", "22,19,18,15,14,12,11,8,7,4,3,2,0,9,10,6,5,13,16,17,1,20,21"),
+            (
+                "1100010000111101010001100011011011101010111111110111011111110100",
+                "31,48,28,52,25,24,23,35,20,19,18,16,37,14,63,39,62,2,60,9,8,7,6,3,4,47,42,46,45,43,44,49,50,51,53,54,55,56,57,58,59,61,0,1,5,10,11,12,13,15,17,21,22,26,27,29,30,32,33,34,36,38,40,41",
+            ),
+            (
+                "1111010011110100001011100100001111011100110001010111011001110000000000100011001111001000111110101100",
+                "29,83,82,34,38,39,77,76,42,43,44,46,48,73,72,71,52,69,55,56,68,67,66,60,61,62,63,64,65,99,98,4,95,6,7,93,12,14,15,16,17,19,28,87,86,23,24,27,26,85,84,97,96,81,94,80,92,91,70,79,90,78,74,75,89,88,31,30,25,22,21,20,18,13,11,10,9,8,5,3,2,1,0,59,58,57,54,53,51,50,49,47,45,41,40,37,36,35,33,32",
+            ),
+        ];
+        for (keys, expected) in cases {
+            let mut v: Vec<(i64, usize)> = keys.bytes().enumerate().map(|(i, b)| (i64::from(b - b'0'), i)).collect();
+            super::uniform_sort_by(&mut v, &|a: &(i64, usize)| a.0);
+            let got: Vec<String> = v.iter().map(|x| x.1.to_string()).collect();
+            assert_eq!(got.join(","), expected);
+        }
+        let mut few: Vec<(i64, usize)> = [1, 0, 1, 0, 0].iter().copied().zip(0..).collect();
+        super::uniform_sort_by(&mut few, &|a: &(i64, usize)| a.0);
+        assert_eq!(few.iter().map(|x| x.1).collect::<Vec<_>>(), [1, 3, 4, 0, 2]);
     }
 }
