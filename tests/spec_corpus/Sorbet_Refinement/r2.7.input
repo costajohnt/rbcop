@@ -1,0 +1,50 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000/my_refinement.rb 81 <==
+module MyRefinement
+  refine "foo" do
+    def to_s
+      "foo"
+    end
+  end
+end
+
+==> test/001/my_refinement.rb 41 <==
+module MyRefinement
+  refine(String)
+end
+
+==> test/002/my_refinement.rb 83 <==
+module MyRefinement
+  refine(String) do
+    def to_s
+      "foo"
+    end
+  end
+end
+
+==> test/003/my_refinement.rb 114 <==
+module MyNamespace
+  class MyClass
+    refine(String) do
+      def to_s
+        "foo"
+      end
+    end
+  end
+end
+
+==> test/004/my_class.rb 12 <==
+using "foo"
+
+==> test/005/my_class.rb 19 <==
+using MyRefinement
+

@@ -1,0 +1,29 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 70 <==
+foo = object.bind(self, Integer)
+foo = T::Private.bind(self, Integer)
+
+==> test/001_test.rb 90 <==
+T.bind(self, Integer)
+consume(T.bind(self, Integer))
+foo = consume(T.bind(self, Integer))
+
+==> test/002_test.rb 153 <==
+foo = T.bind(self, Integer)
+@foo = T.bind(self, Integer)
+self.foo = T.bind(self, Integer)
+foo ||= T.bind(self, Integer)
+foo, bar = T.bind(self, Integer)
+
+==> test/003_test.rb 34 <==
+foo = bar = T.bind(self, Integer)
+

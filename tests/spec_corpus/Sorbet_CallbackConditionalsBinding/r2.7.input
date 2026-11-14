@@ -1,0 +1,179 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 159 <==
+module First
+  class Article
+    validates :that, if: -> { must? }
+  end
+
+  class Second::Post
+    validates :it, presence: true, if: -> { should? }
+  end
+end
+
+==> test/001_test.rb 118 <==
+module First
+  module Second
+    class Post
+      validates :it, presence: true, if: -> { should? }
+    end
+  end
+end
+
+==> test/002_test.rb 66 <==
+class Post < ApplicationRecord
+  validates_with PostValidator
+end
+
+==> test/003_test.rb 70 <==
+class Post < ApplicationRecord
+  validates_with PostValidator.new
+end
+
+==> test/004_test.rb 88 <==
+class Post < ApplicationRecord
+  before_create :do_it, if: -> { should? && ready? }
+end
+
+==> test/005_test.rb 72 <==
+class Post < ApplicationRecord
+  before_create :do_it, if: :should?
+end
+
+==> test/006_test.rb 98 <==
+class Post < ApplicationRecord
+  validates :it, presence: true, if: -> (post) { check(post) }
+end
+
+==> test/007_test.rb 69 <==
+class Post
+  validates :it, presence: true, if: proc { should? }
+end
+
+==> test/008_test.rb 37 <==
+Validator.new.validate(key => value)
+
+==> test/009_test.rb 87 <==
+class Post < ApplicationRecord
+  before_create :do_it, if: -> do
+    should?
+  end
+end
+
+==> test/010_test.rb 58 <==
+class Post < ApplicationRecord
+  before_create :do_it
+end
+
+==> test/011_test.rb 106 <==
+class Post
+  extend Something
+
+  validates :it, presence: true, if: -> do
+    should? && ready?
+  end
+end
+
+==> test/012_test.rb 111 <==
+class Post
+  extend Something
+
+  validates :it, presence: true, if: -> { %w(first second).include?(name) }
+end
+
+==> test/013_test.rb 121 <==
+module SomeConcern
+  extend ActiveSupport::Concern
+
+  included do
+    before_create :do_it, if: -> { should? }
+  end
+end
+
+==> test/014_test.rb 93 <==
+class Post < ApplicationRecord
+  before_create :do_it, unless: -> do
+    shouldnt?
+  end
+end
+
+==> test/015_test.rb 78 <==
+class Post < ApplicationRecord
+  before_create :do_it, if: -> { should? }
+end
+
+==> test/016_test.rb 104 <==
+class Post < ApplicationRecord
+  before_create :do_it, if: -> { should? }, unless: -> { shouldnt? }
+end
+
+==> test/017_test.rb 83 <==
+class Post < ApplicationRecord
+  before_create :do_it, if: [:should?, :ready?]
+end
+
+==> test/018_test.rb 70 <==
+class Post
+  validates :it, presence: true, if: lambda { @ready }
+end
+
+==> test/019_test.rb 124 <==
+module Namespace
+  class Post
+    validates :it, presence: true, if: -> { T.bind(self, Namespace::Post).should? }
+  end
+end
+
+==> test/020_test.rb 84 <==
+class Post < ApplicationRecord
+  before_create :do_it, unless: -> { shouldnt? }
+end
+
+==> test/021_test.rb 82 <==
+class First::Second::Post
+  validates :it, presence: true, if: -> { should? }
+end
+
+==> test/022_test.rb 98 <==
+class Post
+  extend Something
+
+  validates :it, presence: true, if: -> { something.present? }
+end
+
+==> test/023_test.rb 95 <==
+class Post
+  extend Something
+
+  validates :it, presence: true, if: -> {should? && ready?}
+end
+
+==> test/024_test.rb 94 <==
+class Post < ApplicationRecord
+  before_create :do_it, unless: lambda {
+    shouldnt?
+  }
+end
+
+==> test/025_test.rb 124 <==
+class Post < ApplicationRecord
+  before_create :do_it, if: -> do should end
+  after_create :do_it, if: -> do should end
+end
+
+==> test/026_test.rb 107 <==
+class Post < ApplicationRecord
+  before_create :do_it, if: -> do
+    a = should?
+    a && ready?
+  end
+end
+

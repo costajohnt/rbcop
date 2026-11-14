@@ -1,0 +1,20 @@
+==> offenses exit=1 748 <==
+test/000_test.rb:3:11: C: Sorbet/StructPropName: Use snake_case for T::Struct property names.
+test/001_test.rb:3:11: C: Sorbet/StructPropName: Use snake_case for T::Struct property names.
+test/004_test.rb:2:9: C: Sorbet/StructPropName: Use snake_case for T::Struct property names.
+test/004_test.rb:6:8: C: Sorbet/StructPropName: Use snake_case for T::Struct property names.
+test/005_test.rb:2:9: C: Sorbet/StructPropName: Use snake_case for T::Struct property names.
+test/005_test.rb:3:8: C: Sorbet/StructPropName: Use snake_case for T::Struct property names.
+test/005_test.rb:4:14: C: Sorbet/StructPropName: Use snake_case for T::Struct property names.
+test/005_test.rb:5:13: C: Sorbet/StructPropName: Use snake_case for T::Struct property names.
+
+==> autocorrect exit=1 748 <==
+test/000_test.rb:3:11: C: Sorbet/StructPropName: Use snake_case for T::Struct property names.
+test/001_test.rb:3:11: C: Sorbet/StructPropName: Use snake_case for T::Struct property names.
+test/004_test.rb:2:9: C: Sorbet/StructPropName: Use snake_case for T::Struct property names.
+test/004_test.rb:6:8: C: Sorbet/StructPropName: Use snake_case for T::Struct property names.
+test/005_test.rb:2:9: C: Sorbet/StructPropName: Use snake_case for T::Struct property names.
+test/005_test.rb:3:8: C: Sorbet/StructPropName: Use snake_case for T::Struct property names.
+test/005_test.rb:4:14: C: Sorbet/StructPropName: Use snake_case for T::Struct property names.
+test/005_test.rb:5:13: C: Sorbet/StructPropName: Use snake_case for T::Struct property names.
+

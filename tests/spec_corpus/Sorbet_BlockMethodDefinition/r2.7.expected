@@ -1,0 +1,160 @@
+==> offenses exit=1 2101 <==
+test/000_test.rb:4:3: C: [Correctable] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/002_test.rb:2:3: C: [Correctable] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/003_test.rb:3:5: C: [Correctable] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/004_test.rb:3:5: C: [Correctable] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/005_test.rb:2:3: C: [Correctable] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/006_test.rb:2:3: C: [Correctable] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/007_test.rb:2:15: C: [Correctable] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/008_test.rb:2:3: C: [Correctable] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/009_test.rb:2:3: C: [Correctable] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/011_test.rb:2:3: C: [Correctable] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/012_test.rb:2:3: C: [Correctable] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/013_test.rb:2:3: C: [Correctable] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/014_test.rb:6:7: C: [Correctable] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/015_test.rb:5:5: C: [Correctable] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/020_test.rb:2:3: C: [Correctable] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+
+==> autocorrect exit=0 2071 <==
+test/000_test.rb:4:3: C: [Corrected] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/002_test.rb:2:3: C: [Corrected] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/003_test.rb:3:5: C: [Corrected] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/004_test.rb:3:5: C: [Corrected] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/005_test.rb:2:3: C: [Corrected] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/006_test.rb:2:3: C: [Corrected] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/007_test.rb:2:15: C: [Corrected] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/008_test.rb:2:3: C: [Corrected] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/009_test.rb:2:3: C: [Corrected] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/011_test.rb:2:3: C: [Corrected] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/012_test.rb:2:3: C: [Corrected] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/013_test.rb:2:3: C: [Corrected] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/014_test.rb:6:7: C: [Corrected] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/015_test.rb:5:5: C: [Corrected] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+test/020_test.rb:2:3: C: [Corrected] Sorbet/BlockMethodDefinition: Do not define methods in blocks (use `define_method` as a workaround).
+
+==> corrected/test/000_test.rb 79 <==
+yielding_method do
+  puts _1
+
+  define_method(:bad_method) do |args|
+  end
+end
+
+==> corrected/test/002_test.rb 78 <==
+yielding_method do
+  define_method(:example) do
+    # abc
+    # def
+  end
+end
+
+==> corrected/test/003_test.rb 114 <==
+class SomeClass
+  class_methods do
+    define_method(:bad_method) do |args|
+      args.present?
+    end
+  end
+end
+
+==> corrected/test/004_test.rb 116 <==
+module SomeModule
+  class_methods do
+    define_method(:bad_method) do |args|
+      args.present?
+    end
+  end
+end
+
+==> corrected/test/005_test.rb 157 <==
+yielding_method do
+  define_method(:bad_method) do |arg0, arg1 = 1, *args, foo:, bar: nil, **kwargs, &block|
+    if arg0
+      arg0 + arg1
+    end
+  end
+end
+
+==> corrected/test/006_test.rb 62 <==
+Class.new do
+  define_method(:bad_method) do |args|
+  end
+end
+
+==> corrected/test/007_test.rb 167 <==
+            yielding_method do
+              define_method(:example) do
+                <<EOF
+This is a test
+with multiple lines
+EOF
+              end
+            end
+
+==> corrected/test/008_test.rb 99 <==
+yielding_method do
+  define_method(:bad_method) do
+    if arg0
+      arg0 + arg1
+    end
+  end
+end
+
+==> corrected/test/009_test.rb 55 <==
+yielding_method do
+  define_method(:nome) do
+  end
+end
+
+==> corrected/test/011_test.rb 87 <==
+yielding_method do
+  define_method(:example) do
+    <<~XML
+      abc
+    XML
+  end
+end
+
+==> corrected/test/012_test.rb 83 <==
+yielding_method do
+  self.define_singleton_method(:bad_method) do |args|
+  end
+end
+
+==> corrected/test/013_test.rb 68 <==
+yielding_method do
+  define_method(:example) do
+    # abc
+  end
+end
+
+==> corrected/test/014_test.rb 187 <==
+module OuterModule
+  extend ActiveSupport::Concern
+
+  module InnerModule
+    class_methods do
+      define_method(:bad_method) do |args|
+        args.present?
+      end
+    end
+  end
+end
+
+==> corrected/test/015_test.rb 153 <==
+module SomeConcern
+  extend ActiveSupport::Concern
+
+  some_other_block do
+    define_method(:bad_method) do |args|
+      args.present?
+    end
+  end
+end
+
+==> corrected/test/020_test.rb 72 <==
+yielding_method do
+  define_method(:nome) do |arg, other_arg|
+  end
+end
+

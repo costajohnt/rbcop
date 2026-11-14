@@ -1,0 +1,57 @@
+==> offenses exit=1 957 <==
+test/002_test.rb:2:3: C: [Correctable] Sorbet/ForbidIncludeConstLiteral: `include` must only be used with constant literals as arguments
+test/004_test.rb:2:3: C: [Correctable] Sorbet/ForbidIncludeConstLiteral: `include` must only be used with constant literals as arguments
+test/006_test.rb:2:3: C: [Correctable] Sorbet/ForbidIncludeConstLiteral: `extend` must only be used with constant literals as arguments
+test/011_test.rb:4:5: C: [Correctable] Sorbet/ForbidIncludeConstLiteral: `include` must only be used with constant literals as arguments
+test/012_test.rb:2:3: C: [Correctable] Sorbet/ForbidIncludeConstLiteral: `prepend` must only be used with constant literals as arguments
+test/015_test.rb:3:3: C: [Correctable] Sorbet/ForbidIncludeConstLiteral: `include` must only be used with constant literals as arguments
+test/016_test.rb:2:3: C: [Correctable] Sorbet/ForbidIncludeConstLiteral: `extend` must only be used with constant literals as arguments
+
+==> autocorrect exit=0 943 <==
+test/002_test.rb:2:3: C: [Corrected] Sorbet/ForbidIncludeConstLiteral: `include` must only be used with constant literals as arguments
+test/004_test.rb:2:3: C: [Corrected] Sorbet/ForbidIncludeConstLiteral: `include` must only be used with constant literals as arguments
+test/006_test.rb:2:3: C: [Corrected] Sorbet/ForbidIncludeConstLiteral: `extend` must only be used with constant literals as arguments
+test/011_test.rb:4:5: C: [Corrected] Sorbet/ForbidIncludeConstLiteral: `include` must only be used with constant literals as arguments
+test/012_test.rb:2:3: C: [Corrected] Sorbet/ForbidIncludeConstLiteral: `prepend` must only be used with constant literals as arguments
+test/015_test.rb:3:3: C: [Corrected] Sorbet/ForbidIncludeConstLiteral: `include` must only be used with constant literals as arguments
+test/016_test.rb:2:3: C: [Corrected] Sorbet/ForbidIncludeConstLiteral: `extend` must only be used with constant literals as arguments
+
+==> corrected/test/002_test.rb 67 <==
+class MyClass
+  T.unsafe(self).include Polaris::Engine.helpers
+end
+
+==> corrected/test/004_test.rb 80 <==
+class MyClass
+  T.unsafe(self).include Rails.application.routes.url_helpers
+end
+
+==> corrected/test/006_test.rb 68 <==
+module MyModule
+  T.unsafe(self).extend Polaris::Engine.helpers
+end
+
+==> corrected/test/011_test.rb 153 <==
+module FilterHelper
+  class << self
+    include ActionView::Helpers::TagHelper
+    T.unsafe(self).include Rails.application.routes.url_helpers
+  end
+end
+
+==> corrected/test/012_test.rb 67 <==
+class MyClass
+  T.unsafe(self).prepend Polaris::Engine.helpers
+end
+
+==> corrected/test/015_test.rb 63 <==
+class MyClass
+  mod = ThatMod
+  T.unsafe(self).include mod
+end
+
+==> corrected/test/016_test.rb 66 <==
+class MyClass
+  T.unsafe(self).extend Polaris::Engine.helpers
+end
+

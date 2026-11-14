@@ -1,0 +1,8 @@
+==> offenses exit=1 140 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/000_test.rb:3:5: C: Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+
+==> autocorrect exit=1 140 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/000_test.rb:3:5: C: Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+

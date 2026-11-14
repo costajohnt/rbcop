@@ -1,0 +1,219 @@
+==> offenses exit=1 3302 <==
+test/000_test.rb:3:22: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Article)
+test/000_test.rb:7:36: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Second::Post)
+test/001_test.rb:4:38: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/004_test.rb:2:25: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/007_test.rb:2:34: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/009_test.rb:2:25: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/011_test.rb:4:34: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/012_test.rb:4:34: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/014_test.rb:2:25: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/015_test.rb:2:25: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/016_test.rb:2:25: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/016_test.rb:2:45: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/018_test.rb:2:34: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/020_test.rb:2:25: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/021_test.rb:2:34: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, First::Second::Post)
+test/022_test.rb:4:34: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/023_test.rb:4:34: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/024_test.rb:2:25: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/025_test.rb:2:25: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/025_test.rb:3:24: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/026_test.rb:2:25: C: [Correctable] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+
+==> autocorrect exit=0 3260 <==
+test/000_test.rb:3:22: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Article)
+test/000_test.rb:7:36: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Second::Post)
+test/001_test.rb:4:38: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/004_test.rb:2:25: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/007_test.rb:2:34: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/009_test.rb:2:25: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/011_test.rb:4:34: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/012_test.rb:4:34: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/014_test.rb:2:25: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/015_test.rb:2:25: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/016_test.rb:2:25: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/016_test.rb:2:45: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/018_test.rb:2:34: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/020_test.rb:2:25: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/021_test.rb:2:34: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, First::Second::Post)
+test/022_test.rb:4:34: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/023_test.rb:4:34: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/024_test.rb:2:25: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/025_test.rb:2:25: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/025_test.rb:3:24: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+test/026_test.rb:2:25: C: [Corrected] Sorbet/CallbackConditionalsBinding: Callback conditionals should be bound to the right type. Use T.bind(self, Post)
+
+==> corrected/test/000_test.rb 240 <==
+module First
+  class Article
+    validates :that, if: -> {
+      T.bind(self, Article)
+      must?
+    }
+  end
+
+  class Second::Post
+    validates :it, presence: true, if: -> {
+      T.bind(self, Second::Post)
+      should?
+    }
+  end
+end
+
+==> corrected/test/001_test.rb 159 <==
+module First
+  module Second
+    class Post
+      validates :it, presence: true, if: -> {
+        T.bind(self, Post)
+        should?
+      }
+    end
+  end
+end
+
+==> corrected/test/004_test.rb 117 <==
+class Post < ApplicationRecord
+  before_create :do_it, if: -> {
+    T.bind(self, Post)
+    should? && ready?
+  }
+end
+
+==> corrected/test/007_test.rb 98 <==
+class Post
+  validates :it, presence: true, if: proc {
+    T.bind(self, Post)
+    should?
+  }
+end
+
+==> corrected/test/009_test.rb 110 <==
+class Post < ApplicationRecord
+  before_create :do_it, if: -> do
+    T.bind(self, Post)
+    should?
+  end
+end
+
+==> corrected/test/011_test.rb 129 <==
+class Post
+  extend Something
+
+  validates :it, presence: true, if: -> do
+    T.bind(self, Post)
+    should? && ready?
+  end
+end
+
+==> corrected/test/012_test.rb 140 <==
+class Post
+  extend Something
+
+  validates :it, presence: true, if: -> {
+    T.bind(self, Post)
+    %w(first second).include?(name)
+  }
+end
+
+==> corrected/test/014_test.rb 116 <==
+class Post < ApplicationRecord
+  before_create :do_it, unless: -> do
+    T.bind(self, Post)
+    shouldnt?
+  end
+end
+
+==> corrected/test/015_test.rb 107 <==
+class Post < ApplicationRecord
+  before_create :do_it, if: -> {
+    T.bind(self, Post)
+    should?
+  }
+end
+
+==> corrected/test/016_test.rb 162 <==
+class Post < ApplicationRecord
+  before_create :do_it, if: -> {
+    T.bind(self, Post)
+    should?
+  }, unless: -> {
+    T.bind(self, Post)
+    shouldnt?
+  }
+end
+
+==> corrected/test/018_test.rb 99 <==
+class Post
+  validates :it, presence: true, if: lambda {
+    T.bind(self, Post)
+    @ready
+  }
+end
+
+==> corrected/test/020_test.rb 113 <==
+class Post < ApplicationRecord
+  before_create :do_it, unless: -> {
+    T.bind(self, Post)
+    shouldnt?
+  }
+end
+
+==> corrected/test/021_test.rb 126 <==
+class First::Second::Post
+  validates :it, presence: true, if: -> {
+    T.bind(self, First::Second::Post)
+    should?
+  }
+end
+
+==> corrected/test/022_test.rb 127 <==
+class Post
+  extend Something
+
+  validates :it, presence: true, if: -> {
+    T.bind(self, Post)
+    something.present?
+  }
+end
+
+==> corrected/test/023_test.rb 126 <==
+class Post
+  extend Something
+
+  validates :it, presence: true, if: -> {
+    T.bind(self, Post)
+    should? && ready?
+  }
+end
+
+==> corrected/test/024_test.rb 117 <==
+class Post < ApplicationRecord
+  before_create :do_it, unless: lambda {
+    T.bind(self, Post)
+    shouldnt?
+  }
+end
+
+==> corrected/test/025_test.rb 182 <==
+class Post < ApplicationRecord
+  before_create :do_it, if: -> do
+    T.bind(self, Post)
+    should
+  end
+  after_create :do_it, if: -> do
+    T.bind(self, Post)
+    should
+  end
+end
+
+==> corrected/test/026_test.rb 130 <==
+class Post < ApplicationRecord
+  before_create :do_it, if: -> do
+    T.bind(self, Post)
+    a = should?
+    a && ready?
+  end
+end
+

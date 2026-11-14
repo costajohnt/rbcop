@@ -1,0 +1,22 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 31 <==
+Foo = T.type_alias { Integer }
+
+==> test/001_test.rb 40 <==
+Foo = T.type_alias { { foo: Integer } }
+
+==> test/002_test.rb 224 <==
+A = T.type_alias { [{ foo: Integer }] }
+B = T.type_alias { T.nilable({ foo: Integer }) }
+C = T.type_alias { T::Hash[Symbol, { foo: Integer }] }
+D = T.type_alias { T::Hash[Symbol, T::Array[T.any(String, { foo: Integer })]] }
+

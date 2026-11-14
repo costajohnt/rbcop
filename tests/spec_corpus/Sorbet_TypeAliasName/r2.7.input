@@ -1,0 +1,31 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 210 <==
+X = T.type_alias { T.any(A, B) }
+X0 = T.type_alias { X }
+Constant = T.type_alias { Foo }
+ConstantName = T.type_alias { T.any(A, B) }
+HTTP = T.type_alias { Foo }
+PARENT_NAME::ConstantName = T.type_alias { Foo }
+
+==> test/001_test.rb 138 <==
+a_or_b = T.type_alias { T.any(A, B) }
+x = T.type_alias { X }
+constant = T.type_alias { Foo }
+constant_name = T.type_alias { T.any(A, B) }
+
+==> test/002_test.rb 202 <==
+A_B = T.type_alias { T.any(A, B) }
+A_ = T.type_alias { T.any(A, B) }
+A_0 = T.type_alias { T.any(A, B) }
+CONSTANT_NAME = T.type_alias { T.any(A, B) }
+PARENT::CONSTANT_NAME = T.type_alias { T.any(A, B) }
+

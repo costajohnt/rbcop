@@ -1,0 +1,26 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 197 <==
+mixes_in_class_methods
+
+mixes_in_class_methods(ClassMethods)
+
+T::Helpers.mixes_in_class_methods(ClassMethods)
+
+self.mixes_in_class_methods(ClassMethods)
+
+foo = mixes_in_class_methods(ClassMethods)
+
+==> test/001_test.rb 125 <==
+T.mixes_in_class_methods(ClassMethods)
+Helpers.mixes_in_class_methods(ClassMethods)
+Foo.mixes_in_class_methods(ClassMethods)
+

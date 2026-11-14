@@ -1,0 +1,22 @@
+==> offenses exit=1 424 <==
+test/000_test.rb:1:9: C: Sorbet/ForbidTBind: Do not use `T.bind`.
+test/001_test.rb:2:1: C: [Correctable] Sorbet/ForbidTBind: Do not use `T.bind`.
+test/001_test.rb:4:1: C: [Correctable] Sorbet/ForbidTBind: Do not use `T.bind`.
+test/002_test.rb:1:1: C: Sorbet/ForbidTBind: Do not use `T.bind`.
+test/003_test.rb:1:1: C: Sorbet/ForbidTBind: Do not use `T.bind`.
+test/003_test.rb:2:5: C: Sorbet/ForbidTBind: Do not use `T.bind`.
+
+==> autocorrect exit=1 420 <==
+test/000_test.rb:1:9: C: Sorbet/ForbidTBind: Do not use `T.bind`.
+test/001_test.rb:2:1: C: [Corrected] Sorbet/ForbidTBind: Do not use `T.bind`.
+test/001_test.rb:4:1: C: [Corrected] Sorbet/ForbidTBind: Do not use `T.bind`.
+test/002_test.rb:1:1: C: Sorbet/ForbidTBind: Do not use `T.bind`.
+test/003_test.rb:1:1: C: Sorbet/ForbidTBind: Do not use `T.bind`.
+test/003_test.rb:2:5: C: Sorbet/ForbidTBind: Do not use `T.bind`.
+
+==> corrected/test/001_test.rb 52 <==
+# café
+#: self as Array[String]
+
+#: self as String
+

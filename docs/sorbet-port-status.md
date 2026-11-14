@@ -55,7 +55,7 @@ the gate skips.
 |---|---:|---:|---|---|
 | S1 | 9 | 257,155 | `sorbet_sigil` | ported |
 | S2 | 22 | 8,605 | `sorbet_signature`, `sorbet_t_enum`, `sorbet_gem_version` | to do |
-| S3 | 24 | 12,598 | `sorbet_rbs_assertion` | to do |
+| S3 | 24 | 12,598 | `sorbet_rbs_assertion` | ported |
 | S4 | 8 | 146,088 | `sorbet_target_version`, `sorbet_t_let`, `sorbet_rbi_type` | to do |
 
 The S4 row leaves out the Style/MutableConstant and Lint/Void patches.
@@ -93,30 +93,30 @@ The S4 row leaves out the Style/MutableConstant and Lint/Void patches.
 | Sorbet/SingleLineRbiClassModuleDefinitions | S2 | 0 | fallback |
 | Sorbet/ValidGemVersionAnnotations | S2 | 46 | fallback |
 | Sorbet/VoidCheckedTests | S2 | 0 | fallback |
-| Sorbet/BindingConstantWithoutTypeAlias | S3 | 0 | fallback |
-| Sorbet/BlockMethodDefinition | S3 | 8,611 | fallback |
-| Sorbet/CallbackConditionalsBinding | S3 | 89 | fallback |
-| Sorbet/ConstantsFromStrings | S3 | 417 | fallback |
-| Sorbet/ForbidIncludeConstLiteral | S3 | 95 | fallback |
-| Sorbet/ForbidMixesInClassMethods | S3 | 1 | fallback |
-| Sorbet/ForbidSuperclassConstLiteral | S3 | 1,079 | fallback |
-| Sorbet/ForbidTAbsurd | S3 | 14 | fallback |
-| Sorbet/ForbidTAnyWithNil | S3 | 0 | fallback |
-| Sorbet/ForbidTAssertType | S3 | 0 | fallback |
-| Sorbet/ForbidTBind | S3 | 978 | fallback |
-| Sorbet/ForbidTBindInAssignment | S3 | 0 | fallback |
-| Sorbet/ForbidTCast | S3 | 355 | fallback |
-| Sorbet/ForbidTCollectionInstantiation | S3 | 0 | fallback |
-| Sorbet/ForbidTMust | S3 | 0 | fallback |
-| Sorbet/ForbidTUnsafe | S3 | 0 | fallback |
-| Sorbet/ForbidTUntyped | S3 | 822 | fallback |
-| Sorbet/ForbidTypeAliasedShapes | S3 | 12 | fallback |
-| Sorbet/ForbidUntypedStructProps | S3 | 0 | fallback |
-| Sorbet/ImplicitConversionMethod | S3 | 109 (25 crashes) | fallback |
-| Sorbet/Refinement | S3 | 6 (4 crashes) | fallback |
-| Sorbet/SelectByIsA | S3 | 10 | fallback |
-| Sorbet/StructPropName | S3 | 0 | fallback |
-| Sorbet/TypeAliasName | S3 | 0 | fallback |
+| Sorbet/BindingConstantWithoutTypeAlias | S3 | 0 | ported |
+| Sorbet/BlockMethodDefinition | S3 | 8,611 | ported |
+| Sorbet/CallbackConditionalsBinding | S3 | 89 | ported |
+| Sorbet/ConstantsFromStrings | S3 | 417 | ported |
+| Sorbet/ForbidIncludeConstLiteral | S3 | 95 | ported |
+| Sorbet/ForbidMixesInClassMethods | S3 | 1 | ported |
+| Sorbet/ForbidSuperclassConstLiteral | S3 | 1,079 | ported |
+| Sorbet/ForbidTAbsurd | S3 | 14 | ported |
+| Sorbet/ForbidTAnyWithNil | S3 | 0 | ported |
+| Sorbet/ForbidTAssertType | S3 | 0 | ported |
+| Sorbet/ForbidTBind | S3 | 978 | ported |
+| Sorbet/ForbidTBindInAssignment | S3 | 0 | ported |
+| Sorbet/ForbidTCast | S3 | 355 | ported |
+| Sorbet/ForbidTCollectionInstantiation | S3 | 0 | ported |
+| Sorbet/ForbidTMust | S3 | 0 | ported |
+| Sorbet/ForbidTUnsafe | S3 | 0 | ported |
+| Sorbet/ForbidTUntyped | S3 | 822 | ported |
+| Sorbet/ForbidTypeAliasedShapes | S3 | 12 | ported |
+| Sorbet/ForbidUntypedStructProps | S3 | 0 | ported |
+| Sorbet/ImplicitConversionMethod | S3 | 109 (25 crashes) | ported |
+| Sorbet/Refinement | S3 | 6 (4 crashes) | ported |
+| Sorbet/SelectByIsA | S3 | 10 | ported |
+| Sorbet/StructPropName | S3 | 0 | ported |
+| Sorbet/TypeAliasName | S3 | 0 | ported |
 | Sorbet/BuggyObsoleteStrictMemoization | S4 | 0 | fallback |
 | Sorbet/EnforceSignatures | S4 | 143,768 (16 crashes) | fallback |
 | Sorbet/ForbidTLet | S4 | 2,199 | fallback |

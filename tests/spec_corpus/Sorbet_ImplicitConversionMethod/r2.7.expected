@@ -1,0 +1,12 @@
+==> offenses exit=1 693 <==
+test/000_test.rb:1:1: C: Sorbet/ImplicitConversionMethod: Avoid implicit conversion methods, as Sorbet does not support them. Explicity convert to the desired type instead.
+test/001_test.rb:1:14: C: Sorbet/ImplicitConversionMethod: Avoid implicit conversion methods, as Sorbet does not support them. Explicity convert to the desired type instead.
+test/003_test.rb:1:7: C: Sorbet/ImplicitConversionMethod: Avoid implicit conversion methods, as Sorbet does not support them. Explicity convert to the desired type instead.
+test/004_test.rb:1:1: C: Sorbet/ImplicitConversionMethod: Avoid implicit conversion methods, as Sorbet does not support them. Explicity convert to the desired type instead.
+
+==> autocorrect exit=1 693 <==
+test/000_test.rb:1:1: C: Sorbet/ImplicitConversionMethod: Avoid implicit conversion methods, as Sorbet does not support them. Explicity convert to the desired type instead.
+test/001_test.rb:1:14: C: Sorbet/ImplicitConversionMethod: Avoid implicit conversion methods, as Sorbet does not support them. Explicity convert to the desired type instead.
+test/003_test.rb:1:7: C: Sorbet/ImplicitConversionMethod: Avoid implicit conversion methods, as Sorbet does not support them. Explicity convert to the desired type instead.
+test/004_test.rb:1:1: C: Sorbet/ImplicitConversionMethod: Avoid implicit conversion methods, as Sorbet does not support them. Explicity convert to the desired type instead.
+

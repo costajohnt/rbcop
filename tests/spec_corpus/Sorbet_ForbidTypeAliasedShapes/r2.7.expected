@@ -1,0 +1,14 @@
+==> offenses exit=1 695 <==
+test/001_test.rb:1:7: C: Sorbet/ForbidTypeAliasedShapes: Type aliases shouldn't contain shapes because of significant performance overhead
+test/002_test.rb:1:5: C: Sorbet/ForbidTypeAliasedShapes: Type aliases shouldn't contain shapes because of significant performance overhead
+test/002_test.rb:2:5: C: Sorbet/ForbidTypeAliasedShapes: Type aliases shouldn't contain shapes because of significant performance overhead
+test/002_test.rb:3:5: C: Sorbet/ForbidTypeAliasedShapes: Type aliases shouldn't contain shapes because of significant performance overhead
+test/002_test.rb:4:5: C: Sorbet/ForbidTypeAliasedShapes: Type aliases shouldn't contain shapes because of significant performance overhead
+
+==> autocorrect exit=1 695 <==
+test/001_test.rb:1:7: C: Sorbet/ForbidTypeAliasedShapes: Type aliases shouldn't contain shapes because of significant performance overhead
+test/002_test.rb:1:5: C: Sorbet/ForbidTypeAliasedShapes: Type aliases shouldn't contain shapes because of significant performance overhead
+test/002_test.rb:2:5: C: Sorbet/ForbidTypeAliasedShapes: Type aliases shouldn't contain shapes because of significant performance overhead
+test/002_test.rb:3:5: C: Sorbet/ForbidTypeAliasedShapes: Type aliases shouldn't contain shapes because of significant performance overhead
+test/002_test.rb:4:5: C: Sorbet/ForbidTypeAliasedShapes: Type aliases shouldn't contain shapes because of significant performance overhead
+

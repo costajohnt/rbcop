@@ -1,0 +1,42 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 50 <==
+class MyClass < Struct.new(:foo, :bar, :baz); end
+
+==> test/001_test.rb 37 <==
+class MyClass
+  attr_reader :foo
+end
+
+==> test/002_test.rb 50 <==
+class MyClass < ActiveRecord::Migration[6.0]; end
+
+==> test/003_test.rb 71 <==
+class MyClass < Component::TrustedIdScope[UserManagement::UserId]; end
+
+==> test/004_test.rb 40 <==
+class MyClass < MyModule::MyParent; end
+
+==> test/005_test.rb 70 <==
+MyStruct = Struct.new(:foo, :bar, :baz)
+class MyClass < MyStruct; end
+
+==> test/006_test.rb 28 <==
+class MyClass
+  NUM = 1
+end
+
+==> test/007_test.rb 35 <==
+class MyClass < MyParentClass; end
+
+==> test/008_test.rb 47 <==
+class A::B < ActiveRecord::Migration[6.0]; end
+

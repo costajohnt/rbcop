@@ -1,0 +1,33 @@
+==> .rubocop.yml 179 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/ForbidTMust:
+  AutocorrectToRBS: true
+
+==> test/000_test.rb 27 <==
+T.must(foo) #: as Existing
+
+==> test/001_test.rb 37 <==
+# café
+T.must(foo)
+
+x = T.must(foo)
+
+==> test/002_test.rb 27 <==
+T.must(foo) # some comment
+
+==> test/003_test.rb 21 <==
+consume(T.must(foo))
+
+==> test/004_test.rb 20 <==
+T.must(T.must(foo))
+
+==> test/005_test.rb 16 <==
+T.must(*values)
+

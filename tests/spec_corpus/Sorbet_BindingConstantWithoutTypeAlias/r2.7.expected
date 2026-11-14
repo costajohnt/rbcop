@@ -1,0 +1,56 @@
+==> offenses exit=1 3832 <==
+test/002_test.rb:1:5: C: [Correctable] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're trying to bind a type to a constant. To do this, you must alias the type using `T.type_alias`.
+test/002_test.rb:2:5: C: [Correctable] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're trying to bind a type to a constant. To do this, you must alias the type using `T.type_alias`.
+test/002_test.rb:3:5: C: [Correctable] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're trying to bind a type to a constant. To do this, you must alias the type using `T.type_alias`.
+test/002_test.rb:4:5: C: [Correctable] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're trying to bind a type to a constant. To do this, you must alias the type using `T.type_alias`.
+test/002_test.rb:5:5: C: [Correctable] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're trying to bind a type to a constant. To do this, you must alias the type using `T.type_alias`.
+test/002_test.rb:6:5: C: [Correctable] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're trying to bind a type to a constant. To do this, you must alias the type using `T.type_alias`.
+test/002_test.rb:7:5: C: [Correctable] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're trying to bind a type to a constant. To do this, you must alias the type using `T.type_alias`.
+test/002_test.rb:8:5: C: [Correctable] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're trying to bind a type to a constant. To do this, you must alias the type using `T.type_alias`.
+test/003_test.rb:1:5: C: [Correctable] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're using the old `T.type_alias` syntax. `T.type_alias` now expects a block.Run Sorbet with the options "--autocorrect --error-white-list=5043" to automatically upgrade to the new syntax.
+test/003_test.rb:2:5: C: [Correctable] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're using the old `T.type_alias` syntax. `T.type_alias` now expects a block.Run Sorbet with the options "--autocorrect --error-white-list=5043" to automatically upgrade to the new syntax.
+test/003_test.rb:3:5: C: [Correctable] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're using the old `T.type_alias` syntax. `T.type_alias` now expects a block.Run Sorbet with the options "--autocorrect --error-white-list=5043" to automatically upgrade to the new syntax.
+test/003_test.rb:4:5: C: [Correctable] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're using the old `T.type_alias` syntax. `T.type_alias` now expects a block.Run Sorbet with the options "--autocorrect --error-white-list=5043" to automatically upgrade to the new syntax.
+test/003_test.rb:5:5: C: [Correctable] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're using the old `T.type_alias` syntax. `T.type_alias` now expects a block.Run Sorbet with the options "--autocorrect --error-white-list=5043" to automatically upgrade to the new syntax.
+test/003_test.rb:6:5: C: [Correctable] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're using the old `T.type_alias` syntax. `T.type_alias` now expects a block.Run Sorbet with the options "--autocorrect --error-white-list=5043" to automatically upgrade to the new syntax.
+test/003_test.rb:7:5: C: [Correctable] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're using the old `T.type_alias` syntax. `T.type_alias` now expects a block.Run Sorbet with the options "--autocorrect --error-white-list=5043" to automatically upgrade to the new syntax.
+test/003_test.rb:8:5: C: [Correctable] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're using the old `T.type_alias` syntax. `T.type_alias` now expects a block.Run Sorbet with the options "--autocorrect --error-white-list=5043" to automatically upgrade to the new syntax.
+
+==> autocorrect exit=0 3800 <==
+test/002_test.rb:1:5: C: [Corrected] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're trying to bind a type to a constant. To do this, you must alias the type using `T.type_alias`.
+test/002_test.rb:2:5: C: [Corrected] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're trying to bind a type to a constant. To do this, you must alias the type using `T.type_alias`.
+test/002_test.rb:3:5: C: [Corrected] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're trying to bind a type to a constant. To do this, you must alias the type using `T.type_alias`.
+test/002_test.rb:4:5: C: [Corrected] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're trying to bind a type to a constant. To do this, you must alias the type using `T.type_alias`.
+test/002_test.rb:5:5: C: [Corrected] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're trying to bind a type to a constant. To do this, you must alias the type using `T.type_alias`.
+test/002_test.rb:6:5: C: [Corrected] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're trying to bind a type to a constant. To do this, you must alias the type using `T.type_alias`.
+test/002_test.rb:7:5: C: [Corrected] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're trying to bind a type to a constant. To do this, you must alias the type using `T.type_alias`.
+test/002_test.rb:8:5: C: [Corrected] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're trying to bind a type to a constant. To do this, you must alias the type using `T.type_alias`.
+test/003_test.rb:1:5: C: [Corrected] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're using the old `T.type_alias` syntax. `T.type_alias` now expects a block.Run Sorbet with the options "--autocorrect --error-white-list=5043" to automatically upgrade to the new syntax.
+test/003_test.rb:2:5: C: [Corrected] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're using the old `T.type_alias` syntax. `T.type_alias` now expects a block.Run Sorbet with the options "--autocorrect --error-white-list=5043" to automatically upgrade to the new syntax.
+test/003_test.rb:3:5: C: [Corrected] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're using the old `T.type_alias` syntax. `T.type_alias` now expects a block.Run Sorbet with the options "--autocorrect --error-white-list=5043" to automatically upgrade to the new syntax.
+test/003_test.rb:4:5: C: [Corrected] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're using the old `T.type_alias` syntax. `T.type_alias` now expects a block.Run Sorbet with the options "--autocorrect --error-white-list=5043" to automatically upgrade to the new syntax.
+test/003_test.rb:5:5: C: [Corrected] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're using the old `T.type_alias` syntax. `T.type_alias` now expects a block.Run Sorbet with the options "--autocorrect --error-white-list=5043" to automatically upgrade to the new syntax.
+test/003_test.rb:6:5: C: [Corrected] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're using the old `T.type_alias` syntax. `T.type_alias` now expects a block.Run Sorbet with the options "--autocorrect --error-white-list=5043" to automatically upgrade to the new syntax.
+test/003_test.rb:7:5: C: [Corrected] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're using the old `T.type_alias` syntax. `T.type_alias` now expects a block.Run Sorbet with the options "--autocorrect --error-white-list=5043" to automatically upgrade to the new syntax.
+test/003_test.rb:8:5: C: [Corrected] Sorbet/BindingConstantWithoutTypeAlias: It looks like you're using the old `T.type_alias` syntax. `T.type_alias` now expects a block.Run Sorbet with the options "--autocorrect --error-white-list=5043" to automatically upgrade to the new syntax.
+
+==> corrected/test/002_test.rb 296 <==
+A = T.type_alias { T.any(String, Integer) }
+B = T.type_alias { T.all(String, Integer) }
+C = T.type_alias { T.noreturn }
+D = T.type_alias { T.class_of(String) }
+E = T.type_alias { T.proc.void }
+F = T.type_alias { T.untyped }
+G = T.type_alias { T.nilable(String) }
+H = T.type_alias { T.self_type }
+
+==> corrected/test/003_test.rb 296 <==
+A = T.type_alias { T.any(String, Integer) }
+B = T.type_alias { T.all(String, Integer) }
+C = T.type_alias { T.noreturn }
+D = T.type_alias { T.class_of(String) }
+E = T.type_alias { T.proc.void }
+F = T.type_alias { T.untyped }
+G = T.type_alias { T.nilable(String) }
+H = T.type_alias { T.self_type }
+

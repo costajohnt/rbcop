@@ -1,0 +1,51 @@
+==> .rubocop.yml 181 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/ForbidTAbsurd:
+  AutocorrectToRBS: true
+
+==> test/000_test.rb 24 <==
+T.absurd(foo) #: absurd
+
+==> test/001_test.rb 66 <==
+case foo
+when String then foo
+else T.absurd(foo) # exhaustive
+end
+
+==> test/002_test.rb 62 <==
+case foo
+when String then foo
+else consume(T.absurd(foo))
+end
+
+==> test/003_test.rb 23 <==
+consume(T.absurd(foo))
+
+==> test/004_test.rb 29 <==
+T.absurd(foo) # some comment
+
+==> test/005_test.rb 56 <==
+unless true
+then 42
+else T.absurd(foo) # exhaustive
+end
+
+==> test/006_test.rb 53 <==
+if false
+then 42
+else T.absurd(foo) # exhaustive
+end
+
+==> test/007_test.rb 41 <==
+# café
+T.absurd(foo)
+
+x = T.absurd(foo)
+

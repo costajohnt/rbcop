@@ -1,0 +1,18 @@
+==> .rubocop.yml 197 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/StructPropName:
+  ForbiddenIdentifiers:
+  - legacy_name
+
+==> test/000_test.rb 56 <==
+class User < T::Struct
+  const :legacy_name, String
+end
+

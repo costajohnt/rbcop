@@ -1,0 +1,31 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 31 <==
+::T.assert_type!(foo, Integer)
+
+==> test/001_test.rb 30 <==
+T&.assert_type!(foo, Integer)
+
+==> test/002_test.rb 41 <==
+T.let(foo, Integer)
+T.cast(foo, Integer)
+
+==> test/003_test.rb 29 <==
+T.assert_type!(foo, Integer)
+
+==> test/004_test.rb 45 <==
+T.assert_type!(foo, Integer, checked: false)
+
+==> test/005_test.rb 96 <==
+assert_type!(foo, Integer)
+other.assert_type!(foo, Integer)
+Other::T.assert_type!(foo, Integer)
+

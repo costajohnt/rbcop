@@ -1,0 +1,113 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 87 <==
+MyInclude = Rails.application.routes.url_helpers
+class MyClass
+  include MyInclude
+end
+
+==> test/001_test.rb 76 <==
+module MyModule
+  MyModule.include Rails.application.routes.url_helpers
+end
+
+==> test/002_test.rb 52 <==
+class MyClass
+  include Polaris::Engine.helpers
+end
+
+==> test/003_test.rb 75 <==
+module MyModule
+  MyModule.extend Rails.application.routes.url_helpers
+end
+
+==> test/004_test.rb 65 <==
+class MyClass
+  include Rails.application.routes.url_helpers
+end
+
+==> test/005_test.rb 47 <==
+class MyClass
+  include MyModule::MyParent
+end
+
+==> test/006_test.rb 53 <==
+module MyModule
+  extend Polaris::Engine.helpers
+end
+
+==> test/007_test.rb 76 <==
+module MyModule
+  MyModule.prepend Rails.application.routes.url_helpers
+end
+
+==> test/008_test.rb 28 <==
+class Foo
+  extend self
+end
+
+==> test/009_test.rb 18 <==
+class MyClass
+end
+
+==> test/010_test.rb 88 <==
+UrlHelpers =
+  Class.new do
+    include(Rails.application.routes.url_helpers)
+  end.new
+
+==> test/011_test.rb 138 <==
+module FilterHelper
+  class << self
+    include ActionView::Helpers::TagHelper
+    include Rails.application.routes.url_helpers
+  end
+end
+
+==> test/012_test.rb 52 <==
+class MyClass
+  prepend Polaris::Engine.helpers
+end
+
+==> test/013_test.rb 118 <==
+Config = []
+Config.prepend(one)
+
+module MyModule
+  Config.prepend(two)
+end
+
+class MyClass
+  Config.prepend(three)
+end
+
+==> test/014_test.rb 29 <==
+module Foo
+  extend self
+end
+
+==> test/015_test.rb 48 <==
+class MyClass
+  mod = ThatMod
+  include mod
+end
+
+==> test/016_test.rb 51 <==
+class MyClass
+  extend Polaris::Engine.helpers
+end
+
+==> test/017_test.rb 42 <==
+def foo
+  m = Module.new
+  prepend(m)
+end
+

@@ -1,0 +1,14 @@
+==> offenses exit=1 242 <==
+test/001_test.rb:1:1: C: [Correctable] Sorbet/ForbidTAnyWithNil: Use `T.nilable` instead of `T.any(..., NilClass, ...)`.
+test/002_test.rb:1:1: C: [Correctable] Sorbet/ForbidTAnyWithNil: Use `T.nilable` instead of `T.any(..., NilClass, ...)`.
+
+==> autocorrect exit=0 238 <==
+test/001_test.rb:1:1: C: [Corrected] Sorbet/ForbidTAnyWithNil: Use `T.nilable` instead of `T.any(..., NilClass, ...)`.
+test/002_test.rb:1:1: C: [Corrected] Sorbet/ForbidTAnyWithNil: Use `T.nilable` instead of `T.any(..., NilClass, ...)`.
+
+==> corrected/test/001_test.rb 18 <==
+T.nilable(String)
+
+==> corrected/test/002_test.rb 33 <==
+T.nilable(T.any(Symbol, String))
+

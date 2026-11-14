@@ -1,0 +1,8 @@
+==> offenses exit=1 184 <==
+test/000_test.rb:2:9: C: Sorbet/StructPropName: Use camelCase for T::Struct property names.
+test/000_test.rb:3:8: C: Sorbet/StructPropName: Use camelCase for T::Struct property names.
+
+==> autocorrect exit=1 184 <==
+test/000_test.rb:2:9: C: Sorbet/StructPropName: Use camelCase for T::Struct property names.
+test/000_test.rb:3:8: C: Sorbet/StructPropName: Use camelCase for T::Struct property names.
+

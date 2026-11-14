@@ -1,0 +1,20 @@
+==> offenses exit=1 1754 <==
+test/000_test.rb:1:21: C: Sorbet/ConstantsFromStrings: Don't use `safe_constantize`, it makes the code harder to understand, less editor-friendly, and impossible to analyze. Replace `safe_constantize` with a case/when or a hash.
+test/001_test.rb:1:15: C: Sorbet/ConstantsFromStrings: Don't use `constantize`, it makes the code harder to understand, less editor-friendly, and impossible to analyze. Replace `constantize` with a case/when or a hash.
+test/002_test.rb:1:9: C: Sorbet/ConstantsFromStrings: Don't use `const_get`, it makes the code harder to understand, less editor-friendly, and impossible to analyze. Replace `const_get` with a case/when or a hash.
+test/003_test.rb:1:15: C: Sorbet/ConstantsFromStrings: Don't use `safe_constantize`, it makes the code harder to understand, less editor-friendly, and impossible to analyze. Replace `safe_constantize` with a case/when or a hash.
+test/004_test.rb:1:16: C: Sorbet/ConstantsFromStrings: Don't use `const_get`, it makes the code harder to understand, less editor-friendly, and impossible to analyze. Replace `const_get` with a case/when or a hash.
+test/005_test.rb:1:16: C: Sorbet/ConstantsFromStrings: Don't use `constants`, it makes the code harder to understand, less editor-friendly, and impossible to analyze. Replace `constants` with a case/when or a hash.
+test/006_test.rb:1:21: C: Sorbet/ConstantsFromStrings: Don't use `constantize`, it makes the code harder to understand, less editor-friendly, and impossible to analyze. Replace `constantize` with a case/when or a hash.
+test/007_test.rb:1:9: C: Sorbet/ConstantsFromStrings: Don't use `constants`, it makes the code harder to understand, less editor-friendly, and impossible to analyze. Replace `constants` with a case/when or a hash.
+
+==> autocorrect exit=1 1754 <==
+test/000_test.rb:1:21: C: Sorbet/ConstantsFromStrings: Don't use `safe_constantize`, it makes the code harder to understand, less editor-friendly, and impossible to analyze. Replace `safe_constantize` with a case/when or a hash.
+test/001_test.rb:1:15: C: Sorbet/ConstantsFromStrings: Don't use `constantize`, it makes the code harder to understand, less editor-friendly, and impossible to analyze. Replace `constantize` with a case/when or a hash.
+test/002_test.rb:1:9: C: Sorbet/ConstantsFromStrings: Don't use `const_get`, it makes the code harder to understand, less editor-friendly, and impossible to analyze. Replace `const_get` with a case/when or a hash.
+test/003_test.rb:1:15: C: Sorbet/ConstantsFromStrings: Don't use `safe_constantize`, it makes the code harder to understand, less editor-friendly, and impossible to analyze. Replace `safe_constantize` with a case/when or a hash.
+test/004_test.rb:1:16: C: Sorbet/ConstantsFromStrings: Don't use `const_get`, it makes the code harder to understand, less editor-friendly, and impossible to analyze. Replace `const_get` with a case/when or a hash.
+test/005_test.rb:1:16: C: Sorbet/ConstantsFromStrings: Don't use `constants`, it makes the code harder to understand, less editor-friendly, and impossible to analyze. Replace `constants` with a case/when or a hash.
+test/006_test.rb:1:21: C: Sorbet/ConstantsFromStrings: Don't use `constantize`, it makes the code harder to understand, less editor-friendly, and impossible to analyze. Replace `constantize` with a case/when or a hash.
+test/007_test.rb:1:9: C: Sorbet/ConstantsFromStrings: Don't use `constants`, it makes the code harder to understand, less editor-friendly, and impossible to analyze. Replace `constants` with a case/when or a hash.
+

@@ -1,0 +1,6 @@
+==> offenses exit=1 107 <==
+test/000_test.rb:2:9: C: Sorbet/StructPropName: `name_v1` is forbidden, use another property name instead.
+
+==> autocorrect exit=1 107 <==
+test/000_test.rb:2:9: C: Sorbet/StructPropName: `name_v1` is forbidden, use another property name instead.
+

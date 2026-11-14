@@ -1,0 +1,67 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 229 <==
+class MyClass < T::Struct
+  const :foo, Integer
+  const :nilable_foo, T.nilable(String)
+  prop :bar, Date
+  prop :nilable_bar, T.nilable(Float)
+  const :array, T::Array[T.untyped]
+  const :hash, T::Hash[T.untyped, T.untyped]
+end
+
+==> test/001_test.rb 63 <==
+class MyClass < T::ImmutableStruct
+  const :foo, T.untyped
+end
+
+==> test/002_test.rb 53 <==
+class MyClass < T::Struct
+  prop :foo, T.untyped
+end
+
+==> test/003_test.rb 152 <==
+class MyClass < SomethingElse
+  const :foo, Integer
+  const :nilable_foo, T.nilable(String)
+  prop :bar, Date
+  prop :nilable_bar, T.nilable(Float)
+end
+
+==> test/004_test.rb 54 <==
+class MyClass < T::Struct
+  const :foo, T.untyped
+end
+
+==> test/005_test.rb 65 <==
+class MyClass < T::Struct
+  const :foo, T.nilable(T.untyped)
+end
+
+==> test/006_test.rb 64 <==
+class MyClass < T::Struct
+  prop :foo, T.nilable(T.untyped)
+end
+
+==> test/007_test.rb 215 <==
+class MyClass < T::Struct
+  const :foo, T.untyped
+  const :nilable_foo, T.nilable(T.untyped)
+  const :nested_foo, T.nilable(T.nilable(T.untyped))
+  prop :bar, T.untyped
+  prop :nilable_bar, T.nilable(T.untyped)
+end
+
+==> test/008_test.rb 81 <==
+class MyClass < T::Struct
+  prop :foo, T.nilable(T.untyped), immutable: true
+end
+
