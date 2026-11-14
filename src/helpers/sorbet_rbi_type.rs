@@ -12,7 +12,7 @@ pub enum Key {
     Str(String),
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Default)]
 pub enum Type {
     Simple(String),
     Anything,
@@ -21,6 +21,7 @@ pub enum Type {
     NoReturn,
     SelfType,
     Untyped,
+    #[default]
     Void,
     Class(Box<Type>),
     Module(Box<Type>),
@@ -115,12 +116,10 @@ pub fn parse_node(node: &Node) -> Result<Type, Error> {
             if let Some(c) = value.as_call_node()
                 && is_t(c.receiver().as_ref())
                 && call_name(&c) == b"type_alias"
+                && let Some(b) = c.block().and_then(|b| b.as_block_node())
+                && let Some(first) = b.body().and_then(|s| s.as_statements_node()).and_then(|s| s.body().iter().next())
             {
-                if let Some(b) = c.block().and_then(|b| b.as_block_node())
-                    && let Some(first) = b.body().and_then(|s| s.as_statements_node()).and_then(|s| s.body().iter().next())
-                {
-                    return Ok(Type::TypeAlias(name, Box::new(parse_node(&first)?)));
-                }
+                return Ok(Type::TypeAlias(name, Box::new(parse_node(&first)?)));
             }
             Ok(Type::Simple(slice(node).to_string()))
         }
@@ -464,7 +463,7 @@ impl Type {
             Type::Any(_) => {
                 let Type::Any(ts) = self.normalize() else { return self.normalize().simplify() };
                 let mut types: Vec<Type> = ts.iter().map(Type::simplify).collect();
-                if types.iter().any(|t| *t == Type::Untyped) {
+                if types.contains(&Type::Untyped) {
                     return Type::Untyped;
                 }
                 let named = |t: &Type, n: &str| matches!(t, Type::Simple(s) if s == n);
@@ -601,12 +600,6 @@ pub struct Sig {
     pub without_runtime: bool,
     pub checked: Option<String>,
     pub bind: Option<Type>,
-}
-
-impl Default for Type {
-    fn default() -> Self {
-        Type::Void
-    }
 }
 
 /// RBSPrinter#print_method_sig_content (positional names off). Err(Other): RBI raises.
@@ -1317,8 +1310,11 @@ pub fn rbs_comments_to_sigs(rbs_source: &str, node: &Node) -> Option<String> {
     Some(kept.join("\n"))
 }
 
+/// A sig as SigBuilder reads it: the sig, its (name, type source) parameters and return type source.
+type BuiltSig = (Sig, Vec<(String, String)>, String);
+
 /// SigBuilder: an RBI::Sig from a sig call (parameter and return types as written).
-fn sig_of(call: &ruby_prism::CallNode) -> Result<(Sig, Vec<(String, String)>, String), Tr> {
+fn sig_of(call: &ruby_prism::CallNode) -> Result<BuiltSig, Tr> {
     let mut sig = Sig::default();
     let mut params: Vec<(String, String)> = Vec::new();
     let mut returns = "void".to_string();
@@ -1398,7 +1394,8 @@ pub fn sigs_to_rbs_comments(source: &str, node: &Node) -> Result<Option<String>,
     let accessor = node.as_call_node().map(|c| crate::ast::method_name(&c).to_string());
     let method = method_params(node).map_err(|_| Tr::Unsupported)?;
     let mut parts: Vec<(usize, usize, String)> = Vec::new();
-    let mut sigs: Vec<(Sig, Vec<(String, String)>, String, usize, bool)> = Vec::new();
+    // (sig, parameters, return type, start offset, written over several lines)
+    let mut sigs: Vec<(BuiltSig, usize, bool)> = Vec::new();
     for st in &stmts {
         let Some(c) = st.as_call_node() else { return Err(Tr::Unsupported) };
         if crate::ast::method_name(&c) != "sig" {
@@ -1411,21 +1408,17 @@ pub fn sigs_to_rbs_comments(source: &str, node: &Node) -> Result<Option<String>,
         let (sig, params, returns) = sig_of(&c)?;
         let loc = st.location();
         let multiline = source[loc.start_offset()..loc.end_offset()].contains('\n');
-        sigs.push((sig, params, returns, loc.start_offset(), multiline));
+        sigs.push(((sig, params, returns), loc.start_offset(), multiline));
         parts.push((loc.start_offset(), loc.end_offset(), String::new()));
     }
     if sigs.is_empty() {
         return Ok(None);
     }
-    if accessor.is_none() && sigs.iter().all(|_| false) {
+    if accessor.is_some() && sigs.iter().any(|s| s.0.0.is_abstract) {
         return Ok(None);
     }
-    if accessor.is_some() && sigs.iter().any(|s| s.0.is_abstract) {
-        return Ok(None);
-    }
-    let col0 = 0usize;
     let mut annotations = String::new();
-    let any = |f: &dyn Fn(&Sig) -> bool| sigs.iter().any(|s| f(&s.0));
+    let any = |f: &dyn Fn(&Sig) -> bool| sigs.iter().any(|s| f(&s.0.0));
     if any(&|s| s.without_runtime) {
         annotations.push_str("# @without_runtime\n");
     }
@@ -1441,21 +1434,16 @@ pub fn sigs_to_rbs_comments(source: &str, node: &Node) -> Result<Option<String>,
     if any(&|s| s.is_overridable) {
         annotations.push_str("# @overridable\n");
     }
-    let _ = col0;
-    for (k, (sig, params, returns, start, multiline)) in sigs.into_iter().enumerate() {
+    for (k, ((sig, params, returns), start, multiline)) in sigs.into_iter().enumerate() {
         let mut sig = sig;
         let parse = |s: &str| parse_string(s).map_err(|_| Tr::Raise);
         sig.params = params.iter().map(|(n, t)| Ok((n.clone(), parse(t)?))).collect::<Result<_, Tr>>()?;
         sig.returns = parse(&returns)?;
         let text = match &accessor {
-            Some(m) => {
-                let t = if m == "attr_writer" && !sig.params.is_empty() && sig.returns == Type::Void {
-                    sig.params[0].1.rbs_string()?
-                } else {
-                    sig.returns.rbs_string()?
-                };
-                t
+            Some(m) if m == "attr_writer" && !sig.params.is_empty() && sig.returns == Type::Void => {
+                sig.params[0].1.rbs_string()?
             }
+            Some(_) => sig.returns.rbs_string()?,
             None => print_method_sig(&method, &sig, multiline)?,
         };
         let line_start = source[..start].rfind('\n').map_or(0, |i| i + 1);

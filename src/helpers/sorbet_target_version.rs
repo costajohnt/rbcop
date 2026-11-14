@@ -128,20 +128,24 @@ pub fn compare_versions(a: &str, b: &str) -> std::cmp::Ordering {
     Ordering::Equal
 }
 
-/// `sorbet_enabled?`; Err when RuboCop raises (a Gemfile without a lockfile).
-pub fn sorbet_enabled() -> Result<bool, ()> {
+/// RuboCop raises reading the version: a Gemfile without a lockfile (`nil.specs`).
+#[derive(Debug, PartialEq)]
+pub struct NoLockfile;
+
+/// `sorbet_enabled?`; Err when RuboCop raises.
+pub fn sorbet_enabled() -> Result<bool, NoLockfile> {
     match locked() {
         Locked::Version(v) => Ok(v.is_some()),
-        Locked::NoLockfile => Err(()),
+        Locked::NoLockfile => Err(NoLockfile),
     }
 }
 
 /// `enabled_for_sorbet_static_version?` for a cop's `minimum_target_sorbet_static_version`.
-pub fn enabled_for(minimum: &str) -> Result<bool, ()> {
+pub fn enabled_for(minimum: &str) -> Result<bool, NoLockfile> {
     match locked() {
         Locked::Version(Some(v)) => Ok(compare_versions(minimum, v) != std::cmp::Ordering::Greater),
         Locked::Version(None) => Ok(false),
-        Locked::NoLockfile => Err(()),
+        Locked::NoLockfile => Err(NoLockfile),
     }
 }
 

@@ -110,7 +110,7 @@ impl Cop for RedundantTLetForLiteral {
             Some(w) => w.value(),
             None => node.as_constant_path_write_node().unwrap().value(),
         };
-        let v = Version(enabled_for(MIN));
+        let v = Version(enabled_for(MIN).map_err(|_| ()));
         if self.check(cx, node, &value, &v).is_err() {
             crate::runner::cop_error_at(NAME, cx.src, crate::runner::visiting());
         }
@@ -146,7 +146,7 @@ impl RedundantTLetForLiteral {
             && let Some((_, a)) = t_send(value, "let", 2)
         {
             let lit = &a[0];
-            let frozen = send_named(lit, "freeze").filter(|c| call_args(&c).is_empty() && c.receiver().is_some_and(|r| r.as_array_node().is_some()));
+            let frozen = send_named(lit, "freeze").filter(|c| call_args(c).is_empty() && c.receiver().is_some_and(|r| r.as_array_node().is_some()));
             if lit.as_array_node().is_some() || frozen.is_some() {
                 let array = frozen.as_ref().and_then(|c| c.receiver());
                 let array = array.as_ref().unwrap_or(lit);

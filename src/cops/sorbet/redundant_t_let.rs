@@ -13,7 +13,10 @@ const MSG_CONSTRUCTOR: &str = "Unnecessary T.let. The constant type is inferred 
 const GENERIC_CLASSES: &[&str] = &["Array", "Class", "Enumerator", "Hash", "Module", "Range", "Set"];
 
 /// A def's parameters in source order as (parser type, name), for `named_argument_types`.
-pub fn def_params<'pr>(params: Option<ruby_prism::ParametersNode<'pr>>) -> Vec<(&'static str, Option<&'pr [u8]>, (usize, usize))> {
+/// (parser type, name, range) of a def parameter.
+pub type DefParam<'pr> = (&'static str, Option<&'pr [u8]>, (usize, usize));
+
+pub fn def_params<'pr>(params: Option<ruby_prism::ParametersNode<'pr>>) -> Vec<DefParam<'pr>> {
     let Some(p) = params else { return Vec::new() };
     let mut out = Vec::new();
     let mut add = |n: Node<'pr>| {
@@ -187,7 +190,7 @@ impl RedundantTLet {
         match enabled_for("0.6.13304") {
             Ok(true) => {}
             Ok(false) => return,
-            Err(()) => return crate::runner::cop_error_at(NAME, cx.src, crate::runner::visiting()),
+            Err(_) => return crate::runner::cop_error_at(NAME, cx.src, crate::runner::visiting()),
         }
         if !statically_scoped(cx.ancestors) {
             return;

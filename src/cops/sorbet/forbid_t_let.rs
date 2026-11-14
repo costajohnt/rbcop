@@ -87,17 +87,14 @@ fn call_argument_context(cx: &Cx, node: &Node, r: (usize, usize)) -> Option<ArgC
         let ci = helpers::parser_parent::parser_parent_index(anc, hi)?;
         anc[ci].as_call_node()?;
         (ci, range(parent))
-    } else if let Some(pair) = parent.as_assoc_node() {
-        if range(&pair.value()) != r {
-            return None;
-        }
+    } else {
+        let pair = parent.as_assoc_node()?;
+        (range(&pair.value()) == r).then_some(())?;
         let hi = helpers::parser_parent::parser_parent_index(anc, parent_i)?;
         anc[hi].as_keyword_hash_node()?;
         let ci = helpers::parser_parent::parser_parent_index(anc, hi)?;
         anc[ci].as_call_node()?;
         (ci, range(parent))
-    } else {
-        return None;
     };
     let call = anc[call_i].as_call_node()?;
     let mut args = call_args(&call);
