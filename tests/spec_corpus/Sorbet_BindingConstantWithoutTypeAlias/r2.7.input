@@ -1,0 +1,107 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 14 <==
+A, B = [1, 2]
+
+==> test/001_test.rb 144 <==
+A = type_member(fixed: T.untyped)
+A = type_member { { fixed: T.class_of(::ActiveRecord::Base) } }
+A = type_member(:in) { { fixed: T.untyped } }
+
+==> test/002_test.rb 160 <==
+A = T.any(String, Integer)
+B = T.all(String, Integer)
+C = T.noreturn
+D = T.class_of(String)
+E = T.proc.void
+F = T.untyped
+G = T.nilable(String)
+H = T.self_type
+
+==> test/003_test.rb 272 <==
+A = T.type_alias(T.any(String, Integer))
+B = T.type_alias(T.all(String, Integer))
+C = T.type_alias(T.noreturn)
+D = T.type_alias(T.class_of(String))
+E = T.type_alias(T.proc.void)
+F = T.type_alias(T.untyped)
+G = T.type_alias(T.nilable(String))
+H = T.type_alias(T.self_type)
+
+==> test/004_test.rb 67 <==
+A = T.let(None.new, Optional[T.untyped])
+B = T.let(C, T.proc.void)
+
+==> test/005_test.rb 416 <==
+Foo = Class.new do
+  A = T.let(42, T.any(Integer, Float))
+end
+
+Foo2 = Class.new(String) do
+  A = T.let(42, T.any(Integer, Float))
+end
+
+Bar = Module.new do
+  A = T.let(42, T.any(Integer, Float))
+end
+
+Baz = Struct.new do
+  A = T.let(42, T.any(Integer, Float))
+end
+
+Baz2 = Struct.new(:baz) do
+  A = T.let(42, T.any(Integer, Float))
+end
+
+Baz3 = Struct.new(:baz, :bar, :foo) do
+  A = T.let(42, T.any(Integer, Float))
+end
+
+==> test/006_test.rb 296 <==
+A = T.type_alias { T.any(String, Integer) }
+B = T.type_alias { T.all(String, Integer) }
+C = T.type_alias { T.noreturn }
+D = T.type_alias { T.class_of(String) }
+E = T.type_alias { T.proc.void }
+F = T.type_alias { T.untyped }
+G = T.type_alias { T.nilable(String) }
+H = T.type_alias { T.self_type }
+
+==> test/007_test.rb 150 <==
+A = type_template(fixed: T.untyped)
+A = type_template { { fixed: T.class_of(::ActiveRecord::Base) } }
+A = type_template(:in) { { fixed: T.untyped } }
+
+==> test/008_test.rb 457 <==
+sig { params(foo: T.any(String, Integer)).void }
+def a(foo); end
+
+sig { params(foo: T.all(String, Integer)).void }
+def b(foo); end
+
+sig { returns(T.noreturn) }
+def c; end
+
+sig { params(foo: T.class_of(String)).void }
+def d(foo); end
+
+sig { params(foo: T.proc.void).void }
+def e(foo); end
+
+sig { params(foo: T.untyped).void }
+def f(foo); end
+
+sig { params(foo: T.nilable(String)).void }
+def g(foo); end
+
+sig { params(foo: T.self_type).void }
+def h(foo); end
+

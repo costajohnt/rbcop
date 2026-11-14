@@ -1,0 +1,67 @@
+==> offenses exit=1 973 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/001_test.rb:1:10: C: [Correctable] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/001_test.rb:2:11: C: [Correctable] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/002_test.rb:1:1: C: [Correctable] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/003_test.rb:1:25: C: Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/004_test.rb:1:9: C: [Correctable] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/004_test.rb:2:16: C: [Correctable] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/004_test.rb:3:16: C: [Correctable] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/004_test.rb:4:16: C: [Correctable] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/005_test.rb:2:1: C: [Correctable] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/005_test.rb:4:5: C: [Correctable] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/006_test.rb:1:11: C: Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+
+==> autocorrect exit=1 955 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/001_test.rb:1:10: C: [Corrected] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/001_test.rb:2:11: C: [Corrected] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/002_test.rb:1:1: C: [Corrected] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/003_test.rb:1:25: C: Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/004_test.rb:1:9: C: [Corrected] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/004_test.rb:2:16: C: [Corrected] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/004_test.rb:3:16: C: [Corrected] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/004_test.rb:4:16: C: [Corrected] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/005_test.rb:2:1: C: [Corrected] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/005_test.rb:4:5: C: [Corrected] Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+test/006_test.rb:1:11: C: Sorbet/ForbidTUnsafe: Do not use `T.unsafe`.
+
+==> corrected/test/001_test.rb 92 <==
+consume(
+  *(
+    values #: as untyped
+  )
+)
+consume(
+  **(
+    options #: as untyped
+  )
+)
+
+==> corrected/test/002_test.rb 33 <==
+foo #: as untyped # some comment
+
+==> corrected/test/004_test.rb 181 <==
+consume(
+  foo #: as untyped
+)
+consume(
+  first,
+  foo, #: as untyped
+  last
+)
+consume(
+  value: foo #: as untyped
+)
+consume(
+  first,
+  "already #: marker", #: as untyped
+  last
+)
+
+==> corrected/test/005_test.rb 49 <==
+# café
+foo #: as untyped
+
+x = foo #: as untyped
+

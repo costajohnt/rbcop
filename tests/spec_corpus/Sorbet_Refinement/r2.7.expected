@@ -1,0 +1,8 @@
+==> offenses exit=1 241 <==
+test/002/my_refinement.rb:2:3: C: Sorbet/Refinement: Do not use Ruby Refinements library as it is not supported by Sorbet.
+test/005/my_class.rb:1:1: C: Sorbet/Refinement: Do not use Ruby Refinements library as it is not supported by Sorbet.
+
+==> autocorrect exit=1 241 <==
+test/002/my_refinement.rb:2:3: C: Sorbet/Refinement: Do not use Ruby Refinements library as it is not supported by Sorbet.
+test/005/my_class.rb:1:1: C: Sorbet/Refinement: Do not use Ruby Refinements library as it is not supported by Sorbet.
+

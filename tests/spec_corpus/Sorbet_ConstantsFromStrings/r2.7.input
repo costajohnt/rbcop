@@ -1,0 +1,34 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 37 <==
+klass = class_name&.safe_constantize
+
+==> test/001_test.rb 26 <==
+klass = "Foo".constantize
+
+==> test/002_test.rb 25 <==
+klass = const_get("Foo")
+
+==> test/003_test.rb 31 <==
+klass = "Foo".safe_constantize
+
+==> test/004_test.rb 32 <==
+klass = Object.const_get("Foo")
+
+==> test/005_test.rb 56 <==
+klass = Object.constants.select { |c| c.name == "Foo" }
+
+==> test/006_test.rb 32 <==
+klass = class_name&.constantize
+
+==> test/007_test.rb 49 <==
+klass = constants.select { |c| c.name == "Foo" }
+

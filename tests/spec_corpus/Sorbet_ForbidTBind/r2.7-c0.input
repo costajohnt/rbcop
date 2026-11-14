@@ -1,0 +1,28 @@
+==> .rubocop.yml 179 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/ForbidTBind:
+  AutocorrectToRBS: true
+
+==> test/000_test.rb 30 <==
+consume(T.bind(self, String))
+
+==> test/001_test.rb 63 <==
+# café
+T.bind(self, T::Array[String])
+
+::T.bind(self, String)
+
+==> test/002_test.rb 41 <==
+T.bind(self, String) #: self as Existing
+
+==> test/003_test.rb 45 <==
+T.bind(foo, String)
+x = T.bind(self, String)
+

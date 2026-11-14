@@ -1,0 +1,33 @@
+==> .rubocop.yml 179 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/ForbidTCast:
+  AutocorrectToRBS: true
+
+==> test/000_test.rb 35 <==
+T.cast(foo, String) #: as Existing
+
+==> test/001_test.rb 78 <==
+# café
+T.cast(foo, T::Array[String])
+
+x = T.cast(foo, T.any(String, Symbol))
+
+==> test/002_test.rb 46 <==
+T.cast(foo, String) # why this cast is needed
+
+==> test/003_test.rb 18 <==
+T.cast(foo, type)
+
+==> test/004_test.rb 29 <==
+consume(T.cast(foo, String))
+
+==> test/005_test.rb 36 <==
+T.cast(T.cast(foo, String), Object)
+

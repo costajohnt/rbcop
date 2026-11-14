@@ -1,0 +1,49 @@
+==> offenses exit=1 715 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/001_test.rb:3:6: C: [Correctable] Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/002_test.rb:3:14: C: Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/003_test.rb:1:9: C: Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/004_test.rb:1:1: C: [Correctable] Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/005_test.rb:3:6: C: [Correctable] Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/006_test.rb:3:6: C: [Correctable] Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/007_test.rb:2:1: C: [Correctable] Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/007_test.rb:4:5: C: [Correctable] Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+
+==> autocorrect exit=1 703 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/001_test.rb:3:6: C: [Corrected] Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/002_test.rb:3:14: C: Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/003_test.rb:1:9: C: Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/004_test.rb:1:1: C: [Corrected] Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/005_test.rb:3:6: C: [Corrected] Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/006_test.rb:3:6: C: [Corrected] Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/007_test.rb:2:1: C: [Corrected] Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+test/007_test.rb:4:5: C: [Corrected] Sorbet/ForbidTAbsurd: Do not use `T.absurd`.
+
+==> corrected/test/001_test.rb 66 <==
+case foo
+when String then foo
+else foo #: absurd # exhaustive
+end
+
+==> corrected/test/004_test.rb 29 <==
+foo #: absurd # some comment
+
+==> corrected/test/005_test.rb 56 <==
+unless true
+then 42
+else foo #: absurd # exhaustive
+end
+
+==> corrected/test/006_test.rb 53 <==
+if false
+then 42
+else foo #: absurd # exhaustive
+end
+
+==> corrected/test/007_test.rb 41 <==
+# café
+foo #: absurd
+
+x = foo #: absurd
+
