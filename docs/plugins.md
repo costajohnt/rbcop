@@ -14,6 +14,7 @@ running the pinned plugin version below.
 | rubocop-factory_bot | 2.28.0 | FactoryBot | all 11 | #285 |
 | rubocop-capybara | 3.1.0 | Capybara, Capybara/RSpec | all 25 | #285, #673 |
 | rubocop-thread_safety | 0.8.0 | ThreadSafety | all 10 | #755 |
+| rubocop-sorbet | 0.17.2 | Sorbet | 0 of 63 (docs/sorbet-port-status.md) | #760 |
 
 Each version is the newest release that supports RuboCop 1.92.2 (rubocop-performance 1.27.0
 requires `rubocop >= 1.89.0, < 2.0`, released 2026-08-16; rubocop-rails 2.38.0 requires
@@ -22,7 +23,10 @@ rubocop-minitest 0.41.0 requires `rubocop >= 1.89.0, < 2.0`, released 2026-10-02
 rubocop-rspec 3.10.2 requires `rubocop ~> 1.86, >= 1.86.2`; rubocop-rspec_rails 2.33.0 requires
 `rubocop ~> 1.89` and `rubocop-rspec ~> 3.5`, released 2026-10-07; rubocop-factory_bot 2.28.0
 requires `rubocop ~> 1.72, >= 1.72.1`; rubocop-capybara 3.1.0 requires `rubocop ~> 1.89`, released
-2026-10-16; rubocop-thread_safety 0.8.0 requires `rubocop ~> 1.89`, released 2026-09-14). The gem's `config/default.yml` is vendored
+2026-10-16; rubocop-thread_safety 0.8.0 requires `rubocop ~> 1.89`, released 2026-09-14;
+rubocop-sorbet 0.17.2 declares no rubocop dependency and refuses to load below `rubocop >= 1.75.2`,
+released 2026-10-20; it needs rbi, rbs and spoom, so the oracle host and GitHub CI install those
+too, at the versions in .github/workflows/ci.yml). The gem's `config/default.yml` is vendored
 as `config/plugins/<gem>.yml` (MIT, `config/plugins/LICENSE-<gem>`), so the gem need not be
 installed; a different installed version is ignored.
 

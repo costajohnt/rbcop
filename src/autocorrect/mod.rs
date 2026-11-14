@@ -49,6 +49,11 @@ pub fn registry_supports_autocorrect(name: &str) -> bool {
     REGISTRY.supports_autocorrect.contains(name)
 }
 
+/// Every cop in registry.tsv, in its order.
+pub fn registry_cops() -> impl Iterator<Item = &'static str> {
+    include_str!("registry.tsv").lines().map(|l| l.split('\t').next().unwrap())
+}
+
 /// A cop's line in registry.tsv (RuboCop's registration order, plugins after RuboCop's own cops).
 pub fn registry_position(name: &str) -> Option<usize> {
     REGISTRY.order.get(name).copied()

@@ -1,0 +1,13 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    sorbet-static (0.6.13680-x86_64-linux)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  sorbet-static
+
+BUNDLED WITH
+   2.6.9
