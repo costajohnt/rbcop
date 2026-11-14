@@ -1,0 +1,18 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 63 <==
+sig { params(a: Integer).void.checked(false) }
+def foo(a); end
+
+==> test/001_test.rb 62 <==
+sig { params(a: Integer).void.checked(true) }
+def foo(a); end
+

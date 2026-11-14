@@ -1,0 +1,24 @@
+==> offenses exit=1 580 <==
+test/000_test.rb:1:7: C: [Correctable] Sorbet/SignatureBuildOrder: Sig builders must be invoked in the following order: returns, params, override.
+test/001_test.rb:1:7: C: [Correctable] Sorbet/SignatureBuildOrder: Sig builders must be invoked in the following order: returns, override, params.
+test/002_test.rb:1:7: C: [Correctable] Sorbet/SignatureBuildOrder: Sig builders must be invoked in the following order: params, returns, override.
+test/003_test.rb:1:7: C: [Correctable] Sorbet/SignatureBuildOrder: Sig builders must be invoked in the following order: returns, override.
+
+==> autocorrect exit=0 572 <==
+test/000_test.rb:1:7: C: [Corrected] Sorbet/SignatureBuildOrder: Sig builders must be invoked in the following order: returns, params, override.
+test/001_test.rb:1:7: C: [Corrected] Sorbet/SignatureBuildOrder: Sig builders must be invoked in the following order: returns, override, params.
+test/002_test.rb:1:7: C: [Corrected] Sorbet/SignatureBuildOrder: Sig builders must be invoked in the following order: params, returns, override.
+test/003_test.rb:1:7: C: [Corrected] Sorbet/SignatureBuildOrder: Sig builders must be invoked in the following order: returns, override.
+
+==> corrected/test/000_test.rb 53 <==
+sig { returns(Integer).params(x: Integer).override }
+
+==> corrected/test/001_test.rb 53 <==
+sig { returns(Integer).override.params(x: Integer) }
+
+==> corrected/test/002_test.rb 53 <==
+sig { params(x: Integer).returns(Integer).override }
+
+==> corrected/test/003_test.rb 34 <==
+sig { returns(Integer).override }
+

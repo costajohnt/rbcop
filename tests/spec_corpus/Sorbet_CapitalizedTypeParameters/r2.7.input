@@ -1,0 +1,40 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 301 <==
+sig { type_parameters(:x).params(a: T.type_parameter(:x)).void }
+def foo(a)
+  puts T.type_parameter(:x)
+end
+
+sig do
+  type_parameters(:foo, :Bar, :baz)
+    .params(
+      a: T.type_parameter(:foo),
+      b: T.type_parameter(:Bar),
+      c: T.type_parameter(:baz),
+    ).void
+end
+def foo(a, b, c); end
+
+==> test/001_test.rb 274 <==
+sig { type_parameters(:X).params(a: T.type_parameter(:X)).void }
+def foo(a); end
+
+sig do
+  type_parameters(:Foo, :Bar, :Baz)
+    .params(
+      a: T.type_parameter(:Foo),
+      b: T.type_parameter(:Bar),
+      c: T.type_parameter(:Baz),
+    ).void
+end
+def foo(a, b, c); end
+

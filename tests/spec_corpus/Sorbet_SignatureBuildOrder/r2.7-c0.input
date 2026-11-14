@@ -1,0 +1,26 @@
+==> .rubocop.yml 196 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/SignatureBuildOrder:
+  Order:
+  - returns
+  - override
+
+==> test/000_test.rb 53 <==
+sig { override.params(x: Integer).returns(Integer) }
+
+==> test/001_test.rb 53 <==
+sig { override.returns(Integer).params(x: Integer) }
+
+==> test/002_test.rb 53 <==
+sig { params(x: Integer).override.returns(Integer) }
+
+==> test/003_test.rb 34 <==
+sig { override.returns(Integer) }
+

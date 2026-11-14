@@ -1,0 +1,15 @@
+==> .rubocop.yml 192 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/ForbidRBIOutsideOfAllowedPaths:
+  AllowedPaths: []
+
+==> test/000/sorbet/rbi/file.rbi 8 <==
+print 1
+

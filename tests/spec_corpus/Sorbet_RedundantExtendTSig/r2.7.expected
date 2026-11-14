@@ -1,0 +1,59 @@
+==> offenses exit=1 1460 <==
+test/000_test.rb:2:3: C: [Correctable] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/001_test.rb:2:3: C: [Correctable] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/002_test.rb:2:3: C: [Correctable] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/003_test.rb:1:1: C: [Correctable] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/004_test.rb:1:1: C: [Correctable] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/005_test.rb:2:3: C: [Correctable] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/007_test.rb:3:3: C: [Correctable] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/008_test.rb:1:1: C: [Correctable] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/009_test.rb:2:3: C: [Correctable] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/010_test.rb:2:3: C: [Correctable] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+
+==> autocorrect exit=0 1440 <==
+test/000_test.rb:2:3: C: [Corrected] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/001_test.rb:2:3: C: [Corrected] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/002_test.rb:2:3: C: [Corrected] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/003_test.rb:1:1: C: [Corrected] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/004_test.rb:1:1: C: [Corrected] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/005_test.rb:2:3: C: [Corrected] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/007_test.rb:3:3: C: [Corrected] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/008_test.rb:1:1: C: [Corrected] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/009_test.rb:2:3: C: [Corrected] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+test/010_test.rb:2:3: C: [Corrected] Sorbet/RedundantExtendTSig: Do not redundantly `extend T::Sig` when it is already included in all modules.
+
+==> corrected/test/000_test.rb 17 <==
+Class.new do
+end
+
+==> corrected/test/001_test.rb 18 <==
+Module.new do
+end
+
+==> corrected/test/002_test.rb 20 <==
+class << object
+end
+
+==> corrected/test/003_test.rb 0 <==
+
+==> corrected/test/004_test.rb 0 <==
+
+==> corrected/test/005_test.rb 13 <==
+module M
+end
+
+==> corrected/test/007_test.rb 36 <==
+module M
+  extend SomethingElse
+end
+
+==> corrected/test/008_test.rb 0 <==
+
+==> corrected/test/009_test.rb 18 <==
+class << self
+end
+
+==> corrected/test/010_test.rb 12 <==
+class C
+end
+

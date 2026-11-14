@@ -1,0 +1,70 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 56 <==
+class MyEnum < T::Enum
+  enums do
+    A = new
+  end
+end
+
+==> test/001_test.rb 139 <==
+class MyEnum < T::Enum
+  class NestedEnum < T::Enum
+    enums do
+      A = new
+    end
+  end
+
+  enums do
+    B = new
+    C = new
+  end
+end
+
+==> test/002_test.rb 68 <==
+class MyEnum < T::Enum
+  enums do
+    A = new
+    B = new
+  end
+end
+
+==> test/003_test.rb 63 <==
+class MyEnum < T::Enum
+  class Foo
+    enums do; end
+  end
+end
+
+==> test/004_test.rb 27 <==
+class MyEnum < T::Enum
+end
+
+==> test/005_test.rb 141 <==
+class MyEnum < T::Enum
+  class NestedEnum < T::Enum
+    enums do
+      A = new
+      B = new
+    end
+  end
+
+  enums do
+    C = new
+  end
+end
+
+==> test/006_test.rb 44 <==
+class MyEnum < T::Enum
+  enums do
+  end
+end
+

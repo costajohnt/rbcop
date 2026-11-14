@@ -1,0 +1,14 @@
+==> offenses exit=1 465 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTEnum: Using `T::Enum` is deprecated in this codebase.
+test/001_test.rb:1:1: C: Sorbet/ForbidTEnum: Using `T::Enum` is deprecated in this codebase.
+test/001_test.rb:2:3: C: Sorbet/ForbidTEnum: Using `T::Enum` is deprecated in this codebase.
+test/002_test.rb:1:1: C: Sorbet/ForbidTEnum: Using `T::Enum` is deprecated in this codebase.
+test/004_test.rb:1:1: C: Sorbet/ForbidTEnum: Using `T::Enum` is deprecated in this codebase.
+
+==> autocorrect exit=1 465 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTEnum: Using `T::Enum` is deprecated in this codebase.
+test/001_test.rb:1:1: C: Sorbet/ForbidTEnum: Using `T::Enum` is deprecated in this codebase.
+test/001_test.rb:2:3: C: Sorbet/ForbidTEnum: Using `T::Enum` is deprecated in this codebase.
+test/002_test.rb:1:1: C: Sorbet/ForbidTEnum: Using `T::Enum` is deprecated in this codebase.
+test/004_test.rb:1:1: C: Sorbet/ForbidTEnum: Using `T::Enum` is deprecated in this codebase.
+

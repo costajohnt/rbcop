@@ -1,0 +1,8 @@
+==> offenses exit=1 128 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidSig: Do not use `T::Sig`.
+test/001_test.rb:1:1: C: Sorbet/ForbidSig: Do not use `T::Sig`.
+
+==> autocorrect exit=1 128 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidSig: Do not use `T::Sig`.
+test/001_test.rb:1:1: C: Sorbet/ForbidSig: Do not use `T::Sig`.
+

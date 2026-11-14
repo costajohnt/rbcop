@@ -1,0 +1,98 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 51 <==
+class Foo
+  override(allow_incompatible: true)
+end
+
+==> test/001_test.rb 95 <==
+class Foo
+  sig(a: Integer).override(allow_incompatible: true, something: :unrelated).void
+end
+
+==> test/002_test.rb 72 <==
+class Foo
+  sig(a: Integer).override(allow_incompatible: true).void
+end
+
+==> test/003_test.rb 66 <==
+# @override(allow_incompatible: true)
+
+#: () -> void
+def foo; end
+
+==> test/004_test.rb 83 <==
+class Foo
+  sig { override(allow_incompatible: true).params(a: Integer).void }
+end
+
+==> test/005_test.rb 65 <==
+# @override(allow_incompatible: true)
+#: () -> void
+def foo; end
+
+==> test/006_test.rb 46 <==
+class Foo
+  sig(a: Integer).override.void
+end
+
+==> test/007_test.rb 40 <==
+class Foo
+  sig {  }
+  def foo; end
+end
+
+==> test/008_test.rb 179 <==
+# @override
+#: () -> void
+def foo; end
+
+# @override(allow_incompatible: false)
+#: () -> void
+def bar; end
+
+# @override(allow_incompatible: :visibility)
+#: () -> void
+def baz; end
+
+==> test/009_test.rb 58 <==
+# @override(allow_incompatible: true)
+#: String
+attr :foo
+
+==> test/010_test.rb 64 <==
+class Foo
+  sig { override(allow_incompatible: true).void }
+end
+
+==> test/011_test.rb 95 <==
+class Foo
+  sig(a: Integer).void.override(allow_incompatible: true, something: :unrelated)
+end
+
+==> test/012_test.rb 69 <==
+class Foo
+  sig { recv.override(allow_incompatible: true).void }
+end
+
+==> test/013_test.rb 199 <==
+# @override(allow_incompatible: true)
+#: String
+attr_reader :foo
+
+# @override(allow_incompatible: true)
+#: String
+attr_writer :bar
+
+# @override(allow_incompatible: true)
+#: String
+attr_accessor :baz
+

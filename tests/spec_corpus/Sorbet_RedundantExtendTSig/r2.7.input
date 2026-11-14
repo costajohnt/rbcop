@@ -1,0 +1,60 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 33 <==
+Class.new do
+  extend T::Sig
+end
+
+==> test/001_test.rb 34 <==
+Module.new do
+  extend T::Sig
+end
+
+==> test/002_test.rb 36 <==
+class << object
+  extend T::Sig
+end
+
+==> test/003_test.rb 14 <==
+extend T::Sig
+
+==> test/004_test.rb 16 <==
+extend ::T::Sig
+
+==> test/005_test.rb 29 <==
+module M
+  extend T::Sig
+end
+
+==> test/006_test.rb 33 <==
+module M
+  extend T::Helpers
+end
+
+==> test/007_test.rb 52 <==
+module M
+  extend SomethingElse
+  extend T::Sig
+end
+
+==> test/008_test.rb 26 <==
+some_module.extend T::Sig
+
+==> test/009_test.rb 34 <==
+class << self
+  extend T::Sig
+end
+
+==> test/010_test.rb 28 <==
+class C
+  extend T::Sig
+end
+

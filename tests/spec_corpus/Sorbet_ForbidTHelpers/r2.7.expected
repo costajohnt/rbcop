@@ -1,0 +1,12 @@
+==> offenses exit=1 321 <==
+test/001_test.rb:2:3: C: Sorbet/ForbidTHelpers: Do not use `extend T::Helpers`.
+test/002_test.rb:2:3: C: Sorbet/ForbidTHelpers: Do not use `extend T::Helpers`.
+test/003_test.rb:2:3: C: Sorbet/ForbidTHelpers: Do not use `extend T::Helpers`.
+test/005_test.rb:2:3: C: Sorbet/ForbidTHelpers: Do not use `include T::Helpers`.
+
+==> autocorrect exit=1 321 <==
+test/001_test.rb:2:3: C: Sorbet/ForbidTHelpers: Do not use `extend T::Helpers`.
+test/002_test.rb:2:3: C: Sorbet/ForbidTHelpers: Do not use `extend T::Helpers`.
+test/003_test.rb:2:3: C: Sorbet/ForbidTHelpers: Do not use `extend T::Helpers`.
+test/005_test.rb:2:3: C: Sorbet/ForbidTHelpers: Do not use `include T::Helpers`.
+

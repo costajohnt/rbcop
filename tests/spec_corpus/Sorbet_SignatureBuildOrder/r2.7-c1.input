@@ -1,0 +1,51 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 68 <==
+sig do
+  abstract
+    .params(x: Integer)
+    .returns(Integer)
+end
+
+==> test/001_test.rb 7 <==
+sig {}
+
+==> test/002_test.rb 27 <==
+sig { params(a: Integer) }
+
+==> test/003_test.rb 17 <==
+sig { abstract }
+
+==> test/004_test.rb 29 <==
+sig { params(a: Integer).v }
+
+==> test/005_test.rb 65 <==
+sig { void.type_parameters(:U).params(x: T.type_parameter(:U)) }
+
+==> test/006_test.rb 192 <==
+sig { abstract.params(x: Integer).returns(Integer) }
+
+sig { params(x: Integer).void }
+
+sig { abstract.void }
+
+sig { void.soft }
+
+sig { override.void.checked(false) }
+
+sig { overridable.void }
+
+==> test/007_test.rb 106 <==
+sig { void.foo.type_parameters(:U).bar.params(x: T.type_parameter(:U), y: T::Hash[String, Integer]).baz }
+
+==> test/008_test.rb 94 <==
+sig { void.type_parameters(:U).params(x: T.type_parameter(:U), y: T::Hash[String, Integer]) }
+

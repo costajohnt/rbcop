@@ -1,0 +1,16 @@
+==> offenses exit=1 1159 <==
+test/000_test.rb:1:1: C: Sorbet/RuntimeOnFailureDependsOnChecked: To use .on_failure you must additionally call .checked(:tests) or .checked(:always), otherwise, the .on_failure has no effect.
+test/000_test.rb:3:1: C: Sorbet/RuntimeOnFailureDependsOnChecked: To use .on_failure you must additionally call .checked(:tests) or .checked(:always), otherwise, the .on_failure has no effect.
+test/000_test.rb:5:1: C: Sorbet/RuntimeOnFailureDependsOnChecked: To use .on_failure you must additionally call .checked(:tests) or .checked(:always), otherwise, the .on_failure has no effect.
+test/000_test.rb:7:1: C: Sorbet/RuntimeOnFailureDependsOnChecked: To use .on_failure you must additionally call .checked(:tests) or .checked(:always), otherwise, the .on_failure has no effect.
+test/000_test.rb:9:1: C: Sorbet/RuntimeOnFailureDependsOnChecked: To use .on_failure you must additionally call .checked(:tests) or .checked(:always), otherwise, the .on_failure has no effect.
+test/000_test.rb:11:1: C: Sorbet/RuntimeOnFailureDependsOnChecked: To use .on_failure you must additionally call .checked(:tests) or .checked(:always), otherwise, the .on_failure has no effect.
+
+==> autocorrect exit=1 1159 <==
+test/000_test.rb:1:1: C: Sorbet/RuntimeOnFailureDependsOnChecked: To use .on_failure you must additionally call .checked(:tests) or .checked(:always), otherwise, the .on_failure has no effect.
+test/000_test.rb:3:1: C: Sorbet/RuntimeOnFailureDependsOnChecked: To use .on_failure you must additionally call .checked(:tests) or .checked(:always), otherwise, the .on_failure has no effect.
+test/000_test.rb:5:1: C: Sorbet/RuntimeOnFailureDependsOnChecked: To use .on_failure you must additionally call .checked(:tests) or .checked(:always), otherwise, the .on_failure has no effect.
+test/000_test.rb:7:1: C: Sorbet/RuntimeOnFailureDependsOnChecked: To use .on_failure you must additionally call .checked(:tests) or .checked(:always), otherwise, the .on_failure has no effect.
+test/000_test.rb:9:1: C: Sorbet/RuntimeOnFailureDependsOnChecked: To use .on_failure you must additionally call .checked(:tests) or .checked(:always), otherwise, the .on_failure has no effect.
+test/000_test.rb:11:1: C: Sorbet/RuntimeOnFailureDependsOnChecked: To use .on_failure you must additionally call .checked(:tests) or .checked(:always), otherwise, the .on_failure has no effect.
+
