@@ -29,7 +29,7 @@ fn extends_concern(module: &ruby_prism::ModuleNode) -> bool {
 
 /// The replacement of a def's signature (`define_method(:name) do |args|` plus what follows) and
 /// the end of the range it replaces.
-fn correction(src: &crate::source::Source, def: &ruby_prism::DefNode) -> (usize, String) {
+fn correction(src: &crate::source::Source, def: &ruby_prism::DefNode) -> Option<(usize, String)> {
     let loc = def.location();
     let indent = " ".repeat(src.column(loc.start_offset()));
     let name = String::from_utf8_lossy(def.name().as_slice());
@@ -41,14 +41,18 @@ fn correction(src: &crate::source::Source, def: &ruby_prism::DefNode) -> (usize,
     };
     let signature = match def.receiver() {
         None => format!("define_method(:{name}) do{args}"),
-        Some(r) => format!("{}.define_singleton_method(:{name}) do{args}", node_text(&r)),
+        // parser's defs receiver for `def (expr).name` is `expr`, without the parentheses
+        Some(r) => {
+            let r = strip_parens(r)?;
+            format!("{}.define_singleton_method(:{name}) do{args}", node_text(&r))
+        }
     };
     if let Some(body) = def.body() {
-        return (body_range(&body).0, format!("{signature}\n{indent}  "));
+        return Some((body_range(&body).0, format!("{signature}\n{indent}  ")));
     }
     let source = src.slice(loc.start_offset(), loc.end_offset());
     if !source.contains('\n') {
-        return (loc.end_offset(), format!("{signature}\n{indent}end"));
+        return Some((loc.end_offset(), format!("{signature}\n{indent}end")));
     }
     let end = match params.last() {
         Some(last) => {
@@ -60,7 +64,7 @@ fn correction(src: &crate::source::Source, def: &ruby_prism::DefNode) -> (usize,
         }
         None => def.name_loc().end_offset(),
     };
-    (end, signature)
+    Some((end, signature))
 }
 
 impl Cop for BlockMethodDefinition {
@@ -95,9 +99,13 @@ impl Cop for BlockMethodDefinition {
         let src = cx.src;
         for d in descendants(node) {
             let Some(def) = d.as_def_node() else { continue };
-            let (end, replacement) = correction(src, &def);
+            let fix = correction(src, &def);
             let (s, e) = helpers::node_types::range(&d);
-            cx.add_fix(s, e, MSG, |c| c.replace(s, end, &replacement));
+            cx.add_fix(s, e, MSG, |c| {
+                if let Some((end, replacement)) = &fix {
+                    c.replace(s, *end, replacement);
+                }
+            });
         }
     }
 }
