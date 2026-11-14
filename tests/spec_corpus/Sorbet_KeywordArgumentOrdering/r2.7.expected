@@ -1,0 +1,8 @@
+==> offenses exit=1 253 <==
+test/002_test.rb:2:9: C: Sorbet/KeywordArgumentOrdering: Optional keyword arguments must be at the end of the parameter list.
+test/004_test.rb:2:12: C: Sorbet/KeywordArgumentOrdering: Optional keyword arguments must be at the end of the parameter list.
+
+==> autocorrect exit=1 253 <==
+test/002_test.rb:2:9: C: Sorbet/KeywordArgumentOrdering: Optional keyword arguments must be at the end of the parameter list.
+test/004_test.rb:2:12: C: Sorbet/KeywordArgumentOrdering: Optional keyword arguments must be at the end of the parameter list.
+

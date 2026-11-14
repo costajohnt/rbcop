@@ -1,0 +1,112 @@
+==> offenses exit=1 1224 <==
+test/001_test.rb:9:1: C: [Correctable] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/003_test.rb:2:1: C: [Correctable] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/005_test.rb:3:1: C: [Correctable] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/007_test.rb:2:1: C: [Correctable] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/010_test.rb:2:1: C: [Correctable] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/011_test.rb:3:1: C: [Correctable] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/012_test.rb:2:1: C: [Correctable] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/013_test.rb:2:1: C: [Correctable] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/014_test.rb:2:1: C: [Correctable] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/015_test.rb:2:1: C: [Correctable] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/017_test.rb:9:1: C: [Correctable] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/018_test.rb:2:1: C: [Correctable] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+
+==> autocorrect exit=0 1200 <==
+test/001_test.rb:9:1: C: [Corrected] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/003_test.rb:2:1: C: [Corrected] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/005_test.rb:3:1: C: [Corrected] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/007_test.rb:2:1: C: [Corrected] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/010_test.rb:2:1: C: [Corrected] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/011_test.rb:3:1: C: [Corrected] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/012_test.rb:2:1: C: [Corrected] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/013_test.rb:2:1: C: [Corrected] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/014_test.rb:2:1: C: [Corrected] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/015_test.rb:2:1: C: [Corrected] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/017_test.rb:9:1: C: [Corrected] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+test/018_test.rb:2:1: C: [Corrected] Sorbet/EmptyLineAfterSig: Extra empty line or comment detected
+
+==> corrected/test/001_test.rb 161 <==
+module Example
+  extend T::Sig
+
+  sig do
+    params(
+      session: String,
+    ).void
+  end
+  def initialize(
+    session:
+  )
+    @session = session
+  end
+end
+
+==> corrected/test/003_test.rb 30 <==
+sig { void }
+attr_reader :bar
+
+==> corrected/test/005_test.rb 64 <==
+sig { void }
+sig { params(foo: String).void }
+def bar(foo); end
+
+==> corrected/test/007_test.rb 26 <==
+sig { void }
+def foo; end
+
+==> corrected/test/010_test.rb 134 <==
+# Session: string
+# More stuff
+# on more lines
+sig { params(session: String).void }
+def initialize(session:)
+  @session = session
+end
+
+==> corrected/test/011_test.rb 88 <==
+# rubocop:todo Style/Foo
+# Comment
+sig { void }
+# rubocop:enable Style/Foo
+def foo; end
+
+==> corrected/test/012_test.rb 40 <==
+# Comment
+true; sig { void }
+def m; end
+
+==> corrected/test/013_test.rb 31 <==
+sig { void }
+def self.foo; end
+
+==> corrected/test/014_test.rb 23 <==
+sig { void }
+attr :bar
+
+==> corrected/test/015_test.rb 64 <==
+sig { void }
+sig { params(foo: String).void }
+def bar(foo); end
+
+==> corrected/test/017_test.rb 181 <==
+module Example
+  extend T::Sig
+
+  # Session: string
+  sig do
+    params(
+      session: String,
+    ).void
+  end
+  def initialize(
+    session:
+  )
+    @session = session
+  end
+end
+
+==> corrected/test/018_test.rb 29 <==
+sig { void }
+attr :bar, true
+

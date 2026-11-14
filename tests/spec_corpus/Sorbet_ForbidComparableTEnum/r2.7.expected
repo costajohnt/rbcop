@@ -1,0 +1,8 @@
+==> offenses exit=1 288 <==
+test/002_test.rb:2:3: C: Sorbet/ForbidComparableTEnum: Do not use `T::Enum` as a comparable object because of significant performance overhead.
+test/005_test.rb:2:3: C: Sorbet/ForbidComparableTEnum: Do not use `T::Enum` as a comparable object because of significant performance overhead.
+
+==> autocorrect exit=1 288 <==
+test/002_test.rb:2:3: C: Sorbet/ForbidComparableTEnum: Do not use `T::Enum` as a comparable object because of significant performance overhead.
+test/005_test.rb:2:3: C: Sorbet/ForbidComparableTEnum: Do not use `T::Enum` as a comparable object because of significant performance overhead.
+

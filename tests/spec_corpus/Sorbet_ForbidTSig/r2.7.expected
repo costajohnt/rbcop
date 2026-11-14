@@ -1,0 +1,12 @@
+==> offenses exit=1 289 <==
+test/001_test.rb:2:3: C: Sorbet/ForbidTSig: Do not use `extend T::Sig`.
+test/002_test.rb:2:3: C: Sorbet/ForbidTSig: Do not use `extend T::Sig`.
+test/003_test.rb:2:3: C: Sorbet/ForbidTSig: Do not use `extend T::Sig`.
+test/005_test.rb:2:3: C: Sorbet/ForbidTSig: Do not use `include T::Sig`.
+
+==> autocorrect exit=1 289 <==
+test/001_test.rb:2:3: C: Sorbet/ForbidTSig: Do not use `extend T::Sig`.
+test/002_test.rb:2:3: C: Sorbet/ForbidTSig: Do not use `extend T::Sig`.
+test/003_test.rb:2:3: C: Sorbet/ForbidTSig: Do not use `extend T::Sig`.
+test/005_test.rb:2:3: C: Sorbet/ForbidTSig: Do not use `include T::Sig`.
+

@@ -1,0 +1,22 @@
+==> offenses exit=1 1084 <==
+test/006_test.rb:1:7: C: [Correctable] Sorbet/VoidCheckedTests: Returning `.void` from a sig marked `.checked(:tests)` means that the method will return a different value in non-test environments (possibly with different truthiness). Either use `.returns(T.anything).checked(:tests)` to keep checking in tests, or `.void.checked(:never)` to leave it untouched.
+test/007_test.rb:1:7: C: [Correctable] Sorbet/VoidCheckedTests: Returning `.void` from a sig marked `.checked(:tests)` means that the method will return a different value in non-test environments (possibly with different truthiness). Either use `.returns(T.anything).checked(:tests)` to keep checking in tests, or `.void.checked(:never)` to leave it untouched.
+test/008_test.rb:1:26: C: [Correctable] Sorbet/VoidCheckedTests: Returning `.void` from a sig marked `.checked(:tests)` means that the method will return a different value in non-test environments (possibly with different truthiness). Either use `.returns(T.anything).checked(:tests)` to keep checking in tests, or `.void.checked(:never)` to leave it untouched.
+
+==> autocorrect exit=0 1078 <==
+test/006_test.rb:1:7: C: [Corrected] Sorbet/VoidCheckedTests: Returning `.void` from a sig marked `.checked(:tests)` means that the method will return a different value in non-test environments (possibly with different truthiness). Either use `.returns(T.anything).checked(:tests)` to keep checking in tests, or `.void.checked(:never)` to leave it untouched.
+test/007_test.rb:1:7: C: [Corrected] Sorbet/VoidCheckedTests: Returning `.void` from a sig marked `.checked(:tests)` means that the method will return a different value in non-test environments (possibly with different truthiness). Either use `.returns(T.anything).checked(:tests)` to keep checking in tests, or `.void.checked(:never)` to leave it untouched.
+test/008_test.rb:1:26: C: [Corrected] Sorbet/VoidCheckedTests: Returning `.void` from a sig marked `.checked(:tests)` means that the method will return a different value in non-test environments (possibly with different truthiness). Either use `.returns(T.anything).checked(:tests)` to keep checking in tests, or `.void.checked(:never)` to leave it untouched.
+
+==> corrected/test/006_test.rb 57 <==
+sig { returns(T.anything).checked(:tests) }
+def foo; end
+
+==> corrected/test/007_test.rb 88 <==
+sig { returns(T.anything).params(x: Integer).override.checked(:tests) }
+def foo(x); end
+
+==> corrected/test/008_test.rb 79 <==
+sig { params(x: Integer).returns(T.anything).checked(:tests) }
+def foo(x); end
+
