@@ -1,0 +1,34 @@
+==> offenses exit=1 568 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTLet: Do not use `T.let`.
+test/001_test.rb:2:1: C: [Correctable] Sorbet/ForbidTLet: Do not use `T.let`.
+test/001_test.rb:4:5: C: [Correctable] Sorbet/ForbidTLet: Do not use `T.let`.
+test/002_test.rb:1:1: C: [Correctable] Sorbet/ForbidTLet: Do not use `T.let`.
+test/003_test.rb:1:1: C: Sorbet/ForbidTLet: Do not use `T.let`.
+test/004_test.rb:1:9: C: [Correctable] Sorbet/ForbidTLet: Do not use `T.let`.
+test/005_test.rb:1:1: C: Sorbet/ForbidTLet: Do not use `T.let`.
+test/005_test.rb:1:7: C: Sorbet/ForbidTLet: Do not use `T.let`.
+
+==> autocorrect exit=1 560 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTLet: Do not use `T.let`.
+test/001_test.rb:2:1: C: [Corrected] Sorbet/ForbidTLet: Do not use `T.let`.
+test/001_test.rb:4:5: C: [Corrected] Sorbet/ForbidTLet: Do not use `T.let`.
+test/002_test.rb:1:1: C: [Corrected] Sorbet/ForbidTLet: Do not use `T.let`.
+test/003_test.rb:1:1: C: Sorbet/ForbidTLet: Do not use `T.let`.
+test/004_test.rb:1:9: C: [Corrected] Sorbet/ForbidTLet: Do not use `T.let`.
+test/005_test.rb:1:1: C: Sorbet/ForbidTLet: Do not use `T.let`.
+test/005_test.rb:1:7: C: Sorbet/ForbidTLet: Do not use `T.let`.
+
+==> corrected/test/001_test.rb 60 <==
+# café
+foo #: Array[String]?
+
+x = foo #: (String | Symbol)
+
+==> corrected/test/002_test.rb 26 <==
+foo #: Bar # some comment
+
+==> corrected/test/004_test.rb 27 <==
+consume(
+  foo #: String
+)
+

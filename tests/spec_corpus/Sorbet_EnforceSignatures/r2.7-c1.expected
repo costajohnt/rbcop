@@ -1,0 +1,207 @@
+==> offenses exit=1 3574 <==
+test/000_test.rb:1:9: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/001_test.rb:1:1: C: [Correctable] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/001_test.rb:4:1: C: [Correctable] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/002_test.rb:1:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/003_test.rb:1:1: C: [Correctable] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/004_test.rb:2:3: C: [Correctable] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/004_test.rb:8:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/005_test.rb:2:1: C: [Correctable] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/006_test.rb:2:3: C: [Correctable] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/006_test.rb:8:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/007_test.rb:2:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/007_test.rb:5:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/008_test.rb:1:1: C: [Correctable] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/009_test.rb:2:3: C: [Correctable] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/010_test.rb:4:7: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/011_test.rb:1:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/012_test.rb:1:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/013_test.rb:2:3: C: [Correctable] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/014_test.rb:1:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/014_test.rb:2:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/014_test.rb:3:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/014_test.rb:4:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/014_test.rb:5:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/014_test.rb:6:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/014_test.rb:7:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/014_test.rb:8:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/014_test.rb:9:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/015_test.rb:3:5: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/017_test.rb:2:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/017_test.rb:3:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/017_test.rb:4:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+
+==> autocorrect exit=0 3512 <==
+test/000_test.rb:1:9: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/001_test.rb:1:1: C: [Corrected] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/001_test.rb:4:1: C: [Corrected] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/002_test.rb:1:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/003_test.rb:1:1: C: [Corrected] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/004_test.rb:2:3: C: [Corrected] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/004_test.rb:8:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/005_test.rb:2:1: C: [Corrected] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/006_test.rb:2:3: C: [Corrected] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/006_test.rb:8:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/007_test.rb:2:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/007_test.rb:5:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/008_test.rb:1:1: C: [Corrected] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/009_test.rb:2:3: C: [Corrected] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/010_test.rb:4:7: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/011_test.rb:1:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/012_test.rb:1:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/013_test.rb:2:3: C: [Corrected] Sorbet/EnforceSignatures: Use RBS signature comments rather than sig blocks.
+test/014_test.rb:1:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/014_test.rb:2:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/014_test.rb:3:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/014_test.rb:4:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/014_test.rb:5:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/014_test.rb:6:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/014_test.rb:7:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/014_test.rb:8:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/014_test.rb:9:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/015_test.rb:3:5: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/017_test.rb:2:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/017_test.rb:3:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+test/017_test.rb:4:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have an RBS signature.
+
+==> corrected/test/000_test.rb 63 <==
+#: (untyped, untyped) -> void
+private def initialize(a, b)
+end
+
+==> corrected/test/001_test.rb 68 <==
+#: -> void
+def foo; end
+
+# @without_runtime
+#: -> void
+def bar; end
+
+==> corrected/test/002_test.rb 27 <==
+#: -> untyped
+def foo; end
+
+==> corrected/test/003_test.rb 24 <==
+#: -> void
+def foo; end
+
+==> corrected/test/004_test.rb 103 <==
+class Foo
+  #: -> void
+  def foo; end
+
+  #: -> void
+  def bar; end
+
+  #: -> untyped
+  def baz; end
+end
+
+==> corrected/test/005_test.rb 24 <==
+#: -> void
+def foo; end
+
+==> corrected/test/006_test.rb 110 <==
+class Foo
+  #: String
+  attr_reader :foo
+
+  #: String
+  attr_reader :bar
+
+  #: untyped
+  attr_writer :baz
+end
+
+==> corrected/test/007_test.rb 116 <==
+class Foo
+  #: -> untyped
+  def foo
+  end
+
+  #: (untyped, untyped, untyped) -> untyped
+  def bar(a, b, c)
+  end
+end
+
+==> corrected/test/008_test.rb 39 <==
+# @abstract
+#: -> Integer
+def foo; end
+
+==> corrected/test/009_test.rb 81 <==
+class Foo
+  #: -> void
+  def self.foo; end
+
+  #: -> void
+  def self.bar; end
+end
+
+==> corrected/test/010_test.rb 131 <==
+class Foo
+  class << self
+    class Bar
+      #: (untyped, untyped) -> void
+      def initialize(a, b)
+      end
+    end
+  end
+end
+
+==> corrected/test/011_test.rb 55 <==
+#: (untyped, untyped) -> void
+def initialize(a, b)
+end
+
+==> corrected/test/012_test.rb 63 <==
+#: (untyped, untyped) -> untyped
+def self.initialize(a, b)
+end
+
+==> corrected/test/013_test.rb 82 <==
+class Foo
+  #: (String) -> String
+  #: (Integer) -> Integer
+  def foo(x); end
+end
+
+==> corrected/test/014_test.rb 551 <==
+#: -> untyped
+def foo; end
+#: (untyped, ?untyped, ?c: untyped) -> untyped
+def bar(a, b = 2, c: Foo.new); end
+#: ?{ (?) -> untyped } -> untyped
+def baz(&blk); end
+#: (untyped, untyped) ?{ (?) -> untyped } -> untyped
+def self.foo(a, b, &c); end
+#: (untyped, *untyped, **untyped c) -> untyped
+def self.bar(a, *b, **c); end
+#: (a: untyped) -> untyped
+def self.baz(a:); end
+#: (*untyped, **untyped) ?{ (?) -> untyped } -> untyped
+def forward(...); end
+#: (**nil) -> untyped
+def no_keywords(**nil); end
+#: (untyped) -> untyped
+def destructured((a, b)); end
+
+==> corrected/test/015_test.rb 106 <==
+class Foo
+  class << self
+    #: (untyped, untyped) -> untyped
+    def initialize(a, b)
+    end
+  end
+end
+
+==> corrected/test/017_test.rb 112 <==
+class Foo
+  #: untyped
+  attr_reader :foo
+  #: untyped
+  attr_writer :bar
+  #: untyped
+  attr_accessor :baz
+end
+

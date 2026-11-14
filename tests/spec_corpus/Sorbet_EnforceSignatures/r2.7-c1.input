@@ -1,0 +1,134 @@
+==> .rubocop.yml 173 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/EnforceSignatures:
+  Style: rbs
+
+==> test/000_test.rb 33 <==
+private def initialize(a, b)
+end
+
+==> test/001_test.rb 83 <==
+T::Sig.sig { void }
+def foo; end
+
+T::Sig::WithoutRuntime.sig { void }
+def bar; end
+
+==> test/002_test.rb 13 <==
+def foo; end
+
+==> test/003_test.rb 26 <==
+sig { void }
+def foo; end
+
+==> test/004_test.rb 89 <==
+class Foo
+  sig { void }
+  def foo; end
+
+  #: -> void
+  def bar; end
+
+  def baz; end
+end
+
+==> test/005_test.rb 37 <==
+#: -> void
+sig { void }
+def foo; end
+
+==> test/006_test.rb 111 <==
+class Foo
+  sig { returns(String) }
+  attr_reader :foo
+
+  #: String
+  attr_reader :bar
+
+  attr_writer :baz
+end
+
+==> test/007_test.rb 56 <==
+class Foo
+  def foo
+  end
+
+  def bar(a, b, c)
+  end
+end
+
+==> test/008_test.rb 47 <==
+sig { abstract.returns(Integer) }
+def foo; end
+
+==> test/009_test.rb 83 <==
+class Foo
+  sig { void }
+  def self.foo; end
+
+  #: -> void
+  def self.bar; end
+end
+
+==> test/010_test.rb 95 <==
+class Foo
+  class << self
+    class Bar
+      def initialize(a, b)
+      end
+    end
+  end
+end
+
+==> test/011_test.rb 25 <==
+def initialize(a, b)
+end
+
+==> test/012_test.rb 30 <==
+def self.initialize(a, b)
+end
+
+==> test/013_test.rb 122 <==
+class Foo
+  sig { params(x: String).returns(String) }
+  sig { params(x: Integer).returns(Integer) }
+  def foo(x); end
+end
+
+==> test/014_test.rb 227 <==
+def foo; end
+def bar(a, b = 2, c: Foo.new); end
+def baz(&blk); end
+def self.foo(a, b, &c); end
+def self.bar(a, *b, **c); end
+def self.baz(a:); end
+def forward(...); end
+def no_keywords(**nil); end
+def destructured((a, b)); end
+
+==> test/015_test.rb 69 <==
+class Foo
+  class << self
+    def initialize(a, b)
+    end
+  end
+end
+
+==> test/016_test.rb 24 <==
+#: -> void
+def foo; end
+
+==> test/017_test.rb 73 <==
+class Foo
+  attr_reader :foo
+  attr_writer :bar
+  attr_accessor :baz
+end
+

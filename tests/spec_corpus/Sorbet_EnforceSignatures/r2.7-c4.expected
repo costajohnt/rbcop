@@ -1,0 +1,48 @@
+==> offenses exit=1 960 <==
+test/000_test.rb:2:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a sig block signature.
+test/000_test.rb:3:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a sig block signature.
+test/000_test.rb:4:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a sig block signature.
+test/001_test.rb:1:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a sig block signature.
+test/001_test.rb:2:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a sig block signature.
+test/001_test.rb:3:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a sig block signature.
+test/001_test.rb:6:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a sig block signature.
+test/001_test.rb:9:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a sig block signature.
+
+==> autocorrect exit=0 944 <==
+test/000_test.rb:2:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a sig block signature.
+test/000_test.rb:3:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a sig block signature.
+test/000_test.rb:4:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a sig block signature.
+test/001_test.rb:1:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a sig block signature.
+test/001_test.rb:2:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a sig block signature.
+test/001_test.rb:3:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a sig block signature.
+test/001_test.rb:6:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a sig block signature.
+test/001_test.rb:9:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a sig block signature.
+
+==> corrected/test/000_test.rb 172 <==
+class Foo
+  sig { returns(RET) }
+  attr_reader :foo
+  sig { params(bar: PARAM).void }
+  attr_writer :bar
+  sig { params(baz: PARAM).returns(RET) }
+  attr_accessor :baz
+end
+
+==> corrected/test/001_test.rb 326 <==
+sig { returns(RET) }
+def foo; end
+sig { params(a: PARAM, b: PARAM, c: PARAM).returns(RET) }
+def bar(a, b = 2, c: Foo.new); end
+sig { params(blk: PARAM).returns(RET) }
+def baz(&blk); end
+
+class Foo
+  sig { returns(RET) }
+  def foo
+  end
+
+  sig { params(a: PARAM, b: PARAM, c: PARAM).returns(RET) }
+  def bar(a, b, c)
+  end
+end
+

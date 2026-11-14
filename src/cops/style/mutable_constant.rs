@@ -116,6 +116,23 @@ fn operation_produces_immutable_object(node: &Node) -> bool {
     }
 }
 
+/// rubocop-sorbet `sorbet_type_declaration?`: `type_member`, `type_template` (receiverless) or
+/// `T.type_alias` (`T` without `::`), with or without a `{}`/`do` block (not a numbered one).
+fn sorbet_type_declaration(node: &Node) -> bool {
+    let Some(c) = node.as_call_node().filter(|c| !is_csend(c)) else { return false };
+    if c.block().and_then(|b| b.as_block_node()).is_some_and(|b| {
+        b.parameters().is_some_and(|p| p.as_numbered_parameters_node().is_some() || p.as_it_parameters_node().is_some())
+    }) {
+        return false;
+    }
+    match c.receiver() {
+        None => matches!(method_name(&c), "type_member" | "type_template"),
+        Some(r) => {
+            method_name(&c) == "type_alias" && r.as_constant_read_node().is_some_and(|k| k.name().as_slice() == b"T")
+        }
+    }
+}
+
 /// `(send (const {nil? cbase} :Struct) :new ...)` / `(send (const {nil? cbase} :Data) :define ...)`
 fn struct_or_data(c: &ruby_prism::CallNode) -> bool {
     let Some(r) = c.receiver() else { return false };
@@ -307,12 +324,25 @@ impl Cop for MutableConstant {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
-        let value = match node {
+        let mut value = match node {
             Node::ConstantWriteNode { .. } => node.as_constant_write_node().unwrap().value(),
             Node::ConstantPathWriteNode { .. } => node.as_constant_path_write_node().unwrap().value(),
             Node::ConstantOrWriteNode { .. } => node.as_constant_or_write_node().unwrap().value(),
             _ => node.as_constant_path_or_write_node().unwrap().value(),
         };
+        // rubocop-sorbet's MutableConstantSorbetAwareBehaviour, prepended once the gem loads.
+        if crate::helpers::cop_registry::plugin_loaded("rubocop-sorbet") {
+            if sorbet_type_declaration(&value) {
+                return;
+            }
+            if let Some(c) = send(&value)
+                && method_name(&c) == "let"
+                && c.receiver().is_some_and(|r| r.as_constant_read_node().is_some_and(|k| k.name().as_slice() == b"T"))
+                && send_args(&c).len() + usize::from(c.block().is_some()) == 2
+            {
+                value = send_args(&c).into_iter().next().unwrap();
+            }
+        }
         let strict = cx.cfg.str("EnforcedStyle") == Some("strict");
         let ctx = Ctx { cx: &*cx, ruby3: cx.config.target_ruby >= 3.0, recursive: cx.cfg.bool("Recursive") == Some(true) };
         let mut nodes = Vec::new();

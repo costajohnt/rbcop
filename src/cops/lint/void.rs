@@ -307,7 +307,24 @@ fn check_void_op(cx: &mut Cx, node: &Node, inside_each_block: bool) {
     });
 }
 
+/// rubocop-sorbet's VoidSorbetAwareBehaviour (prepended once the gem loads): an expression
+/// followed on its last line by an RBS `#: absurd` comment (only spaces and tabs between).
+fn rbs_absurd_assertion(cx: &Cx, expr: &Node) -> bool {
+    static ABSURD: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\A#:[ \t\r\n\x0b\x0c]*absurd[ \t\r\n\x0b\x0c]*\z").unwrap());
+    let src = cx.src;
+    let end = expr.location().end_offset();
+    let line = src.line_of(end);
+    src.comments.iter().any(|c| {
+        src.line_of(c.start) == line
+            && src.text.get(end..c.start).unwrap_or("").bytes().all(|b| b == b' ' || b == b'\t')
+            && ABSURD.is_match(src.slice(c.start, c.end))
+    })
+}
+
 fn check_expression(cx: &mut Cx, ctx: &Ctx, expr: &Node) {
+    if crate::helpers::cop_registry::plugin_loaded("rubocop-sorbet") && rbs_absurd_assertion(cx, expr) {
+        return;
+    }
     match expr {
         Node::IfNode { .. } | Node::UnlessNode { .. } => {
             // check_if_expression: the if-branch body only.

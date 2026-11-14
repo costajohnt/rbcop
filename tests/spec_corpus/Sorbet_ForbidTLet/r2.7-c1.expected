@@ -1,0 +1,8 @@
+==> offenses exit=1 128 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTLet: Do not use `T.let`.
+test/000_test.rb:3:5: C: Sorbet/ForbidTLet: Do not use `T.let`.
+
+==> autocorrect exit=1 128 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTLet: Do not use `T.let`.
+test/000_test.rb:3:5: C: Sorbet/ForbidTLet: Do not use `T.let`.
+

@@ -36,8 +36,9 @@ for spec in performance:Performance rails:Rails minitest:Minitest rspec:RSpec,RS
   cops=$(CONFIG="$root/config/all-cops-$plugin.yml" rbcop_cops | tr , '\n' | grep -E "^($(echo "$dept" | tr , '|'))/" | grep -Fx "$implemented" | paste -sd, -)
   [ -n "$cops" ] || { echo "check-plugins: no $dept cops in --show-cops" >&2; exit 1; }
   [ "$plugin" = rspec ] && cops="$cops,Metrics/BlockLength"
-  # rubocop-sorbet's default.yml sets AllowRBSInlineAnnotation for these two of RuboCop's cops.
-  [ "$plugin" = sorbet ] && cops="$cops,Layout/LeadingCommentSpace,Lint/SelfAssignment"
+  # rubocop-sorbet's default.yml sets AllowRBSInlineAnnotation for Layout/LeadingCommentSpace and
+  # Lint/SelfAssignment, and loading it patches Style/MutableConstant and Lint/Void.
+  [ "$plugin" = sorbet ] && cops="$cops,Layout/LeadingCommentSpace,Lint/SelfAssignment,Style/MutableConstant,Lint/Void"
   [ "$plugin" = rails ] && cops="$cops,Lint/NumberConversion,Lint/RedundantSafeNavigation,Lint/SafeNavigationChain,Lint/UselessAccessModifier,Lint/UselessMethodDefinition,Style/AndOr,Style/CollectionCompact,Style/FormatStringToken,Style/HashExcept,Style/InvertibleUnlessCondition,Style/SymbolProc"
   echo "rubocop-$plugin: $(echo "$cops" | tr , '\n' | wc -l | tr -d ' ') cops"
   export CONFIG="$root/config/all-cops-$plugin.yml"

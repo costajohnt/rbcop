@@ -1,0 +1,17 @@
+==> .rubocop.yml 184 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/ForbidTStruct:
+  AutocorrectStyle: invalid
+
+==> test/000_test.rb 48 <==
+class Foo < T::Struct
+  const :foo, Integer
+end
+

@@ -1,0 +1,73 @@
+==> offenses exit=1 1848 <==
+test/000_test.rb:3:12: C: [Correctable] Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/001_test.rb:1:21: C: [Correctable] Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/002_test.rb:3:20: C: [Correctable] Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/003_test.rb:1:10: C: [Correctable] Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/004_test.rb:1:1: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/005_test.rb:1:9: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/006_test.rb:1:17: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/007_test.rb:1:12: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/008_test.rb:1:18: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/009_test.rb:1:18: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/010_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/011_test.rb:1:19: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/012_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/013_test.rb:1:21: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/014_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/015_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/016_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/017_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/018_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/019_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/020_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/021_test.rb:2:12: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/022_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+
+==> autocorrect exit=1 1840 <==
+test/000_test.rb:3:12: C: [Corrected] Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/001_test.rb:1:21: C: [Corrected] Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/002_test.rb:3:20: C: [Corrected] Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/003_test.rb:1:10: C: [Corrected] Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/004_test.rb:1:1: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/005_test.rb:1:9: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/006_test.rb:1:17: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/007_test.rb:1:12: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/008_test.rb:1:18: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/009_test.rb:1:18: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/010_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/011_test.rb:1:19: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/012_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/013_test.rb:1:21: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/014_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/015_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/016_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/017_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/018_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/019_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/020_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/021_test.rb:2:12: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+test/022_test.rb:1:10: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+
+==> corrected/test/000_test.rb 70 <==
+module Types
+  # café
+  # explanation
+  #: type my_type = String
+end
+
+==> corrected/test/001_test.rb 47 <==
+#: type string_or_integer = (String | Integer)
+
+==> corrected/test/002_test.rb 108 <==
+module Types
+  class Nested
+    #: type http_response = Hash[String, Integer?]
+
+    def call; end
+  end
+end
+
+==> corrected/test/003_test.rb 39 <==
+# explanation
+#: type my_type = String
+

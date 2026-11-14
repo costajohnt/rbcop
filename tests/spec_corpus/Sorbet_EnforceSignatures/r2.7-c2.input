@@ -1,0 +1,37 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 24 <==
+#: -> void
+def foo; end
+
+==> test/001_test.rb 37 <==
+#: -> void
+sig { void }
+def foo; end
+
+==> test/002_test.rb 39 <==
+# @abstract
+#: -> Integer
+def foo; end
+
+==> test/003_test.rb 159 <==
+class Foo
+  #: (String, ?Symbol) -> String
+  #: (
+  #| Integer,
+  #| ?Symbol
+  #| ) -> Integer
+  def foo(x, y = nil); end
+
+  #: String
+  attr_reader :name
+end
+

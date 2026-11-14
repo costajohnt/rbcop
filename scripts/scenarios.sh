@@ -5,6 +5,8 @@
 # usage: scripts/scenarios.sh [name...]   (RuboCop from $RUBOCOP, see scripts/rubocop.sh)
 set -eu
 . "$(dirname "$0")/rubocop.sh"
+# rubocop-sorbet's TargetSorbetVersion cops find the lockfile like Bundler: the scenario's own.
+unset BUNDLE_GEMFILE BUNDLE_LOCKFILE
 root=$(cd "$(dirname "$0")/.." && pwd)/tests/scenarios
 names=${*:-$(ls "$root")}
 for name in $names; do

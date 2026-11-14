@@ -21,6 +21,9 @@ pub fn command(program: impl AsRef<OsStr>) -> Command {
         "RBCOP_RUBOCOP",
         "RUBOCOP_CACHE_ROOT",
         "XDG_CACHE_HOME",
+        // rubocop-sorbet's TargetSorbetVersion cops find the lockfile like Bundler.
+        "BUNDLE_GEMFILE",
+        "BUNDLE_LOCKFILE",
     ] {
         cmd.env_remove(var);
     }

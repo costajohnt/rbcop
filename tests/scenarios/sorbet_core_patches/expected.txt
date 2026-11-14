@@ -1,0 +1,6 @@
+t.rb:11:7: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+t.rb:12:15: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+t.rb:26:5: W: Lint/Void: Variable `x` used in void context.
+t.rb:2:13: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.
+t.rb:30:5: W: Lint/Void: Variable `x` used in void context.
+t.rb:3:13: C: [Correctable] Style/MutableConstant: Freeze mutable objects assigned to constants.

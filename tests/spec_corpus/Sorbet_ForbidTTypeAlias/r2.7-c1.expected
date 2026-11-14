@@ -1,0 +1,6 @@
+==> offenses exit=1 77 <==
+test/000_test.rb:1:5: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+
+==> autocorrect exit=1 77 <==
+test/000_test.rb:1:5: C: Sorbet/ForbidTTypeAlias: Do not use `T.type_alias`.
+
