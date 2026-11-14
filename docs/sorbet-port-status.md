@@ -56,9 +56,11 @@ the gate skips.
 | S1 | 9 | 257,155 | `sorbet_sigil` | ported |
 | S2 | 22 | 8,605 | `sorbet_signature`, `sorbet_t_enum`, `sorbet_gem_version` | to do |
 | S3 | 24 | 12,598 | `sorbet_rbs_assertion` | to do |
-| S4 | 8 | 146,088 | `sorbet_target_version`, `sorbet_t_let`, `sorbet_rbi_type` | to do |
+| S4 | 8 | 146,088 | `sorbet_target_version`, `sorbet_t_let`, `sorbet_rbi_type` | ported |
 
-The S4 row leaves out the Style/MutableConstant and Lint/Void patches.
+The S4 row leaves out the Style/MutableConstant and Lint/Void patches (ported with S4; 1,697 and 317
+oracle offenses, all matched). EnforceSignatures' 16 crashes hold 255 of its offenses, which the
+gate leaves out on both sides.
 
 | Cop | Batch | Oracle offenses | Status |
 |---|---|---:|---|
@@ -117,11 +119,11 @@ The S4 row leaves out the Style/MutableConstant and Lint/Void patches.
 | Sorbet/SelectByIsA | S3 | 10 | fallback |
 | Sorbet/StructPropName | S3 | 0 | fallback |
 | Sorbet/TypeAliasName | S3 | 0 | fallback |
-| Sorbet/BuggyObsoleteStrictMemoization | S4 | 0 | fallback |
-| Sorbet/EnforceSignatures | S4 | 143,768 (16 crashes) | fallback |
-| Sorbet/ForbidTLet | S4 | 2,199 | fallback |
-| Sorbet/ForbidTStruct | S4 | 42 | fallback |
-| Sorbet/ForbidTTypeAlias | S4 | 79 | fallback |
-| Sorbet/ObsoleteStrictMemoization | S4 | 0 | fallback |
-| Sorbet/RedundantTLet | S4 | 0 | fallback |
-| Sorbet/RedundantTLetForLiteral | S4 | 0 | fallback |
+| Sorbet/BuggyObsoleteStrictMemoization | S4 | 0 | ported |
+| Sorbet/EnforceSignatures | S4 | 143,768 (16 crashes) | ported |
+| Sorbet/ForbidTLet | S4 | 2,199 | ported |
+| Sorbet/ForbidTStruct | S4 | 42 | ported |
+| Sorbet/ForbidTTypeAlias | S4 | 79 | ported |
+| Sorbet/ObsoleteStrictMemoization | S4 | 0 | ported |
+| Sorbet/RedundantTLet | S4 | 0 | ported |
+| Sorbet/RedundantTLetForLiteral | S4 | 0 | ported |

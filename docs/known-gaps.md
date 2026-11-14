@@ -715,6 +715,23 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
   its base URL for cops of other departments (#508). rbcop fills the cache in report order (files,
   then each file's sorted offenses); RuboCop fills it as offenses are added, so a disabled offense
   or one from a correcting pass can fill it first there.
+- rubocop-sorbet (#760):
+  - The TargetSorbetVersion cops (Sorbet/ObsoleteStrictMemoization,
+    Sorbet/BuggyObsoleteStrictMemoization, Sorbet/RedundantTLet and Sorbet/RedundantTLetForLiteral)
+    read the sorbet-static version from the lockfile Bundler finds (`BUNDLE_GEMFILE`, else `gems.rb`
+    or `Gemfile` upward from the working directory; `BUNDLE_LOCKFILE` or the lockfile next to it).
+    With a Gemfile and no lockfile, `Bundler.locked_gems` is nil and RuboCop raises: from
+    ObsoleteStrictMemoization's and BuggyObsoleteStrictMemoization's `relevant_file?` the whole run
+    stops (`undefined method 'specs' for nil`, exit 2); rbcop reports a cop error per file there
+    instead. A lockfile Bundler cannot parse is read as having no sorbet-static.
+  - Sorbet/EnforceSignatures translates between sig blocks and RBS comments as Spoom does
+    (`Style: sig` with RBS comments, `Style: rbs` with sig blocks) for the common forms only: RBS
+    records, literal types, `boolish`, generic bounds, untyped functions, inner `#` comments and
+    sig blocks with `bind`, `checked`, `on_failure` or `override(...)` arguments are not translated.
+    Those offenses are still reported `[Correctable]`, but rbcop withholds the correction.
+  - Sorbet/ForbidTStruct sorts the generated `initialize` keywords (required before optional) with a
+    stable sort; Ruby's `sort_by` is unstable above 16 elements, so a struct with more than 16 props
+    mixing required and optional ones can get its keywords in another order.
 - rubocop-rspec family:
   - RSpec/SpecFilePathFormat with `EnforcedInflector: active_support` uses
     ActiveSupport's default inflections; the project's `InflectorPath` file is not evaluated.
