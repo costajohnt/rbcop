@@ -30,9 +30,19 @@ norm() { grep -E "$pattern" | LC_ALL=C sort; }
 # Files whose differences are documented gaps (scripts/check-skip.txt) are left out on both sides.
 unskipped() { if [ -s "$1" ]; then grep -vF -f "$1"; else cat; fi; }
 
+# Offenses on stdin except those of the (cop, file) pairs in $1 (an oracle's .crashes file).
+uncrashed() {
+  awk -F'\t' 'FILENAME == ARGV[1] { skip[$1 "\t" $2] = 1; next }
+    { path = $0; sub(/:[0-9]+:[0-9]+:[0-9]+:[0-9]+: .*/, "", path)
+      cop = $0; sub(/^.*: [CWEFRI]: (\[Correctable\] )?/, "", cop); sub(/: .*/, "", cop)
+      if (!((cop "\t" path) in skip)) print }' "$1" -
+}
+
 status=0
 for c in $corpora; do
-  # Where a RuboCop cop crashed it reported nothing, so drop rbcop's offenses for that (cop, file).
+  # Where a RuboCop cop crashed, its offenses in that file are not compared: the crash loses
+  # what it was inspecting (often the whole file, sometimes one node), so both sides drop that
+  # (cop, file).
   crashes="$oracle_root/$c.txt.crashes"
   [ -f "$crashes" ] || crashes=/dev/null
   # ALLOW_EMPTY_ORACLE=1: a project RuboCop leaves clean (its own config) has an empty oracle.
@@ -44,12 +54,8 @@ for c in $corpora; do
   sed -n "s|^$c/\(.*\)|$corpus_root/$c/\1:|p" "$root/scripts/check-skip.txt" > "$out/$c.skip"
   # rbcop-oracle = emacs plus range end (path:line:col:last_line:last_col), like scripts/oracle_formatter.rb.
   (cd "$corpus_root/$c" && "$bin" --config "${CONFIG:-$root/config/all-cops.yml}" --format rbcop-oracle $only . 2>"$out/$c.err") \
-    | awk -F'\t' 'FILENAME == ARGV[1] { skip[$1 "\t" $2] = 1; next }
-        { path = $0; sub(/:[0-9]+:[0-9]+:[0-9]+:[0-9]+: .*/, "", path)
-          cop = $0; sub(/^.*: [CWEFRI]: (\[Correctable\] )?/, "", cop); sub(/: .*/, "", cop)
-          if (!((cop "\t" path) in skip)) print }' "$crashes" - \
-    | unskipped "$out/$c.skip" | norm > "$out/$c.rbcop" || true
-  unskipped "$out/$c.skip" < "$oracle_root/$c.txt" | norm > "$out/$c.rubocop" || true
+    | uncrashed "$crashes" | unskipped "$out/$c.skip" | norm > "$out/$c.rbcop" || true
+  uncrashed "$crashes" < "$oracle_root/$c.txt" | unskipped "$out/$c.skip" | norm > "$out/$c.rubocop" || true
   LC_ALL=C comm -23 "$out/$c.rubocop" "$out/$c.rbcop" | sed 's/^/< /' > "$out/$c.diff"
   LC_ALL=C comm -13 "$out/$c.rubocop" "$out/$c.rbcop" | sed 's/^/> /' >> "$out/$c.diff"
   n=$(wc -l < "$out/$c.diff" | tr -d ' ')
