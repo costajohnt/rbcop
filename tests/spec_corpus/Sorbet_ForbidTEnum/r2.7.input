@@ -1,0 +1,38 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 27 <==
+class Foo < ::T::Enum; end
+
+==> test/001_test.rb 52 <==
+class Foo < T::Enum
+  class Bar < T::Enum
+  end
+end
+
+==> test/002_test.rb 25 <==
+class Foo < T::Enum; end
+
+==> test/003_test.rb 88 <==
+class Foo
+end
+
+class Bar < Baz; end
+
+class Baz
+  extend T::Enum
+end
+
+class T::Enum; end
+
+==> test/004_test.rb 24 <==
+class Foo < T::Enum
+end
+

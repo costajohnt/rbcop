@@ -1,0 +1,42 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 49 <==
+sig { params(a: String).void }
+def foo(**a); end
+
+==> test/001_test.rb 26 <==
+sig { void }
+def foo; end
+
+==> test/002_test.rb 83 <==
+sig { params(a: Integer, b: String, blk: Proc).void }
+def foo(a: 1, b:, &blk); end
+
+==> test/003_test.rb 64 <==
+sig { params(a: String, b: Integer).void }
+def foo(a, **b); end
+
+==> test/004_test.rb 97 <==
+sig { params(a: String, b: Integer, c: String, d: Integer).void }
+def foo(a, b: 1, c:, **d); end
+
+==> test/005_test.rb 95 <==
+sig { params(a: String, b: Integer, c: String, d: Integer).void }
+def foo(a, b:, c:, **d); end
+
+==> test/006_test.rb 99 <==
+sig { params(a: String, b: Integer, c: Integer, blk: Proc).void }
+def foo(a, b:, c: 10, &blk); end
+
+==> test/007_test.rb 101 <==
+sig { params(a: String, b: Integer, c: String, d: Integer).void }
+def foo(a, b: 1, c: 'a', **d); end
+

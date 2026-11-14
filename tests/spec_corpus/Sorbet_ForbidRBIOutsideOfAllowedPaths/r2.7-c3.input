@@ -1,0 +1,20 @@
+==> .rubocop.yml 236 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/ForbidRBIOutsideOfAllowedPaths:
+  AllowedPaths:
+  - some/allowed/**
+  - hello/other/allowed/**
+
+==> test/000/hello/other/allowed/file.rbi 8 <==
+print 1
+
+==> test/001/some/forbidden/directory/file.rbi 8 <==
+print 1
+

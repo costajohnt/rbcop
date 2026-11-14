@@ -1,0 +1,35 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 394 <==
+sig { params(x: Integer).returns(Integer).on_failure(:raise) }
+
+sig { params(x: String).returns(String).checked(:none).on_failure(:raise) }
+
+sig { params(x: String).returns(String).checked().on_failure(:log) }
+
+sig { params(x: String).returns(String).checked(true).on_failure(:raise) }
+
+sig { params(x: String).returns(String).checked("tests").on_failure(:log) }
+
+sig { void.on_failure(:log) }
+
+==> test/001_test.rb 106 <==
+sig { params(x: Integer).returns(Integer) }
+
+sig { params(x: Integer).returns(Integer).checked(:always) }
+
+==> test/002_test.rb 208 <==
+sig { params(x: Integer).returns(Integer).checked(:always).on_failure(:raise) }
+
+sig { params(x: Integer).returns(Integer).checked(:tests).on_failure(:log) }
+
+sig { void.checked(:always).on_failure(:raise) }
+

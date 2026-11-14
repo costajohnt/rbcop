@@ -1,0 +1,47 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 55 <==
+sig { void.checked(:tests) }
+X = 1
+def initialize; end
+
+==> test/001_test.rb 49 <==
+sig { void.checked(:tests) }
+def initialize; end
+
+==> test/002_test.rb 88 <==
+sig { params(blk: T.proc.void).returns(T.anything).checked(:tests) }
+def foo(&blk); end
+
+==> test/003_test.rb 57 <==
+sig { returns(T.anything).checked(:tests) }
+def foo; end
+
+==> test/004_test.rb 88 <==
+sig { returns(T.anything).params(x: Integer).override.checked(:tests) }
+def foo(x); end
+
+==> test/005_test.rb 79 <==
+sig { params(x: Integer).returns(T.anything).checked(:tests) }
+def foo(x); end
+
+==> test/006_test.rb 42 <==
+sig { void.checked(:tests) }
+def foo; end
+
+==> test/007_test.rb 73 <==
+sig { void.params(x: Integer).override.checked(:tests) }
+def foo(x); end
+
+==> test/008_test.rb 64 <==
+sig { params(x: Integer).void.checked(:tests) }
+def foo(x); end
+

@@ -1,0 +1,144 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 47 <==
+extend T::Sig
+
+sig { void }
+def foo; end
+
+bar!
+
+==> test/001_test.rb 162 <==
+module Example
+  extend T::Sig
+
+  sig do
+    params(
+      session: String,
+    ).void
+  end
+
+  def initialize(
+    session:
+  )
+    @session = session
+  end
+end
+
+==> test/002_test.rb 26 <==
+sig { void }
+def foo; end
+
+==> test/003_test.rb 31 <==
+sig { void }
+
+attr_reader :bar
+
+==> test/004_test.rb 51 <==
+sig { void }
+# rubocop:todo Style/Foo
+def foo; end
+
+==> test/005_test.rb 65 <==
+sig { void }
+sig { params(foo: String).void }
+
+def bar(foo); end
+
+==> test/006_test.rb 64 <==
+sig { void }
+sig { params(foo: String).void }
+def bar(foo); end
+
+==> test/007_test.rb 27 <==
+sig { void }
+
+def foo; end
+
+==> test/008_test.rb 13 <==
+def foo; end
+
+==> test/009_test.rb 81 <==
+sig { void }
+# rubocop:disable Style/Foo
+def foo; end
+# rubocop:enable Style/Foo
+
+==> test/010_test.rb 139 <==
+sig { params(session: String).void }
+
+
+# Session: string
+
+# More stuff
+
+# on more lines
+
+def initialize(session:)
+  @session = session
+end
+
+==> test/011_test.rb 88 <==
+# rubocop:todo Style/Foo
+sig { void }
+# rubocop:enable Style/Foo
+# Comment
+def foo; end
+
+==> test/012_test.rb 40 <==
+true; sig { void }
+# Comment
+def m; end
+
+==> test/013_test.rb 32 <==
+sig { void }
+
+def self.foo; end
+
+==> test/014_test.rb 24 <==
+sig { void }
+
+attr :bar
+
+==> test/015_test.rb 65 <==
+sig { void }
+
+sig { params(foo: String).void }
+def bar(foo); end
+
+==> test/016_test.rb 13 <==
+sig { void }
+
+==> test/017_test.rb 181 <==
+module Example
+  extend T::Sig
+
+  sig do
+    params(
+      session: String,
+    ).void
+  end
+  # Session: string
+  def initialize(
+    session:
+  )
+    @session = session
+  end
+end
+
+==> test/018_test.rb 30 <==
+sig { void }
+
+attr :bar, true
+
+==> test/019_test.rb 27 <==
+sig { void }; def foo; end
+

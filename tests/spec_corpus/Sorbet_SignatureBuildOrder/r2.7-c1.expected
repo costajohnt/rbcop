@@ -1,0 +1,19 @@
+==> offenses exit=1 468 <==
+test/005_test.rb:1:7: C: [Correctable] Sorbet/SignatureBuildOrder: Sig builders must be invoked in the following order: type_parameters, params, void.
+test/007_test.rb:1:7: C: [Correctable] Sorbet/SignatureBuildOrder: Sig builders must be invoked in the following order: type_parameters, foo, params, bar, void, baz.
+test/008_test.rb:1:7: C: [Correctable] Sorbet/SignatureBuildOrder: Sig builders must be invoked in the following order: type_parameters, params, void.
+
+==> autocorrect exit=0 462 <==
+test/005_test.rb:1:7: C: [Corrected] Sorbet/SignatureBuildOrder: Sig builders must be invoked in the following order: type_parameters, params, void.
+test/007_test.rb:1:7: C: [Corrected] Sorbet/SignatureBuildOrder: Sig builders must be invoked in the following order: type_parameters, foo, params, bar, void, baz.
+test/008_test.rb:1:7: C: [Corrected] Sorbet/SignatureBuildOrder: Sig builders must be invoked in the following order: type_parameters, params, void.
+
+==> corrected/test/005_test.rb 65 <==
+sig { type_parameters(:U).params(x: T.type_parameter(:U)).void }
+
+==> corrected/test/007_test.rb 106 <==
+sig { type_parameters(:U).foo.params(x: T.type_parameter(:U), y: T::Hash[String, Integer]).bar.void.baz }
+
+==> corrected/test/008_test.rb 94 <==
+sig { type_parameters(:U).params(x: T.type_parameter(:U), y: T::Hash[String, Integer]).void }
+
