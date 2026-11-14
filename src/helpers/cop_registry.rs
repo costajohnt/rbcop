@@ -85,6 +85,14 @@ pub const NATIVE_PLUGINS: &[NativePlugin] = &[
         default_yml: include_str!("../../config/plugins/rubocop-thread_safety.yml"),
         obsoletion: Some(include_str!("../../config/plugins/rubocop-thread_safety-obsoletion.yml")),
     },
+    NativePlugin {
+        gem: "rubocop-sorbet",
+        version: "0.17.2",
+        plugin_class: "RuboCop::Sorbet::Plugin",
+        departments: &["Sorbet"],
+        default_yml: include_str!("../../config/plugins/rubocop-sorbet.yml"),
+        obsoletion: Some(include_str!("../../config/plugins/rubocop-sorbet-obsoletion.yml")),
+    },
 ];
 
 pub fn native_plugin(gem: &str) -> Option<&'static NativePlugin> {
@@ -170,7 +178,14 @@ pub fn register_plugin(plugin: &'static NativePlugin) {
     reg.1.push(plugin.gem);
     let mut names = reg.0.unwrap_or_else(|| REGISTRY.core.as_slice()).to_vec();
     // A plugin's default.yml also configures some of RuboCop's cops: those are registered already.
-    let new: Vec<&'static str> = cop_names(plugin.default_yml).into_iter().filter(|n| !names.contains(n)).collect();
+    let mut new: Vec<&'static str> = cop_names(plugin.default_yml).into_iter().filter(|n| !names.contains(n)).collect();
+    // A cop class the gem defines without a default.yml entry is registered all the same
+    // (rubocop-sorbet's Sorbet/ValidGemVersionAnnotations); registry.tsv lists it.
+    for n in crate::autocorrect::registry_cops() {
+        if plugin.departments.contains(&department_of(n)) && !names.contains(&n) && !new.contains(&n) {
+            new.push(n);
+        }
+    }
     names.extend(in_registry_order(new));
     internal_affairs_last(&mut names);
     // ponytail: leaks one name list per plugin load (a handful per process at most).

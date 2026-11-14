@@ -1,0 +1,42 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 28 <==
+class MyEnum < T::Enum; end
+
+==> test/001_test.rb 68 <==
+class MyEnum < T::Enum
+  class Foo
+    prepend Comparable
+  end
+end
+
+==> test/002_test.rb 48 <==
+class MyEnum < T::Enum
+  include Comparable
+end
+
+==> test/003_test.rb 68 <==
+class MyEnum < T::Enum
+  class Foo
+    include Comparable
+  end
+end
+
+==> test/004_test.rb 44 <==
+class MyEnum < T::Enum
+  include T::Sig
+end
+
+==> test/005_test.rb 48 <==
+class MyEnum < T::Enum
+  prepend Comparable
+end
+

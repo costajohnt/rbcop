@@ -1,0 +1,139 @@
+==> .rubocop.yml 198 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/ForbidTCollectionInstantiation:
+  AutocorrectToRBS: true
+
+==> test/000_test.rb 201 <==
+T::Array.new(2)
+T::Hash.new(0)
+T::Set.new(items)
+T::Range.new(1, 3)
+T::Enumerator.new { |y| y << "item" }
+T::Enumerator::Lazy.new(items) { |y, item| y << item }
+T::Enumerator::Chain.new(first, second)
+
+==> test/001_test.rb 254 <==
+T::Array[String].new
+T::Hash[Symbol, Integer].new
+T::Set[String].new
+T::Range[Integer].new(1, 3)
+T::Enumerator[String].new { |y| y << "item" }
+T::Enumerator::Lazy[String].new(items) { |y, item| y << item }
+T::Enumerator::Chain[String].new(first, second)
+
+==> test/002_test.rb 68 <==
+@arr = (T::Array[String].new)
+VALUES = T::Hash[Symbol, Integer].new
+
+==> test/003_test.rb 83 <==
+arr = T::Array[String].new { "item" }
+hash = T::Hash[Symbol, String].new(&factory)
+
+==> test/004_test.rb 43 <==
+T::Array[String]&.new
+::T::Set&.new(items)
+
+==> test/005_test.rb 88 <==
+# café
+values = T::Array[String].new(3) do |index|
+  index.to_s
+end # generated values
+
+==> test/006_test.rb 43 <==
+values = T::Hash[String, element_type].new
+
+==> test/007_test.rb 27 <==
+arr = T::Array[String].new
+
+==> test/008_test.rb 313 <==
+Other::T::Array[String].new
+::Other::T::Set.new
+Other::T::Enumerator::Lazy[String].new(items)
+T::Other[String].new
+T::Array::Other.new
+T::Enumerator::Other[String].new
+T::Struct.new
+T::Enum.new
+T::Proc.new
+T::Enumerable.new
+T::Enumerable[String].new
+CustomCollection[String].new
+collection.new
+new
+self.class.new
+
+==> test/009_test.rb 71 <==
+::T::Set[String].new
+::T::Enumerator::Chain[String].new(first, second)
+
+==> test/010_test.rb 65 <==
+size = T::Array[String].new.size
+arrays = [T::Array[String].new]
+
+==> test/011_test.rb 39 <==
+arr = T::Array[String].new #: Existing
+
+==> test/012_test.rb 326 <==
+Array.new(2) { "item" }
+::Hash.new(0)
+Set.new(items)
+Range.new(1, 3)
+Enumerator.new { |y| y << "item" }
+Enumerator::Lazy.new(items) { |y, item| y << item }
+Enumerator::Chain.new(first, second)
+T.let([], T::Array[String])
+T.let(Set.new, T::Set[String])
+Set.new #: Set[String]
+sig { returns(T::Hash[Symbol, T::Array[String]]) }
+
+==> test/013_test.rb 117 <==
+values = T::Array[String].new(
+  2,
+  "item",
+)
+defaults = T::Hash[Symbol, String].new(<<~TEXT)
+  default value
+TEXT
+
+==> test/014_test.rb 122 <==
+T::Array[String]
+T::Hash[Symbol, Integer]
+T::Set[String].name
+T::Array[String].new_method
+T::Array[String].some_class.new
+
+==> test/015_test.rb 110 <==
+arr = ::T::Array[String].new()
+hash = T::Hash[Symbol, String].new()
+arr = T::Array.new
+hash = ::T::Hash.new()
+
+==> test/016_test.rb 90 <==
+values = T::Hash[Integer, T::Array[T.nilable(String)]].new { |hash, key| hash[key] = [] }
+
+==> test/017_test.rb 81 <==
+arr = T::Array[String].new; consume(arr)
+arr = T::Array[String].new if condition
+
+==> test/018_test.rb 57 <==
+arr = T::Array[String].new(
+  # Keep this explanation.
+)
+
+==> test/019_test.rb 46 <==
+arr = T::Array[ # element type
+  String
+].new
+
+==> test/020_test.rb 141 <==
+consume(T::Array[String].new, T::Hash[Symbol, Integer].new)
+consume T::Hash[Symbol, Integer].new
+result = consume(T::Set[String].new(items))
+

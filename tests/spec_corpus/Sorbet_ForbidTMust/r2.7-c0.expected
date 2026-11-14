@@ -1,0 +1,29 @@
+==> offenses exit=1 570 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTMust: Do not use `T.must`.
+test/001_test.rb:2:1: C: [Correctable] Sorbet/ForbidTMust: Do not use `T.must`.
+test/001_test.rb:4:5: C: [Correctable] Sorbet/ForbidTMust: Do not use `T.must`.
+test/002_test.rb:1:1: C: [Correctable] Sorbet/ForbidTMust: Do not use `T.must`.
+test/003_test.rb:1:9: C: Sorbet/ForbidTMust: Do not use `T.must`.
+test/004_test.rb:1:1: C: Sorbet/ForbidTMust: Do not use `T.must`.
+test/004_test.rb:1:8: C: Sorbet/ForbidTMust: Do not use `T.must`.
+test/005_test.rb:1:1: C: Sorbet/ForbidTMust: Do not use `T.must`.
+
+==> autocorrect exit=1 564 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTMust: Do not use `T.must`.
+test/001_test.rb:2:1: C: [Corrected] Sorbet/ForbidTMust: Do not use `T.must`.
+test/001_test.rb:4:5: C: [Corrected] Sorbet/ForbidTMust: Do not use `T.must`.
+test/002_test.rb:1:1: C: [Corrected] Sorbet/ForbidTMust: Do not use `T.must`.
+test/003_test.rb:1:9: C: Sorbet/ForbidTMust: Do not use `T.must`.
+test/004_test.rb:1:1: C: Sorbet/ForbidTMust: Do not use `T.must`.
+test/004_test.rb:1:8: C: Sorbet/ForbidTMust: Do not use `T.must`.
+test/005_test.rb:1:1: C: Sorbet/ForbidTMust: Do not use `T.must`.
+
+==> corrected/test/001_test.rb 43 <==
+# café
+foo #: as !nil
+
+x = foo #: as !nil
+
+==> corrected/test/002_test.rb 30 <==
+foo #: as !nil # some comment
+

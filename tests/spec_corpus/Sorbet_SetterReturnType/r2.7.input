@@ -1,0 +1,200 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 60 <==
+sig do
+  params(name: String).void
+end
+def name=(name); end
+
+==> test/001_test.rb 55 <==
+#: (String) -> ^(Integer) -> void
+def name=(name); end
+
+==> test/002_test.rb 42 <==
+# (String) -> String
+def name=(name); end
+
+==> test/003_test.rb 61 <==
+#: (
+#| String name
+#| ) -> String
+def self.name=(name); end
+
+==> test/004_test.rb 56 <==
+#: () { (?) -> untyped } -> String
+def name=(name); end
+
+==> test/005_test.rb 67 <==
+#: (String) -> String
+#: (Integer) -> Integer
+def name=(name); end
+
+==> test/006_test.rb 78 <==
+#: (String) -> void
+#: (
+#| Integer name
+#| ) -> Integer
+def name=(name); end
+
+==> test/007_test.rb 71 <==
+sig { params(name: String).returns(T.proc.void) }
+def name=(name); end
+
+==> test/008_test.rb 74 <==
+sig(:final) { params(name: String).returns(String) }
+def name=(name); end
+
+==> test/009_test.rb 74 <==
+sig { params(name: String).returns(String) }
+private def name=(name); end
+
+==> test/010_test.rb 46 <==
+#: (String) ->
+#| String
+def name=(name); end
+
+==> test/011_test.rb 133 <==
+sig { params(name: String).returns(String) }
+def name=(name); end
+
+sig { params(name: String).returns(String) }
+def name=(name); end
+
+==> test/012_test.rb 65 <==
+#: (String) -> void
+#: (Integer) -> Integer
+def name=(name); end
+
+==> test/013_test.rb 71 <==
+sig { params(name: String).returns(String).soft }
+def name=(name); end
+
+==> test/014_test.rb 43 <==
+#: (String) -> String
+def name=(name); end
+
+==> test/015_test.rb 58 <==
+#: (String) ->
+#| (Integer | String)
+def name=(name); end
+
+==> test/016_test.rb 65 <==
+sig { params(name: String).returns(String) }
+def name(name); end
+
+==> test/017_test.rb 21 <==
+def name=(name); end
+
+==> test/018_test.rb 53 <==
+#: (String) -> Integer | String
+def name=(name); end
+
+==> test/019_test.rb 66 <==
+sig { params(name: String).returns(String) }
+def name=(name); end
+
+==> test/020_test.rb 56 <==
+#: (
+#| String name
+#| ) -> String
+def name=(name); end
+
+==> test/021_test.rb 76 <==
+sig do
+  params(name: String)
+    .returns(String)
+end
+def name=(name); end
+
+==> test/022_test.rb 51 <==
+#: (String) -> String
+private def name=(name); end
+
+==> test/023_test.rb 84 <==
+sig { params(key: Symbol, value: String).returns(String) }
+def []=(key, value); end
+
+==> test/024_test.rb 113 <==
+sig { params(name: String).returns(String) }
+sig { params(name: Integer).returns(Integer) }
+def name=(name); end
+
+==> test/025_test.rb 63 <==
+sig { params(name: String).void }
+private def name=(name); end
+
+==> test/026_test.rb 33 <==
+#: (String)
+def name=(name); end
+
+==> test/027_test.rb 54 <==
+#: () { (?) -> untyped } -> void
+def name=(name); end
+
+==> test/028_test.rb 70 <==
+sig { params(value: String).returns(String) }
+def 名前=(value); end
+
+==> test/029_test.rb 50 <==
+sig { params(name: String) }
+def name=(name); end
+
+==> test/030_test.rb 71 <==
+sig { params(name: String).returns(String).void }
+def name=(name); end
+
+==> test/031_test.rb 81 <==
+sig { params(x: Integer).returns(Integer) }
+def foo(x); end
+def name=(name); end
+
+==> test/032_test.rb 55 <==
+sig { params(name: String).void }
+def name=(name); end
+
+==> test/033_test.rb 350 <==
+sig { params(other: Object).returns(T::Boolean) }
+def ==(other); end
+
+sig { params(other: Object).returns(T::Boolean) }
+def !=(other); end
+
+sig { params(other: Object).returns(T::Boolean) }
+def <=(other); end
+
+sig { params(other: Object).returns(T::Boolean) }
+def >=(other); end
+
+sig { params(other: Object).returns(T::Boolean) }
+def ===(other); end
+
+==> test/034_test.rb 41 <==
+#: (String) -> void
+def name=(name); end
+
+==> test/035_test.rb 44 <==
+#: (String) ->
+#| void
+def name=(name); end
+
+==> test/036_test.rb 62 <==
+#: (String) -> void
+#: (Integer) -> void
+def name=(name); end
+
+==> test/037_test.rb 51 <==
+#: (String) -> void
+protected def name=(name); end
+
+==> test/038_test.rb 71 <==
+sig { params(name: String).returns(String) }
+def self.name=(name); end
+

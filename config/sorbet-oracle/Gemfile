@@ -1,0 +1,6 @@
+# The Gemfile scripts/check-plugins.sh and the oracle recording point BUNDLE_GEMFILE at for
+# rubocop-sorbet: its TargetSorbetVersion cops read the sorbet-static version from Bundler.locked_gems,
+# which raises (stopping the whole RuboCop run) in a corpus with a Gemfile and no lockfile.
+source "https://rubygems.org"
+
+gem "sorbet-static"

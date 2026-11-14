@@ -1,0 +1,34 @@
+==> offenses exit=1 778 <==
+test/000_test.rb:1:23: C: [Correctable] Sorbet/CapitalizedTypeParameters: Type parameters must be capitalized.
+test/000_test.rb:1:54: C: [Correctable] Sorbet/CapitalizedTypeParameters: Type parameters must be capitalized.
+test/000_test.rb:3:25: C: [Correctable] Sorbet/CapitalizedTypeParameters: Type parameters must be capitalized.
+test/000_test.rb:7:19: C: [Correctable] Sorbet/CapitalizedTypeParameters: Type parameters must be capitalized.
+test/000_test.rb:7:31: C: [Correctable] Sorbet/CapitalizedTypeParameters: Type parameters must be capitalized.
+test/000_test.rb:9:27: C: [Correctable] Sorbet/CapitalizedTypeParameters: Type parameters must be capitalized.
+test/000_test.rb:11:27: C: [Correctable] Sorbet/CapitalizedTypeParameters: Type parameters must be capitalized.
+
+==> autocorrect exit=0 764 <==
+test/000_test.rb:1:23: C: [Corrected] Sorbet/CapitalizedTypeParameters: Type parameters must be capitalized.
+test/000_test.rb:1:54: C: [Corrected] Sorbet/CapitalizedTypeParameters: Type parameters must be capitalized.
+test/000_test.rb:3:25: C: [Corrected] Sorbet/CapitalizedTypeParameters: Type parameters must be capitalized.
+test/000_test.rb:7:19: C: [Corrected] Sorbet/CapitalizedTypeParameters: Type parameters must be capitalized.
+test/000_test.rb:7:31: C: [Corrected] Sorbet/CapitalizedTypeParameters: Type parameters must be capitalized.
+test/000_test.rb:9:27: C: [Corrected] Sorbet/CapitalizedTypeParameters: Type parameters must be capitalized.
+test/000_test.rb:11:27: C: [Corrected] Sorbet/CapitalizedTypeParameters: Type parameters must be capitalized.
+
+==> corrected/test/000_test.rb 301 <==
+sig { type_parameters(:X).params(a: T.type_parameter(:X)).void }
+def foo(a)
+  puts T.type_parameter(:X)
+end
+
+sig do
+  type_parameters(:Foo, :Bar, :Baz)
+    .params(
+      a: T.type_parameter(:Foo),
+      b: T.type_parameter(:Bar),
+      c: T.type_parameter(:Baz),
+    ).void
+end
+def foo(a, b, c); end
+

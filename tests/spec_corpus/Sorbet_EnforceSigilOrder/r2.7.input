@@ -1,0 +1,95 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 80 <==
+# frozen_string_literal: true
+
+# typed: true
+
+
+# encoding: utf-8
+class Foo; end
+
+==> test/001_test.rb 113 <==
+# encoding: utf-8
+# coding: utf-8
+# typed: true
+# warn_indent: true
+# frozen_string_literal: true
+class Foo; end
+
+==> test/002_test.rb 0 <==
+
+==> test/003_test.rb 85 <==
+# frozen_string_literal: true
+#
+# typed: true
+#
+# encoding: utf-8
+#
+class Foo; end
+#
+
+==> test/004_test.rb 29 <==
+# typed: true
+class Foo; end
+
+==> test/005_test.rb 80 <==
+# frozen_string_literal: true
+# typed: true
+# encoding: utf-8
+
+class Foo; end
+
+
+
+==> test/006_test.rb 160 <==
+# encoding: utf-8
+# foo
+# frozen_string_literal: true
+# bar: true
+# warn_indent: true
+# baz: "Hello"
+# typed: true
+# coding: utf-8
+# another foo
+class Foo; end
+
+==> test/007_test.rb 113 <==
+# encoding: utf-8
+# frozen_string_literal: true
+# warn_indent: true
+# typed: true
+# coding: utf-8
+class Foo; end
+
+==> test/008_test.rb 59 <==
+# frozen_string_literal: true
+# typed: true
+class Foo; end
+
+==> test/009_test.rb 15 <==
+class Foo; end
+
+==> test/010_test.rb 118 <==
+# coding: utf-8
+# typed: true
+# foo: 1
+# bar: true
+# frozen_string_literal: true
+# baz: "Hello, World"
+class Foo; end
+
+==> test/011_test.rb 58 <==
+# foo: 1
+# bar: true
+# baz: "Hello, World"
+class Foo; end
+

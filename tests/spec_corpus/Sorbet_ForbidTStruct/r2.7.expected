@@ -1,0 +1,225 @@
+==> offenses exit=1 2450 <==
+test/000_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/001_test.rb:2:3: C: Sorbet/ForbidTStruct: Using `T::Props` or its variants is deprecated in this codebase.
+test/001_test.rb:3:3: C: Sorbet/ForbidTStruct: Using `T::Props` or its variants is deprecated in this codebase.
+test/001_test.rb:4:3: C: Sorbet/ForbidTStruct: Using `T::Props` or its variants is deprecated in this codebase.
+test/001_test.rb:5:3: C: Sorbet/ForbidTStruct: Using `T::Props` or its variants is deprecated in this codebase.
+test/001_test.rb:6:3: C: Sorbet/ForbidTStruct: Using `T::Props` or its variants is deprecated in this codebase.
+test/001_test.rb:7:3: C: Sorbet/ForbidTStruct: Using `T::Props` or its variants is deprecated in this codebase.
+test/002_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/003_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/004_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/005_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/005_test.rb:2:3: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/006_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/006_test.rb:2:3: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/007_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/008_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/009_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/010_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/012_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/013_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+
+==> autocorrect exit=1 2422 <==
+test/000_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/001_test.rb:2:3: C: Sorbet/ForbidTStruct: Using `T::Props` or its variants is deprecated in this codebase.
+test/001_test.rb:3:3: C: Sorbet/ForbidTStruct: Using `T::Props` or its variants is deprecated in this codebase.
+test/001_test.rb:4:3: C: Sorbet/ForbidTStruct: Using `T::Props` or its variants is deprecated in this codebase.
+test/001_test.rb:5:3: C: Sorbet/ForbidTStruct: Using `T::Props` or its variants is deprecated in this codebase.
+test/001_test.rb:6:3: C: Sorbet/ForbidTStruct: Using `T::Props` or its variants is deprecated in this codebase.
+test/001_test.rb:7:3: C: Sorbet/ForbidTStruct: Using `T::Props` or its variants is deprecated in this codebase.
+test/002_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/003_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/004_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/005_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/005_test.rb:2:3: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/006_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/006_test.rb:2:3: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/007_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/008_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/009_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/010_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/012_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/013_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+
+==> corrected/test/000_test.rb 246 <==
+class Foo
+  extend T::Sig
+
+  sig { returns(Integer) }
+  attr_reader :foo
+
+  sig { returns(String) }
+  attr_accessor :bar
+
+  sig { params(foo: Integer, bar: String).void }
+  def initialize(foo:, bar: "foo")
+    @foo = foo
+    @bar = bar
+  end
+end
+
+==> corrected/test/002_test.rb 435 <==
+class Foo
+  extend T::Sig
+
+  CONST = 42
+
+  sig { returns(Integer) }
+  attr_reader :foo
+
+  sig { params(foo: Integer).void }
+  def initialize(foo:)
+    @foo = foo
+  end
+
+  @foo = 42
+
+  # Some comment
+  sig { params(x: Integer).returns(String) }
+  def foo(x)
+    "foo" * x
+  end
+
+  private
+
+  sig do
+    void
+  end
+  def self.bar; end
+
+  class << self
+    def bar; end
+  end
+
+  # Another comment
+  class Bar
+    class Baz; end
+  end
+end
+
+==> corrected/test/003_test.rb 306 <==
+class Example
+  extend T::Sig
+
+  def instance_method
+    const :inside_instance_method, String
+  end
+
+  def self.class_method
+    prop :inside_class_method, Integer
+  end
+
+  sig { returns(String) }
+  attr_reader :name
+
+  sig { params(name: String).void }
+  def initialize(name:)
+    @name = name
+  end
+end
+
+==> corrected/test/004_test.rb 31 <==
+class Foo
+  extend T::Sig
+
+end
+
+==> corrected/test/005_test.rb 68 <==
+class Foo
+  extend T::Sig
+
+  class Bar
+    extend T::Sig
+
+  end
+end
+
+==> corrected/test/006_test.rb 434 <==
+class Outer
+  extend T::Sig
+
+  class Inner
+    extend T::Sig
+    sig { returns(String) }
+    attr_reader :name
+
+    sig { params(name: String).void }
+    def initialize(name:)
+      @name = name
+    end
+  end
+
+  sig { returns(String) }
+  attr_accessor :name
+
+  sig { returns(Inner) }
+  attr_reader :inner
+
+  sig { params(name: String, inner: Inner).void }
+  def initialize(name:, inner:)
+    @name = name
+    @inner = inner
+  end
+end
+
+==> corrected/test/007_test.rb 15 <==
+class Foo; end
+
+==> corrected/test/008_test.rb 31 <==
+class Foo
+  extend T::Sig
+
+end
+
+==> corrected/test/009_test.rb 326 <==
+class Foo
+  extend T::Sig
+
+  sig { returns(Integer) }
+  attr_reader :foo
+
+  sig { returns(String) }
+  attr_accessor :bar
+
+  sig { returns(Symbol) }
+  attr_reader :baz
+
+  sig { params(foo: Integer, baz: Symbol, bar: String).void }
+  def initialize(foo:, baz:, bar: "foo")
+    @foo = foo
+    @bar = bar
+    @baz = baz
+  end
+end
+
+==> corrected/test/010_test.rb 363 <==
+class Foo
+  extend T::Sig
+
+  sig { returns(Integer) }
+  attr_reader :foo
+
+  sig { returns(String) }
+  attr_accessor :bar
+
+  sig { returns(T.nilable(Symbol)) }
+  attr_reader :baz
+
+  sig { params(foo: Integer, bar: String, baz: T.nilable(Symbol)).void }
+  def initialize(foo:, bar: "foo", baz: ->{ nil })
+    @foo = foo
+    @bar = bar
+    @baz = baz.call
+  end
+end
+
+==> corrected/test/012_test.rb 15 <==
+class Foo; end
+
+==> corrected/test/013_test.rb 31 <==
+class Foo
+  extend T::Sig
+
+end
+

@@ -1,0 +1,261 @@
+==> offenses exit=1 3748 <==
+test/001_test.rb:6:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/001_test.rb:11:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/001_test.rb:17:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/001_test.rb:24:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/001_test.rb:32:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/003_test.rb:2:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/006_test.rb:2:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/006_test.rb:3:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/006_test.rb:4:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/009_test.rb:3:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/009_test.rb:6:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/009_test.rb:9:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/014_test.rb:3:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/016_test.rb:3:5: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/018_test.rb:2:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/019_test.rb:4:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/020_test.rb:6:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/020_test.rb:11:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/020_test.rb:17:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/020_test.rb:24:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/020_test.rb:32:3: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/021_test.rb:1:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/021_test.rb:2:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/023_test.rb:1:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/028_test.rb:4:7: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/029_test.rb:1:9: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/032_test.rb:1:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/033_test.rb:1:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/033_test.rb:2:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/033_test.rb:3:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/033_test.rb:4:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/033_test.rb:5:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/033_test.rb:6:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/034_test.rb:1:1: C: [Correctable] Sorbet/EnforceSignatures: Each method is required to have a signature.
+
+==> autocorrect exit=0 3680 <==
+test/001_test.rb:6:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/001_test.rb:11:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/001_test.rb:17:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/001_test.rb:24:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/001_test.rb:32:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/003_test.rb:2:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/006_test.rb:2:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/006_test.rb:3:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/006_test.rb:4:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/009_test.rb:3:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/009_test.rb:6:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/009_test.rb:9:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/014_test.rb:3:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/016_test.rb:3:5: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/018_test.rb:2:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/019_test.rb:4:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/020_test.rb:6:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/020_test.rb:11:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/020_test.rb:17:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/020_test.rb:24:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/020_test.rb:32:3: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/021_test.rb:1:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/021_test.rb:2:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/023_test.rb:1:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/028_test.rb:4:7: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/029_test.rb:1:9: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/032_test.rb:1:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/033_test.rb:1:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/033_test.rb:2:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/033_test.rb:3:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/033_test.rb:4:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/033_test.rb:5:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/033_test.rb:6:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+test/034_test.rb:1:1: C: [Corrected] Sorbet/EnforceSignatures: Each method is required to have a signature.
+
+==> corrected/test/001_test.rb 396 <==
+module Foo
+  #: -> void
+end
+
+class Bar
+  sig { returns(T.untyped) }
+  def foo; end
+
+  #: -> void
+end
+
+sig { returns(T.untyped) }
+def foo; end
+
+class Baz
+  #: -> void
+  def foo; end
+
+  sig { returns(T.untyped) }
+  def baz; end
+end
+
+foo do
+  #: -> void
+  def foo; end
+
+  sig { returns(T.untyped) }
+  def baz; end
+end
+
+foo do
+  #: -> void
+end
+
+foo do
+  sig { returns(T.untyped) }
+  def foo; end
+end
+
+==> corrected/test/003_test.rb 58 <==
+class Foo
+  sig { returns(T.untyped) }
+  def foo; end
+end
+
+==> corrected/test/006_test.rb 192 <==
+class Foo
+  sig { returns(T.untyped) }
+  attr_reader :foo
+  sig { params(bar: T.untyped).void }
+  attr_writer :bar
+  sig { params(baz: T.untyped).returns(T.untyped) }
+  attr_accessor :baz
+end
+
+==> corrected/test/009_test.rb 228 <==
+class Foo
+  T::Sig::WithRuntime.sig { void }
+  sig { returns(T.untyped) }
+  def foo; end
+
+  T::SomeSig.sig { void }
+  sig { returns(T.untyped) }
+  def foo; end
+
+  Sig.sig { void }
+  sig { returns(T.untyped) }
+  def foo; end
+end
+
+==> corrected/test/014_test.rb 52 <==
+#: -> void
+
+sig { returns(T.untyped) }
+def foo; end
+
+==> corrected/test/016_test.rb 135 <==
+class Foo
+  class << self
+    sig { params(a: T.untyped, b: T.untyped).returns(T.untyped) }
+    def initialize(a, b)
+    end
+  end
+end
+
+==> corrected/test/018_test.rb 63 <==
+class Foo
+  sig { returns(T.untyped) }
+  def self.foo; end
+end
+
+==> corrected/test/019_test.rb 59 <==
+#: -> void
+
+# note
+sig { returns(T.untyped) }
+def foo; end
+
+==> corrected/test/020_test.rb 406 <==
+module Foo
+  sig { void }
+end
+
+class Bar
+  sig { returns(T.untyped) }
+  def foo; end
+
+  sig { void }
+end
+
+sig { returns(T.untyped) }
+def foo; end
+
+class Baz
+  sig { void }
+  def foo; end
+
+  sig { returns(T.untyped) }
+  def baz; end
+end
+
+foo do
+  sig { void }
+  def foo; end
+
+  sig { returns(T.untyped) }
+  def baz; end
+end
+
+foo do
+  sig { void }
+end
+
+foo do
+  sig { returns(T.untyped) }
+  def foo; end
+end
+
+==> corrected/test/021_test.rb 138 <==
+sig { returns(T.untyped) }
+def foo; end
+sig { params(a: T.untyped, b: T.untyped, c: T.untyped).returns(T.untyped) }
+def bar(a, b, c); end
+
+==> corrected/test/023_test.rb 73 <==
+sig { params(a: T.untyped, b: T.untyped).void }
+def initialize(a, b)
+end
+
+==> corrected/test/028_test.rb 149 <==
+class Foo
+  class << self
+    class Bar
+      sig { params(a: T.untyped, b: T.untyped).void }
+      def initialize(a, b)
+      end
+    end
+  end
+end
+
+==> corrected/test/029_test.rb 81 <==
+sig { params(a: T.untyped, b: T.untyped).void }
+private def initialize(a, b)
+end
+
+==> corrected/test/032_test.rb 40 <==
+sig { returns(T.untyped) }
+def foo; end
+
+==> corrected/test/033_test.rb 500 <==
+sig { returns(T.untyped) }
+def foo; end
+sig { params(a: T.untyped, b: T.untyped, c: T.untyped).returns(T.untyped) }
+def bar(a, b = 2, c: Foo.new); end
+sig { params(blk: T.untyped).returns(T.untyped) }
+def baz(&blk); end
+sig { params(a: T.untyped, b: T.untyped, c: T.untyped).returns(T.untyped) }
+def self.foo(a, b, &c); end
+sig { params(a: T.untyped, b: T.untyped, c: T.untyped).returns(T.untyped) }
+def self.bar(a, *b, **c); end
+sig { params(a: T.untyped).returns(T.untyped) }
+def self.baz(a:); end
+
+==> corrected/test/034_test.rb 92 <==
+sig { params(a: T.untyped, b: T.untyped).returns(T.untyped) }
+def self.initialize(a, b)
+end
+

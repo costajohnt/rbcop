@@ -1,0 +1,13 @@
+==> offenses exit=1 280 <==
+test/000_test.rb:1:1: C: [Correctable] Sorbet/StrongSigil: No Sorbet sigil found in file. Try a `typed: strong` to start (you can also use `rubocop -a` to automatically add this).
+test/001_test.rb:2:1: C: Sorbet/StrongSigil: Sorbet sigil should be at least `strong` got `strict`.
+
+==> autocorrect exit=1 278 <==
+test/000_test.rb:1:1: C: [Corrected] Sorbet/StrongSigil: No Sorbet sigil found in file. Try a `typed: strong` to start (you can also use `rubocop -a` to automatically add this).
+test/001_test.rb:2:1: C: Sorbet/StrongSigil: Sorbet sigil should be at least `strong` got `strict`.
+
+==> corrected/test/000_test.rb 61 <==
+# typed: strong
+# frozen_string_literal: true
+class Foo; end
+

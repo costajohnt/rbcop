@@ -1,0 +1,5 @@
+plugins:
+  - rubocop-sorbet
+AllCops:
+  TargetRubyVersion: 3.4
+  SuggestExtensions: false

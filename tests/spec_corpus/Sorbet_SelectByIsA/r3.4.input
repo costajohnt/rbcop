@@ -1,0 +1,61 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.4
+
+==> test/000_test.rb 67 <==
+strings_or_integers.select { |e| e.is_a?(String) && e.length > 5 }
+
+==> test/001_test.rb 48 <==
+strings_or_integers.select { _1.is_a?(String) }
+
+==> test/002_test.rb 48 <==
+strings_or_integers.filter { it.is_a?(String) }
+
+==> test/003_test.rb 71 <==
+strings_or_integers.select { |e| e.is_a?(String) || e.is_a?(Integer) }
+
+==> test/004_test.rb 51 <==
+strings_or_integers.filter { |e| e.is_a?(String) }
+
+==> test/005_test.rb 49 <==
+strings_or_integers&.filter { _1.is_a?(String) }
+
+==> test/006_test.rb 48 <==
+strings_or_integers.select { it.is_a?(String) }
+
+==> test/007_test.rb 31 <==
+strings_or_integers.select { }
+
+==> test/008_test.rb 49 <==
+strings_or_integers&.select { _1.is_a?(String) }
+
+==> test/009_test.rb 33 <==
+strings_or_integers.grep(String)
+
+==> test/010_test.rb 54 <==
+strings_or_integers.select { |e| e.kind_of?(String) }
+
+==> test/011_test.rb 52 <==
+strings_or_integers&.select { |e| e.is_a?(String) }
+
+==> test/012_test.rb 48 <==
+strings_or_integers.filter { _1.is_a?(String) }
+
+==> test/013_test.rb 49 <==
+strings_or_integers&.filter { it.is_a?(String) }
+
+==> test/014_test.rb 51 <==
+strings_or_integers.select { |e| e.is_a?(String) }
+
+==> test/015_test.rb 52 <==
+strings_or_integers&.filter { |e| e.is_a?(String) }
+
+==> test/016_test.rb 49 <==
+strings_or_integers&.select { it.is_a?(String) }
+

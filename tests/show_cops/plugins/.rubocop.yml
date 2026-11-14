@@ -2,6 +2,7 @@ plugins:
   - rubocop-rspec
   - rubocop-capybara
   - rubocop-thread_safety
+  - rubocop-sorbet
 AllCops:
   NewCops: enable
   SuggestExtensions: false

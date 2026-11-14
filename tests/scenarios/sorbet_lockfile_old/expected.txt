@@ -1,0 +1,12 @@
+t.rb:12:17: C: [Correctable] Sorbet/RedundantTLetForLiteral: Redundant `T.let` for Integer literal. Sorbet can infer this type automatically.
+t.rb:13:14: C: [Correctable] Sorbet/RedundantTLetForLiteral: Redundant `T.let` for String literal. Sorbet can infer this type automatically.
+t.rb:14:10: C: [Correctable] Sorbet/RedundantTLetForLiteral: Redundant `T.let` for Float literal. Sorbet can infer this type automatically.
+t.rb:15:13: C: [Correctable] Sorbet/RedundantTLetForLiteral: Redundant `T.let` for Regexp literal. Sorbet can infer this type automatically.
+t.rb:17:12: C: [Correctable] Sorbet/RedundantTLetForLiteral: Redundant `T.let` for Symbol literal. Sorbet can infer this type automatically.
+t.rb:24:13: C: [Correctable] Sorbet/RedundantTLetForLiteral: Redundant `T.let` for String literal. Sorbet can infer this type automatically.
+t.rb:27:26: C: [Correctable] Sorbet/RedundantTLetForLiteral: Redundant RBS annotation for String literal. Sorbet can infer this type automatically.
+t.rb:31:15: C: [Correctable] Sorbet/RedundantTLetForLiteral: Redundant RBS annotation for Integer literal. Sorbet can infer this type automatically.
+t.rb:36:10: C: [Correctable] Sorbet/RedundantTLet: Unnecessary T.let. The instance variable type is inferred from the signature.
+t.rb:37:10: C: [Correctable] Sorbet/RedundantTLet: Unnecessary T.let. The instance variable type is inferred from the signature.
+t.rb:49:18: C: [Correctable] Sorbet/BuggyObsoleteStrictMemoization: This might be a mistaken variant of the two-stage workaround that used to be needed for memoization in `#typed: strict` files. See https://sorbet.org/docs/type-assertions#put-type-assertions-behind-memoization.
+t.rb:59:11: C: [Correctable] Sorbet/RedundantTLetForLiteral: Redundant `T.let` for Integer literal. Sorbet can infer this type automatically.

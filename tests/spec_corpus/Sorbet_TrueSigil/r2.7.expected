@@ -1,0 +1,13 @@
+==> offenses exit=1 271 <==
+test/000_test.rb:1:1: C: [Correctable] Sorbet/TrueSigil: No Sorbet sigil found in file. Try a `typed: true` to start (you can also use `rubocop -a` to automatically add this).
+test/001_test.rb:2:1: C: Sorbet/TrueSigil: Sorbet sigil should be at least `true` got `false`.
+
+==> autocorrect exit=1 269 <==
+test/000_test.rb:1:1: C: [Corrected] Sorbet/TrueSigil: No Sorbet sigil found in file. Try a `typed: true` to start (you can also use `rubocop -a` to automatically add this).
+test/001_test.rb:2:1: C: Sorbet/TrueSigil: Sorbet sigil should be at least `true` got `false`.
+
+==> corrected/test/000_test.rb 59 <==
+# typed: true
+# frozen_string_literal: true
+class Foo; end
+

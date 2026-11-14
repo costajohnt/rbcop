@@ -1,0 +1,16 @@
+==> .rubocop.yml 224 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/EnforceSignatures:
+  Style: rbs
+  ParameterTypePlaceholder: T.nilable(T.proc.void)
+
+==> test/000_test.rb 21 <==
+def foo(&block); end
+

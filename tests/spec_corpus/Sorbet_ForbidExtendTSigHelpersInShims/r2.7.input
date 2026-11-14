@@ -1,0 +1,44 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 100 <==
+module MyModule
+  extend(T::Sig)
+  extend(T::Helpers)
+
+  sig { returns(String) }
+  def foo; end
+end
+
+==> test/001_test.rb 98 <==
+module MyModule
+  extend T::Sig
+  extend T::Helpers
+
+  sig { returns(String) }
+  def foo; end
+end
+
+==> test/002_test.rb 68 <==
+module MyModule
+  extend ActiveSupport::Concern
+
+  def foo; end
+end
+
+==> test/003_test.rb 77 <==
+module MyModule
+  extend(T::Sig)
+end
+
+class MyClass
+  extend(T::Helpers)
+end
+

@@ -1,0 +1,17 @@
+==> .rubocop.yml 198 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/EnforceSignatures:
+  Style: both
+  AutocorrectStyle: rbs
+
+==> test/000_test.rb 35 <==
+def foo; end
+def bar(a, b, c); end
+

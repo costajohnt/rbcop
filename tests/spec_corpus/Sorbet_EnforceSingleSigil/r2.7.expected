@@ -1,0 +1,74 @@
+==> offenses exit=1 1900 <==
+test/000_test.rb:2:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/000_test.rb:3:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/000_test.rb:5:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/000_test.rb:6:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/003_test.rb:2:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/003_test.rb:5:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/004_test.rb:2:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/004_test.rb:3:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/004_test.rb:5:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/004_test.rb:6:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/006_test.rb:2:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/006_test.rb:3:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/006_test.rb:4:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/006_test.rb:5:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/007_test.rb:2:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/007_test.rb:3:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/008_test.rb:2:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/009_test.rb:2:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/009_test.rb:3:1: C: [Correctable] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+
+==> autocorrect exit=0 1862 <==
+test/000_test.rb:2:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/000_test.rb:3:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/000_test.rb:5:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/000_test.rb:6:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/003_test.rb:2:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/003_test.rb:5:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/004_test.rb:2:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/004_test.rb:3:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/004_test.rb:5:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/004_test.rb:6:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/006_test.rb:2:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/006_test.rb:3:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/006_test.rb:4:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/006_test.rb:5:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/007_test.rb:2:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/007_test.rb:3:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/008_test.rb:2:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/009_test.rb:2:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+test/009_test.rb:3:1: C: [Corrected] Sorbet/EnforceSingleSigil: Files must only contain one sigil
+
+==> corrected/test/000_test.rb 61 <==
+# # typed: true
+# frozen_string_literal: true
+class Foo; end
+
+==> corrected/test/003_test.rb 73 <==
+# typed: true
+# frozen_string_literal: true
+# hello there
+class Foo; end
+
+==> corrected/test/004_test.rb 59 <==
+# typed: true
+# frozen_string_literal: true
+class Foo; end
+
+==> corrected/test/006_test.rb 29 <==
+# typed: true
+class Foo; end
+
+==> corrected/test/007_test.rb 29 <==
+# typed: true
+class Foo; end
+
+==> corrected/test/008_test.rb 29 <==
+# typed: true
+class Foo; end
+
+==> corrected/test/009_test.rb 31 <==
+# # typed: true
+class Foo; end
+

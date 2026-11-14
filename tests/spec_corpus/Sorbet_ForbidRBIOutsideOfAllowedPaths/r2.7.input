@@ -1,0 +1,24 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000/sorbet/rbi/some/dir/file.rbi 8 <==
+print 1
+
+==> test/001/some/dir/file.rbi 0 <==
+
+==> test/002/some/dir/file.rbi 8 <==
+print 1
+
+==> test/003/rbi/some/dir/file.rbi 8 <==
+print 1
+
+==> test/004/home/ci/scratch/sorbet-s2/src/sorbet/rbi/some/dir/file.rbi 8 <==
+print 1
+

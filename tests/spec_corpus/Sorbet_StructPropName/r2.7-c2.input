@@ -1,0 +1,18 @@
+==> .rubocop.yml 197 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/StructPropName:
+  AllowedPatterns:
+  - "\\Alegacy[A-Z]"
+
+==> test/000_test.rb 55 <==
+class User < T::Struct
+  const :legacyName, String
+end
+

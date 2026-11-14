@@ -1,0 +1,33 @@
+==> offenses exit=1 746 <==
+test/000_test.rb:2:1: C: Sorbet/HasSigil: Sorbet sigil should not be empty.
+test/003_test.rb:2:1: C: Sorbet/HasSigil: Invalid Sorbet sigil `foobar`.
+test/004_test.rb:1:1: C: [Correctable] Sorbet/HasSigil: No Sorbet sigil found in file. Try a `typed: false` to start (you can also use `rubocop -a` to automatically add this).
+test/005_test.rb:2:1: C: Sorbet/HasSigil: Invalid Sorbet sigil `no`.
+test/006_test.rb:1:1: C: [Correctable] Sorbet/HasSigil: No Sorbet sigil found in file. Try a `typed: false` to start (you can also use `rubocop -a` to automatically add this).
+test/007_test.rb:1:1: C: [Correctable] Sorbet/HasSigil: No Sorbet sigil found in file. Try a `typed: false` to start (you can also use `rubocop -a` to automatically add this).
+
+==> autocorrect exit=1 740 <==
+test/000_test.rb:2:1: C: Sorbet/HasSigil: Sorbet sigil should not be empty.
+test/003_test.rb:2:1: C: Sorbet/HasSigil: Invalid Sorbet sigil `foobar`.
+test/004_test.rb:1:1: C: [Corrected] Sorbet/HasSigil: No Sorbet sigil found in file. Try a `typed: false` to start (you can also use `rubocop -a` to automatically add this).
+test/005_test.rb:2:1: C: Sorbet/HasSigil: Invalid Sorbet sigil `no`.
+test/006_test.rb:1:1: C: [Corrected] Sorbet/HasSigil: No Sorbet sigil found in file. Try a `typed: false` to start (you can also use `rubocop -a` to automatically add this).
+test/007_test.rb:1:1: C: [Corrected] Sorbet/HasSigil: No Sorbet sigil found in file. Try a `typed: false` to start (you can also use `rubocop -a` to automatically add this).
+
+==> corrected/test/004_test.rb 50 <==
+#!/usr/bin/env ruby
+# typed: false
+class Foo; end
+
+==> corrected/test/006_test.rb 60 <==
+# typed: false
+# frozen_string_literal: true
+class Foo; end
+
+==> corrected/test/007_test.rb 84 <==
+# typed: false
+# frozen_string_literal: true
+SOMETHING = <<~FOO
+  # typed: true
+FOO
+

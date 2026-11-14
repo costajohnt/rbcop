@@ -1,0 +1,26 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 63 <==
+sig { params(x: T.untyped).returns(T.untyped) }
+def foo(x)
+end
+
+==> test/001_test.rb 33 <==
+FOO = T.type_alias { T.untyped }
+
+==> test/002_test.rb 10 <==
+T.untyped
+
+==> test/003_test.rb 51 <==
+def foo(x)
+  T.bind(self, T::Array[T.untyped])
+end
+

@@ -1,0 +1,187 @@
+==> offenses exit=1 1143 <==
+test/000_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/001_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/002_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/003_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/004_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/005_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/006_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/006_test.rb:6:5: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/007_test.rb:1:1: C: [Correctable] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+
+==> autocorrect exit=0 1125 <==
+test/000_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/001_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/002_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/003_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/004_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/005_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/006_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/006_test.rb:6:5: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+test/007_test.rb:1:1: C: [Corrected] Sorbet/ForbidTStruct: Using `T::Struct` or its variants is deprecated in this codebase.
+
+==> corrected/test/000_test.rb 377 <==
+class Foo
+  #: untyped
+  attr_reader :a
+
+  #: singleton(Foo)
+  attr_reader :b
+
+  #: ^(Integer x) -> String
+  attr_reader :c
+
+  #: bot
+  attr_reader :d
+
+  #: untyped
+  attr_reader :e
+
+  #: (a: untyped, b: singleton(Foo), c: ^(Integer x) -> String, d: bot, e: untyped) -> void
+  def initialize(a:, b:, c:, d:, e:)
+    @a = a
+    @b = b
+    @c = c
+    @d = d
+    @e = e
+  end
+end
+
+==> corrected/test/001_test.rb 278 <==
+class Foo
+  #: Integer
+  attr_reader :foo
+
+  #: String
+  attr_accessor :bar
+
+  #: Symbol?
+  attr_reader :baz
+
+  #: (foo: Integer, ?bar: String, ?baz: Symbol?) -> void
+  def initialize(foo:, bar: "foo", baz: ->{ nil })
+    @foo = foo
+    @bar = bar
+    @baz = baz.call
+  end
+end
+
+==> corrected/test/002_test.rb 337 <==
+class Foo
+  #: bool
+  attr_reader :a
+
+  #: Range[Integer]
+  attr_reader :b
+
+  #: Hash[Symbol, bool]
+  attr_reader :c
+
+  #: Enumerable[Integer]
+  attr_reader :d
+
+  #: (a: bool, b: Range[Integer], c: Hash[Symbol, bool], d: Enumerable[Integer]) -> void
+  def initialize(a:, b:, c:, d:)
+    @a = a
+    @b = b
+    @c = c
+    @d = d
+  end
+end
+
+==> corrected/test/003_test.rb 119 <==
+class Foo
+  #: Integer
+  attr_reader :foo
+
+  #: (foo: Integer) -> void
+  def initialize(foo:)
+    @foo = foo
+  end
+end
+
+==> corrected/test/004_test.rb 375 <==
+class Foo
+  #: (Integer | String)
+  attr_reader :a
+
+  #: Array[String]
+  attr_reader :b
+
+  #: Hash[Symbol, Integer]
+  attr_reader :c
+
+  #: (Comparable & Numeric)
+  attr_reader :d
+
+  #: (a: (Integer | String), b: Array[String], c: Hash[Symbol, Integer], d: (Comparable & Numeric)) -> void
+  def initialize(a:, b:, c:, d:)
+    @a = a
+    @b = b
+    @c = c
+    @d = d
+  end
+end
+
+==> corrected/test/005_test.rb 196 <==
+class Foo
+  #: (Integer | String)?
+  attr_reader :a
+
+  #: Integer
+  attr_reader :b
+
+  #: (b: Integer, ?a: (Integer | String)?) -> void
+  def initialize(b:, a: nil)
+    @a = a
+    @b = b
+  end
+end
+
+==> corrected/test/006_test.rb 454 <==
+class Outer
+  module Namespace
+    extend T::Sig
+    prop :untouched, String
+
+    class Inner
+      #: String
+      attr_reader :name
+
+      #: (name: String) -> void
+      def initialize(name:)
+        @name = name
+      end
+    end
+  end
+
+  class Other
+    const :untouched, String
+  end
+
+  class << self
+    prop :untouched, String
+  end
+
+  #: String
+  attr_reader :name
+
+  #: (name: String) -> void
+  def initialize(name:)
+    @name = name
+  end
+end
+
+==> corrected/test/007_test.rb 143 <==
+class Foo
+  #: Integer
+  attr_reader :foo
+
+  #: (foo: Integer) -> void
+  def initialize(foo:)
+    @foo = foo
+  end
+
+  def some_method; end
+end
+

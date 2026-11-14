@@ -23216,6 +23216,1203 @@ L   YAML.safe_load("--- !ruby/object:Foo {}", [Foo])                    # Ruby 2
 L   YAML.safe_load("--- !ruby/object:Foo {}", permitted_classes: [Foo]) # Ruby 3.0- (Psych 3)
 L   YAML.load("--- !ruby/object:Foo {}", permitted_classes: [Foo])      # Ruby 3.1+ (Psych 4)
 L   YAML.dump(foo)
+C Sorbet/AllowIncompatibleOverride
+S Details
+L Disallows incompatible overrides in Sorbet signatures and RBS comments.
+L Using `allow_incompatible` suggests a violation of the Liskov
+L Substitution Principle, meaning that a subclass is not a valid
+L subtype of its superclass. This Cop prevents these design smells
+L from occurring.
+S Example
+L   # bad
+L   sig { override(allow_incompatible: true).void }
+L   def foo; end
+L 
+L   # @override(allow_incompatible: true)
+L   #: () -> void
+L   def foo; end
+L 
+L   # @override(allow_incompatible: true)
+L   #: String
+L   attr_reader :foo
+L 
+L   # good
+L   sig { override.void }
+L 
+L   # @override
+L   #: () -> void
+L   def foo; end
+C Sorbet/BindingConstantWithoutTypeAlias
+S Details
+L Disallows binding the return value of `T.any`, `T.all`, `T.enum`
+L to a constant directly. To bind the value, one must use `T.type_alias`.
+S Example
+L   # bad
+L   FooOrBar = T.any(Foo, Bar)
+L 
+L   # good
+L   FooOrBar = T.type_alias { T.any(Foo, Bar) }
+C Sorbet/BlockMethodDefinition
+S Details
+L Disallow defining methods in blocks, to prevent running into issues
+L caused by https://github.com/sorbet/sorbet/issues/3609.
+L 
+L As a workaround, use `define_method` instead.
+L 
+L The one exception is for `Class.new` blocks, as long as the result is
+L assigned to a constant (i.e. as long as it is not an anonymous class).
+L Another exception is for ActiveSupport::Concern `class_methods` blocks.
+S Example
+L   # bad
+L   yielding_method do
+L     def bad(args)
+L       # ...
+L     end
+L   end
+L 
+L   # bad
+L   Class.new do
+L     def bad(args)
+L       # ...
+L     end
+L   end
+L 
+L   # good
+L   yielding_method do
+L     define_method(:good) do |args|
+L       # ...
+L     end
+L   end
+L 
+L   # good
+L   MyClass = Class.new do
+L     def good(args)
+L       # ...
+L     end
+L   end
+L 
+L   # good
+L   module SomeConcern
+L     extend ActiveSupport::Concern
+L 
+L     class_methods do
+L       def good(args)
+L         # ...
+L       end
+L     end
+L   end
+C Sorbet/BuggyObsoleteStrictMemoization
+S Details
+L Checks for the a mistaken variant of the "obsolete memoization pattern" that used to be required
+L for older Sorbet versions in `#typed: strict` files. The mistaken variant would overwrite the ivar with `nil`
+L on every call, causing the memoized value to be discarded and recomputed on every call.
+L 
+L This cop will correct it to read from the ivar instead of `nil`, which will memoize it correctly.
+L 
+L The result of this correction will be the "obsolete memoization pattern", which can further be corrected by
+L the `Sorbet/ObsoleteStrictMemoization` cop.
+L 
+L See `Sorbet/ObsoleteStrictMemoization` for more details.
+S Safety
+L   If the computation being memoized had side effects, calling it only once (instead of once on every call
+L   to the affected method) can be observed, and might be a breaking change.
+S Example
+L   # bad
+L   sig { returns(Foo) }
+L   def foo
+L     # This `nil` is likely a mistake, causing the memoized value to be discarded and recomputed on every call.
+L     @foo = T.let(nil, T.nilable(Foo))
+L     @foo ||= some_computation
+L   end
+L 
+L   # good
+L   sig { returns(Foo) }
+L   def foo
+L     # This will now memoize the value as was likely intended, so `some_computation` is only ever called once.
+L     # ⚠️If `some_computation` has side effects, this might be a breaking change!
+L     @foo = T.let(@foo, T.nilable(Foo))
+L     @foo ||= some_computation
+L   end
+C Sorbet/CallbackConditionalsBinding
+S Details
+L Ensures that callback conditionals are bound to the right type
+L so that they are type checked properly.
+S Safety
+L Auto-correction is unsafe because other libraries define similar style callbacks as Rails, but don't always need
+L binding to the attached class. Auto-correcting those usages can lead to false positives and auto-correction
+L introduces new typing errors.
+S Example
+L   # bad
+L   class Post < ApplicationRecord
+L     before_create :do_it, if: -> { should_do_it? }
+L 
+L     def should_do_it?
+L       true
+L     end
+L   end
+L 
+L   # good
+L   class Post < ApplicationRecord
+L     before_create :do_it, if: -> {
+L       T.bind(self, Post)
+L       should_do_it?
+L     }
+L 
+L     def should_do_it?
+L       true
+L     end
+L   end
+C Sorbet/CapitalizedTypeParameters
+S Details
+L Ensure type parameters used in generic methods are always capitalized.
+S Example
+L   # bad
+L   sig { type_parameters(:x).params(a: T.type_parameter(:x)).void }
+L   def foo(a); end
+L 
+L   # good
+L   sig { type_parameters(:X).params(a: T.type_parameter(:X)).void }
+L   def foo(a: 1); end
+C Sorbet/CheckedTrueInSignature
+S Details
+L Disallows the usage of `checked(true)`. This usage could cause
+L confusion; it could lead some people to believe that a method would be checked
+L even if runtime checks have not been enabled on the class or globally.
+L Additionally, in the event where checks are enabled, `checked(true)` would
+L be redundant; only `checked(false)` or `soft` would change the behaviour.
+S Example
+L   # bad
+L   sig { void.checked(true) }
+L 
+L   # good
+L   sig { void }
+C Sorbet/ConstantsFromStrings
+S Details
+L Disallows the calls that are used to get constants fom Strings
+L such as +constantize+, +const_get+, and +constants+.
+L 
+L The goal of this cop is to make the code easier to statically analyze,
+L more IDE-friendly, and more predictable. It leads to code that clearly
+L expresses which values the constant can have.
+S Example
+L   # bad
+L   class_name.constantize
+L 
+L   # bad
+L   constants.detect { |c| c.name == "User" }
+L 
+L   # bad
+L   const_get(class_name)
+L 
+L   # good
+L   case class_name
+L   when "User"
+L     User
+L   else
+L     raise ArgumentError
+L   end
+L 
+L   # good
+L   { "User" => User }.fetch(class_name)
+C Sorbet/EmptyLineAfterSig
+S Details
+L Checks for blank lines after signatures.
+S Example
+L   # bad
+L   sig { void }
+L 
+L   def foo; end
+L 
+L   # good
+L   sig { void }
+L   def foo; end
+C Sorbet/EnforceSigilOrder
+S Details
+L Checks that the Sorbet sigil comes as the first magic comment in the file, after the encoding comment if any.
+L 
+L The expected order for magic comments is: (en)?coding, typed, warn_indent then frozen_string_literal.
+L 
+L The ordering is for consistency only, except for the encoding comment which must be first, if present.
+L 
+L For example, the following bad ordering:
+L 
+L ```ruby
+L # frozen_string_literal: true
+L # typed: true
+L class Foo; end
+L ```
+L 
+L Will be corrected as:
+L 
+L ```ruby
+L # typed: true
+L # frozen_string_literal: true
+L class Foo; end
+L ```
+L 
+L Only `(en)?coding`, `typed`, `warn_indent` and `frozen_string_literal` magic comments are considered,
+L other comments or magic comments are left in the same place.
+C Sorbet/EnforceSignatures
+S Details
+L Checks that every method definition and attribute accessor has a Sorbet signature.
+L 
+L It also suggest an autocorrect with placeholders so the following code:
+L 
+L ```
+L def foo(a, b, c); end
+L ```
+L 
+L Will be corrected as:
+L 
+L ```
+L sig { params(a: T.untyped, b: T.untyped, c: T.untyped).returns(T.untyped)
+L def foo(a, b, c); end
+L ```
+L 
+L You can configure the placeholders used by changing the following options:
+L 
+L * `ParameterTypePlaceholder`: placeholders used for parameter types (default: 'T.untyped')
+L * `ReturnTypePlaceholder`: placeholders used for return types (default: 'T.untyped')
+L * `Style`: signature style to enforce - 'sig' for sig blocks, 'rbs' for RBS comments, 'both' to allow either (default: 'sig')
+L * `AutocorrectStyle`: signature style to use when autocorrecting - 'sig' for sig blocks, 'rbs' for RBS comments (default: 'sig'). Only used when `Style` is 'both'.
+C Sorbet/EnforceSingleSigil
+S Details
+L Checks that there is only one Sorbet sigil in a given file
+L 
+L For example, the following class with two sigils
+L 
+L ```ruby
+L # typed: true
+L # typed: true
+L # frozen_string_literal: true
+L class Foo; end
+L ```
+L 
+L Will be corrected as:
+L 
+L ```ruby
+L # typed: true
+L # frozen_string_literal: true
+L class Foo; end
+L ```
+L 
+L Other comments or magic comments are left in place.
+C Sorbet/FalseSigil
+S Details
+L Makes the Sorbet `false` sigil mandatory in all files.
+C Sorbet/ForbidComparableTEnum
+S Details
+L Disallow including the `Comparable` module in `T::Enum`.
+S Example
+L  # bad
+L  class Priority < T::Enum
+L    include Comparable
+L 
+L    enums do
+L      High = new(3)
+L      Medium = new(2)
+L      Low = new(1)
+L    end
+L 
+L    def <=>(other)
+L      serialize <=> other.serialize
+L    end
+L  end
+C Sorbet/ForbidExtendTSigHelpersInShims
+S Details
+L Ensures RBI shims do not include a call to extend T::Sig
+L or to extend T::Helpers
+S Example
+L   # bad
+L   module SomeModule
+L     extend T::Sig
+L     extend T::Helpers
+L 
+L     sig { returns(String) }
+L     def foo; end
+L   end
+L 
+L   # good
+L   module SomeModule
+L     sig { returns(String) }
+L     def foo; end
+L   end
+C Sorbet/ForbidIncludeConstLiteral
+S Details
+L Correct `send` expressions in include statements by constant literals.
+L 
+L Sorbet, the static checker, is not (yet) able to support constructs on the
+L following form:
+L 
+L ```ruby
+L class MyClass
+L   include send_expr
+L end
+L ```
+L 
+L Multiple occurences of this can be found in Shopify's code base like:
+L 
+L ```ruby
+L include Rails.application.routes.url_helpers
+L ```
+L or
+L ```ruby
+L include Polaris::Engine.helpers
+L ```
+C Sorbet/ForbidMixesInClassMethods
+S Details
+L Check that code does not call `mixes_in_class_methods` from Sorbet `T::Helpers`.
+L 
+L Good:
+L 
+L ```
+L module M
+L   extend ActiveSupport::Concern
+L 
+L   class_methods do
+L     ...
+L   end
+L end
+L ```
+L 
+L Bad:
+L 
+L ```
+L module M
+L   extend T::Helpers
+L 
+L   module ClassMethods
+L     ...
+L   end
+L 
+L   mixes_in_class_methods(ClassMethods)
+L end
+L ```
+C Sorbet/ForbidRBIOutsideOfAllowedPaths
+S Details
+L Makes sure that RBI files are always located under the defined allowed paths.
+L 
+L Options:
+L 
+L * `AllowedPaths`: A list of the paths where RBI files are allowed (default: ["rbi/**", "sorbet/rbi/**"])
+S Example
+L   # bad
+L   # lib/some_file.rbi
+L   # other_file.rbi
+L 
+L   # good
+L   # rbi/external_interface.rbi
+L   # sorbet/rbi/some_file.rbi
+L   # sorbet/rbi/any/path/for/file.rbi
+C Sorbet/ForbidSig
+S Details
+L Check that definitions do not use a `sig` block.
+L 
+L Good:
+L 
+L ```
+L #: -> void
+L def foo; end
+L ```
+L 
+L Bad:
+L 
+L ```
+L sig { void }
+L def foo; end
+L ```
+C Sorbet/ForbidSigWithRuntime
+S Details
+L Check that definitions do not use a `sig` block.
+L 
+L Good:
+L 
+L ```
+L #: -> void
+L def foo; end
+L ```
+L 
+L Bad:
+L 
+L ```
+L T::Sig.sig { void }
+L def foo; end
+L ```
+C Sorbet/ForbidSigWithoutRuntime
+S Details
+L Check that `sig` is used instead of `T::Sig::WithoutRuntime.sig`.
+L 
+L Good:
+L 
+L ```
+L sig { void }
+L def foo; end
+L ```
+L 
+L Bad:
+L 
+L ```
+L T::Sig::WithoutRuntime.sig { void }
+L def foo; end
+L ```
+C Sorbet/ForbidTAbsurd
+S Details
+L Disallows using `T.absurd` anywhere.
+L Set `AutocorrectToRBS: true` to replace supported calls with RBS inline comments.
+S Example
+L   # bad
+L   T.absurd(foo)
+L 
+L   # good
+L   foo #: absurd
+C Sorbet/ForbidTAnyWithNil
+S Details
+L Detect and autocorrect `T.any(..., NilClass, ...)` to `T.nilable(...)`
+S Example
+L   # bad
+L   T.any(String, NilClass)
+L   T.any(NilClass, String)
+L   T.any(NilClass, Symbol, String)
+L 
+L   # good
+L   T.nilable(String)
+L   T.nilable(String)
+L   T.nilable(T.any(Symbol, String))
+C Sorbet/ForbidTAssertType
+S Details
+L Disallows using `T.assert_type!` anywhere.
+S Example
+L   # bad
+L   T.assert_type!(foo, Integer)
+L 
+L   # good
+L   raise unless foo.is_a?(Integer)
+L 
+L   # good
+L   assert_kind_of(Integer, foo)
+C Sorbet/ForbidTBind
+S Details
+L Disallows using `T.bind` anywhere.
+L Set `AutocorrectToRBS: true` to replace supported calls with RBS inline comments.
+S Example
+L   # bad
+L   T.bind(self, Integer)
+L 
+L   # good
+L   #: self as Integer
+C Sorbet/ForbidTBindInAssignment
+S Details
+L Disallows assigning the result of `T.bind`.
+L 
+L `T.bind` changes the type of its first argument and returns that argument.
+L Assigning its result can therefore unintentionally change the inferred type
+L of both the assignment target and the first argument.
+S Safety
+L   Auto-correction is unsafe because replacing `T.bind` with `T.cast`
+L   removes the scope-wide type rebind of the first argument. Code that
+L   relies on that narrowed type may no longer type-check.
+S Example
+L   # bad
+L   foo = T.bind(self, Integer)
+L 
+L   # good
+L   foo = T.cast(self, Integer)
+C Sorbet/ForbidTCast
+S Details
+L Disallows using `T.cast` anywhere.
+L Set `AutocorrectToRBS: true` to replace supported calls with RBS inline comments.
+S Example
+L   # bad
+L   T.cast(foo, Integer)
+L 
+L   # good
+L   foo #: as Integer
+C Sorbet/ForbidTCollectionInstantiation
+S Details
+L Disallows instantiating Sorbet collection types. Instantiate the Ruby
+L collection directly and declare its type separately when needed.
+L 
+L Checks `T::Array`, `T::Hash`, `T::Set`, `T::Range`,
+L `T::Enumerator`, `T::Enumerator::Lazy`, and `T::Enumerator::Chain`,
+L with or without type arguments.
+L 
+L Set `AutocorrectToRBS: true` to replace Sorbet constructors with Ruby
+L constructors. RBS inline type annotations are added only to assignments.
+L Assignments with an existing RBS annotation or an untranslatable type
+L are not autocorrected.
+L Empty Array and Hash constructors use literals unless arguments, blocks,
+L or comments inside the call need to be preserved.
+S Safety
+L   Autocorrection removes runtime evaluation of type arguments and changes
+L   constant lookup. RBS annotations require an RBS-aware type checker.
+S Example
+L   # bad
+L   T::Array[String].new
+L   T::Hash[Symbol, Integer].new
+L   T::Set[String].new
+L   T::Array.new
+L 
+L   # good
+L   Array.new
+L   Hash.new
+L   Set.new
+L   T.let(Array.new, T::Array[String])
+L   Set.new #: Set[String]
+S Example: AutocorrectToRBS: true
+L   # bad
+L   arr = T::Array[String].new
+L   items = T::Set[T.nilable(String)].new(values)
+L   consume(T::Array[String].new)
+L 
+L   # good
+L   arr = [] #: Array[String]
+L   items = Set.new(values) #: Set[String?]
+L   consume([])
+C Sorbet/ForbidTEnum
+S Details
+L Disallow using `T::Enum`.
+S Example
+L   # bad
+L   class MyEnum < T::Enum
+L     enums do
+L       A = new
+L       B = new
+L     end
+L   end
+L 
+L   # good
+L   class MyEnum
+L     A = "a"
+L     B = "b"
+L     C = "c"
+L   end
+C Sorbet/ForbidTHelpers
+S Details
+L Forbids `extend T::Helpers` and `include T::Helpers` in classes and modules.
+L 
+L This is useful when using RBS or RBS-inline syntax for type signatures,
+L where `T::Helpers` is not needed and including it is redundant.
+S Example
+L   # bad
+L   class Example
+L     extend T::Helpers
+L   end
+L 
+L   # bad
+L   module Example
+L     include T::Helpers
+L   end
+L 
+L   # good
+L   class Example
+L   end
+C Sorbet/ForbidTLet
+S Details
+L Disallows using `T.let` anywhere.
+L Set `AutocorrectToRBS: true` to replace supported calls with RBS inline comments.
+S Example
+L   # bad
+L   T.let(foo, Integer)
+L 
+L   # good
+L   foo #: Integer
+C Sorbet/ForbidTMust
+S Details
+L Disallows using `T.must` anywhere.
+L Set `AutocorrectToRBS: true` to replace supported calls with RBS inline comments.
+S Example
+L   # bad
+L   T.must(foo)
+L 
+L   # good
+L   foo #: as !nil
+C Sorbet/ForbidTSig
+S Details
+L Forbids `extend T::Sig` and `include T::Sig` in classes and modules.
+L 
+L This is useful when using RBS or RBS-inline syntax for type signatures,
+L where `T::Sig` is not needed and including it is redundant.
+S Example
+L   # bad
+L   class Example
+L     extend T::Sig
+L   end
+L 
+L   # bad
+L   module Example
+L     include T::Sig
+L   end
+L 
+L   # good
+L   class Example
+L   end
+C Sorbet/ForbidTStruct
+S Details
+L Disallow using `T::Struct` and `T::Props`.
+S Example
+L   # bad
+L   class MyStruct < T::Struct
+L     const :foo, String
+L     prop :bar, Integer, default: 0
+L 
+L     def some_method; end
+L   end
+L 
+L   # good
+L   class MyStruct
+L     extend T::Sig
+L 
+L     sig { returns(String) }
+L     attr_reader :foo
+L 
+L     sig { returns(Integer) }
+L     attr_accessor :bar
+L 
+L     sig { params(foo: String, bar: Integer) }
+L     def initialize(foo:, bar: 0)
+L       @foo = foo
+L       @bar = bar
+L     end
+L 
+L     def some_method; end
+L   end
+S Example: AutocorrectStyle: rbs
+L   # bad
+L   class MyStruct < T::Struct
+L     const :foo, String
+L     prop :bar, T.nilable(Integer), default: 0
+L   end
+L 
+L   # good
+L   class MyStruct
+L     #: String
+L     attr_reader :foo
+L 
+L     #: Integer?
+L     attr_accessor :bar
+L 
+L     #: (foo: String, ?bar: Integer?) -> void
+L     def initialize(foo:, bar: 0)
+L       @foo = foo
+L       @bar = bar
+L     end
+L   end
+C Sorbet/ForbidTTypeAlias
+S Details
+L Disallows using `T.type_alias` anywhere.
+L Set `AutocorrectToRBS: true` to replace standalone constant assignments with RBS type aliases.
+L Autocorrection is unsafe because it removes the Ruby constant. References to the
+L constant must be migrated separately to the lowercase RBS alias name.
+L Declarations containing RuboCop directives are not autocorrected.
+S Example
+L   # bad
+L   STRING_OR_INTEGER = T.type_alias { T.any(Integer, String) }
+L 
+L   # good
+L   #: type string_or_integer = Integer | String
+C Sorbet/ForbidTUnsafe
+S Details
+L Disallows using `T.unsafe` anywhere.
+L Set `AutocorrectToRBS: true` to replace supported calls with RBS inline comments.
+S Example
+L   # bad
+L   T.unsafe(foo)
+L 
+L   # good
+L   foo #: as untyped
+C Sorbet/ForbidTUntyped
+S Details
+L Disallows using `T.untyped` anywhere.
+S Example
+L   # bad
+L   sig { params(my_argument: T.untyped).void }
+L   def foo(my_argument); end
+L 
+L   # good
+L   sig { params(my_argument: String).void }
+L   def foo(my_argument); end
+C Sorbet/ForbidTypeAliasedShapes
+S Details
+L Disallows defining type aliases that contain shapes
+S Example
+L  # bad
+L  Foo = T.type_alias { { foo: Integer } }
+L 
+L  # good
+L  class Foo
+L    extend T::Sig
+L 
+L    sig { params(foo: Integer).void }
+L    def initialize(foo)
+L      @foo = foo
+L    end
+L  end
+C Sorbet/ForbidUntypedStructProps
+S Details
+L Disallows use of `T.untyped` or `T.nilable(T.untyped)`
+L as a prop type for `T::Struct` or `T::ImmutableStruct`.
+S Example
+L   # bad
+L   class SomeClass < T::Struct
+L     const :foo, T.untyped
+L     prop :bar, T.nilable(T.untyped)
+L   end
+L 
+L   # good
+L   class SomeClass < T::Struct
+L     const :foo, Integer
+L     prop :bar, T.nilable(String)
+L   end
+C Sorbet/HasSigil
+S Details
+L Makes the Sorbet typed sigil mandatory in all files.
+L 
+L Options:
+L 
+L * `SuggestedStrictness`: Sorbet strictness level suggested in offense messages (default: 'false')
+L * `MinimumStrictness`: If set, make offense if the strictness level in the file is below this one
+L 
+L If a `SuggestedStrictness` level is specified, it will be used in autocorrect.
+L If a `MinimumStrictness` level is specified, it will be used in offense messages and autocorrect.
+C Sorbet/IgnoreSigil
+S Details
+L Makes the Sorbet `ignore` sigil mandatory in all files.
+C Sorbet/ImplicitConversionMethod
+S Details
+L Disallows declaring implicit conversion methods.
+L Since Sorbet is a nominal (not structural) type system,
+L implicit conversion is currently unsupported.
+S Example
+L   # bad
+L   def to_str; end
+L 
+L   # good
+L   def to_str(x); end
+L 
+L   # bad
+L   def self.to_str; end
+L 
+L   # good
+L   def self.to_str(x); end
+L 
+L   # bad
+L   alias to_str to_s
+C Sorbet/KeywordArgumentOrdering
+S Details
+L Checks for the ordering of keyword arguments required by
+L sorbet-runtime. The ordering requires that all keyword arguments
+L are at the end of the parameters list, and all keyword arguments
+L with a default value must be after those without default values.
+S Example
+L   # bad
+L   sig { params(a: Integer, b: String).void }
+L   def foo(a: 1, b:); end
+L 
+L   # good
+L   sig { params(b: String, a: Integer).void }
+L   def foo(b:, a: 1); end
+C Sorbet/MultipleTEnumValues
+S Details
+L Disallow creating a `T::Enum` with less than two values.
+S Example
+L  # bad
+L  class ErrorMessages < T::Enum
+L    enums do
+L      ServerError = new("There was a server error.")
+L    end
+L  end
+L 
+L  # good
+L  class ErrorMessages < T::Enum
+L    enums do
+L      ServerError = new("There was a server error.")
+L      NotFound = new("The resource was not found.")
+L    end
+L  end
+C Sorbet/ObsoleteStrictMemoization
+S Details
+L Checks for the obsolete pattern for initializing instance variables that was required for older Sorbet
+L versions in `#typed: strict` files.
+L 
+L It's no longer required, as of Sorbet 0.5.10210
+L See https://sorbet.org/docs/type-assertions#put-type-assertions-behind-memoization
+S Example
+L   # bad
+L   sig { returns(Foo) }
+L   def foo
+L     @foo = T.let(@foo, T.nilable(Foo))
+L     @foo ||= Foo.new
+L   end
+L 
+L   # bad
+L   sig { returns(Foo) }
+L   def foo
+L     # This would have been a mistake, causing the memoized value to be discarded and recomputed on every call.
+L     @foo = T.let(nil, T.nilable(Foo))
+L     @foo ||= Foo.new
+L   end
+L 
+L   # good
+L   sig { returns(Foo) }
+L   def foo
+L     @foo ||= T.let(Foo.new, T.nilable(Foo))
+L   end
+C Sorbet/RedundantExtendTSig
+S Details
+L Forbids the use of redundant `extend T::Sig`. Only for use in
+L applications that monkey patch `Module.include(T::Sig)` globally,
+L which would make it redundant.
+S Safety
+L   This cop should not be enabled in applications that have not monkey
+L   patched `Module`.
+S Example
+L   # bad
+L   class Example
+L     extend T::Sig
+L     sig { void }
+L     def no_op; end
+L   end
+L 
+L   # good
+L   class Example
+L     sig { void }
+L     def no_op; end
+L   end
+C Sorbet/RedundantTLet
+S Details
+L Prevents unnecessary `T.let` where Sorbet infers the type automatically.
+L 
+L When a signature parameter is assigned to an instance variable in
+L `initialize`, the type is inferred from the signature.
+L 
+L When a constant is assigned a constructor call (`.new`), optionally
+L followed by `.freeze` (Sorbet 0.6.13304+), the type is inferred from
+L the class being instantiated. Generic classes (e.g. `Set`) are
+L excluded: Sorbet infers their constructor calls as applied types like
+L `T::Set[T.untyped]`, so an annotation is still required.
+S Example
+L  # bad
+L  sig { params(a: Integer) }
+L  def initialize(a)
+L    @a = T.let(a, Integer)
+L  end
+L 
+L  # good
+L  sig { params(a: Integer) }
+L  def initialize(a)
+L    @a = a
+L  end
+L 
+L  # good
+L  sig { params(a: Integer) }
+L  def initialize(a)
+L    @a = T.let(a, T.any(Integer, String))
+L  end
+L 
+L  # bad
+L  DEFAULT_PATH = T.let(Pathname.new("/usr/local").freeze, Pathname)
+L 
+L  # good
+L  DEFAULT_PATH = Pathname.new("/usr/local").freeze
+L 
+L  # good — generic classes are not inferred, so T.let is required
+L  LICENSES = T.let(Set.new(["mit"]).freeze, T::Set[String])
+L 
+L  # good — instance variables are only inferred from signature parameters
+L  @path = T.let(Pathname.new("/usr/local"), Pathname)
+C Sorbet/RedundantTLetForLiteral
+S Details
+L Checks for redundant `T.let` declarations and trailing RBS annotations
+L where the assigned value is a literal whose type Sorbet can infer
+L automatically.
+L 
+L Simple literals (strings, symbols, integers, floats, regexps) infer as
+L their own class. Regexp literals are the only simple literals whose
+L inference survives a `.freeze` call (Sorbet 0.6.13304+), so
+L `T.let(/foo/.freeze, Regexp)` is also redundant; other frozen simple
+L literals (e.g. `"hello".freeze`) are not inferred and still need `T.let`.
+L 
+L Array literals of simple literals are also inferred:
+L 
+L * A frozen array (`[...].freeze`) infers as a fixed-size tuple, which is
+L   a subtype of the annotated `T::Array`, so the annotation is redundant.
+L * An unfrozen array infers as `T::Array[<element type>]`. It is only
+L   flagged when that inferred type matches the annotation exactly, to
+L   avoid silently widening (e.g. `["a", nil]` infers a nilable element).
+L 
+L An array annotation whose direct element type is a fixed-size tuple is
+L preserved. Removing `T::Array[[...]]` or `Array[[...]]` can widen each
+L tuple into an array with a union element type and lose its positional
+L types.
+L 
+L Hashes are excluded: Sorbet infers hash literals as `T.untyped`, so the
+L annotation is required.
+S Example
+L   # bad
+L   MAX_RETRIES = T.let(3, Integer)
+L   GREETING = T.let("hello", String)
+L   RATE = T.let(1.5, Float)
+L   PATTERN = T.let(/foo/, Regexp)
+L   FROZEN_PATTERN = T.let(/foo/.freeze, Regexp)
+L   STATUS = T.let(:active, Symbol)
+L   SHELLS = T.let([:bash, :zsh].freeze, T::Array[Symbol])
+L   NAMES = T.let(["alice", "bob"], T::Array[String])
+L   RBS_GREETING = "hello" #: String
+L   RBS_NAMES = ["alice", "bob"] #: Array[String]
+L 
+L   # good
+L   MAX_RETRIES = 3
+L   GREETING = "hello"
+L   RATE = 1.5
+L   PATTERN = /foo/
+L   FROZEN_PATTERN = /foo/.freeze
+L   STATUS = :active
+L   SHELLS = [:bash, :zsh].freeze
+L   NAMES = ["alice", "bob"]
+L   RBS_GREETING = "hello"
+L   RBS_NAMES = ["alice", "bob"]
+L 
+L   # good — non-regexp frozen simple literals are not inferred
+L   GREETING = T.let("hello".freeze, String)
+L 
+L   # good — hash literals are inferred as T.untyped
+L   OPTIONS = T.let({ verbose: true }, T::Hash[Symbol, T::Boolean])
+L 
+L   # good — unfrozen array whose annotation is wider than the inferred type
+L   NAMES = T.let(["alice", "bob"], T::Array[T.nilable(String)])
+L 
+L   # good — the tuple element type is not inferred from the nested literals
+L   BUCKETS = T.let([[1, "one"]].freeze, T::Array[[Integer, String]])
+L   RBS_BUCKETS = [[1, "one"]].freeze #: Array[[Integer, String]]
+L 
+L   # good — type is not the literal's own class
+L   value = T.let("hello", T.nilable(String))
+L 
+L   # good — instance variables need T.let for Sorbet to track their type
+L   @max_retries = T.let(3, Integer)
+L 
+L   # good — local variables may need T.let so Sorbet allows reassignment
+L   count = T.let(0, Integer)
+C Sorbet/RuntimeOnFailureDependsOnChecked
+S Details
+L Checks that `on_failure` is not used without `checked(:tests)` or `checked(:always)`.
+S Example
+L   # bad
+L   sig { params(x: Integer).returns(Integer).on_failure(:raise) }
+L   def plus_one(x)
+L     x + 1
+L   end
+L 
+L   # good
+L   sig { params(x: Integer).returns(Integer).checked(:always).on_failure(:raise) }
+L   def plus_one(x)
+L     x + 1
+L   end
+C Sorbet/SelectByIsA
+S Details
+L Suggests using `grep` over `select` when using it only for type narrowing.
+S Example
+L   # bad
+L   strings_or_integers.select { |e| e.is_a?(String) }
+L   strings_or_integers.filter { |e| e.is_a?(String) }
+L   strings_or_integers.select { |e| e.kind_of?(String) }
+L 
+L   # good
+L   strings_or_integers.grep(String)
+C Sorbet/SetterReturnType
+S Details
+L Checks that setter methods (methods whose name ends with `=`)
+L declare a `void` return type, in either a Sorbet `sig` block or an
+L RBS inline comment signature.
+L 
+L Sorbet requires setter methods to return `void`. Declaring any other
+L return type violates the setter contract and is rejected by Sorbet
+L under `#typed: strict` and above.
+S Example
+L   # bad
+L   sig { params(name: String).returns(String) }
+L   def name=(name); end
+L 
+L   # good
+L   sig { params(name: String).void }
+L   def name=(name); end
+L 
+L   # bad
+L   #: (String) -> String
+L   def name=(name); end
+L 
+L   # good
+L   #: (String) -> void
+L   def name=(name); end
+L 
+L   # bad
+L   #: (
+L   #|   String name
+L   #| ) -> String
+L   def name=(name); end
+L 
+L   # good
+L   #: (
+L   #|   String name
+L   #| ) -> void
+L   def name=(name); end
+C Sorbet/SignatureBuildOrder
+S Details
+L Checks for the correct order of `sig` builder methods.
+L 
+L Options:
+L 
+L * `Order`: The order in which to enforce the builder methods are called.
+S Example
+L   # bad
+L   sig { void.abstract }
+L 
+L   # good
+L   sig { abstract.void }
+L 
+L   # bad
+L   sig { returns(Integer).params(x: Integer) }
+L 
+L   # good
+L   sig { params(x: Integer).returns(Integer) }
+C Sorbet/SingleLineRbiClassModuleDefinitions
+S Details
+L Ensures empty class/module definitions in RBI files are
+L done on a single line rather than being split across multiple lines.
+S Example
+L   # bad
+L   module SomeModule
+L   end
+L 
+L   # good
+L   module SomeModule; end
+C Sorbet/StrictSigil
+S Details
+L Makes the Sorbet `strict` sigil mandatory in all files.
+S Safety
+L   This cop is unsafe because Sorbet sigils may not exist yet when it is run.
+S Example
+L   # bad
+L   # typed: true
+L 
+L   # bad
+L   # typed: false
+L 
+L   # good
+L   # typed: strict
+C Sorbet/StrongSigil
+S Details
+L Makes the Sorbet `strong` sigil mandatory in all files.
+C Sorbet/StructPropName
+S Details
+L Checks that `T::Struct` property names use the configured style.
+L The supported styles and name filters match `Naming/MethodName`.
+S Example: EnforcedStyle: snake_case (default)
+L   # bad
+L   class User < T::Struct
+L     const :firstName, String
+L     prop :lastName, String
+L   end
+L 
+L   # good
+L   class User < T::Struct
+L     const :first_name, String
+L     prop :last_name, String
+L   end
+S Example: EnforcedStyle: camelCase
+L   # bad
+L   class User < T::Struct
+L     const :first_name, String
+L     prop :last_name, String
+L   end
+L 
+L   # good
+L   class User < T::Struct
+L     const :firstName, String
+L     prop :lastName, String
+L   end
+S Example: AllowedPatterns: ['\Alegacy[A-Z]']
+L   # good
+L   class User < T::Struct
+L     const :legacyName, String
+L   end
+S Example: ForbiddenIdentifiers: ['legacy_name']
+L   # bad
+L   class User < T::Struct
+L     const :legacy_name, String
+L   end
+S Example: ForbiddenPatterns: ['_v1\z']
+L   # bad
+L   class User < T::Struct
+L     const :name_v1, String
+L   end
+C Sorbet/TrueSigil
+S Details
+L Makes the Sorbet `true` sigil mandatory in all files.
+C Sorbet/TypeAliasName
+S Details
+L Ensures all constants used as `T.type_alias` are using CamelCase.
+S Example
+L   # bad
+L   FOO_OR_BAR = T.type_alias { T.any(Foo, Bar) }
+L 
+L   # good
+L   FooOrBar = T.type_alias { T.any(Foo, Bar) }
+C Sorbet/ValidGemVersionAnnotations
+S Details
+L Checks that gem versions in RBI annotations are properly formatted per the Bundler gem specification.
+S Example
+L   # bad
+L   # @version > not a version number
+L 
+L   # good
+L   # @version = 1
+L 
+L   # good
+L   # @version > 1.2.3
+L 
+L   # good
+L   # @version <= 4.3-preview
+C Sorbet/ValidSigil
+S Details
+L Checks that every Ruby file contains a valid Sorbet sigil.
+L Adapted from: https://gist.github.com/clarkdave/85aca4e16f33fd52aceb6a0a29936e52
+L 
+L Options:
+L 
+L * `RequireSigilOnAllFiles`: make offense if the Sorbet typed is not found in the file (default: false)
+L * `SuggestedStrictness`: Sorbet strictness level suggested in offense messages (default: 'false')
+L * `MinimumStrictness`: If set, make offense if the strictness level in the file is below this one
+L * `ExactStrictness`: If set, make offense if the strictness level in the file is different than this one
+L 
+L If an `ExactStrictness` level is specified, it will be used in offense messages and autocorrect.
+L If a `SuggestedStrictness` level is specified, it will be used in autocorrect.
+L Otherwise, if a `MinimumStrictness` level is specified, it will be used in offense messages and autocorrect.
+C Sorbet/VoidCheckedTests
+S Details
+L Disallows the usage of `.void.checked(:tests)`.
+L 
+L Using `.void` changes the value returned from the method, but only if
+L runtime type checking is enabled for the method. Methods marked `.void`
+L will return different values in tests compared with non-test
+L environments. This is particularly troublesome if branching on the
+L result of a `.void` method, because the returned value in test code
+L will be the truthy `VOID` value, while the non-test return value may be
+L falsy depending on the method's implementation.
+L 
+L - Use `.returns(T.anything).checked(:tests)` to keep the runtime type
+L   checking for the rest of the parameters.
+L - Use `.void.checked(:never)` if you are on an older version of Sorbet
+L   which does not have `T.anything` (meaning versions 0.5.10781 or
+L   earlier. Versions released after 2023-04-14 include `T.anything`.)
+S Example
+L   # bad
+L   sig { void.checked(:tests) }
+L 
+L   # good
+L   sig { void }
+L   sig { returns(T.anything).checked(:tests) }
+L   sig { void.checked(:never) }
 C Style/AccessModifierDeclarations
 S Details
 L Access modifiers should be declared to apply to a group of methods

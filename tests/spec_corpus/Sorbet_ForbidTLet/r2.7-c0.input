@@ -1,0 +1,33 @@
+==> .rubocop.yml 178 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/ForbidTLet:
+  AutocorrectToRBS: true
+
+==> test/000_test.rb 31 <==
+T.let(foo, String) #: Existing
+
+==> test/001_test.rb 87 <==
+# café
+T.let(foo, T.nilable(T::Array[String]))
+
+x = T.let(foo, T.any(String, Symbol))
+
+==> test/002_test.rb 31 <==
+T.let(foo, Bar) # some comment
+
+==> test/003_test.rb 17 <==
+T.let(foo, type)
+
+==> test/004_test.rb 28 <==
+consume(T.let(foo, String))
+
+==> test/005_test.rb 34 <==
+T.let(T.let(foo, String), Object)
+

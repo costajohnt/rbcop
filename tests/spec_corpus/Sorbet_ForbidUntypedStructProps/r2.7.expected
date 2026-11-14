@@ -1,0 +1,26 @@
+==> offenses exit=1 1012 <==
+test/001_test.rb:2:15: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/002_test.rb:2:14: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/004_test.rb:2:15: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/005_test.rb:2:15: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/006_test.rb:2:14: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/007_test.rb:2:15: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/007_test.rb:3:23: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/007_test.rb:4:22: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/007_test.rb:5:14: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/007_test.rb:6:22: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/008_test.rb:2:14: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+
+==> autocorrect exit=1 1012 <==
+test/001_test.rb:2:15: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/002_test.rb:2:14: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/004_test.rb:2:15: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/005_test.rb:2:15: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/006_test.rb:2:14: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/007_test.rb:2:15: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/007_test.rb:3:23: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/007_test.rb:4:22: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/007_test.rb:5:14: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/007_test.rb:6:22: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+test/008_test.rb:2:14: C: Sorbet/ForbidUntypedStructProps: Struct props cannot be T.untyped
+

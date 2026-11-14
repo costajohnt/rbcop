@@ -1,0 +1,78 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 124 <==
+# # typed: true
+# typed: false
+# typed: strict
+# frozen_string_literal: true
+# typed: strong
+# typed: ignore
+class Foo; end
+
+==> test/001_test.rb 0 <==
+
+==> test/002_test.rb 29 <==
+# typed: true
+class Foo; end
+
+==> test/003_test.rb 102 <==
+# typed: true
+# typed: false
+# frozen_string_literal: true
+# hello there
+# typed: true
+class Foo; end
+
+==> test/004_test.rb 122 <==
+# typed: true
+# typed: false
+# typed: strict
+# frozen_string_literal: true
+# typed: strong
+# typed: ignore
+class Foo; end
+
+==> test/005_test.rb 69 <==
+# typed: true
+#
+# Something something `# typed: true`
+class Foo; end
+
+==> test/006_test.rb 85 <==
+# typed: true
+# typed: true
+# typed: true
+# typed: true
+# typed: true
+class Foo; end
+
+==> test/007_test.rb 58 <==
+# typed: true
+# typed: false
+# typed: true
+class Foo; end
+
+==> test/008_test.rb 44 <==
+# typed: true
+# typed: false
+class Foo; end
+
+==> test/009_test.rb 62 <==
+# # typed: true
+# typed: false
+# # typed: true
+class Foo; end
+
+==> test/010_test.rb 59 <==
+# typed: true
+# frozen_string_literal: true
+class Foo; end
+

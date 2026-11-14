@@ -1,0 +1,69 @@
+==> offenses exit=1 1677 <==
+test/001_test.rb:1:1: C: [Correctable] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/002_test.rb:1:1: C: [Correctable] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/004_test.rb:1:1: C: [Correctable] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/005_test.rb:1:1: C: [Correctable] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/006_test.rb:1:1: C: [Correctable] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/008_test.rb:1:1: C: [Correctable] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/010_test.rb:1:1: C: [Correctable] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/011_test.rb:1:1: C: [Correctable] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/012_test.rb:1:1: C: [Correctable] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/013_test.rb:1:1: C: [Correctable] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/014_test.rb:1:1: C: [Correctable] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/015_test.rb:1:1: C: [Correctable] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/016_test.rb:1:1: C: [Correctable] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+
+==> autocorrect exit=0 1651 <==
+test/001_test.rb:1:1: C: [Corrected] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/002_test.rb:1:1: C: [Corrected] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/004_test.rb:1:1: C: [Corrected] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/005_test.rb:1:1: C: [Corrected] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/006_test.rb:1:1: C: [Corrected] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/008_test.rb:1:1: C: [Corrected] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/010_test.rb:1:1: C: [Corrected] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/011_test.rb:1:1: C: [Corrected] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/012_test.rb:1:1: C: [Corrected] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/013_test.rb:1:1: C: [Corrected] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/014_test.rb:1:1: C: [Corrected] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/015_test.rb:1:1: C: [Corrected] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+test/016_test.rb:1:1: C: [Corrected] Sorbet/SelectByIsA: Use `grep` instead of `select` when using it only for type narrowing.
+
+==> corrected/test/001_test.rb 33 <==
+strings_or_integers.grep(String)
+
+==> corrected/test/002_test.rb 33 <==
+strings_or_integers.grep(String)
+
+==> corrected/test/004_test.rb 33 <==
+strings_or_integers.grep(String)
+
+==> corrected/test/005_test.rb 34 <==
+strings_or_integers&.grep(String)
+
+==> corrected/test/006_test.rb 33 <==
+strings_or_integers.grep(String)
+
+==> corrected/test/008_test.rb 34 <==
+strings_or_integers&.grep(String)
+
+==> corrected/test/010_test.rb 33 <==
+strings_or_integers.grep(String)
+
+==> corrected/test/011_test.rb 34 <==
+strings_or_integers&.grep(String)
+
+==> corrected/test/012_test.rb 33 <==
+strings_or_integers.grep(String)
+
+==> corrected/test/013_test.rb 34 <==
+strings_or_integers&.grep(String)
+
+==> corrected/test/014_test.rb 33 <==
+strings_or_integers.grep(String)
+
+==> corrected/test/015_test.rb 34 <==
+strings_or_integers&.grep(String)
+
+==> corrected/test/016_test.rb 34 <==
+strings_or_integers&.grep(String)
+
