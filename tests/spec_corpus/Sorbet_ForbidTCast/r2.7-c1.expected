@@ -1,0 +1,8 @@
+==> offenses exit=1 132 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTCast: Do not use `T.cast`.
+test/000_test.rb:3:5: C: Sorbet/ForbidTCast: Do not use `T.cast`.
+
+==> autocorrect exit=1 132 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTCast: Do not use `T.cast`.
+test/000_test.rb:3:5: C: Sorbet/ForbidTCast: Do not use `T.cast`.
+

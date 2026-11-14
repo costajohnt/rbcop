@@ -1,0 +1,14 @@
+==> offenses exit=1 480 <==
+test/000_test.rb:1:1: C: Sorbet/MultipleTEnumValues: `T::Enum` should have at least two values.
+test/001_test.rb:2:3: C: Sorbet/MultipleTEnumValues: `T::Enum` should have at least two values.
+test/004_test.rb:1:1: C: Sorbet/MultipleTEnumValues: `T::Enum` should have at least two values.
+test/005_test.rb:1:1: C: Sorbet/MultipleTEnumValues: `T::Enum` should have at least two values.
+test/006_test.rb:1:1: C: Sorbet/MultipleTEnumValues: `T::Enum` should have at least two values.
+
+==> autocorrect exit=1 480 <==
+test/000_test.rb:1:1: C: Sorbet/MultipleTEnumValues: `T::Enum` should have at least two values.
+test/001_test.rb:2:3: C: Sorbet/MultipleTEnumValues: `T::Enum` should have at least two values.
+test/004_test.rb:1:1: C: Sorbet/MultipleTEnumValues: `T::Enum` should have at least two values.
+test/005_test.rb:1:1: C: Sorbet/MultipleTEnumValues: `T::Enum` should have at least two values.
+test/006_test.rb:1:1: C: Sorbet/MultipleTEnumValues: `T::Enum` should have at least two values.
+

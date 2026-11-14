@@ -1,4 +1,4 @@
-use crate::cops::sorbet_enforce_signatures::is_signature;
+use crate::helpers::sorbet_signature::signature;
 use crate::cops::sorbet_obsolete_strict_memoization::t_send;
 use crate::helpers::sorbet_t_let::{replace_t_let, statically_scoped};
 use crate::helpers::sorbet_target_version::enabled_for;
@@ -136,7 +136,7 @@ impl RedundantTLet {
         let stmts: Vec<Node> = stmts.body().iter().collect();
         let start = node.location().start_offset();
         let Some(i) = stmts.iter().position(|s| s.location().start_offset() == start) else { return };
-        if i == 0 || !is_signature(&stmts[i - 1]) {
+        if i == 0 || signature(&stmts[i - 1]).is_none() {
             return;
         }
         let Some(pairs) = sig_params(&stmts[i - 1]) else { return };

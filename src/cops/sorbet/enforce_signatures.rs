@@ -1,6 +1,7 @@
 use crate::cops::sorbet_redundant_t_let::def_params;
 use crate::helpers::comment_association::{self, Associator};
 use crate::helpers::sorbet_rbi_type::{self as rbi, Error, MethodParam, Tr, Type};
+use crate::helpers::sorbet_signature::{Sig, signature};
 use crate::helpers::whole_lines::range_by_whole_lines;
 use crate::prelude::*;
 use std::collections::HashMap;
@@ -15,56 +16,6 @@ const MSG_BOTH: &str = "Each method is required to have a signature.";
 const MSG_USE_SIG: &str = "Use sig block signatures rather than RBS signature comments.";
 const MSG_SIG: &str = "Each method is required to have a sig block signature.";
 
-// A minimal port of rubocop-sorbet's SignatureHelp (batch S2 owns the shared `sorbet_signature`
-// helper; RedundantTLet uses this one too until it lands).
-
-/// `(const (const {nil? cbase} :T) :Sig)`
-fn t_sig(node: &Node) -> bool {
-    node.as_constant_path_node().is_some_and(|p| {
-        p.name().is_some_and(|n| n.as_slice() == b"Sig") && p.parent().is_some_and(|q| helpers::parser_parent::is_top_const(&q, "T"))
-    })
-}
-
-/// `(const (const (const {nil? cbase} :T) :Sig) :WithoutRuntime)`
-fn t_sig_without_runtime(node: &Node) -> bool {
-    node.as_constant_path_node().is_some_and(|p| {
-        p.name().is_some_and(|n| n.as_slice() == b"WithoutRuntime") && p.parent().is_some_and(|q| t_sig(&q))
-    })
-}
-
-/// SignatureHelp `signature?`: `sig { }` / `sig(:final) { }` with no block parameters, bare or on
-/// `T::Sig` / `T::Sig::WithoutRuntime`. Some(true) for the `T::Sig` receiver (`sig_with_runtime?`).
-pub fn signature_kind(node: &Node) -> Option<bool> {
-    let c = node.as_call_node()?;
-    let b = c.block()?.as_block_node()?;
-    if is_csend(&c) || method_name(&c) != "sig" {
-        return None;
-    }
-    let no_params = match b.parameters() {
-        None => true,
-        Some(p) => p.as_block_parameters_node().is_some_and(|bp| bp.parameters().is_none() && bp.locals().iter().next().is_none()),
-    };
-    if !no_params {
-        return None;
-    }
-    let args = call_args(&c);
-    match args.as_slice() {
-        [] => {}
-        [a] if a.as_symbol_node().is_some_and(|s| s.unescaped() == b"final" && s.opening_loc().is_some()) => {}
-        _ => return None,
-    }
-    match c.receiver() {
-        None => Some(false),
-        Some(r) if t_sig(&r) => Some(true),
-        Some(r) if t_sig_without_runtime(&r) => Some(false),
-        _ => None,
-    }
-}
-
-pub fn is_signature(node: &Node) -> bool {
-    signature_kind(node).is_some()
-}
-
 /// `(send nil? {:attr_reader :attr_writer :attr_accessor} ...)`
 fn accessor<'pr>(node: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
     node.as_call_node().filter(|c| {
@@ -74,6 +25,8 @@ fn accessor<'pr>(node: &Node<'pr>) -> Option<ruby_prism::CallNode<'pr>> {
 
 type Scope = Option<(usize, usize, usize)>;
 
+// The cop's per-file state holds the sig blocks by scope, so it keeps its own comment association
+// rather than sorbet_signature::signatures_before (which keeps its map in the cop state).
 #[derive(Default)]
 struct State {
     sigs: HashMap<Scope, Vec<(usize, usize)>>,
@@ -193,7 +146,7 @@ impl Cop for EnforceSignatures {
         let anc = cx.ancestors;
         if node.as_call_node().is_some() {
             // on_block (SignatureHelp) runs before on_send.
-            if is_signature(node) {
+            if signature(node).is_some() {
                 let sc = scope(anc, anc.len());
                 cx.state::<State>().sigs.entry(sc).or_default().push(range(node));
             }
@@ -377,7 +330,7 @@ impl EnforceSignatures {
         let mut source = src.slice(s, e).to_string();
         for &(ss, _) in sigs.iter().rev() {
             let Some(n) = src.node_at(*sigs.iter().find(|r| r.0 == ss).unwrap()) else { return Err(Tr::Unsupported) };
-            if signature_kind(n) == Some(true) {
+            if signature(n) == Some(Sig::WithRuntime) {
                 let c = n.as_call_node().unwrap();
                 let recv = c.receiver().unwrap().location().start_offset();
                 let sel = c.message_loc().unwrap().start_offset();

@@ -1,0 +1,10 @@
+==> offenses exit=1 198 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTBind: Do not use `T.bind`.
+test/000_test.rb:3:5: C: Sorbet/ForbidTBind: Do not use `T.bind`.
+test/000_test.rb:5:1: C: Sorbet/ForbidTBind: Do not use `T.bind`.
+
+==> autocorrect exit=1 198 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTBind: Do not use `T.bind`.
+test/000_test.rb:3:5: C: Sorbet/ForbidTBind: Do not use `T.bind`.
+test/000_test.rb:5:1: C: Sorbet/ForbidTBind: Do not use `T.bind`.
+

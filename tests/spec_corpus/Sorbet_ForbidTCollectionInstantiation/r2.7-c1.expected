@@ -1,0 +1,6 @@
+==> offenses exit=1 138 <==
+test/000_test.rb:1:7: C: Sorbet/ForbidTCollectionInstantiation: Instantiate Ruby collections directly instead of Sorbet collection types.
+
+==> autocorrect exit=1 138 <==
+test/000_test.rb:1:7: C: Sorbet/ForbidTCollectionInstantiation: Instantiate Ruby collections directly instead of Sorbet collection types.
+

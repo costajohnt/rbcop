@@ -1,0 +1,51 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 81 <==
+module MyModule
+  def hello; end
+end
+
+module AnotherModule
+  def world
+  end
+end
+
+==> test/001_test.rb 48 <==
+module MyModule; end
+
+module AnotherModule; end
+
+==> test/002_test.rb 95 <==
+module MyModule
+end
+
+module SecondModule
+
+
+end
+
+module ThirdModule
+  def some_method
+  end
+end
+
+==> test/003_test.rb 62 <==
+class MyClass; end
+
+class AnotherClass < SomeParentClass; end
+
+==> test/004_test.rb 60 <==
+class MyClass
+end
+
+class AnotherClass < SomeParentClass
+end
+

@@ -1,0 +1,28 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 20 <==
+def self.to_int
+end
+
+==> test/001_test.rb 29 <==
+alias_method :to_hash, :to_h
+
+==> test/002_test.rb 20 <==
+def to_int(foo)
+end
+
+==> test/003_test.rb 18 <==
+alias to_str to_s
+
+==> test/004_test.rb 15 <==
+def to_ary
+end
+

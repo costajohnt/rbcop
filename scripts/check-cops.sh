@@ -29,8 +29,7 @@ case ",$cops," in *,Lint/RedundantCopDisableDirective,*) only= ;; esac
 norm() { grep -E "$pattern" | LC_ALL=C sort; }
 # Files whose differences are documented gaps (scripts/check-skip.txt) are left out on both sides.
 unskipped() { if [ -s "$1" ]; then grep -vF -f "$1"; else cat; fi; }
-
-# Offenses on stdin except those of the (cop, file) pairs in $1 (an oracle's .crashes file).
+# Offenses not in a crash-listed (cop, file) pair (the oracle's .crashes, tab-separated).
 uncrashed() {
   awk -F'\t' 'FILENAME == ARGV[1] { skip[$1 "\t" $2] = 1; next }
     { path = $0; sub(/:[0-9]+:[0-9]+:[0-9]+:[0-9]+: .*/, "", path)
@@ -40,9 +39,9 @@ uncrashed() {
 
 status=0
 for c in $corpora; do
-  # Where a RuboCop cop crashed, its offenses in that file are not compared: the crash loses
-  # what it was inspecting (often the whole file, sometimes one node), so both sides drop that
-  # (cop, file).
+  # Where a RuboCop cop crashed, what it reported for that (cop, file) depends on where it raised: it
+  # keeps the offenses from nodes it finished before the crash (Sorbet/ImplicitConversionMethod raising
+  # on a later `alias_method`) or loses them all. Neither side's offenses are compared there.
   crashes="$oracle_root/$c.txt.crashes"
   [ -f "$crashes" ] || crashes=/dev/null
   # ALLOW_EMPTY_ORACLE=1: a project RuboCop leaves clean (its own config) has an empty oracle.

@@ -54,8 +54,8 @@ the gate skips.
 | Batch | Cops | Oracle offenses | Helpers it owns | Status |
 |---|---:|---:|---|---|
 | S1 | 9 | 257,155 | `sorbet_sigil` | ported |
-| S2 | 22 | 8,605 | `sorbet_signature`, `sorbet_t_enum`, `sorbet_gem_version` | to do |
-| S3 | 24 | 12,598 | `sorbet_rbs_assertion` | to do |
+| S2 | 22 | 8,605 | `sorbet_signature`, `sorbet_t_enum`, `sorbet_gem_version` | ported |
+| S3 | 24 | 12,598 | `sorbet_rbs_assertion` | ported |
 | S4 | 8 | 146,088 | `sorbet_target_version`, `sorbet_t_let`, `sorbet_rbi_type` | ported |
 
 The S4 row leaves out the Style/MutableConstant and Lint/Void patches (ported with S4; 1,697 and 317
@@ -73,52 +73,52 @@ gate leaves out on both sides.
 | Sorbet/StrongSigil | S1 | 44,341 | ported |
 | Sorbet/TrueSigil | S1 | 42,598 | ported |
 | Sorbet/ValidSigil | S1 | 0 | ported |
-| Sorbet/AllowIncompatibleOverride | S2 | 0 | fallback |
-| Sorbet/CapitalizedTypeParameters | S2 | 0 | fallback |
-| Sorbet/CheckedTrueInSignature | S2 | 0 | fallback |
-| Sorbet/EmptyLineAfterSig | S2 | 2 | fallback |
-| Sorbet/ForbidComparableTEnum | S2 | 0 | fallback |
-| Sorbet/ForbidExtendTSigHelpersInShims | S2 | 0 | fallback |
-| Sorbet/ForbidRBIOutsideOfAllowedPaths | S2 | 0 | fallback |
-| Sorbet/ForbidSig | S2 | 8,408 | fallback |
-| Sorbet/ForbidSigWithRuntime | S2 | 0 | fallback |
-| Sorbet/ForbidSigWithoutRuntime | S2 | 21 | fallback |
-| Sorbet/ForbidTEnum | S2 | 3 | fallback |
-| Sorbet/ForbidTHelpers | S2 | 114 | fallback |
-| Sorbet/ForbidTSig | S2 | 6 | fallback |
-| Sorbet/KeywordArgumentOrdering | S2 | 0 | fallback |
-| Sorbet/MultipleTEnumValues | S2 | 1 | fallback |
-| Sorbet/RedundantExtendTSig | S2 | 4 | fallback |
-| Sorbet/RuntimeOnFailureDependsOnChecked | S2 | 0 | fallback |
-| Sorbet/SetterReturnType | S2 | 0 | fallback |
-| Sorbet/SignatureBuildOrder | S2 | 0 | fallback |
-| Sorbet/SingleLineRbiClassModuleDefinitions | S2 | 0 | fallback |
-| Sorbet/ValidGemVersionAnnotations | S2 | 46 | fallback |
-| Sorbet/VoidCheckedTests | S2 | 0 | fallback |
-| Sorbet/BindingConstantWithoutTypeAlias | S3 | 0 | fallback |
-| Sorbet/BlockMethodDefinition | S3 | 8,611 | fallback |
-| Sorbet/CallbackConditionalsBinding | S3 | 89 | fallback |
-| Sorbet/ConstantsFromStrings | S3 | 417 | fallback |
-| Sorbet/ForbidIncludeConstLiteral | S3 | 95 | fallback |
-| Sorbet/ForbidMixesInClassMethods | S3 | 1 | fallback |
-| Sorbet/ForbidSuperclassConstLiteral | S3 | 1,079 | fallback |
-| Sorbet/ForbidTAbsurd | S3 | 14 | fallback |
-| Sorbet/ForbidTAnyWithNil | S3 | 0 | fallback |
-| Sorbet/ForbidTAssertType | S3 | 0 | fallback |
-| Sorbet/ForbidTBind | S3 | 978 | fallback |
-| Sorbet/ForbidTBindInAssignment | S3 | 0 | fallback |
-| Sorbet/ForbidTCast | S3 | 355 | fallback |
-| Sorbet/ForbidTCollectionInstantiation | S3 | 0 | fallback |
-| Sorbet/ForbidTMust | S3 | 0 | fallback |
-| Sorbet/ForbidTUnsafe | S3 | 0 | fallback |
-| Sorbet/ForbidTUntyped | S3 | 822 | fallback |
-| Sorbet/ForbidTypeAliasedShapes | S3 | 12 | fallback |
-| Sorbet/ForbidUntypedStructProps | S3 | 0 | fallback |
-| Sorbet/ImplicitConversionMethod | S3 | 109 (25 crashes) | fallback |
-| Sorbet/Refinement | S3 | 6 (4 crashes) | fallback |
-| Sorbet/SelectByIsA | S3 | 10 | fallback |
-| Sorbet/StructPropName | S3 | 0 | fallback |
-| Sorbet/TypeAliasName | S3 | 0 | fallback |
+| Sorbet/AllowIncompatibleOverride | S2 | 0 | ported |
+| Sorbet/CapitalizedTypeParameters | S2 | 0 | ported |
+| Sorbet/CheckedTrueInSignature | S2 | 0 | ported |
+| Sorbet/EmptyLineAfterSig | S2 | 2 | ported |
+| Sorbet/ForbidComparableTEnum | S2 | 0 | ported |
+| Sorbet/ForbidExtendTSigHelpersInShims | S2 | 0 | ported |
+| Sorbet/ForbidRBIOutsideOfAllowedPaths | S2 | 0 | ported |
+| Sorbet/ForbidSig | S2 | 8,408 | ported |
+| Sorbet/ForbidSigWithRuntime | S2 | 0 | ported |
+| Sorbet/ForbidSigWithoutRuntime | S2 | 21 | ported |
+| Sorbet/ForbidTEnum | S2 | 3 | ported |
+| Sorbet/ForbidTHelpers | S2 | 114 | ported |
+| Sorbet/ForbidTSig | S2 | 6 | ported |
+| Sorbet/KeywordArgumentOrdering | S2 | 0 | ported |
+| Sorbet/MultipleTEnumValues | S2 | 1 | ported |
+| Sorbet/RedundantExtendTSig | S2 | 4 | ported |
+| Sorbet/RuntimeOnFailureDependsOnChecked | S2 | 0 | ported |
+| Sorbet/SetterReturnType | S2 | 0 | ported |
+| Sorbet/SignatureBuildOrder | S2 | 0 | ported |
+| Sorbet/SingleLineRbiClassModuleDefinitions | S2 | 0 | ported |
+| Sorbet/ValidGemVersionAnnotations | S2 | 46 | ported |
+| Sorbet/VoidCheckedTests | S2 | 0 | ported |
+| Sorbet/BindingConstantWithoutTypeAlias | S3 | 0 | ported |
+| Sorbet/BlockMethodDefinition | S3 | 8,611 | ported |
+| Sorbet/CallbackConditionalsBinding | S3 | 89 | ported |
+| Sorbet/ConstantsFromStrings | S3 | 417 | ported |
+| Sorbet/ForbidIncludeConstLiteral | S3 | 95 | ported |
+| Sorbet/ForbidMixesInClassMethods | S3 | 1 | ported |
+| Sorbet/ForbidSuperclassConstLiteral | S3 | 1,079 | ported |
+| Sorbet/ForbidTAbsurd | S3 | 14 | ported |
+| Sorbet/ForbidTAnyWithNil | S3 | 0 | ported |
+| Sorbet/ForbidTAssertType | S3 | 0 | ported |
+| Sorbet/ForbidTBind | S3 | 978 | ported |
+| Sorbet/ForbidTBindInAssignment | S3 | 0 | ported |
+| Sorbet/ForbidTCast | S3 | 355 | ported |
+| Sorbet/ForbidTCollectionInstantiation | S3 | 0 | ported |
+| Sorbet/ForbidTMust | S3 | 0 | ported |
+| Sorbet/ForbidTUnsafe | S3 | 0 | ported |
+| Sorbet/ForbidTUntyped | S3 | 822 | ported |
+| Sorbet/ForbidTypeAliasedShapes | S3 | 12 | ported |
+| Sorbet/ForbidUntypedStructProps | S3 | 0 | ported |
+| Sorbet/ImplicitConversionMethod | S3 | 109 (25 crashes) | ported |
+| Sorbet/Refinement | S3 | 6 (4 crashes) | ported |
+| Sorbet/SelectByIsA | S3 | 10 | ported |
+| Sorbet/StructPropName | S3 | 0 | ported |
+| Sorbet/TypeAliasName | S3 | 0 | ported |
 | Sorbet/BuggyObsoleteStrictMemoization | S4 | 0 | ported |
 | Sorbet/EnforceSignatures | S4 | 143,768 (16 crashes) | ported |
 | Sorbet/ForbidTLet | S4 | 2,199 | ported |

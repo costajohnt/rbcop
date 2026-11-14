@@ -1,0 +1,49 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 111 <==
+T::Sig::WithoutRuntime.sig(:final) do
+  params(
+    x: A,
+    y: B,
+  ).returns(C)
+end
+def self.foo(x, y); end
+
+==> test/001_test.rb 33 <==
+T::Sig.sig { void }
+def foo; end
+
+==> test/002_test.rb 49 <==
+T::Sig::WithoutRuntime.sig { void }
+def foo; end
+
+==> test/003_test.rb 26 <==
+sig { void }
+def foo; end
+
+==> test/004_test.rb 126 <==
+T::
+  Sig::
+    WithoutRuntime
+      .sig(:final) do
+  params(
+    x: A,
+    y: B,
+  ).returns(C)
+end
+def self.foo(x, y); end
+
+==> test/005_test.rb 62 <==
+T::Sig::WithoutRuntime.sig do
+  void
+end
+def self.foo(x); end
+

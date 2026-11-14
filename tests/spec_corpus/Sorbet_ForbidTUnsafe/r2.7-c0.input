@@ -1,0 +1,40 @@
+==> .rubocop.yml 181 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/ForbidTUnsafe:
+  AutocorrectToRBS: true
+
+==> test/000_test.rb 29 <==
+T.unsafe(foo) #: as Existing
+
+==> test/001_test.rb 56 <==
+consume(*T.unsafe(values))
+consume(**T.unsafe(options))
+
+==> test/002_test.rb 29 <==
+T.unsafe(foo) # some comment
+
+==> test/003_test.rb 41 <==
+assert_raises { consume(T.unsafe(foo)) }
+
+==> test/004_test.rb 141 <==
+consume(T.unsafe(foo))
+consume(first, T.unsafe(foo), last)
+consume(value: T.unsafe(foo))
+consume(first, T.unsafe("already #: marker"), last)
+
+==> test/005_test.rb 41 <==
+# café
+T.unsafe(foo)
+
+x = T.unsafe(foo)
+
+==> test/006_test.rb 48 <==
+consume(**T.unsafe(required: value, **options))
+

@@ -1,0 +1,182 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 63 <==
+yielding_method do
+  puts _1
+
+  def bad_method(args)
+  end
+end
+
+==> test/001_test.rb 137 <==
+module SomeConcern
+  extend ::ActiveSupport::Concern
+
+  class_methods do
+    def good_method(args)
+      args.present?
+    end
+  end
+end
+
+==> test/002_test.rb 63 <==
+yielding_method do
+  def example
+    # abc
+    # def
+  end
+end
+
+==> test/003_test.rb 98 <==
+class SomeClass
+  class_methods do
+    def bad_method(args)
+      args.present?
+    end
+  end
+end
+
+==> test/004_test.rb 100 <==
+module SomeModule
+  class_methods do
+    def bad_method(args)
+      args.present?
+    end
+  end
+end
+
+==> test/005_test.rb 141 <==
+yielding_method do
+  def bad_method(arg0, arg1 = 1, *args, foo:, bar: nil, **kwargs, &block)
+    if arg0
+      arg0 + arg1
+    end
+  end
+end
+
+==> test/006_test.rb 46 <==
+Class.new do
+  def bad_method(args)
+  end
+end
+
+==> test/007_test.rb 152 <==
+            yielding_method do
+              def example
+                <<EOF
+This is a test
+with multiple lines
+EOF
+              end
+            end
+
+==> test/008_test.rb 84 <==
+yielding_method do
+  def bad_method
+    if arg0
+      arg0 + arg1
+    end
+  end
+end
+
+==> test/009_test.rb 39 <==
+yielding_method do
+  def nome; end
+end
+
+==> test/010_test.rb 42 <==
+class MyClass
+  def good_method
+  end
+end
+
+==> test/011_test.rb 72 <==
+yielding_method do
+  def example
+    <<~XML
+      abc
+    XML
+  end
+end
+
+==> test/012_test.rb 57 <==
+yielding_method do
+  def self.bad_method(args)
+  end
+end
+
+==> test/013_test.rb 53 <==
+yielding_method do
+  def example
+    # abc
+  end
+end
+
+==> test/014_test.rb 171 <==
+module OuterModule
+  extend ActiveSupport::Concern
+
+  module InnerModule
+    class_methods do
+      def bad_method(args)
+        args.present?
+      end
+    end
+  end
+end
+
+==> test/015_test.rb 137 <==
+module SomeConcern
+  extend ActiveSupport::Concern
+
+  some_other_block do
+    def bad_method(args)
+      args.present?
+    end
+  end
+end
+
+==> test/016_test.rb 135 <==
+module SomeConcern
+  extend ActiveSupport::Concern
+
+  class_methods do
+    def good_method(args)
+      args.present?
+    end
+  end
+end
+
+==> test/017_test.rb 51 <==
+MyClass = Class.new do
+  def good_method
+  end
+end
+
+==> test/018_test.rb 69 <==
+yielding_method do
+  define_method(:good_method) do |args|
+  end
+end
+
+==> test/019_test.rb 20 <==
+def good_method
+end
+
+==> test/020_test.rb 68 <==
+yielding_method do
+  def nome(
+    arg,
+    other_arg
+  )
+  end
+end
+

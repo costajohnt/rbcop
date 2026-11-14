@@ -1,0 +1,12 @@
+==> offenses exit=1 320 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTAssertType: Do not use `T.assert_type!`.
+test/001_test.rb:1:1: C: Sorbet/ForbidTAssertType: Do not use `T.assert_type!`.
+test/003_test.rb:1:1: C: Sorbet/ForbidTAssertType: Do not use `T.assert_type!`.
+test/004_test.rb:1:1: C: Sorbet/ForbidTAssertType: Do not use `T.assert_type!`.
+
+==> autocorrect exit=1 320 <==
+test/000_test.rb:1:1: C: Sorbet/ForbidTAssertType: Do not use `T.assert_type!`.
+test/001_test.rb:1:1: C: Sorbet/ForbidTAssertType: Do not use `T.assert_type!`.
+test/003_test.rb:1:1: C: Sorbet/ForbidTAssertType: Do not use `T.assert_type!`.
+test/004_test.rb:1:1: C: Sorbet/ForbidTAssertType: Do not use `T.assert_type!`.
+

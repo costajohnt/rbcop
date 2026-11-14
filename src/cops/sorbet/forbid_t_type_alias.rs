@@ -1,4 +1,4 @@
-use crate::cops::sorbet_forbid_t_let::autocorrectable;
+use crate::helpers::sorbet_rbs_assertion::{assertion_statement, autocorrectable};
 use crate::helpers::sorbet_rbi_type::{Error, rbs_of};
 use crate::prelude::*;
 
@@ -75,7 +75,7 @@ impl ForbidTTypeAlias {
             return Ok(None);
         }
         let Some(body) = block.body() else { return Ok(None) };
-        if !autocorrectable(cx, r, Some(&anc[pi]), true) {
+        if !autocorrectable(cx, r, assertion_statement(Some(&anc[pi]), r, true)) {
             return Ok(None);
         }
         let name = String::from_utf8_lossy(assignment.name().as_slice()).into_owned();
