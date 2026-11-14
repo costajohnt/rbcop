@@ -1,0 +1,17 @@
+==> .rubocop.yml 179 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+Sorbet/ValidSigil:
+  MinimumStrictness: true
+
+==> test/000_test.rb 60 <==
+# frozen_string_literal: true
+# typed: false
+class Foo; end
+

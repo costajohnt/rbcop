@@ -1,0 +1,6 @@
+==> offenses exit=1 96 <==
+test/000_test.rb:2:1: C: Sorbet/ValidSigil: Sorbet sigil should be at least `true` got `false`.
+
+==> autocorrect exit=1 96 <==
+test/000_test.rb:2:1: C: Sorbet/ValidSigil: Sorbet sigil should be at least `true` got `false`.
+

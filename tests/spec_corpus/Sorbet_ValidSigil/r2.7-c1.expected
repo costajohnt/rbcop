@@ -1,0 +1,36 @@
+==> offenses exit=1 698 <==
+test/000_test.rb:1:1: C: [Correctable] Sorbet/ValidSigil: Invalid Sorbet sigil `# # typed: strict`.
+test/002_test.rb:1:1: C: [Correctable] Sorbet/ValidSigil: Invalid Sorbet sigil `#    # typed: false`.
+test/004_test.rb:1:1: C: [Correctable] Sorbet/ValidSigil: Invalid Sorbet sigil `# # typed: true`.
+test/005_test.rb:2:1: C: Sorbet/ValidSigil: Invalid Sorbet sigil `foobar`.
+test/006_test.rb:1:1: C: [Correctable] Sorbet/ValidSigil: Invalid Sorbet sigil `# #  typed:  true`.
+test/007_test.rb:2:1: C: Sorbet/ValidSigil: Invalid Sorbet sigil `true#`.
+test/008_test.rb:2:1: C: Sorbet/ValidSigil: Sorbet sigil should not be empty.
+test/009_test.rb:2:1: C: Sorbet/ValidSigil: Invalid Sorbet sigil `no`.
+
+==> autocorrect exit=1 690 <==
+test/000_test.rb:1:1: C: [Corrected] Sorbet/ValidSigil: Invalid Sorbet sigil `# # typed: strict`.
+test/002_test.rb:1:1: C: [Corrected] Sorbet/ValidSigil: Invalid Sorbet sigil `#    # typed: false`.
+test/004_test.rb:1:1: C: [Corrected] Sorbet/ValidSigil: Invalid Sorbet sigil `# # typed: true`.
+test/005_test.rb:2:1: C: Sorbet/ValidSigil: Invalid Sorbet sigil `foobar`.
+test/006_test.rb:1:1: C: [Corrected] Sorbet/ValidSigil: Invalid Sorbet sigil `# #  typed:  true`.
+test/007_test.rb:2:1: C: Sorbet/ValidSigil: Invalid Sorbet sigil `true#`.
+test/008_test.rb:2:1: C: Sorbet/ValidSigil: Sorbet sigil should not be empty.
+test/009_test.rb:2:1: C: Sorbet/ValidSigil: Invalid Sorbet sigil `no`.
+
+==> corrected/test/000_test.rb 31 <==
+# typed: strict
+class Foo; end
+
+==> corrected/test/002_test.rb 30 <==
+# typed: false
+class Foo; end
+
+==> corrected/test/004_test.rb 29 <==
+# typed: true
+class Foo; end
+
+==> corrected/test/006_test.rb 29 <==
+# typed: true
+class Foo; end
+
