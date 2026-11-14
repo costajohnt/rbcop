@@ -26,16 +26,24 @@ corpus=${RBCOP_CORPUS:?set RBCOP_CORPUS}
 # Resolved: check-autocorrect.sh strips "$RBCOP_CORPUS/<corpus>/" from the oracles' paths.
 corpus2=$(cd "${RBCOP_CORPUS2:-$corpus/../corpus2}" && pwd)
 status=0
-for spec in performance:Performance rails:Rails minitest:Minitest rspec:RSpec,RSpecRails,FactoryBot,Capybara thread_safety:ThreadSafety; do
+# The cops rbcop implements (src/cops): a plugin ported in batches (rubocop-sorbet,
+# docs/sorbet-port-status.md) registers all its cops, and the unported ones go to the fallback.
+implemented=$(sed -n 's/^pub const NAME: &str = "\(.*\)";$/\1/p' "$root"/src/cops/*/*.rs)
+for spec in performance:Performance rails:Rails minitest:Minitest rspec:RSpec,RSpecRails,FactoryBot,Capybara thread_safety:ThreadSafety sorbet:Sorbet; do
   plugin=${spec%%:*} dept=${spec#*:}
   oracle=${RBCOP_PLUGIN_ORACLE:-${RBCOP_ORACLE:?set RBCOP_ORACLE}/../oracle-$plugin}
   [ -d "$oracle" ] || { echo "check-plugins: no oracles for rubocop-$plugin in $oracle" >&2; exit 1; }
-  cops=$(CONFIG="$root/config/all-cops-$plugin.yml" rbcop_cops | tr , '\n' | grep -E "^($(echo "$dept" | tr , '|'))/" | paste -sd, -)
+  cops=$(CONFIG="$root/config/all-cops-$plugin.yml" rbcop_cops | tr , '\n' | grep -E "^($(echo "$dept" | tr , '|'))/" | grep -Fx "$implemented" | paste -sd, -)
   [ -n "$cops" ] || { echo "check-plugins: no $dept cops in --show-cops" >&2; exit 1; }
   [ "$plugin" = rspec ] && cops="$cops,Metrics/BlockLength"
+  # rubocop-sorbet's default.yml sets AllowRBSInlineAnnotation for these two of RuboCop's cops.
+  [ "$plugin" = sorbet ] && cops="$cops,Layout/LeadingCommentSpace,Lint/SelfAssignment"
   [ "$plugin" = rails ] && cops="$cops,Lint/NumberConversion,Lint/RedundantSafeNavigation,Lint/SafeNavigationChain,Lint/UselessAccessModifier,Lint/UselessMethodDefinition,Style/AndOr,Style/CollectionCompact,Style/FormatStringToken,Style/HashExcept,Style/InvertibleUnlessCondition,Style/SymbolProc"
   echo "rubocop-$plugin: $(echo "$cops" | tr , '\n' | wc -l | tr -d ' ') cops"
   export CONFIG="$root/config/all-cops-$plugin.yml"
+  # As the sorbet oracles were recorded: rubocop-sorbet's TargetSorbetVersion cops read the
+  # sorbet-static version from Bundler.locked_gems, which stops RuboCop in a lockless corpus.
+  [ "$plugin" = sorbet ] && export BUNDLE_GEMFILE="$root/config/sorbet-oracle/Gemfile"
   RBCOP_ORACLE=$oracle sh "$root/scripts/check-cops.sh" "$cops" || status=1
   RBCOP_ORACLE=$oracle RBCOP_CORPUS=$corpus2 sh "$root/scripts/check-cops.sh" "$cops" \
     sidekiq puma devise rspec graphql-ruby solidus || status=1
@@ -45,7 +53,7 @@ for spec in performance:Performance rails:Rails minitest:Minitest rspec:RSpec,RS
     CONFIG="$root/config/plugin-$plugin.yml" RBCOP_ORACLE=$oracle RBCOP_CORPUS=$corpus2 \
       sh "$root/scripts/check-autocorrect.sh" "$cops" rspec graphql-ruby || status=1
   fi
-  unset CONFIG
+  unset CONFIG BUNDLE_GEMFILE
   if [ "$plugin" = rspec ]; then
     # A real Rails app's own config: every cop rbcop implements, as mastodon configures them.
     project="$corpus/mastodon/.rubocop.yml"

@@ -1,0 +1,49 @@
+==> .rubocop.yml 134 <==
+---
+plugins:
+- rubocop-sorbet
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> test/000_test.rb 39 <==
+# Hello world!
+# typed:
+class Foo; end
+
+==> test/001_test.rb 59 <==
+# frozen_string_literal: true
+# typed: true
+class Foo; end
+
+==> test/002_test.rb 30 <==
+
+# typed: true
+class Foo; end
+
+==> test/003_test.rb 46 <==
+# Hello world!
+# typed: foobar
+class Foo; end
+
+==> test/004_test.rb 35 <==
+#!/usr/bin/env ruby
+class Foo; end
+
+==> test/005_test.rb 57 <==
+# frozen_string_literal: true
+# typed: no
+class Foo; end
+
+==> test/006_test.rb 45 <==
+# frozen_string_literal: true
+class Foo; end
+
+==> test/007_test.rb 69 <==
+# frozen_string_literal: true
+SOMETHING = <<~FOO
+  # typed: true
+FOO
+
