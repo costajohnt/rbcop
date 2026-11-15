@@ -1,5 +1,5 @@
-//! `# rubocop:...` directive comments, ported from RuboCop 1.92.2's DirectiveComment and CommentConfig
-//! (with its DisableNext and PushPop parts).
+//! `# rubocop:...` directive comments (and standard's `# standard:...` once it is loaded), ported
+//! from RuboCop 1.92.2's DirectiveComment and CommentConfig (with its DisableNext and PushPop parts).
 
 use crate::source::Source;
 use regex::Regex;
@@ -7,16 +7,77 @@ use std::collections::HashMap;
 use std::path::Path;
 use std::sync::LazyLock;
 
-pub static DIRECTIVE: LazyLock<Regex> = LazyLock::new(|| {
-    let name = r"(?:[A-Za-z]\w+/)*[A-Za-z]\w+";
-    let names = format!(r"(?:{name}\s*,\s*)*{name}");
-    let signed = format!(r"[+\-]{name}(?:\s+[+\-]{name})*");
+const NAME: &str = r"(?:[A-Za-z]\w+/)*[A-Za-z]\w+";
+
+static RUBOCOP_DIRECTIVE: LazyLock<Regex> = LazyLock::new(|| {
+    let names = format!(r"(?:{NAME}\s*,\s*)*{NAME}");
+    let signed = format!(r"[+\-]{NAME}(?:\s+[+\-]{NAME})*");
     // AVAILABLE_MODES sorted longest first, as RuboCop builds MODES_PATTERN.
     let modes = "disable-next|enable-next|todo-next|disable|enable|todo|push|next|pop";
     // Ruby's \s and \w are ASCII-only.
     let re = format!(r"#\s*rubocop\s*:\s*({modes})\b(?:\s*(all|{names})|\s+({signed}))?");
     Regex::new(&crate::helpers::ruby_string::ruby_regex_classes(&re)).unwrap()
 });
+
+/// The DIRECTIVE_COMMENT_REGEXP standard's `standard/rubocop/ext.rb` (1.57.0) puts in RuboCop's
+/// place: `standard` or `rubocop`, only the `disable`, `enable` and `todo` modes, and a cop list
+/// that is not optional. Every RuboCop user of the constant reads it when it runs, so `# rubocop:`
+/// directives of other modes (`push`, `pop`, `*-next`, `next`) stop being directives too.
+static STANDARD_DIRECTIVE: LazyLock<Regex> = LazyLock::new(|| {
+    let names = format!(r"(?:{NAME}\s*,\s*)*{NAME}");
+    let re = format!(r"#\s*(?:standard|rubocop)\s*:\s*(disable|enable|todo)\b\s*(all|{names})");
+    Regex::new(&crate::helpers::ruby_string::ruby_regex_classes(&re)).unwrap()
+});
+
+/// DirectiveComment::DIRECTIVE_COMMENT_REGEXP as the file being inspected sees it: RuboCop's, or
+/// standard's once a config has `require:`d standard (`standard_loaded`).
+pub struct DirectiveRegexp;
+pub static DIRECTIVE: DirectiveRegexp = DirectiveRegexp;
+
+impl std::ops::Deref for DirectiveRegexp {
+    type Target = Regex;
+    fn deref(&self) -> &Regex {
+        if standard_loaded() { &STANDARD_DIRECTIVE } else { &RUBOCOP_DIRECTIVE }
+    }
+}
+
+static STANDARD: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+
+thread_local! {
+    /// Whether standard had been loaded when the file inspected on this thread got its config.
+    static STANDARD_VIEW: std::cell::Cell<Option<bool>> = const { std::cell::Cell::new(None) };
+}
+
+/// A config `require:`d standard: its `standard/rubocop/ext.rb` has run, for the rest of the run.
+pub fn load_standard() {
+    STANDARD.store(true, std::sync::atomic::Ordering::Relaxed);
+}
+
+/// Whether standard's ext.rb has patched RuboCop for the file being inspected: the file's view
+/// (`with_standard`) or, outside one, whether any config has loaded it so far.
+pub fn standard_loaded() -> bool {
+    STANDARD_VIEW.with(|v| v.get()).unwrap_or_else(|| STANDARD.load(std::sync::atomic::Ordering::Relaxed))
+}
+
+/// Runs `f` seeing standard as loaded or not, as RuboCop's process was when that file's config
+/// loaded (RuboCop loads a file's config at its turn; a `require:` in a later config does not
+/// reach the files before it).
+pub fn with_standard<T>(loaded: Option<bool>, f: impl FnOnce() -> T) -> T {
+    struct Restore(Option<bool>);
+    impl Drop for Restore {
+        fn drop(&mut self) {
+            STANDARD_VIEW.with(|v| v.set(self.0));
+        }
+    }
+    let _restore = Restore(STANDARD_VIEW.with(|v| v.replace(loaded)));
+    f()
+}
+
+/// CommentConfig's `@no_directives` negated: whether the source can hold a directive (`rubocop`,
+/// or with standard loaded `standard`, appears in it).
+pub fn may_have_directives(text: &str) -> bool {
+    text.contains("rubocop") || (standard_loaded() && text.contains("standard"))
+}
 
 const LINT_SYNTAX: &str = "Lint/Syntax";
 const LINT_REDUNDANT: &str = "Lint/RedundantCopDisableDirective";
@@ -252,7 +313,7 @@ fn resolve_signed(d: &Directive) -> Vec<(char, String)> {
 /// `enable LineLength` opts nothing in. `all` opts nothing in.
 // ponytail: a `+` name two departments share raises AmbiguousCopName in RuboCop; here it is kept as written.
 pub fn opted_in(src: &Source) -> (Vec<&'static str>, Vec<String>) {
-    if !src.text.contains("rubocop") {
+    if !may_have_directives(src.text) {
         return (Vec::new(), Vec::new());
     }
     let mark = warnings_len();
@@ -330,7 +391,7 @@ impl Analysis {
 /// Whether a source uses any statement-scoped directive (so the runner only computes statement
 /// bounds when needed).
 pub fn needs_statement_bounds(src: &Source) -> bool {
-    src.text.contains("rubocop")
+    may_have_directives(src.text)
         && src.comments.iter().any(|c| parse(src.slice(c.start, c.end)).is_some_and(|d| d.mode.ends_with("next")))
 }
 
@@ -369,7 +430,7 @@ pub fn analyze(
     prevent_style: bool,
     warn: bool,
 ) -> CommentConfig {
-    if !src.text.contains("rubocop") {
+    if !may_have_directives(src.text) {
         return CommentConfig::default();
     }
     let mut analyses: HashMap<String, Analysis> = HashMap::new();

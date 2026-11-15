@@ -1,0 +1,5 @@
+require:
+  - standard
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false

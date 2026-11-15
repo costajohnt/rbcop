@@ -1964,7 +1964,8 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     // Team#validate_config fails the same way, but later: when the file's team is mobilized, after
     // the --only/--except warnings and Config#for_cop's. (index in jobs, error)
     let mut team_error = None;
-    // The registry's length once each file's config has loaded: what that file's directives see.
+    // The registry's length once each file's config has loaded, and whether standard had been
+    // `require:`d by then: what that file's directives see.
     let mut registry_at = std::collections::HashMap::new();
     for (i, f) in files.iter().enumerate() {
         let loaded = match early_config_error.take_if(|(at, _)| *at == i) {
@@ -1974,7 +1975,10 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
         loading[i].push_str(&rbcop::config::take_debug());
         match loaded {
             Ok(c) => {
-                registry_at.insert(f.clone(), rbcop::helpers::cop_registry::REGISTRY.len());
+                registry_at.insert(
+                    f.clone(),
+                    (rbcop::helpers::cop_registry::REGISTRY.len(), rbcop::directives::standard_loaded()),
+                );
                 c.mobilize_team();
                 let valid = rbcop::config::validator::cop_validate_config(&c, |cop| {
                     badge_selected(cop, &c) && c.cop_enabled(cop)
@@ -2159,9 +2163,11 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     // like any error, instead of taking down every worker's results with it.
     let lint_one = |path: &PathBuf, cfg: &Resolved, mode: Option<rbcop::autocorrect::Mode>| -> Linted {
         rbcop::config::value::reset_run_budget();
-        let view = registry_at.get(path).copied();
+        let (view, standard) = registry_at.get(path).copied().unzip();
         let linted = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-            rbcop::helpers::cop_registry::with_view(view, || lint(path, cfg, mode))
+            rbcop::directives::with_standard(standard, || {
+                rbcop::helpers::cop_registry::with_view(view, || lint(path, cfg, mode))
+            })
         }))
         .unwrap_or_else(|_| Err(format!("rbcop: internal error while inspecting {}", path.display())));
         let errors = runner::take_file_errors();
@@ -2396,7 +2402,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             }
             // Lint/RedundantCopDisableDirective's did-you-mean list is the registry of the first
             // file that described an unknown cop name (#599).
-            let view = registry_at.get(path).copied();
+            let view = registry_at.get(path).map(|v| v.0);
             for o in
                 report.offenses.iter_mut().filter(|o| o.cop == rbcop::cops::lint_redundant_cop_disable_directive::NAME)
             {
