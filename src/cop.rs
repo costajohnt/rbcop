@@ -184,7 +184,10 @@ impl Cx<'_, '_> {
             return;
         }
         if self.fixes.todo && !self.suppressed(start, end) {
-            return self.push_todo(start, end, message.into());
+            if self.push_todo(start, end, message.into()) {
+                self.cop_error();
+            }
+            return;
         }
         self.push(start, end, message.into(), correctable, false);
     }
@@ -194,8 +197,9 @@ impl Cx<'_, '_> {
     }
 
     /// Base#disable_uncorrectable: a `# rubocop:todo` comment for the offense (none if its line has
-    /// one from this cop already), status `:corrected_with_todo`.
-    fn push_todo(&mut self, start: usize, end: usize, message: String) {
+    /// one from this cop already), status `:corrected_with_todo`. True when the todo comment's
+    /// edit clobbered (the caller raises the cop error).
+    fn push_todo(&mut self, start: usize, end: usize, message: String) -> bool {
         let mut edits = None;
         if self.fixes.todo_lines.insert(self.src.line_of(start)) {
             let mut c = Corrector::new(self.facts.text.clone());
@@ -210,7 +214,7 @@ impl Cx<'_, '_> {
             );
             let merged = self.fixes.corrector.get_or_insert_with(|| Corrector::new(self.facts.text.clone()));
             if merged.merge(&c).is_err() {
-                return self.cop_error();
+                return true;
             }
             edits = (recording_edits() && !c.is_empty()).then(|| c.as_replacements());
         }
@@ -219,6 +223,7 @@ impl Cx<'_, '_> {
             o.todo = true;
             o.edits = edits;
         }
+        false
     }
 
     /// Report an offense with no location (RuboCop's `add_global_offense`), e.g. a file name problem.
@@ -250,18 +255,50 @@ impl Cx<'_, '_> {
     /// offense is `[Correctable]` only if the block made an edit (and AutoCorrect allows it).
     /// Under `-a`/`-A` the edits are applied and the offense reported `[Corrected]`.
     pub fn add_fix(&mut self, start: usize, end: usize, message: impl Into<String>, fix: impl FnOnce(&mut Corrector)) {
+        self.add_fix_then(start, end, message, fix, |_| {});
+    }
+
+    /// `add_fix`, then `after`, which stands for the cop's code inside the `add_offense` block that
+    /// follows the corrector edits (an `ignore_node`, a flag the block sets): `after` runs once,
+    /// before this returns and before the cop error when the correction clobbers, so the state it
+    /// records survives the raise as RuboCop's does (#767). Code RuboCop runs after `add_offense`
+    /// belongs after the call instead: the raise skips it.
+    pub fn add_fix_then(
+        &mut self,
+        start: usize,
+        end: usize,
+        message: impl Into<String>,
+        fix: impl FnOnce(&mut Corrector),
+        after: impl FnOnce(&mut Self),
+    ) {
+        let clobbered = self.offense_with_fix(start, end, message, fix);
+        after(self);
+        if clobbered {
+            self.cop_error();
+        }
+    }
+
+    /// `add_fix` up to the raise: true when the correction clobbered.
+    fn offense_with_fix(
+        &mut self,
+        start: usize,
+        end: usize,
+        message: impl Into<String>,
+        fix: impl FnOnce(&mut Corrector),
+    ) -> bool {
         if !self.fixes.seen.insert((start, end)) {
-            return;
+            return false;
         }
         let (first, last) = (self.src.line_of(start), self.src.line_of(end));
         if crate::directives::suppressed(&self.facts.disabled, self.cop, first, last) {
             // Reported as :disabled (the runner drops it); the block never runs.
-            return self.push(start, end, message.into(), false, false);
+            self.push(start, end, message.into(), false, false);
+            return false;
         }
         let mut corrector = Corrector::new(self.facts.text.clone());
         fix(&mut corrector);
         if corrector.clobbered() {
-            return self.cop_error();
+            return true;
         }
         // Base#use_corrector: under --disable-uncorrectable an offense without a correction (or
         // whose unsafe correction -a skips) gets a todo comment instead.
@@ -269,20 +306,22 @@ impl Cx<'_, '_> {
             return self.push_todo(start, end, message.into());
         }
         if corrector.is_empty() {
-            return self.push(start, end, message.into(), false, false);
+            self.push(start, end, message.into(), false, false);
+            return false;
         }
         let edits = recording_edits().then(|| corrector.as_replacements());
         if self.fixes.autocorrect {
             // Base#apply_correction: merged into the cop's corrector; clobbering there raises too.
             let merged = self.fixes.corrector.get_or_insert_with(|| Corrector::new(self.facts.text.clone()));
             if merged.merge(&corrector).is_err() {
-                return self.cop_error();
+                return true;
             }
         }
         self.push(start, end, message.into(), true, self.fixes.autocorrect);
         if let Some(o) = self.out.last_mut() {
             o.edits = edits;
         }
+        false
     }
 
     /// An offense RuboCop corrects (so `[Correctable]`) whose correction rbcop deliberately withholds:
@@ -298,8 +337,14 @@ impl Cx<'_, '_> {
     }
 
     /// A corrector raised ClobberingError: RuboCop reports the cop error (at the node the cop was
-    /// visiting, not the offense) and loses the offense.
+    /// visiting, not the offense) and loses the offense. The raise also ends the callback, so the
+    /// offenses it would have added after this one are lost too: unwind to the callback's guard
+    /// (`guarded` or `own_callback`), which reports the error (#767).
     fn cop_error(&self) {
+        if crate::runner::in_cop() {
+            // resume_unwind skips the panic hook: this is RuboCop's raise, not an rbcop bug.
+            std::panic::resume_unwind(Box::new(()));
+        }
         crate::runner::cop_error_at(self.cop, self.src, crate::runner::visiting());
     }
 

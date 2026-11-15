@@ -1,6 +1,7 @@
 use crate::helpers::if_node::{Else, is_elsif, parts};
 use crate::helpers::node_types::range;
 use crate::prelude::*;
+use std::cell::Cell;
 
 pub const NAME: &str = "Style/NegatedIfElseCondition";
 pub static COP: NegatedIfElseCondition = NegatedIfElseCondition;
@@ -111,9 +112,9 @@ impl Cop for NegatedIfElseCondition {
         let ancestor_corrected = cx.ancestors.iter().any(|a| {
             matches!(kind::of(a), kind::IF_NODE | kind::UNLESS_NODE) && corrected.contains(&range(a))
         });
-        let mut ran = false;
+        let ran = Cell::new(false);
         let (s, e) = range(node);
-        cx.add_fix(s, e, msg, |c| {
+        let fix = |c: &mut Corrector| {
             if ancestor_corrected {
                 return;
             }
@@ -126,10 +127,12 @@ impl Cop for NegatedIfElseCondition {
                     }
                 }
             }
-            ran = true;
+            ran.set(true);
+        };
+        cx.add_fix_then(s, e, msg, fix, |cx| {
+            if ran.get() {
+                cx.state::<Vec<(usize, usize)>>().push((s, e));
+            }
         });
-        if ran {
-            cx.state::<Vec<(usize, usize)>>().push((s, e));
-        }
     }
 }

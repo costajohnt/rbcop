@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use std::cell::Cell;
 use helpers::whole_lines::range_by_whole_lines;
 
 pub const NAME: &str = "Style/SpecialGlobalVars";
@@ -203,8 +204,8 @@ impl Cop for SpecialGlobalVars {
                 insert = Some(stmts.first().map(range).unwrap_or((start, end)));
             }
         }
-        let mut required = false;
-        cx.add_fix(start, end, msg, |c| {
+        let required = Cell::new(false);
+        let fix = |c: &mut Corrector| {
             if require_english {
                 for &(a, b) in &removals {
                     c.remove(a, b);
@@ -212,12 +213,14 @@ impl Cop for SpecialGlobalVars {
                 if let Some((a, b)) = insert {
                     c.insert_before(a, b, "require 'English'\n");
                 }
-                required = true;
+                required.set(true);
             }
             c.replace(rs, re, &replacement);
+        };
+        cx.add_fix_then(start, end, msg, fix, |cx| {
+            if required.get() {
+                cx.state::<State>().required_english = true;
+            }
         });
-        if required {
-            cx.state::<State>().required_english = true;
-        }
     }
 }

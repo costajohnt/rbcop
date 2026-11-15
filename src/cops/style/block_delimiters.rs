@@ -1,5 +1,6 @@
 use crate::helpers::range_help::{range_with_surrounding_space, Side, Surrounding};
 use crate::prelude::*;
+use std::cell::Cell;
 
 pub const NAME: &str = "Style/BlockDelimiters";
 pub static COP: BlockDelimiters = BlockDelimiters;
@@ -257,9 +258,9 @@ fn on_block(cx: &mut Cx, b: &Block, node: &Node) {
     });
     let block_range = b.range;
 
-    let mut ran = false;
-    cx.add_fix(open.0, open.1, msg, |c| {
-        ran = true;
+    let ran = Cell::new(false);
+    let fix = |c: &mut Corrector| {
+        ran.set(true);
         if breaks {
             return;
         }
@@ -294,10 +295,12 @@ fn on_block(cx: &mut Cx, b: &Block, node: &Node) {
                 c.insert_after(last.0, last.1, "\nend");
             }
         }
+    };
+    cx.add_fix_then(open.0, open.1, msg, fix, |cx| {
+        if ran.get() {
+            cx.state::<Ignored>().0.push(b.range);
+        }
     });
-    if ran {
-        cx.state::<Ignored>().0.push(b.range);
-    }
 }
 
 /// `loop_condition?`: the block is (within) the condition of a `while`/`until`, with no block

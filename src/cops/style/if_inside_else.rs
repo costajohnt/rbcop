@@ -53,7 +53,7 @@ impl Cop for IfInsideElse {
         let skip = ignored || shares_lines_with_other_code(src, &inner);
         let edits = if skip { Vec::new() } else { autocorrect(src, &inner, &inner_node, (else_kw.start_offset(), else_kw.end_offset())) };
         let ran = Cell::new(false);
-        cx.add_fix(kw.start_offset(), kw.end_offset(), "Convert `if` nested inside `else` to `elsif`.", |c| {
+        let fix = |c: &mut Corrector| {
             if skip {
                 return;
             }
@@ -64,10 +64,12 @@ impl Cop for IfInsideElse {
                     Edit::Remove(s, e) => c.remove(*s, *e),
                 }
             }
+        };
+        cx.add_fix_then(kw.start_offset(), kw.end_offset(), "Convert `if` nested inside `else` to `elsif`.", fix, |cx| {
+            if ran.get() {
+                cx.state::<Vec<(usize, usize)>>().push(me);
+            }
         });
-        if ran.get() {
-            cx.state::<Vec<(usize, usize)>>().push(me);
-        }
     }
 }
 

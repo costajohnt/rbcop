@@ -1,0 +1,51 @@
+a.rb:4:12: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Lint/UselessAssignment`.
+a.rb:5:3: W: Lint/Void: Variable `a` used in void context.
+a.rb:8:3: W: Lint/Void: Variable `b` used in void context.
+a.rb:10:1: C: [Corrected] Style/DirectiveScope: Use `disable-next` instead of a `disable`/`enable` pair around a single statement.
+a.rb:13:5: C: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:16:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Lint` department.
+a.rb:16:1: C: [Corrected] Style/DirectiveScope: Use `disable-next` instead of a `disable`/`enable` pair around a single statement.
+a.rb:18:5: C: [Corrected] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:19:1: C: [Corrected] Style/DirectiveScope: Use `disable-next` instead of a `disable`/`enable` pair around a single statement.
+a.rb:20:1: C: [Corrected] Layout/LeadingCommentSpace: Missing space after `#`.
+a.rb:20:1: W: [Corrected] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Style/StringLiterals`.
+a.rb:20:2: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 1 instead of 0).
+a.rb:20:2: W: [Corrected] Lint/CopDirectiveSyntax: Malformed directive comment detected. Only the first directive on a line takes effect. List the cop names in a single directive instead.
+a.rb:22:1: W: [Corrected] Lint/Void: Literal `"six"` used in void context.
+a.rb:23:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `t`.
+a.rb:23:1: W: [Corrected] Lint/Void: Literal `"seven"` used in void context.
+a.rb:24:1: W: [Corrected] Lint/UselessAssignment: Useless assignment to variable - `s`.
+
+--- a/a.rb
++++ b/a.rb
+@@ -1,25 +1,19 @@
+ # frozen_string_literal: true
+ 
+ x = 1
+-if (a = x) # rubocop:disable Lint/UselessAssignment
++if (a = x)
+   a
+ end
+ if b = x # rubocop:disable Lint/AssignmentInCondition
+   b
+ end
+-# rubocop:disable Style/StringLiterals
++# rubocop:disable-next Style/StringLiterals
+ y = "one"
+-# rubocop:enable Style/StringLiterals
+-z = "two"
++z = 'two'
+ # rubocop:todo Style/StringLiterals
+ w = "three"
+ # rubocop:enable all
+-# rubocop:disable Lint
+-v = "four" if x == 1
+-# rubocop:enable Lint
+-#rubocop: disable Style/StringLiterals, Layout/SpaceAroundOperators
++v = 'four' if x == 1
++# rubocop: disable-next Style/StringLiterals, Layout/SpaceAroundOperators
+ u ="five"
+-# rubocop:enable Style/StringLiterals, Layout/SpaceAroundOperators
+-t = "six" # rubocop:disable Style/StringLiterals
+-s = "seven" # rubocop:todo Style/StringLiterals
+ puts y, z, w, v, u

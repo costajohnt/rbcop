@@ -154,16 +154,18 @@ impl Cop for OneLineConditional {
             if wrap { format!("({r})") } else { r }
         };
         let ran = Cell::new(false);
-        cx.add_fix(start, end, msg, |c| {
+        let fix = |c: &mut Corrector| {
             if ignored {
                 return;
             }
             c.replace(start, end, &replacement);
             ran.set(true);
+        };
+        cx.add_fix_then(start, end, msg, fix, |cx| {
+            if ran.get() {
+                cx.state::<Vec<(usize, usize)>>().push((start, end));
+            }
         });
-        if ran.get() {
-            cx.state::<Vec<(usize, usize)>>().push((start, end));
-        }
     }
 }
 

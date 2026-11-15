@@ -121,10 +121,12 @@ impl Cop for RedundantBegin {
         let Some(state) = cx.state.take() else { return };
         let Ok(state) = state.downcast::<State>() else { return };
         let all = &state.0;
+        let src = cx.src;
         for k in all {
             let last = all.iter().filter(|o| o.offense.is_some() && k.start <= o.start && o.end <= k.end).max_by_key(|o| o.start);
             if let Some((s, e, ops)) = last.and_then(|o| o.offense.as_ref()) {
-                cx.add_fix(*s, *e, MSG, |c| apply(c, ops));
+                // on_kwbegin is a callback per kwbegin: a clobbering correction ends only this one.
+                crate::runner::own_callback(NAME, src, Some(k.start), || cx.add_fix(*s, *e, MSG, |c| apply(c, ops)));
             }
         }
     }

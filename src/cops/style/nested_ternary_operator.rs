@@ -48,7 +48,7 @@ impl Cop for NestedTernaryOperator {
         for (ns, ne) in nested.0 {
             let ignored = cx.state::<Ignored>().0.iter().any(|&(a, b)| a <= s && e <= b);
             let ran = Cell::new(false);
-            cx.add_fix(ns, ne, MSG, |c| {
+            let fix = |c: &mut Corrector| {
                 if ignored || heredoc {
                     return;
                 }
@@ -66,10 +66,12 @@ impl Cop for NestedTernaryOperator {
                     c.wrap(s, e, "if ", "\nend");
                 }
                 ran.set(true);
+            };
+            cx.add_fix_then(ns, ne, MSG, fix, |cx| {
+                if ran.get() {
+                    cx.state::<Ignored>().0.push((s, e));
+                }
             });
-            if ran.get() {
-                cx.state::<Ignored>().0.push((s, e));
-            }
         }
     }
 }

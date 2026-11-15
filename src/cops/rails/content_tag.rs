@@ -108,12 +108,14 @@ impl Cop for ContentTag {
             return;
         }
         let ran = Cell::new(false);
-        cx.add_fix(s, e, msg, |c| {
+        let fix = |c: &mut Corrector| {
             c.replace(sel, e, &replacement);
             ran.set(true);
+        };
+        cx.add_fix_then(s, e, msg, fix, |cx| {
+            if ran.get() {
+                cx.state::<Corrected>().0.push((s, e));
+            }
         });
-        if ran.get() {
-            cx.state::<Corrected>().0.push((s, e));
-        }
     }
 }

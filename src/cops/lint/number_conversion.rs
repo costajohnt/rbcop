@@ -66,16 +66,18 @@ fn handle_conversion_method(cx: &mut Cx, call: &ruby_prism::CallNode, name: &[u8
     let (start, end) = send_range(call);
     let skip = is_csend(call) || has_csend(&receiver) || cx.state::<Ignored>().0.iter().any(|&(s, e)| s <= start && e >= end);
     let ignored = Cell::new(false);
-    cx.add_fix(start, end, msg, |c| {
+    let fix = |c: &mut Corrector| {
         if skip {
             return;
         }
         c.replace(start, end, &fixed);
         ignored.set(true);
+    };
+    cx.add_fix_then(start, end, msg, fix, |cx| {
+        if ignored.get() {
+            cx.state::<Ignored>().0.push((start, end));
+        }
     });
-    if ignored.get() {
-        cx.state::<Ignored>().0.push((start, end));
-    }
 }
 
 fn handle_as_symbol(cx: &mut Cx, call: &ruby_prism::CallNode, arg: &Node) {

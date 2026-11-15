@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use std::cell::Cell;
 use ruby_prism::CallNode;
 
 pub const NAME: &str = "Style/MapCompactWithConditionalBlock";
@@ -173,13 +174,15 @@ impl Cop for MapCompactWithConditionalBlock {
         }
         let msg = format!("Replace `{current}` with `{method}`.");
         let repl = format!("{method} {{ |{}| {} }}", node_text(&m.arg), node_text(&m.cond));
-        let mut ran = false;
-        cx.add_fix(s, e, msg, |c| {
+        let ran = Cell::new(false);
+        let fix = |c: &mut Corrector| {
             c.replace(s, e, &repl);
-            ran = true;
+            ran.set(true);
+        };
+        cx.add_fix_then(s, e, msg, fix, |cx| {
+            if ran.get() {
+                cx.state::<Vec<(usize, usize)>>().push(node_r);
+            }
         });
-        if ran {
-            cx.state::<Vec<(usize, usize)>>().push(node_r);
-        }
     }
 }
