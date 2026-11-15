@@ -287,16 +287,21 @@ fn pruning_keeps_the_entries_a_run_reads() {
     let _ = fs::remove_dir_all(&dir);
     fs::create_dir_all(&dir).unwrap();
     let dir = dir.canonicalize().unwrap();
-    fs::write(dir.join(".rubocop.yml"), "AllCops:\n  SuggestExtensions: false\n  MaxFilesInCache: 4\n").unwrap();
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "AllCops:\n  NewCops: enable\n  SuggestExtensions: false\n  MaxFilesInCache: 4\n",
+    )
+    .unwrap();
     for f in ["u1.rb", "u2.rb", "u3.rb", "e.rb"] {
         fs::write(dir.join(f), "puts 1\n").unwrap();
     }
-    rbcop(&dir, &[]);
+    // Every run with -d (part of each file's key), to see the entries it loads.
+    rbcop(&dir, &["-d"]);
     assert_eq!(entries(&dir), 4);
     // Five outdated entries of e.rb: a one-file run never prunes.
     for i in 2..7 {
         fs::write(dir.join("e.rb"), format!("puts {i}\n")).unwrap();
-        rbcop(&dir, &["e.rb"]);
+        rbcop(&dir, &["-d", "e.rb"]);
     }
     assert_eq!(entries(&dir), 9);
     // Every file is read from the cache, then 9 / 2 + 1 = 5 entries go: the outdated ones.
