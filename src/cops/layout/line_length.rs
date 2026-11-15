@@ -62,6 +62,8 @@ struct Breakable {
     endless: std::collections::HashMap<usize, Option<(usize, usize, String)>>,
     /// `heredoc_openers`: (line, offset) of every heredoc opener in the file.
     openers: Vec<(usize, usize)>,
+    /// any_long_line, once computed.
+    long: Option<bool>,
 }
 
 /// `after_heredoc_opener?` (1.92.2): a break at `pos` follows a heredoc opener on its line, so
@@ -73,6 +75,29 @@ fn after_heredoc_opener(cx: &mut Cx, pos: usize) -> bool {
 
 fn max_of(cx: &Cx) -> Num {
     cx.cfg.num("Max").unwrap_or(Num::Int(120))
+}
+
+fn settings(cx: &Cx) -> Settings {
+    let indentation_width = cx.config.for_cop("Layout/IndentationStyle").int("IndentationWidth");
+    let width = indentation_width.or_else(|| cx.config.for_cop("Layout/IndentationWidth").int("Width")).unwrap_or(2);
+    Settings { max: max_of(cx), tab_width: width.max(0) as usize }
+}
+
+/// Whether some line is longer than `Max` as on_file measures it. When none is, on_file reads
+/// none of the break points, so on_node and the token pass in `init` are skipped. A String `Max`
+/// (it raises where it is first compared) keeps the full path.
+fn any_long_line(cx: &mut Cx) -> bool {
+    if let Some(long) = cx.state::<Breakable>().long {
+        return long;
+    }
+    let long = matches!(cx.cfg.get("Max"), Some(Value::Str(_) | Value::Sym(_))) || {
+        let s = settings(cx);
+        let max = s.max.f64();
+        // bytes >= chars: most lines pass the cheap test.
+        cx.src.lines.iter().any(|l| (l.len() + s.indentation_difference(l)) as f64 > max && s.line_length(l) as f64 > max)
+    };
+    cx.state::<Breakable>().long = Some(long);
+    long
 }
 
 /// LineLength#on_new_investigation: break points after semicolons, earliest per line wins.
@@ -413,6 +438,9 @@ impl Cop for LineLength {
     }
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
+        if !any_long_line(cx) {
+            return;
+        }
         init(cx);
         match kind::of(node) {
             kind::CALL_NODE => {
@@ -520,7 +548,9 @@ impl Cop for LineLength {
     }
 
     fn on_file(&self, cx: &mut Cx) {
-        init(cx);
+        if any_long_line(cx) {
+            init(cx);
+        }
         let breaks = std::mem::take(&mut cx.state::<Breakable>().by_line);
         let endless = std::mem::take(&mut cx.state::<Breakable>().endless);
         let cfg = cx.cfg;
@@ -528,10 +558,8 @@ impl Cop for LineLength {
         if cx.src.text.is_empty() {
             return;
         }
-        let max = max_of(cx);
-        let indentation_width = cx.config.for_cop("Layout/IndentationStyle").int("IndentationWidth");
-        let width = indentation_width.or_else(|| cx.config.for_cop("Layout/IndentationWidth").int("Width")).unwrap_or(2);
-        let s = Settings { max, tab_width: width.max(0) as usize };
+        let s = settings(cx);
+        let max = s.max;
         let allow_uri = cfg.bool("AllowURI").unwrap_or(true);
         let allow_qn = cfg.bool("AllowQualifiedName").unwrap_or(true);
         let allow_directives = match cfg.bool("IgnoreCopDirectives") {

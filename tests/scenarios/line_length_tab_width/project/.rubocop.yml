@@ -1,0 +1,7 @@
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false
+Layout/IndentationStyle:
+  IndentationWidth: 8
+Layout/LineLength:
+  Max: 24

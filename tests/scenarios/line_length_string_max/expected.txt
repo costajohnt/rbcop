@@ -1,0 +1,2 @@
+Gemfile:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+short.rb:4:1: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `x`.
