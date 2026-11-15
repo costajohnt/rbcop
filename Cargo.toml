@@ -20,6 +20,8 @@ ruby-prism-sys = "1.9.0"
 # AllCops/UseProjectIndex (#295): RuboCop builds its project index with the rubydex gem;
 # vendor/rubydex is that gem's Rust core, so the index resolves exactly as RuboCop's does.
 rubydex = { path = "vendor/rubydex" }
+# The result cache's build digest (src/cache.rs); already built for rubydex.
+xxhash-rust = { version = "0.8.15", features = ["xxh3"] }
 
 # musl's allocator serializes rbcop's worker threads (several times slower than glibc's).
 [target.'cfg(target_env = "musl")'.dependencies]
