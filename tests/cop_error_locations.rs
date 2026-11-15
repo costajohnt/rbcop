@@ -29,3 +29,23 @@ fn cop_errors_are_located_at_the_parser_node() {
     ];
     assert_eq!(errors, expected, "{stderr}");
 }
+
+/// A String `Layout/LineLength` `Max` raises at every breakable node that compares it, even on a
+/// short line, and in on_file (#779: the no-long-line shortcut must not skip them). RuboCop
+/// 1.92.2's lines for tests/scenarios/line_length_string_max/project/short.rb.
+#[test]
+fn line_length_string_max_errors_at_short_lines() {
+    let dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/scenarios/line_length_string_max/project");
+    let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
+        .args(["--cache", "false", "-f", "emacs", "short.rb"])
+        .current_dir(&dir)
+        .output()
+        .unwrap();
+    let prefix = format!("{}/", dir.display());
+    let stderr = String::from_utf8_lossy(&out.stderr).replace(&prefix, "");
+    let mut errors: Vec<&str> = stderr.lines().filter(|l| l.starts_with("An error")).collect();
+    errors.sort();
+    errors.dedup();
+    let at = |loc: &str| format!("An error occurred while Layout/LineLength cop was inspecting short.rb{loc}.");
+    assert_eq!(errors, [at(""), at(":3:0"), at(":4:4"), at(":7:7")], "{stderr}");
+}
