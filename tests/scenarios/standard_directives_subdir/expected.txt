@@ -1,0 +1,8 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:4:4: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `b`.
+a.rb:4:6: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+a.rb:7:6: W: [Correctable] Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+sub/b.rb:4:4: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `b`.
+sub/b.rb:7:6: W: [Correctable] Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional
+zz/c.rb:4:4: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `b`.
+zz/c.rb:7:6: W: [Correctable] Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional

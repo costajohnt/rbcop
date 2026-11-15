@@ -552,6 +552,14 @@ RUBOCOP="env GEM_HOME=$g/gems GEM_PATH=$g/extra-gems:$g/gems RBENV_VERSION=4.0.6
   $HOME/.rbenv/versions/4.0.6/bin/ruby $g/gems/bin/rubocop" scripts/check-fixtures.sh
 ```
 
+A scenario that needs a gem outside the pinned set carries it in its own gem home,
+`tests/scenarios/<name>/gems/` (`specifications/<gem>-<version>.gemspec`, `gems/<gem>-<version>/lib`;
+a symlink to another scenario's works too). tests/scenarios.rs puts it first on `GEM_PATH`, where
+rbcop's gem lookups find it, and scripts/scenarios.sh puts each of its `lib` dirs on RuboCop's load
+path through `RUBYOPT=-I`, which the GEM_PATH-resetting wrappers above keep, so recording needs no
+install on the host. `standard_directives*` carry standard's `lib/standard/rubocop/ext.rb`
+(docs/plugins.md) behind a one-line `lib/standard.rb`; their output matches the full gem's.
+
 `scripts/check-fixtures.sh` re-records every one of them into the working tree (tests/ must be
 clean first) and fails with the changed files and `git diff --stat` when anything differs, leaving
 the re-recorded files in place. GitHub CI runs it in the `fixtures` job, beside the fast tier; it

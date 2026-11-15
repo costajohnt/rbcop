@@ -678,7 +678,7 @@ fn investigate(
     let pn = program.as_program_node().unwrap();
     let first_code = pn.statements().body().iter().next().map(|n| n.location().start_offset());
     facts.first_code = first_code;
-    if src.text.contains("rubocop") {
+    if directives::may_have_directives(src.text) {
         // Registry#disabled_names of the --only/--except filtered registry (only directives read
         // it, so a file without one skips the scan of every cop name, #388).
         let config_disabled: Vec<&'static str> = crate::helpers::cop_registry::REGISTRY
@@ -920,7 +920,7 @@ fn lint_syntax_offenses(
 ) -> Vec<Offense> {
     // ponytail: without a tree there are no statement bounds, so a detached disable-next or
     // enable-next warns here where RuboCop's would not.
-    if warn && src.text.contains("rubocop") {
+    if warn && directives::may_have_directives(src.text) {
         for c in &src.comments {
             if let Some(d) = directives::parse(src.slice(c.start, c.end)).filter(|d| d.mode != "pop") {
                 directives::warn_unqualified(src, &d);

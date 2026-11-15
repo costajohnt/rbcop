@@ -1841,6 +1841,12 @@ impl Store {
             } else {
                 (ruby_files(&lib), [path.clone()].into_iter().filter(|p| p.is_file()).collect())
             };
+            // standard's lib/standard.rb requires standard/rubocop/ext, which widens RuboCop's
+            // directive pattern to `# standard:` comments (src/directives.rs).
+            // ponytail: found by its path, which is all RuboCop's own code reaches it by.
+            if load == Load::Require && files.iter().any(|f| f.ends_with("standard/rubocop/ext.rb")) {
+                crate::directives::load_standard();
+            }
             let merge = !paths.is_empty();
             for file in &files {
                 ruby_file_constants(file, &mut self.plugin_constants);

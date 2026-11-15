@@ -324,9 +324,12 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
   an encoding magic comment is inspected as UTF-8 text, as RuboCop inspects it, but a corrected one
   is reread through the magic comment as `-a` rereads files. A request the reader cannot parse
   ends the server with status 2, as in RuboCop, with rbcop's wording of the error.
-- A `require:`d gem's Ruby code that changes RuboCop's directive syntax is not run: standard's
-  `standard/rubocop/ext.rb` widens `DirectiveComment::DIRECTIVE_COMMENT_REGEXP`, so its
-  `# standard:disable Cop` comments are directives in RuboCop and plain comments in rbcop.
+- standard's directive comments (docs/plugins.md) are honoured once a `require:` loads a gem's
+  `standard/rubocop/ext.rb`, without checking the gem's dependencies: RuboCop 1.92.2 refuses the
+  released standard 1.57.0 (it requires `rubocop ~> 1.91.0`) with `Unable to activate
+  standard-1.57.0, because rubocop-1.92.2 conflicts with rubocop (~> 1.91.0)`, where rbcop runs
+  and honours its `# standard:` comments. A local `require: ./file.rb` that loads ext.rb is not
+  followed, so its comments stay plain comments.
 - Static regexp literals Onigmo rejects (RuboCop compiles each with `Regexp.new` and reports
   Lint/Syntax): `helpers::onigmo_compile` covers group names and references, repeat ranges,
   character class ranges, POSIX bracket names, `\k<+n>`, and look-behind bodies with quantifiers,

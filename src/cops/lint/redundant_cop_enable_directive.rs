@@ -38,7 +38,7 @@ fn text<'a>(src: &'a crate::source::Source, i: usize) -> &'a str {
 fn extra_enabled_comments(cx: &Cx) -> Vec<(usize, Vec<String>)> {
     let src = cx.src;
     let mut extras: Vec<(usize, Vec<String>)> = Vec::new();
-    if !src.text.contains("rubocop") {
+    if !directives::may_have_directives(src.text) {
         return extras;
     }
     // Counts start at one for registry.disabled_names(config).
