@@ -38,7 +38,7 @@ case:
 
 - The RuboCop fallback is skipped and reported, not an error: the stderr notice ends `--no-ruby
   keeps RuboCop from running them`, and `-f json` adds `skipped_cops` and `skipped_ruby_code`
-  (json-output.md). The exit status is the run's as usual.
+  ([json-output.md](json-output.md)). The exit status is the run's as usual.
 - A `plugins:`/`require:` gem rbcop does not implement (and `rubocop-internal_affairs`) is not
   looked up: a `Warning: rbcop: --no-ruby: finding <gem> (plugins:/require:) needs Ruby, ...` line,
   and its cops count as Ruby code the config requires (skipped as above). A native plugin's
