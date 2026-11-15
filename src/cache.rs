@@ -106,6 +106,8 @@ pub struct Cache {
     /// Cop names, to give loaded offenses their `&'static str`.
     names: HashSet<&'static str>,
     saved: std::sync::atomic::AtomicUsize,
+    /// `dir` exists with no symlink in its path, as the last save found.
+    ready: std::sync::atomic::AtomicBool,
 }
 
 impl Cache {
@@ -134,7 +136,7 @@ impl Cache {
         let build = digest(&[env!("CARGO_PKG_VERSION").as_bytes(), &exe.digest().to_le_bytes(), FORMAT]);
         let top = root.join("rbcop_cache");
         let dir = top.join(build).join(digest(&[context.as_bytes()]));
-        Some(Cache { top, dir, allow_symlinks, max_files, names, saved: Default::default() })
+        Some(Cache { top, dir, allow_symlinks, max_files, names, saved: Default::default(), ready: Default::default() })
     }
 
     /// ResultCache#file_checksum: the path, the file mode, everything else that decides the file's
@@ -208,14 +210,22 @@ impl Cache {
     /// (the caller knows the offenses are those of a plain inspection), but warns as RuboCop does
     /// either way.
     pub fn save(&self, key: &str, report: &FileReport, write: bool) {
-        match mkdir_p(&self.dir) {
-            Ok(()) => {}
-            Err(Some(msg)) => return eprintln!("Couldn't create cache directory. Continuing without cache.\n  {msg}"),
-            Err(None) => return,
-        }
-        // A symbolic link anywhere in the cache directory's path can be a symlink attack.
-        if let Some(link) = self.refused_symlink(&self.dir) {
-            return eprintln!("Warning: {} is a symlink, which is not allowed.", link.display());
+        use std::sync::atomic::Ordering::Relaxed;
+        // Checked until a save finds the directory fine (about ten syscalls per file, #778), so
+        // every refused save still warns.
+        if !self.ready.load(Relaxed) {
+            match mkdir_p(&self.dir) {
+                Ok(()) => {}
+                Err(Some(msg)) => {
+                    return eprintln!("Couldn't create cache directory. Continuing without cache.\n  {msg}");
+                }
+                Err(None) => return,
+            }
+            // A symbolic link anywhere in the cache directory's path can be a symlink attack.
+            if let Some(link) = self.refused_symlink(&self.dir) {
+                return eprintln!("Warning: {} is a symlink, which is not allowed.", link.display());
+            }
+            self.ready.store(true, Relaxed);
         }
         let mut out = format!("{} {}\n", report.text.len(), text_check(&report.text));
         for o in &report.offenses {
@@ -231,13 +241,17 @@ impl Cache {
         // name is unpredictable and created fresh (never through an existing file or symlink);
         // any failure skips saving, with ResultCache#write_cache_file's warning for EACCES, EPERM and
         // EROFS. Without `write` the file is only created and removed again, for that warning.
-        let n = self.saved.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+        let n = self.saved.fetch_add(1, Relaxed);
         let random = std::collections::hash_map::RandomState::new().hash_one(n);
         let tmp = self.dir.join(format!("{key}_{}_{random:016x}", std::process::id()));
         let dest = self.dir.join(key);
         let opened = fs::OpenOptions::new().write(true).create_new(true).custom_flags(libc::O_NOFOLLOW).open(&tmp);
         let written = match opened {
-            Err(e) => Err((e, format!("rb_sysopen - {}", tmp.display()))),
+            Err(e) => {
+                // Removed meanwhile (a parallel run's pruning): the next save creates it again.
+                self.ready.store(false, Relaxed);
+                Err((e, format!("rb_sysopen - {}", tmp.display())))
+            }
             Ok(_) if !write => Ok(()),
             Ok(mut f) => {
                 f.write_all(out.as_bytes()).map_err(|e| (e, format!("rb_sysopen - {}", tmp.display()))).and_then(|()| {
