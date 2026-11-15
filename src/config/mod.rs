@@ -335,7 +335,7 @@ pub struct Resolved {
     opts: Options,
     /// for_cop of every cop-like key, built on first use: cops ask for other cops' settings per
     /// node, and building one takes two linear scans of the whole config and a clone.
-    for_cop_cache: std::sync::OnceLock<HashMap<String, Map>>,
+    for_cop_cache: std::sync::OnceLock<HashMap<String, Map, std::hash::BuildHasherDefault<Fnv>>>,
     /// Config#gem_versions_in_target, read on first use.
     gem_versions: std::sync::OnceLock<Option<HashMap<String, String>>>,
     /// Config#path_sourced_gems_in_target, read on first use.
