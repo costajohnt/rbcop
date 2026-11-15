@@ -1,0 +1,4 @@
+# Adjacent Style/DirectiveScope pairs: a ClobberingError ends the cop's callback, losing the later offenses of that iteration (#767).
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false

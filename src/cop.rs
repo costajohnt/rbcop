@@ -298,8 +298,14 @@ impl Cx<'_, '_> {
     }
 
     /// A corrector raised ClobberingError: RuboCop reports the cop error (at the node the cop was
-    /// visiting, not the offense) and loses the offense.
+    /// visiting, not the offense) and loses the offense. The raise also ends the callback, so the
+    /// offenses it would have added after this one are lost too: unwind to the callback's guard
+    /// (`guarded` or `own_callback`), which reports the error (#767).
     fn cop_error(&self) {
+        if crate::runner::in_cop() {
+            // resume_unwind skips the panic hook: this is RuboCop's raise, not an rbcop bug.
+            std::panic::resume_unwind(Box::new(()));
+        }
         crate::runner::cop_error_at(self.cop, self.src, crate::runner::visiting());
     }
 
