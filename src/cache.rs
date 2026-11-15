@@ -496,13 +496,15 @@ mod tests {
         };
         cache.save("k1", &report("a"), true);
         assert!(cache.entry("k1").is_file());
-        // The whole tree moves away and `root` becomes a link to a directory outside the cache.
+        // The whole tree moves away and `root` becomes a link to a directory outside the cache,
+        // one with the same layout, so the old path resolves there.
+        let rel = cache.dir.strip_prefix(base.join("root")).unwrap().to_path_buf();
         fs::rename(base.join("root"), base.join("moved")).unwrap();
+        fs::create_dir_all(base.join("outside").join(&rel)).unwrap();
         std::os::unix::fs::symlink(base.join("outside"), base.join("root")).unwrap();
         cache.save("k2", &report("b"), true);
-        assert_eq!(fs::read_dir(base.join("outside")).unwrap().count(), 0);
-        let moved = base.join("moved").join(cache.dir.strip_prefix(base.join("root")).unwrap());
-        assert!(moved.join("k2").is_file());
+        assert_eq!(fs::read_dir(base.join("outside").join(&rel)).unwrap().count(), 0);
+        assert!(base.join("moved").join(&rel).join("k2").is_file());
         let _ = fs::remove_dir_all(&base);
     }
 }
