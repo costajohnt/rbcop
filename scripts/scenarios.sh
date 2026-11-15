@@ -20,7 +20,14 @@ for name in $names; do
   [ -f "$dir/stderr.txt" ] && err=$dir/stderr.txt
   out=$(mktemp)
   status=0
-  (cd "$dir/project" && rubocop --cache false --format emacs $args 2>"$err") > "$out" || status=$?
+  # A scenario's own gem home (gems/, for a gem the pinned set lacks) goes on the load path: rbcop
+  # finds the gem on GEM_PATH (tests/scenarios.rs), but RuboCop wrappers such as the CI host's
+  # reset GEM_PATH, and its `require:` only needs the gem's lib.
+  rubyopt=${RUBYOPT:-}
+  for lib in "$dir"/gems/gems/*/lib; do
+    [ -d "$lib" ] && rubyopt="-I$lib $rubyopt"
+  done
+  (cd "$dir/project" && RUBYOPT=$rubyopt rubocop --cache false --format emacs $args 2>"$err") > "$out" || status=$?
   echo "$status" > "$dir/status"
   sed "s|$dir/project/||g" "$out" | LC_ALL=C sort > "$dir/expected.txt"
   # Absolute paths in messages (config file paths) are stored relative to the scenario root too.

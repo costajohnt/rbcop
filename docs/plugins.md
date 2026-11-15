@@ -103,6 +103,33 @@ installed; a different installed version is ignored.
   and one `scripts/check-plugins.sh` iteration (`rspec`), which also checks Metrics/BlockLength
   (rubocop-rspec's config adds spec files to its Exclude) and mastodon under its own `.rubocop.yml`.
 
+## standard's directive comments
+
+standard (the `standardrb` gem) is not a plugin rbcop implements, but the setup its README gives
+for running its rules through RuboCop, `require: standard`, runs its `lib/standard/rubocop/ext.rb`,
+which patches RuboCop. rbcop does what that patch does (`src/directives.rs`), from the config that
+`require:`s `standard` (or `standard/rubocop/ext`) on:
+
+- `# standard:disable Cop`, `# standard:enable Cop` and `# standard:todo Cop` are directives, the
+  same as their `# rubocop:` forms: departments, `all`, `--` reasons, Lint/RedundantCopDisableDirective,
+  Lint/RedundantCopEnableDirective, Lint/MissingCopEnableDirective, Style/DirectiveScope.
+- standard's pattern replaces RuboCop's for both keywords: only `disable`, `enable` and `todo`
+  with a cop list are directives. `push`, `pop`, `disable-next`, `enable-next`, `todo-next` and
+  `next` are plain comments with either keyword, and Lint/CopDirectiveSyntax reports the
+  `# rubocop:` ones as malformed.
+- Lint/AssignmentInCondition's message is standard's: `Wrap assignment in parentheses if intentional`.
+- The patch is global and lasts the run. RuboCop loads a file's config when the file's turn comes,
+  so the files inspected before a subdirectory's config requires standard keep RuboCop's pattern,
+  and every file after it, in any directory, gets standard's.
+
+`plugins: standard` fails in both (standard is not a lint_roller plugin), `inherit_gem: standard:
+config/base.yml` alone loads no Ruby, and standard-custom and standard-performance do not touch
+directives. Without a `require:` of standard, `# standard:` comments are plain comments. The
+behaviour was recorded with standard built from standardrb/standard a7199b91 (1.57.0's lib with
+`rubocop ~> 1.92.0`, unreleased); the released 1.57.0 does not load in RuboCop 1.92.2
+(docs/known-gaps.md). The scenarios (`tests/scenarios/standard_directives*`) carry a trimmed copy
+of the gem (docs/porting-cops.md).
+
 ## Porting a plugin
 
 1. Pin the version: the newest release whose gemspec accepts RuboCop 1.92.2. Install it with the

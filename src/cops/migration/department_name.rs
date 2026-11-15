@@ -26,9 +26,9 @@ impl Cop for DepartmentName {
                 continue;
             }
             let text = src.slice(c.start, c.end).trim_end_matches('\n');
-            let directive = crate::directives::parse(text)
-                .filter(|d| d.start == 0 && matches!(d.mode.as_str(), "disable" | "enable" | "todo"));
-            let Some(prefix) = directive.and_then(|_| PREFIX.find(text)) else { continue };
+            // DISABLE_COMMENT_FORMAT alone, not DirectiveComment: standard's directive pattern
+            // (docs/plugins.md) does not change what this cop reads.
+            let Some(prefix) = PREFIX.find(text) else { continue };
             let mut offset = prefix.end();
             for m in TOKENS.find_iter(&text[offset..]) {
                 let name = m.as_str();

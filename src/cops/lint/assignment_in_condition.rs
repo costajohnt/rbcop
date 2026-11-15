@@ -246,7 +246,14 @@ impl Cop for AssignmentInCondition {
         let allow_safe = cx.cfg.bool("AllowSafeAssignment") == Some(true);
         let mut walk = Walk { allow_safe, stack: vec![false], flat_stmts: false, found: Vec::new() };
         walk.visit(&condition);
-        let msg = if allow_safe { MSG_ALLOWED } else { MSG_NOT_ALLOWED };
+        // standard's ext.rb replaces `message` with its own (docs/plugins.md).
+        let msg = if crate::directives::standard_loaded() {
+            "Wrap assignment in parentheses if intentional"
+        } else if allow_safe {
+            MSG_ALLOWED
+        } else {
+            MSG_NOT_ALLOWED
+        };
         for ((s, e), (ns, ne)) in walk.found {
             cx.add_fix(s, e, msg, |c| {
                 if allow_safe {

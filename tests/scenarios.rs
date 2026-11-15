@@ -48,7 +48,13 @@ fn config_scenarios_match_rubocop() {
     for dir in names {
         let project = dir.join("project");
         let args = std::fs::read_to_string(dir.join("args")).unwrap_or_default();
-        let out = common::command(bin())
+        let mut cmd = common::command(bin());
+        // A scenario's own gem home (`gems/`, a gem the pinned set lacks) comes first on the gem path.
+        if dir.join("gems").is_dir() {
+            let rest = std::env::var("GEM_PATH").map(|p| format!(":{p}")).unwrap_or_default();
+            cmd.env("GEM_PATH", format!("{}{rest}", dir.join("gems").display()));
+        }
+        let out = cmd
             .args(["--format", "emacs"])
             .args(args.split_whitespace())
             .current_dir(&project)

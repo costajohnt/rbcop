@@ -180,7 +180,7 @@ impl Cop for DirectiveScope {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let src = cx.src;
-        if !src.text.contains("rubocop") {
+        if !directives::may_have_directives(src.text) {
             return;
         }
         let code = code_lines(src, cx.facts);

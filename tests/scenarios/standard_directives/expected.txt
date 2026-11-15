@@ -1,0 +1,38 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:10:1: C: [Correctable] Style/DirectiveScope: Use `disable-next` instead of a `disable`/`enable` pair around a single statement.
+a.rb:12:1: C: [Correctable] Style/DirectiveScope: Use `enable-next` instead of an `enable`/`disable` pair around a single statement.
+a.rb:13:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:17:1: C: [Correctable] Style/DirectiveScope: Use `disable-next` instead of a `disable`/`enable` pair around a single statement.
+a.rb:17:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Lint` department.
+a.rb:18:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:20:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after `#`.
+a.rb:20:1: C: [Correctable] Style/DirectiveScope: Use `disable-next` instead of a `disable`/`enable` pair around a single statement.
+a.rb:25:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. Cop names must be separated by commas. Comment in the directive must start with `--`.
+a.rb:26:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:27:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. Cop names must be separated by commas. Comment in the directive must start with `--`.
+a.rb:28:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:29:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. The cop name is missing.
+a.rb:31:6: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:33:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:34:1: C: [Correctable] Style/DirectiveScope: Use `disable-next` instead of a `disable`/`enable` pair around a single statement.
+a.rb:37:1: C: [Correctable] Style/DirectiveScope: Use `disable-next` instead of a `disable`/`enable` pair around a single statement.
+a.rb:37:1: W: [Correctable] Lint/CopDirectiveSyntax: Malformed directive comment detected. Only the first directive on a line takes effect. List the cop names in a single directive instead.
+a.rb:41:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:42:1: C: [Correctable] Style/DirectiveScope: Use `disable-next` instead of a `disable`/`enable` pair around a single statement.
+a.rb:45:19: W: [Correctable] Lint/RedundantCopEnableDirective: Unnecessary enabling of Style/StringLiterals.
+a.rb:48:1: W: Lint/RedundantCopDisableDirective: Unnecessary disabling of `Style/NoSuchCop` (did you mean `Style/FileTouch`?).
+a.rb:49:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:4:12: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Lint/UselessAssignment`.
+a.rb:51:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:53:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:57:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. Cop names must be separated by commas. Comment in the directive must start with `--`.
+a.rb:58:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:59:1: W: Lint/CopDirectiveSyntax: Malformed directive comment detected. Cop names must be separated by commas. Comment in the directive must start with `--`.
+a.rb:5:3: W: Lint/Void: Variable `a` used in void context.
+a.rb:60:5: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:62:1: W: Lint/MissingCopEnableDirective: Re-enable Style/StringLiterals cop with `# rubocop:enable` after disabling it.
+a.rb:62:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Style/StringLiterals`.
+a.rb:8:3: W: Lint/Void: Variable `b` used in void context.
+b.rb:4:3: W: Lint/MissingCopEnableDirective: Re-enable Metrics/AbcSize cop with `# rubocop:enable` after disabling it.
+b.rb:4:3: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Metrics/AbcSize`.
+b.rb:8:8: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Style/StringLiterals`.
