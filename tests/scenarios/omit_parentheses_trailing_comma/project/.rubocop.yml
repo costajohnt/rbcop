@@ -1,0 +1,6 @@
+AllCops:
+  TargetRubyVersion: 3.2
+  NewCops: enable
+  SuggestExtensions: false
+Style/MethodCallWithArgsParentheses:
+  EnforcedStyle: omit_parentheses
