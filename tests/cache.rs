@@ -295,7 +295,7 @@ fn pruning_keeps_the_entries_a_run_reads() {
     for f in ["u1.rb", "u2.rb", "u3.rb", "e.rb"] {
         fs::write(dir.join(f), "puts 1\n").unwrap();
     }
-    // Every run with -d (part of each file's key), to see the entries it loads.
+    // -d prints the entries a run loads.
     rbcop(&dir, &["-d"]);
     assert_eq!(entries(&dir), 4);
     // Five outdated entries of e.rb: a one-file run never prunes.
@@ -311,5 +311,20 @@ fn pruning_keeps_the_entries_a_run_reads() {
     assert!(String::from_utf8_lossy(&out.stdout).contains("Removing the 5 oldest files"));
     assert_eq!(entries(&dir), 4);
     assert_eq!(loaded(&rbcop(&dir, &["-d"])), 4);
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// ResultCache::NON_CHANGING: `-d` and `--color` change no offense, so a run with either reads
+/// the entries a plain run saved (RuboCop prints `Loading cache from` for each).
+#[test]
+fn debug_and_color_share_the_entries() {
+    let dir = project("nonchanging");
+    rbcop(&dir, &["-f", "e"]);
+    let n = entries(&dir);
+    for args in [&["-d", "-f", "e"][..], &["--color", "-d", "-f", "e"]] {
+        let out = rbcop(&dir, args);
+        assert_eq!(String::from_utf8_lossy(&out.stdout).matches("Loading cache from").count(), n, "{args:?}");
+        assert_eq!(entries(&dir), n, "{args:?}");
+    }
     let _ = fs::remove_dir_all(&dir);
 }

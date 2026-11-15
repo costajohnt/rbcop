@@ -496,7 +496,8 @@ impl Resolved {
 
     /// Every input that resolves into this config's offenses, for the result cache key
     /// (Config#signature, plus what RuboCop reads outside the config: the target Ruby, the locked
-    /// gem versions and the plugins in the team).
+    /// gem versions and the plugins in the team). Not `-d` or the color setting: they change
+    /// no offense, and RuboCop's key leaves them out (ResultCache::NON_CHANGING).
     pub fn signature(&self) -> String {
         let mut gems: Vec<_> = self.gem_versions_in_target().map(|g| g.iter().collect()).unwrap_or_default();
         gems.sort();
@@ -505,7 +506,7 @@ impl Resolved {
             self.hash,
             self.base_dir,
             self.target_ruby,
-            self.opts,
+            Options { debug: false, color: false, ..self.opts.clone() },
             self.team_plugins.get(),
             gems
         )
