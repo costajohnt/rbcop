@@ -30,7 +30,9 @@ impl Cop for NonNilCheck {
             return;
         }
         let call = node.as_call_node().unwrap();
-        if is_csend(&call) {
+        // Only `!=`, `!` and `nil?` can match: check the name before the config and range work.
+        let name = method_name(&call);
+        if is_csend(&call) || !matches!(name, "!=" | "!" | "nil?") {
             return;
         }
         let semantic = cx.cfg.bool("IncludeSemanticChanges").unwrap_or(false);
@@ -45,7 +47,6 @@ impl Cop for NonNilCheck {
             }
         }
         let args = send_args(&call);
-        let name = method_name(&call);
         if name == "!=" {
             // (send _ :!= nil)
             let Some(recv) = call.receiver() else { return };
