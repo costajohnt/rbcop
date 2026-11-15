@@ -60,6 +60,8 @@ rbcop: RuboCop runs them when one is found: add the rubocop gem to the bundle, p
 
 `-r`/`--require`, `--plugin` and custom formatter classes (`-r ./my_formatter.rb --format MyFormatter`) load Ruby code that can change anything, so rbcop hands the whole run to the same RuboCop with the same arguments: the output is RuboCop's, with no speedup. With no RuboCop found, or `RBCOP_FALLBACK=0`, rbcop refuses them (exit 2).
 
+`--no-ruby` (or `RBCOP_NO_RUBY=1`), rbcop's own option, guarantees rbcop never starts `ruby`, `rubocop` or `bundle`, whatever `RBCOP_FALLBACK` says: for a pinned binary in an environment without Ruby. The cops the fallback would run are skipped and reported (on stderr, and as `skipped_cops` and `skipped_ruby_code` in `-f json`); anything else that needs Ruby (ERB in config files, remote `inherit_from`, `inherit_gem`, `AllCops/ProjectIndexIncludesGems`, `-r`, `--plugin`, custom formatter classes) fails with exit 2 and a `rbcop: --no-ruby: ...` error. [docs/known-gaps.md](docs/known-gaps.md) ("Security: when rbcop runs Ruby") has the details.
+
 Limits of the fallback:
 
 - With `-a`/`-A`, RuboCop corrects its cops first, then rbcop corrects the result; the two never iterate together, so a correction that triggers the other side's cop is fixed on the next run.

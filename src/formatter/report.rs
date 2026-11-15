@@ -194,12 +194,17 @@ impl Formatter for Json {
         self.offense_count += f.offenses.len();
     }
 
-    fn finished(&mut self, out: &mut String, _cx: &Ctx, inspected: &[PathBuf]) {
+    fn finished(&mut self, out: &mut String, cx: &Ctx, inspected: &[PathBuf]) {
+        // rbcop's own members (#771), only under --no-ruby: the default output stays RuboCop's.
+        let skipped = cx.skipped.as_ref().map_or(String::new(), |(cops, ruby_code)| {
+            let cops: Vec<String> = cops.iter().map(|c| json(c)).collect();
+            format!(",\"skipped_cops\":[{}],\"skipped_ruby_code\":{ruby_code}", cops.join(","))
+        });
         let _ = write!(
             out,
             "{{\"metadata\":{{\"rubocop_version\":{},\"ruby_engine\":\"ruby\",\"ruby_version\":{},\
              \"ruby_patchlevel\":{},\"ruby_platform\":{}}},\"files\":[{}],\"summary\":{{\"offense_count\":{},\
-             \"target_file_count\":{},\"inspected_file_count\":{}{}}}}}",
+             \"target_file_count\":{},\"inspected_file_count\":{}{}}}{skipped}}}",
             json(RUBOCOP_VERSION),
             json(RUBY_VERSION),
             json(RUBY_PATCHLEVEL),

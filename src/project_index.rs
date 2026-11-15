@@ -93,10 +93,12 @@ pub fn install(paths: Vec<String>) {
 /// gem's `lib/**/*.rb`, empty outside a bundle. The project's Ruby asks Bundler, so the bundle
 /// resolves as inside RuboCop, and what Bundler prints (`Resolving dependencies...`) reaches
 /// stdout as there. `Bundler.load` is memoized per process, so a rebuilt index (`--lsp`) reuses
-/// the first list. Err: the message RuboCop warns with before indexing the project only.
+/// the first list. Err: the message RuboCop warns with before indexing the project only, or
+/// --no-ruby's refusal (crate::no_ruby::refused), which ends the run.
 // ponytail: the memoized list also skips re-globbing the gem dirs, which do not change in a run.
 pub fn bundled_gem_source_files(cwd: &Path) -> Result<Vec<String>, String> {
     use std::io::Write;
+    crate::no_ruby::refuse("AllCops/ProjectIndexIncludesGems")?;
     const MARK: &[u8] = b"\0rbcop-bundled-gems\0";
     const SCRIPT: &str = r##"out = begin
   require 'bundler'

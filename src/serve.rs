@@ -151,7 +151,7 @@ impl Runtime {
         // Runner#run builds the index from the targets (none when excluded) before inspecting.
         if !self.index_built && self.pwd_config.all_cops().truthy("UseProjectIndex") {
             let targets = if excluded { Vec::new() } else { vec![abs.clone()] };
-            crate::build_project_index(&mut self.store, &self.pwd_config, &targets, true, false);
+            crate::build_project_index(&mut self.store, &self.pwd_config, &targets, true, false)?;
         }
         self.index_built = true;
         if excluded {

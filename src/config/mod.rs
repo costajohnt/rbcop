@@ -995,30 +995,38 @@ impl Store {
 
     /// CacheConfig.root_dir_from_toplevel_config: `AllCops: CacheRootDirectory` as written in the
     /// config file found from the working directory (no inheritance, no -c).
-    fn toplevel_cache_root(&self) -> Option<String> {
-        let path = self.find_config_path(&self.cwd)?;
-        let text = std::fs::read(&path).ok()?;
+    /// Err only for --no-ruby's refusal to render ERB there.
+    fn toplevel_cache_root(&self) -> Result<Option<String>, String> {
+        let Some(path) = self.find_config_path(&self.cwd) else { return Ok(None) };
+        let Ok(text) = std::fs::read(&path) else { return Ok(None) };
         if !text.windows(18).any(|w| w == b"CacheRootDirectory") {
-            return None;
+            return Ok(None);
         }
         let text = match text.windows(2).any(|w| w == b"<%") {
-            true => render_erb(&path, &text).ok().flatten().unwrap_or(text),
+            true => match render_erb(&path, &text) {
+                Err(e) if crate::no_ruby::refused(&e) => return Err(e),
+                r => r.ok().flatten().unwrap_or(text),
+            },
             false => text,
         };
-        match parse_yaml_bytes(&text, &path.display().to_string()).ok()? {
-            Value::Map(m) => m.map("AllCops")?.get("CacheRootDirectory")?.as_string(),
+        Ok(match parse_yaml_bytes(&text, &path.display().to_string()) {
+            Ok(Value::Map(m)) => m.map("AllCops").and_then(|a| a.get("CacheRootDirectory")?.as_string()),
             _ => None,
-        }
+        })
     }
 
     /// CLI#act_on_options' `ConfigLoader.cache_root(@options[:cache_root])`, before the pwd config
     /// loads: memoized by its first use, so a remote config in the `-c` file (loaded earlier, by
     /// ConfigStore#apply_options!) keeps the root without `--cache-root`.
-    pub fn early_cache_root(&mut self, cache_root_override: Option<String>) -> Option<String> {
+    pub fn early_cache_root(&mut self, cache_root_override: Option<String>) -> Result<Option<String>, String> {
         if self.remote_root.is_none() {
-            self.remote_root = Some(cache_root_override.or_else(|| self.toplevel_cache_root()));
+            let root = match cache_root_override {
+                Some(r) => Some(r),
+                None => self.toplevel_cache_root()?,
+            };
+            self.remote_root = Some(root);
         }
-        self.remote_root.clone().flatten()
+        Ok(self.remote_root.clone().flatten())
     }
 
     /// `ConfigLoader.cache_root = ResultCache.cache_root(...)`: the root later remote configs use.
@@ -1060,6 +1068,10 @@ impl Store {
     /// The installed version of a gem, if any.
     fn gem_version(&self, gem: &str) -> Option<String> {
         if !gem.chars().all(|c| c.is_ascii_alphanumeric() || "_-.".contains(c)) || gem.starts_with('-') {
+            return None;
+        }
+        // ponytail: not reached under --no-ruby, where no gem plugin loads (Store::feature).
+        if crate::no_ruby::on() {
             return None;
         }
         let out = std::process::Command::new("ruby")
@@ -2032,7 +2044,8 @@ impl Store {
     /// the project's ruby with RuboCop's own code (src/config/remote_config.rb); None when ruby
     /// cannot be run. On failure RuboCop prints the message and its backtrace; rbcop the message.
     fn remote_file(&mut self, url: &str, relative: &str) -> Result<Option<(String, PathBuf)>, String> {
-        let configured = self.early_cache_root(None).unwrap_or_default();
+        crate::no_ruby::refuse(&format!("remote inherit_from {url}"))?;
+        let configured = self.early_cache_root(None)?.unwrap_or_default();
         let Ok(out) = std::process::Command::new("ruby")
             .args(["-e", include_str!("remote_config.rb"), url, relative, &configured])
             .current_dir(&self.cwd)
@@ -2059,6 +2072,7 @@ impl Store {
         {
             return Err(format!("invalid gem name {gem:?} in config"));
         }
+        crate::no_ruby::refuse(&format!("finding the {gem} gem"))?;
         let out = std::process::Command::new("ruby")
             .args([
                 "-e",
@@ -2100,6 +2114,7 @@ impl Store {
         {
             return Err(format!("cannot load such file -- {feature}"));
         }
+        crate::no_ruby::refuse(&format!("finding {feature} (plugins:/require:)"))?;
         // Prints whether the gem named `f` is a lint_roller plugin, then the gem dir and the
         // file the feature resolves to (none for the standard library).
         let out = std::process::Command::new("ruby")
@@ -2138,6 +2153,7 @@ impl Store {
 fn render_erb(path: &Path, text: &[u8]) -> Result<Option<Vec<u8>>, String> {
     use std::io::Write;
     use std::process::{Command, Stdio};
+    crate::no_ruby::refuse(&format!("{}: ERB in config", path.display()))?;
     // No local variables before `result`: ERB's default binding is a fresh top level. Inside
     // RuboCop the rubocop gem is activated; templates such as rubocop-shopify's read its version
     // from Gem.loaded_specs, so that sees the version rbcop matches.

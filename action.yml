@@ -31,6 +31,12 @@ inputs:
       since a cached run are not inspected again. Sets RUBOCOP_CACHE_ROOT for the run, which takes
       precedence over --cache-root and AllCops/CacheRootDirectory.
     default: 'true'
+  no-ruby:
+    description: >-
+      true sets RBCOP_NO_RUBY=1: rbcop starts no ruby, rubocop or bundle at all, whatever fallback
+      says. Cops the fallback would run are skipped and reported; ERB in config files, remote
+      inherit_from, inherit_gem and AllCops/ProjectIndexIncludesGems fail the run (exit 2).
+    default: 'false'
   rubocop:
     description: >-
       The RuboCop command for the fallback (RBCOP_RUBOCOP); empty finds one: bundle exec rubocop
@@ -90,6 +96,7 @@ runs:
         ARGS: ${{ inputs.args }}
         RBCOP_FALLBACK: ${{ inputs.fallback == 'true' && '1' || inputs.fallback == 'false' && '0' || '' }}
         RBCOP_RUBOCOP: ${{ inputs.rubocop }}
+        RBCOP_NO_RUBY: ${{ inputs['no-ruby'] == 'true' && '1' || '' }}
         RESULTS: ${{ inputs.cache == 'true' && format('{0}/rbcop-results', runner.temp) || '' }}
       run: |
         set -f
