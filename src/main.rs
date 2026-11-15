@@ -131,6 +131,8 @@ const SPECS: &[(&str, Option<char>, Arg, Use)] = &[
     ("profile", None, Arg::None, Use::Handle),
     ("memory", None, Arg::None, Use::Handle),
     ("help", Some('h'), Arg::None, Use::Handle),
+    // rbcop's own (#771): not in RuboCop's -h, which src/help.txt reproduces.
+    ("no-ruby", None, Arg::None, Use::Handle),
 ];
 
 /// A failure before linting starts: (message, how RuboCop words it on stderr).
@@ -497,6 +499,11 @@ fn parse_args(args: Vec<String>) -> Result<Cli, Fail> {
                     }
                 }
                 return parse_args(again);
+            }
+            // Not a RuboCop option, so not one of `@options`' keys.
+            if name == "no-ruby" {
+                rbcop::no_ruby::set();
+                continue;
             }
             if usage == Use::Ruby {
                 cli.ruby.get_or_insert_with(|| format!("--{name} loads Ruby code, which rbcop cannot run"));
@@ -1780,7 +1787,7 @@ fn build_project_index(
     targets: &[PathBuf],
     force_exclusion: bool,
     only_recognized: bool,
-) {
+) -> Result<(), String> {
     let root = pwd_config.base_dir.clone();
     let mut all = targets::find(store, &[root], force_exclusion, only_recognized).unwrap_or_default();
     all.extend(targets.iter().cloned());
@@ -1788,6 +1795,7 @@ fn build_project_index(
     if pwd_config.all_cops().truthy("ProjectIndexIncludesGems") {
         match rbcop::project_index::bundled_gem_source_files(store.cwd()) {
             Ok(gems) => paths.extend(gems),
+            Err(e) if rbcop::no_ruby::refused(&e) => return Err(e),
             Err(e) => eprintln!(
                 "{}",
                 formatter::Paint(store.color())
@@ -1798,6 +1806,7 @@ fn build_project_index(
     paths.sort();
     paths.dedup();
     rbcop::project_index::install(paths);
+    Ok(())
 }
 
 fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Result<u8, String> {
@@ -1819,7 +1828,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     // CLI#act_on_options: ConfigLoader.cache_root(--cache-root) is set before the pwd config loads.
     let loaded = Store::new(cli.opts.clone(), names.clone()).and_then(|mut store| {
         let cwd = store.cwd().to_path_buf();
-        let early = store.early_cache_root(cli.cache_root.clone());
+        let early = store.early_cache_root(cli.cache_root.clone())?;
         store.for_dir(&cwd).map(|c| (store, c, early))
     });
     print!("{}", rbcop::config::take_debug());
@@ -1882,7 +1891,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     print!("{}", rbcop::config::take_debug());
     let mut loading = vec![String::new(); files.len()];
     if !cli.list_targets && pwd_config.all_cops().truthy("UseProjectIndex") {
-        build_project_index(&mut store, &pwd_config, &files, cli.force_exclusion, cli.only_recognized);
+        build_project_index(&mut store, &pwd_config, &files, cli.force_exclusion, cli.only_recognized)?;
     }
 
     // Runner#qualify_option_cop_names runs when the first team mobilizes: after the configs of the
@@ -1912,7 +1921,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     store.set_only(cli.opts.only.clone());
     pwd_config = store.for_dir(&cwd)?;
 
-    let cx = Ctx {
+    let mut cx = Ctx {
         pwd: pwd.clone(),
         opts: Opts {
             color: cli.color,
@@ -1927,6 +1936,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
         pwd_config: pwd_config.clone(),
         default_config: store.default_config(),
         stdout_tty: std::io::stdout().is_terminal(),
+        skipped: None,
     };
 
     if cli.list_targets {
@@ -2024,6 +2034,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     // Looked up only when needed: a project that needs nothing never starts Ruby.
     let program = if usable && (unrunnable || !copless.is_empty()) { fallback::rubocop() } else { None };
     let what = fallback::what(&skipped, store.requires_ruby_code(), &copless);
+    if rbcop::no_ruby::on() {
+        cx.skipped = Some((skipped.iter().cloned().collect(), store.requires_ruby_code() || !copless.is_empty()));
+    }
     if unrunnable || !copless.is_empty() {
         let forced = env::var_os("RBCOP_FALLBACK").is_some_and(|v| v == "1");
         // Deliberate difference: the RuboCop child corrects by writing the files, which `--diff`

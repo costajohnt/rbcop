@@ -31,6 +31,27 @@ the project being linted (as RuboCop does, since RuboCop runs that same code):
   evaluates the project's Gemfile, also under `--lsp`, `--mcp` and the server options, as RuboCop
   does. `RBCOP_FALLBACK=0` does not stop it. To avoid it, leave the option off (the default).
 
+**`--no-ruby`** (or `RBCOP_NO_RUBY=1`; rbcop's own option, #771) guarantees none of the above:
+rbcop then never starts `ruby`, `rubocop` or `bundle`, in any mode (`--lsp`, `--mcp` and the
+server options included). It wins over `RBCOP_FALLBACK` (`=1` too) and `RBCOP_RUBOCOP`. Case by
+case:
+
+- The RuboCop fallback is skipped and reported, not an error: the stderr notice ends `--no-ruby
+  keeps RuboCop from running them`, and `-f json` adds `skipped_cops` and `skipped_ruby_code`
+  ([json-output.md](json-output.md)). The exit status is the run's as usual.
+- A `plugins:`/`require:` gem rbcop does not implement (and `rubocop-internal_affairs`) is not
+  looked up: a `Warning: rbcop: --no-ruby: finding <gem> (plugins:/require:) needs Ruby, ...` line,
+  and its cops count as Ruby code the config requires (skipped as above). A native plugin's
+  `plugin_class_name` is not checked, as when its gem is not installed.
+- `-r`/`--require`, `--plugin` and custom formatter classes are refused (exit 2), as with no
+  RuboCop found.
+- ERB in a config file, a remote `inherit_from` URL, `inherit_gem` and
+  `AllCops/ProjectIndexIncludesGems` fail the run with exit 2 and `rbcop: --no-ruby: <what> needs
+  Ruby, which --no-ruby (or RBCOP_NO_RUBY=1) forbids`.
+
+`--no-ruby` is not in `-h`, which prints RuboCop's help unchanged. `git` (below) is not Ruby and
+still runs for `--changed`.
+
 rbcop also runs `git` for `--changed` and the MCP tools' `changed` scope, as RuboCop does. What
 rbcop pins and refuses there (and nothing beyond it):
 

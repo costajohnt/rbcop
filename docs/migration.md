@@ -92,6 +92,7 @@ By default it runs `rbcop --format github --format progress`: offenses become an
 | `version` | the action's version | the rbcop release to run |
 | `fallback` | `auto` | run plugin and custom cops with RuboCop: `auto` when one is found, `true` always (`RBCOP_FALLBACK=1`), `false` never (`RBCOP_FALLBACK=0`). `auto` runs RuboCop, and so the repository's Ruby code, when the config needs it. `false` skips RuboCop only: rbcop still runs `ruby` for ERB in config files, remote `inherit_from` URLs and `AllCops/ProjectIndexIncludesGems` ([known-gaps.md](known-gaps.md#security-when-rbcop-runs-ruby)). |
 | `cache` | `true` | keep the result cache between runs with `actions/cache` (keyed on the rbcop version, runner OS and architecture, the `.rubocop*.yml` and `Gemfile.lock` contents and the commit, restored from the newest entry with the same config), so files unchanged since then are not inspected again. Only `rbcop_cache` is kept, never `rubocop_cache` (remote `inherit_from` downloads, the fallback RuboCop's cache), and nothing is saved from `pull_request_target` or `workflow_run` runs. It sets `RUBOCOP_CACHE_ROOT`, which overrides `--cache-root` and `AllCops: CacheRootDirectory`; `MaxFilesInCache` still prunes it. A run with offenses saves too. `false` leaves the cache settings alone. |
+| `no-ruby` | `false` | `true` sets `RBCOP_NO_RUBY=1`: rbcop starts no `ruby`, `rubocop` or `bundle`, skipping and reporting the cops the fallback would run and failing (exit 2) on anything else that needs Ruby ([known-gaps.md](known-gaps.md#security-when-rbcop-runs-ruby)); wins over `fallback` |
 | `rubocop` | (found) | the RuboCop command the fallback runs (`RBCOP_RUBOCOP`); by default `bundle exec rubocop` when `Gemfile.lock` has rubocop, else `rubocop` on `PATH` |
 
 With plugins, install the bundle first so the fallback finds RuboCop:
@@ -123,7 +124,7 @@ rbcop: not running 6 cops it does not implement (I18n/GetText: 4, I18n/RailsI18n
 rbcop: RuboCop runs them when one is found: add the rubocop gem to the bundle, put rubocop on PATH, or set RBCOP_RUBOCOP
 ```
 
-(the second line only when none was found), and refuses `-r`, `--plugin` and custom formatter classes. Cops from Ruby files the config requires are named as "cops from Ruby code the config requires", since rbcop cannot know their names. The README lists the fallback's limits.
+(the second line only when none was found), and refuses `-r`, `--plugin` and custom formatter classes. With `--no-ruby` (or `RBCOP_NO_RUBY=1`) rbcop never starts Ruby at all: the same cops are skipped and reported (also in `-f json`, [json-output.md](json-output.md)), and a config that needs Ruby otherwise (ERB, remote `inherit_from`, `inherit_gem`) fails with exit 2. Cops from Ruby files the config requires are named as "cops from Ruby code the config requires", since rbcop cannot know their names. The README lists the fallback's limits.
 
 ## Editors
 

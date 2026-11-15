@@ -39,7 +39,7 @@ rbcop -A [paths...]    # all autocorrections
 rbcop -f json -o report.json
 ```
 
-All builtin formatters are supported, as are the display options, `--fail-level`, `--stdin` (with `-a`/`-A` it prints the corrected source after the report), `-L`, `--show-cops`, `-v` and `-V`.
+All builtin formatters are supported (`-f json` is documented, with the exit codes and a compatibility policy, in [docs/json-output.md](docs/json-output.md)), as are the display options, `--fail-level`, `--stdin` (with `-a`/`-A` it prints the corrected source after the report), `-L`, `--show-cops`, `-v` and `-V`.
 
 `--auto-gen-config` (with its options), `--regenerate-todo`, `--disable-uncorrectable` and `--report-unused-todo-entries` are supported. The server options are accepted and run in process (no server is started), `--lsp` runs RuboCop's language server, `--mcp` its MCP server, and `--changed` limits the run to files git reports as changed. Plugin and custom cops rbcop does not implement, `-r`/`--plugin` and custom formatter classes run with RuboCop when one is installed (see [Plugins and custom cops](#plugins-and-custom-cops)). ERB in config files is rendered by running `ruby`, as RuboCop renders it, and remote `inherit_from` URLs are fetched as RuboCop fetches them. The result cache (`--cache`, `--cache-root`, `AllCops: UseCache`) works as RuboCop's, in its own `rbcop_cache` directory. [docs/known-gaps.md](docs/known-gaps.md) lists these and every other known difference, including a few deliberate ones (for example, `-o` pointing at a file being inspected is refused). `-a`/`-A` do not write files that resolve (through symlinks) outside the working directory and the paths given on the command line; those are reported uncorrected with a warning.
 
@@ -61,6 +61,8 @@ rbcop: RuboCop runs them when one is found: add the rubocop gem to the bundle, p
 (the second line only when none was found). Cops defined by Ruby code the config requires (`require: ./lib/cops/my_cop.rb`, or a plugin gem rbcop could not load) are named as "cops from Ruby code the config requires", since rbcop cannot know their names. A plugin that defines no cops but works through Ruby code (rubocop-erb's ERB extraction) is named as "the Ruby code of plugin rubocop-erb": rbcop runs no cops on the files its `AllCops: Include` brings in (the `.erb` views), and with the fallback RuboCop runs every cop on them. `RBCOP_FALLBACK=1` runs the fallback with `rubocop` even when none was found.
 
 `-r`/`--require`, `--plugin` and custom formatter classes (`-r ./my_formatter.rb --format MyFormatter`) load Ruby code that can change anything, so rbcop hands the whole run to the same RuboCop with the same arguments: the output is RuboCop's, with no speedup. With no RuboCop found, or `RBCOP_FALLBACK=0`, rbcop refuses them (exit 2).
+
+`--no-ruby` (or `RBCOP_NO_RUBY=1`), rbcop's own option, guarantees rbcop never starts `ruby`, `rubocop` or `bundle`, whatever `RBCOP_FALLBACK` says: for a pinned binary in an environment without Ruby. The cops the fallback would run are skipped and reported (on stderr, and as `skipped_cops` and `skipped_ruby_code` in `-f json`); anything else that needs Ruby (ERB in config files, remote `inherit_from`, `inherit_gem`, `AllCops/ProjectIndexIncludesGems`, `-r`, `--plugin`, custom formatter classes) fails with exit 2 and a `rbcop: --no-ruby: ...` error. [docs/known-gaps.md](docs/known-gaps.md) ("Security: when rbcop runs Ruby") has the details.
 
 Limits of the fallback:
 

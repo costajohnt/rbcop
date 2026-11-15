@@ -483,6 +483,9 @@ pub struct Ctx {
     /// The default configuration (ConfigLoader.default_configuration).
     pub default_config: Arc<Resolved>,
     pub stdout_tty: bool,
+    /// Under --no-ruby: the cops not run, and whether Ruby code the config requires (cops of
+    /// unknown names) was not run either; `-f json` lists them (docs/json-output.md).
+    pub skipped: Option<(Vec<String>, bool)>,
 }
 
 impl Ctx {

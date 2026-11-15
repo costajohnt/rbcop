@@ -22,8 +22,11 @@ const PRELOAD: &str = "module RuboCop\n  class ArgumentsFile\n    singleton_clas
 /// rubocop gem, else `rubocop` when it is on PATH. RBCOP_FALLBACK=1 runs `rubocop` even when none
 /// was found (and fails if it cannot start). Called only once something needs RuboCop, so a project
 /// that needs nothing never looks. In an editor or server context (`editor_context`) only
-/// RBCOP_FALLBACK=1 runs it.
+/// RBCOP_FALLBACK=1 runs it. Never under --no-ruby, whatever RBCOP_FALLBACK says.
 pub fn rubocop() -> Option<String> {
+    if rbcop::no_ruby::on() {
+        return None;
+    }
     let mode = std::env::var("RBCOP_FALLBACK").unwrap_or_default();
     if mode == "0" || (mode != "1" && EDITOR.load(Relaxed)) {
         return None;
@@ -53,12 +56,14 @@ pub fn announce(program: &str, what: &str) {
     }
 }
 
-/// The notice's second line when no RuboCop was found; None under RBCOP_FALLBACK=0 or in an editor.
+/// The notice's second line when no RuboCop was found; None under RBCOP_FALLBACK=0, --no-ruby or
+/// in an editor.
 pub fn missing() -> Option<&'static str> {
-    (std::env::var_os("RBCOP_FALLBACK").is_none_or(|v| v != "0") && !EDITOR.load(Relaxed)).then_some(
-        "rbcop: RuboCop runs them when one is found: add the rubocop gem to the bundle, put rubocop on PATH, or \
+    (std::env::var_os("RBCOP_FALLBACK").is_none_or(|v| v != "0") && !EDITOR.load(Relaxed) && !rbcop::no_ruby::on())
+        .then_some(
+            "rbcop: RuboCop runs them when one is found: add the rubocop gem to the bundle, put rubocop on PATH, or \
          set RBCOP_RUBOCOP",
-    )
+        )
 }
 
 /// Bundler's Gemfile lookup (BUNDLE_GEMFILE, else Gemfile or gems.rb in the working directory or a
@@ -142,10 +147,11 @@ pub fn unimplemented<'c>(
 
 /// `rbcop: not running 3 cops it does not implement (Rails: 2, RSpec: 1); set RBCOP_FALLBACK=1 ...`
 pub fn notice(skipped: &BTreeSet<String>, required_code: bool, copless_plugins: &[&str]) -> String {
-    format!(
-        "rbcop: not running {}; set RBCOP_FALLBACK=1 to run them with RuboCop",
-        what(skipped, required_code, copless_plugins)
-    )
+    let hint = match rbcop::no_ruby::on() {
+        true => "--no-ruby keeps RuboCop from running them",
+        false => "set RBCOP_FALLBACK=1 to run them with RuboCop",
+    };
+    format!("rbcop: not running {}; {hint}", what(skipped, required_code, copless_plugins))
 }
 
 /// `3 cops it does not implement (Rails: 2, RSpec: 1) or cops from Ruby code the config requires`
