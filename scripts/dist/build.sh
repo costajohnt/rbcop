@@ -22,7 +22,15 @@ if command -v sha256sum >/dev/null; then sum="sha256sum"; else sum="shasum -a 25
 export CARGO_PROFILE_RELEASE_STRIP=symbols
 for target in "$@"; do
   case "$target" in
-    *-linux-gnu) cargo zigbuild --release --locked --target "$target.2.17" ;;
+    *-linux-gnu)
+      cargo zigbuild --release --locked --target "$target.2.17"
+      # The documented floor (README, Install): no symbol needs a glibc newer than 2.17.
+      newest=$(readelf --dyn-syms -W "target/$target/release/rbcop" | grep -o 'GLIBC_[0-9.]*' | sort -Vu | tail -1)
+      if [ "$(printf '%s\nGLIBC_2.17\n' "$newest" | sort -V | tail -1)" != GLIBC_2.17 ]; then
+        echo "build.sh: $target needs $newest, above the glibc 2.17 floor" >&2
+        exit 1
+      fi
+      ;;
     *-linux-musl) cargo zigbuild --release --locked --target "$target" ;;
     *) cargo build --release --locked --target "$target" ;;
   esac

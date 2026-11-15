@@ -52,3 +52,34 @@ against the default branch, whose tip can be another commit by then), publish it
 tag there), then run the workflow on the tag with stage `publish-gems`. Gems go out through RubyGems trusted publishing: register `release.yml`
 with environment `release` as a trusted publisher for the `rbcop` gem on rubygems.org (a pending
 publisher before the first push), and give the `release` environment a required reviewer.
+
+The `attest` job runs after `draft-release` and attests every file in `SHA256SUMS` with
+`actions/attest-build-provenance`; wait for it to finish before publishing the draft. Archives
+built and uploaded by hand (steps 2 to 7) get no attestation. Check one with
+
+    gh attestation verify rbcop-X.Y.Z-<target>.tar.gz -R costajohnt/rbcop \
+      --signer-workflow costajohnt/rbcop/.github/workflows/release.yml
+
+(`gh` 2.49 or newer, signed in; the attestations are public). Releases up to 0.1.4 have none.
+
+## glibc floor
+
+The `*-linux-gnu` archives target glibc 2.17 (`cargo zigbuild --target <target>.2.17` in
+`scripts/dist/build.sh`), and `build.sh` fails if the binary needs a newer `GLIBC_` symbol version.
+They link only `libc.so.6`, `libpthread.so.0` and `libdl.so.2`. Measured on the published 0.1.4
+archives with `readelf --dyn-syms -W rbcop | grep -o 'GLIBC_[0-9.]*' | sort -Vu | tail -1`:
+`GLIBC_2.17` for both x86_64 and aarch64. Raising the floor is a minor release and goes in the
+release notes and README.
+
+## Versions
+
+rbcop is 0.x. Every published release is meant to be pinned: a tag is never moved and a release's
+files are never replaced (their checksums are committed before the tag). From the release after
+0.1.4 on:
+
+- A patch release (0.Y.Z) fixes bugs only. A parity fix can change output toward what RuboCop
+  1.92.2 prints for the same input; nothing else about options, configuration or platforms changes.
+- A minor release (0.Y.0) may change the RuboCop target version, options, configuration handling,
+  supported platforms or the glibc floor; its notes say which.
+
+Earlier patch releases did not follow this (0.1.4 moved the target from RuboCop 1.92.1 to 1.92.2).
