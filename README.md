@@ -16,6 +16,8 @@ The target is byte-identical output: same offenses, ranges, messages, `[Correcta
 - GitHub Actions: `uses: costajohnt/rbcop@v<version>` downloads and caches the release binary, and keeps rbcop's result cache between runs ([inputs](docs/migration.md#github-actions)).
 - Homebrew: `brew install costajohnt/tap/rbcop`. Release archives with each release.
 
+The Linux glibc binaries (`*-linux-gnu` archives and gems) need glibc 2.17 or newer (CentOS 7, Ubuntu 14.04, Debian 8 and later); the musl ones are statically linked. Each release lists every file's SHA-256 in `SHA256SUMS` (also committed as `packaging/checksums/<version>.sha256`), and releases after 0.1.4 carry a GitHub build-provenance attestation for each file: `gh attestation verify rbcop-<version>-<target>.tar.gz -R costajohnt/rbcop` checks that it was built by this repository's release workflow. rbcop is 0.x: every published release is meant to be pinned, and from the release after 0.1.4 on, patch releases fix bugs only ([docs/releasing.md](docs/releasing.md#versions)).
+
 [docs/migration.md](docs/migration.md) covers switching a project from RuboCop: Gemfile, binstubs, CI, editors and plugins. `docs/releasing.md` describes how releases are built.
 
 ## Build

@@ -9,10 +9,15 @@
 #     against the committed packaging/checksums file, and push them with RubyGems trusted
 #     publishing (OIDC, no API key secret).
 #
+#   job `attest` (after `draft-release`): a GitHub build-provenance attestation for every file in
+#     SHA256SUMS, so a pinned digest traces back to this workflow, run and commit (`gh attestation
+#     verify <file> -R costajohnt/rbcop`).
+#
 # Hardening: third-party actions are pinned to commit SHAs; the workflow token is read-only except
 # in the two publishing jobs, which run no project code (no build scripts, no Bundler, no caches),
 # check what they publish against checksums first, and wait for the `release` environment (give
-# it a required reviewer); only manual runs trigger the workflow, never pushes or pull requests;
+# it a required reviewer), and in `attest`, which checks out nothing, runs only the attest action
+# on the SHA256SUMS that `draft-release` checked, and starts only after that job succeeded; only manual runs trigger the workflow, never pushes or pull requests;
 # no event data is interpolated into scripts; Rust is rust-toolchain.toml's (the toolchain ci.yml
 # gates with; `rustup toolchain install` with no argument installs it and `rustup target add`
 # adds the targets to it); zig is checked against its published SHA-256 and
@@ -153,8 +158,31 @@ jobs:
           test "$(cut -c67- SHA256SUMS | LC_ALL=C sort)" = "$expected"
           sha256sum --strict -c SHA256SUMS
           mapfile -t files < <(printf '%s\n' "$expected")
+          # The release notes template: the maintainer adds the changes above it.
+          notes="Pin a file by its SHA-256 in SHA256SUMS (committed as packaging/checksums/$VERSION.sha256).
+          Check where it was built with \`gh attestation verify <file> -R costajohnt/rbcop\`.
+          The *-linux-gnu archives and gems need glibc 2.17 or newer; the *-linux-musl ones are static.
+          Patch releases fix bugs only (docs/releasing.md, \"Versions\")."
           gh release create "v$VERSION" --repo "$GITHUB_REPOSITORY" --draft --title "rbcop $VERSION" \
-            "${files[@]}" SHA256SUMS
+            --notes "$notes" "${files[@]}" SHA256SUMS
+
+  # Attests exactly the digests `draft-release` checked: the same artifact's SHA256SUMS, one subject
+  # per line. Nothing is checked out or run but the attest action.
+  attest:
+    needs: draft-release
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: release
+          path: release
+      - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-checksums: release/SHA256SUMS
 
   publish-gems:
     if: inputs.stage == 'publish-gems' && startsWith(github.ref, 'refs/tags/v')
