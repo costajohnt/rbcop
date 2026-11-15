@@ -118,10 +118,20 @@ impl Cache {
         names: HashSet<&'static str>,
     ) -> Option<Cache> {
         // ResultCache.source_checksum: RuboCop hashes its own source; rbcop, its binary.
-        // One pass over the binary (tens of MB): 64 bits tell builds apart. xxh3, not SipHash:
-        // SipHash took about 30 ms of a one-file run (#777).
-        let exe = xxhash_rust::xxh3::xxh3_64(&fs::read(std::env::current_exe().ok()?).ok()?);
-        let build = digest(&[env!("CARGO_PKG_VERSION").as_bytes(), &exe.to_le_bytes(), FORMAT]);
+        // One pass over the binary (tens of MB): 64 bits tell builds apart. xxh3 through a small
+        // buffer: SipHash over the whole file read into memory took about 30 ms a run (#777).
+        let mut exe = xxhash_rust::xxh3::Xxh3::new();
+        let mut file = fs::File::open(std::env::current_exe().ok()?).ok()?;
+        let mut buf = vec![0; 1 << 16];
+        loop {
+            match file.read(&mut buf) {
+                Ok(0) => break,
+                Ok(n) => exe.update(&buf[..n]),
+                Err(e) if e.kind() == std::io::ErrorKind::Interrupted => {}
+                Err(_) => return None,
+            }
+        }
+        let build = digest(&[env!("CARGO_PKG_VERSION").as_bytes(), &exe.digest().to_le_bytes(), FORMAT]);
         let top = root.join("rbcop_cache");
         let dir = top.join(build).join(digest(&[context.as_bytes()]));
         Some(Cache { top, dir, allow_symlinks, max_files, names, saved: Default::default() })
