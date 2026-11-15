@@ -1764,9 +1764,9 @@ impl Store {
                 // gem (#556, #568).
                 // ponytail: with the gem not installed the name is not checked.
                 if let Load::NamedPlugin(class) = &load
-                    && let Ok(Feature { dir: Some(dir), .. }) = self.feature(&name)
+                    && let Ok(Feature { dir: Some(dir), file, .. }) = self.feature(&name)
                     && let Some(problem) =
-                        named_plugin_problem(&name, class, &self.constant_libs(&name, dir.join("lib")))
+                        named_plugin_problem(&name, class, &self.constant_files(&name, dir.join("lib"), file))
                 {
                     self.failed_entry = Some(name.clone());
                     return Err(problem);
@@ -1820,7 +1820,8 @@ impl Store {
             let lib = dir.join(lib);
             // Kernel.const_get of the name, then `.new(plugin_config)` on it.
             if let Load::NamedPlugin(class) = &load
-                && let Some(problem) = named_plugin_problem(&name, class, &self.constant_libs(&name, lib.clone()))
+                && let Some(problem) =
+                    named_plugin_problem(&name, class, &self.constant_files(&name, lib.clone(), feature.file.clone()))
             {
                 self.failed_entry = Some(name.clone());
                 return Err(problem);
@@ -2000,23 +2001,24 @@ impl Store {
     }
 
     /// Gem dir for inherit_gem and plugins, as `Gem::Specification.find_by_name(name).gem_dir` reports it.
-    /// The lib/ directories whose classes and modules Kernel.const_get sees once the gem `name`
-    /// (lib/ `own`) is required: its own, rubocop's, lint_roller's and those of the plugins and
-    /// features loaded before it (#590).
-    fn constant_libs(&mut self, name: &str, own: PathBuf) -> Vec<PathBuf> {
-        let mut libs = vec![own];
+    /// The Ruby files whose classes and modules Kernel.const_get sees once the gem `name` (lib/
+    /// `own`, feature file `file`) is required: those its require reaches (not every file of
+    /// lib/: standard's `Standard::Base::Plugin` needs `standard/base`, #768), rubocop's,
+    /// lint_roller's and those the plugins and features loaded before it reach (#590).
+    fn constant_files(&mut self, name: &str, own: PathBuf, file: Option<PathBuf>) -> Vec<PathBuf> {
+        let mut files = reached_files(&own, file.as_deref());
         for gem in ["rubocop", "lint_roller"] {
             if let Ok(d) = self.gem_dir(gem) {
-                libs.push(d.join("lib"));
+                files.extend(ruby_files(&d.join("lib")));
             }
         }
         let earlier: Vec<String> = self.loaded_plugins.iter().filter(|n| *n != name).cloned().collect();
         for n in earlier {
-            if let Ok(Feature { dir: Some(d), .. }) = self.feature(&n) {
-                libs.push(d.join("lib"));
+            if let Ok(Feature { dir: Some(d), file, .. }) = self.feature(&n) {
+                files.extend(reached_files(&d.join("lib"), file.as_deref()));
             }
         }
-        libs
+        files
     }
 
     /// RemoteConfig#file (downloading into ConfigLoader.cache_root, refreshed after a day), for
@@ -2203,8 +2205,8 @@ struct Feature {
 /// The Ruby files a plain `require` of `file` loads: the file and, transitively, those its
 /// literal `require_relative`s and its `require`s of features under the gem's `lib` name. Files
 /// of the rubocop gem itself (`loaded`) are loaded before any config is read, so requiring them
-/// again does nothing. A `require` of a computed path (`Dir[...].each { |f| require f }`) is taken
-/// to load every file under `lib`.
+/// again does nothing. A `require` of a computed path (`Dir[...].each { |f| require f }`) outside
+/// a method body is taken to load every file under `lib`.
 // ponytail: only literal require lines are followed; conditions on them (`if defined?(...)`) and
 // requires into other gems are not.
 fn required_files(lib: &Path, file: &Path, loaded: Option<&Path>) -> Vec<PathBuf> {
@@ -2213,6 +2215,11 @@ fn required_files(lib: &Path, file: &Path, loaded: Option<&Path>) -> Vec<PathBuf
     });
     static COMPUTED: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| {
         Regex::new(r##"^[^#]*\brequire(?:_relative)?\b[\s(]*(?:[a-z_]\w*\s*(?:[)};]|$)|File\.|"[^"]*#\{)"##).unwrap()
+    });
+    // A multi-line `def` (not `def x; end` nor an endless `def x = ...`).
+    // ponytail: by its line shape, as for SCOPE_OPEN; a `def` inside a heredoc is taken as one.
+    static DEF_OPEN: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| {
+        Regex::new(r"^\s*def\s+[^\s(;=]+(?:\([^)]*\))?\s*(?:#.*)?$|^\s*def\s+[^\s(;=]+\s+[^=;]*$").unwrap()
     });
     let rb = |p: PathBuf| match p.extension() {
         Some(e) if e == "rb" => p,
@@ -2225,18 +2232,40 @@ fn required_files(lib: &Path, file: &Path, loaded: Option<&Path>) -> Vec<PathBuf
             continue;
         }
         let Ok(text) = std::fs::read_to_string(&f) else { continue };
+        // The indentation of the `def` whose body the line is in: a computed require there runs
+        // only when the method is called (standard's DeterminesClassConstant, #768).
+        let mut in_def: Option<usize> = None;
         for line in text.lines() {
+            let body = line.trim_start();
+            let indent = line.len() - body.len();
+            match in_def {
+                Some(i) if indent == i && body.starts_with("end") => in_def = None,
+                None if DEF_OPEN.is_match(line) => in_def = Some(indent),
+                _ => {}
+            }
             if let Some(m) = LITERAL.captures(line) {
                 let target =
                     if &m[1] == "require_relative" { f.parent().unwrap().join(&m[2]) } else { lib.join(&m[2]) };
                 todo.push(rb(normalize(&target)));
-            } else if COMPUTED.is_match(line) {
+            } else if in_def.is_none() && COMPUTED.is_match(line) {
                 return ruby_files(lib).into_iter().filter(|f| !loaded.is_some_and(|l| f.starts_with(l))).collect();
             }
         }
         seen.push(f);
     }
     seen
+}
+
+/// The files of `lib` a `require` of `file` loads (required_files), or every file of `lib` when
+/// there is no file or one of them `autoload`s (the autoloaded constants resolve too).
+// ponytail: any `autoload` line falls back to the whole lib/; follow its path if that matters.
+fn reached_files(lib: &Path, file: Option<&Path>) -> Vec<PathBuf> {
+    let Some(file) = file else { return ruby_files(lib) };
+    let files = required_files(lib, file, None);
+    let autoloads = |f: &PathBuf| {
+        std::fs::read_to_string(f).is_ok_and(|t| t.lines().any(|l| l.trim_start().starts_with("autoload")))
+    };
+    if files.iter().any(autoloads) { ruby_files(lib) } else { files }
 }
 
 /// The config files (relative to the gem directory) that loading these files merges into
@@ -2516,14 +2545,13 @@ static SCOPE_END: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex
 /// error that ends the run when the name is no class.
 // ponytail: an earlier plugin's plugin class is taken as this gem's; RuboCop integrates that
 // plugin's rules instead and leaves this gem's cops unconfigured (docs/known-gaps.md).
-fn named_plugin_problem(name: &str, class: &str, libs: &[PathBuf]) -> Option<String> {
+fn named_plugin_problem(name: &str, class: &str, files: &[PathBuf]) -> Option<String> {
     let bare = class.trim_start_matches("::");
     // `LintRoller::Rules.new(plugin_config)`: a keyword_init Struct (no `class` line)
     if bare == "LintRoller::Rules" {
         return Some("unknown keywords: enabled, require_path, plugin_class_name".into());
     }
-    let files: Vec<PathBuf> = libs.iter().flat_map(|l| ruby_files(l)).collect();
-    match ruby_constant_kinds(&files).get(bare) {
+    match ruby_constant_kinds(files).get(bare) {
         // Plugin::ConfigurationIntegrator.validate_plugins! and LintRoller::Plugin#rules
         Some((true, _)) if bare == "LintRoller::Plugin" => {
             Some("Please implement `rules(context)` and return an instance of LintRoller::Rules".into())

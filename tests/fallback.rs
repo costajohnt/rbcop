@@ -218,7 +218,8 @@ fn plain_require_loads_what_the_feature_requires() {
     .unwrap();
     fs::write(
         gem.join("lib/rubocop-fake_ns.rb"),
-        "require 'rubocop'\nrequire_relative 'rubocop/fake_ns'\nrequire_relative 'rubocop/fake_ns/inject'\n\
+        "require 'rubocop'\nrequire_relative 'rubocop/fake_ns'\nrequire_relative 'rubocop/fake_ns/plugin'\n\
+         require_relative 'rubocop/fake_ns/inject'\n\
          RuboCop::FakeNs::Inject.defaults!\nrequire 'rubocop/cop/fake_ns/one'\n",
     )
     .unwrap();
@@ -272,11 +273,22 @@ fn plain_require_loads_what_the_feature_requires() {
         let named = |class: &str| run(&format!("plugins:\n  - rubocop-fake_ns:\n      plugin_class_name: {class}\n"));
         let out = named("RuboCop::FakeNs::Plugin");
         assert!(text(&out.stderr).contains("not running 1 cop it does not implement"), "{}", text(&out.stderr));
-        // A name that is no constant, or a module, ends the run (#530).
+        // A name that is no constant, or a module, ends the run (#530). A class in a file the gem's
+        // require does not reach is no constant either (#768).
+        fs::write(
+            gem.join("lib/rubocop/fake_ns/unrequired.rb"),
+            "module RuboCop\n  module FakeNs\n    class Unrequired < LintRoller::Plugin\n    end\n  end\nend\n",
+        )
+        .unwrap();
         for (class, want) in [
             (
                 "Nope::Plugin",
                 "Failed while configuring plugin `rubocop-fake_ns': no constant with name `Nope::Plugin' was found.\n",
+            ),
+            (
+                "RuboCop::FakeNs::Unrequired",
+                "Failed while configuring plugin `rubocop-fake_ns': no constant with name \
+                 `RuboCop::FakeNs::Unrequired' was found.\n",
             ),
             ("RuboCop::FakeNs", "undefined method 'new' for module RuboCop::FakeNs\n"),
         ] {
@@ -294,7 +306,8 @@ fn plain_require_loads_what_the_feature_requires() {
             fs::write(
                 gem.join("lib/rubocop-fake_ns.rb"),
                 format!(
-                    "require 'rubocop'\nrequire_relative 'rubocop/fake_ns'\nrequire_relative 'rubocop/fake_ns/inject'\n\
+                    "require 'rubocop'\nrequire_relative 'rubocop/fake_ns'\nrequire_relative 'rubocop/fake_ns/plugin'\n\
+                     require_relative 'rubocop/fake_ns/inject'\n\
                      {call}require 'rubocop/cop/fake_ns/one'\n"
                 ),
             )
@@ -320,7 +333,8 @@ fn plain_require_loads_what_the_feature_requires() {
         .unwrap();
         fs::write(
             gem.join("lib/rubocop-fake_ns.rb"),
-            "require 'rubocop'\nrequire_relative 'rubocop/fake_ns'\nrequire_relative 'rubocop/fake_ns/inject'\n\
+            "require 'rubocop'\nrequire_relative 'rubocop/fake_ns'\nrequire_relative 'rubocop/fake_ns/plugin'\n\
+             require_relative 'rubocop/fake_ns/inject'\n\
              RuboCop::FakeNs::Inject.default_defaults!\nrequire 'rubocop/cop/fake_ns/one'\n",
         )
         .unwrap();

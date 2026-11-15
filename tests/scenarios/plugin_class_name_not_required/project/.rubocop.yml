@@ -1,0 +1,3 @@
+plugins:
+  - rubocop-rspec:
+      plugin_class_name: RuboCop::RSpec::DescriptionExtractor
