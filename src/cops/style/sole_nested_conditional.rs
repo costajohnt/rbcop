@@ -5,6 +5,7 @@ use helpers::node_types::is_assignment;
 use helpers::range_help::{Surrounding, range_with_surrounding_space};
 use helpers::whole_lines::range_by_whole_lines;
 use ruby_prism::Visit;
+use std::cell::Cell;
 use std::collections::HashSet;
 
 pub const NAME: &str = "Style/SoleNestedConditional";
@@ -325,15 +326,24 @@ impl Cop for SoleNestedConditional {
         );
         let me = span(node);
         let branch_span = span(&branch_node);
-        let mut state = std::mem::take(cx.state::<State>());
-        let ignored = state.ignored.contains(&me);
-        cx.add_fix(branch.keyword.0, branch.keyword.1, msg, |c| {
-            if ignored {
-                return;
-            }
-            apply(c, &edits);
-            state.ignored.insert(branch_span);
-        });
-        *cx.state::<State>() = state;
+        let ignored = cx.state::<State>().ignored.contains(&me);
+        let ran = Cell::new(false);
+        cx.add_fix_then(
+            branch.keyword.0,
+            branch.keyword.1,
+            msg,
+            |c| {
+                if ignored {
+                    return;
+                }
+                apply(c, &edits);
+                ran.set(true);
+            },
+            |cx| {
+                if ran.get() {
+                    cx.state::<State>().ignored.insert(branch_span);
+                }
+            },
+        );
     }
 }

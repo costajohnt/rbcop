@@ -67,7 +67,7 @@ impl Cop for MultilineTernaryOperator {
         });
         let ignored = cx.state::<Vec<(usize, usize)>>().iter().any(|&(a, b)| a <= start && end <= b);
         let ran = Cell::new(false);
-        cx.add_fix(start, end, msg, |c| {
+        let fix = |c: &mut Corrector| {
             if ignored {
                 return;
             }
@@ -78,10 +78,12 @@ impl Cop for MultilineTernaryOperator {
                 c.insert_before(ps, pe, &comments);
             }
             ran.set(true);
+        };
+        cx.add_fix_then(start, end, msg, fix, |cx| {
+            if ran.get() {
+                cx.state::<Vec<(usize, usize)>>().push((start, end));
+            }
         });
-        if ran.get() {
-            cx.state::<Vec<(usize, usize)>>().push((start, end));
-        }
     }
 }
 

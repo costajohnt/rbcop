@@ -229,6 +229,8 @@ impl Cop for UselessAccessModifier {
         let Some(root) = tree.root else { return };
         let mut all = Vec::new();
         tree.each_node(root, &mut |n| all.push(n));
+        // (node start, end of its hits in ctx.hits) for each node whose callback found offenses.
+        let mut callbacks = Vec::new();
         for n in all {
             // Each node is its own callback in RuboCop (on_class, on_block, ...): a raise there is a
             // cop error at that node.
@@ -257,9 +259,21 @@ impl Cop for UselessAccessModifier {
                 }
                 crate::runner::cop_error(NAME, cx.src, tree.range(n).0);
             }
+            if callbacks.last().map_or(0, |&(_, end)| end) < ctx.hits.len() {
+                callbacks.push((tree.range(n).0, ctx.hits.len()));
+            }
         }
-        for (s, e, msg, (rs, re)) in std::mem::take(&mut ctx.hits) {
-            cx.add_fix(s, e, msg, |c| c.remove(rs, re));
+        // Each node's offenses come from its own callback: a clobbering correction ends that one.
+        let src = cx.src;
+        let mut from = 0;
+        for (at, to) in callbacks {
+            crate::runner::own_callback(NAME, src, Some(at), || {
+                for (s, e, msg, (rs, re)) in &ctx.hits[from..to] {
+                    let (rs, re) = (*rs, *re);
+                    cx.add_fix(*s, *e, msg.clone(), |c| c.remove(rs, re));
+                }
+            });
+            from = to;
         }
     }
 }

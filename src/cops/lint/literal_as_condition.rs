@@ -1,5 +1,6 @@
 use crate::helpers::node_types::range;
 use crate::prelude::*;
+use std::cell::Cell;
 use helpers::select_by::plain_send;
 use ruby_prism::{IfNode, Visit};
 
@@ -332,17 +333,19 @@ impl LiteralAsCondition {
         let (ns, ne) = if_range(node);
         let ignored = cx.state::<Ignored>().0.iter().any(|&(s, e)| s <= ns && e >= ne);
         let (cs, ce) = range(cond);
-        let mut ran = false;
-        cx.add_fix(cs, ce, msg(node_text(cond)), |c| {
+        let ran = Cell::new(false);
+        let fix = |c: &mut Corrector| {
             if ignored {
                 return;
             }
             c.replace(ns, ne, &new_node);
-            ran = true;
+            ran.set(true);
+        };
+        cx.add_fix_then(cs, ce, msg(node_text(cond)), fix, |cx| {
+            if ran.get() {
+                cx.state::<Ignored>().0.push((ns, ne));
+            }
         });
-        if ran {
-            cx.state::<Ignored>().0.push((ns, ne));
-        }
     }
 
     fn on_loop(&self, cx: &mut Cx, node: &Node) {

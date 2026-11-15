@@ -1,5 +1,6 @@
 use crate::prelude::*;
 use ruby_prism::{Location, StatementsNode};
+use std::cell::RefCell;
 use std::collections::HashMap;
 
 pub const NAME: &str = "Style/Next";
@@ -175,8 +176,10 @@ impl Cop for Next {
             .collect();
         let target = indent_of(source_line(src, src.line_of(pred_loc.start_offset()))).unwrap_or(0) as i64;
         let delta = lines.iter().filter_map(|&l| indent_of(source_line(src, l))).min().unwrap_or(0) as i64 - target;
-        let mut reindented = std::mem::take(cx.state::<HashMap<usize, i64>>());
-        cx.add_fix(start, pred_loc.end_offset(), msg, |c| {
+        // Taken while the block runs and put back before a clobbering correction raises (#767).
+        let reindented = RefCell::new(std::mem::take(cx.state::<HashMap<usize, i64>>()));
+        let fix = |c: &mut Corrector| {
+            let mut reindented = reindented.borrow_mut();
             c.insert_before(start, end, &next_code);
             c.remove(start, cond_end);
             c.remove(end_begin, end_end);
@@ -190,8 +193,10 @@ impl Cop for Next {
                     c.remove_leading(ls, ls + line.len(), bytes);
                 }
             }
+        };
+        cx.add_fix_then(start, pred_loc.end_offset(), msg, fix, |cx| {
+            *cx.state::<HashMap<usize, i64>>() = reindented.take();
         });
-        *cx.state::<HashMap<usize, i64>>() = reindented;
     }
 }
 

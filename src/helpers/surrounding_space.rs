@@ -65,27 +65,34 @@ pub fn extra_space(src: &Source, token: Option<&Token>, side: Side) -> bool {
 }
 
 /// `space_offense`: the first offense for a node runs the node's full correction, later ones
-/// (the node is then ignored) correct nothing. `ignored` holds the nodes' ranges.
+/// (the node is then ignored) correct nothing. `is_ignored`: the node is ignored already; `ignore`
+/// ignores it, from inside the offense's block (so before a clobbering correction raises).
 pub fn space_offense(
     cx: &mut Cx,
-    ignored: &mut Vec<(usize, usize)>,
-    node: (usize, usize),
+    is_ignored: bool,
     (token, side, command): Planned,
     message: &str,
     correct: &dyn Fn(&mut Corrector),
+    ignore: impl FnOnce(&mut Cx),
 ) {
     let (s, e) = side_space_range(cx.src, token.start, token.end, side, false);
-    let is_ignored = ignored.contains(&node);
     let ran = Cell::new(false);
-    cx.add_fix(s, e, message.replace("%<command>s", command), |c| {
-        ran.set(true);
-        if !is_ignored {
-            correct(c);
-        }
-    });
-    if ran.get() {
-        ignored.push(node);
-    }
+    cx.add_fix_then(
+        s,
+        e,
+        message.replace("%<command>s", command),
+        |c| {
+            ran.set(true);
+            if !is_ignored {
+                correct(c);
+            }
+        },
+        |cx| {
+            if ran.get() {
+                ignore(cx);
+            }
+        },
+    );
 }
 
 /// Offense list entry produced by `no_space_offenses` / `space_offenses`: (token, side, command).

@@ -371,7 +371,7 @@ impl Cop for IfUnlessModifier {
         };
         let ran = Cell::new(false);
         let (ks, ke) = s.keyword_loc;
-        cx.add_fix(ks, ke, msg.replace("%s", s.keyword), |c| {
+        let fix = |c: &mut Corrector| {
             if skip {
                 return;
             }
@@ -380,10 +380,12 @@ impl Cop for IfUnlessModifier {
             }
             c.replace(start, end, &replacement);
             ran.set(true);
+        };
+        cx.add_fix_then(ks, ke, msg.replace("%s", s.keyword), fix, |cx| {
+            if ran.get() {
+                cx.state::<Ignored>().0.push((start, end));
+            }
         });
-        if ran.get() {
-            cx.state::<Ignored>().0.push((start, end));
-        }
     }
 }
 

@@ -65,15 +65,11 @@ impl Cop for SpaceInsideArrayLiteralBrackets {
         let src = cx.src;
         let style = cx.cfg.str("EnforcedStyle").unwrap_or("no_space").to_string();
         let empty_config = cx.cfg.str("EnforcedStyleForEmptyBrackets").unwrap_or("no_space").to_string();
-        let mut st = std::mem::take(cx.state::<State>());
-        let all = st.tokens.get_or_insert_with(|| translated_sorted(src));
+        let all = cx.state::<State>().tokens.get_or_insert_with(|| translated_sorted(src));
         let tokens = within(all, node_range.0, node_range.1).to_vec();
         let li = tokens.iter().position(left_bracket);
         let ri = tokens.iter().rposition(right_bracket);
-        let (Some(li), Some(ri)) = (li, ri) else {
-            *cx.state::<State>() = st;
-            return;
-        };
+        let (Some(li), Some(ri)) = (li, ri) else { return };
         let (left, right) = (tokens[li], tokens[ri]);
         let line = |t: &Token| src.line_of(t.start);
         let end_has_own_line = {
@@ -124,7 +120,6 @@ impl Cop for SpaceInsideArrayLiteralBrackets {
             if let Some(command) = ss::empty_offense_command(src, &empty_config, &left, &right) {
                 cx.add_fix(left.start, right.end, EMPTY_MSG.replace("%<command>s", command), correct);
             }
-            *cx.state::<State>() = st;
             return;
         }
 
@@ -158,8 +153,8 @@ impl Cop for SpaceInsideArrayLiteralBrackets {
             }
         };
         for p in planned {
-            ss::space_offense(cx, &mut st.ignored, node_range, p, MSG, &correct);
+            let ignored = cx.state::<State>().ignored.contains(&node_range);
+            ss::space_offense(cx, ignored, p, MSG, &correct, |cx| cx.state::<State>().ignored.push(node_range));
         }
-        *cx.state::<State>() = st;
     }
 }

@@ -139,7 +139,7 @@ fn report(cx: &mut Cx, n: &ruby_prism::RescueModifierNode, fix: Option<ParenFix>
         let skip = inside || heredoc_end(&n.rescue_expression()).is_some();
         let clause = format!("\n{off}rescue\n{ind}{}\n{off}end", node_text(&n.rescue_expression()));
         let done = Cell::new(false);
-        cx.add_fix(start, end, "Avoid using `rescue` in its modifier form.", |c| {
+        let correct = |c: &mut Corrector| {
             if skip {
                 return;
             }
@@ -154,9 +154,11 @@ fn report(cx: &mut Cx, n: &ruby_prism::RescueModifierNode, fix: Option<ParenFix>
             if let Some(f) = &fix {
                 parentheses_corrector::apply(c, f);
             }
+        };
+        cx.add_fix_then(start, end, "Avoid using `rescue` in its modifier form.", correct, |cx| {
+            if done.get() {
+                cx.state::<HashSet<(usize, usize)>>().insert(span(&n.as_node()));
+            }
         });
-        if done.get() {
-            cx.state::<HashSet<(usize, usize)>>().insert(span(&n.as_node()));
-        }
     }
 }

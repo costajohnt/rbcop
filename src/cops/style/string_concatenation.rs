@@ -185,14 +185,16 @@ impl Cop for StringConcatenation {
         let edit = !corrected_ancestor && !parts.iter().any(|p| uncorrectable(cx.src, p));
         let fixed = if edit { replacement(&parts) } else { String::new() };
         let done = Cell::new(false);
-        cx.add_fix(range.0, range.1, "Prefer string interpolation to string concatenation.", |c| {
+        let fix = |c: &mut Corrector| {
             if edit {
                 c.replace(range.0, range.1, &fixed);
                 done.set(true);
             }
+        };
+        cx.add_fix_then(range.0, range.1, "Prefer string interpolation to string concatenation.", fix, |cx| {
+            if done.get() {
+                cx.state::<HashSet<(usize, usize)>>().insert(range);
+            }
         });
-        if done.get() {
-            cx.state::<HashSet<(usize, usize)>>().insert(range);
-        }
     }
 }

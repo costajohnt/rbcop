@@ -44,15 +44,17 @@ impl Cop for LambdaCall {
         let msg = format!("Prefer the use of `{prefer}` over `{}`.", &cx.src.text[s..e]);
         let ignored = cx.state::<Vec<(usize, usize)>>().iter().any(|&(a, b)| a <= s && e <= b);
         let ran = Cell::new(false);
-        cx.add_fix(s, e, msg, |c| {
+        let fix = |c: &mut Corrector| {
             if !ignored {
                 c.replace(s, e, &prefer);
                 ran.set(true);
             }
+        };
+        cx.add_fix_then(s, e, msg, fix, |cx| {
+            if ran.get() {
+                cx.opposite_style_detected();
+                cx.state::<Vec<(usize, usize)>>().push((s, e));
+            }
         });
-        if ran.get() {
-            cx.opposite_style_detected();
-            cx.state::<Vec<(usize, usize)>>().push((s, e));
-        }
     }
 }

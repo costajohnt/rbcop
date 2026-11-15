@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use std::cell::Cell;
 use helpers::surrounding_space as ss;
 
 pub const NAME: &str = "Layout/SpaceInsideReferenceBrackets";
@@ -132,9 +133,10 @@ impl Cop for SpaceInsideReferenceBrackets {
                 ss::add_space(src, c, &left, &r);
             }
         };
-        let mut ignored = Vec::new();
+        let ignored = Cell::new(false);
         for p in planned {
-            ss::space_offense(cx, &mut ignored, (start, end), p, "%<command>s space inside reference brackets.", &correct);
+            let msg = "%<command>s space inside reference brackets.";
+            ss::space_offense(cx, ignored.get(), p, msg, &correct, |_| ignored.set(true));
         }
     }
 }
