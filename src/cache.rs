@@ -187,6 +187,10 @@ impl Cache {
                 edits: parse_edits(edits, &text)?,
             });
         }
+        // Deliberate difference: RuboCop's load leaves the mtime alone, so `cleanup`, which removes
+        // the oldest entries, removed the ones every warm run reads first (#778). Best effort: a
+        // read-only cache still loads.
+        let _ = file.set_modified(std::time::SystemTime::now());
         Some(FileReport { offenses, text, warnings: Vec::new(), abort: None, diffs: Vec::new() })
     }
 
@@ -251,7 +255,8 @@ impl Cache {
         path.ancestors().take_while(|p| p.parent().is_some()).find(|p| p.is_symlink())
     }
 
-    /// ResultCache.cleanup: past MaxFilesInCache entries, remove the oldest half (and one more);
+    /// ResultCache.cleanup: past MaxFilesInCache entries, remove the oldest half (and one more),
+    /// oldest by last use (`load` refreshes the mtime);
     /// `verbose` (`-d`) says so.
     pub fn cleanup(&self, verbose: bool) {
         let Some(max) = self.max_files else { return };
