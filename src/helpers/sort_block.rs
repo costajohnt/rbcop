@@ -16,7 +16,7 @@ pub fn sort_block<'pr>(node: &Node<'pr>, reversed: bool) -> Option<(ruby_prism::
         // (block $(call _ :sort) (args (arg $_a) (arg $_b)) $send)
         Some(p) if p.as_block_parameters_node().is_some() => {
             let bp = p.as_block_parameters_node().unwrap();
-            if bp.locals().len() != 0 {
+            if !bp.locals().is_empty() {
                 return None;
             }
             let ps = bp.parameters()?;

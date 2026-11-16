@@ -381,10 +381,10 @@ mod omit {
             }
         }
         // comment_before_first_argument? (1.92)
-        if let Some(first) = d.args.first() {
-            if !src.comments_in_lines(src.line_of(open.0), src.line_of(first.location().start_offset())).is_empty() {
-                return;
-            }
+        if let Some(first) = d.args.first()
+            && !src.comments_in_lines(src.line_of(open.0), src.line_of(first.location().start_offset())).is_empty()
+        {
+            return;
         }
         let args_parenthesized = args_parenthesized(d);
         if args_parenthesized {

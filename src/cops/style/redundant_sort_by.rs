@@ -31,16 +31,16 @@ impl Cop for RedundantSortBy {
             // (block $(call _ :sort_by) (args (arg $_x)) (lvar _x))
             Some(p) if p.as_block_parameters_node().is_some() => {
                 let bp = p.as_block_parameters_node().unwrap();
-                if bp.locals().len() != 0 {
+                if !bp.locals().is_empty() {
                     return;
                 }
                 let Some(params) = bp.parameters() else { return };
                 let reqs: Vec<_> = params.requireds().iter().collect();
                 if reqs.len() != 1
-                    || params.optionals().len() != 0
+                    || !params.optionals().is_empty()
                     || crate::ast::parser_rest(params.rest()).is_some()
-                    || params.posts().len() != 0
-                    || params.keywords().len() != 0
+                    || !params.posts().is_empty()
+                    || !params.keywords().is_empty()
                     || params.keyword_rest().is_some()
                     || params.block().is_some()
                 {

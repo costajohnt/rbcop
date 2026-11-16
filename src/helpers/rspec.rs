@@ -1346,14 +1346,14 @@ pub fn metadata_lists<'pr>(l: &Language, node: &Node<'pr>) -> Vec<(CallNode<'pr>
         let block = block_of(&call).unwrap();
         let params = block.parameters().and_then(|p| p.as_block_parameters_node());
         let var = params
-            .filter(|p| p.locals().len() == 0)
+            .filter(|p| p.locals().is_empty())
             .and_then(|p| p.parameters())
             .filter(|p| {
                 p.requireds().len() == 1
-                    && p.optionals().len() == 0
+                    && p.optionals().is_empty()
                     && p.rest().is_none()
-                    && p.posts().len() == 0
-                    && p.keywords().len() == 0
+                    && p.posts().is_empty()
+                    && p.keywords().is_empty()
                     && p.keyword_rest().is_none()
                     && p.block().is_none()
             })

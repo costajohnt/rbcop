@@ -46,7 +46,7 @@ fn struct_initialize(cx: &Cx, def: &ruby_prism::DefNode) -> bool {
     let Some(call) = a[n - 3].as_call_node() else { return false };
     let no_args = match block.parameters() {
         None => true,
-        Some(p) => p.as_block_parameters_node().is_some_and(|b| b.parameters().is_none() && b.locals().len() == 0),
+        Some(p) => p.as_block_parameters_node().is_some_and(|b| b.parameters().is_none() && b.locals().is_empty()),
     };
     let ctor = match (call.receiver(), call.name().as_slice()) {
         (Some(r), b"new") => global_const(&r, &["Struct"]),

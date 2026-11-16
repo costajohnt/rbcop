@@ -30,7 +30,7 @@ impl Cop for CompareWithBlock {
         }
         let Some(block) = call.block().and_then(|b| b.as_block_node()) else { return };
         let Some(bp) = block.parameters().and_then(|p| p.as_block_parameters_node()) else { return };
-        if bp.locals().len() != 0 {
+        if !bp.locals().is_empty() {
             return;
         }
         let Some(ps) = bp.parameters() else { return };

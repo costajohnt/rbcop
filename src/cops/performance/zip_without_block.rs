@@ -35,15 +35,15 @@ impl Cop for ZipWithoutBlock {
                 let single = bp.parameters().is_some_and(|ps| {
                     ps.requireds().len() == 1
                         && ps.requireds().iter().all(|r| r.as_required_parameter_node().is_some())
-                        && ps.optionals().len() == 0
+                        && ps.optionals().is_empty()
                         // `|e,|` is `(args (arg :e))` too.
                         && ps.rest().is_none_or(|r| r.as_implicit_rest_node().is_some())
-                        && ps.posts().len() == 0
-                        && ps.keywords().len() == 0
+                        && ps.posts().is_empty()
+                        && ps.keywords().is_empty()
                         && ps.keyword_rest().is_none()
                         && ps.block().is_none()
                 });
-                single && bp.locals().len() == 0 && element.as_local_variable_read_node().is_some()
+                single && bp.locals().is_empty() && element.as_local_variable_read_node().is_some()
             }
             // (numblock (call ...) 1 (array (lvar _)))
             Some(p) if p.as_numbered_parameters_node().is_some() => {

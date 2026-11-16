@@ -33,7 +33,7 @@ impl Cop for RedundantEqualityComparisonBlock {
         let Some(list) = params.parameters() else { return };
         let mut nodes = parameter_nodes(&list);
         nodes.retain(|n| n.as_implicit_rest_node().is_none());
-        if nodes.len() != 1 || params.locals().len() != 0 {
+        if nodes.len() != 1 || !params.locals().is_empty() {
             return;
         }
         let args_src = &cx.src.text[list.location().start_offset()..list.location().end_offset()];
