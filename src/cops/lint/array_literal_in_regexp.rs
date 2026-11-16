@@ -36,7 +36,7 @@ impl Cop for ArrayLiteralInRegexp {
         };
         for part in &parts {
             let Some(embedded) = part.as_embedded_statements_node() else { continue };
-            let Some(last) = embedded.statements().and_then(|s| s.body().iter().last()) else { continue };
+            let Some(last) = embedded.statements().and_then(|s| s.body().last()) else { continue };
             let Some(array) = last.as_array_node() else { continue };
             let loc = part.location();
             let (start, end) = (loc.start_offset(), loc.end_offset());

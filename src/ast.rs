@@ -129,7 +129,7 @@ pub fn strip_parens<'pr>(node: Node<'pr>) -> Option<Node<'pr>> {
     while let Some(p) = node.as_parentheses_node() {
         let body = p.body()?;
         node = match body.as_statements_node() {
-            Some(s) => s.body().iter().last()?,
+            Some(s) => s.body().last()?,
             None => body,
         };
     }

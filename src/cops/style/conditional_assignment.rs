@@ -118,12 +118,12 @@ fn last_child<'pr>(n: &Node<'pr>) -> Option<Node<'pr>> {
         if let Some(b) = c.block().filter(|b| b.as_block_argument_node().is_some()) {
             return Some(b);
         }
-        return c.arguments().and_then(|a| a.arguments().iter().last());
+        return c.arguments().and_then(|a| a.arguments().last());
     }
     if let Some(p) = n.as_parentheses_node() {
         let body = p.body()?;
         return match body.as_statements_node() {
-            Some(s) => s.body().iter().last(),
+            Some(s) => s.body().last(),
             None => Some(body),
         };
     }

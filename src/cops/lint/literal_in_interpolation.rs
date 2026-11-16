@@ -282,7 +282,7 @@ fn interpolation_parts<'pr>(parent: &Node<'pr>) -> Vec<Node<'pr>> {
 /// `offending?` of the interpolation's final node: that node when it is a literal the cop reports.
 fn offending<'pr>(cx: &Cx, node: &Node<'pr>, parent: &Node) -> Option<Node<'pr>> {
     let e = node.as_embedded_statements_node()?;
-    let last = e.statements().and_then(|s| s.body().iter().last())?;
+    let last = e.statements().and_then(|s| s.body().last())?;
     let src = cx.src;
     let text = node_text(&last);
     // special_keyword?

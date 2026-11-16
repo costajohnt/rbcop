@@ -18,7 +18,7 @@ fn return_value<'pr>(body: Option<Node<'pr>>) -> Option<ruby_prism::LocalVariabl
         match only.as_parentheses_node() {
             // `(x)` is a parser `begin`: take its last child
             Some(p) => match p.body()?.as_statements_node() {
-                Some(s) => s.body().iter().last()?,
+                Some(s) => s.body().last()?,
                 None => p.body()?,
             },
             None => only,

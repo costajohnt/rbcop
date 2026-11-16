@@ -35,7 +35,7 @@ impl Cop for RedundantStringCoercion {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         if let Some(e) = node.as_embedded_statements_node() {
-            let Some(last) = e.statements().and_then(|s| s.body().iter().last()) else { return };
+            let Some(last) = e.statements().and_then(|s| s.body().last()) else { return };
             if let Some(call) = to_s_without_args(&last) {
                 register(cx, &call, "interpolation");
             }

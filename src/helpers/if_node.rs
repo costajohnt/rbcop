@@ -74,11 +74,11 @@ impl<'pr> Body<'pr> {
     }
     /// `branch.begin_type? ? Array(branch).last : branch` (None for an empty `()`).
     pub fn tail(&self) -> Option<Node<'pr>> {
-        let Some(n) = self.single() else { return self.stmts.body().iter().last() };
+        let Some(n) = self.single() else { return self.stmts.body().last() };
         let Some(p) = n.as_parentheses_node() else { return Some(n) };
         let body = p.body()?;
         match body.as_statements_node() {
-            Some(s) => s.body().iter().last(),
+            Some(s) => s.body().last(),
             None => Some(body),
         }
     }

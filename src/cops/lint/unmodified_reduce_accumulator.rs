@@ -248,7 +248,7 @@ impl Cop for UnmodifiedReduceAccumulator {
         let mut values: Vec<(Node, (usize, usize))> = vec![];
         match body.as_statements_node() {
             Some(s) => {
-                let last = s.body().iter().last().unwrap();
+                let last = s.body().last().unwrap();
                 let r = span(&last);
                 values.push((last, r));
             }

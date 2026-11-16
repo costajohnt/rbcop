@@ -83,7 +83,7 @@ fn msg(src: &str) -> String {
 fn void_value(n: &Node) -> bool {
     if let Some(p) = n.as_parentheses_node() {
         let last = p.body().and_then(|b| match b.as_statements_node() {
-            Some(s) => s.body().iter().last(),
+            Some(s) => s.body().last(),
             None => Some(b),
         });
         return last.is_some_and(|l| void_value(&l));

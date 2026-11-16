@@ -83,7 +83,7 @@ impl Cop for ConcatArrayLiterals {
                 let close = if i + 1 == arrays.len() {
                     c.start_offset()
                 } else {
-                    a.elements().iter().last().map_or(c.start_offset(), |e| e.location().end_offset())
+                    a.elements().last().map_or(c.start_offset(), |e| e.location().end_offset())
                 };
                 let gap = cx.src.slice(close, c.end_offset());
                 movable &= gap.strip_suffix(']').is_some_and(|g| g.chars().all(|ch| ch.is_whitespace() || ch == ','));
