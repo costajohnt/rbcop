@@ -321,14 +321,14 @@ impl Tree {
     }
 
     fn stmts(&mut self, st: Option<ruby_prism::StatementsNode>) -> Option<usize> {
-        let body: Vec<Node> = st.map(|s| s.body().iter().collect()).unwrap_or_default();
+        let body = st?.body();
         match body.len() {
             0 => None,
-            1 => self.conv(&body[0]),
+            1 => self.conv(&body.first()?),
             _ => {
-                let b = self.mk(T::Begin, (loc(&body[0]).0, loc(body.last().unwrap()).1));
-                for n in &body {
-                    let c = self.conv(n);
+                let b = self.mk(T::Begin, (loc(&body.first()?).0, loc(&body.last()?).1));
+                for n in body.iter() {
+                    let c = self.conv(&n);
                     self.kid(b, c);
                 }
                 Some(b)
