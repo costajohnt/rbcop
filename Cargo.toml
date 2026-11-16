@@ -23,8 +23,9 @@ rubydex = { path = "vendor/rubydex" }
 # The result cache's build digest (src/cache.rs); already built for rubydex.
 xxhash-rust = { version = "0.8.15", features = ["xxh3"] }
 
-# musl's allocator serializes rbcop's worker threads (several times slower than glibc's).
-[target.'cfg(target_env = "musl")'.dependencies]
+# musl's allocator serializes rbcop's worker threads (several times slower than glibc's), and
+# mimalloc also beats glibc's malloc on Linux (#781).
+[target.'cfg(target_os = "linux")'.dependencies]
 mimalloc = { version = "0.1", default-features = false }
 
 # Vendored with an added parse_with_version (see vendor/ruby-prism/src/lib.rs, "rbcop patch"): the
@@ -33,5 +34,6 @@ mimalloc = { version = "0.1", default-features = false }
 ruby-prism = { path = "vendor/ruby-prism" }
 
 # Thin LTO: ~9% fewer cycles linting discourse (#388), for ~5 s more per release rebuild.
+# Release archives build with fat LTO instead (scripts/dist/build.sh, #781).
 [profile.release]
 lto = "thin"

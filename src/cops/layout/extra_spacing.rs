@@ -61,7 +61,8 @@ type Profile = (HashMap<usize, Vec<(usize, isize)>>, HashMap<(usize, u32), (Vec<
 
 struct Run<'a, 's> {
     al: Alignment<'a, 's>,
-    by_line: HashMap<usize, Vec<Token>>,
+    /// The tokens, stably sorted by line: a few translated tokens are out of position order.
+    by_line: Vec<Token>,
     profiles: RefCell<HashMap<Vec<usize>, Rc<Profile>>>,
     aligned_comments: HashSet<usize>,
 }
@@ -69,6 +70,14 @@ struct Run<'a, 's> {
 impl Run<'_, '_> {
     fn col(&self, t: &Token) -> usize {
         self.al.src.column(t.start)
+    }
+
+    /// The tokens on `line`, in token order.
+    fn tokens_on(&self, line: usize) -> &[Token] {
+        let line_of = |t: &Token| self.al.src.line_of(t.start);
+        let from = self.by_line.partition_point(|t| line_of(t) < line);
+        let to = self.by_line.partition_point(|t| line_of(t) <= line);
+        &self.by_line[from..to]
     }
 
     fn group_profile(&self, line: usize) -> Rc<Profile> {
@@ -80,8 +89,7 @@ impl Run<'_, '_> {
         let mut by_column: HashMap<usize, Vec<(usize, isize)>> = HashMap::new();
         let mut typed: HashMap<(usize, u32), (Vec<usize>, Vec<isize>)> = HashMap::new();
         for &l in group.iter() {
-            let Some(tokens) = self.by_line.get(&l) else { continue };
-            for w in tokens.windows(2) {
+            for w in self.tokens_on(l).windows(2) {
                 let spacing = w[1].start as isize - w[0].end as isize;
                 let col = self.col(&w[1]);
                 by_column.entry(col).or_default().push((l, spacing));
@@ -151,7 +159,7 @@ impl Run<'_, '_> {
     }
 
     fn spacing_before_token_at(&self, line: usize, column: usize) -> Option<isize> {
-        let tokens = self.by_line.get(&line)?;
+        let tokens = self.tokens_on(line);
         let index = tokens.iter().position(|t| self.col(t) == column)?;
         (index > 0).then(|| tokens[index].start as isize - tokens[index - 1].end as isize)
     }
@@ -211,10 +219,8 @@ impl Cop for ExtraSpacing {
                 aligned_comments.insert(src.line_of(w[1].start));
             }
         }
-        let mut by_line: HashMap<usize, Vec<Token>> = HashMap::new();
-        for t in &data.tokens {
-            by_line.entry(src.line_of(t.start)).or_default().push(*t);
-        }
+        let mut by_line = data.tokens.clone();
+        by_line.sort_by_key(|t| src.line_of(t.start));
         let run = Run {
             al: Alignment { src, d: &data },
             by_line,

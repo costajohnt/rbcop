@@ -11,7 +11,7 @@ pub struct ElseAlignment;
 
 /// `ignore_node`d if nodes (checked through an assignment or an enclosing if), by span.
 #[derive(Default)]
-struct Ignored(HashSet<(usize, usize)>);
+struct Ignored(HashSet<(usize, usize), crate::config::FnvBuild>);
 
 fn lspan(l: Location) -> (usize, usize) {
     (l.start_offset(), l.end_offset())

@@ -1967,5 +1967,8 @@ fn format_ruby_version(v: f64) -> String {
 /// severity (fixed per cop), not the range, so two ranges starting at one position collapse.
 fn dedup(out: &mut Vec<Offense>) {
     let mut seen = std::collections::HashSet::new();
-    out.retain(|o| seen.insert((o.cop, o.start, o.message.clone())));
+    let keep: Vec<bool> = out.iter().map(|o| seen.insert((o.cop, o.start, o.message.as_str()))).collect();
+    drop(seen);
+    let mut keep = keep.into_iter();
+    out.retain(|_| keep.next().unwrap());
 }

@@ -301,6 +301,9 @@ impl CopConfig {
 }
 
 /// FNV-1a: SipHash's DoS resistance buys nothing for cop names, and its cost showed up per file.
+/// Integers (offsets, lines, `(start, end)` ranges) take FxHash's one multiply per word instead.
+/// The keys are names rbcop defines or positions in a file, not strings a file chooses; maps keyed
+/// by source text keep SipHash.
 #[derive(Default)]
 pub(crate) struct Fnv(u64);
 
@@ -308,7 +311,17 @@ pub(crate) type FnvBuild = std::hash::BuildHasherDefault<Fnv>;
 
 impl std::hash::Hasher for Fnv {
     fn finish(&self) -> u64 {
-        self.0
+        // The multiplies mix upward; hashbrown picks the bucket from the low bits (rustc-hash 2).
+        self.0.rotate_left(26)
+    }
+    fn write_u64(&mut self, n: u64) {
+        self.0 = (self.0.rotate_left(5) ^ n).wrapping_mul(0xf135_7aea_2e62_a9c5);
+    }
+    fn write_usize(&mut self, n: usize) {
+        self.write_u64(n as u64);
+    }
+    fn write_u32(&mut self, n: u32) {
+        self.write_u64(n.into());
     }
     fn write(&mut self, bytes: &[u8]) {
         let mut h = if self.0 == 0 { 0xcbf2_9ce4_8422_2325 } else { self.0 };

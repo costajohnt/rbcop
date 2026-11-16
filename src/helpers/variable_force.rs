@@ -111,7 +111,7 @@ pub struct Tree {
     pub root: Option<usize>,
     /// rubocop-ast structural identity (`node_equality::shape`) of each `lvasgn`: Array#include?
     /// compares nodes with `==` (#361).
-    lvasgn_shapes: HashMap<usize, Vec<String>>,
+    lvasgn_shapes: HashMap<usize, Vec<String>, crate::config::FnvBuild>,
 }
 
 fn loc(node: &Node) -> (usize, usize) {
@@ -262,7 +262,7 @@ impl Tree {
     }
 
     pub fn build(program: &ruby_prism::ProgramNode, src: &crate::source::Source) -> Tree {
-        let mut tree = Tree { nodes: Vec::new(), root: None, lvasgn_shapes: HashMap::new() };
+        let mut tree = Tree { nodes: Vec::new(), root: None, lvasgn_shapes: HashMap::default() };
         tree.root = tree.stmts(Some(program.statements()));
         // Only mark_assignments_as_referenced_in_loop compares them, so only a file with a loop
         // (a `retry` makes its rescue one) pays for building the node index and keys (#388).
@@ -1228,7 +1228,7 @@ pub struct Force<'t, B: FnMut(&Tree, &Variable, Option<&Variable>), F: FnMut(&Tr
     tree: &'t Tree,
     scopes: Vec<Scope>,
     pub variables: Vec<Variable>,
-    scanned: HashSet<usize>,
+    scanned: HashSet<usize, crate::config::FnvBuild>,
     before: B,
     hook: F,
 }
@@ -1244,7 +1244,7 @@ pub fn investigate_with<B: FnMut(&Tree, &Variable, Option<&Variable>), F: FnMut(
     hook: F,
 ) {
     let Some(root) = tree.root else { return };
-    let mut f = Force { tree, scopes: Vec::new(), variables: Vec::new(), scanned: HashSet::new(), before, hook };
+    let mut f = Force { tree, scopes: Vec::new(), variables: Vec::new(), scanned: HashSet::default(), before, hook };
     f.push_scope(root);
     f.process_node(root);
     f.pop_scope();
