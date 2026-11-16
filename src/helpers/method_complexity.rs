@@ -234,7 +234,7 @@ impl<'pr> Visit<'pr> for Counter {
     }
     fn visit_case_node(&mut self, node: &ruby_prism::CaseNode<'pr>) {
         if self.perceived {
-            let nb = node.conditions().iter().count() as f64 + node.else_clause().and_then(|e| e.statements()).map_or(0.0, |_| 1.0);
+            let nb = node.conditions().len() as f64 + node.else_clause().and_then(|e| e.statements()).map_or(0.0, |_| 1.0);
             self.score += if node.predicate().is_none() { nb as i64 } else { (nb * 0.2 + 0.8).round() as i64 };
         }
         ruby_prism::visit_case_node(self, node);

@@ -85,7 +85,7 @@ impl<'pr> Visit<'pr> for Walk {
 
     fn visit_statements_node(&mut self, node: &ruby_prism::StatementsNode<'pr>) {
         let flat = std::mem::take(&mut self.flat_stmts);
-        self.stack.push(!flat && node.body().iter().count() > 1);
+        self.stack.push(!flat && node.body().len() > 1);
         ruby_prism::visit_statements_node(self, node);
         self.stack.pop();
     }

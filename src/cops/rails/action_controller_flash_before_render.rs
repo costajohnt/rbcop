@@ -52,7 +52,7 @@ fn right_siblings<'a, 'pr>(anc: &'a [Node<'pr>], k: usize) -> Vec<Node<'pr>> {
 fn use_redirect_to(sibs: &[Node]) -> bool {
     sibs.iter().any(|s| {
         let target: Node = match s.as_return_node().and_then(|rt| rt.arguments()) {
-            Some(a) if a.arguments().iter().count() == 1 => a.arguments().iter().next().unwrap(),
+            Some(a) if a.arguments().len() == 1 => a.arguments().iter().next().unwrap(),
             _ => match s.as_return_node() {
                 Some(_) => return false,
                 None => {

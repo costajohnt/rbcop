@@ -94,7 +94,7 @@ pub fn frame(node: &Node) -> Frame {
         kind::ARRAY_NODE | kind::HASH_NODE | kind::KEYWORD_HASH_NODE | kind::RANGE_NODE => Frame::Literal,
         kind::ASSOC_NODE => Frame::Pair,
         kind::PROGRAM_NODE | kind::ELSE_NODE | kind::ARGUMENTS_NODE => Frame::Transparent,
-        kind::STATEMENTS_NODE if node.as_statements_node().unwrap().body().iter().count() == 1 => Frame::Transparent,
+        kind::STATEMENTS_NODE if node.as_statements_node().unwrap().body().len() == 1 => Frame::Transparent,
         _ => Frame::Other,
     }
 }
@@ -129,7 +129,7 @@ pub fn strip_parens<'pr>(node: Node<'pr>) -> Option<Node<'pr>> {
     while let Some(p) = node.as_parentheses_node() {
         let body = p.body()?;
         node = match body.as_statements_node() {
-            Some(s) => s.body().iter().last()?,
+            Some(s) => s.body().last()?,
             None => body,
         };
     }

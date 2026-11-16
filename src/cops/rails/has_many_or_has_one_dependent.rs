@@ -63,7 +63,7 @@ impl<'pr> Tree<'_, 'pr> {
             P::Own => false,
             P::Idx(i) => {
                 self.anc[i].as_parentheses_node().is_some()
-                    || self.anc[i].as_statements_node().is_some_and(|s| s.body().iter().count() > 1)
+                    || self.anc[i].as_statements_node().is_some_and(|s| s.body().len() > 1)
             }
         }
     }

@@ -115,7 +115,7 @@ fn persist_method(cx: &Cx, call: &CallNode, methods: &[&str]) -> bool {
 
 /// A parser `begin`: parentheses, or a statement list of two or more.
 fn is_begin(n: &Node) -> bool {
-    n.as_parentheses_node().is_some() || n.as_statements_node().is_some_and(|s| s.body().iter().count() > 1)
+    n.as_parentheses_node().is_some() || n.as_statements_node().is_some_and(|s| s.body().len() > 1)
 }
 
 /// The parser children of a begin, as ranges.

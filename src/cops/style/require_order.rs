@@ -75,7 +75,7 @@ impl Cop for RequireOrder {
         let n = anc.len();
         // the search node (the require, or its modifier `if`) and the index of its statement list
         let (search, stmts_idx) = match anc.last() {
-            Some(Node::StatementsNode { .. }) if anc[n - 1].as_statements_node().unwrap().body().iter().count() >= 2 => {
+            Some(Node::StatementsNode { .. }) if anc[n - 1].as_statements_node().unwrap().body().len() >= 2 => {
                 ((node.location().start_offset(), node.location().end_offset()), n - 1)
             }
             Some(Node::StatementsNode { .. }) if n >= 2 && matches!(modifier_body(&anc[n - 2]), Ok(Some(_))) => {

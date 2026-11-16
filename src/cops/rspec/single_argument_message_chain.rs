@@ -37,7 +37,7 @@ impl Cop for SingleArgumentMessageChain {
         let valid = if hash_pairs.is_some() {
             !single_pair
         } else if let Some(a) = &array {
-            a.elements().iter().count() != 1
+            a.elements().len() != 1
         } else {
             // `node.to_s.include?('.')`: the s-expression
             helpers::rspec::skey(cx.src, Some(arg)).contains('.')

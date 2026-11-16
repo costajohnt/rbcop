@@ -44,7 +44,7 @@ fn parser_parents(ancestors: &[Node]) -> Vec<usize> {
         .filter(|&i| match &ancestors[i] {
             Node::StatementsNode { .. } => {
                 let paren_body = i > 0 && ancestors[i - 1].as_parentheses_node().is_some();
-                ancestors[i].as_statements_node().unwrap().body().iter().count() > 1 && !paren_body
+                ancestors[i].as_statements_node().unwrap().body().len() > 1 && !paren_body
             }
             Node::ProgramNode { .. } | Node::ElseNode { .. } | Node::ArgumentsNode { .. } => false,
             _ => true,

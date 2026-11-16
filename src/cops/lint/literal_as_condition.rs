@@ -83,7 +83,7 @@ fn msg(src: &str) -> String {
 fn void_value(n: &Node) -> bool {
     if let Some(p) = n.as_parentheses_node() {
         let last = p.body().and_then(|b| match b.as_statements_node() {
-            Some(s) => s.body().iter().last(),
+            Some(s) => s.body().last(),
             None => Some(b),
         });
         return last.is_some_and(|l| void_value(&l));
@@ -298,7 +298,7 @@ impl LiteralAsCondition {
             // one decorating its last line, when the branch is a single statement (a `begin`'s
             // comments go to its statements).
             let (bs, be) = p.if_branch.unwrap();
-            let single = node.as_if_node().unwrap().statements().unwrap().body().iter().count() == 1;
+            let single = node.as_if_node().unwrap().statements().unwrap().body().len() == 1;
             let cond_line = cx.src.line_of(cond.location().end_offset());
             let start = cx
                 .src

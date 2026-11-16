@@ -102,7 +102,7 @@ impl Cop for CompoundHash {
         }
         // (send (array _) :hash)
         let monuple = !is_csend(&call)
-            && call.receiver().and_then(|r| r.as_array_node()).is_some_and(|a| a.elements().iter().count() == 1);
+            && call.receiver().and_then(|r| r.as_array_node()).is_some_and(|a| a.elements().len() == 1);
         if monuple {
             cx.add(start, end, MONUPLE_HASH_MSG);
         }

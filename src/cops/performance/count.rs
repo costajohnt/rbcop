@@ -63,7 +63,7 @@ impl Cop for Count {
             let body = b.body().unwrap();
             let (s, e) = match body.as_statements_node() {
                 Some(st) => {
-                    let last = st.body().iter().last().unwrap();
+                    let last = st.body().last().unwrap();
                     (last.location().start_offset(), last.location().end_offset())
                 }
                 None => body_range(&body),

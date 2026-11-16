@@ -141,7 +141,7 @@ impl Cop for SpecialGlobalVars {
         let mut parent_kind = None;
         for a in anc.iter().rev() {
             let k = kind::of(a);
-            let one = |s: Option<ruby_prism::StatementsNode>| s.is_some_and(|s| s.body().iter().count() == 1);
+            let one = |s: Option<ruby_prism::StatementsNode>| s.is_some_and(|s| s.body().len() == 1);
             match k {
                 kind::EMBEDDED_VARIABLE_NODE => {}
                 kind::STATEMENTS_NODE if one(a.as_statements_node()) => {}

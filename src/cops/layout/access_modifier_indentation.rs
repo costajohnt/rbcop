@@ -62,7 +62,7 @@ impl Cop for AccessModifierIndentation {
         };
         // body.begin_type?: two or more statements, no rescue/ensure wrapper.
         let Some(stmts) = body.and_then(|b| b.as_statements_node()) else { return };
-        if stmts.body().iter().count() < 2 {
+        if stmts.body().len() < 2 {
             return;
         }
         // Blocks: the modifier is a macro only if the block itself is in a macro scope.

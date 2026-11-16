@@ -29,9 +29,9 @@ fn last_child<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
             }
             send_args(&c).pop()
         }
-        kind::RETURN_NODE => node.as_return_node().unwrap().arguments().and_then(|a| a.arguments().iter().last()),
-        kind::BREAK_NODE => node.as_break_node().unwrap().arguments().and_then(|a| a.arguments().iter().last()),
-        kind::NEXT_NODE => node.as_next_node().unwrap().arguments().and_then(|a| a.arguments().iter().last()),
+        kind::RETURN_NODE => node.as_return_node().unwrap().arguments().and_then(|a| a.arguments().last()),
+        kind::BREAK_NODE => node.as_break_node().unwrap().arguments().and_then(|a| a.arguments().last()),
+        kind::NEXT_NODE => node.as_next_node().unwrap().arguments().and_then(|a| a.arguments().last()),
         kind::AND_NODE => Some(node.as_and_node().unwrap().right()),
         kind::OR_NODE => Some(node.as_or_node().unwrap().right()),
         _ => None,

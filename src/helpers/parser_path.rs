@@ -64,7 +64,7 @@ pub fn frame_of<'pr>(n: &Node<'pr>) -> Frame<'pr> {
         Node::CallNode { .. } => send_frame(&n.as_call_node().unwrap()),
         Node::LambdaNode { .. } => plain(Tag::Block, n),
         Node::ParenthesesNode { .. } | Node::EmbeddedStatementsNode { .. } => plain(Tag::Begin, n),
-        Node::StatementsNode { .. } if n.as_statements_node().unwrap().body().iter().count() > 1 => plain(Tag::Begin, n),
+        Node::StatementsNode { .. } if n.as_statements_node().unwrap().body().len() > 1 => plain(Tag::Begin, n),
         _ => plain(Tag::Other, n),
     }
 }
@@ -87,7 +87,7 @@ pub fn frames<'pr>(chain: &[&Node<'pr>], target: &Node<'pr>) -> Vec<Frame<'pr>> 
                     matches!(kind::of(p), kind::PARENTHESES_NODE | kind::EMBEDDED_STATEMENTS_NODE)
                         || p.as_begin_node().is_some_and(|b| b.begin_keyword_loc().is_some())
                 });
-                if !wrapped && n.as_statements_node().unwrap().body().iter().count() > 1 {
+                if !wrapped && n.as_statements_node().unwrap().body().len() > 1 {
                     out.push(plain(Tag::Begin, n));
                 }
             }

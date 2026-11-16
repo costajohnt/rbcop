@@ -116,7 +116,7 @@ fn has_right_sibling(anc: &[Node], i: usize) -> bool {
     }
     // A Prism StatementsNode with 2+ statements is parser's `begin`.
     if let Some(st) = anc[..i].last().and_then(|n| n.as_statements_node())
-        && st.body().iter().count() > 1
+        && st.body().len() > 1
     {
         return st.body().iter().any(|n| n.location().start_offset() >= e);
     }

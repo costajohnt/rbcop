@@ -61,10 +61,10 @@ fn is_begin(anc: &[Node], i: usize) -> bool {
 /// Number of parser children of the parser parent `anc[i]` (only exact where it can be one).
 fn children_count(anc: &[Node], i: usize) -> usize {
     let n = &anc[i];
-    let args = |a: Option<ruby_prism::ArgumentsNode>| a.map_or(0, |a| a.arguments().iter().count());
+    let args = |a: Option<ruby_prism::ArgumentsNode>| a.map_or(0, |a| a.arguments().len());
     match kind::of(n) {
         kind::PARENTHESES_NODE | kind::EMBEDDED_STATEMENTS_NODE | kind::STATEMENTS_NODE => begin_children(n).len(),
-        kind::ARRAY_NODE => n.as_array_node().unwrap().elements().iter().count(),
+        kind::ARRAY_NODE => n.as_array_node().unwrap().elements().len(),
         kind::RETURN_NODE => args(n.as_return_node().unwrap().arguments()),
         kind::NEXT_NODE => args(n.as_next_node().unwrap().arguments()),
         kind::BREAK_NODE => args(n.as_break_node().unwrap().arguments()),
@@ -81,7 +81,7 @@ fn children_count(anc: &[Node], i: usize) -> usize {
             } else if b.ensure_clause().is_some() {
                 2
             } else {
-                b.statements().map_or(0, |s| s.body().iter().count())
+                b.statements().map_or(0, |s| s.body().len())
             }
         }
         // `children.one?` counts non-nil children: an empty body or else is nil.
@@ -99,12 +99,12 @@ fn children_count(anc: &[Node], i: usize) -> usize {
         kind::UNTIL_NODE => 1 + usize::from(non_empty(n.as_until_node().unwrap().statements())),
         kind::WHEN_NODE => {
             let w = n.as_when_node().unwrap();
-            w.conditions().iter().count() + usize::from(non_empty(w.statements()))
+            w.conditions().len() + usize::from(non_empty(w.statements()))
         }
         kind::CASE_NODE => {
             let c = n.as_case_node().unwrap();
             usize::from(c.predicate().is_some())
-                + c.conditions().iter().count()
+                + c.conditions().len()
                 + usize::from(c.else_clause().is_some_and(|e| non_empty(e.statements())))
         }
         _ => 2,

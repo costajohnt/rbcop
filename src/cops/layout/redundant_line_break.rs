@@ -187,7 +187,7 @@ fn on_send(cx: &mut Cx, node: &Node, block_level: bool) {
             p -= 1;
             match chain[p] {
                 Node::ArgumentsNode { .. } => continue,
-                Node::StatementsNode { .. } if chain[p].as_statements_node().unwrap().body().iter().count() == 1 => {
+                Node::StatementsNode { .. } if chain[p].as_statements_node().unwrap().body().len() == 1 => {
                     continue;
                 }
                 _ => break Some(p),

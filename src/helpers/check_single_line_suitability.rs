@@ -62,7 +62,7 @@ impl<'pr> Visit<'pr> for Unsafe<'_> {
     }
     fn visit_statements_node(&mut self, node: &ruby_prism::StatementsNode<'pr>) {
         // Several statements are a parser `begin`.
-        self.found |= node.body().iter().nth(1).is_some() && self.multiline(&node.as_node());
+        self.found |= node.body().get(1).is_some() && self.multiline(&node.as_node());
         ruby_prism::visit_statements_node(self, node);
     }
     fn visit_ensure_node(&mut self, node: &ruby_prism::EnsureNode<'pr>) {

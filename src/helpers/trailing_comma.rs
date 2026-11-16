@@ -50,9 +50,9 @@ fn heredoc(node: &Node) -> bool {
             }
         }
         Node::AssocNode { .. } => heredoc(&node.as_assoc_node().unwrap().value()),
-        Node::HashNode { .. } => node.as_hash_node().unwrap().elements().iter().last().is_some_and(|e| heredoc(&e)),
+        Node::HashNode { .. } => node.as_hash_node().unwrap().elements().last().is_some_and(|e| heredoc(&e)),
         Node::KeywordHashNode { .. } => {
-            node.as_keyword_hash_node().unwrap().elements().iter().last().is_some_and(|e| heredoc(&e))
+            node.as_keyword_hash_node().unwrap().elements().last().is_some_and(|e| heredoc(&e))
         }
         _ => false,
     }

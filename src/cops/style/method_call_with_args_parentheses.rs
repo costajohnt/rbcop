@@ -381,11 +381,10 @@ mod omit {
             }
         }
         // comment_before_first_argument? (1.92)
-        if let Some(first) = d.args.first() {
-            let lines = src.line_of(open.0)..src.line_of(first.location().start_offset());
-            if src.comments.iter().any(|c| lines.contains(&src.line_of(c.start))) {
-                return;
-            }
+        if let Some(first) = d.args.first()
+            && !src.comments_in_lines(src.line_of(open.0), src.line_of(first.location().start_offset())).is_empty()
+        {
+            return;
         }
         let args_parenthesized = args_parenthesized(d);
         if args_parenthesized {
@@ -459,8 +458,14 @@ mod omit {
             _ => None,
         };
         if let Some(s) = stmts {
-            let body: Vec<Node> = s.body().iter().collect();
-            return body.iter().position(|a| span(a) == child).is_some_and(|i| i + 1 < body.len());
+            // Statements start in increasing order: a binary search keeps a long list linear overall.
+            let body = s.body();
+            let (mut lo, mut hi) = (0, body.len());
+            while lo < hi {
+                let mid = (lo + hi) / 2;
+                if body.get(mid).unwrap().location().start_offset() < child.0 { lo = mid + 1 } else { hi = mid }
+            }
+            return body.get(lo).is_some_and(|a| span(&a) == child) && lo + 1 < body.len();
         }
         // The body of parser's `(rescue body resbody ...)` / `(ensure body ensure_body)`.
         if let Some(b) = n.as_begin_node()
@@ -712,7 +717,7 @@ mod omit {
     fn inside_string_interpolation(anc: &[Node]) -> bool {
         let is_begin = |n: &Node| match n {
             Node::EmbeddedStatementsNode { .. } | Node::ParenthesesNode { .. } => true,
-            Node::StatementsNode { .. } => n.as_statements_node().unwrap().body().iter().count() > 1,
+            Node::StatementsNode { .. } => n.as_statements_node().unwrap().body().len() > 1,
             _ => false,
         };
         let Some(b) = anc.iter().rposition(is_begin) else { return false };

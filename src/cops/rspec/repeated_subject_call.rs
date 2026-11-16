@@ -114,7 +114,7 @@ impl Walk<'_> {
             fn visit_branch_node_enter(&mut self, node: Node<'pr>) {
                 let f = match kind::of(&node) {
                     kind::CALL_NODE | kind::ARGUMENTS_NODE => Frame::Transparent,
-                    kind::STATEMENTS_NODE if node.as_statements_node().unwrap().body().iter().count() < 2 => Frame::Transparent,
+                    kind::STATEMENTS_NODE if node.as_statements_node().unwrap().body().len() < 2 => Frame::Transparent,
                     _ => Frame::Other,
                 };
                 self.frames.push(f);

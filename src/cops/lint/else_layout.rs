@@ -66,7 +66,7 @@ impl Cop for ElseLayout {
         // `begin_type?`: several statements, or one parenthesized statement.
         let multi_stmt = |b: &Option<Node>| {
             b.as_ref().and_then(|b| b.as_statements_node()).is_some_and(|s| {
-                s.body().iter().count() > 1 || s.body().iter().next().is_some_and(|f| f.as_parentheses_node().is_some())
+                s.body().len() > 1 || s.body().iter().next().is_some_and(|f| f.as_parentheses_node().is_some())
             })
         };
         if p.then && !multi_stmt(&p.else_branch) {
@@ -89,7 +89,7 @@ fn check(cx: &mut Cx, p: If) {
         let first_else = match else_branch.as_statements_node() {
             Some(s) => {
                 let first = s.body().iter().next().unwrap();
-                match first.as_parentheses_node().filter(|_| s.body().iter().count() == 1) {
+                match first.as_parentheses_node().filter(|_| s.body().len() == 1) {
                     Some(p) => match p.body() {
                         Some(b) => match b.as_statements_node() {
                             Some(inner) => inner.body().iter().next().unwrap(),

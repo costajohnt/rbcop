@@ -4,7 +4,7 @@ use crate::cop::Cx;
 
 /// `processed_source.each_comment_in_lines(start_line...end_line).any?` (1-based lines).
 pub fn contains_comments(cx: &Cx, start_line: usize, end_line: usize) -> bool {
-    cx.src.comments.iter().any(|c| (start_line..end_line).contains(&cx.src.line_of(c.start)))
+    !cx.src.comments_in_lines(start_line, end_line).is_empty()
 }
 
 /// `comments_contain_disables?`: a disabled range for this cop covers `start_line...end_line`
@@ -85,5 +85,5 @@ pub fn find_end_line(cx: &Cx, node: &ruby_prism::Node) -> usize {
 
 /// `comments_in_range(node)`: comments starting on lines `start_line...end_line` (1-based).
 pub fn comments_in_lines(cx: &Cx, start_line: usize, end_line: usize) -> Vec<crate::source::Comment> {
-    cx.src.comments.iter().filter(|c| (start_line..end_line).contains(&cx.src.line_of(c.start))).copied().collect()
+    cx.src.comments_in_lines(start_line, end_line).to_vec()
 }
