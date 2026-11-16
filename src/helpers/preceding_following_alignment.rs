@@ -113,7 +113,7 @@ impl Data {
             .filter(|l| !assignment_lines.contains(l))
             .collect();
         Data {
-            tokens,
+            tokens: tokens.to_vec(),
             aligned_comment_lines,
             def_lines: facts.def_lines,
             assignment_tokens,
