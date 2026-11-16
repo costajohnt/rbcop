@@ -560,9 +560,13 @@ fn investigate(
         (r, t, Vec::new(), Vec::new())
     };
     let sclass_returns = if parser_gem { crate::syntax::sclass_returns(&result) } else { Vec::new() };
-    // The depth guard is asked up to four times below; the tree is walked for it once (#388).
-    let too_deep = std::cell::OnceCell::new();
-    let too_deep = || *too_deep.get_or_init(|| crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH));
+    // The depth guard is asked up to four times below; the tree is walked for it once (#388), in
+    // the same walk as the error checks that need a tree (#780): None when too deep.
+    let checks = std::cell::OnceCell::new();
+    let checks = || {
+        checks.get_or_init(|| crate::syntax::pre_cop_checks(&result.node(), (!parser_gem).then_some(text)))
+    };
+    let too_deep = || checks().is_none();
     let mut errors: Vec<(usize, usize, String)> = result
         .errors()
         .filter(|e| !tolerated(e, parser_gem, cfg.target_ruby, text, &sclass_returns))
@@ -583,14 +587,19 @@ fn investigate(
         errors = parser_gem_errors(&result, &tokens, text, cfg.target_ruby, &sclass_returns);
     }
     // Pattern variable names the parser gem's builder rejects, only reached when Prism found no
-    // error (a tree walk, so only on trees the depth check below accepts; patterns need `in`/`=>`).
-    if errors.is_empty() && (text.contains("in") || text.contains("=>")) && !too_deep() {
-        errors.extend(crate::syntax::pattern_variable_errors(&result.node()));
+    // error (a tree walk, so only on trees the depth check below accepts).
+    if errors.is_empty()
+        && let Some((patterns, _)) = checks()
+    {
+        errors.extend(patterns.iter().cloned());
     }
     // Onigmo compile errors of static regexps (below 3.3 they are semantic errors above), reported
     // by the Prism translation only when the file otherwise parses.
-    if !parser_gem && errors.is_empty() && text.contains(['/', '%']) && !too_deep() {
-        errors.extend(crate::syntax::regexp_compile_errors(&result.node(), text));
+    if !parser_gem
+        && errors.is_empty()
+        && let Some((_, regexps)) = checks()
+    {
+        errors.extend(regexps.iter().cloned());
     }
     let comments: Vec<Comment> = result
         .comments()
