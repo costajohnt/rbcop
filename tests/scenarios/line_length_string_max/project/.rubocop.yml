@@ -1,0 +1,5 @@
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false
+Layout/LineLength:
+  Max: '20'

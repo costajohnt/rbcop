@@ -28,7 +28,17 @@ pub fn allowed_methods(cfg: &CopConfig) -> Vec<String> {
 
 /// AllowedMethods#allowed_method?.
 pub fn allowed_method(cfg: &CopConfig, name: &str) -> bool {
-    allowed_methods(cfg).iter().any(|m| m == name)
+    // `allowed_methods(cfg).contains(name)` without cloning every entry (cops call this per node).
+    let is = |v: &Value| match v {
+        Value::Str(s) | Value::Sym(s) => s == name,
+        v => v.as_string().is_some_and(|s| s == name),
+    };
+    let listed = |key: &str| match cfg.get(key) {
+        Some(Value::Seq(items)) => items.iter().any(is),
+        Some(v) => is(v),
+        None => false,
+    };
+    listed("AllowedMethods") || (!deprecated_are_patterns(cfg) && DEPRECATED_METHODS.iter().any(|k| listed(k)))
 }
 
 /// The deprecated method values AllowedPattern#allowed_patterns adds, as configured (only when
