@@ -551,8 +551,14 @@ fn investigate(
     crate::helpers::literal_node::set_fold_plus(parser_gem);
     let mut buf = Vec::new();
     // From 3.3 the parse is parse_for_target's plain one, with the lexer's tokens collected on the
-    // way: `Source::lex_tokens` would otherwise parse the same text again for them (#780).
-    let (result, tokens, fake, edits) = if parser_gem {
+    // way when a cop will read them: `Source::lex_tokens` would otherwise parse the same text again
+    // for them (#780). Collecting costs about 5% of a run whose cops read no tokens (`--only`).
+    // ponytail: default-on cops that read every file's tokens; any other token reader lexes lazily.
+    let lexed = !parser_gem
+        && ["Layout/ExtraSpacing", "Layout/LeadingEmptyLines", "Naming/AsciiIdentifiers"]
+            .iter()
+            .any(|&c| selected(c) && cfg.cop_enabled(c));
+    let (result, tokens, fake, edits) = if !lexed {
         parse_for_target(text, &mut buf, version, cfg.target_ruby)
     } else {
         let utf8 = !crate::source::binary_encoding(text);
@@ -635,6 +641,8 @@ fn investigate(
     // encoding): its warnings save that second parse.
     if !parser_gem {
         let _ = src.parse_warnings.set(crate::helpers::parse_warnings::from_result(&result));
+    }
+    if lexed {
         src.set_lex_tokens(&tokens);
     }
 
