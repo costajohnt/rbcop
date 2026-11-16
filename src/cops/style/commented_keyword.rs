@@ -36,6 +36,10 @@ impl Cop for CommentedKeyword {
             let line_start = src.line_start(ln);
             let line_end = src.text[line_start..].find('\n').map_or(src.text.len(), |i| line_start + i);
             let line = &src.text[line_start..line_end];
+            // The other tests only exempt a line KEYWORD matches: run it first.
+            if !KEYWORD.is_match(line) {
+                continue;
+            }
             let text = src.slice(c.start, c.end);
             let rbs = if SUBCLASS_DEFINITION.is_match(line) {
                 RBS_BRACKET.is_match(text)
@@ -44,7 +48,7 @@ impl Cop for CommentedKeyword {
             } else {
                 false
             };
-            if rbs || STEEP.is_match(text) || !KEYWORD.is_match(line) || ALLOWED.is_match(line) {
+            if rbs || STEEP.is_match(text) || ALLOWED.is_match(line) {
                 continue;
             }
             let Some(m) = MATCH.captures(line) else { continue };

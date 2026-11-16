@@ -95,6 +95,11 @@ impl Cop for HashEachMethods {
         if node.as_block_argument_node().is_some() {
             return self.on_block_pass(cx, node, &call);
         }
+        // Both checks below need `each` with no arguments: test that before walking the call
+        // for a mutation.
+        if method_name(&call) != "each" || call.arguments().is_some() {
+            return;
+        }
         let block = node.as_block_node().unwrap();
         let src = cx.src;
         let call_node = call.as_node();
@@ -115,9 +120,7 @@ impl Cop for HashEachMethods {
         }
 
         // kv_each
-        if method_name(&call) == "each"
-            && call.arguments().is_none()
-            && let Some((target_recv, kv)) = call.receiver().as_ref().and_then(keys_or_values)
+        if let Some((target_recv, kv)) = call.receiver().as_ref().and_then(keys_or_values)
             && let Some(parent_receiver) = target_recv.receiver()
             && !helpers::allowed_receivers::allowed_receiver(cx, &parent_receiver)
         {
@@ -138,9 +141,6 @@ impl Cop for HashEachMethods {
         }
 
         // each_arguments: (block (call _ :each) (args $_key $_value) ...)
-        if method_name(&call) != "each" || call.arguments().is_some() {
-            return;
-        }
         let Some(params) = block.parameters().and_then(|p| p.as_block_parameters_node()) else { return };
         let mut args = params.parameters().map(|p| parameter_nodes(&p)).unwrap_or_default();
         // Block-local variables (`|x; y|`) are shadowarg children of the parser gem's args node,
