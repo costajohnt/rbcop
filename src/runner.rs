@@ -1747,6 +1747,14 @@ impl<'pr> Walker<'_, 'pr, '_> {
         if kind == node_kind::SYMBOL_NODE && self.pattern_key() {
             return;
         }
+        let all: &[usize] = &self.dispatch[kind];
+        let named: &[usize] = match node {
+            Node::CallNode { .. } => self.calls.get(node.as_call_node().unwrap().name().as_slice()).map_or(&[], |v| v),
+            _ => &[],
+        };
+        if all.is_empty() && named.is_empty() {
+            return;
+        }
         // A cop error is located at the parser node: a `block` starts at its send (or `super`),
         // the `begin` of parenthesized statements at the parenthesis.
         let mut at = node.location().start_offset();
@@ -1761,11 +1769,6 @@ impl<'pr> Walker<'_, 'pr, '_> {
         {
             at = p.location().start_offset();
         }
-        let all: &[usize] = &self.dispatch[kind];
-        let named: &[usize] = match node {
-            Node::CallNode { .. } => self.calls.get(node.as_call_node().unwrap().name().as_slice()).map_or(&[], |v| v),
-            _ => &[],
-        };
         // Both lists are in `active` order; merge them so cops still run in that order.
         let (mut x, mut y) = (0, 0);
         while x < all.len() || y < named.len() {
