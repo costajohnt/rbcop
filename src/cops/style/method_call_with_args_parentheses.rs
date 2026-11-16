@@ -382,8 +382,7 @@ mod omit {
         }
         // comment_before_first_argument? (1.92)
         if let Some(first) = d.args.first() {
-            let lines = src.line_of(open.0)..src.line_of(first.location().start_offset());
-            if src.comments.iter().any(|c| lines.contains(&src.line_of(c.start))) {
+            if !src.comments_in_lines(src.line_of(open.0), src.line_of(first.location().start_offset())).is_empty() {
                 return;
             }
         }
