@@ -13,10 +13,7 @@ pub struct EndAlignment;
 /// assignment check found, emitted when the node itself is visited (its ancestors are needed for
 /// the `[Correctable]` flag).
 #[derive(Default)]
-struct Ignored(
-    HashSet<(usize, usize), crate::config::FnvBuild>,
-    HashMap<(usize, usize), ((usize, usize), String), crate::config::FnvBuild>,
-);
+struct Ignored(HashSet<Span, crate::config::FnvBuild>, HashMap<Span, (Span, String), crate::config::FnvBuild>);
 
 fn lspan(l: Location) -> (usize, usize) {
     (l.start_offset(), l.end_offset())
