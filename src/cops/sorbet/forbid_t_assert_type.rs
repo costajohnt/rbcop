@@ -10,6 +10,10 @@ impl Cop for ForbidTAssertType {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["assert_type!"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (call (const {nil? cbase} :T) :assert_type! ...)
         let call = node.as_call_node().unwrap();

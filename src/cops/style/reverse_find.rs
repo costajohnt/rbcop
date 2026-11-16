@@ -17,6 +17,10 @@ impl Cop for ReverseFind {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["find", "detect"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (call (call _ {:reverse :reverse_each}) {:find :detect} (block_pass sym)?)
         let call = node.as_call_node().unwrap();

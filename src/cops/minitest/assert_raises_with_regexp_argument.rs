@@ -10,6 +10,10 @@ impl Cop for AssertRaisesWithRegexpArgument {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["assert_raises"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         if method_name(&call) != "assert_raises" || !send_args(&call).last().is_some_and(is_regexp) {

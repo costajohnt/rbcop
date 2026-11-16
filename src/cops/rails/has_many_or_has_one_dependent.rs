@@ -92,6 +92,10 @@ impl Cop for HasManyOrHasOneDependent {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["has_many", "has_one"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let Some(call) = helpers::rails::send(node) else { return };
         if !matches!(method_name(&call), "has_many" | "has_one") {

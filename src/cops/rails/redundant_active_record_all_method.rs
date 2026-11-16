@@ -29,6 +29,10 @@ impl Cop for RedundantActiveRecordAllMethod {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["all"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let Some(call) = helpers::rails::send(node) else { return };
         if method_name(&call) != "all" || !send_args(&call).is_empty() || call.block().is_some() {

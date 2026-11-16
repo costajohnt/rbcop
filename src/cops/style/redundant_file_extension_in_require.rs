@@ -13,6 +13,10 @@ impl Cop for RedundantFileExtensionInRequire {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["require", "require_relative"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         if call.receiver().is_some() || !matches!(method_name(&call), "require" | "require_relative") {

@@ -41,6 +41,10 @@ impl Cop for RedundantRequireStatement {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["require"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send nil? :require (str #redundant_feature?))
         let call = node.as_call_node().unwrap();

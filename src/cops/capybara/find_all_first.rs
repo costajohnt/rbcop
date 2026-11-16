@@ -13,6 +13,10 @@ impl Cop for FindAllFirst {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["all"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send (send _ :all _ ...) {:first | :[] (int 0)}), the `all` call being this node
         let call = node.as_call_node().unwrap();

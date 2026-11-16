@@ -89,6 +89,10 @@ impl Cop for RedundantTypeConversion {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["to_s", "to_sym", "to_i", "to_f", "to_r", "to_c", "to_a", "to_h", "to_set", "to_d"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         let method = method_name(&call);

@@ -18,6 +18,10 @@ impl Cop for ReflectionClassName {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["has_many", "has_one", "belongs_to"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send nil? {:has_many :has_one :belongs_to} _ _ ? (hash <$#reflection_class_name ...>))
         let Some(call) = helpers::rails::send(node) else { return };

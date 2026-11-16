@@ -13,6 +13,10 @@ impl Cop for ScopeArgs {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["scope"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send nil? :scope _ $send)
         let Some(call) = helpers::rails::send(node) else { return };

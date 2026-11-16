@@ -13,6 +13,10 @@ impl Cop for RedundantArrayFlatten {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["flatten"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         if method_name(&call) != "flatten" || call.receiver().is_none() || send_args(&call).len() > 1 {

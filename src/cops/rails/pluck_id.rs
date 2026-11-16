@@ -13,6 +13,10 @@ impl Cop for PluckId {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["pluck"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (call _ :pluck {(sym :id) (send nil? :primary_key)})
         let call = node.as_call_node().unwrap();

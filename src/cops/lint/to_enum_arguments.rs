@@ -135,6 +135,10 @@ impl Cop for ToEnumArguments {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["to_enum", "enum_for"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         if !matches!(method_name(&call), "to_enum" | "enum_for")

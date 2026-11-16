@@ -63,6 +63,10 @@ impl Cop for CollectionCompact {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["reject", "reject!", "select", "select!", "filter", "filter!", "grep_v"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         let name = method_name(&call);

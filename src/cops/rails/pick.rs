@@ -17,6 +17,10 @@ impl Cop for Pick {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["first"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (call (call _ :pluck ...) :first)
         let call = node.as_call_node().unwrap();

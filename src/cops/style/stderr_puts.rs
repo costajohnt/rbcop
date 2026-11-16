@@ -14,6 +14,10 @@ impl Cop for StderrPuts {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["puts"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         if is_csend(&call) || method_name(&call) != "puts" || send_args(&call).is_empty() {

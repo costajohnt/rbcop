@@ -9,6 +9,10 @@ impl Cop for OpenStruct {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["new"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send (const {nil? cbase} :OpenStruct) :new ...)
         let call = node.as_call_node().unwrap();

@@ -13,6 +13,10 @@ impl Cop for IgnoredSkipActionFilterOption {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["skip_after_action", "skip_around_action", "skip_before_action", "skip_action_callback"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let Some(call) = helpers::rails::send(node) else { return };
         if call.receiver().is_some()

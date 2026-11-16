@@ -71,6 +71,10 @@ impl Cop for EnumHash {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["enum"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let Some(call) = helpers::rails::send(node) else { return };
         if !helpers::rails::is_command(&call, "enum") {

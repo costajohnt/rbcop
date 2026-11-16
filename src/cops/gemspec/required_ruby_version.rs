@@ -95,6 +95,10 @@ impl Cop for RequiredRubyVersion {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["required_ruby_version="]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         if method_name(&call) != "required_ruby_version=" {

@@ -21,6 +21,10 @@ impl Cop for HttpStatus {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["have_http_status"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send nil? :have_http_status ${int sym str})
         let call = node.as_call_node().unwrap();

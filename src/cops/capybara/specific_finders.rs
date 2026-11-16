@@ -53,6 +53,10 @@ impl Cop for SpecificFinders {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["find"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send _ :find $(sym {:css :id :link :field})? (str $_) ...)
         let call = node.as_call_node().unwrap();

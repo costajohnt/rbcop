@@ -78,6 +78,10 @@ impl Cop for PredicateMatcher {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["to", "to_not", "not_to"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         let to = method_name(&call);

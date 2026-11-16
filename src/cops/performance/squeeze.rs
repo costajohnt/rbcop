@@ -14,6 +14,10 @@ impl Cop for Squeeze {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["gsub", "gsub!"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (call $!nil? ${:gsub :gsub!} (regexp (str $#repeating_literal?) (regopt)) (str $_))
         let call = node.as_call_node().unwrap();

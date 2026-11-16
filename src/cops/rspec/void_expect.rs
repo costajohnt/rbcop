@@ -37,6 +37,10 @@ impl Cop for VoidExpect {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["expect"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // expect?: (send nil? :expect ...)
         let call = node.as_call_node().unwrap();

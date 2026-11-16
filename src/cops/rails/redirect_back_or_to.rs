@@ -17,6 +17,10 @@ impl Cop for RedirectBackOrTo {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["redirect_back"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send nil? :redirect_back (hash <$(pair (sym :fallback_location) $_) $...>))
         let Some(call) = helpers::rails::send(node) else { return };

@@ -13,6 +13,10 @@ impl Cop for RootPublicPath {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["join"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send (send $(const {nil? cbase} :Rails) :root) :join (str $#public_path?) $...)
         let Some(call) = helpers::rails::send(node) else { return };

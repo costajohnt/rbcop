@@ -21,6 +21,10 @@ impl Cop for WhereNotWithMultipleConditions {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["not"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send (send _ :where) :not $...)
         let Some(call) = helpers::rails::send(node) else { return };

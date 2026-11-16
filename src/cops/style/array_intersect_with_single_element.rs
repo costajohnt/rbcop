@@ -12,6 +12,10 @@ impl Cop for ArrayIntersectWithSingleElement {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["intersect?"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         // `(send _ _ $(array $_))`: a plain send with one array argument holding one element.

@@ -63,6 +63,10 @@ impl Cop for StubbedMock {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["to"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send $(send nil? $#Expectations.all ...) :to $_)
         let call = node.as_call_node().unwrap();

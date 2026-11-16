@@ -22,6 +22,10 @@ impl Cop for AssociationStyle {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["factory", "trait"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         if is_csend(&call) || !matches!(method_name(&call), "factory" | "trait") {

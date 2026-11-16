@@ -13,6 +13,10 @@ impl Cop for FileFixture {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["join"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send (send (const {nil? cbase} :Rails) :root) :join {(str "spec") (str "fixtures") | (str "spec/fixtures")} _ ...)
         let call = node.as_call_node().unwrap();

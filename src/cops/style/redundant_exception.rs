@@ -14,6 +14,10 @@ impl Cop for RedundantException {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["raise", "fail"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         if call.receiver().is_some() || is_csend(&call) || !matches!(method_name(&call), "raise" | "fail") {
