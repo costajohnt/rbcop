@@ -6,13 +6,14 @@ use crate::helpers::parser_sexp::{hash_sexp, key_sexp, Numbers};
 use crate::source::Source;
 use ruby_prism::Node;
 use ruby_prism_sys as sys;
+use crate::config::FnvBuild;
 use std::collections::HashMap;
 
 /// Every node of `root` by range: the outermost one, past the Prism-only Program and Arguments
 /// wrappers (a parser `begin` of several statements is the StatementsNode).
-pub(crate) fn index(root: &Node) -> HashMap<(usize, usize), Node<'static>> {
+pub(crate) fn index(root: &Node) -> HashMap<(usize, usize), Node<'static>, FnvBuild> {
     use ruby_prism::Visit;
-    struct Index<'pr>(HashMap<(usize, usize), Node<'pr>>);
+    struct Index<'pr>(HashMap<(usize, usize), Node<'pr>, FnvBuild>);
     impl<'pr> Index<'pr> {
         fn add(&mut self, node: Node<'pr>) {
             if !matches!(node, Node::ProgramNode { .. } | Node::ArgumentsNode { .. }) {
@@ -29,11 +30,15 @@ pub(crate) fn index(root: &Node) -> HashMap<(usize, usize), Node<'static>> {
             self.add(node);
         }
     }
-    let mut ix = Index(HashMap::new());
+    let mut ix = Index(HashMap::default());
     ix.visit(root);
     // SAFETY: only the lifetime changes. The map lives in the Source that holds `root`, so it
     // never outlives the parse, and Source::node_at hands its nodes out at the Source's lifetime.
-    unsafe { std::mem::transmute::<HashMap<(usize, usize), Node<'_>>, HashMap<(usize, usize), Node<'static>>>(ix.0) }
+    unsafe {
+        std::mem::transmute::<HashMap<(usize, usize), Node<'_>, FnvBuild>, HashMap<(usize, usize), Node<'static>, FnvBuild>>(
+            ix.0,
+        )
+    }
 }
 
 /// The parser-gem tree of the node at `range` (with `hash`: and the one its cached hash

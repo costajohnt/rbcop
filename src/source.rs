@@ -63,7 +63,8 @@ pub struct Source<'a> {
     /// The program the cops run on (set by runner::analyze): node_equality finds nodes by range in it.
     pub root: Option<ruby_prism::Node<'a>>,
     /// `root`'s nodes by range (node_equality::node_at).
-    nodes_by_range: OnceCell<std::collections::HashMap<(usize, usize), ruby_prism::Node<'static>>>,
+    nodes_by_range:
+        OnceCell<std::collections::HashMap<(usize, usize), ruby_prism::Node<'static>, crate::config::FnvBuild>>,
 }
 
 impl<'a> Source<'a> {

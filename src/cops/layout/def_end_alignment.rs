@@ -8,7 +8,7 @@ pub struct DefEndAlignment;
 
 /// Defs already checked through their modifier send (`ignore_node`), by start offset.
 #[derive(Default)]
-struct Ignored(HashSet<usize>);
+struct Ignored(HashSet<usize, crate::config::FnvBuild>);
 
 /// `def_modifier`: `private def ...`, `memoize private def ...` (receiverless sends whose first
 /// argument chain ends in a def).

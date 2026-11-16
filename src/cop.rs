@@ -132,12 +132,12 @@ pub struct Fixes {
     /// Corrections of this cop's offenses so far, merged.
     pub corrector: Option<Corrector>,
     /// Ranges reported so far (`current_offense_locations`).
-    pub seen: HashSet<(usize, usize)>,
+    pub seen: HashSet<(usize, usize), crate::config::FnvBuild>,
     /// `--disable-uncorrectable`: an offense this run does not correct gets a `# rubocop:todo`
     /// comment (the cop autocorrects, or its unsafe correction is skipped under `-a`).
     pub todo: bool,
     /// Lines given a todo comment so far (`currently_disabled_lines`).
-    pub todo_lines: HashSet<usize>,
+    pub todo_lines: HashSet<usize, crate::config::FnvBuild>,
 }
 
 /// What a cop sees while it runs on one node or one file.
@@ -180,7 +180,7 @@ impl Cx<'_, '_> {
     pub fn add_with(&mut self, start: usize, end: usize, message: impl Into<String>, correctable: bool) {
         // Base#add_offense: `return unless current_offense_locations.add?(range)`, whatever the
         // message, so a cop's second offense on an identical range is dropped.
-        if self.fixes.seen.contains(&(start, end)) {
+        if !self.fixes.seen.insert((start, end)) {
             return;
         }
         if self.fixes.todo && !self.suppressed(start, end) {
@@ -353,7 +353,7 @@ impl Cx<'_, '_> {
         if !crate::directives::ignoring_disable_comments() && !crate::runner::skipping_offenses() {
             crate::runner::poison_raise_offense(self.cop, start, &message);
         }
-        self.fixes.seen.insert((start, end));
+        // Every caller inserted (start, end) into `fixes.seen` already (add_offense's `add?`).
         self.out.push(Offense {
             start,
             end,
