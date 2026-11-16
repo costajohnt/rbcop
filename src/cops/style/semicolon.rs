@@ -157,7 +157,7 @@ impl Cop for Semicolon {
         if !empty && src.raw_text.contains(';') {
             let tokens = translated(src);
             let mut lines: BTreeMap<usize, Vec<Token>> = BTreeMap::new();
-            for t in &tokens {
+            for t in tokens {
                 lines.entry(src.line_of(t.start)).or_default().push(*t);
             }
             let semi = |t: Option<&Token>| t.is_some_and(|t| t.kind == sys::PM_TOKEN_SEMICOLON);
