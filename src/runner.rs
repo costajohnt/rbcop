@@ -550,11 +550,27 @@ fn investigate(
     let parser_gem = cfg.target_ruby < 3.3;
     crate::helpers::literal_node::set_fold_plus(parser_gem);
     let mut buf = Vec::new();
-    let (result, tokens, fake, edits) = parse_for_target(text, &mut buf, version, cfg.target_ruby);
+    // From 3.3 the parse is parse_for_target's plain one, with the lexer's tokens collected on the
+    // way when a cop will read them: `Source::lex_tokens` would otherwise parse the same text again
+    // for them (#780). Collecting costs about 5% of a run whose cops read no tokens (`--only`).
+    // ponytail: default-on cops that read every file's tokens; any other token reader lexes lazily.
+    let lexed = !parser_gem
+        && ["Layout/ExtraSpacing", "Layout/LeadingEmptyLines", "Naming/AsciiIdentifiers"]
+            .iter()
+            .any(|&c| selected(c) && cfg.cop_enabled(c));
+    let (result, tokens, fake, edits) = if !lexed {
+        parse_for_target(text, &mut buf, version, cfg.target_ruby)
+    } else {
+        let utf8 = !crate::source::binary_encoding(text);
+        let (r, t) = ruby_prism::parse_with_version_and_tokens(text.as_bytes(), version, utf8);
+        (r, t, Vec::new(), Vec::new())
+    };
     let sclass_returns = if parser_gem { crate::syntax::sclass_returns(&result) } else { Vec::new() };
-    // The depth guard is asked up to four times below; the tree is walked for it once (#388).
-    let too_deep = std::cell::OnceCell::new();
-    let too_deep = || *too_deep.get_or_init(|| crate::ast::deeper_than(&result.node(), MAX_AST_DEPTH));
+    // The depth guard is asked up to four times below; the tree is walked for it once (#388), in
+    // the same walk as the error checks that need a tree (#780): None when too deep.
+    let checks = std::cell::OnceCell::new();
+    let checks = || checks.get_or_init(|| crate::syntax::pre_cop_checks(&result.node(), (!parser_gem).then_some(text)));
+    let too_deep = || checks().is_none();
     let mut errors: Vec<(usize, usize, String)> = result
         .errors()
         .filter(|e| !tolerated(e, parser_gem, cfg.target_ruby, text, &sclass_returns))
@@ -575,14 +591,19 @@ fn investigate(
         errors = parser_gem_errors(&result, &tokens, text, cfg.target_ruby, &sclass_returns);
     }
     // Pattern variable names the parser gem's builder rejects, only reached when Prism found no
-    // error (a tree walk, so only on trees the depth check below accepts; patterns need `in`/`=>`).
-    if errors.is_empty() && (text.contains("in") || text.contains("=>")) && !too_deep() {
-        errors.extend(crate::syntax::pattern_variable_errors(&result.node()));
+    // error (a tree walk, so only on trees the depth check below accepts).
+    if errors.is_empty()
+        && let Some((patterns, _)) = checks()
+    {
+        errors.extend(patterns.iter().cloned());
     }
     // Onigmo compile errors of static regexps (below 3.3 they are semantic errors above), reported
     // by the Prism translation only when the file otherwise parses.
-    if !parser_gem && errors.is_empty() && text.contains(['/', '%']) && !too_deep() {
-        errors.extend(crate::syntax::regexp_compile_errors(&result.node(), text));
+    if !parser_gem
+        && errors.is_empty()
+        && let Some((_, regexps)) = checks()
+    {
+        errors.extend(regexps.iter().cloned());
     }
     let comments: Vec<Comment> = result
         .comments()
@@ -618,6 +639,9 @@ fn investigate(
     // encoding): its warnings save that second parse.
     if !parser_gem {
         let _ = src.parse_warnings.set(crate::helpers::parse_warnings::from_result(&result));
+    }
+    if lexed {
+        src.set_lex_tokens(&tokens);
     }
 
     // CommentConfig is analyzed once per investigation, not again for the redundant-directive pass

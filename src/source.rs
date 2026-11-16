@@ -181,7 +181,8 @@ impl<'a> Source<'a> {
     }
 
     /// Prism lexer tokens in source order (rubocop-ast's `sorted_tokens`), computed on first use
-    /// (only cops that need tokens pay for the second parse).
+    /// (below 3.3 only cops that need tokens pay for a second parse; from 3.3 the runner's parse
+    /// supplies them, `set_lex_tokens`).
     pub fn tokens(&self) -> &[Token] {
         self.tokens.get_or_init(|| {
             let mut tokens = self.lex_tokens().to_vec();
@@ -217,6 +218,26 @@ impl<'a> Source<'a> {
             }
             tokens
         })
+    }
+
+    /// `lex_tokens` from a parse of this text with the same version and encoding (the runner's,
+    /// from 3.3, where the text is lexed unedited and to its end).
+    pub fn set_lex_tokens(&self, tokens: &[ruby_prism::Token]) {
+        static KINDS: std::sync::LazyLock<std::collections::HashMap<usize, u32>> = std::sync::LazyLock::new(|| {
+            (ruby_prism_sys::PM_TOKEN_EOF..ruby_prism_sys::PM_TOKEN_MAXIMUM)
+                // SAFETY: pm_token_type_name returns a static C string for every token type.
+                .map(|k| (unsafe { pm_token_type_name(k) } as usize, k))
+                .collect()
+        });
+        if self.lex_end != self.text.len() || !self.lex_edits.is_empty() {
+            return;
+        }
+        let tokens = tokens
+            .iter()
+            .filter(|t| t.kind != "EOF")
+            .map(|t| Token { kind: KINDS[&(t.kind.as_ptr() as usize)], start: t.start, end: t.end })
+            .collect();
+        let _ = self.lex_tokens.set(tokens);
     }
 
     /// Comment that starts on `line`, if any.
@@ -271,6 +292,7 @@ unsafe extern "C" {
     // Exported by libprism but missing from ruby-prism-sys's generated bindings.
     fn pm_options_version_set(options: *mut ruby_prism_sys::pm_options_t, version: *const u8, length: usize) -> bool;
     fn pm_options_free(options: *mut ruby_prism_sys::pm_options_t);
+    fn pm_token_type_name(token_type: ruby_prism_sys::pm_token_type_t) -> *const std::ffi::c_char;
     fn pm_options_partial_script_set(options: *mut ruby_prism_sys::pm_options_t, partial_script: bool);
 }
 
@@ -408,6 +430,16 @@ mod tests {
         ];
         assert_eq!(kinds, want);
         assert!(src.tokens().windows(2).all(|w| w[0].start <= w[1].start));
+    }
+
+    #[test]
+    fn main_parse_tokens_match_the_lexer_parse() {
+        let text = "x <<-EOT, 1\n  a #{b}\nEOT\ndef f = yield\n%w[a b].map { _1 } # c\n=begin\n=end\n__END__\nd\n";
+        let lexed = Source::new("t.rb", text, Vec::new(), None, "3.4");
+        let given = Source::new("t.rb", text, Vec::new(), None, "3.4");
+        let (_, tokens) = ruby_prism::parse_with_version_and_tokens(text.as_bytes(), "3.4", true);
+        given.set_lex_tokens(&tokens);
+        assert_eq!(given.lex_tokens.get().unwrap(), lexed.lex_tokens());
     }
 
     // A binary search over the comments, which are in source order (#388).
