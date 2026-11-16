@@ -1,0 +1,6 @@
+calls.rb:11:4: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+calls.rb:12:4: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+calls.rb:16:4: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+calls.rb:20:4: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+calls.rb:2:4: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.
+calls.rb:7:4: C: [Correctable] Style/MethodCallWithArgsParentheses: Omit parentheses for method calls with arguments.

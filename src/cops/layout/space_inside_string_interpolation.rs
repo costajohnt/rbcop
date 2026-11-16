@@ -23,7 +23,12 @@ fn lost_opening(cx: &Cx, open: usize) -> bool {
     if src.parser_gem {
         return false;
     }
-    let Some(content) = src.tokens().iter().find(|t| t.end == open && t.kind == sys::PM_TOKEN_STRING_CONTENT) else {
+    // Sorted tokens end in order too (parser_tokens::within): a search, not a scan per interpolation.
+    let tokens = src.tokens();
+    let from = tokens.partition_point(|t| t.end < open);
+    let Some(content) =
+        tokens[from..].iter().take_while(|t| t.end == open).find(|t| t.kind == sys::PM_TOKEN_STRING_CONTENT)
+    else {
         return false;
     };
     let value = src.slice(content.start, content.end);

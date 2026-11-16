@@ -132,6 +132,11 @@ fn walk(root: &Path, cfg: &Resolved, out: &mut Vec<PathBuf>) {
             let path = entry.path();
             let Ok(kind) = entry.file_type() else { continue };
             let link = kind.is_symlink();
+            // d_type already says a plain file is one: no lstat for the bulk of the walk.
+            if kind.is_file() {
+                out.push(path);
+                continue;
+            }
             let Ok(meta) = (if link { fs::metadata(&path) } else { entry.metadata() }) else { continue };
             if meta.is_dir() {
                 if pruned(&path) || chain.contains(&id(&meta)) {
