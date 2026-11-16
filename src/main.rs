@@ -22,8 +22,9 @@ mod lsp;
 mod mcp;
 mod serve;
 
-// musl's malloc is a bottleneck for the worker threads; glibc and macOS keep the system allocator.
-#[cfg(target_env = "musl")]
+// musl's malloc is a bottleneck for the worker threads, and glibc's is slower than mimalloc too
+// (#781); macOS keeps the system allocator.
+#[cfg(target_os = "linux")]
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
