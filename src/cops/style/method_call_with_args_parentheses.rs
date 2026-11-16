@@ -459,8 +459,14 @@ mod omit {
             _ => None,
         };
         if let Some(s) = stmts {
-            let body: Vec<Node> = s.body().iter().collect();
-            return body.iter().position(|a| span(a) == child).is_some_and(|i| i + 1 < body.len());
+            // Statements start in increasing order: a binary search keeps a long list linear overall.
+            let body = s.body();
+            let (mut lo, mut hi) = (0, body.len());
+            while lo < hi {
+                let mid = (lo + hi) / 2;
+                if body.get(mid).unwrap().location().start_offset() < child.0 { lo = mid + 1 } else { hi = mid }
+            }
+            return body.get(lo).is_some_and(|a| span(&a) == child) && lo + 1 < body.len();
         }
         // The body of parser's `(rescue body resbody ...)` / `(ensure body ensure_body)`.
         if let Some(b) = n.as_begin_node()
