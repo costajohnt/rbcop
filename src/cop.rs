@@ -475,6 +475,13 @@ pub trait Cop: Send + Sync {
         &[]
     }
 
+    /// RuboCop's RESTRICT_ON_SEND: the method names of the calls this cop acts on. When not empty,
+    /// a CALL_NODE subscriber is only called for calls with one of these names; declare them only
+    /// when `on_node` provably returns without effect for every other name (#776).
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &[]
+    }
+
     /// Called for every node of a subscribed kind, in source (pre-)order.
     fn on_node(&self, _cx: &mut Cx, _node: &Node) {}
 
@@ -503,4 +510,24 @@ pub trait Cop: Send + Sync {
 pub struct Registered {
     pub name: &'static str,
     pub cop: &'static dyn Cop,
+}
+
+#[cfg(test)]
+mod tests {
+    /// `restrict_on_send` only filters CALL_NODE dispatch, and a name listed twice would run the cop
+    /// twice on one call.
+    #[test]
+    fn restrict_on_send_declarations() {
+        for r in crate::cops::ALL {
+            let names = r.cop.restrict_on_send();
+            if names.is_empty() {
+                continue;
+            }
+            assert!(r.cop.kinds().contains(&crate::node_kind::CALL_NODE), "{} filters calls it never sees", r.name);
+            let mut sorted = names.to_vec();
+            sorted.sort();
+            sorted.dedup();
+            assert_eq!(sorted.len(), names.len(), "{} lists a method name twice", r.name);
+        }
+    }
 }

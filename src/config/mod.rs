@@ -302,7 +302,9 @@ impl CopConfig {
 
 /// FNV-1a: SipHash's DoS resistance buys nothing for cop names, and its cost showed up per file.
 #[derive(Default)]
-struct Fnv(u64);
+pub(crate) struct Fnv(u64);
+
+pub(crate) type FnvBuild = std::hash::BuildHasherDefault<Fnv>;
 
 impl std::hash::Hasher for Fnv {
     fn finish(&self) -> u64 {
@@ -328,7 +330,7 @@ pub struct Resolved {
     /// Each implemented cop's config, in the order of the cop names it was built from (`cop_at`).
     cop_list: Vec<(&'static str, CopConfig)>,
     /// Index in `cop_list` by name, with a cheap hash (the keys are cop names).
-    cops: HashMap<&'static str, usize, std::hash::BuildHasherDefault<Fnv>>,
+    cops: HashMap<&'static str, usize, FnvBuild>,
     /// Cop-like keys no registered cop has (see Store::unregistered).
     unregistered: Vec<String>,
     /// The options the cops were resolved with (Registry#enabled_cop_name? for other cop names).
