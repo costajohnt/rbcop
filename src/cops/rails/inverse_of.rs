@@ -49,6 +49,10 @@ impl Cop for InverseOf {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["has_many", "has_one", "belongs_to"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send $_ {:has_many :has_one :belongs_to} _ $...)
         let Some(call) = helpers::rails::send(node) else { return };

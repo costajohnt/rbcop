@@ -104,6 +104,10 @@ impl Cop for WhereMissing {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["left_joins", "left_outer_joins"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let Some(call) = helpers::rails::send(node) else { return };
         let name = method_name(&call);

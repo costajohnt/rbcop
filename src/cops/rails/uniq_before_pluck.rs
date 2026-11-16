@@ -13,6 +13,10 @@ impl Cop for UniqBeforePluck {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["uniq"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // [!^any_block $(send $(send _ :pluck ...) :uniq ...)]
         let Some(call) = helpers::rails::send(node) else { return };

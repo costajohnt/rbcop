@@ -13,6 +13,10 @@ impl Cop for RedundantStringChars {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["[]", "slice", "first", "last", "take", "length", "size", "empty?"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send $(send !nil? :chars) $_ $...)
         let call = node.as_call_node().unwrap();

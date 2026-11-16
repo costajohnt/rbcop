@@ -13,6 +13,10 @@ impl Cop for RangeInclude {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["include?", "member?"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (call {range (begin range)} ${:include? :member?} ...)
         let call = node.as_call_node().unwrap();

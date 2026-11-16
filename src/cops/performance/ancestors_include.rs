@@ -13,6 +13,10 @@ impl Cop for AncestorsInclude {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["include?"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send (send $_subclass :ancestors) :include? $_superclass)
         let call = node.as_call_node().unwrap();

@@ -9,6 +9,10 @@ impl Cop for DescribeSymbol {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["describe"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send #rspec? :describe $sym ...)
         let call = node.as_call_node().unwrap();

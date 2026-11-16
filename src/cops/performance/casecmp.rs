@@ -48,6 +48,10 @@ impl Cop for Casecmp {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["==", "eql?", "!="]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         let method = method_name(&call);

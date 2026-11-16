@@ -16,6 +16,10 @@ impl Cop for ConcatArrayLiterals {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["concat"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         if method_name(&call) != "concat" || call.block().is_some_and(|b| b.as_block_argument_node().is_some()) {

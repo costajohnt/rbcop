@@ -13,6 +13,10 @@ impl Cop for RequireDependency {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["require_dependency"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send {nil? (const {nil? cbase} :Kernel)} :require_dependency _)
         let Some(call) = helpers::rails::send(node) else { return };

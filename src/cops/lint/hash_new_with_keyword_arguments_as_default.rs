@@ -13,6 +13,10 @@ impl Cop for HashNewWithKeywordArgumentsAsDefault {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["new"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send (const {nil? (cbase)} :Hash) :new $[hash !braces?])
         let call = node.as_call_node().unwrap();

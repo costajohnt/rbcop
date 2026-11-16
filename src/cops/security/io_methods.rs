@@ -13,6 +13,10 @@ impl Cop for IoMethods {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["read", "binread", "write", "binwrite", "foreach", "readlines"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         let name = method_name(&call);

@@ -37,6 +37,10 @@ impl Cop for ReceiveCounts {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["times"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send $(send _ {:exactly :at_least :at_most} (int {1 2})) :times)
         let call = node.as_call_node().unwrap();

@@ -13,6 +13,10 @@ impl Cop for HaveContent {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["have_content", "have_no_content"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // on_send and on_csend
         let call = node.as_call_node().unwrap();

@@ -22,6 +22,10 @@ impl Cop for ArraySemiInfiniteRangeSlice {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["[]", "slice"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (call $!any_str $%SLICE_METHODS $#endless_range?)
         let call = node.as_call_node().unwrap();

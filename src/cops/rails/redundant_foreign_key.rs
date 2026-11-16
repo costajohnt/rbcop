@@ -13,6 +13,10 @@ impl Cop for RedundantForeignKey {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["belongs_to", "has_one", "has_many", "has_and_belongs_to_many"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let Some(call) = helpers::rails::send(node) else { return };
         let ty = method_name(&call);

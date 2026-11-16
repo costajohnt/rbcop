@@ -29,6 +29,10 @@ impl Cop for LinkToBlank {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["link_to", "link_to_if", "link_to_unless"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let Some(call) = helpers::rails::send(node) else { return };
         if !matches!(method_name(&call), "link_to" | "link_to_if" | "link_to_unless") {

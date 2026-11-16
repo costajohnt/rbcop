@@ -9,6 +9,10 @@ impl Cop for RemoveConst {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["send", "__send__"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send _ {:send | :__send__} (sym :remove_const) _)
         let call = node.as_call_node().unwrap();

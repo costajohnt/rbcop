@@ -26,6 +26,10 @@ impl Cop for MessageExpectation {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["to"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send $(send nil? {:expect :allow} ...) :to #receive_message?)
         let call = node.as_call_node().unwrap();

@@ -13,6 +13,10 @@ impl Cop for Strip {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["lstrip", "rstrip"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         let other = match method_name(&call) {

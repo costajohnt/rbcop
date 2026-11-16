@@ -55,6 +55,10 @@ impl Cop for ActiveSupportOnLoad {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["prepend", "include", "extend"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let Some(call) = helpers::rails::send(node) else { return };
         let method = method_name(&call);

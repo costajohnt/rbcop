@@ -13,6 +13,10 @@ impl Cop for NegateInclude {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["!"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send (send $!nil? :include? $_) :!)
         let Some(call) = helpers::rails::send(node) else { return };

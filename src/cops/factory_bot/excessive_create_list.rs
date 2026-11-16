@@ -9,6 +9,10 @@ impl Cop for ExcessiveCreateList {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["create_list"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send #factory_call? :create_list {sym str} $(int _) ...)
         let call = node.as_call_node().unwrap();

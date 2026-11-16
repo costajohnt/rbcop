@@ -721,9 +721,19 @@ fn investigate(
         .collect();
 
     let mut dispatch: Vec<Vec<usize>> = vec![Vec::new(); node_kind::COUNT];
+    // Calls go only to the cops that act on their method name (#776); `dispatch[CALL_NODE]` keeps
+    // the cops that see every call.
+    let mut calls: CallDispatch = Default::default();
     for (i, a) in active.iter().enumerate() {
         for &k in a.cop.kinds() {
-            dispatch[k].push(i);
+            let names = a.cop.restrict_on_send();
+            if k == node_kind::CALL_NODE && !names.is_empty() {
+                for n in names {
+                    calls.entry(n.as_bytes()).or_default().push(i);
+                }
+            } else {
+                dispatch[k].push(i);
+            }
         }
     }
     let mut out = Vec::new();
@@ -734,6 +744,7 @@ fn investigate(
         config: cfg,
         active: &active,
         dispatch: &dispatch,
+        calls: &calls,
         stack: Vec::new(),
         leaf: None,
         out: &mut out,
@@ -1687,12 +1698,16 @@ fn same(a: &Node, b: &Node) -> bool {
     node_kind::of(a) == node_kind::of(b) && la.start_offset() == lb.start_offset() && la.end_offset() == lb.end_offset()
 }
 
+/// Method name -> indices in `active` of the cops that declared it (`Cop::restrict_on_send`).
+type CallDispatch = std::collections::HashMap<&'static [u8], Vec<usize>, crate::config::FnvBuild>;
+
 struct Walker<'s, 'pr, 'c> {
     src: &'s Source<'s>,
     facts: &'s Facts,
     config: &'s Resolved,
     active: &'s [Active<'c>],
     dispatch: &'s [Vec<usize>],
+    calls: &'s CallDispatch,
     stack: Vec<Node<'pr>>,
     leaf: Option<Node<'pr>>,
     out: &'s mut Vec<Offense>,
@@ -1722,22 +1737,40 @@ impl<'pr> Walker<'_, 'pr, '_> {
         {
             at = p.location().start_offset();
         }
-        for &i in &self.dispatch[kind] {
-            let a = &self.active[i];
-            let mut cx = Cx {
-                src: self.src,
-                facts: self.facts,
-                ancestors: &self.stack,
-                cfg: a.cfg,
-                config: self.config,
-                cop: a.name,
-                correctable: a.cop.correctable(),
-                out: self.out,
-                state: &mut self.states[i],
-                fixes: &mut self.fixes[i],
+        let all: &[usize] = &self.dispatch[kind];
+        let named: &[usize] = match node {
+            Node::CallNode { .. } => self.calls.get(node.as_call_node().unwrap().name().as_slice()).map_or(&[], |v| v),
+            _ => &[],
+        };
+        // Both lists are in `active` order; merge them so cops still run in that order.
+        let (mut x, mut y) = (0, 0);
+        while x < all.len() || y < named.len() {
+            let i = if y == named.len() || (x < all.len() && all[x] < named[y]) {
+                x += 1;
+                all[x - 1]
+            } else {
+                y += 1;
+                named[y - 1]
             };
-            guarded(a.name, self.src, Some(at), || a.cop.on_node(&mut cx, node));
+            self.run(i, node, at);
         }
+    }
+
+    fn run(&mut self, i: usize, node: &Node<'pr>, at: usize) {
+        let a = &self.active[i];
+        let mut cx = Cx {
+            src: self.src,
+            facts: self.facts,
+            ancestors: &self.stack,
+            cfg: a.cfg,
+            config: self.config,
+            cop: a.name,
+            correctable: a.cop.correctable(),
+            out: self.out,
+            state: &mut self.states[i],
+            fixes: &mut self.fixes[i],
+        };
+        guarded(a.name, self.src, Some(at), || a.cop.on_node(&mut cx, node));
     }
 
     /// The node being dispatched is the key of a valueless hash pattern pair.

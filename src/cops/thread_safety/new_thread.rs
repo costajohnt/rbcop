@@ -10,6 +10,10 @@ impl Cop for NewThread {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["new", "fork", "start"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (call (const {nil? cbase} :Thread) {:new :fork :start} ...)
         let call = node.as_call_node().unwrap();

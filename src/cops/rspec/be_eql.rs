@@ -13,6 +13,10 @@ impl Cop for BeEql {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["to"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send _ :to $(send nil? :eql {boolean int float sym nil}))
         let call = node.as_call_node().unwrap();

@@ -27,6 +27,10 @@ impl Cop for RootJoinChain {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["join"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let Some(call) = helpers::rails::send(node) else { return };
         if method_name(&call) != "join" {

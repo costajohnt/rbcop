@@ -14,6 +14,10 @@ impl Cop for I18nLazyLookup {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["translate", "t"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send nil? {:translate :t} ${sym_type? str_type?} ...)
         let Some(call) = helpers::rails::send(node) else { return };

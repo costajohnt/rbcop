@@ -11,6 +11,10 @@ impl Cop for ForbidTypeAliasedShapes {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["type_alias"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (block (send (const {nil? cbase} :T) :type_alias) (args) `hash)
         let call = node.as_call_node().unwrap();
