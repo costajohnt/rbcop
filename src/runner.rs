@@ -569,9 +569,7 @@ fn investigate(
     // The depth guard is asked up to four times below; the tree is walked for it once (#388), in
     // the same walk as the error checks that need a tree (#780): None when too deep.
     let checks = std::cell::OnceCell::new();
-    let checks = || {
-        checks.get_or_init(|| crate::syntax::pre_cop_checks(&result.node(), (!parser_gem).then_some(text)))
-    };
+    let checks = || checks.get_or_init(|| crate::syntax::pre_cop_checks(&result.node(), (!parser_gem).then_some(text)));
     let too_deep = || checks().is_none();
     let mut errors: Vec<(usize, usize, String)> = result
         .errors()
