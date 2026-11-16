@@ -223,7 +223,7 @@ impl<'a> Source<'a> {
     /// from 3.3, where the text is lexed unedited and to its end).
     pub fn set_lex_tokens(&self, tokens: &[ruby_prism::Token]) {
         static KINDS: std::sync::LazyLock<std::collections::HashMap<usize, u32>> = std::sync::LazyLock::new(|| {
-            (0..ruby_prism_sys::PM_TOKEN_MAXIMUM)
+            (ruby_prism_sys::PM_TOKEN_EOF..ruby_prism_sys::PM_TOKEN_MAXIMUM)
                 // SAFETY: pm_token_type_name returns a static C string for every token type.
                 .map(|k| (unsafe { pm_token_type_name(k) } as usize, k))
                 .collect()
