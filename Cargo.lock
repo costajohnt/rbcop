@@ -456,6 +456,7 @@ dependencies = [
  "ruby-prism",
  "ruby-prism-sys",
  "rubydex",
+ "xxhash-rust",
 ]
 
 [[package]]

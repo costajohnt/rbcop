@@ -651,8 +651,8 @@ pub fn write_contained(path: &Path, content: &[u8], roots: &[PathBuf], append: b
     Ok(f)
 }
 
-/// `openat`, `renameat` and `unlinkat` relative to an open directory.
-mod at {
+/// `openat`, `renameat` and `unlinkat` relative to an open directory (also the result cache's).
+pub mod at {
     use std::ffi::{CString, OsStr};
     use std::fs::File;
     use std::io::{Error, Result};

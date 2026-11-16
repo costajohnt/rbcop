@@ -3,6 +3,7 @@
 //! inspected again. rbcop keeps its own `rbcop_cache` next to RuboCop's `rubocop_cache`: each
 //! tool's MaxFilesInCache pruning would otherwise delete the other's entries.
 
+use rbcop::autocorrect::at;
 use rbcop::cop::{Offense, Severity};
 use rbcop::runner::FileReport;
 use std::collections::HashSet;
@@ -106,6 +107,9 @@ pub struct Cache {
     /// Cop names, to give loaded offenses their `&'static str`.
     names: HashSet<&'static str>,
     saved: std::sync::atomic::AtomicUsize,
+    /// `dir`, opened by the first save that found it fine, without following a symlink in its
+    /// path; later saves create entries relative to it.
+    dir_fd: std::sync::Mutex<Option<fs::File>>,
 }
 
 impl Cache {
@@ -118,13 +122,31 @@ impl Cache {
         names: HashSet<&'static str>,
     ) -> Option<Cache> {
         // ResultCache.source_checksum: RuboCop hashes its own source; rbcop, its binary.
-        // One pass over the binary (tens of MB): 64 bits tell builds apart.
-        let mut exe = std::hash::DefaultHasher::new();
-        exe.write(&fs::read(std::env::current_exe().ok()?).ok()?);
-        let build = digest(&[env!("CARGO_PKG_VERSION").as_bytes(), &exe.finish().to_le_bytes(), FORMAT]);
+        // One pass over the binary (tens of MB): 64 bits tell builds apart. xxh3 through a small
+        // buffer: SipHash over the whole file read into memory took about 30 ms a run (#777).
+        let mut exe = xxhash_rust::xxh3::Xxh3::new();
+        let mut file = fs::File::open(std::env::current_exe().ok()?).ok()?;
+        let mut buf = vec![0; 1 << 16];
+        loop {
+            match file.read(&mut buf) {
+                Ok(0) => break,
+                Ok(n) => exe.update(&buf[..n]),
+                Err(e) if e.kind() == std::io::ErrorKind::Interrupted => {}
+                Err(_) => return None,
+            }
+        }
+        let build = digest(&[env!("CARGO_PKG_VERSION").as_bytes(), &exe.digest().to_le_bytes(), FORMAT]);
         let top = root.join("rbcop_cache");
         let dir = top.join(build).join(digest(&[context.as_bytes()]));
-        Some(Cache { top, dir, allow_symlinks, max_files, names, saved: Default::default() })
+        Some(Cache {
+            top,
+            dir,
+            allow_symlinks,
+            max_files,
+            names,
+            saved: Default::default(),
+            dir_fd: Default::default(),
+        })
     }
 
     /// ResultCache#file_checksum: the path, the file mode, everything else that decides the file's
@@ -187,6 +209,10 @@ impl Cache {
                 edits: parse_edits(edits, &text)?,
             });
         }
+        // Deliberate difference: RuboCop's load leaves the mtime alone, so `cleanup`, which removes
+        // the oldest entries, removed the ones every warm run reads first (#778). Best effort: a
+        // read-only cache still loads.
+        let _ = file.set_modified(std::time::SystemTime::now());
         Some(FileReport { offenses, text, warnings: Vec::new(), abort: None, diffs: Vec::new() })
     }
 
@@ -194,15 +220,28 @@ impl Cache {
     /// (the caller knows the offenses are those of a plain inspection), but warns as RuboCop does
     /// either way.
     pub fn save(&self, key: &str, report: &FileReport, write: bool) {
-        match mkdir_p(&self.dir) {
-            Ok(()) => {}
-            Err(Some(msg)) => return eprintln!("Couldn't create cache directory. Continuing without cache.\n  {msg}"),
-            Err(None) => return,
+        use std::sync::atomic::Ordering::Relaxed;
+        // Checked until a save finds the directory fine and opens it (about ten syscalls per file
+        // before, #778), so every refused save still warns.
+        let mut dir_fd = self.dir_fd.lock().unwrap_or_else(|e| e.into_inner());
+        if dir_fd.is_none() {
+            match mkdir_p(&self.dir) {
+                Ok(()) => {}
+                Err(Some(msg)) => {
+                    return eprintln!("Couldn't create cache directory. Continuing without cache.\n  {msg}");
+                }
+                Err(None) => return,
+            }
+            // A symbolic link anywhere in the cache directory's path can be a symlink attack.
+            if let Some(link) = self.refused_symlink(&self.dir) {
+                return eprintln!("Warning: {} is a symlink, which is not allowed.", link.display());
+            }
+            // Every later save goes through this descriptor, so a symlink swapped into the path
+            // after the check is never followed. Failing here is such a swap: skip quietly.
+            let Ok(d) = self.open_dir() else { return };
+            *dir_fd = Some(d);
         }
-        // A symbolic link anywhere in the cache directory's path can be a symlink attack.
-        if let Some(link) = self.refused_symlink(&self.dir) {
-            return eprintln!("Warning: {} is a symlink, which is not allowed.", link.display());
-        }
+        let Some(dir) = dir_fd.as_ref() else { return };
         let mut out = format!("{} {}\n", report.text.len(), text_check(&report.text));
         for o in &report.offenses {
             let flags = format!("{}{}{}", u8::from(o.correctable), u8::from(o.global), u8::from(o.disabled));
@@ -217,29 +256,48 @@ impl Cache {
         // name is unpredictable and created fresh (never through an existing file or symlink);
         // any failure skips saving, with ResultCache#write_cache_file's warning for EACCES, EPERM and
         // EROFS. Without `write` the file is only created and removed again, for that warning.
-        let n = self.saved.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+        let n = self.saved.fetch_add(1, Relaxed);
         let random = std::collections::hash_map::RandomState::new().hash_one(n);
-        let tmp = self.dir.join(format!("{key}_{}_{random:016x}", std::process::id()));
-        let dest = self.dir.join(key);
-        let opened = fs::OpenOptions::new().write(true).create_new(true).custom_flags(libc::O_NOFOLLOW).open(&tmp);
+        let name = format!("{key}_{}_{random:016x}", std::process::id());
+        let (tmp, dest) = (self.dir.join(&name), self.dir.join(key));
+        let flags = libc::O_WRONLY | libc::O_CREAT | libc::O_EXCL | libc::O_NOFOLLOW;
+        let opened = at::open(dir, name.as_ref(), flags, 0o666);
+        // The directory was removed meanwhile (a parallel run's pruning): the next save makes it again.
+        let gone = opened.as_ref().is_err_and(|e| e.kind() == std::io::ErrorKind::NotFound);
         let written = match opened {
             Err(e) => Err((e, format!("rb_sysopen - {}", tmp.display()))),
             Ok(_) if !write => Ok(()),
             Ok(mut f) => {
                 f.write_all(out.as_bytes()).map_err(|e| (e, format!("rb_sysopen - {}", tmp.display()))).and_then(|()| {
-                    fs::rename(&tmp, &dest)
+                    at::rename(dir, name.as_ref(), key.as_ref())
                         .map_err(|e| (e, format!("rb_file_s_rename - ({}, {})", tmp.display(), dest.display())))
                 })
             }
         };
         if !write || written.is_err() {
-            let _ = fs::remove_file(&tmp);
+            let _ = at::unlink(dir, name.as_ref());
+        }
+        if gone {
+            *dir_fd = None;
         }
         if let Err((e, at)) = written
             && let Some(what) = errno_message(&e)
         {
             eprintln!("Couldn't write cache file. Continuing without cache.\n  {what} @ {at}");
         }
+    }
+
+    /// `dir`, each component opened relative to the last without following a symlink (unless
+    /// AllowSymlinksInCacheRootDirectory).
+    fn open_dir(&self) -> std::io::Result<fs::File> {
+        if self.allow_symlinks {
+            return at::open_dir(&self.dir);
+        }
+        let mut dir = at::open_dir(Path::new(if self.dir.is_absolute() { "/" } else { "." }))?;
+        for c in self.dir.components().filter(|c| *c != std::path::Component::RootDir) {
+            dir = at::open(&dir, c.as_os_str(), at::DIR | libc::O_NOFOLLOW, 0)?;
+        }
+        Ok(dir)
     }
 
     /// ResultCache#any_symlink?: the deepest symlink in `path` or its ancestors, unless
@@ -251,7 +309,8 @@ impl Cache {
         path.ancestors().take_while(|p| p.parent().is_some()).find(|p| p.is_symlink())
     }
 
-    /// ResultCache.cleanup: past MaxFilesInCache entries, remove the oldest half (and one more);
+    /// ResultCache.cleanup: past MaxFilesInCache entries, remove the oldest half (and one more),
+    /// oldest by last use (`load` refreshes the mtime);
     /// `verbose` (`-d`) says so.
     pub fn cleanup(&self, verbose: bool) {
         let Some(max) = self.max_files else { return };
@@ -417,5 +476,35 @@ mod tests {
             assert_eq!(entry(bad), None, "{bad}");
         }
         let _ = fs::remove_dir_all(&root);
+    }
+
+    /// A symlink swapped into the cache directory's path after the first save is never followed:
+    /// later saves go through the directory the first one opened.
+    #[test]
+    fn saves_never_follow_a_symlink_swapped_in_later() {
+        let base = std::env::temp_dir().join(format!("rbcop-cache-swap-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&base);
+        fs::create_dir_all(base.join("outside")).unwrap();
+        let base = base.canonicalize().unwrap();
+        let cache = Cache::new(&base.join("root"), "ctx", false, None, HashSet::new()).unwrap();
+        let report = |text: &str| FileReport {
+            offenses: Vec::new(),
+            text: text.into(),
+            warnings: Vec::new(),
+            abort: None,
+            diffs: Vec::new(),
+        };
+        cache.save("k1", &report("a"), true);
+        assert!(cache.entry("k1").is_file());
+        // The whole tree moves away and `root` becomes a link to a directory outside the cache,
+        // one with the same layout, so the old path resolves there.
+        let rel = cache.dir.strip_prefix(base.join("root")).unwrap().to_path_buf();
+        fs::rename(base.join("root"), base.join("moved")).unwrap();
+        fs::create_dir_all(base.join("outside").join(&rel)).unwrap();
+        std::os::unix::fs::symlink(base.join("outside"), base.join("root")).unwrap();
+        cache.save("k2", &report("b"), true);
+        assert_eq!(fs::read_dir(base.join("outside").join(&rel)).unwrap().count(), 0);
+        assert!(base.join("moved").join(&rel).join("k2").is_file());
+        let _ = fs::remove_dir_all(&base);
     }
 }
