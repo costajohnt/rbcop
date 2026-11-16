@@ -44,7 +44,7 @@ fn begin_children(b: &(Vec<Node>, (usize, usize))) -> usize {
         return b.0.len();
     }
     b.0[0].as_parentheses_node().and_then(|p| p.body()).map_or(0, |body| match body.as_statements_node() {
-        Some(s) => s.body().iter().count(),
+        Some(s) => s.body().len(),
         None => 1,
     })
 }

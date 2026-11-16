@@ -132,7 +132,7 @@ fn parser_ancestors(anc: &[Node], subject: &Node) -> Vec<PA> {
                     && anc[i - 1].as_begin_node().is_some_and(|b| {
                         b.begin_keyword_loc().is_some() && b.rescue_clause().is_none() && b.ensure_clause().is_none()
                     });
-                if flat || n.as_statements_node().unwrap().body().iter().count() < 2 {
+                if flat || n.as_statements_node().unwrap().body().len() < 2 {
                     continue;
                 }
                 PT::Begin

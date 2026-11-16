@@ -20,7 +20,7 @@ impl Cop for UnreachableAssertion {
         if !is_begin(&body) {
             return;
         }
-        let last = body.as_statements_node().unwrap().body().iter().last().unwrap();
+        let last = body.as_statements_node().unwrap().body().last().unwrap();
         let Some(send) = as_send(&last) else { return };
         if !send_is_assertion(&send) {
             return;

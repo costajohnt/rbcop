@@ -13,7 +13,7 @@ fn top_level(anc: &[Node]) -> bool {
         // `(class A; end; class B; end)` as the whole file: the parenthesised `begin` is the root.
         4 => {
             anc[2].as_parentheses_node().is_some()
-                && anc[1].as_statements_node().is_some_and(|s| s.body().iter().count() == 1)
+                && anc[1].as_statements_node().is_some_and(|s| s.body().len() == 1)
         }
         _ => false,
     }

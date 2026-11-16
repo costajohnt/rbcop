@@ -113,7 +113,7 @@ pub fn array_style_detected(cx: &Cx, style: &'static str, size: usize) {
 
 /// PercentArray#allowed_bracket_array?
 pub fn allowed_bracket_array(cx: &Cx, node: &Node) -> bool {
-    let size = node.as_array_node().unwrap().elements().iter().count() as f64;
+    let size = node.as_array_node().unwrap().elements().len() as f64;
     // ArrayMinSize: `node.values.length < cop_config['MinSize']`
     comments_in_array(cx.src, node)
         || size < cx.cfg.num("MinSize").map_or(0.0, Num::f64)

@@ -246,6 +246,18 @@ impl<'a> Source<'a> {
         self.comments.get(self.comments.partition_point(|c| c.start < from)).filter(|c| self.line_of(c.start) == line)
     }
 
+    /// Comments starting on 1-based lines `start..end`, found by binary search (comments are in
+    /// source order), so per-node callers stay linear in a file with many comments.
+    pub fn comments_in_lines(&self, start: usize, end: usize) -> &[Comment] {
+        let from = |line: usize| match line {
+            0 => 0,
+            l => self.line_starts.get(l - 1).copied().unwrap_or(usize::MAX),
+        };
+        let lo = self.comments.partition_point(|c| c.start < from(start));
+        let hi = self.comments.partition_point(|c| c.start < from(end));
+        &self.comments[lo..hi.max(lo)]
+    }
+
     /// True if the text before `off` on its line is only (Ruby, ASCII) whitespace.
     pub fn begins_its_line(&self, off: usize) -> bool {
         self.text[self.line_start(self.line_of(off))..off].bytes().all(crate::helpers::parser_tokens::is_ruby_space)
@@ -437,5 +449,21 @@ mod tests {
         let src = Source::new("t.rb", text, Vec::from(comments), None, "3.4");
         let starts: Vec<Option<usize>> = (0..=5).map(|l| src.comment_on_line(l).map(|c| c.start)).collect();
         assert_eq!(starts, [None, Some(2), None, Some(10), Some(18), None]);
+    }
+
+    // Same answer as the linear `line_of` filter it replaced (#789), for every line range.
+    #[test]
+    fn comments_in_lines() {
+        let text = "a # one\nb\n# two\nc # three";
+        let comments = [(2, 7), (10, 15), (18, 25)].map(|(start, end)| Comment { start, end, embdoc: false });
+        let src = Source::new("t.rb", text, Vec::from(comments), None, "3.4");
+        for s in 0..=6 {
+            for e in 0..=6 {
+                let want: Vec<usize> =
+                    src.comments.iter().filter(|c| (s..e).contains(&src.line_of(c.start))).map(|c| c.start).collect();
+                let got: Vec<usize> = src.comments_in_lines(s, e).iter().map(|c| c.start).collect();
+                assert_eq!(got, want, "lines {s}..{e}");
+            }
+        }
     }
 }

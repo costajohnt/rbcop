@@ -987,7 +987,7 @@ pub fn let_(l: &Language, node: &Node) -> bool {
     }
     // Helpers is asked once the node's type and arity fit: a plain block, or a send of two
     // arguments (the block_pass is checked after it)
-    let args = call.arguments().map_or(0, |a| a.arguments().iter().count());
+    let args = call.arguments().map_or(0, |a| a.arguments().len());
     match call.block() {
         Some(b) if b.as_block_node().is_some() => is_plain(&b.as_block_node().unwrap()) && l.helper(method_name(&call)),
         Some(_) => args == 1 && l.helper(method_name(&call)),
@@ -1099,7 +1099,7 @@ pub fn ask_let_of_parts(l: &Language, body: Option<Node>) {
 
 /// Whether a block body is parser's `begin` (two or more statements).
 pub fn is_begin_body(body: &Option<Node>) -> bool {
-    body.as_ref().and_then(|b| b.as_statements_node()).is_some_and(|s| s.body().iter().count() > 1)
+    body.as_ref().and_then(|b| b.as_statements_node()).is_some_and(|s| s.body().len() > 1)
 }
 
 /// Parser's statement list the node at `ancestors` sits in: (siblings, index) when its parent is a
@@ -1346,14 +1346,14 @@ pub fn metadata_lists<'pr>(l: &Language, node: &Node<'pr>) -> Vec<(CallNode<'pr>
         let block = block_of(&call).unwrap();
         let params = block.parameters().and_then(|p| p.as_block_parameters_node());
         let var = params
-            .filter(|p| p.locals().iter().count() == 0)
+            .filter(|p| p.locals().is_empty())
             .and_then(|p| p.parameters())
             .filter(|p| {
-                p.requireds().iter().count() == 1
-                    && p.optionals().iter().count() == 0
+                p.requireds().len() == 1
+                    && p.optionals().is_empty()
                     && p.rest().is_none()
-                    && p.posts().iter().count() == 0
-                    && p.keywords().iter().count() == 0
+                    && p.posts().is_empty()
+                    && p.keywords().is_empty()
                     && p.keyword_rest().is_none()
                     && p.block().is_none()
             })

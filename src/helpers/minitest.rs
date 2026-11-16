@@ -108,7 +108,7 @@ pub fn parser_body<'pr>(body: Option<Node<'pr>>) -> Option<Node<'pr>> {
 
 /// A Prism StatementsNode standing for a parser `begin` (two or more statements).
 pub fn is_begin(node: &Node) -> bool {
-    node.as_statements_node().is_some_and(|s| s.body().iter().count() > 1)
+    node.as_statements_node().is_some_and(|s| s.body().len() > 1)
 }
 
 fn stmts(node: Option<Node>) -> Vec<Node> {

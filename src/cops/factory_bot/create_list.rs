@@ -153,7 +153,7 @@ impl Cop for CreateList {
         let Some(body) = helpers::rspec::parser_body(block.body()) else { return };
         // block_with_arg_and_used?: one `|x|` argument that the body mentions
         if let Some(p) = block.parameters().and_then(|p| p.as_block_parameters_node()).and_then(|p| p.parameters())
-            && p.requireds().iter().count() == 1
+            && p.requireds().len() == 1
             && p.optionals().iter().next().is_none()
             && p.rest().is_none()
             && p.posts().iter().next().is_none()

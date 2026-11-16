@@ -16,7 +16,7 @@ pub fn value_used(ancestors: &[Node], start: usize) -> bool {
     };
     let up = || value_used(&ancestors[..pi], parent_start);
     let last_statement = |stmts: Option<ruby_prism::StatementsNode>| {
-        stmts.and_then(|s| s.body().iter().last()).is_some_and(|l| l.location().start_offset() == start)
+        stmts.and_then(|s| s.body().last()).is_some_and(|l| l.location().start_offset() == start)
     };
     match parent {
         Node::ArrayNode { .. }
@@ -46,7 +46,7 @@ pub fn value_used(ancestors: &[Node], start: usize) -> bool {
         Node::ParenthesesNode { .. } => {
             let body = parent.as_parentheses_node().unwrap().body();
             let last = match body.as_ref().and_then(|b| b.as_statements_node()) {
-                Some(s) => s.body().iter().last(),
+                Some(s) => s.body().last(),
                 None => body,
             };
             if last.is_some_and(|l| l.location().start_offset() == start) { up() } else { false }

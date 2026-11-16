@@ -44,7 +44,7 @@ fn check_body_node(cx: &mut Cx, body: Option<Node>) {
 
 /// A statement list: its last statement (a single one, or the last child of a parser `begin`).
 fn check_statements(cx: &mut Cx, stmts: Option<ruby_prism::StatementsNode>) {
-    if let Some(last) = stmts.and_then(|s| s.body().iter().last()) {
+    if let Some(last) = stmts.and_then(|s| s.body().last()) {
         check_branch(cx, &last);
     }
 }

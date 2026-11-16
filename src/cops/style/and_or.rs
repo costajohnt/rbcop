@@ -76,7 +76,7 @@ fn has_block(call: &ruby_prism::CallNode) -> bool {
 /// Parser `last_argument`: a `&blk` block pass counts as an argument.
 fn last_argument(args: Option<ruby_prism::ArgumentsNode>, block: Option<Node>) -> Option<(usize, usize)> {
     let block_pass = block.filter(|b| b.as_block_argument_node().is_some());
-    let last = block_pass.or_else(|| args.and_then(|a| a.arguments().iter().last()))?;
+    let last = block_pass.or_else(|| args.and_then(|a| a.arguments().last()))?;
     Some((last.location().start_offset(), last.location().end_offset()))
 }
 

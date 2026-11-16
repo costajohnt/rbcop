@@ -49,7 +49,7 @@ fn named_params<'pr>(block: &BlockNode<'pr>) -> Option<Vec<ruby_prism::RequiredP
         return None;
     }
     let req: Vec<_> = p.requireds().iter().filter_map(|r| r.as_required_parameter_node()).collect();
-    (req.len() == 2 && p.requireds().iter().count() == 2).then_some(req)
+    (req.len() == 2 && p.requireds().len() == 2).then_some(req)
 }
 
 fn matches<'pr>(call: &CallNode<'pr>) -> Option<Match<'pr>> {

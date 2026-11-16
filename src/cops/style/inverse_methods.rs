@@ -76,7 +76,7 @@ impl InverseMethods {
         } else if let Some(p) = recv.as_parentheses_node() {
             let Some(body) = p.body() else { return };
             let inner = match body.as_statements_node() {
-                Some(s) if s.body().iter().count() == 1 => s.body().iter().next().unwrap(),
+                Some(s) if s.body().len() == 1 => s.body().iter().next().unwrap(),
                 Some(_) => return,
                 None => body,
             };
@@ -159,14 +159,14 @@ impl InverseMethods {
                         let only = s.body().iter().next().unwrap();
                         match only.as_parentheses_node().and_then(|p| p.body()) {
                             Some(pb) => match pb.as_statements_node() {
-                                Some(ps) => ps.body().iter().last(),
+                                Some(ps) => ps.body().last(),
                                 None => Some(pb),
                             },
                             None if only.as_parentheses_node().is_some() => None,
                             None => Some(only),
                         }
                     }
-                    _ => s.body().iter().last(),
+                    _ => s.body().last(),
                 }
             }
             None => return,

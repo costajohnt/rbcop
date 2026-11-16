@@ -39,7 +39,7 @@ impl Cop for FirstArrayElementIndentation {
         // autocorrect_incompatible_with_other_cops?
         if enabled_cop_str(cx, "Layout/ArrayAlignment", "EnforcedStyle").as_deref() == Some("with_fixed_indentation")
             && (cx.cfg.str("EnforcedStyle") != Some("consistent")
-                || (array.elements().iter().count() >= 2 && !matches!(base(cx).1, IndentBase::StartOfLine)))
+                || (array.elements().len() >= 2 && !matches!(base(cx).1, IndentBase::StartOfLine)))
         {
             return;
         }

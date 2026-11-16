@@ -150,7 +150,7 @@ impl Cop for HashEachMethods {
         let Some(body) = block.body() else { return };
         let mut lvars = Lvars::default();
         match body.as_statements_node() {
-            Some(s) if s.body().iter().count() == 1 => {
+            Some(s) if s.body().len() == 1 => {
                 let only = s.body().iter().next().unwrap();
                 if only.as_local_variable_read_node().is_none() && only.as_it_local_variable_read_node().is_none() {
                     lvars.visit(&only);

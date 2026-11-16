@@ -183,7 +183,7 @@ impl Cop for UselessSetterCall {
             return;
         }
         let last = match body.as_statements_node() {
-            Some(s) => match s.body().iter().last() {
+            Some(s) => match s.body().last() {
                 Some(l) => l,
                 None => return,
             },

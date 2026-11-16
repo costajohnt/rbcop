@@ -106,7 +106,7 @@ impl Cop for Delegate {
                 let stmts = helpers::rails::body_statements(m.body());
                 return stmts.len() == 1 && module_function(&stmts[0]);
             }
-            a.as_statements_node().is_some_and(|s| s.body().iter().count() > 1 && s.body().iter().any(|c| module_function(&c)))
+            a.as_statements_node().is_some_and(|s| s.body().len() > 1 && s.body().iter().any(|c| module_function(&c)))
         });
         if declared {
             return;

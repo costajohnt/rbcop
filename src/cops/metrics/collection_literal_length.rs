@@ -13,11 +13,11 @@ impl Cop for CollectionLiteralLength {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let len = match node {
-            Node::ArrayNode { .. } => node.as_array_node().unwrap().elements().iter().count(),
-            Node::HashNode { .. } => node.as_hash_node().unwrap().elements().iter().count(),
-            Node::KeywordHashNode { .. } => node.as_keyword_hash_node().unwrap().elements().iter().count(),
+            Node::ArrayNode { .. } => node.as_array_node().unwrap().elements().len(),
+            Node::HashNode { .. } => node.as_hash_node().unwrap().elements().len(),
+            Node::KeywordHashNode { .. } => node.as_keyword_hash_node().unwrap().elements().len(),
             // parser's `rescue A, B` exception list is an `array`
-            Node::RescueNode { .. } => match node.as_rescue_node().unwrap().exceptions().iter().count() {
+            Node::RescueNode { .. } => match node.as_rescue_node().unwrap().exceptions().len() {
                 0 => return,
                 n => n,
             },

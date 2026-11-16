@@ -2527,7 +2527,7 @@ fn command_asgn(node: &Node) -> bool {
 /// The value of a setter call (`a.b = v`, `a[i] = v`).
 fn setter_value<'pr>(node: &Node<'pr>) -> Option<Node<'pr>> {
     let setter = node.as_call_node().filter(|c| c.equal_loc().is_some())?;
-    setter.arguments()?.arguments().iter().last()
+    setter.arguments()?.arguments().last()
 }
 
 /// `command_asgn`'s command (a call, `super`, `yield`, `return`, `break`, `next` with arguments

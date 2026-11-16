@@ -15,7 +15,7 @@ impl Cop for TopLevelMethodDefinition {
         let anc = cx.ancestors;
         let top = anc.len() == 2
             || (anc.len() == 4
-                && anc[1].as_statements_node().is_some_and(|s| s.body().iter().count() == 1)
+                && anc[1].as_statements_node().is_some_and(|s| s.body().len() == 1)
                 && anc[2].as_parentheses_node().is_some());
         if !top {
             return;

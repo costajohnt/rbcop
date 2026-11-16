@@ -59,7 +59,7 @@ impl Cop for EmptyLineBeforeAssertionMethods {
             && let Some(body) = parser_body(b.body())
         {
             let last = match body.as_statements_node() {
-                Some(s) => s.body().iter().last(),
+                Some(s) => s.body().last(),
                 None => Some(body),
             };
             if assertion_method(last.as_ref()) {

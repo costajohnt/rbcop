@@ -29,11 +29,11 @@ fn plain_args(params: Option<ParametersNode>, n: Option<usize>) -> bool {
 /// `def_node.arguments.size`
 fn arg_count(def: &DefNode) -> usize {
     def.parameters().map_or(0, |p| {
-        p.requireds().iter().count()
-            + p.optionals().iter().count()
+        p.requireds().len()
+            + p.optionals().len()
             + usize::from(p.rest().is_some_and(|r| r.as_implicit_rest_node().is_none()))
-            + p.posts().iter().count()
-            + p.keywords().iter().count()
+            + p.posts().len()
+            + p.keywords().len()
             + usize::from(p.keyword_rest().is_some())
             + usize::from(p.block().is_some())
     })
@@ -50,7 +50,7 @@ fn middleware_like(class: &ruby_prism::ClassNode) -> bool {
     }
     let Some(stmts) = class.body().and_then(|b| b.as_statements_node()) else { return false };
     let defs: Vec<DefNode> = stmts.body().iter().filter_map(|n| n.as_def_node()).filter(|d| d.receiver().is_none()).collect();
-    stmts.body().iter().count() >= 2
+    stmts.body().len() >= 2
         && defs.iter().any(|d| named(d, "initialize") && plain_args(d.parameters(), None))
         && defs.iter().any(|d| named(d, "call") && plain_args(d.parameters(), Some(1)))
 }

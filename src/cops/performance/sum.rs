@@ -146,7 +146,7 @@ impl Sum {
         }
         let init = args.first();
         let Some(bp) = block.parameters().and_then(|p| p.as_block_parameters_node()) else { return };
-        if bp.locals().iter().count() != 0 {
+        if !bp.locals().is_empty() {
             return;
         }
         let Some(ps) = bp.parameters() else { return };

@@ -277,3 +277,54 @@ fn transcoded_source_is_never_rebuilt_from_its_length() {
     }
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// #778: pruning removes the oldest entries, and an entry this run read counts as new. Loading
+/// never changed an entry's mtime, so the entries every warm run reads were the oldest and went
+/// first, while outdated entries of edited files survived.
+#[test]
+fn pruning_keeps_the_entries_a_run_reads() {
+    let dir = std::env::temp_dir().join(format!("rbcop-cache-lru-{}", std::process::id()));
+    let _ = fs::remove_dir_all(&dir);
+    fs::create_dir_all(&dir).unwrap();
+    let dir = dir.canonicalize().unwrap();
+    fs::write(
+        dir.join(".rubocop.yml"),
+        "AllCops:\n  NewCops: enable\n  SuggestExtensions: false\n  MaxFilesInCache: 4\n",
+    )
+    .unwrap();
+    for f in ["u1.rb", "u2.rb", "u3.rb", "e.rb"] {
+        fs::write(dir.join(f), "puts 1\n").unwrap();
+    }
+    // -d prints the entries a run loads.
+    rbcop(&dir, &["-d"]);
+    assert_eq!(entries(&dir), 4);
+    // Five outdated entries of e.rb: a one-file run never prunes.
+    for i in 2..7 {
+        fs::write(dir.join("e.rb"), format!("puts {i}\n")).unwrap();
+        rbcop(&dir, &["-d", "e.rb"]);
+    }
+    assert_eq!(entries(&dir), 9);
+    // Every file is read from the cache, then 9 / 2 + 1 = 5 entries go: the outdated ones.
+    let loaded = |out: &Output| String::from_utf8_lossy(&out.stdout).matches("Loading cache from").count();
+    let out = rbcop(&dir, &["-d"]);
+    assert_eq!(loaded(&out), 4);
+    assert!(String::from_utf8_lossy(&out.stdout).contains("Removing the 5 oldest files"));
+    assert_eq!(entries(&dir), 4);
+    assert_eq!(loaded(&rbcop(&dir, &["-d"])), 4);
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// ResultCache::NON_CHANGING: `-d` and `--color` change no offense, so a run with either reads
+/// the entries a plain run saved (RuboCop prints `Loading cache from` for each).
+#[test]
+fn debug_and_color_share_the_entries() {
+    let dir = project("nonchanging");
+    rbcop(&dir, &["-f", "e"]);
+    let n = entries(&dir);
+    for args in [&["-d", "-f", "e"][..], &["--color", "-d", "-f", "e"]] {
+        let out = rbcop(&dir, args);
+        assert_eq!(String::from_utf8_lossy(&out.stdout).matches("Loading cache from").count(), n, "{args:?}");
+        assert_eq!(entries(&dir), n, "{args:?}");
+    }
+    let _ = fs::remove_dir_all(&dir);
+}

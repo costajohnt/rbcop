@@ -297,7 +297,7 @@ pub fn capybara_receiver_pattern(node: Option<&Node>) -> bool {
     if let Some(p) = node.as_parentheses_node() {
         // (begin #capybara_receiver_pattern?): exactly one child
         let only = p.body().and_then(|b| match b.as_statements_node() {
-            Some(s) if s.body().iter().count() == 1 => s.body().iter().next(),
+            Some(s) if s.body().len() == 1 => s.body().iter().next(),
             Some(_) => None,
             None => Some(b),
         });

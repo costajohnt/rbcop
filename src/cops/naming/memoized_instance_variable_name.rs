@@ -91,13 +91,13 @@ impl Style<'_> {
 // ponytail: begin/kwbegin/parens, `||`/`&&`, if/unless/case, blocks, sends, assignments and
 // loops; other node types not modelled.
 fn last_child<'pr>(body: &Node<'pr>) -> Option<Node<'pr>> {
-    let last_stmt = |s: Option<ruby_prism::StatementsNode<'pr>>| s.and_then(|s| s.body().iter().last());
+    let last_stmt = |s: Option<ruby_prism::StatementsNode<'pr>>| s.and_then(|s| s.body().last());
     // a body as one parser node: the single statement (a multi-statement `begin` never matches)
     let one = |s: Option<ruby_prism::StatementsNode<'pr>>| s.filter(|s| s.body().len() == 1).and_then(|s| s.body().iter().next());
     match body {
         Node::StatementsNode { .. } => {
             let s = body.as_statements_node().unwrap();
-            if s.body().len() == 1 { last_child(&s.body().iter().next().unwrap()) } else { s.body().iter().last() }
+            if s.body().len() == 1 { last_child(&s.body().iter().next().unwrap()) } else { s.body().last() }
         }
         Node::BeginNode { .. } => {
             let b = body.as_begin_node().unwrap();
@@ -134,15 +134,15 @@ fn last_child<'pr>(body: &Node<'pr>) -> Option<Node<'pr>> {
             }
         }
         // return/next/break/yield/super and array literals: their last argument or element (#642)
-        Node::ReturnNode { .. } => body.as_return_node().unwrap().arguments()?.arguments().iter().last(),
-        Node::NextNode { .. } => body.as_next_node().unwrap().arguments()?.arguments().iter().last(),
-        Node::BreakNode { .. } => body.as_break_node().unwrap().arguments()?.arguments().iter().last(),
-        Node::YieldNode { .. } => body.as_yield_node().unwrap().arguments()?.arguments().iter().last(),
+        Node::ReturnNode { .. } => body.as_return_node().unwrap().arguments()?.arguments().last(),
+        Node::NextNode { .. } => body.as_next_node().unwrap().arguments()?.arguments().last(),
+        Node::BreakNode { .. } => body.as_break_node().unwrap().arguments()?.arguments().last(),
+        Node::YieldNode { .. } => body.as_yield_node().unwrap().arguments()?.arguments().last(),
         Node::SuperNode { .. } => {
             let s = body.as_super_node().unwrap();
-            if s.block().is_some_and(|b| b.as_block_node().is_some()) { None } else { s.arguments()?.arguments().iter().last() }
+            if s.block().is_some_and(|b| b.as_block_node().is_some()) { None } else { s.arguments()?.arguments().last() }
         }
-        Node::ArrayNode { .. } => body.as_array_node().unwrap().elements().iter().last(),
+        Node::ArrayNode { .. } => body.as_array_node().unwrap().elements().last(),
         // an assignment's last child is its value (`x = @a ||= 1`)
         _ => crate::ast::assignment_parts(body).map(|(_, value)| value),
     }

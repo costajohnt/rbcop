@@ -21,7 +21,7 @@ impl Cop for IndentationConsistency {
 
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let stmts = node.as_statements_node().unwrap();
-        if stmts.body().iter().count() < 2 {
+        if stmts.body().len() < 2 {
             return;
         }
         let mut ancestors: Vec<&Node> = cx.ancestors.iter().collect();
@@ -103,7 +103,7 @@ impl IndentationConsistency {
             i = i.checked_sub(1)?;
             while i > 0
                 && (kind::of(&cx.ancestors[i]) == kind::ARGUMENTS_NODE
-                    || cx.ancestors[i].as_statements_node().is_some_and(|s| s.body().iter().count() == 1))
+                    || cx.ancestors[i].as_statements_node().is_some_and(|s| s.body().len() == 1))
             {
                 i -= 1;
             }

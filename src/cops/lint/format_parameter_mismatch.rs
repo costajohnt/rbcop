@@ -101,7 +101,7 @@ impl Cop for FormatParameterMismatch {
         let counts = if format && !heredoc_first_arg(&args) {
             (args.len() as u64 - 1, expected_fields(&args[0]))
         } else if percent && args[0].as_array_node().is_some() {
-            (args[0].as_array_node().unwrap().elements().iter().count() as u64, expected_fields(recv.as_ref().unwrap()))
+            (args[0].as_array_node().unwrap().elements().len() as u64, expected_fields(recv.as_ref().unwrap()))
         } else {
             return;
         };

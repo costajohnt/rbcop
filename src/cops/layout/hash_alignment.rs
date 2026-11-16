@@ -252,7 +252,7 @@ fn ignored_last_argument(cx: &Cx, node: &Node, braces: bool) -> bool {
         return false;
     }
     let args = cx.ancestors[n - 1].as_arguments_node().unwrap();
-    if args.arguments().iter().last().is_none_or(|l| span(&l) != span(node)) {
+    if args.arguments().last().is_none_or(|l| span(&l) != span(node)) {
         return false;
     }
     let owner = &cx.ancestors[n - 2];

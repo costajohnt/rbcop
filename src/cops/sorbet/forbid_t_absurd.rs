@@ -11,7 +11,7 @@ pub struct ForbidTAbsurd;
 fn inline_else(src: &crate::source::Source, ancestors: &[Node], start: usize) -> Option<usize> {
     let n = ancestors.len();
     let stmts = ancestors.get(n.checked_sub(1)?)?.as_statements_node()?;
-    if stmts.body().iter().count() != 1 {
+    if stmts.body().len() != 1 {
         return None;
     }
     let els = ancestors.get(n.checked_sub(2)?)?.as_else_node()?;

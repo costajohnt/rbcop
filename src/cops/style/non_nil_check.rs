@@ -112,7 +112,7 @@ fn ignored_last(body: Node<'_>) -> Option<Node<'_>> {
     let only = stmts.into_iter().next()?;
     match only.as_parentheses_node() {
         Some(p) => match p.body()?.as_statements_node() {
-            Some(s) => s.body().iter().last(),
+            Some(s) => s.body().last(),
             None => p.body(),
         },
         None => Some(only),

@@ -40,7 +40,7 @@ fn plain_call<'pr>(node: &Node<'pr>, name: &str) -> Option<CallNode<'pr>> {
 
 /// `(array _ _)`
 fn pair_array(node: &Node) -> bool {
-    node.as_array_node().is_some_and(|a| a.elements().iter().count() == 2)
+    node.as_array_node().is_some_and(|a| a.elements().len() == 2)
 }
 
 impl ComparableClamp {

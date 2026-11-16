@@ -18,7 +18,7 @@ fn arg_count(block: &ruby_prism::BlockNode) -> i64 {
     if p.rest().is_some_and(|r| r.as_rest_parameter_node().is_some()) {
         return i64::MAX;
     }
-    (p.requireds().iter().count() + p.optionals().iter().count() + p.posts().iter().count()) as i64
+    (p.requireds().len() + p.optionals().len() + p.posts().len()) as i64
 }
 
 impl Cop for UnexpectedBlockArity {

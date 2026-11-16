@@ -472,7 +472,7 @@ impl SafeNavigation {
             let r = and.right();
             r.as_or_node().is_some()
                 || r.as_parentheses_node().and_then(|p| p.body()).is_some_and(|b| match b.as_statements_node() {
-                    Some(s) => s.body().iter().count() == 1 && s.body().iter().next().unwrap().as_or_node().is_some(),
+                    Some(s) => s.body().len() == 1 && s.body().iter().next().unwrap().as_or_node().is_some(),
                     None => b.as_or_node().is_some(),
                 })
         };
