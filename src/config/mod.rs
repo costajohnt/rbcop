@@ -866,6 +866,11 @@ pub struct Store {
     default_loaded: bool,
     gem_dirs: HashMap<String, PathBuf>,
     features: HashMap<String, Result<Feature, String>>,
+    /// The gem and feature lookups the config files loaded so far may need: the first that runs
+    /// ruby answers them all in that one process (#777). See ruby_lookup.
+    lookups: Vec<(Lookup, String)>,
+    /// What that ruby answered: success, stdout and stderr, as from a ruby of its own.
+    answers: HashMap<(Lookup, String), Answer>,
     /// The `plugins:`/`require:` entry whose loading failed (integrate_plugins).
     failed_entry: Option<String>,
     loaded_plugins: Vec<String>,
@@ -954,6 +959,8 @@ impl Store {
             default_loaded: false,
             gem_dirs: HashMap::new(),
             features: HashMap::new(),
+            lookups: Vec::new(),
+            answers: HashMap::new(),
             failed_entry: None,
             loaded_plugins: Vec::new(),
             plugin_entries: Vec::new(),
@@ -1294,6 +1301,31 @@ impl Store {
             // A ValidationError, which the CLI prints as `Error: ...`.
             _ => return Err(format!("Error: Malformed configuration in {}", path.display())),
         };
+        // What this file's `plugins:`, `require:` and inherit_gem will likely look up, for the first
+        // lookup that runs ruby to answer too (ruby_lookup). Each costs the batch ~10 ms, so not
+        // the native plugins (looked up only with a `plugin_class_name`) nor RuboCop's built-in
+        // one (the rubocop gem, which a gem `require:` looks up as well).
+        for key in ["plugins", "require"] {
+            for entry in seq(hash.get(key).cloned()) {
+                let names = match entry {
+                    Value::Str(s) => vec![s],
+                    Value::Map(m) => m.keys().map(String::from).collect(),
+                    _ => Vec::new(),
+                };
+                for n in names.into_iter().filter(|n| !n.starts_with('.') && !n.starts_with('/')) {
+                    let builtin = n == INTERNAL_AFFAIRS || n == OBSOLETE_INTERNAL_AFFAIRS;
+                    if builtin || key == "require" {
+                        self.lookups.push((Lookup::GemDir, "rubocop".into()));
+                    }
+                    if !builtin && crate::helpers::cop_registry::native_plugin(&n).is_none() {
+                        self.lookups.push((Lookup::Feature, n));
+                    }
+                }
+            }
+        }
+        if let Some(Value::Map(gems)) = hash.get("inherit_gem") {
+            self.lookups.extend(gems.keys().map(|g| (Lookup::GemDir, g.to_string())));
+        }
         // Plugins (and plugin-capable `require:` gems) only matter here for their default configs.
         let mut plugins: Vec<(String, Load)> = Vec::new();
         let mut migrate = Vec::new();
@@ -2091,31 +2123,18 @@ impl Store {
         if let Some(d) = self.gem_dirs.get(gem) {
             return Ok(d.clone());
         }
-        // Gem names come from config files; anything else must never reach the ruby command line.
-        if gem.is_empty()
-            || gem.starts_with('-')
-            || !gem.chars().all(|c| c.is_ascii_alphanumeric() || "_-.".contains(c))
-        {
+        if !Lookup::GemDir.valid(gem) {
             return Err(format!("invalid gem name {gem:?} in config"));
         }
         crate::no_ruby::refuse(&format!("finding the {gem} gem"))?;
-        let out = std::process::Command::new("ruby")
-            .args([
-                "-e",
-                "begin; print Gem::Specification.find_by_name(ARGV[0]).gem_dir; \
-                 rescue Gem::LoadError => e; $stderr.print e.message; exit 1; end",
-                "--",
-                gem,
-            ])
-            .current_dir(&self.cwd)
-            .output()
-            .map_err(|e| format!("inherit_gem {gem}: cannot run ruby: {e}"))?;
-        if !out.status.success() {
+        let (success, stdout, stderr) =
+            self.ruby_lookup(Lookup::GemDir, gem).map_err(|e| format!("inherit_gem {gem}: cannot run ruby: {e}"))?;
+        if !success {
             // gem_config_path's Gem::LoadError.
-            let message = String::from_utf8_lossy(&out.stderr);
+            let message = String::from_utf8_lossy(&stderr);
             return Err(format!("Unable to find gem {gem}; is the gem installed? {}", message.trim_end()));
         }
-        let dir = PathBuf::from(String::from_utf8_lossy(&out.stdout).into_owned());
+        let dir = PathBuf::from(String::from_utf8_lossy(&stdout).into_owned());
         self.gem_dirs.insert(gem.to_string(), dir.clone());
         Ok(dir)
     }
@@ -2132,20 +2151,84 @@ impl Store {
         found
     }
 
-    fn find_feature(&self, feature: &str) -> Result<Feature, String> {
-        // Features come from config files; anything else must never reach the ruby command line.
-        if feature.is_empty()
-            || feature.starts_with('-')
-            || !feature.chars().all(|c| c.is_ascii_alphanumeric() || "_-./".contains(c))
-        {
+    fn find_feature(&mut self, feature: &str) -> Result<Feature, String> {
+        if !Lookup::Feature.valid(feature) {
             return Err(format!("cannot load such file -- {feature}"));
         }
         crate::no_ruby::refuse(&format!("finding {feature} (plugins:/require:)"))?;
-        // Prints whether the gem named `f` is a lint_roller plugin, then the gem dir and the
-        // file the feature resolves to (none for the standard library).
+        let (success, stdout, stderr) =
+            self.ruby_lookup(Lookup::Feature, feature).map_err(|e| format!("{feature}: cannot run ruby: {e}"))?;
+        if !success {
+            return Err(String::from_utf8_lossy(&stderr).trim_end().to_string());
+        }
+        let out = String::from_utf8_lossy(&stdout);
+        let mut lines = out.lines();
+        let plugin = lines.next() == Some("true");
+        let mut path = || lines.next().filter(|l| !l.is_empty()).map(PathBuf::from);
+        Ok(Feature { plugin, dir: path(), file: path() })
+    }
+
+    /// `kind`'s script run by ruby in the working directory for `name`: its success, stdout and
+    /// stderr. Starting ruby costs far more than a lookup (~70 ms of rubygems), so the first
+    /// lookup that needs one also answers every other lookup queued in `lookups`, in one process
+    /// (BATCH_RB). A lookup that process could not answer gets a ruby of its own, as before.
+    /// Callers have passed no_ruby::refuse.
+    fn ruby_lookup(&mut self, kind: Lookup, name: &str) -> std::io::Result<Answer> {
+        let key = (kind, name.to_string());
+        if !self.answers.contains_key(&key) {
+            let mut queries = vec![key.clone()];
+            for q in std::mem::take(&mut self.lookups) {
+                if q.0.valid(&q.1) && !queries.contains(&q) && !self.answers.contains_key(&q) {
+                    queries.push(q);
+                }
+            }
+            if queries.len() > 1 {
+                let mut args = vec!["-e", BATCH_RB, "--", Lookup::Feature.script(), Lookup::GemDir.script()];
+                for (k, n) in &queries {
+                    args.extend([if *k == Lookup::Feature { "f" } else { "g" }, n.as_str()]);
+                }
+                let out = std::process::Command::new("ruby").args(args).current_dir(&self.cwd).output()?;
+                self.answers
+                    .extend(queries.into_iter().zip(batch_answers(&out.stdout)).filter_map(|(q, a)| Some((q, a?))));
+            }
+        }
+        if let Some(a) = self.answers.get(&key) {
+            return Ok(a.clone());
+        }
         let out = std::process::Command::new("ruby")
-            .args([
-                "-e",
+            .args(["-e", kind.script(), "--", name])
+            .current_dir(&self.cwd)
+            .output()?;
+        Ok((out.status.success(), out.stdout, out.stderr))
+    }
+}
+
+/// A lookup's success, stdout and stderr.
+type Answer = (bool, Vec<u8>, Vec<u8>);
+
+/// A lookup that runs ruby (Store::ruby_lookup).
+#[derive(Clone, Copy, PartialEq, Eq, Hash)]
+enum Lookup {
+    /// Store::find_feature
+    Feature,
+    /// Store::gem_dir
+    GemDir,
+}
+
+impl Lookup {
+    /// Names come from config files; anything else must never reach the ruby command line.
+    fn valid(self, name: &str) -> bool {
+        let extra = if self == Lookup::Feature { "_-./" } else { "_-." };
+        !name.is_empty()
+            && !name.starts_with('-')
+            && name.chars().all(|c| c.is_ascii_alphanumeric() || extra.contains(c))
+    }
+
+    fn script(self) -> &'static str {
+        match self {
+            // Prints whether the gem named `f` is a lint_roller plugin, then the gem dir and the
+            // file the feature resolves to (none for the standard library).
+            Lookup::Feature => {
                 "f = ARGV[0]; plugin = begin; !!Gem::Specification.find_by_name(f).metadata['default_lint_roller_plugin']; \
                  rescue Gem::LoadError, StandardError; false; end; \
                  [f, f.tr('-', '/')].uniq.each do |t| \
@@ -2153,22 +2236,67 @@ impl Store {
                  (puts plugin, spec.gem_dir, spec.full_require_paths.flat_map { |d| [\"#{d}/#{t}.rb\", \"#{d}/#{t}\"] }.find { |p| File.file?(p) }; exit) if spec && !spec.default_gem?; \
                  (puts plugin; exit) if spec || $LOADED_FEATURES.include?(t) || $LOADED_FEATURES.include?(\"#{t}.rb\") || \
                  (($LOAD_PATH.resolve_feature_path(t) rescue nil)); \
-                 end; $stderr.print \"cannot load such file -- #{f}\"; exit 1",
-                "--",
-                feature,
-            ])
-            .current_dir(&self.cwd)
-            .output()
-            .map_err(|e| format!("{feature}: cannot run ruby: {e}"))?;
-        if !out.status.success() {
-            return Err(String::from_utf8_lossy(&out.stderr).trim_end().to_string());
+                 end; $stderr.print \"cannot load such file -- #{f}\"; exit 1"
+            }
+            Lookup::GemDir => {
+                "begin; print Gem::Specification.find_by_name(ARGV[0]).gem_dir; \
+                 rescue Gem::LoadError => e; $stderr.print e.message; exit 1; end"
+            }
         }
-        let out = String::from_utf8_lossy(&out.stdout);
-        let mut lines = out.lines();
-        let plugin = lines.next() == Some("true");
-        let mut path = || lines.next().filter(|l| !l.is_empty()).map(PathBuf::from);
-        Ok(Feature { plugin, dir: path(), file: path() })
     }
+}
+
+/// Runs Lookup scripts (ARGV: the Feature script, the GemDir script, then kind and name pairs),
+/// each as if in a ruby of its own: ARGV is the name, output is captured, `exit` ends the script
+/// only. Lookups only query Gem::Specification and the load path; they load nothing. Prints per
+/// lookup `<status><stdout bytes>,<stderr bytes>\n<stdout><stderr>`: status 0 (success), 1 (failed)
+/// or ? (another exception, whose report only a ruby of its own prints exactly).
+const BATCH_RB: &str = r#"require "stringio"
+scripts = { "f" => ARGV[0], "g" => ARGV[1] }
+queries = ARGV.drop(2).each_slice(2).to_a
+def lookup(script)
+  eval(script)
+end
+STDOUT.binmode
+queries.each do |kind, name|
+  ARGV.replace([name])
+  $stdout, $stderr = StringIO.new(+""), StringIO.new(+"")
+  ok = begin
+    lookup(scripts[kind])
+    "0"
+  rescue SystemExit => e
+    e.success? ? "0" : "1"
+  rescue Exception
+    "?"
+  end
+  out, err = $stdout.string.b, $stderr.string.b
+  $stdout, $stderr = STDOUT, STDERR
+  STDOUT.print ok, out.bytesize, ",", err.bytesize, "\n", out, err
+end"#;
+
+/// BATCH_RB's answers in query order, None for one it could not answer; stops at output it did
+/// not finish.
+fn batch_answers(mut out: &[u8]) -> Vec<Option<Answer>> {
+    let mut answers = Vec::new();
+    while let Some(nl) = out.iter().position(|&b| b == b'\n') {
+        let head = String::from_utf8_lossy(&out[..nl]);
+        let Some((status, sizes)) = head.split_at_checked(1) else { break };
+        let Some((o, e)) =
+            sizes.split_once(',').and_then(|(o, e)| Some((o.parse::<usize>().ok()?, e.parse::<usize>().ok()?)))
+        else {
+            break;
+        };
+        let rest = &out[nl + 1..];
+        if rest.len() < o + e {
+            break;
+        }
+        answers.push(match status {
+            "0" | "1" => Some((status == "0", rest[..o].to_vec(), rest[o..o + e].to_vec())),
+            _ => None,
+        });
+        out = &rest[o + e..];
+    }
+    answers
 }
 
 /// `Dir.chdir(File.dirname(path)) { ERB.new(contents).result }`, run by the project's Ruby (the
@@ -2961,6 +3089,35 @@ fn lockfile_gem_versions() {
     assert_eq!(v.get("railties").map(String::as_str), Some("8.1.4"));
     assert_eq!(v.get("nokogiri").map(String::as_str), Some("1.18.0"));
     assert!(!v.contains_key("actionpack") && !v.contains_key("rails"));
+}
+
+/// #777: one ruby answers lookups as a ruby per lookup would (found or not, gem or standard
+/// library), and an unfinished batch answers only what it finished.
+#[test]
+fn batched_lookups_answer_as_single_rubies() {
+    use std::process::Command;
+    let queries = [
+        (Lookup::Feature, "rubocop"),
+        (Lookup::Feature, "set"),
+        (Lookup::Feature, "rubocop-no_such_gem"),
+        (Lookup::Feature, "rubocop/cop/internal_affairs"),
+        (Lookup::GemDir, "rubocop"),
+        (Lookup::GemDir, "no_such_gem"),
+    ];
+    let mut args = vec!["-e", BATCH_RB, "--", Lookup::Feature.script(), Lookup::GemDir.script()];
+    for (k, n) in queries {
+        args.extend([if k == Lookup::Feature { "f" } else { "g" }, n]);
+    }
+    let batch = batch_answers(&Command::new("ruby").args(args).output().unwrap().stdout);
+    let single: Vec<_> = queries
+        .iter()
+        .map(|(k, n)| {
+            let out = Command::new("ruby").args(["-e", k.script(), "--", n]).output().unwrap();
+            Some((out.status.success(), out.stdout, out.stderr))
+        })
+        .collect();
+    assert_eq!(batch, single);
+    assert_eq!(batch_answers(b"03,0\nabc?0,0\n1"), vec![Some((true, b"abc".to_vec(), Vec::new())), None]);
 }
 
 #[test]
