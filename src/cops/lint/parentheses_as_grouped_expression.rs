@@ -10,7 +10,7 @@ fn invalid_bare_argument(paren: &ruby_prism::ParenthesesNode) -> bool {
     let mut node = match paren.body() {
         None => return false,
         Some(b) => match b.as_statements_node() {
-            Some(s) if s.body().iter().count() == 1 => s.body().iter().next().unwrap(),
+            Some(s) if s.body().len() == 1 => s.body().iter().next().unwrap(),
             Some(_) => return false,
             None => b,
         },
@@ -19,7 +19,7 @@ fn invalid_bare_argument(paren: &ruby_prism::ParenthesesNode) -> bool {
         node = match p.body() {
             None => return false,
             Some(b) => match b.as_statements_node() {
-                Some(s) if s.body().iter().count() == 1 => s.body().iter().next().unwrap(),
+                Some(s) if s.body().len() == 1 => s.body().iter().next().unwrap(),
                 Some(_) => return false,
                 None => b,
             },

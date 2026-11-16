@@ -19,7 +19,7 @@ fn surrounding_around(cx: &Cx, anc: &[Node]) -> Option<Around> {
     let pi = helpers::parser_parent::parser_parent_index(anc, anc.len())?;
     let bi = if anc[pi].as_block_node().is_some() {
         pi
-    } else if anc[pi].as_statements_node().is_some_and(|s| s.body().iter().count() > 1) {
+    } else if anc[pi].as_statements_node().is_some_and(|s| s.body().len() > 1) {
         helpers::parser_parent::parser_parent_index(anc, pi).filter(|&b| anc[b].as_block_node().is_some())?
     } else {
         return None;

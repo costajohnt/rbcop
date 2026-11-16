@@ -41,12 +41,12 @@ fn struct_initialize(cx: &Cx, def: &ruby_prism::DefNode) -> bool {
     if n < 3 {
         return false;
     }
-    let single = a[n - 1].as_statements_node().is_some_and(|s| s.body().iter().count() == 1);
+    let single = a[n - 1].as_statements_node().is_some_and(|s| s.body().len() == 1);
     let Some(block) = a[n - 2].as_block_node() else { return false };
     let Some(call) = a[n - 3].as_call_node() else { return false };
     let no_args = match block.parameters() {
         None => true,
-        Some(p) => p.as_block_parameters_node().is_some_and(|b| b.parameters().is_none() && b.locals().iter().count() == 0),
+        Some(p) => p.as_block_parameters_node().is_some_and(|b| b.parameters().is_none() && b.locals().len() == 0),
     };
     let ctor = match (call.receiver(), call.name().as_slice()) {
         (Some(r), b"new") => global_const(&r, &["Struct"]),
@@ -80,7 +80,7 @@ impl Cop for ParameterLists {
             let params = def.parameters();
             // on_def
             crate::runner::own_callback(cop, src, crate::runner::visiting(), || {
-                let optargs = params.as_ref().map_or(0, |p| p.optionals().iter().count()) as i64;
+                let optargs = params.as_ref().map_or(0, |p| p.optionals().len()) as i64;
                 let max_opt = cx.cfg.int("MaxOptionalParameters").unwrap_or(0);
                 if optargs > max_opt {
                     let l = node.location();
@@ -124,7 +124,7 @@ impl Cop for ParameterLists {
             },
         };
         let range = bp.as_ref().map(|b| (b.location().start_offset(), b.location().end_offset()));
-        let count = bp.as_ref().map_or(0, |b| args_count(cx, b.parameters().as_ref(), b.locals().iter().count()));
+        let count = bp.as_ref().map_or(0, |b| args_count(cx, b.parameters().as_ref(), b.locals().len()));
         let Some(max) = args_max(cx, range) else { return };
         if count <= max {
             return;

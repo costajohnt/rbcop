@@ -298,7 +298,7 @@ impl LiteralAsCondition {
             // one decorating its last line, when the branch is a single statement (a `begin`'s
             // comments go to its statements).
             let (bs, be) = p.if_branch.unwrap();
-            let single = node.as_if_node().unwrap().statements().unwrap().body().iter().count() == 1;
+            let single = node.as_if_node().unwrap().statements().unwrap().body().len() == 1;
             let cond_line = cx.src.line_of(cond.location().end_offset());
             let start = cx
                 .src

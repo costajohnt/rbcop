@@ -270,7 +270,7 @@ impl Cop for UnmodifiedReduceAccumulator {
             .map(span)
             .collect();
         // `each_descendant` excludes parser's body node itself (a lone statement).
-        let lone = block.body().and_then(|b| b.as_statements_node()).filter(|s| s.body().iter().count() == 1).map(|_| values[0].1);
+        let lone = block.body().and_then(|b| b.as_statements_node()).filter(|s| s.body().len() == 1).map(|_| values[0].1);
         for n in all {
             if Some(span(&n)) == lone && kind::of(&n) != kind::STATEMENTS_NODE {
                 continue;

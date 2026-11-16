@@ -204,7 +204,7 @@ fn another_statement_on_same_line(cx: &Cx, s: &Stmt) -> bool {
         let a = &anc[i];
         let begin = match a {
             Node::StatementsNode { .. } => {
-                let n = a.as_statements_node().unwrap().body().iter().count();
+                let n = a.as_statements_node().unwrap().body().len();
                 // A plain `begin..end` holds its statements directly (kwbegin).
                 let kwbegin = i > 0
                     && anc[i - 1].as_begin_node().is_some_and(|b| {

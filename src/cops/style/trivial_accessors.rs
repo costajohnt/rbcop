@@ -87,12 +87,12 @@ impl Cop for TrivialAccessors {
             && !allowed_name
             && !(cfg.bool("AllowPredicates").unwrap_or(false) && predicate);
         let looks_writer = def.parameters().is_some_and(|p| {
-            p.requireds().iter().count() == 1
+            p.requireds().len() == 1
                 && p.requireds().iter().all(|r| r.as_required_parameter_node().is_some())
-                && p.optionals().iter().count() == 0
+                && p.optionals().len() == 0
                 && crate::ast::parser_rest(p.rest()).is_none()
-                && p.posts().iter().count() == 0
-                && p.keywords().iter().count() == 0
+                && p.posts().len() == 0
+                && p.keywords().len() == 0
                 && p.keyword_rest().is_none()
                 && p.block().is_none()
         }) && body.as_ref().and_then(|b| b.as_instance_variable_write_node()).is_some_and(|w| {

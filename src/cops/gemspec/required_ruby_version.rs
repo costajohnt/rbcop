@@ -62,7 +62,7 @@ fn ruby_version(node: &Node) -> Option<String> {
     } else if let Some(a) = node.as_array_node() {
         // (array (str _) (str _))
         let strs: Vec<String> = a.elements().iter().filter_map(|e| str_content(&e)).collect();
-        if a.elements().iter().count() != 2 || strs.len() != 2 {
+        if a.elements().len() != 2 || strs.len() != 2 {
             return None;
         }
         detect(strs)?

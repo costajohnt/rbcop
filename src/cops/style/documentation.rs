@@ -224,7 +224,7 @@ fn namespace(body: &Option<Node>) -> bool {
         children.all(|c| constant_definition(&c) || constant_visibility_declaration(&c))
     }
     match body.as_statements_node() {
-        Some(s) if s.body().iter().count() > 1 => declarations(s.body().iter()),
+        Some(s) if s.body().len() > 1 => declarations(s.body().iter()),
         Some(s) => s.body().iter().next().is_some_and(|c| match c.as_parentheses_node() {
             // A parenthesized body is a parser `begin` too: its statements (none for `()`).
             Some(p) => match p.body() {

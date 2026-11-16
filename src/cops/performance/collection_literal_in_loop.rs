@@ -49,10 +49,10 @@ impl Cop for CollectionLiteralInLoop {
         let Some(recv) = call.receiver() else { return };
         let (class, size) = match &recv {
             Node::ArrayNode { .. } if ENUMERABLE.contains(&method) || NONMUTATING_ARRAY_METHODS.contains(&method) => {
-                ("Array", recv.as_array_node().unwrap().elements().iter().count())
+                ("Array", recv.as_array_node().unwrap().elements().len())
             }
             Node::HashNode { .. } if ENUMERABLE.contains(&method) || NONMUTATING_HASH_METHODS.contains(&method) => {
-                ("Hash", recv.as_hash_node().unwrap().elements().iter().count())
+                ("Hash", recv.as_hash_node().unwrap().elements().len())
             }
             _ => return,
         };

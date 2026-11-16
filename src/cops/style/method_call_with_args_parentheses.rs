@@ -717,7 +717,7 @@ mod omit {
     fn inside_string_interpolation(anc: &[Node]) -> bool {
         let is_begin = |n: &Node| match n {
             Node::EmbeddedStatementsNode { .. } | Node::ParenthesesNode { .. } => true,
-            Node::StatementsNode { .. } => n.as_statements_node().unwrap().body().iter().count() > 1,
+            Node::StatementsNode { .. } => n.as_statements_node().unwrap().body().len() > 1,
             _ => false,
         };
         let Some(b) = anc.iter().rposition(is_begin) else { return false };

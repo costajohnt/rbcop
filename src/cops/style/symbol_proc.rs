@@ -50,7 +50,7 @@ impl Cop for SymbolProc {
         let method = if let Some(bp) = params.as_block_parameters_node() {
             plain_block = true;
             let Some(p) = bp.parameters() else { return };
-            if bp.locals().iter().count() != 0 {
+            if bp.locals().len() != 0 {
                 return;
             }
             let all = parameter_nodes(&p);

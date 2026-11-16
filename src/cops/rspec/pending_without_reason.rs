@@ -44,7 +44,7 @@ impl Cop for PendingWithoutReason {
         let anc = cx.ancestors;
         // parser parent of the node, or of its block (the same Prism node)
         let Some(mut pi) = helpers::parser_parent::parser_parent_index(anc, anc.len()) else { return };
-        if anc[pi].as_statements_node().is_some_and(|st| st.body().iter().count() > 1)
+        if anc[pi].as_statements_node().is_some_and(|st| st.body().len() > 1)
             && let Some(p) = helpers::parser_parent::parser_parent_index(anc, pi)
         {
             pi = p;

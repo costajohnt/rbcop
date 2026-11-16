@@ -22,7 +22,7 @@ impl Cop for HashLikeCase {
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let case = node.as_case_node().unwrap();
         let min = cx.cfg.positive_int("MinBranchesCount", 3);
-        if case.conditions().iter().count() < min || case.else_clause().is_some() {
+        if case.conditions().len() < min || case.else_clause().is_some() {
             return;
         }
         let mut conds = Vec::new();

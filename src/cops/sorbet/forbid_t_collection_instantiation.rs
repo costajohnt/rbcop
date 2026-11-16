@@ -75,7 +75,7 @@ impl ForbidTCollectionInstantiation {
         let mut parent = parser_parent_index(ancestors, ancestors.len());
         while let Some(i) = parent
             && let Some(p) = ancestors[i].as_parentheses_node()
-            && p.body().and_then(|b| b.as_statements_node()).is_some_and(|s| s.body().iter().count() == 1)
+            && p.body().and_then(|b| b.as_statements_node()).is_some_and(|s| s.body().len() == 1)
         {
             expression = helpers::node_types::range(&ancestors[i]);
             parent = parser_parent_index(ancestors, i);

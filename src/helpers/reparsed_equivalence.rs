@@ -346,7 +346,7 @@ impl<'pr> Visit<'pr> for Ser<'_> {
                 match p.body() {
                     None => Frame::Open(k),
                     Some(b) => match b.as_statements_node() {
-                        Some(s) if s.body().iter().count() > 1 => {
+                        Some(s) if s.body().len() > 1 => {
                             // Spliced into an enclosing statement list.
                             if self.last() == Some(Frame::Stmts) { Frame::Inline } else { Frame::Open(k) }
                         }

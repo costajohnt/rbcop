@@ -85,5 +85,5 @@ impl Cop for UselessRuby2Keywords {
 
 /// The node is the program's only statement (no parser parent).
 fn is_lone_root(ancestors: &[Node]) -> bool {
-    ancestors.len() == 2 && ancestors[1].as_statements_node().is_some_and(|s| s.body().iter().count() == 1)
+    ancestors.len() == 2 && ancestors[1].as_statements_node().is_some_and(|s| s.body().len() == 1)
 }

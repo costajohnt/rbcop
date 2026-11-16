@@ -703,7 +703,7 @@ fn move_inside(src: &Source, node: &Node, condition: &Node) -> Option<Vec<Edit>>
 fn one_child<'pr>(n: &Node<'pr>) -> Option<Node<'pr>> {
     let body = n.as_parentheses_node()?.body()?;
     match body.as_statements_node() {
-        Some(s) if s.body().iter().count() == 1 => s.body().iter().next(),
+        Some(s) if s.body().len() == 1 => s.body().iter().next(),
         Some(_) => None,
         None => Some(body),
     }

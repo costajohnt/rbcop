@@ -76,14 +76,14 @@ impl Cop for DuplicatedGem {
         let mut within = Vec::new();
         if !has_block && n >= 1 && kind::of(&anc[n - 1]) == kind::STATEMENTS_NODE {
             within = branch_owners(anc, n - 1);
-            let lone = anc[n - 1].as_statements_node().unwrap().body().iter().count() == 1;
+            let lone = anc[n - 1].as_statements_node().unwrap().body().len() == 1;
             if within.is_empty()
                 && lone
                 && n >= 4
                 && kind::of(&anc[n - 2]) == kind::BLOCK_NODE
                 && kind::of(&anc[n - 3]) == kind::CALL_NODE
                 && kind::of(&anc[n - 4]) == kind::STATEMENTS_NODE
-                && anc[n - 4].as_statements_node().unwrap().body().iter().count() == 1
+                && anc[n - 4].as_statements_node().unwrap().body().len() == 1
             {
                 within = branch_owners(anc, n - 4);
             }

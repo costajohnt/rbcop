@@ -43,11 +43,11 @@ impl Cop for IteratedExpectation {
                     return;
                 }
                 let Some(params) = bp.parameters() else { return };
-                let only = params.requireds().iter().count() == 1
-                    && params.optionals().iter().count() == 0
+                let only = params.requireds().len() == 1
+                    && params.optionals().len() == 0
                     && params.rest().is_none()
-                    && params.posts().iter().count() == 0
-                    && params.keywords().iter().count() == 0
+                    && params.posts().len() == 0
+                    && params.keywords().len() == 0
                     && params.keyword_rest().is_none()
                     && params.block().is_none();
                 let Some(r) = params.requireds().iter().next().filter(|_| only).and_then(|r| r.as_required_parameter_node()) else {

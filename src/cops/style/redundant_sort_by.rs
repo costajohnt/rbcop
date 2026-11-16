@@ -23,7 +23,7 @@ impl Cop for RedundantSortBy {
         // The body is a single expression.
         let Some(body) = block.body() else { return };
         let body = match body.as_statements_node() {
-            Some(s) if s.body().iter().count() == 1 => s.body().iter().next().unwrap(),
+            Some(s) if s.body().len() == 1 => s.body().iter().next().unwrap(),
             Some(_) => return,
             None => return,
         };
@@ -31,16 +31,16 @@ impl Cop for RedundantSortBy {
             // (block $(call _ :sort_by) (args (arg $_x)) (lvar _x))
             Some(p) if p.as_block_parameters_node().is_some() => {
                 let bp = p.as_block_parameters_node().unwrap();
-                if bp.locals().iter().count() != 0 {
+                if bp.locals().len() != 0 {
                     return;
                 }
                 let Some(params) = bp.parameters() else { return };
                 let reqs: Vec<_> = params.requireds().iter().collect();
                 if reqs.len() != 1
-                    || params.optionals().iter().count() != 0
+                    || params.optionals().len() != 0
                     || crate::ast::parser_rest(params.rest()).is_some()
-                    || params.posts().iter().count() != 0
-                    || params.keywords().iter().count() != 0
+                    || params.posts().len() != 0
+                    || params.keywords().len() != 0
                     || params.keyword_rest().is_some()
                     || params.block().is_some()
                 {

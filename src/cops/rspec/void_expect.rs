@@ -23,7 +23,7 @@ fn void(cx: &Cx) -> bool {
             b.begin_keyword_loc().is_some() && b.rescue_clause().is_none() && b.ensure_clause().is_none() && b.else_clause().is_none()
         });
     p.as_parentheses_node().is_some()
-        || (p.as_statements_node().is_some_and(|s| s.body().iter().count() > 1) && !kwbegin)
+        || (p.as_statements_node().is_some_and(|s| s.body().len() > 1) && !kwbegin)
         // `parent.block_type?`: not a numblock / itblock
         || match p {
             Node::BlockNode { .. } => helpers::node_types::plain_block_params(p.as_block_node().unwrap().parameters()),

@@ -137,7 +137,7 @@ impl Cop for ExplicitBlockArgument {
         }
         // (block $_ (args $...) (yield $...)): the yield is the whole block body.
         let Some(stmts) = cx.ancestors[n - 1].as_statements_node() else { return };
-        if stmts.body().iter().count() != 1 {
+        if stmts.body().len() != 1 {
             return;
         }
         let holder = &cx.ancestors[n - 2];

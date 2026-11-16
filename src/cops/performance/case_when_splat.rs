@@ -25,7 +25,7 @@ impl Cop for CaseWhenSplat {
         let all: Vec<(usize, usize)> = whens
             .iter()
             .enumerate()
-            .flat_map(|(w, when)| (0..when.conditions().iter().count()).map(move |c| (w, c)))
+            .flat_map(|(w, when)| (0..when.conditions().len()).map(move |c| (w, c)))
             .collect();
         let condition = |(w, c): (usize, usize)| whens[w].conditions().iter().nth(c).unwrap();
         // splat_offenses: splats with a non-splat condition somewhere after them.

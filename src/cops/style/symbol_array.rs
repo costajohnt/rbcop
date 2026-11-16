@@ -93,7 +93,7 @@ impl Cop for SymbolArray {
             let replacement = pa::percent_literal_replacement(cx, node, &values, 'i');
             cx.add_fix(start, end, PERCENT_MSG, |c| c.replace(start, end, &replacement));
         } else if open.starts_with("%i") || open.starts_with("%I") {
-            pa::array_style_detected(cx, "percent", array.elements().iter().count());
+            pa::array_style_detected(cx, "percent", array.elements().len());
             let brackets_required = complex_content(&array);
             if percent_style && !brackets_required {
                 return;

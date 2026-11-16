@@ -129,7 +129,7 @@ fn each_with_object_memo(anc: &[Node], recv: &Node) -> bool {
     let Some(name) = unwind_lvar(recv) else { return false };
     // node.parent (a `begin` parent's parent): an each_with_object block.
     let Some(mut i) = parser_parent_index(anc, anc.len()) else { return false };
-    if anc[i].as_statements_node().is_some_and(|s| s.body().iter().count() > 1) {
+    if anc[i].as_statements_node().is_some_and(|s| s.body().len() > 1) {
         let Some(j) = parser_parent_index(anc, i) else { return false };
         i = j;
     }
@@ -146,7 +146,7 @@ fn each_with_object_memo(anc: &[Node], recv: &Node) -> bool {
     };
     let mut params = parameter_nodes(&ps);
     params.retain(|n| n.as_implicit_rest_node().is_none());
-    let locals = block.parameters().unwrap().as_block_parameters_node().unwrap().locals().iter().count();
+    let locals = block.parameters().unwrap().as_block_parameters_node().unwrap().locals().len();
     let [_, second] = params.as_slice() else { return false };
     if locals != 0 {
         return false;

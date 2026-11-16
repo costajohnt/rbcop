@@ -96,7 +96,7 @@ impl Cop for RedundantSplatExpansion {
             Some(kind::RESCUE_NODE) => {
                 let r = anc[n - 1].as_rescue_node().unwrap();
                 let loc = splat.location();
-                (Parent::Array { bracketed: false, range: (loc.start_offset(), loc.end_offset()), count: r.exceptions().iter().count() }, Grand::Resbody)
+                (Parent::Array { bracketed: false, range: (loc.start_offset(), loc.end_offset()), count: r.exceptions().len() }, Grand::Resbody)
             }
             _ => {
                 let Some(pi) = parser_parent(anc, n) else { return };
@@ -106,7 +106,7 @@ impl Cop for RedundantSplatExpansion {
                     Parent::Array {
                         bracketed: a.opening_loc().is_some(),
                         range: (loc.start_offset(), loc.end_offset()),
-                        count: a.elements().iter().count(),
+                        count: a.elements().len(),
                     }
                 } else if p.as_call_node().is_some() {
                     Parent::Call

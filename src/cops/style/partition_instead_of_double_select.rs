@@ -60,7 +60,7 @@ fn block_params<'pr>(params: Option<Node<'pr>>) -> (Option<(usize, usize)>, Opti
         && p.keyword_rest().is_none()
         && p.block().is_none()
         && empty_locals
-        && p.requireds().iter().count() == 1;
+        && p.requireds().len() == 1;
     let single = if only_one {
         p.requireds().iter().next().and_then(|r| r.as_required_parameter_node()).map(|r| r.name().as_slice())
     } else {

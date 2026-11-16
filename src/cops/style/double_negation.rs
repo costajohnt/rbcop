@@ -38,7 +38,7 @@ fn parser_parents<'a, 'pr>(ancestors: &'a [Node<'pr>]) -> Vec<P<'a, 'pr>> {
                     matches!(kind::of(p), kind::PARENTHESES_NODE | kind::EMBEDDED_STATEMENTS_NODE)
                         || p.as_begin_node().is_some_and(|b| b.begin_keyword_loc().is_some())
                 });
-                if s.body().iter().count() > 1 && !wrapped {
+                if s.body().len() > 1 && !wrapped {
                     out.push(P::Begin(n.location().end_offset()));
                 }
             }

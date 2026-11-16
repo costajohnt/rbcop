@@ -59,7 +59,7 @@ fn ambiguous_when_made_endless(node: &Node, ancestors: &[Node]) -> bool {
         return left.location().start_offset() == start;
     }
     // `(if _ <any_def _>)` / `({while until} _ any_def)`: the def alone in the branch or body.
-    if parent.as_statements_node().is_none_or(|s| s.body().iter().count() != 1) || ancestors.len() < 2 {
+    if parent.as_statements_node().is_none_or(|s| s.body().len() != 1) || ancestors.len() < 2 {
         return false;
     }
     match &ancestors[ancestors.len() - 2] {

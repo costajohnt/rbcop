@@ -132,7 +132,7 @@ impl Calc<'_> {
         // A single-statement body is that statement in parser.
         if let View::Node { node, .. } = view
             && let Some(s) = node.as_statements_node()
-            && s.body().iter().count() == 1
+            && s.body().len() == 1
         {
             let stmt = s.body().iter().next().unwrap();
             return self.view_length(&View::Node { range: crate::ast::body_range(&stmt), node: &stmt });

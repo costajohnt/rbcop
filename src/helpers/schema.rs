@@ -68,7 +68,7 @@ fn load() -> Option<Schema> {
     let block = helpers::rails::block_call(root)?.block()?.as_block_node()?;
     let mut schema = Schema { tables: Vec::new(), add_indices: Vec::new() };
     let Some(body) = block.body() else { return Some(schema) };
-    let multi = body.as_statements_node().filter(|s| s.body().iter().count() > 1);
+    let multi = body.as_statements_node().filter(|s| s.body().len() > 1);
     let statements: Vec<Node> = helpers::rails::body_statements(Some(body));
     for s in &statements {
         if let Some(c) = helpers::rails::block_call(s).filter(|c| method_name(c) == "create_table") {

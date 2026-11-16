@@ -66,7 +66,7 @@ impl Cop for EmptyConditionalBody {
             None => {
                 let paren_parent = keyword == "if" && cx.ancestors.last().is_some_and(|p| {
                     // `(if x ... end)`: the parentheses' single statement.
-                    p.as_statements_node().is_some_and(|s| s.body().iter().count() == 1)
+                    p.as_statements_node().is_some_and(|s| s.body().len() == 1)
                         && cx.ancestors.len() > 1
                         && cx.ancestors[cx.ancestors.len() - 2].as_parentheses_node().is_some()
                 });
@@ -123,7 +123,7 @@ impl Cop for EmptyConditionalBody {
 fn empty_if_branch(ancestors: &[Node]) -> bool {
     for (i, a) in ancestors.iter().enumerate().rev() {
         match a {
-            Node::StatementsNode { .. } if a.as_statements_node().unwrap().body().iter().count() == 1 => {
+            Node::StatementsNode { .. } if a.as_statements_node().unwrap().body().len() == 1 => {
                 if i > 0 && ancestors[i - 1].as_program_node().is_some() {
                     return false;
                 }
