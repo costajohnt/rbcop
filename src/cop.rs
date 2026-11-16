@@ -132,12 +132,12 @@ pub struct Fixes {
     /// Corrections of this cop's offenses so far, merged.
     pub corrector: Option<Corrector>,
     /// Ranges reported so far (`current_offense_locations`).
-    pub seen: HashSet<(usize, usize), crate::config::FnvBuild>,
+    pub(crate) seen: HashSet<(usize, usize), crate::config::FnvBuild>,
     /// `--disable-uncorrectable`: an offense this run does not correct gets a `# rubocop:todo`
     /// comment (the cop autocorrects, or its unsafe correction is skipped under `-a`).
     pub todo: bool,
     /// Lines given a todo comment so far (`currently_disabled_lines`).
-    pub todo_lines: HashSet<usize, crate::config::FnvBuild>,
+    pub(crate) todo_lines: HashSet<usize, crate::config::FnvBuild>,
 }
 
 /// What a cop sees while it runs on one node or one file.
