@@ -107,36 +107,68 @@ pub fn translate(kind: &str, prism_message: &str, start: usize, end: usize, text
 static LVAR_NAME: std::sync::LazyLock<regex::Regex> =
     std::sync::LazyLock::new(|| regex::Regex::new(r"\A[\p{Lowercase}_][\p{Alphabetic}\p{Nd}_]*\z").unwrap());
 
-/// The parser gem builder's `check_lvar_name` on pattern variables (`in x`, `in {x:}`, `in [*x]`,
+/// The runner's checks before any cop, in one walk (#780): `None` when the tree is nested more than
+/// `runner::MAX_AST_DEPTH` levels deep (as `ast::deeper_than`), else the pattern variable errors
+/// and, with `regexps` (the text), `regexp_compile_errors`.
+///
+/// Pattern variables: the parser gem builder's `check_lvar_name` (`in x`, `in {x:}`, `in [*x]`,
 /// `in a => x`): Ruby's `[[:lower:]]`/`[[:alnum:]]` reject names Prism accepts, such as one starting
 /// with a non-lowercase letter (`in 变量`) or containing U+3000. (start, end, message) of each.
-pub fn pattern_variable_errors(program: &ruby_prism::Node) -> Vec<(usize, usize, String)> {
+#[allow(clippy::type_complexity)]
+pub fn pre_cop_checks(
+    program: &ruby_prism::Node,
+    regexps: Option<&str>,
+) -> Option<(Vec<(usize, usize, String)>, Vec<(usize, usize, String)>)> {
     use ruby_prism::Visit;
-    struct Walk {
+    struct Walk<'t> {
+        depth: usize,
         in_pattern: bool,
         out: Vec<(usize, usize, String)>,
+        regexps: Option<&'t str>,
+        regexp_out: Vec<(usize, usize, String)>,
     }
-    impl Walk {
+    struct TooDeep;
+    impl Walk<'_> {
         fn pattern(&mut self, node: &ruby_prism::Node) {
             let outer = std::mem::replace(&mut self.in_pattern, true);
             self.visit(node);
             self.in_pattern = outer;
         }
+        fn regexp(&mut self, node: &ruby_prism::Node, content: ruby_prism::Location, closing: ruby_prism::Location) {
+            if let Some(text) = self.regexps {
+                self.regexp_out.extend(regexp_error(node, content, closing, text));
+            }
+        }
     }
-    impl<'pr> Visit<'pr> for Walk {
+    impl<'pr> Visit<'pr> for Walk<'_> {
+        fn visit_branch_node_enter(&mut self, _: ruby_prism::Node<'pr>) {
+            self.depth += 1;
+            if self.depth > crate::runner::MAX_AST_DEPTH {
+                // resume_unwind skips the panic hook: this is control flow, not an error.
+                std::panic::resume_unwind(Box::new(TooDeep));
+            }
+        }
+        fn visit_branch_node_leave(&mut self) {
+            self.depth -= 1;
+        }
         fn visit_in_node(&mut self, n: &ruby_prism::InNode<'pr>) {
-            // A guard (`in x if y`) wraps the pattern in an IfNode/UnlessNode; only its statements are the pattern.
+            // A guard (`in x if y`) wraps the pattern in an IfNode/UnlessNode; only its statements are
+            // the pattern. The wrapper still counts toward the depth.
             let pat = n.pattern();
             if let Some(i) = pat.as_if_node() {
+                self.visit_branch_node_enter(i.as_node());
                 if let Some(s) = i.statements() {
                     self.pattern(&s.as_node());
                 }
                 self.visit(&i.predicate());
+                self.visit_branch_node_leave();
             } else if let Some(u) = pat.as_unless_node() {
+                self.visit_branch_node_enter(u.as_node());
                 if let Some(s) = u.statements() {
                     self.pattern(&s.as_node());
                 }
                 self.visit(&u.predicate());
+                self.visit_branch_node_leave();
             } else {
                 self.pattern(&pat);
             }
@@ -165,10 +197,16 @@ pub fn pattern_variable_errors(program: &ruby_prism::Node) -> Vec<(usize, usize,
                 self.out.push((loc.start_offset(), loc.end_offset(), msg));
             }
         }
+        fn visit_regular_expression_node(&mut self, n: &ruby_prism::RegularExpressionNode<'pr>) {
+            self.regexp(&n.as_node(), n.content_loc(), n.closing_loc());
+        }
+        fn visit_match_last_line_node(&mut self, n: &ruby_prism::MatchLastLineNode<'pr>) {
+            self.regexp(&n.as_node(), n.content_loc(), n.closing_loc());
+        }
     }
-    let mut w = Walk { in_pattern: false, out: Vec::new() };
-    w.visit(program);
-    w.out
+    let mut w = Walk { depth: 0, in_pattern: false, out: Vec::new(), regexps, regexp_out: Vec::new() };
+    std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| w.visit(program))).ok()?;
+    Some((w.out, w.regexp_out))
 }
 
 /// Numbered-parameter errors as the parser gem (2.7 to 3.2) reports them, one per identifier:
@@ -623,16 +661,7 @@ pub fn regexp_compile_errors(program: &ruby_prism::Node, text: &str) -> Vec<(usi
     }
     impl Walk<'_> {
         fn check(&mut self, node: &ruby_prism::Node, content: ruby_prism::Location, closing: ruby_prism::Location) {
-            let flags = self.text.get(closing.start_offset() + 1..closing.end_offset()).unwrap_or("");
-            if flags.contains('x') {
-                return;
-            }
-            let Some(source) = self.text.get(content.start_offset()..content.end_offset()) else { return };
-            let source = source.replace("\\\n", "");
-            if let Some(msg) = crate::helpers::onigmo_compile::error(&source) {
-                let loc = node.location();
-                self.out.push((loc.start_offset(), loc.end_offset(), format!("{msg}: /{source}/")));
-            }
+            self.out.extend(regexp_error(node, content, closing, self.text));
         }
     }
     impl<'pr> Visit<'pr> for Walk<'_> {
@@ -646,6 +675,23 @@ pub fn regexp_compile_errors(program: &ruby_prism::Node, text: &str) -> Vec<(usi
     let mut w = Walk { text, out: Vec::new() };
     w.visit(program);
     w.out
+}
+
+/// One regexp literal's `regexp_compile_errors` entry.
+fn regexp_error(
+    node: &ruby_prism::Node,
+    content: ruby_prism::Location,
+    closing: ruby_prism::Location,
+    text: &str,
+) -> Option<(usize, usize, String)> {
+    let flags = text.get(closing.start_offset() + 1..closing.end_offset()).unwrap_or("");
+    if flags.contains('x') {
+        return None;
+    }
+    let source = text.get(content.start_offset()..content.end_offset())?.replace("\\\n", "");
+    let msg = crate::helpers::onigmo_compile::error(&source)?;
+    let loc = node.location();
+    Some((loc.start_offset(), loc.end_offset(), format!("{msg}: /{source}/")))
 }
 
 /// Offsets of the `return`s directly in a singleton class body (`class << self; return; end`),
@@ -706,5 +752,23 @@ pub fn sclass_returns(result: &ruby_prism::ParseResult) -> Vec<usize> {
     match std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| w.visit(&program))) {
         Ok(()) => w.found,
         Err(_) => Vec::new(),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    // pre_cop_checks is the runner's depth guard: it must agree with ast::deeper_than at the limit,
+    // including under a pattern guard, whose IfNode/UnlessNode it walks by hand (#780).
+    #[test]
+    fn pre_cop_checks_depth_agrees_with_deeper_than() {
+        let max = crate::runner::MAX_AST_DEPTH;
+        for guard in ["if", "unless"] {
+            for k in max - 8..max {
+                let text = format!("case x\nin [a] {guard} {}b{}\nend\n", "[".repeat(k), "]".repeat(k));
+                let result = ruby_prism::parse(text.as_bytes());
+                let deep = crate::ast::deeper_than(&result.node(), max);
+                assert_eq!(super::pre_cop_checks(&result.node(), Some(&text)).is_none(), deep, "{guard} {k}");
+            }
+        }
     }
 }
