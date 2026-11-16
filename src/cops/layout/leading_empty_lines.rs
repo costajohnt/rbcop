@@ -12,7 +12,7 @@ impl Cop for LeadingEmptyLines {
     fn on_file(&self, cx: &mut Cx) {
         let src = cx.src;
         // Parser-shaped tokens: one tSTRING for a simple string, comments without their newline.
-        let Some(token) = helpers::parser_tokens::translated(src).iter().find(|t| t.kind != sys::PM_TOKEN_NEWLINE)
+        let Some(token) = helpers::parser_tokens::translated(src).into_iter().find(|t| t.kind != sys::PM_TOKEN_NEWLINE)
         else {
             return;
         };
