@@ -14,6 +14,10 @@ impl Cop for RedundantMerge {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["merge!"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send $!nil? :merge! [(hash $...) !kwsplat_type?])
         let call = node.as_call_node().unwrap();

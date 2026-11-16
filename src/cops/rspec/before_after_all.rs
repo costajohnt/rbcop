@@ -9,6 +9,10 @@ impl Cop for BeforeAfterAll {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["before", "after"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // $(send _ RESTRICT_ON_SEND (sym {:all :context}))
         let call = node.as_call_node().unwrap();

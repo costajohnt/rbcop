@@ -60,6 +60,10 @@ impl Cop for ExpandPathArguments {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["expand_path"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         if is_csend(&call) || method_name(&call) != "expand_path" {

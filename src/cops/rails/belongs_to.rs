@@ -17,6 +17,10 @@ impl Cop for BelongsTo {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["belongs_to"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send _ :belongs_to ... (hash <$(pair (sym :required) $boolean) ...>))
         let Some(call) = helpers::rails::send(node) else { return };

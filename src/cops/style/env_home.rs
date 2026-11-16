@@ -18,6 +18,10 @@ impl Cop for EnvHome {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["[]", "fetch"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         if !matches!(method_name(&call), "[]" | "fetch") || is_csend(&call) {

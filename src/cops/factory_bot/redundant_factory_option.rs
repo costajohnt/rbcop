@@ -13,6 +13,10 @@ impl Cop for RedundantFactoryOption {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["association"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send nil? :association (sym $_name) ... (hash <$(pair (sym :factory) {(sym $_name) (array (sym $_name))}) ...>))
         let call = node.as_call_node().unwrap();

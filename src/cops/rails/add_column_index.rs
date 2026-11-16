@@ -13,6 +13,10 @@ impl Cop for AddColumnIndex {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["add_column"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send nil? :add_column $_table $_column <(hash <$(pair {(sym :index) (str "index")} $_) ...>) ...>)
         let Some(call) = helpers::rails::send(node) else { return };

@@ -13,6 +13,10 @@ impl Cop for ClassCheck {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["be_a", "be_a_kind_of", "be_an", "be_kind_of"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         let name = method_name(&call);

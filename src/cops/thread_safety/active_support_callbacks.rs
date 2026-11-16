@@ -22,6 +22,10 @@ impl Cop for ActiveSupportCallbacks {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["set_callback", "skip_callback"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         if !matches!(method_name(&call), "set_callback" | "skip_callback") {

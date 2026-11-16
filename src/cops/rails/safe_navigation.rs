@@ -22,6 +22,10 @@ impl Cop for SafeNavigation {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["try", "try!"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send _ ${:try :try!} $_ ...)
         let Some(call) = helpers::rails::send(node) else { return };

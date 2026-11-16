@@ -15,6 +15,10 @@ impl Cop for ForbidTBind {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["bind"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send (const {nil? cbase} :T) :bind _ _)
         let call = node.as_call_node().unwrap();

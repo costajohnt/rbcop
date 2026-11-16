@@ -40,6 +40,10 @@ impl Cop for NativeAttribute {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["attribute"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (call $(call #element_finder? :native) :attribute $({str sym} _))
         let call = node.as_call_node().unwrap();

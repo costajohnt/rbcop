@@ -13,6 +13,10 @@ impl Cop for MatchStyle {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["has_style?", "have_style"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         let good = match method_name(&call) {

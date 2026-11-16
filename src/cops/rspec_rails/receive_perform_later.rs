@@ -9,6 +9,10 @@ impl Cop for ReceivePerformLater {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["receive", "have_received"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send nil? {:receive :have_received} (sym :perform_later))
         let call = node.as_call_node().unwrap();

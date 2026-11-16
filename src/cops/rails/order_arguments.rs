@@ -43,6 +43,10 @@ impl Cop for OrderArguments {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["order"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (call _ :order (str $_value)+)
         let call = node.as_call_node().unwrap();

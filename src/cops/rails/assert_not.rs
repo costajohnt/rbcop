@@ -15,6 +15,10 @@ impl Cop for AssertNot {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["assert"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send nil? :assert (send ... :!) ...)
         let Some(call) = helpers::rails::send(node) else { return };

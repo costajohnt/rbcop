@@ -13,6 +13,10 @@ impl Cop for AttributeDefaultBlockValue {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["attribute"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send nil? :attribute _ ?_ (hash <$(pair (sym :default) $_) ...>))
         let Some(call) = helpers::rails::send(node) else { return };

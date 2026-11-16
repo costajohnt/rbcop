@@ -13,6 +13,10 @@ impl Cop for StringBytesize {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["size", "length", "count"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (call (call !{nil? int} :bytes) {:size :length :count})
         let call = node.as_call_node().unwrap();

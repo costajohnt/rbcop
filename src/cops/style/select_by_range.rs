@@ -15,6 +15,10 @@ impl Cop for SelectByRange {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["select", "filter", "find_all", "find", "detect", "reject"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         let call = node.as_call_node().unwrap();
         let method = method_name(&call);

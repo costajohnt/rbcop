@@ -13,6 +13,10 @@ impl Cop for CompareWithBlock {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["sort", "sort!", "min", "max", "minmax"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (block $(send _ {:sort :sort! :min :max :minmax}) (args (arg $_a) (arg $_b)) $send)
         let call = node.as_call_node().unwrap();

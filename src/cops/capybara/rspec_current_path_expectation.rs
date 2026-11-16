@@ -35,6 +35,10 @@ impl Cop for CurrentPathExpectation {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["expect"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send nil? :expect (send {(send nil? :page) nil?} :current_path))
         let call = node.as_call_node().unwrap();

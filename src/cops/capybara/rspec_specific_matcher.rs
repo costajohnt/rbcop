@@ -11,6 +11,10 @@ impl Cop for SpecificMatcher {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["have_selector", "have_no_selector", "have_css", "have_no_css"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send nil? _ (str $_) ...)
         let call = node.as_call_node().unwrap();

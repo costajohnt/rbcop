@@ -33,6 +33,10 @@ impl Cop for DotSeparatedKeys {
         &[kind::CALL_NODE]
     }
 
+    fn restrict_on_send(&self) -> &'static [&'static str] {
+        &["translate", "t"]
+    }
+
     fn on_node(&self, cx: &mut Cx, node: &Node) {
         // (send {nil? (const {nil? cbase} :I18n)} {:translate :t} ${sym_type? str_type?}
         //   (hash <$(pair (sym :scope) ${array_type? sym_type?}) ...>))
