@@ -230,12 +230,13 @@ seconds, min (p25 within 0.3 points of it). Output identical in every run.
 | change | CPU s, before | CPU s, after | change |
 |---|---:|---:|---:|
 | integer keys hashed with one multiply (`config::Fnv`), no double hash in `Fixes.seen` | 11.09 | 11.01 | -0.7% |
-| Layout/ExtraSpacing slices a line's tokens (no by-line map) | 11.01 | 10.91 | -0.9% |
+| Layout/ExtraSpacing slices a line's tokens (no by-line map), with the rest applied | 10.03 | 10.01 | -0.2% |
 | mimalloc on glibc (it was musl only) | 10.91 | 9.99 | -8.4% |
 | fat LTO instead of thin (release archives only) | 10.06 | 9.64 | -4.2% |
 
-`--profile` per cop for the first two (min of 8 runs): Layout/ExtraSpacing 492 to 415 ms,
-Lint/UselessAssignment (VariableForce) 39.5 to 32.6 ms, Layout/IndentationWidth 133 to 129 ms.
+`--profile` per cop (min of 8 runs): the hashers took Lint/UselessAssignment (VariableForce) from
+39.5 to 32.6 ms and Layout/IndentationWidth from 133 to 129 ms; the line slices took
+Layout/ExtraSpacing from 442 to 406 ms (-8%).
 One file (mastodon's `app/models/account.rb`, unpinned, 30 rounds): mimalloc 0.16 to 0.14 s.
 Warm result cache (mastodon, 4 CPUs, 20 rounds), all four changes but fat LTO: 0.33 to 0.31 s.
 
