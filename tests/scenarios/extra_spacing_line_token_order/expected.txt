@@ -1,0 +1,21 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+a.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+a.rb:1:1: R: Metrics/AbcSize: Assignment Branch Condition size for `test_to_date` is too high. [<0, 24, 0> 24/17]
+a.rb:3:129: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:3:137: C: [Correctable] Layout/LineLength: Line is too long. [166/120]
+a.rb:5:129: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:5:137: C: [Correctable] Layout/LineLength: Line is too long. [166/120]
+a.rb:5:30: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+a.rb:5:34: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+a.rb:5:95: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+a.rb:5:99: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+a.rb:7:129: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:7:137: C: [Correctable] Layout/LineLength: Line is too long. [166/120]
+a.rb:7:30: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+a.rb:7:34: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+a.rb:9:129: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+a.rb:9:137: C: [Correctable] Layout/LineLength: Line is too long. [166/120]
+a.rb:9:30: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+a.rb:9:34: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+a.rb:9:95: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.
+a.rb:9:99: C: [Correctable] Layout/ExtraSpacing: Unnecessary spacing detected.

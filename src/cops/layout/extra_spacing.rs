@@ -61,6 +61,8 @@ type Profile = (HashMap<usize, Vec<(usize, isize)>>, HashMap<(usize, u32), (Vec<
 
 struct Run<'a, 's> {
     al: Alignment<'a, 's>,
+    /// The tokens, stably sorted by line: a few translated tokens are out of position order.
+    by_line: Vec<Token>,
     profiles: RefCell<HashMap<Vec<usize>, Rc<Profile>>>,
     aligned_comments: HashSet<usize>,
 }
@@ -70,19 +72,12 @@ impl Run<'_, '_> {
         self.al.src.column(t.start)
     }
 
-    /// The tokens on `line` (they are in source order).
+    /// The tokens on `line`, in token order.
     fn tokens_on(&self, line: usize) -> &[Token] {
-        let (src, tokens) = (self.al.src, &self.al.d.tokens);
-        if line == 0 || line > src.line_count() {
-            return &[];
-        }
-        let from = tokens.partition_point(|t| t.start < src.line_start(line));
-        let to = if line == src.line_count() {
-            tokens.len()
-        } else {
-            tokens.partition_point(|t| t.start < src.line_start(line + 1))
-        };
-        &tokens[from..to]
+        let line_of = |t: &Token| self.al.src.line_of(t.start);
+        let from = self.by_line.partition_point(|t| line_of(t) < line);
+        let to = self.by_line.partition_point(|t| line_of(t) <= line);
+        &self.by_line[from..to]
     }
 
     fn group_profile(&self, line: usize) -> Rc<Profile> {
@@ -224,8 +219,11 @@ impl Cop for ExtraSpacing {
                 aligned_comments.insert(src.line_of(w[1].start));
             }
         }
+        let mut by_line = data.tokens.clone();
+        by_line.sort_by_key(|t| src.line_of(t.start));
         let run = Run {
             al: Alignment { src, d: &data },
+            by_line,
             profiles: RefCell::default(),
             aligned_comments,
         };
