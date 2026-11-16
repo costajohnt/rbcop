@@ -557,7 +557,9 @@ mod omit {
         // trailing_comma? (1.92)
         if let (Some(last), Some(close)) = (d.args.last(), d.close) {
             let from = last.location().end_offset();
-            if cx.src.tokens().iter().any(|t| t.kind == sys::PM_TOKEN_COMMA && t.start >= from && t.end <= close.0) {
+            let tokens = cx.src.tokens();
+            let after = &tokens[tokens.partition_point(|t| t.start < from)..];
+            if after.iter().take_while(|t| t.start <= close.0).any(|t| t.kind == sys::PM_TOKEN_COMMA && t.end <= close.0) {
                 return true;
             }
         }

@@ -336,6 +336,8 @@ pub struct Resolved {
     /// for_cop of every cop-like key, built on first use: cops ask for other cops' settings per
     /// node, and building one takes two linear scans of the whole config and a clone.
     for_cop_cache: std::sync::OnceLock<HashMap<String, Map>>,
+    /// AllCops Include and Exclude as patterns, built on first use: the target filter asks per file.
+    target_patterns: std::sync::OnceLock<(Vec<Pattern>, Vec<Pattern>)>,
     /// Config#gem_versions_in_target, read on first use.
     gem_versions: std::sync::OnceLock<Option<HashMap<String, String>>>,
     /// Config#path_sourced_gems_in_target, read on first use.
@@ -387,6 +389,7 @@ impl Resolved {
             unregistered: Vec::new(),
             opts: opts.clone(),
             for_cop_cache: std::sync::OnceLock::new(),
+            target_patterns: std::sync::OnceLock::new(),
             gem_versions: std::sync::OnceLock::new(),
             path_gems: std::sync::OnceLock::new(),
             rspec_language: std::sync::OnceLock::new(),
@@ -782,14 +785,21 @@ impl Resolved {
     /// Config#file_to_exclude? (AllCops/Exclude against the absolute path).
     pub fn file_to_exclude(&self, file: &Path) -> bool {
         let abs = file.display().to_string();
-        patterns(self.all_cops(), "Exclude").unwrap_or_default().iter().any(|p| p.matches(&abs))
+        self.target_patterns().1.iter().any(|p| p.matches(&abs))
+    }
+
+    fn target_patterns(&self) -> &(Vec<Pattern>, Vec<Pattern>) {
+        self.target_patterns.get_or_init(|| {
+            let list = |key| patterns(self.all_cops(), key).unwrap_or_default();
+            (list("Include"), list("Exclude"))
+        })
     }
 
     /// Config#file_to_include? (AllCops/Include).
     pub fn file_to_include(&self, file: &Path) -> bool {
         let rel = self.relative(file);
         let abs = file.display().to_string();
-        let include = patterns(self.all_cops(), "Include").unwrap_or_default();
+        let include = &self.target_patterns().0;
         let hidden = rel.starts_with('.') && !rel.starts_with("..");
         let possibly_hidden = include.iter().any(|p| match p {
             Pattern::Regex(_) => true,

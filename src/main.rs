@@ -2220,7 +2220,15 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
         // Each worker takes the next file, largest first, so no core idles while another finishes
         // a long run of big files (fixed chunks of the sorted list did). Results keep file order.
         let mut order: Vec<usize> = (0..jobs.len()).collect();
-        order.sort_by_cached_key(|&i| std::cmp::Reverse(fs::metadata(&jobs[i].0).map_or(0, |m| m.len())));
+        // Statted across the workers: one serial pass over every file showed on cached runs.
+        let sizes: Vec<u64> = thread::scope(|s| {
+            let chunks = jobs.chunks(jobs.len().div_ceil(workers).max(1));
+            let handles: Vec<_> = chunks
+                .map(|c| s.spawn(|| c.iter().map(|(p, _)| fs::metadata(p).map_or(0, |m| m.len())).collect::<Vec<_>>()))
+                .collect();
+            handles.into_iter().flat_map(|h| h.join().unwrap()).collect()
+        });
+        order.sort_by_key(|&i| std::cmp::Reverse(sizes[i]));
         let next = std::sync::atomic::AtomicUsize::new(0);
         let mut reports: Vec<Option<Linted>> = jobs.iter().map(|_| None).collect();
         thread::scope(|s| {
