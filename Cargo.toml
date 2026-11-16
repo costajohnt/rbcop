@@ -34,5 +34,6 @@ mimalloc = { version = "0.1", default-features = false }
 ruby-prism = { path = "vendor/ruby-prism" }
 
 # Thin LTO: ~9% fewer cycles linting discourse (#388), for ~5 s more per release rebuild.
+# Release archives build with fat LTO instead (scripts/dist/build.sh, #781).
 [profile.release]
 lto = "thin"

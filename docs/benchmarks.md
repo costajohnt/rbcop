@@ -220,6 +220,32 @@ analyses (token translation, charged to Style/Semicolon or Layout/ExtraSpacing a
 ask; VariableForce, charged to Lint/ShadowedArgument or Lint/UselessAssignment), parsing, and
 the walker's dispatch.
 
+## Hashers, allocator and release profile (#781)
+
+Linux box of the CI-shaped runs, shared with other jobs (host load average 4 to 10), mastodon
+with its own config, `--cache false`, pinned to 4 CPUs (`taskset -c 2-5`; unpinned runs of one
+build varied 3x in CPU time). Builds interleaved in alternating order, 20 rounds; user+sys CPU
+seconds, min (p25 within 0.3 points of it). Output identical in every run.
+
+| change | CPU s, before | CPU s, after | change |
+|---|---:|---:|---:|
+| integer keys hashed with one multiply (`config::Fnv`), no double hash in `Fixes.seen` | 11.09 | 11.01 | -0.7% |
+| Layout/ExtraSpacing slices a line's tokens (no by-line map) | 11.01 | 10.91 | -0.9% |
+| mimalloc on glibc (it was musl only) | 10.91 | 9.99 | -8.4% |
+| fat LTO instead of thin (release archives only) | 10.06 | 9.64 | -4.2% |
+
+`--profile` per cop for the first two (min of 8 runs): Layout/ExtraSpacing 492 to 415 ms,
+Lint/UselessAssignment (VariableForce) 39.5 to 32.6 ms, Layout/IndentationWidth 133 to 129 ms.
+One file (mastodon's `app/models/account.rb`, unpinned, 30 rounds): mimalloc 0.16 to 0.14 s.
+Warm result cache (mastodon, 4 CPUs, 20 rounds), all four changes but fat LTO: 0.33 to 0.31 s.
+
+Release profile, release build of rbcop alone (deps built) on the same box: thin LTO 166 s, thin
+with `codegen-units = 1` 706 s and no faster at run time, fat LTO 262 s, fat with
+`codegen-units = 1` 411 s and no faster than fat. The x86_64 glibc 2.17 archive built by
+`scripts/dist/build.sh` with fat LTO and mimalloc still needs nothing newer than GLIBC_2.17. So `Cargo.toml` keeps thin LTO for gates and
+local builds, and `scripts/dist/build.sh` builds the archives with fat LTO. `panic` stays
+`unwind`: cop errors unwind to the callback's guard. PGO was not tried.
+
 ## Reproducing
 
 CI-shaped runs (Linux, needs `taskset` and RuboCop 1.91 on `PATH`):

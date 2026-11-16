@@ -20,6 +20,9 @@ if [ $# -eq 0 ]; then
 fi
 if command -v sha256sum >/dev/null; then sum="sha256sum"; else sum="shasum -a 256"; fi
 export CARGO_PROFILE_RELEASE_STRIP=symbols
+# Fat LTO for release archives only: 4% less CPU than Cargo.toml's thin LTO, for about 60% longer
+# builds, which gates and local builds should not pay (#781). codegen-units=1 measured no better.
+export CARGO_PROFILE_RELEASE_LTO=fat
 for target in "$@"; do
   case "$target" in
     *-linux-gnu)
