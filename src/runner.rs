@@ -550,7 +550,15 @@ fn investigate(
     let parser_gem = cfg.target_ruby < 3.3;
     crate::helpers::literal_node::set_fold_plus(parser_gem);
     let mut buf = Vec::new();
-    let (result, tokens, fake, edits) = parse_for_target(text, &mut buf, version, cfg.target_ruby);
+    // From 3.3 the parse is parse_for_target's plain one, with the lexer's tokens collected on the
+    // way: `Source::lex_tokens` would otherwise parse the same text again for them (#780).
+    let (result, tokens, fake, edits) = if parser_gem {
+        parse_for_target(text, &mut buf, version, cfg.target_ruby)
+    } else {
+        let utf8 = !crate::source::binary_encoding(text);
+        let (r, t) = ruby_prism::parse_with_version_and_tokens(text.as_bytes(), version, utf8);
+        (r, t, Vec::new(), Vec::new())
+    };
     let sclass_returns = if parser_gem { crate::syntax::sclass_returns(&result) } else { Vec::new() };
     // The depth guard is asked up to four times below; the tree is walked for it once (#388).
     let too_deep = std::cell::OnceCell::new();
@@ -618,6 +626,7 @@ fn investigate(
     // encoding): its warnings save that second parse.
     if !parser_gem {
         let _ = src.parse_warnings.set(crate::helpers::parse_warnings::from_result(&result));
+        src.set_lex_tokens(&tokens);
     }
 
     // CommentConfig is analyzed once per investigation, not again for the redundant-directive pass
