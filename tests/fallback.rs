@@ -986,11 +986,26 @@ fn fallback_gets_only_the_files_its_cops_may_inspect() {
     assert_eq!(files("").as_deref(), Some("Gemfile a.rb b.rb no_foo.rb \n"));
     assert_eq!(files("Custom/NoFoo:\n  Include:\n    - b.rb\n").as_deref(), Some("b.rb \n"));
     assert_eq!(files("Custom:\n  Exclude:\n    - b.rb\n").as_deref(), Some("Gemfile a.rb no_foo.rb \n"));
-    // No file for any of its cops: no RuboCop at all.
-    assert_eq!(files("Custom/NoFoo:\n  Enabled: false\n"), None);
+    // No file for any of its cops: RuboCop still starts, on one file, for what the required code
+    // prints while it loads...
+    assert_eq!(files("Custom/NoFoo:\n  Enabled: false\n").as_deref(), Some("Gemfile \n"));
+    // ...unless the result cache knows it printed nothing.
+    let cached = |config: &str| {
+        fs::write(dir.join(".rubocop.yml"), format!("{CONFIG}{config}")).unwrap();
+        let _ = fs::remove_file(dir.join("log"));
+        let mut cmd = common::command(env!("CARGO_BIN_EXE_rbcop"));
+        cmd.env("HOME", &dir).env("RBCOP_FALLBACK", "1").env("RBCOP_RUBOCOP", &rc);
+        let out =
+            cmd.env("RUBOCOP_CACHE_ROOT", dir.join("cache")).args(["-f", "e"]).current_dir(&dir).output().unwrap();
+        assert!(out.status.code().is_some_and(|c| c < 2), "{}", text(&out.stderr));
+        fs::read_to_string(dir.join("log")).ok()
+    };
+    assert_eq!(cached("Custom/NoFoo:\n  Enabled: false\n").as_deref(), Some("Gemfile \n"));
+    assert_eq!(cached("Custom/NoFoo:\n  Enabled: false\n"), None);
+    fs::remove_dir_all(dir.join("cache")).unwrap();
     // A cop class outside RuboCop::Cop is named as Badge.for names it (`CustomCops/NoBar`).
     fs::write(dir.join("no_bar.rb"), NO_BAR).unwrap();
-    assert_eq!(files_with(BOTH), None);
+    assert_eq!(files_with(BOTH).as_deref(), Some("Gemfile \n"));
     fs::remove_file(dir.join("no_bar.rb")).unwrap();
     // ...but a directive can opt a disabled cop in.
     fs::write(dir.join("c.rb"), "# rubocop:enable Custom/NoFoo\nfoo\n").unwrap();
@@ -1044,6 +1059,7 @@ fn fallback_results_are_cached() {
          shift; done\nd=${0%/*}\n: > \"$o\"\nfor f; do printf '%s ' \"${f##*/}\" >> \"$d/log\"\n\
          case $f in */a.rb) printf '%s\\t2\\t5\\tconvention\\t0\\t0\\t0\\tCustom/NoFoo\\tAvoid.\\t0\\t\\n' \"$f\" >> \"$o\";; \
          */b.rb) [ -e \"$d/warn\" ] && printf 'rbcop-fallback-uncached\\t%s\\n' \"$f\" >> \"$o\";; esac\ndone\n\
+         [ -e \"$d/noisy\" ] && echo 'warning: loud' >&2\n\
          echo >> \"$d/log\"\necho rbcop-fallback-done >> \"$o\"\n",
     )
     .unwrap();
@@ -1061,6 +1077,7 @@ fn fallback_results_are_cached() {
             .output()
             .unwrap();
         assert!(text(&out.stdout).contains("a.rb:1:3: C: Custom/NoFoo: Avoid."), "{}", text(&out.stdout));
+        fs::write(dir.join("stderr"), &out.stderr).unwrap();
         fs::read_to_string(dir.join("log")).unwrap_or_default()
     };
     assert_eq!(run(), "a.rb b.rb \n");
@@ -1074,5 +1091,13 @@ fn fallback_results_are_cached() {
     fs::write(dir.join("b.rb"), "# frozen_string_literal: true\n\nfoo(5)\n").unwrap();
     assert_eq!(run(), "b.rb \n");
     assert_eq!(run(), "b.rb \n");
+    // A run whose RuboCop printed to stderr keeps nothing: each run starts it, and prints the same.
+    fs::remove_file(dir.join("warn")).unwrap();
+    fs::write(dir.join("noisy"), "").unwrap();
+    fs::write(dir.join("no_foo.rb"), format!("{COP}\n\n")).unwrap();
+    for _ in 0..2 {
+        assert_eq!(run(), "a.rb b.rb \n");
+        assert_eq!(fs::read_to_string(dir.join("stderr")).unwrap(), "warning: loud\n");
+    }
     let _ = fs::remove_dir_all(&dir);
 }

@@ -2172,15 +2172,34 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                         }
                         rest.push(p.clone());
                     }
-                    let (found, uncached) = fallback::run(&rest, &cwd, &names, child)?;
-                    for (p, key, bytes) in keys.into_iter().filter(|(p, ..)| !uncached.contains(p)) {
+                    // What the required code prints while it loads (#804) comes only from a RuboCop
+                    // start: with no file left to give it, it still starts on one, unless a run with
+                    // the same inputs printed nothing to stderr. A run that printed anything keeps
+                    // nothing, so a warm run prints the same.
+                    let quiet_key = inputs.as_ref().map(|i| cache::digest(&[b"fallback-quiet", i.as_bytes()]));
+                    let known_quiet = matches!((cache, &quiet_key), (Some(c), Some(k)) if c.load(k, b"").is_some());
+                    if rest.is_empty()
+                        && !known_quiet
+                        && let Some((p, _)) = jobs.iter().find(|(p, _)| !plugin_files.contains(p))
+                    {
+                        rest.push(p.clone());
+                    }
+                    let (found, uncached, quiet) = fallback::run(&rest, &cwd, &names, child)?;
+                    let empty = |text: String| FileReport {
+                        offenses: Vec::new(),
+                        text,
+                        warnings: Vec::new(),
+                        abort: None,
+                        diffs: Vec::new(),
+                    };
+                    if let (true, false, Some(cache), Some(key)) = (quiet, rest.is_empty(), cache, &quiet_key) {
+                        cache.save_quiet(key, &empty(String::new()));
+                    }
+                    for (p, key, bytes) in keys.into_iter().filter(|(p, ..)| quiet && !uncached.contains(p)) {
                         let Some(cache) = cache else { break };
                         let report = FileReport {
                             offenses: found.get(&p).cloned().unwrap_or_default(),
-                            text: String::from_utf8_lossy(&bytes).into_owned(),
-                            warnings: Vec::new(),
-                            abort: None,
-                            diffs: Vec::new(),
+                            ..empty(String::from_utf8_lossy(&bytes).into_owned())
                         };
                         cache.save_quiet(&key, &report);
                     }
@@ -2420,7 +2439,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                 let one = std::slice::from_ref(path);
                 if plugin_files.contains(path) {
                     fallback_offenses.extend(fallback::run(one, &cwd, &[], child)?.0);
-                } else if unrunnable && needs_child(path, cfg) {
+                } else if unrunnable {
                     fallback_offenses.extend(fallback::run(one, &cwd, &names, child)?.0);
                 }
             }

@@ -193,8 +193,9 @@ pub fn may_opt_in(text: &str, cops: &[&str]) -> bool {
         })
 }
 
-/// The child's offenses by file, and the files it reports uncached.
-pub type Found = (HashMap<PathBuf, Vec<Offense>>, HashSet<PathBuf>);
+/// The child's offenses by file, the files it reports uncached, and whether it wrote nothing to
+/// stderr.
+pub type Found = (HashMap<PathBuf, Vec<Offense>>, HashSet<PathBuf>, bool);
 
 /// What the RuboCop subprocess needs from the command line.
 #[derive(Clone, Copy)]
@@ -219,7 +220,7 @@ pub fn run(files: &[PathBuf], cwd: &Path, implemented: &[&str], c: Child) -> Res
     let mut out = HashMap::new();
     let mut uncached = HashSet::new();
     if files.is_empty() {
-        return Ok((out, uncached));
+        return Ok((out, uncached, false));
     }
     let program = c.program;
     announce(program, c.what);
@@ -324,10 +325,13 @@ pub fn run(files: &[PathBuf], cwd: &Path, implemented: &[&str], c: Child) -> Res
     } else {
         HashMap::new()
     };
-    let status = cmd.status();
+    // Its stderr is passed on once it exits; whether there was any decides what is cached (#805).
+    let output = cmd.stdout(Stdio::inherit()).stderr(Stdio::piped()).output();
     let report = std::fs::read(&report).unwrap_or_default();
     drop(dir);
-    let status = status.map_err(|e| format!("rbcop: RBCOP_FALLBACK: cannot run {program}: {e}"))?;
+    let output = output.map_err(|e| format!("rbcop: RBCOP_FALLBACK: cannot run {program}: {e}"))?;
+    let _ = std::io::Write::write_all(&mut std::io::stderr(), &output.stderr);
+    let (status, quiet) = (output.status, output.stderr.is_empty());
     // 0: no offenses, 1: offenses; anything else is RuboCop failing (its stderr was passed through).
     // The formatter's last line tells a run from a wrapper failing with 1 (an rbenv shim with the
     // project's Ruby missing, `bundle exec` outside an installed bundle).
@@ -374,7 +378,7 @@ pub fn run(files: &[PathBuf], cwd: &Path, implemented: &[&str], c: Child) -> Res
         };
         out.entry(path).or_insert_with(Vec::new).push(offense);
     }
-    Ok((out, uncached))
+    Ok((out, uncached, quiet))
 }
 
 /// One `begin,end,hex(replacement)` correction of the formatter's last field.
