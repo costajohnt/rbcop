@@ -13,13 +13,12 @@ fn sym_or_str(node: &Node, target_ruby: f64) -> Option<String> {
             return None;
         }
         s.unescaped().to_vec()
-    } else if let Some(s) = node.as_string_node() {
+    } else {
+        let s = node.as_string_node()?;
         if is_parser_dstr(node) {
             return None;
         }
         s.unescaped().to_vec()
-    } else {
-        return None;
     };
     Some(String::from_utf8_lossy(&bytes).into_owned())
 }

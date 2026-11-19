@@ -75,16 +75,16 @@ fn simple_target(arg: &Node, file: &Inspected) -> Option<Vec<u8>> {
     if let Some(s) = str_value(arg) {
         return hit(&s, &file.dir);
     }
-    if let Some(call) = send(arg) {
-        if file_call(&call, "expand_path") {
-            let [path, base] = <[Node; 2]>::try_from(send_args(&call)).ok()?;
-            let s = str_value(&path)?;
-            if send(&base).is_some_and(|b| b.receiver().is_none() && method_name(&b) == "__dir__" && send_args(&b).is_empty())
-            {
-                return hit(&s, &file.dir);
-            }
-            return if is_str(&base) { hit(&s, &file.path) } else { None };
+    if let Some(call) = send(arg)
+        && file_call(&call, "expand_path")
+    {
+        let [path, base] = <[Node; 2]>::try_from(send_args(&call)).ok()?;
+        let s = str_value(&path)?;
+        if send(&base).is_some_and(|b| b.receiver().is_none() && method_name(&b) == "__dir__" && send_args(&b).is_empty())
+        {
+            return hit(&s, &file.dir);
         }
+        return if is_str(&base) { hit(&s, &file.path) } else { None };
     }
     None
 }
