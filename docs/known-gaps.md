@@ -519,6 +519,9 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
   RuboCop::Cop::Style::OneClassPerFile`, compact or in nested `module` lines) counts as such a
   custom cop, so RuboCop runs the patched class (#801); a class patched through `prepend`,
   `class_eval` or a dynamically built name is not seen, and rbcop's own port runs.
+  What required code prints on stderr while it loads (Ruby's `already initialized constant`
+  warnings, #804) reaches stderr from the fallback, but after rbcop's own config warnings, where
+  RuboCop prints it before them, and once per RuboCop start (one per file under `-F` with `-a`/`-A`).
 - Cops rbcop cannot run (a non-native plugin's, custom cops): Lint/RedundantCopDisableDirective
   never reports a directive naming one, nor a `disable all` while any is loaded, since their
   offenses are unknown (RuboCop reports those that turn out redundant). With custom cops loaded, a
