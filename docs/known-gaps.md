@@ -519,13 +519,19 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
   RuboCop::Cop::Style::OneClassPerFile`, compact or in nested `module` lines) counts as such a
   custom cop, so RuboCop runs the patched class (#801); a class patched through `prepend`,
   `class_eval` or a dynamically built name is not seen, and rbcop's own port runs.
-  The RuboCop child gets only the files one of its cops may inspect (#805), and nothing when there
-  are none: no `rbcop: running` line then, and a file RuboCop would fail to parse fails nothing.
-  Its offenses are kept in rbcop's result cache, keyed also on the RuboCop command, the project's
-  lockfile, GEM_HOME/GEM_PATH/BUNDLE_GEMFILE/RUBYOPT, the gem directories rbcop resolved and the
-  required local Ruby files. An upgrade RuboCop's own cache would see but those do not (a gem
-  updated behind an `RBCOP_RUBOCOP` wrapper with its own bundle) needs `--cache false` once, or
-  a cleared cache.
+  What required code prints on stderr while it loads (Ruby's `already initialized constant`
+  warnings, #804) reaches stderr from the fallback, but after rbcop's own config warnings, where
+  RuboCop prints it before them, and once per RuboCop start (one per file under `-F` with `-a`/`-A`).
+  The RuboCop child gets only the files one of its cops may inspect (#805), so a file RuboCop
+  would fail to parse fails nothing when no fallback cop inspects it. With no such file it still
+  starts, on one file, for what the required code prints while loading, unless the result cache
+  recorded that RuboCop printed nothing to stderr with the same RuboCop, gems and required code.
+  The child's offenses are kept in rbcop's result cache, keyed also on the RuboCop command, the
+  project's lockfile, GEM_HOME/GEM_PATH/BUNDLE_GEMFILE/RUBYOPT, the gem directories rbcop resolved
+  and the required local Ruby files; a run in which the child wrote to stderr keeps nothing, so a
+  warm run prints the same. An upgrade RuboCop's own cache would see but those do not (a gem
+  updated behind an `RBCOP_RUBOCOP` wrapper with its own bundle) needs `--cache false` once, or a
+  cleared cache.
 - Cops rbcop cannot run (a non-native plugin's, custom cops): Lint/RedundantCopDisableDirective
   never reports a directive naming one, nor a `disable all` while any is loaded, since their
   offenses are unknown (RuboCop reports those that turn out redundant). With custom cops loaded, a

@@ -15,8 +15,19 @@ RuboCop::Cop::MessageAnnotator.prepend(Module.new { def annotate(message) = mess
 # rbcop loads the same configuration and has printed its warnings, the pending-cops banner and the
 # missing-department warnings for its own cops in directives already, so the child keeps them to
 # itself. A config error still reaches stderr: it is raised, and printed after the config is
-# loaded.
+# loaded. What the Ruby code the config requires prints while it loads (Ruby's warning about a
+# constant it redefines) reaches stderr, as from RuboCop: rbcop runs no Ruby (#804).
 module RbcopQuiet
+  ERR = $stderr
+
+  def self.loud
+    quiet = $stderr
+    $stderr = ERR
+    yield
+  ensure
+    $stderr = quiet
+  end
+
   def self.call
     err = $stderr
     $stderr = StringIO.new
@@ -31,6 +42,7 @@ RuboCop::ConfigStore.prepend(Module.new do
     define_method(m) { |*args| RbcopQuiet.call { super(*args) } }
   end
 end)
+RuboCop::FeatureLoader.prepend(Module.new { def load = RbcopQuiet.loud { super } })
 RuboCop::PendingCopsReporter.singleton_class.prepend(Module.new { def warn_if_needed(_config) = nil })
 # rbcop warns about bare directive names of the cops in its registry (RBCOP_REGISTRY: the ones it
 # implements, a plugin's lib/ classes, a `require:`d file's cop classes).
