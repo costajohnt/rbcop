@@ -1,0 +1,67 @@
+task :a
+desc "x"
+task :b
+task :a do
+end
+namespace :n do
+  task :a
+  task :a
+  def helper; end
+  class Inner; end
+  module M; end
+  class << self
+    def ok; end
+  end
+end
+namespace :n
+namespace :m
+foo { _1; task :q }
+task(:r) { _1 }
+task default: [:a, :b]
+task :default
+task c: [:a]
+task "d" => %w[a]
+task "e" => :a
+task({ f: :a })
+task "g", [:arg] => :a
+namespace "n" do
+  task "a"
+  namespace :inner do
+    task :z
+  end
+end
+namespace :inner do
+  task :z
+end
+x.namespace :ns do
+  task :y
+end
+task :y
+task :klass do
+  Class.new do
+    def fine; end
+  end
+  Class.new(Base) do
+    def bad; end
+  end
+  def self.bad2; end
+  class Foo
+    def ok; end
+  end
+end
+task(:paren) { (task :inner_paren) }
+begin
+  task :kw
+end
+begin
+  task :resc
+rescue
+end
+x = task :assigned
+if cond
+  task :in_if
+end
+task :"sym#{x}"
+task *args
+task(&blk)
+desc "last"

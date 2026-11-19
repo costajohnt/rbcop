@@ -1,0 +1,55 @@
+==> .rubocop.yml 137 <==
+---
+plugins:
+- rubocop-packaging
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 23 <==
+require '../lib/foo.rb'
+==> 001/001.rb 51 <==
+$:.unshift('../../lib')
+require '../../lib/foo/bar'
+==> 002/002.rb 51 <==
+require File.expand_path('../../lib/foo', __FILE__)
+==> 003/003.rb 65 <==
+require File.expand_path('../../../lib/foo/bar/baz/qux', __dir__)
+==> 004/004.rb 53 <==
+require File.dirname(__FILE__) + '/../../lib/baz/qux'
+==> 005/005.rb 53 <==
+require "#{File.dirname(__FILE__)}/../../lib/baz/qux"
+==> 006/006.rb 45 <==
+require File.dirname(__dir__) + '/../lib/foo'
+==> 007/007.rb 45 <==
+require "#{File.dirname(__dir__)}/../lib/foo"
+==> 008/008.rb 13 <==
+require 'bar'
+==> 009/009.rb 16 <==
+require '../foo'
+==> 010/010.rb 23 <==
+require '../../lib/foo'
+==> 011/011.rb 25 <==
+require 'lib/foo/version'
+==> 012/012.rb 47 <==
+require File.expand_path('../../foo', __FILE__)
+==> 013/013.rb 56 <==
+require File.expand_path('../lib/foo/version', __FILE__)
+==> 014/014.rb 46 <==
+require File.expand_path('../../foo', __dir__)
+==> 015/015.rb 52 <==
+require File.expand_path('lib/qux/version', __dir__)
+==> 016/016.rb 46 <==
+require File.dirname(__FILE__) + '/../lib/bar'
+==> 017/017.rb 42 <==
+require File.dirname(__FILE__) + '/../baz'
+==> 018/018.rb 54 <==
+require File.dirname(__FILE__) + '/../lib/bar/version'
+==> 019/019.rb 45 <==
+require File.dirname(__dir__) + '/../lib/bar'
+==> 020/020.rb 41 <==
+require File.dirname(__dir__) + '/../baz'
+==> 021/021.rb 50 <==
+require File.dirname(__dir__) + '/lib/baz/version'

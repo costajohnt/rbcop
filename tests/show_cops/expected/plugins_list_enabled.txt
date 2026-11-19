@@ -306,6 +306,10 @@ Naming/PredicatePrefix
 Naming/RescuedExceptionsVariableName
 Naming/VariableName
 Naming/VariableNumber
+Packaging/BundlerSetupInTests
+Packaging/GemspecGit
+Packaging/RequireHardcodingLib
+Packaging/RequireRelativeHardcodingLib
 RSpec/AnyInstance
 RSpec/AroundBlock
 RSpec/Be
@@ -415,6 +419,11 @@ RSpec/VerifiedDoubleReference
 RSpec/VerifiedDoubles
 RSpec/VoidExpect
 RSpec/Yield
+Rake/ClassDefinitionInTask
+Rake/Desc
+Rake/DuplicateNamespace
+Rake/DuplicateTask
+Rake/MethodDefinitionInTask
 Security/CompoundHash
 Security/Eval
 Security/IoMethods

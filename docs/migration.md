@@ -4,7 +4,7 @@ rbcop is RuboCop 1.92.2's command line reimplemented in Rust. It reads the same 
 
 Before switching, check two things:
 
-- **Plugins and custom cops.** rbcop runs RuboCop's 613 core cops and the plugins listed in [plugins.md](plugins.md) (rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot, rubocop-capybara, rubocop-thread_safety, rubocop-sorbet). Cops from other plugins and custom cops loaded with `require:` are not run natively: rbcop runs them with RuboCop when the bundle has the rubocop gem (or `rubocop` is on `PATH`), and otherwise names them on stderr (see [Plugins and custom cops](#plugins-and-custom-cops) below). A project that uses only core cops needs nothing else and never starts RuboCop.
+- **Plugins and custom cops.** rbcop runs RuboCop's 613 core cops and the plugins listed in [plugins.md](plugins.md) (rubocop-performance, rubocop-rails, rubocop-minitest, rubocop-rspec, rubocop-rspec_rails, rubocop-factory_bot, rubocop-capybara, rubocop-thread_safety, rubocop-sorbet, rubocop-packaging, rubocop-rake). Cops from other plugins and custom cops loaded with `require:` are not run natively: rbcop runs them with RuboCop when the bundle has the rubocop gem (or `rubocop` is on `PATH`), and otherwise names them on stderr (see [Plugins and custom cops](#plugins-and-custom-cops) below). A project that uses only core cops needs nothing else and never starts RuboCop.
 - **Options.** Every RuboCop 1.92.2 option is accepted (the `--server` options run in process); [known-gaps.md](known-gaps.md) lists every known difference.
 
 ## Gemfile

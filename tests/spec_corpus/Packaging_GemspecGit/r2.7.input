@@ -1,0 +1,68 @@
+==> .rubocop.yml 137 <==
+---
+plugins:
+- rubocop-packaging
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/000.rb 79 <==
+Gem::Specification.new do |spec|
+  spec.files = `git ls-files`.split("\n")
+end
+
+==> 001/001.rb 98 <==
+Gem::Specification.new do |s|
+  s.files         = `git ls-files LICENSE docs lib`.split("\n")
+end
+
+==> 002/002.rb 646 <==
+Gem::Specification.new do |spec|
+  spec.files = `git ls-files`.split + %w(
+                  lib/parser/lexer.rb
+                  lib/parser/ruby18.rb
+                  lib/parser/ruby19.rb
+                  lib/parser/ruby20.rb
+                  lib/parser/ruby21.rb
+                  lib/parser/ruby22.rb
+                  lib/parser/ruby23.rb
+                  lib/parser/ruby24.rb
+                  lib/parser/ruby25.rb
+                  lib/parser/ruby26.rb
+                  lib/parser/ruby27.rb
+                  lib/parser/ruby28.rb
+                  lib/parser/macruby.rb
+                  lib/parser/rubymotion.rb
+               )
+end
+
+==> 003/003.rb 191 <==
+Gem::Specification.new do |spec|
+  spec.files = Dir.chdir(File.expand_path("..", __FILE__)) do
+    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  end
+end
+
+==> 004/004.rb 85 <==
+Gem::Specification.new do |spec|
+  spec.executables = `git ls-files`.split("\n")
+end
+
+==> 005/005.rb 114 <==
+# Dummy comments.
+# Blank file.
+# Copyright 2020, Utkarsh Gupta <utkarsh@debian.org>
+# This is an important test.
+
+==> 006/006.rb 0 <==
+
+==> 007/007.rb 28 <==
+spec.files = `git ls-files`
+
+==> 008/008.rb 131 <==
+Gem::Specification.new do |spec|
+  spec.files = Dir["docs/**/*", "lib/**/*", "LICENSE"].reject { |f| File.directory?(f) }.sort
+end
+

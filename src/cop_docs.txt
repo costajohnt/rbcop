@@ -14263,6 +14263,107 @@ L   expect(Open3).to receive(:capture3)
 S Example: AllowedPatterns: ['_v\d+\z']
 L   # good
 L   :some_sym_v1
+C Packaging/BundlerSetupInTests
+S Details
+L This cop flags the `require "bundler/setup"` calls if they're
+L made from inside the tests directory.
+S Example
+L   # bad
+L   require "foo"
+L   require "bundler/setup"
+L 
+L   # good
+L   require "foo"
+C Packaging/GemspecGit
+S Details
+L This cop flags the usage of `git ls-files` in gemspec
+L and suggests to use a plain Ruby alternative, like `Dir`,
+L `Dir.glob`, or `Rake::FileList` instead.
+S Example
+L   # bad
+L   Gem::Specification.new do |spec|
+L     spec.files = `git ls-files`.split("\n")
+L   end
+L 
+L   # good
+L   Gem::Specification.new do |spec|
+L     spec.files = Dir["lib/**/*", "LICENSE", "README.md"]
+L   end
+L 
+L   # bad
+L   Gem::Specification.new do |spec|
+L     spec.files = Dir.chdir(File.expand_path(__dir__)) do
+L       `git ls-files -z`.split("\\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+L     end
+L   end
+L 
+L   # good
+L   require "rake/file_list"
+L 
+L   Gem::Specification.new do |spec|
+L     spec.files = Rake::FileList["**/*"].exclude(*File.read(".gitignore").split)
+L   end
+L 
+L   # bad
+L   Gem::Specification.new do |spec|
+L     spec.files        = `git ls-files -- lib/`.split("\n")
+L     spec.executables  = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+L   end
+L 
+L   # good
+L   Gem::Specification.new do |spec|
+L     spec.files        = Dir.glob("lib/**/*")
+L     spec.executables  = Dir.glob("bin/*").map{ |f| File.basename(f) }
+L   end
+C Packaging/RequireHardcodingLib
+S Details
+L This cop flags the `require` calls, from anywhere mapping to
+L the "lib" directory, except originating from lib/.
+S Example
+L   # bad
+L   require "../lib/foo/bar"
+L 
+L   # good
+L   require "foo/bar"
+L 
+L   # bad
+L   require File.expand_path("../../lib/foo", __FILE__)
+L 
+L   # good
+L   require "foo"
+L 
+L   # bad
+L   require File.expand_path("../../../lib/foo/bar/baz/qux", __dir__)
+L 
+L   # good
+L   require "foo/bar/baz/qux"
+L 
+L   # bad
+L   require File.dirname(__FILE__) + "/../../lib/baz/qux"
+L 
+L   # good
+L   require "baz/qux"
+C Packaging/RequireRelativeHardcodingLib
+S Details
+L This cop flags the `require_relative` calls, from anywhere
+L mapping to the "lib" directory, except originating from lib/ or
+L the gemspec file, and suggests to use `require` instead.
+S Example
+L   # bad
+L   require_relative "lib/foo"
+L 
+L   # good
+L   require "foo"
+L 
+L   # bad
+L   require_relative "../../lib/foo/bar"
+L 
+L   # good
+L   require "foo/bar"
+L 
+L   # good
+L   require_relative "foo/bar/bax"
+L   require_relative "baz/qux"
 C Performance/AncestorsInclude
 S Details
 L Identifies usages of `ancestors.include?` and change them to use `<=` instead.
@@ -23036,6 +23137,126 @@ L
 L   # good
 L   # There are no beginless ranges in ruby.
 L   User.where('age > ?', 18)
+C Rake/ClassDefinitionInTask
+S Details
+L Detects class or module definition in a task or namespace,
+L because it is defined to the top level.
+L It is confusing because the scope looks in the task or namespace,
+L but actually it is defined to the top level.
+S Example
+L   # bad
+L   task :foo do
+L     class C
+L     end
+L   end
+L 
+L   # bad
+L   namespace :foo do
+L     module M
+L     end
+L   end
+L 
+L   # good - It is also defined to the top level,
+L   #        but it looks expected behavior.
+L   class C
+L   end
+L   task :foo do
+L   end
+C Rake/Desc
+S Details
+L Rake task definition should have a description with `desc` method.
+L It is useful as a documentation of task. And Rake does not display
+L task that does not have `desc` by `rake -T`.
+L 
+L Note: This cop does not require description for the default task,
+L       because the default task is executed with `rake` without command.
+S Example
+L   # bad
+L   task :do_something
+L 
+L   # bad
+L   task :do_something do
+L   end
+L 
+L   # good
+L   desc 'Do something'
+L   task :do_something
+L 
+L   # good
+L   desc 'Do something'
+L   task :do_something do
+L   end
+C Rake/DuplicateNamespace
+S Details
+L If namespaces are defined with the same name, Rake executes the both namespaces
+L in definition order.
+L It is redundant. You should squash them into one definition.
+L This cop detects it.
+S Example
+L   # bad
+L   namespace :foo do
+L     task :bar do
+L     end
+L   end
+L   namespace :foo do
+L     task :hoge do
+L     end
+L   end
+L 
+L   # good
+L   namespace :foo do
+L     task :bar do
+L     end
+L     task :hoge do
+L     end
+L   end
+C Rake/DuplicateTask
+S Details
+L If tasks are defined with the same name, Rake executes the both tasks
+L in definition order.
+L It is misleading sometimes. You should squash them into one definition.
+L This cop detects it.
+S Example
+L   # bad
+L   task :foo do
+L     p 'foo 1'
+L   end
+L   task :foo do
+L     p 'foo 2'
+L   end
+L 
+L   # good
+L   task :foo do
+L     p 'foo 1'
+L     p 'foo 2'
+L   end
+C Rake/MethodDefinitionInTask
+S Details
+L Detects method definition in a task or namespace,
+L because it is defined to the top level.
+L It is confusing because the scope looks in the task or namespace,
+L but actually it is defined to the top level.
+S Example
+L   # bad
+L   task :foo do
+L     def helper_method
+L       do_something
+L     end
+L   end
+L 
+L   # bad
+L   namespace :foo do
+L     def helper_method
+L       do_something
+L     end
+L   end
+L 
+L   # good - It is also defined to the top level,
+L   #        but it looks expected behavior.
+L   def helper_method
+L   end
+L   task :foo do
+L   end
 C Security/CompoundHash
 S Details
 L Checks for implementations of the `hash` method which combine

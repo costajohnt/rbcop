@@ -1,0 +1,14 @@
+==> offenses exit=1 1214 <==
+000/000.rb:2:16: C: Packaging/GemspecGit: Avoid using git to produce lists of files. Downstreams often need to build your package in an environment that does not have git (on purpose). Use some pure Ruby alternative, like `Dir` or `Dir.glob`.
+001/001.rb:2:21: C: Packaging/GemspecGit: Avoid using git to produce lists of files. Downstreams often need to build your package in an environment that does not have git (on purpose). Use some pure Ruby alternative, like `Dir` or `Dir.glob`.
+002/002.rb:2:16: C: Packaging/GemspecGit: Avoid using git to produce lists of files. Downstreams often need to build your package in an environment that does not have git (on purpose). Use some pure Ruby alternative, like `Dir` or `Dir.glob`.
+003/003.rb:3:5: C: Packaging/GemspecGit: Avoid using git to produce lists of files. Downstreams often need to build your package in an environment that does not have git (on purpose). Use some pure Ruby alternative, like `Dir` or `Dir.glob`.
+004/004.rb:2:22: C: Packaging/GemspecGit: Avoid using git to produce lists of files. Downstreams often need to build your package in an environment that does not have git (on purpose). Use some pure Ruby alternative, like `Dir` or `Dir.glob`.
+
+==> autocorrect exit=1 1214 <==
+000/000.rb:2:16: C: Packaging/GemspecGit: Avoid using git to produce lists of files. Downstreams often need to build your package in an environment that does not have git (on purpose). Use some pure Ruby alternative, like `Dir` or `Dir.glob`.
+001/001.rb:2:21: C: Packaging/GemspecGit: Avoid using git to produce lists of files. Downstreams often need to build your package in an environment that does not have git (on purpose). Use some pure Ruby alternative, like `Dir` or `Dir.glob`.
+002/002.rb:2:16: C: Packaging/GemspecGit: Avoid using git to produce lists of files. Downstreams often need to build your package in an environment that does not have git (on purpose). Use some pure Ruby alternative, like `Dir` or `Dir.glob`.
+003/003.rb:3:5: C: Packaging/GemspecGit: Avoid using git to produce lists of files. Downstreams often need to build your package in an environment that does not have git (on purpose). Use some pure Ruby alternative, like `Dir` or `Dir.glob`.
+004/004.rb:2:22: C: Packaging/GemspecGit: Avoid using git to produce lists of files. Downstreams often need to build your package in an environment that does not have git (on purpose). Use some pure Ruby alternative, like `Dir` or `Dir.glob`.
+

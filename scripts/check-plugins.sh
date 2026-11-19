@@ -29,7 +29,7 @@ status=0
 # The cops rbcop implements (src/cops): a plugin ported in batches (rubocop-sorbet,
 # docs/sorbet-port-status.md) registers all its cops, and the unported ones go to the fallback.
 implemented=$(sed -n 's/^pub const NAME: &str = "\(.*\)";$/\1/p' "$root"/src/cops/*/*.rs)
-for spec in performance:Performance rails:Rails minitest:Minitest rspec:RSpec,RSpecRails,FactoryBot,Capybara thread_safety:ThreadSafety sorbet:Sorbet; do
+for spec in performance:Performance rails:Rails minitest:Minitest rspec:RSpec,RSpecRails,FactoryBot,Capybara thread_safety:ThreadSafety sorbet:Sorbet packaging:Packaging rake:Rake; do
   plugin=${spec%%:*} dept=${spec#*:}
   oracle=${RBCOP_PLUGIN_ORACLE:-${RBCOP_ORACLE:?set RBCOP_ORACLE}/../oracle-$plugin}
   [ -d "$oracle" ] || { echo "check-plugins: no oracles for rubocop-$plugin in $oracle" >&2; exit 1; }

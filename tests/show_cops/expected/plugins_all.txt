@@ -1,4 +1,4 @@
-# Available cops (826) + config for <project>: 
+# Available cops (835) + config for <project>: 
 # Department 'Bundler' (7):
 Bundler/DuplicatedGem:
   Description: Checks for duplicate gem entries in Gemfile.
@@ -3119,6 +3119,38 @@ Naming/VariableNumber:
   - x86_64
   AllowedPatterns: []
 
+# Department 'Packaging' (4):
+# Supports --autocorrect
+Packaging/BundlerSetupInTests:
+  Description: Using `bundler/setup` in tests is redundant. Consider removing it.
+  Enabled: true
+  VersionAdded: '0.4'
+  VersionChanged: '0.5'
+
+Packaging/GemspecGit:
+  Description: Avoid using git to produce lists of files. Downstreams often need to
+    build your package in an environment that does not have git (on purpose). Use some
+    pure Ruby alternative, like `Dir` or `Dir.glob`.
+  Enabled: true
+  VersionAdded: '0.1'
+  VersionChanged: '0.1'
+
+# Supports --autocorrect
+Packaging/RequireHardcodingLib:
+  Description: Avoid using `require` with relative path to lib. Use `require` with absolute
+    path instead.
+  Enabled: true
+  VersionAdded: '0.4'
+  VersionChanged: '0.5'
+
+# Supports --autocorrect
+Packaging/RequireRelativeHardcodingLib:
+  Description: Avoid using `require_relative` with relative path to lib. Use `require`
+    with absolute path instead.
+  Enabled: true
+  VersionAdded: '0.2'
+  VersionChanged: '0.5'
+
 # Department 'RSpec' (115):
 # Supports --autocorrect
 RSpec/AlignLeftLetBrace:
@@ -4128,6 +4160,35 @@ RSpec/Yield:
   Enabled: true
   VersionAdded: '1.32'
   Reference: https://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/Yield
+
+# Department 'Rake' (5):
+Rake/ClassDefinitionInTask:
+  Description: Do not define a class or module in rake task, because it will be defined
+    to the top level.
+  Enabled: true
+  VersionAdded: 0.3.0
+
+# Supports --autocorrect
+Rake/Desc:
+  Description: Describe the task with `desc` method.
+  Enabled: true
+  VersionAdded: 0.1.0
+
+Rake/DuplicateNamespace:
+  Description: Do not define namespace with the same name
+  Enabled: true
+  VersionAdded: 0.5.0
+
+Rake/DuplicateTask:
+  Description: Do not define tasks with the same name
+  Enabled: true
+  VersionAdded: 0.4.0
+
+Rake/MethodDefinitionInTask:
+  Description: Do not define a method in rake task, because it will be defined to the
+    top level.
+  Enabled: true
+  VersionAdded: 0.2.0
 
 # Department 'Security' (7):
 Security/CompoundHash:

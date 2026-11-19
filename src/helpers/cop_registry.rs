@@ -93,6 +93,22 @@ pub const NATIVE_PLUGINS: &[NativePlugin] = &[
         default_yml: include_str!("../../config/plugins/rubocop-sorbet.yml"),
         obsoletion: Some(include_str!("../../config/plugins/rubocop-sorbet-obsoletion.yml")),
     },
+    NativePlugin {
+        gem: "rubocop-packaging",
+        version: "0.6.0",
+        plugin_class: "RuboCop::Packaging::Plugin",
+        departments: &["Packaging"],
+        default_yml: include_str!("../../config/plugins/rubocop-packaging.yml"),
+        obsoletion: None,
+    },
+    NativePlugin {
+        gem: "rubocop-rake",
+        version: "0.7.1",
+        plugin_class: "RuboCop::Rake::Plugin",
+        departments: &["Rake"],
+        default_yml: include_str!("../../config/plugins/rubocop-rake.yml"),
+        obsoletion: None,
+    },
 ];
 
 pub fn native_plugin(gem: &str) -> Option<&'static NativePlugin> {

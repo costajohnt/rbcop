@@ -1,0 +1,76 @@
+==> .rubocop.yml 132 <==
+---
+plugins:
+- rubocop-rake
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/Rakefile 177 <==
+task :foo do
+  def helper_method
+    do_something
+  end
+end
+
+task :foo do
+  do_something
+
+  def helper_method
+    do_something
+  end
+
+  def self.foo
+    do_something2
+  end
+end
+
+==> 001/Rakefile 106 <==
+namespace 'foo' do
+  def helper_method
+    do_something
+  end
+
+  task :bar do
+    helper_method
+  end
+end
+
+==> 002/Rakefile 30 <==
+def foo
+end
+
+task :foo do
+end
+
+==> 003/Rakefile 351 <==
+task :foo do
+  Class.new do
+    def initialize
+      do_something
+    end
+  end
+
+  Module.new do
+    def foo
+      do_something
+    end
+  end
+
+  # C will be defined to the top level scope,
+  # but it should be detected by another cop.
+  class C
+    def foo
+      do_something
+    end
+  end
+
+  module M
+    def foo
+      do_something
+    end
+  end
+end
+
