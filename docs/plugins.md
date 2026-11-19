@@ -15,6 +15,8 @@ running the pinned plugin version below.
 | rubocop-capybara | 3.1.0 | Capybara, Capybara/RSpec | all 25 | #285, #673 |
 | rubocop-thread_safety | 0.8.0 | ThreadSafety | all 10 | #755 |
 | rubocop-sorbet | 0.17.2 | Sorbet | 63 of 63 (docs/sorbet-port-status.md) | #760 |
+| rubocop-packaging | 0.6.0 | Packaging | all 4 | |
+| rubocop-rake | 0.7.1 | Rake | all 5 | |
 
 Each version is the newest release that supports RuboCop 1.92.2 (rubocop-performance 1.27.0
 requires `rubocop >= 1.89.0, < 2.0`, released 2026-08-16; rubocop-rails 2.38.0 requires
@@ -26,7 +28,8 @@ requires `rubocop ~> 1.72, >= 1.72.1`; rubocop-capybara 3.1.0 requires `rubocop 
 2026-10-16; rubocop-thread_safety 0.8.0 requires `rubocop ~> 1.89`, released 2026-09-14;
 rubocop-sorbet 0.17.2 declares no rubocop dependency and refuses to load below `rubocop >= 1.75.2`,
 released 2026-10-20; it needs rbi, rbs and spoom, so the oracle host and GitHub CI install those
-too, at the versions in .github/workflows/ci.yml). The gem's `config/default.yml` is vendored
+too, at the versions in .github/workflows/ci.yml; rubocop-packaging 0.6.0 requires `rubocop >= 1.72.1, < 2.0`, released 2025-03-23;
+rubocop-rake 0.7.1 requires `rubocop >= 1.72.1`, released 2025-02-16). The gem's `config/default.yml` is vendored
 as `config/plugins/<gem>.yml` (MIT, `config/plugins/LICENSE-<gem>`), so the gem need not be
 installed; a different installed version is ignored.
 

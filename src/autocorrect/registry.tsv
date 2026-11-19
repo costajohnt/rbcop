@@ -1090,3 +1090,12 @@ Sorbet/EnforceSigilOrder	1
 Sorbet/EnforceSingleSigil	1
 Sorbet/ForbidComparableTEnum	0
 Sorbet/MultipleTEnumValues	0
+Packaging/BundlerSetupInTests	1
+Packaging/GemspecGit	0
+Packaging/RequireHardcodingLib	1
+Packaging/RequireRelativeHardcodingLib	1
+Rake/ClassDefinitionInTask	0
+Rake/Desc	1
+Rake/DuplicateTask	0
+Rake/DuplicateNamespace	0
+Rake/MethodDefinitionInTask	0

@@ -1,0 +1,56 @@
+==> .rubocop.yml 132 <==
+---
+plugins:
+- rubocop-rake
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/Rakefile 34 <==
+task :foo
+
+task :foo do
+  bar
+end
+
+==> 001/Rakefile 82 <==
+tap do
+  task :foo
+end
+
+tap do
+  something 'foo'
+  task :foo do
+    bar
+  end
+end
+
+==> 002/Rakefile 22 <==
+begin
+  task :foo
+end
+
+==> 003/Rakefile 56 <==
+desc 'Do foo'
+task :foo do
+end
+
+desc 'Do bar'
+task :bar
+
+==> 004/Rakefile 53 <==
+task default: :spec
+
+task default: [:spec, :rubocop]
+
+==> 005/Rakefile 10 <==
+task.name
+
+==> 006/Rakefile 38 <==
+task release: 'changelog:check_clean'
+
+==> 007/Rakefile 60 <==
+task release: ['changelog:check_clean', 'changelog:create']
+
