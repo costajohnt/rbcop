@@ -93,12 +93,13 @@ class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
   def finished(_inspected_files)
     here = [File.dirname(File.expand_path(__FILE__)), File.dirname(File.realpath(__FILE__))]
     $LOADED_FEATURES.each { |f| output.puts "rbcop-fallback-loaded\t#{esc(f)}" unless f.start_with?(*here) }
+    # Registry#names and the loaded cop classes: Registry#cops would load every lazily registered
+    # cop (0.3 s), and a cop that was never loaded did not run.
     known = ENV.fetch('RBCOP_REGISTRY', '').split(',').to_set
-    cops = RuboCop::Cop::Registry.global.cops
-    output.puts 'rbcop-fallback-unknown-cops' unless cops.all? { |c| known.include?(c.cop_name) }
+    output.puts 'rbcop-fallback-unknown-cops' unless RuboCop::Cop::Registry.global.names.all? { |n| known.include?(n) }
     except = Array(options[:except])
-    output.puts 'rbcop-fallback-external-dependency' if cops.any? do |c|
-      !except.include?(c.cop_name) &&
+    output.puts 'rbcop-fallback-external-dependency' if ObjectSpace.each_object(Class).any? do |c|
+      c < RuboCop::Cop::Base && c.name && !except.include?(c.cop_name) &&
         c.instance_method(:external_dependency_checksum).owner != RuboCop::Cop::Base
     end
     output.puts 'rbcop-fallback-done'
