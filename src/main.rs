@@ -2137,8 +2137,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                     jobs.iter().map(|(p, _)| p).filter(|p| plugin_files.contains(*p)).cloned().collect();
                 if unrunnable {
                     // Each file's offenses are kept in the result cache (#805), keyed on what the
-                    // child's depend on besides the file and its config: the RuboCop it runs and
-                    // the gems and required Ruby code it loads. Not under -a/-A, where it corrects.
+                    // child's depend on besides the file and its config: the RuboCop it runs, the
+                    // gems and required Ruby code it loads, and (from the last run with those) the
+                    // Ruby files it loaded. Not under -a/-A, where it corrects.
                     let cache = result_cache.as_ref().filter(|_| cli.autocorrect.is_none());
                     let inputs = cache.map(|_| {
                         let lock = fallback::bundle_lock().and_then(|l| fs::read(l).ok()).unwrap_or_default();
@@ -2153,59 +2154,109 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                             format!("{env:?}").as_bytes(),
                         ])
                     });
+                    // The last run's record: whether its registry had a cop rbcop's does not, then
+                    // the files it loaded.
+                    let record_key = inputs.as_ref().map(|i| cache::digest(&[b"fallback-record", i.as_bytes()]));
+                    let record = cache.zip(record_key.as_ref()).and_then(|(c, k)| c.load_record(k));
+                    let record: Option<(bool, Vec<String>)> = record.and_then(|r| {
+                        let mut lines = r.lines();
+                        let unknown = lines.next()? == "1";
+                        Some((unknown, lines.map(String::from).collect()))
+                    });
+                    let restrict = child_cops_known && !record.as_ref().is_some_and(|r| r.0);
+                    let selected: Vec<&(PathBuf, std::sync::Arc<Resolved>)> = jobs
+                        .iter()
+                        .filter(|(p, c)| !plugin_files.contains(p) && (!restrict || needs_child(p, c)))
+                        .collect();
+                    let signature = |c: &std::sync::Arc<Resolved>, loaded: &str| {
+                        format!(
+                            "{}|fallback|{}|{loaded}",
+                            signatures[&(std::sync::Arc::as_ptr(c) as usize)],
+                            inputs.as_deref().unwrap_or_default()
+                        )
+                    };
+                    let mut bytes: std::collections::HashMap<&PathBuf, Vec<u8>> = Default::default();
+                    let mut hits = Vec::new();
                     let mut rest = Vec::new();
-                    let mut keys = Vec::new();
-                    for (p, c) in jobs.iter().filter(|(p, c)| !plugin_files.contains(p) && needs_child(p, c)) {
-                        if let (Some(cache), Some(inputs)) = (cache, &inputs)
-                            && let Ok(bytes) = fs::read(p)
-                            && let Some(key) = cache.key(
-                                p,
-                                &format!("{}|fallback|{inputs}", signatures[&(std::sync::Arc::as_ptr(c) as usize)]),
-                                &bytes,
-                            )
+                    let loaded_then = record.as_ref().map(|r| fallback::loaded_digest(&r.1));
+                    for (p, c) in &selected {
+                        if let Some(cache) = cache
+                            && let Ok(b) = fs::read(p)
                         {
-                            if let Some(report) = cache.load(&key, &bytes) {
+                            if let Some(loaded) = &loaded_then
+                                && let Some(key) = cache.key(p, &signature(c, loaded), &b)
+                                && let Some(report) = cache.load(&key, &b)
+                            {
                                 fallback_offenses.insert(p.clone(), report.offenses);
+                                hits.push(p.clone());
                                 continue;
                             }
-                            keys.push((p.clone(), key, bytes));
+                            bytes.insert(p, b);
                         }
                         rest.push(p.clone());
                     }
-                    // What the required code prints while it loads (#804) comes only from a RuboCop
-                    // start: with no file left to give it, it still starts on one, unless a run with
-                    // the same inputs printed nothing to stderr. A run that printed anything keeps
-                    // nothing, so a warm run prints the same.
-                    let quiet_key = inputs.as_ref().map(|i| cache::digest(&[b"fallback-quiet", i.as_bytes()]));
-                    let known_quiet = matches!((cache, &quiet_key), (Some(c), Some(k)) if c.load(k, b"").is_some());
+                    // RuboCop loads the required code on every run, printing what it prints there
+                    // (#804): the child always starts, on one file at least.
                     if rest.is_empty()
-                        && !known_quiet
-                        && let Some((p, _)) = jobs.iter().find(|(p, _)| !plugin_files.contains(p))
+                        && let Some((p, _)) =
+                            selected.first().copied().or_else(|| jobs.iter().find(|(p, _)| !plugin_files.contains(p)))
                     {
                         rest.push(p.clone());
                     }
-                    let (found, uncached, quiet) = fallback::run(&rest, &cwd, &names, child)?;
-                    let empty = |text: String| FileReport {
-                        offenses: Vec::new(),
-                        text,
-                        warnings: Vec::new(),
-                        abort: None,
-                        diffs: Vec::new(),
+                    let mut found = fallback::run(&rest, &cwd, &names, child)?;
+                    // Its registry has a cop rbcop could not select files for, or it loaded a Ruby
+                    // file the record the cached offenses were looked up with does not list: it
+                    // runs again on every file those may be wrong for, and nothing found before is
+                    // used. (It may load fewer: a run on fewer files reaches less lazily loaded code.)
+                    let then: Vec<String> = record.as_ref().map(|r| r.1.clone()).unwrap_or_default();
+                    let new_in = |found: &fallback::Found| -> Vec<String> {
+                        let known: std::collections::HashSet<&String> = then.iter().collect();
+                        let mut new: Vec<String> =
+                            found.loaded.iter().filter(|f| !known.contains(f)).cloned().collect();
+                        new.dedup();
+                        new
                     };
-                    if let (true, false, Some(cache), Some(key)) = (quiet, rest.is_empty(), cache, &quiet_key) {
-                        cache.save_quiet(key, &empty(String::new()));
-                    }
-                    for (p, key, bytes) in keys.into_iter().filter(|(p, ..)| quiet && !uncached.contains(p)) {
-                        let Some(cache) = cache else { break };
-                        let report = FileReport {
-                            offenses: found.get(&p).cloned().unwrap_or_default(),
-                            ..empty(String::from_utf8_lossy(&bytes).into_owned())
+                    let unknown = restrict && found.unknown_cops;
+                    let moved = !hits.is_empty() && !new_in(&found).is_empty();
+                    if unknown || moved {
+                        let again: Vec<PathBuf> = if unknown {
+                            jobs.iter().filter(|(p, _)| !plugin_files.contains(p)).map(|(p, _)| p.clone()).collect()
+                        } else {
+                            selected.iter().map(|(p, _)| p.clone()).collect()
                         };
-                        cache.save_quiet(&key, &report);
+                        for p in &hits {
+                            fallback_offenses.remove(p);
+                        }
+                        found = fallback::run(&again, &cwd, &names, child)?;
+                        rest = again;
                     }
-                    fallback_offenses.extend(found);
+                    if let (Some(cache), Some(key)) = (cache, &record_key) {
+                        let flag = if found.unknown_cops { "1" } else { "0" };
+                        let loaded: Vec<String> = then.iter().cloned().chain(new_in(&found)).collect();
+                        cache.save_record(key, &format!("{flag}\n{}", loaded.join("\n")));
+                        // As Runner#save_in_cache: nothing after a cop's error or warning; nor
+                        // when a cop's external dependency (unknown to rbcop) or what the child
+                        // printed to stderr could change between runs.
+                        if found.quiet && !found.external_dependency {
+                            let loaded = fallback::loaded_digest(&loaded);
+                            let ran: std::collections::HashSet<&PathBuf> = rest.iter().collect();
+                            for (p, c) in jobs.iter().filter(|(p, _)| ran.contains(p) && !found.uncached.contains(p)) {
+                                let Some(b) = bytes.get(p).cloned().or_else(|| fs::read(p).ok()) else { continue };
+                                let Some(key) = cache.key(p, &signature(c, &loaded), &b) else { continue };
+                                let report = FileReport {
+                                    offenses: found.offenses.get(p).cloned().unwrap_or_default(),
+                                    text: String::from_utf8_lossy(&b).into_owned(),
+                                    warnings: Vec::new(),
+                                    abort: None,
+                                    diffs: Vec::new(),
+                                };
+                                cache.save_quiet(&key, &report);
+                            }
+                        }
+                    }
+                    fallback_offenses.extend(found.offenses);
                 }
-                fallback_offenses.extend(fallback::run(&whole, &cwd, &[], child)?.0);
+                fallback_offenses.extend(fallback::run(&whole, &cwd, &[], child)?.offenses);
             }
         } else {
             eprintln!("{}", fallback::notice(&skipped, store.requires_ruby_code(), &copless));
@@ -2438,9 +2489,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             if let Some(child) = fallback_per_file {
                 let one = std::slice::from_ref(path);
                 if plugin_files.contains(path) {
-                    fallback_offenses.extend(fallback::run(one, &cwd, &[], child)?.0);
+                    fallback_offenses.extend(fallback::run(one, &cwd, &[], child)?.offenses);
                 } else if unrunnable {
-                    fallback_offenses.extend(fallback::run(one, &cwd, &names, child)?.0);
+                    fallback_offenses.extend(fallback::run(one, &cwd, &names, child)?.offenses);
                 }
             }
             let linted = match linted.take() {

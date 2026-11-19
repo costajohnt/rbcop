@@ -396,10 +396,22 @@ fn plain_require_loads_what_the_feature_requires() {
 
 /// rbcop under RBCOP_FALLBACK=1 and RuboCop print the same stdout and stderr and exit alike.
 fn same(dir: &Path, env: &[(&str, &str)], args: &[&str]) {
+    same_with(dir, env, args, false);
+}
+
+/// `same` with RuboCop's result cache on too (both caches under HOME, `dir`).
+fn same_cached(dir: &Path, env: &[(&str, &str)], args: &[&str]) {
+    same_with(dir, env, args, true);
+}
+
+fn same_with(dir: &Path, env: &[(&str, &str)], args: &[&str], cache: bool) {
     let mut ours = common::command(env!("CARGO_BIN_EXE_rbcop"));
     ours.env("HOME", dir).env("RBCOP_FALLBACK", "1");
     let mut theirs = common::command("rubocop");
-    theirs.env("HOME", dir).args(["--cache", "false"]);
+    theirs.env("HOME", dir);
+    if !cache {
+        theirs.args(["--cache", "false"]);
+    }
     for (k, v) in env {
         ours.env(k, v);
         theirs.env(k, v);
@@ -989,7 +1001,7 @@ fn fallback_gets_only_the_files_its_cops_may_inspect() {
     // No file for any of its cops: RuboCop still starts, on one file, for what the required code
     // prints while it loads...
     assert_eq!(files("Custom/NoFoo:\n  Enabled: false\n").as_deref(), Some("Gemfile \n"));
-    // ...unless the result cache knows it printed nothing.
+    // ...also with the result cache: RuboCop loads the required code on every run.
     let cached = |config: &str| {
         fs::write(dir.join(".rubocop.yml"), format!("{CONFIG}{config}")).unwrap();
         let _ = fs::remove_file(dir.join("log"));
@@ -1000,8 +1012,9 @@ fn fallback_gets_only_the_files_its_cops_may_inspect() {
         assert!(out.status.code().is_some_and(|c| c < 2), "{}", text(&out.stderr));
         fs::read_to_string(dir.join("log")).ok()
     };
-    assert_eq!(cached("Custom/NoFoo:\n  Enabled: false\n").as_deref(), Some("Gemfile \n"));
-    assert_eq!(cached("Custom/NoFoo:\n  Enabled: false\n"), None);
+    for _ in 0..2 {
+        assert_eq!(cached("Custom/NoFoo:\n  Enabled: false\n").as_deref(), Some("Gemfile \n"));
+    }
     fs::remove_dir_all(dir.join("cache")).unwrap();
     // A cop class outside RuboCop::Cop is named as Badge.for names it (`CustomCops/NoBar`).
     fs::write(dir.join("no_bar.rb"), NO_BAR).unwrap();
@@ -1044,8 +1057,8 @@ fn fallback_gets_only_the_files_its_cops_may_inspect() {
     let _ = fs::remove_dir_all(&dir);
 }
 
-/// The child's offenses are kept in the result cache (#805): a warm run starts no RuboCop for an
-/// unchanged file, and a changed file, a changed required Ruby file, or a file a cop raised an
+/// The child's offenses are kept in the result cache (#805): a warm run gives RuboCop no
+/// unchanged file but one (it loads the required code every run), and a changed file, a changed required Ruby file, or a file a cop raised an
 /// error or a warning on is inspected again.
 #[test]
 fn fallback_results_are_cached() {
@@ -1081,10 +1094,11 @@ fn fallback_results_are_cached() {
         fs::read_to_string(dir.join("log")).unwrap_or_default()
     };
     assert_eq!(run(), "a.rb b.rb \n");
-    assert_eq!(run(), "");
+    // RuboCop loads the required code on every run: the child starts on one file at least.
+    assert_eq!(run(), "a.rb \n");
     fs::write(dir.join("b.rb"), "# frozen_string_literal: true\n\nfoo(4)\n").unwrap();
     assert_eq!(run(), "b.rb \n");
-    assert_eq!(run(), "");
+    assert_eq!(run(), "a.rb \n");
     fs::write(dir.join("no_foo.rb"), format!("{COP}\n")).unwrap();
     assert_eq!(run(), "a.rb b.rb \n");
     fs::write(dir.join("warn"), "").unwrap();
@@ -1099,5 +1113,139 @@ fn fallback_results_are_cached() {
         assert_eq!(run(), "a.rb b.rb \n");
         assert_eq!(fs::read_to_string(dir.join("stderr")).unwrap(), "warning: loud\n");
     }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+const FOO_COP: &str = "  def on_send(node)\n    add_offense(node, message: 'foo') if node.method?(:foo)\n  end\nend\n";
+const REQUIRE_ONLY: &str = "AllCops:\n  NewCops: disable\n  SuggestExtensions: false\n";
+
+/// #805 review F1: a cop class rbcop cannot read in the required code (top level, `Class.new`)
+/// keeps every file, though another cop class there is read and restricts its own.
+#[test]
+fn unread_cop_classes_get_every_file() {
+    if !have_rubocop() {
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
+        return;
+    }
+    let dir = project("unread");
+    fs::write(
+        dir.join(".rubocop.yml"),
+        format!("require:\n  - ./cops.rb\n{REQUIRE_ONLY}CustomCops/NoBar:\n  Include:\n    - b.rb\n"),
+    )
+    .unwrap();
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nfoo\n").unwrap();
+    fs::write(dir.join("b.rb"), "# frozen_string_literal: true\n\nbar\nfoo\n").unwrap();
+    for unread in [
+        format!("class NoFoo < RuboCop::Cop::Base\n{FOO_COP}"),
+        format!("module Other\nend\nOther::NoFoo = Class.new(RuboCop::Cop::Base) do\n{FOO_COP}"),
+    ] {
+        fs::write(dir.join("cops.rb"), format!("{NO_BAR}\n{unread}")).unwrap();
+        same(&dir, &[], &["-f", "e", "a.rb", "b.rb"]);
+        same_cached(&dir, &[], &["-f", "e", "a.rb", "b.rb"]);
+        same_cached(&dir, &[], &["-f", "e", "a.rb", "b.rb"]);
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// #805 review F2: a file the required code loads through $LOAD_PATH is part of what a warm run's
+/// cached offenses depend on.
+#[test]
+fn cached_fallback_offenses_follow_loaded_files() {
+    if !have_rubocop() {
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
+        return;
+    }
+    let dir = project("loaded");
+    fs::create_dir_all(dir.join("tools/rubocop/lib/acme")).unwrap();
+    fs::write(dir.join(".rubocop.yml"), format!("require:\n  - ./tools/rubocop/loader.rb\n{REQUIRE_ONLY}")).unwrap();
+    fs::write(
+        dir.join("tools/rubocop/loader.rb"),
+        "$LOAD_PATH.unshift(File.expand_path('lib', __dir__))\nrequire 'acme/messages'\nmodule RuboCop\n  \
+         module Cop\n    module Custom\n      class NoFoo < Base\n        def on_send(node)\n          \
+         add_offense(node, message: Acme::MSG) if node.method?(:foo)\n        end\n      end\n    end\n  end\nend\n",
+    )
+    .unwrap();
+    let messages = dir.join("tools/rubocop/lib/acme/messages.rb");
+    fs::write(&messages, "module Acme\n  MSG = 'old message'\nend\n").unwrap();
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nfoo\n").unwrap();
+    for _ in 0..2 {
+        same_cached(&dir, &[], &["-f", "e", "a.rb"]);
+    }
+    fs::write(&messages, "module Acme\n  MSG = 'new message'\nend\n").unwrap();
+    same_cached(&dir, &[], &["-f", "e", "a.rb"]);
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// #805 review F3: a custom cop's external dependency (Base#external_dependency_checksum) is
+/// something rbcop cannot key on, so its offenses are not cached.
+#[test]
+fn external_dependencies_are_not_cached() {
+    if !have_rubocop() {
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
+        return;
+    }
+    let dir = project("external");
+    fs::write(dir.join(".rubocop.yml"), format!("require:\n  - ./cops.rb\n{REQUIRE_ONLY}")).unwrap();
+    fs::write(
+        dir.join("cops.rb"),
+        "require 'digest'\nmodule RuboCop\n  module Cop\n    module Custom\n      class Banned < Base\n        \
+         def external_dependency_checksum\n          Digest::SHA1.hexdigest(File.read('banned.txt'))\n        \
+         end\n\n        def on_send(node)\n          add_offense(node, message: 'banned') if \
+         File.read('banned.txt').split.include?(node.method_name.to_s)\n        end\n      end\n    end\n  \
+         end\nend\n",
+    )
+    .unwrap();
+    fs::write(dir.join("banned.txt"), "foo\n").unwrap();
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nfoo\nbar\n").unwrap();
+    same_cached(&dir, &[], &["-f", "e", "a.rb"]);
+    fs::write(dir.join("banned.txt"), "bar\n").unwrap();
+    same_cached(&dir, &[], &["-f", "e", "a.rb"]);
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// #805 review F4: what the required code prints on stdout while it loads comes on every run,
+/// warm too.
+#[test]
+fn required_code_output_comes_every_run() {
+    if !have_rubocop() {
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
+        return;
+    }
+    let dir = project("loud");
+    let cop = format!(
+        "module RuboCop\n  module Cop\n    module Custom\n      class NoFoo < Base\n{FOO_COP}    end\n  end\nend\n"
+    );
+    fs::write(dir.join("cops.rb"), format!("puts 'acme cops loaded'\n{cop}")).unwrap();
+    fs::write(dir.join(".rubocop.yml"), format!("require:\n  - ./cops.rb\n{REQUIRE_ONLY}")).unwrap();
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nfoo\n").unwrap();
+    fs::write(dir.join("b.rb"), "# frozen_string_literal: true\n\nfoo\n").unwrap();
+    for _ in 0..2 {
+        same_cached(&dir, &[], &["-f", "e", "a.rb"]);
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// #805 review F5: what the required code prints on stderr while it loads, depending on anything
+/// (an environment variable here), comes on a cached run with no file for its cops (#804).
+#[test]
+fn required_code_stderr_comes_without_files() {
+    if !have_rubocop() {
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
+        return;
+    }
+    let dir = project("stderr");
+    let cop = format!(
+        "module RuboCop\n  module Cop\n    module Custom\n      class NoFoo < Base\n{FOO_COP}    end\n  end\nend\n"
+    );
+    fs::write(dir.join("b.rb"), "# frozen_string_literal: true\n\nfoo\n").unwrap();
+    fs::write(dir.join("cops.rb"), &cop).unwrap();
+    fs::write(dir.join("consts.rb"), "warn 'acme cops: STRICT mode is deprecated' if ENV['ACME_STRICT']\n").unwrap();
+    fs::write(
+        dir.join(".rubocop.yml"),
+        format!("require:\n  - ./consts.rb\n  - ./cops.rb\n{REQUIRE_ONLY}Custom/NoFoo:\n  Include:\n    - a.rb\n"),
+    )
+    .unwrap();
+    same_cached(&dir, &[], &["-f", "e", "b.rb"]);
+    same_cached(&dir, &[("ACME_STRICT", "1")], &["-f", "e", "b.rb"]);
     let _ = fs::remove_dir_all(&dir);
 }

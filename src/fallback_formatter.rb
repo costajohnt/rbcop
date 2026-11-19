@@ -1,6 +1,7 @@
 # Loaded by `rubocop --require` when rbcop runs RuboCop for the cops it does not implement
 # (src/fallback.rs). One line per offense (and `rbcop-fallback-uncached<TAB>path` after a file a cop
-# raised an error or a warning on), then `rbcop-fallback-done`. Offenses are tab-separated:
+# raised an error or a warning on), what the cache needs (see `finished`), then
+# `rbcop-fallback-done`. Offenses are tab-separated:
 #   path  begin_byte  end_byte  severity  correctable  corrected  global  cop  message  disabled  justification
 #   corrections
 # (justification empty when there is none; disabled offenses come only under --display-suppressed)
@@ -85,8 +86,21 @@ class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
     output.flush
   end
 
-  # rbcop checks for this line: RuboCop ran to the end (Runner calls it from an ensure).
+  # rbcop checks for this line: RuboCop ran to the end (Runner calls it from an ensure). Before
+  # it, what rbcop's cache of these offenses depends on (#805): the Ruby files loaded (but this
+  # one, which lives in a fresh directory each run), whether the registry has a cop rbcop's does
+  # not, and whether a cop it may run has an external dependency (ResultCache#context_checksum).
   def finished(_inspected_files)
+    here = [File.dirname(File.expand_path(__FILE__)), File.dirname(File.realpath(__FILE__))]
+    $LOADED_FEATURES.each { |f| output.puts "rbcop-fallback-loaded\t#{esc(f)}" unless f.start_with?(*here) }
+    known = ENV.fetch('RBCOP_REGISTRY', '').split(',').to_set
+    cops = RuboCop::Cop::Registry.global.cops
+    output.puts 'rbcop-fallback-unknown-cops' unless cops.all? { |c| known.include?(c.cop_name) }
+    except = Array(options[:except])
+    output.puts 'rbcop-fallback-external-dependency' if cops.any? do |c|
+      !except.include?(c.cop_name) &&
+        c.instance_method(:external_dependency_checksum).owner != RuboCop::Cop::Base
+    end
     output.puts 'rbcop-fallback-done'
   end
 

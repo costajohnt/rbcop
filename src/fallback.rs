@@ -193,9 +193,35 @@ pub fn may_opt_in(text: &str, cops: &[&str]) -> bool {
         })
 }
 
-/// The child's offenses by file, the files it reports uncached, and whether it wrote nothing to
-/// stderr.
-pub type Found = (HashMap<PathBuf, Vec<Offense>>, HashSet<PathBuf>, bool);
+/// What a child run reports.
+#[derive(Default)]
+pub struct Found {
+    /// Its offenses by file.
+    pub offenses: HashMap<PathBuf, Vec<Offense>>,
+    /// The files a cop raised an error or a warning on (Runner#save_in_cache keeps nothing then).
+    pub uncached: HashSet<PathBuf>,
+    /// It wrote nothing to stderr.
+    pub quiet: bool,
+    /// The Ruby files it loaded ($LOADED_FEATURES, as ResultCache's checksum hashes them).
+    pub loaded: Vec<String>,
+    /// Its registry has a cop rbcop's does not (RBCOP_REGISTRY): one rbcop cannot select files for.
+    pub unknown_cops: bool,
+    /// A cop it may run declares an external dependency (Base#external_dependency_checksum),
+    /// which ResultCache hashes and rbcop cannot.
+    pub external_dependency: bool,
+}
+
+/// A digest of the Ruby files a child loaded (`Found::loaded`): each path with its size and
+/// modification time (a missing file, or a feature without a path, as such).
+pub fn loaded_digest(loaded: &[String]) -> String {
+    let mut text = String::new();
+    for f in loaded {
+        let meta = std::fs::metadata(f).ok();
+        let stamp = meta.as_ref().map(|m| (m.len(), m.modified().ok()));
+        text.push_str(&format!("{f}\0{stamp:?}\n"));
+    }
+    crate::cache::digest(&[text.as_bytes()])
+}
 
 /// What the RuboCop subprocess needs from the command line.
 #[derive(Clone, Copy)]
@@ -218,9 +244,9 @@ pub struct Child<'a> {
 /// rbcop then inspects the result; its offenses refer to the source before correction.
 pub fn run(files: &[PathBuf], cwd: &Path, implemented: &[&str], c: Child) -> Result<Found, String> {
     let mut out = HashMap::new();
-    let mut uncached = HashSet::new();
+    let mut found = Found::default();
     if files.is_empty() {
-        return Ok((out, uncached, false));
+        return Ok(found);
     }
     let program = c.program;
     announce(program, c.what);
@@ -331,7 +357,8 @@ pub fn run(files: &[PathBuf], cwd: &Path, implemented: &[&str], c: Child) -> Res
     drop(dir);
     let output = output.map_err(|e| format!("rbcop: RBCOP_FALLBACK: cannot run {program}: {e}"))?;
     let _ = std::io::Write::write_all(&mut std::io::stderr(), &output.stderr);
-    let (status, quiet) = (output.status, output.stderr.is_empty());
+    let status = output.status;
+    found.quiet = output.stderr.is_empty();
     // 0: no offenses, 1: offenses; anything else is RuboCop failing (its stderr was passed through).
     // The formatter's last line tells a run from a wrapper failing with 1 (an rbenv shim with the
     // project's Ruby missing, `bundle exec` outside an installed bundle).
@@ -345,8 +372,23 @@ pub fn run(files: &[PathBuf], cwd: &Path, implemented: &[&str], c: Child) -> Res
     let mut names: HashMap<String, &'static str> = HashMap::new();
     for line in body.lines() {
         if let Some(path) = line.strip_prefix("rbcop-fallback-uncached\t") {
-            uncached.insert(PathBuf::from(unescape(path)));
+            found.uncached.insert(PathBuf::from(unescape(path)));
             continue;
+        }
+        if let Some(path) = line.strip_prefix("rbcop-fallback-loaded\t") {
+            found.loaded.push(unescape(path));
+            continue;
+        }
+        match line {
+            "rbcop-fallback-unknown-cops" => {
+                found.unknown_cops = true;
+                continue;
+            }
+            "rbcop-fallback-external-dependency" => {
+                found.external_dependency = true;
+                continue;
+            }
+            _ => {}
         }
         let mut f: Vec<&str> = line.split('\t').collect();
         // The corrections field is optional (a stand-in child may print the eleven before it).
@@ -378,7 +420,8 @@ pub fn run(files: &[PathBuf], cwd: &Path, implemented: &[&str], c: Child) -> Res
         };
         out.entry(path).or_insert_with(Vec::new).push(offense);
     }
-    Ok((out, uncached, quiet))
+    found.offenses = out;
+    Ok(found)
 }
 
 /// One `begin,end,hex(replacement)` correction of the formatter's last field.

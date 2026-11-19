@@ -220,16 +220,31 @@ impl Cache {
     /// (the caller knows the offenses are those of a plain inspection), but warns as RuboCop does
     /// either way.
     pub fn save(&self, key: &str, report: &FileReport, write: bool) {
-        self.store(key, report, write, true);
+        self.store(key, &entry_text(report), write, true);
     }
 
     /// `save` of what RuboCop does not save itself (the fallback child's offenses, #805): never
     /// warns, so a cache that cannot be written warns only as RuboCop would.
     pub fn save_quiet(&self, key: &str, report: &FileReport) {
-        self.store(key, report, true, false);
+        self.store(key, &entry_text(report), true, false);
     }
 
-    fn store(&self, key: &str, report: &FileReport, write: bool, warn: bool) {
+    /// Saves `text` under `key` as `save_quiet` saves, for `load_record` (never read as a report).
+    pub fn save_record(&self, key: &str, text: &str) {
+        self.store(key, &format!("record\n{text}"), true, false);
+    }
+
+    /// What `save_record` saved under `key`.
+    pub fn load_record(&self, key: &str) -> Option<String> {
+        let mut data = String::new();
+        let mut file =
+            fs::OpenOptions::new().read(true).custom_flags(libc::O_NOFOLLOW).open(self.dir.join(key)).ok()?;
+        file.read_to_string(&mut data).ok()?;
+        let _ = file.set_modified(std::time::SystemTime::now());
+        data.strip_prefix("record\n").map(String::from)
+    }
+
+    fn store(&self, key: &str, out: &str, write: bool, warn: bool) {
         use std::sync::atomic::Ordering::Relaxed;
         // Checked until a save finds the directory fine and opens it (about ten syscalls per file
         // before, #778), so every refused save still warns.
@@ -258,16 +273,6 @@ impl Cache {
             *dir_fd = Some(d);
         }
         let Some(dir) = dir_fd.as_ref() else { return };
-        let mut out = format!("{} {}\n", report.text.len(), text_check(&report.text));
-        for o in &report.offenses {
-            let flags = format!("{}{}{}", u8::from(o.correctable), u8::from(o.global), u8::from(o.disabled));
-            let mut message = escape(&o.message);
-            if let Some(j) = &o.justification {
-                message = format!("{message}\t{}", escape(j));
-            }
-            let edits = encode_edits(&o.edits);
-            out.push_str(&format!("{} {} {} {flags} {} {edits} {message}\n", o.start, o.end, o.severity.name(), o.cop));
-        }
         // Written aside and renamed, so a parallel run never reads half an entry. The temporary
         // name is unpredictable and created fresh (never through an existing file or symlink);
         // any failure skips saving, with ResultCache#write_cache_file's warning for EACCES, EPERM and
@@ -371,6 +376,21 @@ impl Cache {
             dirs = dirs.iter().filter_map(|d| d.parent().map(Path::to_path_buf)).collect();
         }
     }
+}
+
+/// A report as an entry: the saved text's length and digest, then one line per offense.
+fn entry_text(report: &FileReport) -> String {
+    let mut out = format!("{} {}\n", report.text.len(), text_check(&report.text));
+    for o in &report.offenses {
+        let flags = format!("{}{}{}", u8::from(o.correctable), u8::from(o.global), u8::from(o.disabled));
+        let mut message = escape(&o.message);
+        if let Some(j) = &o.justification {
+            message = format!("{message}\t{}", escape(j));
+        }
+        let edits = encode_edits(&o.edits);
+        out.push_str(&format!("{} {} {} {flags} {} {edits} {message}\n", o.start, o.end, o.severity.name(), o.cop));
+    }
+    out
 }
 
 /// One line, no tabs: an entry line is space-separated fields, then the message and an optional
