@@ -924,3 +924,71 @@ fn required_code_reopening_a_builtin_cop_goes_to_rubocop() {
     }
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// The RuboCop child parses every file it is given, which is most of its time: it gets only the
+/// files a cop it runs may inspect (enabled, Include/Exclude, or opted in by a directive), unless
+/// the required code may hide cops or their relevance from rbcop (#805).
+#[test]
+fn fallback_gets_only_the_files_its_cops_may_inspect() {
+    let dir = project("files");
+    let rc = dir.join("rc");
+    // A stand-in RuboCop that logs the names of the files it is given.
+    fs::write(
+        &rc,
+        "#!/bin/sh\no=/dev/null\nwhile [ $# -gt 0 ]; do case $1 in --out) o=$2; shift;; --) shift; break;; esac; \
+         shift; done\nfor f; do printf '%s ' \"${f##*/}\"; done >> \"${0%/*}/log\"\necho >> \"${0%/*}/log\"\n\
+         echo rbcop-fallback-done > \"$o\"\n",
+    )
+    .unwrap();
+    Command::new("chmod").arg("755").arg(&rc).status().unwrap();
+    let files_with = |config: &str| {
+        fs::write(dir.join(".rubocop.yml"), config).unwrap();
+        let _ = fs::remove_file(dir.join("log"));
+        let mut cmd = common::command(env!("CARGO_BIN_EXE_rbcop"));
+        let out = cmd
+            .env("HOME", &dir)
+            .env("RBCOP_FALLBACK", "1")
+            .env("RBCOP_RUBOCOP", &rc)
+            .args(["--cache", "false", "-f", "e"])
+            .current_dir(&dir)
+            .output()
+            .unwrap();
+        assert!(out.status.code().is_some_and(|c| c < 2), "{}", text(&out.stderr));
+        fs::read_to_string(dir.join("log")).ok()
+    };
+    let files = |config: &str| files_with(&format!("{CONFIG}{config}"));
+    assert_eq!(files("").as_deref(), Some("Gemfile a.rb b.rb no_foo.rb \n"));
+    assert_eq!(files("Custom/NoFoo:\n  Include:\n    - b.rb\n").as_deref(), Some("b.rb \n"));
+    assert_eq!(files("Custom:\n  Exclude:\n    - b.rb\n").as_deref(), Some("Gemfile a.rb no_foo.rb \n"));
+    // No file for any of its cops: no RuboCop at all.
+    assert_eq!(files("Custom/NoFoo:\n  Enabled: false\n"), None);
+    // ...but a directive can opt a disabled cop in.
+    fs::write(dir.join("c.rb"), "# rubocop:enable Custom/NoFoo\nfoo\n").unwrap();
+    assert_eq!(files("Custom/NoFoo:\n  Enabled: false\n").as_deref(), Some("c.rb \n"));
+    fs::remove_file(dir.join("c.rb")).unwrap();
+    // Required code that loads other files, or picks its own files, gets every file.
+    for extra in ["require_relative 'more'\n", "class RuboCop::Cop::Base\n  def relevant_file?(_) = true\nend\n"] {
+        fs::write(dir.join("more.rb"), "").unwrap();
+        fs::write(dir.join("no_foo.rb"), format!("{extra}{COP}")).unwrap();
+        assert_eq!(
+            files("Custom/NoFoo:\n  Enabled: false\n").as_deref(),
+            Some("Gemfile a.rb b.rb more.rb no_foo.rb \n")
+        );
+    }
+    fs::remove_file(dir.join("more.rb")).unwrap();
+    fs::write(dir.join("no_foo.rb"), COP).unwrap();
+    let _ = fs::remove_file(dir.join("log"));
+    fs::remove_file(&rc).unwrap();
+    if have_rubocop() {
+        fs::write(dir.join("c.rb"), "# rubocop:enable Custom/NoFoo\nfoo\n").unwrap();
+        for config in [
+            "Custom/NoFoo:\n  Include:\n    - b.rb\n",
+            "Custom:\n  Exclude:\n    - b.rb\n",
+            "Custom/NoFoo:\n  Enabled: false\n",
+        ] {
+            fs::write(dir.join(".rubocop.yml"), format!("{CONFIG}{config}")).unwrap();
+            same(&dir, &[], &["-f", "e"]);
+        }
+    }
+    let _ = fs::remove_dir_all(&dir);
+}

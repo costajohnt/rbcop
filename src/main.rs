@@ -2037,6 +2037,20 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     let plugin_files: std::collections::HashSet<PathBuf> =
         jobs.iter().filter(|(p, c)| store.copless_plugin_file(c, p)).map(|(p, _)| p.clone()).collect();
     let unrunnable = !skipped.is_empty() || store.requires_ruby_code();
+    // Most of the child's time is RuboCop parsing the files it is given (#805): it gets only the
+    // files one of its cops (the registry's, but those rbcop runs) may inspect, when rbcop knows
+    // them all.
+    let child_cops: Vec<&str> = rbcop::helpers::cop_registry::REGISTRY
+        .iter()
+        .copied()
+        .filter(|c| !implemented.contains(c) || rbcop::helpers::cop_registry::is_custom(c))
+        .collect();
+    let child_cops_known = store.child_cops_known();
+    let needs_child = |path: &Path, cfg: &Resolved| {
+        !child_cops_known
+            || child_cops.iter().any(|c| badge_selected(c, cfg) && cfg.may_run(c, path))
+            || fs::read(path).is_ok_and(|b| fallback::may_opt_in(&String::from_utf8_lossy(&b), &child_cops))
+    };
     let usable = stdin_text.is_none() && config_error.is_none() && team_error.is_none();
     // Looked up only when needed: a project that needs nothing never starts Ruby.
     let program = if usable && (unrunnable || !copless.is_empty()) { fallback::rubocop() } else { None };
@@ -2064,9 +2078,14 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             if cli.fail_fast && cli.autocorrect.is_some() {
                 fallback_per_file = Some(child);
             } else {
-                let (whole, rest): (Vec<PathBuf>, Vec<PathBuf>) =
-                    jobs.iter().map(|(p, _)| p.clone()).partition(|p| plugin_files.contains(p));
+                let whole: Vec<PathBuf> =
+                    jobs.iter().map(|(p, _)| p).filter(|p| plugin_files.contains(*p)).cloned().collect();
                 if unrunnable {
+                    let rest: Vec<PathBuf> = jobs
+                        .iter()
+                        .filter(|(p, c)| !plugin_files.contains(p) && needs_child(p, c))
+                        .map(|(p, _)| p.clone())
+                        .collect();
                     fallback_offenses = fallback::run(&rest, &cwd, &names, child)?;
                 }
                 fallback_offenses.extend(fallback::run(&whole, &cwd, &[], child)?);
@@ -2357,7 +2376,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                 let one = std::slice::from_ref(path);
                 if plugin_files.contains(path) {
                     fallback_offenses.extend(fallback::run(one, &cwd, &[], child)?);
-                } else if unrunnable {
+                } else if unrunnable && needs_child(path, cfg) {
                     fallback_offenses.extend(fallback::run(one, &cwd, &names, child)?);
                 }
             }

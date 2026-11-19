@@ -743,6 +743,21 @@ impl Resolved {
         }
     }
 
+    /// Team#roundup_relevant_cops for any cop, ported or not: enabled (Registry#enabled?) and its
+    /// Include/Exclude take the file. An enable directive in the file can still opt it in; the
+    /// target version checks only leave it out of more files.
+    pub fn may_run(&self, name: &str, file: &Path) -> bool {
+        let built;
+        let cop = match self.cops.get(name) {
+            Some(&i) => &self.cop_list[i].1,
+            None => {
+                built = self.build_cop(name, &self.opts);
+                &built
+            }
+        };
+        cop.enabled && self.relevant(cop, file)
+    }
+
     /// Path relative to the config's base dir (PathUtil.relative_path).
     pub fn relative(&self, file: &Path) -> String {
         relative_path(file, &self.base_dir)
@@ -891,6 +906,8 @@ pub struct Store {
     /// class was found. Where cop classes were found, they are the registry.
     open_custom: bool,
     open_constants: std::collections::HashSet<String>,
+    /// Required code whose cops may inspect files their config does not name (opaque_cops).
+    opaque_cops: bool,
     dir_to_file: HashMap<PathBuf, Option<PathBuf>>,
     /// inherit_from files being loaded (outermost first), to detect cycles.
     loading: Vec<PathBuf>,
@@ -970,6 +987,7 @@ impl Store {
             plugin_constants: Default::default(),
             open_custom: false,
             open_constants: Default::default(),
+            opaque_cops: false,
             dir_to_file: HashMap::new(),
             loading: Vec::new(),
             remote: HashMap::new(),
@@ -1117,6 +1135,13 @@ impl Store {
 
     pub fn requires_ruby_code(&self) -> bool {
         self.custom_cops
+    }
+
+    /// Whether rbcop knows every cop of the registry RuboCop would run and which files each may
+    /// inspect: no required code with cops it cannot read, and none that overrides
+    /// Base#relevant_file? or loads files rbcop does not read (#805).
+    pub fn child_cops_known(&self) -> bool {
+        !self.open_custom && self.open_constants.is_empty() && !self.opaque_cops
     }
 
     /// The loaded plugins rbcop does not implement that define no cops.
@@ -1923,6 +1948,7 @@ impl Store {
                 ruby_file_constants(file, &mut self.plugin_constants);
             }
             let cops = ruby_cops_in(files.clone());
+            self.opaque_cops |= files.iter().any(|f| overrides_relevance(f));
             if !merge && cops.is_empty() {
                 // A plugin without config/default.yml may still register cops; the files a plain
                 // `require` reaches were read, and define none.
@@ -2076,6 +2102,10 @@ impl Store {
             self.open_custom = true;
             ruby_file_constants(file, &mut self.open_constants);
         }
+        // Cops in the files it loads are not seen (see above).
+        self.opaque_cops |= overrides_relevance(file)
+            || required_files(file.parent().unwrap_or(file), file, None).len() > 1
+            || std::fs::read_to_string(file).is_ok_and(|t| t.contains("autoload"));
         crate::helpers::cop_registry::register_custom(cops);
     }
 
@@ -2442,6 +2472,12 @@ fn required_files(lib: &Path, file: &Path, loaded: Option<&Path>) -> Vec<PathBuf
         seen.push(f);
     }
     seen
+}
+
+/// Whether the Ruby file defines Base#relevant_file? or #excluded_file?, so a cop may inspect
+/// files other than its Include/Exclude select (#805).
+fn overrides_relevance(file: &Path) -> bool {
+    std::fs::read_to_string(file).is_ok_and(|t| t.contains("relevant_file?") || t.contains("excluded_file?"))
 }
 
 /// The files of `lib` a `require` of `file` loads (required_files), or every file of `lib` when

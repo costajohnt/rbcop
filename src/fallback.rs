@@ -176,6 +176,17 @@ pub fn what(skipped: &BTreeSet<String>, required_code: bool, copless_plugins: &[
     parts.join(" or ")
 }
 
+/// Whether a directive in `text` may opt one of `cops` in (CommentConfig#opt_in_cops: `enable`
+/// or `push +` naming it or its department), past its `Enabled` and Include/Exclude.
+// ponytail: the name anywhere in a file with a directive word counts.
+pub fn may_opt_in(text: &str, cops: &[&str]) -> bool {
+    rbcop::directives::may_have_directives(text)
+        && cops.iter().any(|c| {
+            let (department, name) = c.rsplit_once('/').unwrap_or(("", c));
+            text.contains(name) || (!department.is_empty() && text.contains(department))
+        })
+}
+
 /// What the RuboCop subprocess needs from the command line.
 #[derive(Clone, Copy)]
 pub struct Child<'a> {
