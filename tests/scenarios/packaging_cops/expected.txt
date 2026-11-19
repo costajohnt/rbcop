@@ -1,0 +1,20 @@
+foo.gemspec:17:18: C: Packaging/GemspecGit: Avoid using git to produce lists of files. Downstreams often need to build your package in an environment that does not have git (on purpose). Use some pure Ruby alternative, like `Dir` or `Dir.glob`.
+foo.gemspec:3:13: C: Packaging/GemspecGit: Avoid using git to produce lists of files. Downstreams often need to build your package in an environment that does not have git (on purpose). Use some pure Ruby alternative, like `Dir` or `Dir.glob`.
+foo.gemspec:7:37: C: Packaging/GemspecGit: Avoid using git to produce lists of files. Downstreams often need to build your package in an environment that does not have git (on purpose). Use some pure Ruby alternative, like `Dir` or `Dir.glob`.
+other.rb:1:1: C: [Correctable] Packaging/RequireRelativeHardcodingLib: Avoid using `require_relative` with relative path to lib. Use `require` with absolute path instead.
+other.rb:2:1: C: [Correctable] Packaging/RequireHardcodingLib: Avoid using `require` with relative path to `lib/`. Use `require` with absolute path instead.
+other.rb:3:1: C: [Correctable] Packaging/RequireHardcodingLib: Avoid using `require` with relative path to `lib/`. Use `require` with absolute path instead.
+spec/a_spec.rb:11:1: C: [Correctable] Packaging/RequireHardcodingLib: Avoid using `require` with relative path to `lib/`. Use `require` with absolute path instead.
+spec/a_spec.rb:13:1: C: [Correctable] Packaging/RequireHardcodingLib: Avoid using `require` with relative path to `lib/`. Use `require` with absolute path instead.
+spec/a_spec.rb:18:1: C: [Correctable] Packaging/RequireHardcodingLib: Avoid using `require` with relative path to `lib/`. Use `require` with absolute path instead.
+spec/a_spec.rb:19:1: C: [Correctable] Packaging/RequireHardcodingLib: Avoid using `require` with relative path to `lib/`. Use `require` with absolute path instead.
+spec/a_spec.rb:1:1: C: [Correctable] Packaging/BundlerSetupInTests: Using `bundler/setup` in tests is redundant. Consider removing it.
+spec/a_spec.rb:21:1: C: [Correctable] Packaging/RequireHardcodingLib: Avoid using `require` with relative path to `lib/`. Use `require` with absolute path instead.
+spec/a_spec.rb:2:1: C: [Correctable] Packaging/BundlerSetupInTests: Using `bundler/setup` in tests is redundant. Consider removing it.
+spec/a_spec.rb:4:1: C: [Correctable] Packaging/RequireHardcodingLib: Avoid using `require` with relative path to `lib/`. Use `require` with absolute path instead.
+spec/a_spec.rb:5:1: C: [Correctable] Packaging/RequireHardcodingLib: Avoid using `require` with relative path to `lib/`. Use `require` with absolute path instead.
+spec/a_spec.rb:7:1: C: [Correctable] Packaging/RequireRelativeHardcodingLib: Avoid using `require_relative` with relative path to lib. Use `require` with absolute path instead.
+spec/a_spec.rb:9:1: C: [Correctable] Packaging/RequireHardcodingLib: Avoid using `require` with relative path to `lib/`. Use `require` with absolute path instead.
+specsfoo/x.rb:1:1: C: [Correctable] Packaging/BundlerSetupInTests: Using `bundler/setup` in tests is redundant. Consider removing it.
+test/t_test.rb:1:1: C: [Correctable] Packaging/RequireRelativeHardcodingLib: Avoid using `require_relative` with relative path to lib. Use `require` with absolute path instead.
+test/t_test.rb:2:1: C: [Correctable] Packaging/BundlerSetupInTests: Using `bundler/setup` in tests is redundant. Consider removing it.

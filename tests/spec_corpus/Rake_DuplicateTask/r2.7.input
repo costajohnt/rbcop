@@ -1,0 +1,72 @@
+==> .rubocop.yml 132 <==
+---
+plugins:
+- rubocop-rake
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+==> 000/Rakefile 35 <==
+task :foo do
+end
+
+task :foo do
+end
+
+==> 001/Rakefile 36 <==
+task :foo do
+end
+
+task "foo" do
+end
+
+==> 002/Rakefile 67 <==
+namespace :foo do
+  task 'bar' do
+  end
+end
+
+task 'foo:bar' do
+end
+
+==> 003/Rakefile 40 <==
+task foo: :bar do
+end
+
+task :foo do
+end
+
+==> 004/Rakefile 35 <==
+task :foo do
+end
+
+task :bar do
+end
+
+==> 005/Rakefile 40 <==
+task :foo do
+end
+
+namespace :foo do
+end
+
+==> 006/Rakefile 61 <==
+task :foo do
+end
+
+namespace :bar do
+  task :foo do
+  end
+end
+
+==> 007/Rakefile 59 <==
+task foo do
+end
+
+namespace bar do
+  task :foo do
+  end
+end
+

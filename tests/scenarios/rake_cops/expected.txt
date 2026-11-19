@@ -1,0 +1,36 @@
+Rakefile:10:3: C: Rake/ClassDefinitionInTask: Do not define a class in rake task, because it will be defined to the top level.
+Rakefile:11:3: C: Rake/ClassDefinitionInTask: Do not define a module in rake task, because it will be defined to the top level.
+Rakefile:17:1: C: Rake/DuplicateNamespace: Namespace `` is defined at both Rakefile:16 and Rakefile:17.
+Rakefile:18:11: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:21:1: C: Rake/DuplicateTask: Task `default` is defined at both Rakefile:20 and Rakefile:21.
+Rakefile:24:1: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:25:1: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:26:1: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:27:1: C: Rake/DuplicateNamespace: Namespace `n` is defined at both Rakefile:6 and Rakefile:27.
+Rakefile:28:3: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:28:3: C: Rake/DuplicateTask: Task `n:a` is defined at both Rakefile:7 and Rakefile:28.
+Rakefile:30:5: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:34:3: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:37:3: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:39:1: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:40:1: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:45:5: C: Rake/MethodDefinitionInTask: Do not define a method in rake task, because it will be defined to the top level.
+Rakefile:47:3: C: Rake/MethodDefinitionInTask: Do not define a method in rake task, because it will be defined to the top level.
+Rakefile:48:3: C: Rake/ClassDefinitionInTask: Do not define a class in rake task, because it will be defined to the top level.
+Rakefile:4:1: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:4:1: C: Rake/DuplicateTask: Task `a` is defined at both Rakefile:1 and Rakefile:4.
+Rakefile:52:17: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:52:1: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:54:3: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:64:1: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:65:1: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:66:1: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:7:3: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:8:3: C: Rake/Desc: Describe the task with `desc` method.
+Rakefile:8:3: C: Rake/DuplicateTask: Task `n:a` is defined at both Rakefile:7 and Rakefile:8.
+Rakefile:9:3: C: Rake/MethodDefinitionInTask: Do not define a method in rake task, because it will be defined to the top level.
+lib/tasks/a.rake:11:3: C: Rake/MethodDefinitionInTask: Do not define a method in rake task, because it will be defined to the top level.
+lib/tasks/a.rake:1:1: C: Rake/Desc: Describe the task with `desc` method.
+lib/tasks/a.rake:2:1: C: Rake/Desc: Describe the task with `desc` method.
+lib/tasks/a.rake:2:1: C: Rake/DuplicateTask: Task `a` is defined at both lib/tasks/a.rake:1 and lib/tasks/a.rake:2.
+lib/tasks/a.rake:7:1: C: Rake/DuplicateNamespace: Namespace `n` is defined at both lib/tasks/a.rake:3 and lib/tasks/a.rake:7.

@@ -1,0 +1,5 @@
+plugins:
+  - rubocop-packaging
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
