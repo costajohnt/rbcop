@@ -925,6 +925,11 @@ fn required_code_reopening_a_builtin_cop_goes_to_rubocop() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+const NO_BAR: &str = "module CustomCops\n  class NoBar < RuboCop::Cop::Base\n    def on_send(node)\n      \
+                      add_offense(node, message: 'bar') if node.method?(:bar)\n    end\n  end\nend\n";
+const BOTH: &str = "require:\n  - ./no_foo.rb\n  - ./no_bar.rb\nAllCops:\n  DisabledByDefault: true\n  \
+                    SuggestExtensions: false\n";
+
 /// The RuboCop child parses every file it is given, which is most of its time: it gets only the
 /// files a cop it runs may inspect (enabled, Include/Exclude, or opted in by a directive), unless
 /// the required code may hide cops or their relevance from rbcop (#805).
@@ -962,6 +967,10 @@ fn fallback_gets_only_the_files_its_cops_may_inspect() {
     assert_eq!(files("Custom:\n  Exclude:\n    - b.rb\n").as_deref(), Some("Gemfile a.rb no_foo.rb \n"));
     // No file for any of its cops: no RuboCop at all.
     assert_eq!(files("Custom/NoFoo:\n  Enabled: false\n"), None);
+    // A cop class outside RuboCop::Cop is named as Badge.for names it (`CustomCops/NoBar`).
+    fs::write(dir.join("no_bar.rb"), NO_BAR).unwrap();
+    assert_eq!(files_with(BOTH), None);
+    fs::remove_file(dir.join("no_bar.rb")).unwrap();
     // ...but a directive can opt a disabled cop in.
     fs::write(dir.join("c.rb"), "# rubocop:enable Custom/NoFoo\nfoo\n").unwrap();
     assert_eq!(files("Custom/NoFoo:\n  Enabled: false\n").as_deref(), Some("c.rb \n"));
@@ -988,6 +997,12 @@ fn fallback_gets_only_the_files_its_cops_may_inspect() {
         ] {
             fs::write(dir.join(".rubocop.yml"), format!("{CONFIG}{config}")).unwrap();
             same(&dir, &[], &["-f", "e"]);
+        }
+        fs::write(dir.join("no_bar.rb"), NO_BAR).unwrap();
+        fs::write(dir.join("c.rb"), "# rubocop:enable CustomCops/NoBar\nbar\n").unwrap();
+        fs::write(dir.join(".rubocop.yml"), BOTH).unwrap();
+        for args in [&["-f", "e"][..], &["-f", "e", "--only", "CustomCops/NoBar"]] {
+            same(&dir, &[], args);
         }
     }
     let _ = fs::remove_dir_all(&dir);

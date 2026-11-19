@@ -2818,8 +2818,8 @@ fn ruby_constant_kinds(files: &[PathBuf]) -> HashMap<String, (bool, Option<Strin
     out
 }
 
-/// The cops some Ruby files define (Badge.for of each class under RuboCop::Cop that descends
-/// from a cop base class and does not call `exclude_from_registry`), sorted, each with whether it
+/// The cops some Ruby files define (Badge.for of each class that descends from a cop base
+/// class and does not call `exclude_from_registry`), sorted, each with whether it
 /// supports autocorrect (`extend AutoCorrector`, its own or a superclass's).
 // ponytail: reads nesting from `module`/`class` lines and the `end` at the same indentation, as
 // every rubocop-* gem is formatted; classes opened by metaprogramming are not seen.
@@ -2899,11 +2899,17 @@ fn ruby_cops_in(files: Vec<PathBuf>) -> Vec<(String, bool)> {
         }
         None
     };
+    // Badge.for: the class name's parts after the first two when it has four or more
+    // (`RuboCop::Cop::Style::Foo`), else its last two (`CustomCops::Foo`).
+    // ponytail: a top-level cop class (no department) is not counted.
     let mut out: Vec<(String, bool)> = classes
         .iter()
         .enumerate()
-        .filter(|(_, c)| !c.excluded && c.path.len() >= 4 && c.path[0] == "RuboCop" && c.path[1] == "Cop")
-        .filter_map(|(i, c)| lineage(i).map(|ac| (c.path[2..].join("/"), ac)))
+        .filter(|(_, c)| !c.excluded && c.path.len() >= 2)
+        .filter_map(|(i, c)| {
+            let badge = if c.path.len() >= 4 { &c.path[2..] } else { &c.path[c.path.len() - 2..] };
+            lineage(i).map(|ac| (badge.join("/"), ac))
+        })
         .collect();
     out.sort();
     out.dedup_by(|a, b| a.0 == b.0);
