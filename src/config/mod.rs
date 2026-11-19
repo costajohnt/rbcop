@@ -2059,7 +2059,19 @@ impl Store {
     /// leaves the registry open.
     // ponytail: files the local file itself requires are not read.
     fn register_local(&mut self, file: &Path) {
-        let cops = ruby_cops_in(vec![file.to_path_buf()]);
+        let mut cops = ruby_cops_in(vec![file.to_path_buf()]);
+        // A class reopened without a superclass (`class RuboCop::Cop::Style::OneClassPerFile`)
+        // patches the cop rbcop implements: RuboCop runs the patched class, so rbcop must too (#801).
+        // ponytail: `class`/`module` lines only; a cop patched through `prepend`, `class_eval` or a
+        // dynamically built class name is not seen and still runs natively.
+        for (name, (class, _)) in ruby_constant_kinds(&[file.to_path_buf()]) {
+            let cop = name.strip_prefix("RuboCop::Cop::").map(|c| c.replace("::", "/"));
+            if let Some(cop) = cop.filter(|c| class && crate::cops::ALL.iter().any(|r| r.name == *c))
+                && !cops.iter().any(|(c, _)| *c == cop)
+            {
+                cops.push((cop, false));
+            }
+        }
         if cops.is_empty() {
             self.open_custom = true;
             ruby_file_constants(file, &mut self.open_constants);

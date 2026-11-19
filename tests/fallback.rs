@@ -876,3 +876,51 @@ fn default_fallback_matches_rubocop() {
     check(&["--cache", "false", "-r", "./no_foo.rb", "-r", "./my_formatter.rb", "-f", "MyFormatter"]);
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// A `require:`d local file that defines or reopens the class of a cop rbcop implements changes
+/// that cop in RuboCop: rbcop leaves it to RuboCop as required code, and under RBCOP_FALLBACK=0
+/// neither runs its own port nor judges a directive naming it redundant (#801).
+#[test]
+fn required_code_reopening_a_builtin_cop_goes_to_rubocop() {
+    let dir = project("reopen");
+    let config = "require:\n  - ./quiet_cop.rb\nAllCops:\n  DisabledByDefault: true\n  NewCops: disable\n  \
+                  SuggestExtensions: false\n  TargetRubyVersion: 3.4\nStyle/OneClassPerFile:\n  Enabled: true\n\
+                  Lint/RedundantCopDisableDirective:\n  Enabled: true\n";
+    fs::write(dir.join(".rubocop.yml"), config).unwrap();
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nclass A; end\nclass B; end\n").unwrap();
+    fs::write(
+        dir.join("b.rb"),
+        "# frozen_string_literal: true\n\nclass C; end\nclass D; end # rubocop:disable Style/OneClassPerFile\n",
+    )
+    .unwrap();
+    let patch = "  private\n\n  def allowed_class?(_node) = true\nend\n";
+    let forms = [
+        // Compact, as a new cop would be declared.
+        format!("class RuboCop::Cop::Style::OneClassPerFile < RuboCop::Cop::Base\n{patch}"),
+        // Nested modules.
+        "module RuboCop\n  module Cop\n    module Style\n      class OneClassPerFile < Base\n        private\n\n        \
+         def allowed_class?(_node) = true\n      end\n    end\n  end\nend\n"
+            .to_string(),
+        // Reopened without a superclass.
+        format!("class RuboCop::Cop::Style::OneClassPerFile\n{patch}"),
+    ];
+    for form in &forms {
+        fs::write(dir.join("quiet_cop.rb"), form).unwrap();
+        let mut cmd = common::command(env!("CARGO_BIN_EXE_rbcop"));
+        let out =
+            cmd.env("HOME", &dir).env("RBCOP_FALLBACK", "0").args(["-f", "e"]).current_dir(&dir).output().unwrap();
+        assert_eq!(text(&out.stdout), "", "{form}");
+        assert_eq!(
+            text(&out.stderr),
+            "rbcop: not running cops from Ruby code the config requires; set RBCOP_FALLBACK=1 to run them with \
+             RuboCop\n",
+            "{form}"
+        );
+        assert_eq!(out.status.code(), Some(0), "{form}");
+        // RuboCop judges b.rb's directive redundant: the deliberate difference above.
+        if have_rubocop() {
+            same(&dir, &[], &["-f", "e", "a.rb"]);
+        }
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
