@@ -229,21 +229,6 @@ impl Cache {
         self.store(key, &entry_text(report), true, false);
     }
 
-    /// Saves `text` under `key` as `save_quiet` saves, for `load_record` (never read as a report).
-    pub fn save_record(&self, key: &str, text: &str) {
-        self.store(key, &format!("record\n{text}"), true, false);
-    }
-
-    /// What `save_record` saved under `key`.
-    pub fn load_record(&self, key: &str) -> Option<String> {
-        let mut data = String::new();
-        let mut file =
-            fs::OpenOptions::new().read(true).custom_flags(libc::O_NOFOLLOW).open(self.dir.join(key)).ok()?;
-        file.read_to_string(&mut data).ok()?;
-        let _ = file.set_modified(std::time::SystemTime::now());
-        data.strip_prefix("record\n").map(String::from)
-    }
-
     fn store(&self, key: &str, out: &str, write: bool, warn: bool) {
         use std::sync::atomic::Ordering::Relaxed;
         // Checked until a save finds the directory fine and opens it (about ten syscalls per file

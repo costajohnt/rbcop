@@ -69,25 +69,19 @@ pub fn missing() -> Option<&'static str> {
 /// Bundler's Gemfile lookup (BUNDLE_GEMFILE, else Gemfile or gems.rb in the working directory or a
 /// parent), and whether its lockfile has the rubocop gem among its specs.
 fn bundle_has_rubocop() -> bool {
-    bundle_lock().is_some_and(|lock| {
-        std::fs::read_to_string(lock).is_ok_and(|t| t.lines().any(|l| l.starts_with("    rubocop (")))
-    })
-}
-
-/// The lockfile of Bundler's Gemfile lookup.
-pub fn bundle_lock() -> Option<PathBuf> {
     let gemfile = match std::env::var_os("BUNDLE_GEMFILE").filter(|v| !v.is_empty()) {
         Some(g) => Some(PathBuf::from(g)),
         None => std::env::current_dir()
             .ok()
             .and_then(|cwd| cwd.ancestors().flat_map(|d| [d.join("Gemfile"), d.join("gems.rb")]).find(|p| p.is_file())),
     };
-    let gemfile = gemfile?;
-    Some(if gemfile.file_name().is_some_and(|n| n == "gems.rb") {
+    let Some(gemfile) = gemfile else { return false };
+    let lock = if gemfile.file_name().is_some_and(|n| n == "gems.rb") {
         gemfile.with_file_name("gems.locked")
     } else {
         PathBuf::from(format!("{}.lock", gemfile.display()))
-    })
+    };
+    std::fs::read_to_string(lock).is_ok_and(|t| t.lines().any(|l| l.starts_with("    rubocop (")))
 }
 
 fn on_path(name: &str) -> bool {
@@ -182,17 +176,6 @@ pub fn what(skipped: &BTreeSet<String>, required_code: bool, copless_plugins: &[
     parts.join(" or ")
 }
 
-/// Whether a directive in `text` may opt one of `cops` in (CommentConfig#opt_in_cops: `enable`
-/// or `push +` naming it or its department), past its `Enabled` and Include/Exclude.
-// ponytail: the name anywhere in a file with a directive word counts.
-pub fn may_opt_in(text: &str, cops: &[&str]) -> bool {
-    rbcop::directives::may_have_directives(text)
-        && cops.iter().any(|c| {
-            let (department, name) = c.rsplit_once('/').unwrap_or(("", c));
-            text.contains(name) || (!department.is_empty() && text.contains(department))
-        })
-}
-
 /// What a child run reports.
 #[derive(Default)]
 pub struct Found {
@@ -200,28 +183,38 @@ pub struct Found {
     pub offenses: HashMap<PathBuf, Vec<Offense>>,
     /// The files a cop raised an error or a warning on (Runner#save_in_cache keeps nothing then).
     pub uncached: HashSet<PathBuf>,
-    /// It wrote nothing to stderr.
-    pub quiet: bool,
-    /// The Ruby files it loaded ($LOADED_FEATURES, as ResultCache's checksum hashes them).
-    pub loaded: Vec<String>,
-    /// Its registry has a cop rbcop's does not (RBCOP_REGISTRY): one rbcop cannot select files for.
-    pub unknown_cops: bool,
+    /// The digest of the Ruby files it had loaded before inspecting any file (`Cached`).
+    pub loaded: Option<String>,
     /// A cop it may run declares an external dependency (Base#external_dependency_checksum),
     /// which ResultCache hashes and rbcop cannot.
     pub external_dependency: bool,
 }
 
-/// A digest of the Ruby files a child loaded (`Found::loaded`): each path with its size and
-/// modification time (a missing file, or a feature without a path, as such).
-pub fn loaded_digest(loaded: &[String]) -> String {
-    let mut text = String::new();
-    for f in loaded {
-        let meta = std::fs::metadata(f).ok();
-        let stamp = meta.as_ref().map(|m| (m.len(), m.modified().ok()));
-        text.push_str(&format!("{f}\0{stamp:?}\n"));
+/// With rbcop's result cache, the child tells it the Ruby files it has loaded, before inspecting
+/// any file: called with their digest (each path and its contents, as ResultCache.source_checksum
+/// reads them), it returns the files whose offenses rbcop has cached, which the child skips.
+pub type Cached<'a> = &'a dyn Fn(&str) -> HashSet<PathBuf>;
+
+/// The digest of the Ruby files listed in `list` (one per line): each path with its contents (a
+/// feature without a readable file, as such).
+fn loaded_digest(list: &str) -> String {
+    let mut h = xxhash_rust::xxh3::Xxh3::new();
+    for f in list.lines() {
+        h.update(f.as_bytes());
+        match std::fs::read(f) {
+            Ok(b) => {
+                h.update(&(b.len() as u64).to_le_bytes());
+                h.update(&b);
+            }
+            Err(_) => h.update(b"\0missing"),
+        }
+        h.update(b"\0");
     }
-    crate::cache::digest(&[text.as_bytes()])
+    format!("{:032x}", h.digest128())
 }
+
+/// The line the child writes to stderr once `loaded` is in place (the formatter's `started`).
+const LOADED: &[u8] = b"\x1Erbcop-fallback-loaded\n";
 
 /// What the RuboCop subprocess needs from the command line.
 #[derive(Clone, Copy)]
@@ -237,12 +230,18 @@ pub struct Child<'a> {
     pub autocorrect: Option<Mode>,
 }
 
-/// Runs RuboCop (`c.program`) on `files` with every cop rbcop implements
-/// excluded, and returns its offenses by file, and the files on which a cop raised an error or a
-/// warning (Runner#save_in_cache keeps nothing for them). With `implemented` empty RuboCop runs every cop,
+/// Runs RuboCop (`c.program`) on `files` with every cop rbcop implements excluded (the child
+/// itself skips the files none of its cops may inspect, and those `cached` names), and returns
+/// what it reports (`Found`). With `implemented` empty RuboCop runs every cop,
 /// Lint/Syntax included: the files rbcop leaves wholly to it (Store::copless_plugin_file). Under -a/-A RuboCop corrects (and writes) first, so
 /// rbcop then inspects the result; its offenses refer to the source before correction.
-pub fn run(files: &[PathBuf], cwd: &Path, implemented: &[&str], c: Child) -> Result<Found, String> {
+pub fn run(
+    files: &[PathBuf],
+    cwd: &Path,
+    implemented: &[&str],
+    c: Child,
+    cached: Option<Cached>,
+) -> Result<Found, String> {
     let mut out = HashMap::new();
     let mut found = Found::default();
     if files.is_empty() {
@@ -306,7 +305,10 @@ pub fn run(files: &[PathBuf], cwd: &Path, implemented: &[&str], c: Child) -> Res
         .env_remove("RUBOCOP_OPTS")
         .env("RUBYOPT", rubyopt)
         .env("RBCOP_REGISTRY", rbcop::helpers::cop_registry::REGISTRY.join(","))
-        .stdin(Stdio::null());
+        .stdin(if cached.is_some() { Stdio::piped() } else { Stdio::null() });
+    if cached.is_some() {
+        cmd.env("RBCOP_FALLBACK_HANDSHAKE", &dir.0);
+    }
     let o = c.opts;
     if let Some(cfg) = &o.config_file {
         cmd.arg("--config").arg(cfg);
@@ -351,14 +353,54 @@ pub fn run(files: &[PathBuf], cwd: &Path, implemented: &[&str], c: Child) -> Res
     } else {
         HashMap::new()
     };
-    // Its stderr is passed on once it exits; whether there was any decides what is cached (#805).
-    let output = cmd.stdout(Stdio::inherit()).stderr(Stdio::piped()).output();
+    // Its stderr is passed on once it exits, without the handshake's line.
+    let mut child = cmd
+        .stdout(Stdio::inherit())
+        .stderr(Stdio::piped())
+        .spawn()
+        .map_err(|e| format!("rbcop: RBCOP_FALLBACK: cannot run {program}: {e}"))?;
+    let mut stdin = child.stdin.take();
+    let mut pipe = child.stderr.take().expect("piped");
+    let (ready, at_loaded) = std::sync::mpsc::channel();
+    let reader = std::thread::spawn(move || {
+        use std::io::Read;
+        let mut err = Vec::new();
+        let mut buf = [0; 1 << 14];
+        let mut told = false;
+        while let Ok(n @ 1..) = pipe.read(&mut buf) {
+            err.extend_from_slice(&buf[..n]);
+            if !told && let Some(at) = err.windows(LOADED.len()).position(|w| w == LOADED) {
+                err.drain(at..at + LOADED.len());
+                told = true;
+                let _ = ready.send(());
+            }
+        }
+        err
+    });
+    // The child stops after `loaded` until it reads the cached files (or the end of stdin); a
+    // child that ends before (a config error) never says it is ready.
+    if let Some(cached) = cached
+        && at_loaded.recv().is_ok()
+        && let Ok(list) = std::fs::read_to_string(dir.0.join("loaded"))
+    {
+        let loaded = loaded_digest(&list);
+        let skip = cached(&loaded);
+        found.loaded = Some(loaded);
+        if let Some(mut stdin) = stdin.take() {
+            let mut text = String::new();
+            for p in &skip {
+                text.push_str(&format!("{}\n", p.display()));
+            }
+            let _ = std::io::Write::write_all(&mut stdin, text.as_bytes());
+        }
+    }
+    drop(stdin);
+    let status = child.wait();
+    let err = reader.join().unwrap_or_default();
+    let _ = std::io::Write::write_all(&mut std::io::stderr(), &err);
     let report = std::fs::read(&report).unwrap_or_default();
     drop(dir);
-    let output = output.map_err(|e| format!("rbcop: RBCOP_FALLBACK: cannot run {program}: {e}"))?;
-    let _ = std::io::Write::write_all(&mut std::io::stderr(), &output.stderr);
-    let status = output.status;
-    found.quiet = output.stderr.is_empty();
+    let status = status.map_err(|e| format!("rbcop: RBCOP_FALLBACK: cannot run {program}: {e}"))?;
     // 0: no offenses, 1: offenses; anything else is RuboCop failing (its stderr was passed through).
     // The formatter's last line tells a run from a wrapper failing with 1 (an rbenv shim with the
     // project's Ruby missing, `bundle exec` outside an installed bundle).
@@ -375,20 +417,9 @@ pub fn run(files: &[PathBuf], cwd: &Path, implemented: &[&str], c: Child) -> Res
             found.uncached.insert(PathBuf::from(unescape(path)));
             continue;
         }
-        if let Some(path) = line.strip_prefix("rbcop-fallback-loaded\t") {
-            found.loaded.push(unescape(path));
+        if line == "rbcop-fallback-external-dependency" {
+            found.external_dependency = true;
             continue;
-        }
-        match line {
-            "rbcop-fallback-unknown-cops" => {
-                found.unknown_cops = true;
-                continue;
-            }
-            "rbcop-fallback-external-dependency" => {
-                found.external_dependency = true;
-                continue;
-            }
-            _ => {}
         }
         let mut f: Vec<&str> = line.split('\t').collect();
         // The corrections field is optional (a stand-in child may print the eleven before it).

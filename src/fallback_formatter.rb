@@ -1,6 +1,6 @@
 # Loaded by `rubocop --require` when rbcop runs RuboCop for the cops it does not implement
 # (src/fallback.rs). One line per offense (and `rbcop-fallback-uncached<TAB>path` after a file a cop
-# raised an error or a warning on), what the cache needs (see `finished`), then
+# raised an error or a warning on), whether a cop has an external dependency, then
 # `rbcop-fallback-done`. Offenses are tab-separated:
 #   path  begin_byte  end_byte  severity  correctable  corrected  global  cop  message  disabled  justification
 #   corrections
@@ -56,11 +56,6 @@ RuboCop::Cop::Registry.prepend(Module.new do
 end)
 
 class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
-  class << self
-    # Whether a cop raised an error or a warning on the file just inspected (see below).
-    attr_accessor :uncached
-  end
-
   def file_finished(file, offenses)
     offenses.each do |o|
       # rbcop reports syntax errors itself (and Lint/Syntax cannot be excluded), except in the
@@ -81,22 +76,30 @@ class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
                    o.cop_name, esc(o.message), o.disabled? ? 1 : 0, esc(o.justification.to_s),
                    corrections(o)].join("\t")
     end
-    output.puts "rbcop-fallback-uncached\t#{esc(file)}" if self.class.uncached
+    output.puts "rbcop-fallback-uncached\t#{esc(file)}" if RbcopFiles::UNCACHED.include?(file)
     # A cop that forks (rubocop-require_tools) would flush a copy of anything still buffered.
     output.flush
   end
 
-  # rbcop checks for this line: RuboCop ran to the end (Runner calls it from an ensure). Before
-  # it, what rbcop's cache of these offenses depends on (#805): the Ruby files loaded (but this
-  # one, which lives in a fresh directory each run), whether the registry has a cop rbcop's does
-  # not, and whether a cop it may run has an external dependency (ResultCache#context_checksum).
-  def finished(_inspected_files)
+  # With rbcop's result cache (#805, RBCOP_FALLBACK_HANDSHAKE: a directory), before any file is
+  # inspected, where ResultCache.source_checksum would read them: the Ruby files loaded (but
+  # this one, in a fresh directory each run) go to `loaded` there, a line to stderr says so, and
+  # rbcop answers on stdin with the files it has offenses for, which are then skipped.
+  def started(_target_files)
+    dir = ENV.fetch('RBCOP_FALLBACK_HANDSHAKE', nil) or return
+
     here = [File.dirname(File.expand_path(__FILE__)), File.dirname(File.realpath(__FILE__))]
-    $LOADED_FEATURES.each { |f| output.puts "rbcop-fallback-loaded\t#{esc(f)}" unless f.start_with?(*here) }
-    # Registry#names and the loaded cop classes: Registry#cops would load every lazily registered
-    # cop (0.3 s), and a cop that was never loaded did not run.
-    known = ENV.fetch('RBCOP_REGISTRY', '').split(',').to_set
-    output.puts 'rbcop-fallback-unknown-cops' unless RuboCop::Cop::Registry.global.names.all? { |n| known.include?(n) }
+    File.write(File.join(dir, 'loaded'), $LOADED_FEATURES.reject { |f| f.start_with?(*here) }.join("\n"))
+    STDERR.write("\x1Erbcop-fallback-loaded\n")
+    STDERR.flush
+    $stdin.each_line { |line| RbcopFiles::CACHED << File.expand_path(line.chomp) }
+  end
+
+  # rbcop checks for this line: RuboCop ran to the end (Runner calls it from an ensure). Before
+  # it, whether a cop it may run has an external dependency (ResultCache#context_checksum),
+  # which rbcop's cache cannot key on. Only loaded cop classes count: Registry#cops would load
+  # every lazily registered cop (0.3 s), and a cop that was never loaded did not run.
+  def finished(_inspected_files)
     except = Array(options[:except])
     output.puts 'rbcop-fallback-external-dependency' if ObjectSpace.each_object(Class).any? do |c|
       c < RuboCop::Cop::Base && c.name && !except.include?(c.cop_name) &&
@@ -122,10 +125,49 @@ class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
   def esc(s) = s.gsub(/[\\\t\n]/, ESCAPES)
 end
 
-# rbcop keeps the child's offenses in its result cache (#805), except for a file on which a cop
-# raised an error or a warning, as Runner#save_in_cache (process_file sees only that file's).
+# Which files the child inspects (#805). Most of its time goes to parsing, and a file no cop it
+# runs may inspect has no offenses: such a file (Team#roundup_relevant_cops: enabled, not
+# excluded_file?) is not parsed unless a directive in it may opt one of its cops in, nor is a
+# file rbcop has cached offenses for (CACHED). The others are inspected, and rbcop keeps their
+# offenses in its result cache, except for a file on which a cop raised an error or a warning,
+# as Runner#save_in_cache: Runner#file_problems reports those before file_finished, also when the
+# files are inspected in parallel worker processes.
+module RbcopFiles
+  CACHED = Set.new
+  UNCACHED = Set.new
+  DIRECTIVE = /(?:rubocop|standard)\s*:\s*(?:enable|todo|push)\b.*/
+end
+
 RuboCop::Runner.prepend(Module.new do
   private def process_file(file)
-    super.tap { RbcopFallbackFormatter.uncached = errors.any? || warnings.any? }
+    return [] if RbcopFiles::CACHED.include?(File.expand_path(file))
+    return [] unless ENV['RBCOP_FALLBACK_SYNTAX'] || rbcop_inspects?(file)
+
+    super
+  end
+
+  private def file_problems(file, errors, warnings)
+    RbcopFiles::UNCACHED << file
+    super
+  end
+
+  private def rbcop_inspects?(file)
+    config = @config_store.for_file(file)
+    @rbcop_teams ||= {}.compare_by_identity
+    team = @rbcop_teams[config] ||= mobilized_cop_classes(config).enabled(config)
+                                                                 .reject { |c| c.cop_name == 'Lint/Syntax' }
+                                                                 .map { |c| c.new(config, @options) }
+    return true if team.any? { |cop| !cop.excluded_file?(file) }
+
+    lines = File.binread(file).scan(RbcopFiles::DIRECTIVE)
+    return false if lines.empty?
+
+    @rbcop_names ||= RuboCop::Cop::Registry.global.names - Array(@options[:except]) - ['Lint/Syntax']
+    @rbcop_names.any? do |name|
+      department, _, cop = name.rpartition('/')
+      lines.any? { |l| l.include?(cop) || (!department.empty? && l.include?(department)) }
+    end
+  rescue SystemCallError
+    true
   end
 end)
