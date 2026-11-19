@@ -1,5 +1,6 @@
 # Loaded by `rubocop --require` when rbcop runs RuboCop for the cops it does not implement
-# (src/fallback.rs). One line per offense, then `rbcop-fallback-done`. Offenses are tab-separated:
+# (src/fallback.rs). One line per offense (and `rbcop-fallback-uncached<TAB>path` after a file a cop
+# raised an error or a warning on), then `rbcop-fallback-done`. Offenses are tab-separated:
 #   path  begin_byte  end_byte  severity  correctable  corrected  global  cop  message  disabled  justification
 #   corrections
 # (justification empty when there is none; disabled offenses come only under --display-suppressed)
@@ -42,6 +43,11 @@ RuboCop::Cop::Registry.prepend(Module.new do
 end)
 
 class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
+  class << self
+    # Whether a cop raised an error or a warning on the file just inspected (see below).
+    attr_accessor :uncached
+  end
+
   def file_finished(file, offenses)
     offenses.each do |o|
       # rbcop reports syntax errors itself (and Lint/Syntax cannot be excluded), except in the
@@ -62,6 +68,7 @@ class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
                    o.cop_name, esc(o.message), o.disabled? ? 1 : 0, esc(o.justification.to_s),
                    corrections(o)].join("\t")
     end
+    output.puts "rbcop-fallback-uncached\t#{esc(file)}" if self.class.uncached
     # A cop that forks (rubocop-require_tools) would flush a copy of anything still buffered.
     output.flush
   end
@@ -87,3 +94,11 @@ class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
 
   def esc(s) = s.gsub(/[\\\t\n]/, ESCAPES)
 end
+
+# rbcop keeps the child's offenses in its result cache (#805), except for a file on which a cop
+# raised an error or a warning, as Runner#save_in_cache (process_file sees only that file's).
+RuboCop::Runner.prepend(Module.new do
+  private def process_file(file)
+    super.tap { RbcopFallbackFormatter.uncached = errors.any? || warnings.any? }
+  end
+end)

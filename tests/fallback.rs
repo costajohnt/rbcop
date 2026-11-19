@@ -701,6 +701,8 @@ const MISSING: &str = "rbcop: RuboCop runs them when one is found: add the ruboc
 #[test]
 fn fallback_is_the_default() {
     let dir = project("default");
+    // Each run starts RuboCop: none reuses the child's cached offenses (#805).
+    fs::write(dir.join(".rubocop.yml"), format!("{CONFIG}  UseCache: false\n")).unwrap();
     let bin = dir.join("bin");
     fs::create_dir_all(&bin).unwrap();
     let run = |env: &[(&str, &str)], args: &[&str]| {
@@ -1005,5 +1007,53 @@ fn fallback_gets_only_the_files_its_cops_may_inspect() {
             same(&dir, &[], args);
         }
     }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// The child's offenses are kept in the result cache (#805): a warm run starts no RuboCop for an
+/// unchanged file, and a changed file, a changed required Ruby file, or a file a cop raised an
+/// error or a warning on is inspected again.
+#[test]
+fn fallback_results_are_cached() {
+    let dir = project("cached");
+    let rc = dir.join("rc");
+    // A stand-in RuboCop: logs the files it is given, reports one offense in a.rb, and marks b.rb
+    // uncached while `warn` exists.
+    fs::write(
+        &rc,
+        "#!/bin/sh\no=/dev/null\nwhile [ $# -gt 0 ]; do case $1 in --out) o=$2; shift;; --) shift; break;; esac; \
+         shift; done\nd=${0%/*}\n: > \"$o\"\nfor f; do printf '%s ' \"${f##*/}\" >> \"$d/log\"\n\
+         case $f in */a.rb) printf '%s\\t2\\t5\\tconvention\\t0\\t0\\t0\\tCustom/NoFoo\\tAvoid.\\t0\\t\\n' \"$f\" >> \"$o\";; \
+         */b.rb) [ -e \"$d/warn\" ] && printf 'rbcop-fallback-uncached\\t%s\\n' \"$f\" >> \"$o\";; esac\ndone\n\
+         echo >> \"$d/log\"\necho rbcop-fallback-done >> \"$o\"\n",
+    )
+    .unwrap();
+    Command::new("chmod").arg("755").arg(&rc).status().unwrap();
+    let run = || {
+        let _ = fs::remove_file(dir.join("log"));
+        let mut cmd = common::command(env!("CARGO_BIN_EXE_rbcop"));
+        let out = cmd
+            .env("HOME", &dir)
+            .env("RBCOP_FALLBACK", "1")
+            .env("RBCOP_RUBOCOP", &rc)
+            .env("RUBOCOP_CACHE_ROOT", dir.join("cache"))
+            .args(["-f", "e", "a.rb", "b.rb"])
+            .current_dir(&dir)
+            .output()
+            .unwrap();
+        assert!(text(&out.stdout).contains("a.rb:1:3: C: Custom/NoFoo: Avoid."), "{}", text(&out.stdout));
+        fs::read_to_string(dir.join("log")).unwrap_or_default()
+    };
+    assert_eq!(run(), "a.rb b.rb \n");
+    assert_eq!(run(), "");
+    fs::write(dir.join("b.rb"), "# frozen_string_literal: true\n\nfoo(4)\n").unwrap();
+    assert_eq!(run(), "b.rb \n");
+    assert_eq!(run(), "");
+    fs::write(dir.join("no_foo.rb"), format!("{COP}\n")).unwrap();
+    assert_eq!(run(), "a.rb b.rb \n");
+    fs::write(dir.join("warn"), "").unwrap();
+    fs::write(dir.join("b.rb"), "# frozen_string_literal: true\n\nfoo(5)\n").unwrap();
+    assert_eq!(run(), "b.rb \n");
+    assert_eq!(run(), "b.rb \n");
     let _ = fs::remove_dir_all(&dir);
 }

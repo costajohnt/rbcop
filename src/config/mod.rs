@@ -908,6 +908,8 @@ pub struct Store {
     open_constants: std::collections::HashSet<String>,
     /// Required code whose cops may inspect files their config does not name (opaque_cops).
     opaque_cops: bool,
+    /// The `require:`d local Ruby files (register_local).
+    local_requires: Vec<PathBuf>,
     dir_to_file: HashMap<PathBuf, Option<PathBuf>>,
     /// inherit_from files being loaded (outermost first), to detect cycles.
     loading: Vec<PathBuf>,
@@ -988,6 +990,7 @@ impl Store {
             open_custom: false,
             open_constants: Default::default(),
             opaque_cops: false,
+            local_requires: Vec::new(),
             dir_to_file: HashMap::new(),
             loading: Vec::new(),
             remote: HashMap::new(),
@@ -1142,6 +1145,22 @@ impl Store {
     /// Base#relevant_file? or loads files rbcop does not read (#805).
     pub fn child_cops_known(&self) -> bool {
         !self.open_custom && self.open_constants.is_empty() && !self.opaque_cops
+    }
+
+    /// What the RuboCop child's offenses depend on besides each file and its config (#805): the
+    /// gems rbcop looked up (their directories name their versions) and the `require:`d local Ruby
+    /// files with the files they load, as ResultCache's checksum covers RuboCop's loaded features.
+    pub fn fallback_inputs(&self) -> Vec<u8> {
+        let mut gems: Vec<_> = self.gem_dirs.iter().collect();
+        gems.sort();
+        let mut out = format!("{gems:?}").into_bytes();
+        for f in &self.local_requires {
+            for r in required_files(f.parent().unwrap_or(f), f, None) {
+                out.extend(format!("\0{}\0", r.display()).bytes());
+                out.extend(std::fs::read(&r).unwrap_or_default());
+            }
+        }
+        out
     }
 
     /// The loaded plugins rbcop does not implement that define no cops.
@@ -2106,6 +2125,7 @@ impl Store {
         self.opaque_cops |= overrides_relevance(file)
             || required_files(file.parent().unwrap_or(file), file, None).len() > 1
             || std::fs::read_to_string(file).is_ok_and(|t| t.contains("autoload"));
+        self.local_requires.push(file.to_path_buf());
         crate::helpers::cop_registry::register_custom(cops);
     }
 

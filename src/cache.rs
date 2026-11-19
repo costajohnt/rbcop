@@ -220,6 +220,16 @@ impl Cache {
     /// (the caller knows the offenses are those of a plain inspection), but warns as RuboCop does
     /// either way.
     pub fn save(&self, key: &str, report: &FileReport, write: bool) {
+        self.store(key, report, write, true);
+    }
+
+    /// `save` of what RuboCop does not save itself (the fallback child's offenses, #805): never
+    /// warns, so a cache that cannot be written warns only as RuboCop would.
+    pub fn save_quiet(&self, key: &str, report: &FileReport) {
+        self.store(key, report, true, false);
+    }
+
+    fn store(&self, key: &str, report: &FileReport, write: bool, warn: bool) {
         use std::sync::atomic::Ordering::Relaxed;
         // Checked until a save finds the directory fine and opens it (about ten syscalls per file
         // before, #778), so every refused save still warns.
@@ -228,13 +238,19 @@ impl Cache {
             match mkdir_p(&self.dir) {
                 Ok(()) => {}
                 Err(Some(msg)) => {
-                    return eprintln!("Couldn't create cache directory. Continuing without cache.\n  {msg}");
+                    if warn {
+                        eprintln!("Couldn't create cache directory. Continuing without cache.\n  {msg}");
+                    }
+                    return;
                 }
                 Err(None) => return,
             }
             // A symbolic link anywhere in the cache directory's path can be a symlink attack.
             if let Some(link) = self.refused_symlink(&self.dir) {
-                return eprintln!("Warning: {} is a symlink, which is not allowed.", link.display());
+                if warn {
+                    eprintln!("Warning: {} is a symlink, which is not allowed.", link.display());
+                }
+                return;
             }
             // Every later save goes through this descriptor, so a symlink swapped into the path
             // after the check is never followed. Failing here is such a swap: skip quietly.
@@ -281,6 +297,7 @@ impl Cache {
             *dir_fd = None;
         }
         if let Err((e, at)) = written
+            && warn
             && let Some(what) = errno_message(&e)
         {
             eprintln!("Couldn't write cache file. Continuing without cache.\n  {what} @ {at}");

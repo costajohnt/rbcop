@@ -2027,6 +2027,61 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     let known: std::collections::HashSet<&str> =
         configs.iter().flat_map(|c| c.hash.0.iter().map(|(k, _)| k.as_str())).collect();
     let names: Vec<&'static str> = names.into_iter().filter(|&n| n == "Lint/Syntax" || known.contains(n)).collect();
+    // Runner#cached_run?: `--cache true|false`, else `AllCops: UseCache`; never for --stdin. Under
+    // --auto-gen-config (AutoGenerateConfig#use_temporary_cache: a cache root of its own, removed
+    // afterwards) every file is inspected and nothing is kept.
+    let use_cache = stdin_text.is_none()
+        && phase.is_none()
+        && match cli.cache.as_deref() {
+            Some("true") => true,
+            Some("false") => false,
+            _ => pwd_config.all_cops().truthy("UseCache"),
+        };
+    let result_cache = use_cache.then(|| cache::root_dir(configured_root.clone())).flatten().and_then(|root| {
+        // ResultCache#context_checksum: the options that change offenses, plus what the cops
+        // read outside each file's config: rubocop-rails' db/schema.rb (ActiveRecordHelper's
+        // external_dependency_checksum), the working directory, the plugins loaded and, with
+        // AllCops/UseProjectIndex, every indexed file's path, mtime and size (ProjectIndexHelp's
+        // external_dependency_checksum).
+        let schema = cwd.ancestors().find_map(|d| fs::read(d.join("db/schema.rb")).ok());
+        let index = rbcop::project_index::get().map(|ix| cache::digest(&[ix.signature().as_bytes()]));
+        let context = format!(
+            "{}|{only:?}|{except:?}|{}|{}|{}|{}|{}|{:?}|{}|{}",
+            // CachedData keeps Offense#corrections. rbcop records them only for the JSON
+            // formatter (recording them on every run costs a warm run ~40% more CPU on rails),
+            // so entries with and without them live apart: a JSON run never loads an entry
+            // saved without its corrections.
+            rbcop::cop::recording_edits(),
+            cli.only_guide,
+            runner::display_suppressed(),
+            // Both change what is stored (suppressed offenses; messages, ranges and
+            // [Correctable] under editor mode) and are in RuboCop's relevant_options_digest.
+            rbcop::directives::ignoring_disable_comments(),
+            rbcop::helpers::lsp::enabled(),
+            cwd.display(),
+            store.loaded_plugins(),
+            schema.map(|s| cache::digest(&[&s])).unwrap_or_default(),
+            index.unwrap_or_default()
+        );
+        let all = pwd_config.all_cops();
+        cache::Cache::new(
+            &root,
+            &context,
+            all.truthy("AllowSymlinksInCacheRootDirectory"),
+            all.int("MaxFilesInCache"),
+            // The RuboCop child's offenses are kept too (#805): any registered cop's.
+            implemented.iter().copied().chain(rbcop::helpers::cop_registry::REGISTRY.to_vec()).collect(),
+        )
+    });
+    // Each config's signature (Config#signature), once.
+    let mut signatures = std::collections::HashMap::new();
+    if result_cache.is_some() {
+        for (_, c) in &jobs {
+            signatures
+                .entry(std::sync::Arc::as_ptr(c) as usize)
+                .or_insert_with(|| cache::digest(&[c.signature().as_bytes()]));
+        }
+    }
     let mut fallback_offenses = std::collections::HashMap::new();
     // -F with -a/-A: RuboCop corrects no file after the first failing one, so the child corrects
     // one file at a time, as each is reached (in the loop below).
@@ -2081,74 +2136,63 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                 let whole: Vec<PathBuf> =
                     jobs.iter().map(|(p, _)| p).filter(|p| plugin_files.contains(*p)).cloned().collect();
                 if unrunnable {
-                    let rest: Vec<PathBuf> = jobs
-                        .iter()
-                        .filter(|(p, c)| !plugin_files.contains(p) && needs_child(p, c))
-                        .map(|(p, _)| p.clone())
-                        .collect();
-                    fallback_offenses = fallback::run(&rest, &cwd, &names, child)?;
+                    // Each file's offenses are kept in the result cache (#805), keyed on what the
+                    // child's depend on besides the file and its config: the RuboCop it runs and
+                    // the gems and required Ruby code it loads. Not under -a/-A, where it corrects.
+                    let cache = result_cache.as_ref().filter(|_| cli.autocorrect.is_none());
+                    let inputs = cache.map(|_| {
+                        let lock = fallback::bundle_lock().and_then(|l| fs::read(l).ok()).unwrap_or_default();
+                        let env: Vec<String> = ["GEM_HOME", "GEM_PATH", "BUNDLE_GEMFILE", "RUBYOPT"]
+                            .iter()
+                            .map(|k| env::var(k).unwrap_or_default())
+                            .collect();
+                        cache::digest(&[
+                            program.as_bytes(),
+                            &store.fallback_inputs(),
+                            &lock,
+                            format!("{env:?}").as_bytes(),
+                        ])
+                    });
+                    let mut rest = Vec::new();
+                    let mut keys = Vec::new();
+                    for (p, c) in jobs.iter().filter(|(p, c)| !plugin_files.contains(p) && needs_child(p, c)) {
+                        if let (Some(cache), Some(inputs)) = (cache, &inputs)
+                            && let Ok(bytes) = fs::read(p)
+                            && let Some(key) = cache.key(
+                                p,
+                                &format!("{}|fallback|{inputs}", signatures[&(std::sync::Arc::as_ptr(c) as usize)]),
+                                &bytes,
+                            )
+                        {
+                            if let Some(report) = cache.load(&key, &bytes) {
+                                fallback_offenses.insert(p.clone(), report.offenses);
+                                continue;
+                            }
+                            keys.push((p.clone(), key, bytes));
+                        }
+                        rest.push(p.clone());
+                    }
+                    let (found, uncached) = fallback::run(&rest, &cwd, &names, child)?;
+                    for (p, key, bytes) in keys.into_iter().filter(|(p, ..)| !uncached.contains(p)) {
+                        let Some(cache) = cache else { break };
+                        let report = FileReport {
+                            offenses: found.get(&p).cloned().unwrap_or_default(),
+                            text: String::from_utf8_lossy(&bytes).into_owned(),
+                            warnings: Vec::new(),
+                            abort: None,
+                            diffs: Vec::new(),
+                        };
+                        cache.save_quiet(&key, &report);
+                    }
+                    fallback_offenses.extend(found);
                 }
-                fallback_offenses.extend(fallback::run(&whole, &cwd, &[], child)?);
+                fallback_offenses.extend(fallback::run(&whole, &cwd, &[], child)?.0);
             }
         } else {
             eprintln!("{}", fallback::notice(&skipped, store.requires_ruby_code(), &copless));
             if let Some(m) = fallback::missing().filter(|_| usable && program.is_none()) {
                 eprintln!("{m}");
             }
-        }
-    }
-    // Runner#cached_run?: `--cache true|false`, else `AllCops: UseCache`; never for --stdin. Under
-    // --auto-gen-config (AutoGenerateConfig#use_temporary_cache: a cache root of its own, removed
-    // afterwards) every file is inspected and nothing is kept.
-    let use_cache = stdin_text.is_none()
-        && phase.is_none()
-        && match cli.cache.as_deref() {
-            Some("true") => true,
-            Some("false") => false,
-            _ => pwd_config.all_cops().truthy("UseCache"),
-        };
-    let result_cache = use_cache.then(|| cache::root_dir(configured_root.clone())).flatten().and_then(|root| {
-        // ResultCache#context_checksum: the options that change offenses, plus what the cops
-        // read outside each file's config: rubocop-rails' db/schema.rb (ActiveRecordHelper's
-        // external_dependency_checksum), the working directory, the plugins loaded and, with
-        // AllCops/UseProjectIndex, every indexed file's path, mtime and size (ProjectIndexHelp's
-        // external_dependency_checksum).
-        let schema = cwd.ancestors().find_map(|d| fs::read(d.join("db/schema.rb")).ok());
-        let index = rbcop::project_index::get().map(|ix| cache::digest(&[ix.signature().as_bytes()]));
-        let context = format!(
-            "{}|{only:?}|{except:?}|{}|{}|{}|{}|{}|{:?}|{}|{}",
-            // CachedData keeps Offense#corrections. rbcop records them only for the JSON
-            // formatter (recording them on every run costs a warm run ~40% more CPU on rails),
-            // so entries with and without them live apart: a JSON run never loads an entry
-            // saved without its corrections.
-            rbcop::cop::recording_edits(),
-            cli.only_guide,
-            runner::display_suppressed(),
-            // Both change what is stored (suppressed offenses; messages, ranges and
-            // [Correctable] under editor mode) and are in RuboCop's relevant_options_digest.
-            rbcop::directives::ignoring_disable_comments(),
-            rbcop::helpers::lsp::enabled(),
-            cwd.display(),
-            store.loaded_plugins(),
-            schema.map(|s| cache::digest(&[&s])).unwrap_or_default(),
-            index.unwrap_or_default()
-        );
-        let all = pwd_config.all_cops();
-        cache::Cache::new(
-            &root,
-            &context,
-            all.truthy("AllowSymlinksInCacheRootDirectory"),
-            all.int("MaxFilesInCache"),
-            implemented.clone(),
-        )
-    });
-    // Each config's signature (Config#signature), once.
-    let mut signatures = std::collections::HashMap::new();
-    if result_cache.is_some() {
-        for (_, c) in &jobs {
-            signatures
-                .entry(std::sync::Arc::as_ptr(c) as usize)
-                .or_insert_with(|| cache::digest(&[c.signature().as_bytes()]));
         }
     }
     let stdin_text = &stdin_text;
@@ -2375,9 +2419,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             if let Some(child) = fallback_per_file {
                 let one = std::slice::from_ref(path);
                 if plugin_files.contains(path) {
-                    fallback_offenses.extend(fallback::run(one, &cwd, &[], child)?);
+                    fallback_offenses.extend(fallback::run(one, &cwd, &[], child)?.0);
                 } else if unrunnable && needs_child(path, cfg) {
-                    fallback_offenses.extend(fallback::run(one, &cwd, &names, child)?);
+                    fallback_offenses.extend(fallback::run(one, &cwd, &names, child)?.0);
                 }
             }
             let linted = match linted.take() {

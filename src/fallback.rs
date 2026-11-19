@@ -69,19 +69,25 @@ pub fn missing() -> Option<&'static str> {
 /// Bundler's Gemfile lookup (BUNDLE_GEMFILE, else Gemfile or gems.rb in the working directory or a
 /// parent), and whether its lockfile has the rubocop gem among its specs.
 fn bundle_has_rubocop() -> bool {
+    bundle_lock().is_some_and(|lock| {
+        std::fs::read_to_string(lock).is_ok_and(|t| t.lines().any(|l| l.starts_with("    rubocop (")))
+    })
+}
+
+/// The lockfile of Bundler's Gemfile lookup.
+pub fn bundle_lock() -> Option<PathBuf> {
     let gemfile = match std::env::var_os("BUNDLE_GEMFILE").filter(|v| !v.is_empty()) {
         Some(g) => Some(PathBuf::from(g)),
         None => std::env::current_dir()
             .ok()
             .and_then(|cwd| cwd.ancestors().flat_map(|d| [d.join("Gemfile"), d.join("gems.rb")]).find(|p| p.is_file())),
     };
-    let Some(gemfile) = gemfile else { return false };
-    let lock = if gemfile.file_name().is_some_and(|n| n == "gems.rb") {
+    let gemfile = gemfile?;
+    Some(if gemfile.file_name().is_some_and(|n| n == "gems.rb") {
         gemfile.with_file_name("gems.locked")
     } else {
         PathBuf::from(format!("{}.lock", gemfile.display()))
-    };
-    std::fs::read_to_string(lock).is_ok_and(|t| t.lines().any(|l| l.starts_with("    rubocop (")))
+    })
 }
 
 fn on_path(name: &str) -> bool {
@@ -187,6 +193,9 @@ pub fn may_opt_in(text: &str, cops: &[&str]) -> bool {
         })
 }
 
+/// The child's offenses by file, and the files it reports uncached.
+pub type Found = (HashMap<PathBuf, Vec<Offense>>, HashSet<PathBuf>);
+
 /// What the RuboCop subprocess needs from the command line.
 #[derive(Clone, Copy)]
 pub struct Child<'a> {
@@ -202,18 +211,15 @@ pub struct Child<'a> {
 }
 
 /// Runs RuboCop (`c.program`) on `files` with every cop rbcop implements
-/// excluded, and returns its offenses by file. With `implemented` empty RuboCop runs every cop,
+/// excluded, and returns its offenses by file, and the files on which a cop raised an error or a
+/// warning (Runner#save_in_cache keeps nothing for them). With `implemented` empty RuboCop runs every cop,
 /// Lint/Syntax included: the files rbcop leaves wholly to it (Store::copless_plugin_file). Under -a/-A RuboCop corrects (and writes) first, so
 /// rbcop then inspects the result; its offenses refer to the source before correction.
-pub fn run(
-    files: &[PathBuf],
-    cwd: &Path,
-    implemented: &[&str],
-    c: Child,
-) -> Result<HashMap<PathBuf, Vec<Offense>>, String> {
+pub fn run(files: &[PathBuf], cwd: &Path, implemented: &[&str], c: Child) -> Result<Found, String> {
     let mut out = HashMap::new();
+    let mut uncached = HashSet::new();
     if files.is_empty() {
-        return Ok(out);
+        return Ok((out, uncached));
     }
     let program = c.program;
     announce(program, c.what);
@@ -334,6 +340,10 @@ pub fn run(
     };
     let mut names: HashMap<String, &'static str> = HashMap::new();
     for line in body.lines() {
+        if let Some(path) = line.strip_prefix("rbcop-fallback-uncached\t") {
+            uncached.insert(PathBuf::from(unescape(path)));
+            continue;
+        }
         let mut f: Vec<&str> = line.split('\t').collect();
         // The corrections field is optional (a stand-in child may print the eleven before it).
         if f.len() == 11 {
@@ -364,7 +374,7 @@ pub fn run(
         };
         out.entry(path).or_insert_with(Vec::new).push(offense);
     }
-    Ok(out)
+    Ok((out, uncached))
 }
 
 /// One `begin,end,hex(replacement)` correction of the formatter's last field.
