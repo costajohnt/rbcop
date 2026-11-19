@@ -683,7 +683,9 @@ fn investigate(
             // first, then an enable directive opts the cop in past both `Enabled` and the target
             // Ruby range.
             let on = opted_in.contains(&r.name) || (c.enabled && ruby_ok);
-            (on && rails_ok && cfg.relevant(c, path)).then_some(Active { name: r.name, cop: r.cop, cfg: c })
+            // A cop whose class a `require:`d local file defines or reopens runs in RuboCop (#801).
+            let native = !crate::helpers::cop_registry::is_custom(r.name);
+            (on && rails_ok && cfg.relevant(c, path) && native).then_some(Active { name: r.name, cop: r.cop, cfg: c })
         })
         .collect();
 

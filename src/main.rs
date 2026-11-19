@@ -2009,8 +2009,14 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     for w in &store.warnings {
         eprintln!("Warning: {w}");
     }
-    // Deliberate difference: cops rbcop cannot run are named on stderr, or run by RuboCop.
-    let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).chain(["Lint/Syntax"]).collect();
+    // Deliberate difference: cops rbcop cannot run are named on stderr, or run by RuboCop. A cop
+    // whose class a `require:`d local file defines or reopens is among them (#801).
+    let names: Vec<&'static str> = cops::ALL
+        .iter()
+        .map(|c| c.name)
+        .filter(|n| !rbcop::helpers::cop_registry::is_custom(n))
+        .chain(["Lint/Syntax"])
+        .collect();
     let implemented: std::collections::HashSet<&str> = names.iter().copied().collect();
     let mut seen = std::collections::HashSet::new();
     let configs: Vec<&Resolved> =

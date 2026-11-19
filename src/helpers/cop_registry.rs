@@ -242,7 +242,7 @@ pub fn register_custom(cops: Vec<(String, bool)>) {
     register_foreign(cops.into_iter().map(|(c, _)| c).collect());
 }
 
-/// A cop a `require:`d local Ruby file defines.
+/// A cop a `require:`d local Ruby file defines (or reopens: then rbcop does not run its own port).
 pub fn is_custom(cop: &str) -> bool {
     CUSTOM.read().unwrap().iter().any(|c| c == cop)
 }
@@ -290,11 +290,12 @@ pub fn is_known(cop: &str) -> bool {
 }
 
 /// A cop RuboCop would run that rbcop has no implementation of (a foreign plugin's or a custom
-/// one): its offenses are unknowable, so a directive naming it is never judged redundant.
+/// one, also one whose class a `require:`d local file defines or reopens, #801): its offenses are
+/// unknowable, so a directive naming it is never judged redundant.
 pub fn is_unrunnable(cop: &str) -> bool {
     static IMPLEMENTED: LazyLock<std::collections::HashSet<&'static str>> =
         LazyLock::new(|| crate::cops::ALL.iter().map(|r| r.name).chain(["Lint/Syntax"]).collect());
-    is_known(cop) && !IMPLEMENTED.contains(cop)
+    is_known(cop) && (!IMPLEMENTED.contains(cop) || is_custom(cop))
 }
 
 /// Whether any loaded cop is unrunnable (then a `disable all` range is never judged redundant).

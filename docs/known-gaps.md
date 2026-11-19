@@ -515,6 +515,10 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
   cop prints on its own (rubocop-require_tools' `Note: Could not load` lines) reaches stdout
   before rbcop's report rather than interleaved with the offenses, as RuboCop prints it.
   `--stdin` and (without `RBCOP_FALLBACK=1`) `--diff` skip the fallback with the notice.
+  A cop rbcop implements whose class a `require:`d local file defines or reopens (`class
+  RuboCop::Cop::Style::OneClassPerFile`, compact or in nested `module` lines) counts as such a
+  custom cop, so RuboCop runs the patched class (#801); a class patched through `prepend`,
+  `class_eval` or a dynamically built name is not seen, and rbcop's own port runs.
 - Cops rbcop cannot run (a non-native plugin's, custom cops): Lint/RedundantCopDisableDirective
   never reports a directive naming one, nor a `disable all` while any is loaded, since their
   offenses are unknown (RuboCop reports those that turn out redundant). With custom cops loaded, a
