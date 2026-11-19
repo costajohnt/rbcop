@@ -877,6 +877,25 @@ fn default_fallback_matches_rubocop() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// What a `require:`d file prints while it loads reaches stderr as from RuboCop: Ruby's warnings
+/// when it redefines a cop's constant, though the child hides its config output (#804).
+#[test]
+fn required_code_warnings_reach_stderr() {
+    if !have_rubocop() {
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
+        return;
+    }
+    let dir = project("warn");
+    let config = "require:\n  - ./msg_cop.rb\nAllCops:\n  DisabledByDefault: true\n  NewCops: disable\n  \
+                  SuggestExtensions: false\n  TargetRubyVersion: 3.4\nStyle/OneClassPerFile:\n  Enabled: true\n";
+    fs::write(dir.join(".rubocop.yml"), config).unwrap();
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nclass A; end\nclass B; end\n").unwrap();
+    let cop = "class RuboCop::Cop::Style::OneClassPerFile < RuboCop::Cop::Base\n  MSG = 'Changed.'\nend\n";
+    fs::write(dir.join("msg_cop.rb"), cop).unwrap();
+    same(&dir, &[], &["-f", "e", "a.rb"]);
+    let _ = fs::remove_dir_all(&dir);
+}
+
 /// A `require:`d local file that defines or reopens the class of a cop rbcop implements changes
 /// that cop in RuboCop: rbcop leaves it to RuboCop as required code, and under RBCOP_FALLBACK=0
 /// neither runs its own port nor judges a directive naming it redundant (#801).
