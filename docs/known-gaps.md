@@ -519,6 +519,13 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
   RuboCop::Cop::Style::OneClassPerFile`, compact or in nested `module` lines) counts as such a
   custom cop, so RuboCop runs the patched class (#801); a class patched through `prepend`,
   `class_eval` or a dynamically built name is not seen, and rbcop's own port runs.
+  The RuboCop child gets only the files one of its cops may inspect (#805), and nothing when there
+  are none: no `rbcop: running` line then, and a file RuboCop would fail to parse fails nothing.
+  Its offenses are kept in rbcop's result cache, keyed also on the RuboCop command, the project's
+  lockfile, GEM_HOME/GEM_PATH/BUNDLE_GEMFILE/RUBYOPT, the gem directories rbcop resolved and the
+  required local Ruby files. An upgrade RuboCop's own cache would see but those do not (a gem
+  updated behind an `RBCOP_RUBOCOP` wrapper with its own bundle) needs `--cache false` once, or
+  a cleared cache.
 - Cops rbcop cannot run (a non-native plugin's, custom cops): Lint/RedundantCopDisableDirective
   never reports a directive naming one, nor a `disable all` while any is loaded, since their
   offenses are unknown (RuboCop reports those that turn out redundant). With custom cops loaded, a
