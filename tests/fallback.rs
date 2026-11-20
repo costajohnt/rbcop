@@ -1366,22 +1366,14 @@ fn cop_errors_are_not_cached() {
     .unwrap();
     fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nfoo\n").unwrap();
     fs::write(dir.join("b.rb"), "# frozen_string_literal: true\n\nbar\n").unwrap();
-    // (Exit status not compared: RuboCop exits 1 after a cop error, rbcop 0, also without the
-    // cache.)
+    // The run fails, as RuboCop's (#811): exit status 1 with no offenses, cold and warm.
     let args = ["-f", "e", "a.rb", "b.rb"];
-    for _ in 0..2 {
-        let ours = common::command(env!("CARGO_BIN_EXE_rbcop"))
-            .env("HOME", &dir)
-            .env("RBCOP_FALLBACK", "1")
-            .args(args)
-            .current_dir(&dir)
-            .output()
-            .unwrap();
-        let theirs = common::command("rubocop").env("HOME", &dir).args(args).current_dir(&dir).output().unwrap();
-        assert_eq!(text(&ours.stdout), text(&theirs.stdout));
-        assert_eq!(text(&ours.stderr), text(&theirs.stderr));
-        assert!(text(&theirs.stderr).contains("1 error occurred"), "{}", text(&theirs.stderr));
-    }
+    same_cached(&dir, &[], &args);
+    same_cached(&dir, &[], &args);
+    same(&dir, &[], &args);
+    same(&dir, &[], &["--no-parallel", "-f", "e", "a.rb", "b.rb"]);
+    same(&dir, &[], &["-a", "-f", "e", "a.rb", "b.rb"]);
+    assert!(text(&rubocop(&dir, &args).stderr).contains("1 error occurred"));
     let _ = fs::remove_dir_all(&dir);
 }
 
