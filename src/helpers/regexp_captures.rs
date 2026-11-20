@@ -31,7 +31,27 @@ pub fn regexp_captures(node: &Node) -> Option<(usize, usize)> {
 /// Count `(...)` capture groups in regexp source: plain groups are numbered, `(?<n>` / `(?'n'`
 /// named; escapes, character classes, `(?#...)` and (with /x) `#` comments are skipped.
 pub fn count_captures(s: &[u8], extended: bool) -> (usize, usize) {
-    let (mut named, mut numbered) = (0, 0);
+    let (named, numbered) = scan(s, extended);
+    (named.len(), numbered)
+}
+
+/// `regexp.to_regexp.named_captures.keys` of a non-interpolated regexp literal: every group name,
+/// first occurrence order, whether or not it is a valid local variable name (`(?<OS>..)`).
+pub fn capture_names(node: &Node) -> Vec<String> {
+    let Some(r) = node.as_regular_expression_node() else { return Vec::new() };
+    let mut names: Vec<String> = Vec::new();
+    for name in scan(r.content_loc().as_slice(), r.is_extended()).0 {
+        let name = String::from_utf8_lossy(name).into_owned();
+        if !names.contains(&name) {
+            names.push(name);
+        }
+    }
+    names
+}
+
+/// (named group names, numbered group count).
+fn scan(s: &[u8], extended: bool) -> (Vec<&[u8]>, usize) {
+    let (mut named, mut numbered) = (Vec::new(), 0);
     let mut i = 0;
     while i < s.len() {
         match s[i] {
@@ -47,8 +67,8 @@ pub fn count_captures(s: &[u8], extended: bool) -> (usize, usize) {
                     numbered += 1;
                 } else {
                     match (s.get(i + 2), s.get(i + 3)) {
-                        (Some(b'<'), Some(c)) if *c != b'=' && *c != b'!' => named += 1,
-                        (Some(b'\''), _) => named += 1,
+                        (Some(b'<'), Some(c)) if *c != b'=' && *c != b'!' => named.push(group_name(s, i + 3, b'>')),
+                        (Some(b'\''), _) => named.push(group_name(s, i + 3, b'\'')),
                         (Some(b'#'), _) => {
                             while i < s.len() && s[i] != b')' {
                                 i += 1;
@@ -63,6 +83,12 @@ pub fn count_captures(s: &[u8], extended: bool) -> (usize, usize) {
         }
     }
     (named, numbered)
+}
+
+/// The group name starting at `s[from]`, up to `close`.
+fn group_name(s: &[u8], from: usize, close: u8) -> &[u8] {
+    let rest = &s[from.min(s.len())..];
+    &rest[..rest.iter().position(|&b| b == close).unwrap_or(rest.len())]
 }
 
 /// Index just past the character class starting at `s[i] == '['` (nested classes included).

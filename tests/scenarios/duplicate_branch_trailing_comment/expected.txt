@@ -1,0 +1,3 @@
+c.rb:5:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+i.rb:4:1: W: Lint/DuplicateBranch: Duplicate branch body detected.
+i.rb:7:1: W: Lint/DuplicateBranch: Duplicate branch body detected.

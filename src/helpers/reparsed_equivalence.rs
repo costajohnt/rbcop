@@ -140,6 +140,89 @@ pub fn parses_equivalently_folding(
     }
 }
 
+/// Whether RuboCop's reparse of a binary file's scope fragment fails (#816): ProcessedSource
+/// parses the fragment as UTF-8 (it lacks the magic comment), while the original's string values
+/// are ASCII-8BIT. So it fails on any non-ASCII byte outside comments, any string,
+/// symbol or command literal whose value is not ASCII (one a `\u` escape makes UTF-8 is equal
+/// below 3.3, where the parser gem builds it as UTF-8 in both), and any regexp whose escapes are
+/// not valid UTF-8 (`/\x8d/` is "invalid multibyte escape").
+/// ponytail: RuboCop raises a cop error for a `:"\x88"` symbol below 3.3; this only drops the item.
+fn utf8_fragment_differs(fragment: &str, version: &'static str, legacy: Option<f64>) -> bool {
+    let mut buf = Vec::new();
+    let Some(result) = parse_clean(fragment, &mut buf, version, legacy) else { return false };
+    let bytes = fragment.as_bytes();
+    let mut code = bytes.to_vec();
+    for c in result.comments() {
+        let l = c.location();
+        code[l.start_offset()..l.end_offset()].fill(b' ');
+    }
+    if !code.is_ascii() {
+        return true;
+    }
+    struct V {
+        legacy: bool,
+        differs: bool,
+    }
+    impl<'pr> Visit<'pr> for V {
+        fn visit_string_node(&mut self, n: &ruby_prism::StringNode<'pr>) {
+            self.differs |= !n.unescaped().is_ascii() && !(self.legacy && unicode_escape(&n.location()));
+        }
+        fn visit_x_string_node(&mut self, n: &ruby_prism::XStringNode<'pr>) {
+            self.differs |= !n.unescaped().is_ascii() && !(self.legacy && unicode_escape(&n.location()));
+        }
+        fn visit_symbol_node(&mut self, n: &ruby_prism::SymbolNode<'pr>) {
+            self.differs |= !n.unescaped().is_ascii() && !(self.legacy && unicode_escape(&n.location()));
+        }
+        fn visit_regular_expression_node(&mut self, n: &ruby_prism::RegularExpressionNode<'pr>) {
+            self.differs |= !n.is_ascii_8bit() && !utf8_escapes(n.content_loc().as_slice());
+        }
+    }
+    let mut v = V { legacy: legacy.is_some(), differs: false };
+    v.visit(&result.node());
+    v.differs
+}
+
+/// A `\u` escape in the literal: the parser gem builds its value as UTF-8.
+fn unicode_escape(l: &ruby_prism::Location) -> bool {
+    l.as_slice().windows(2).any(|w| w == b"\\u")
+}
+
+/// Whether a regexp's `\xHH` / octal escapes spell valid UTF-8 (other escapes are ASCII).
+fn utf8_escapes(content: &[u8]) -> bool {
+    let hex = |b: u8| (b as char).to_digit(16);
+    let mut out = Vec::with_capacity(content.len());
+    let mut i = 0;
+    while i < content.len() {
+        if content[i] != b'\\' || i + 1 == content.len() {
+            out.push(content[i]);
+            i += 1;
+            continue;
+        }
+        let next = content[i + 1];
+        if next == b'x' && let Some(h) = content.get(i + 2).and_then(|&b| hex(b)) {
+            let mut v = h;
+            i += 3;
+            if let Some(l) = content.get(i).and_then(|&b| hex(b)) {
+                v = v * 16 + l;
+                i += 1;
+            }
+            out.push(v as u8);
+        } else if (b'0'..=b'7').contains(&next) {
+            let (mut v, mut k) = (0u32, i + 1);
+            while k < content.len() && k < i + 4 && (b'0'..=b'7').contains(&content[k]) {
+                v = v * 8 + (content[k] - b'0') as u32;
+                k += 1;
+            }
+            out.push(v as u8);
+            i = k;
+        } else {
+            out.extend_from_slice(&[b'\\', next]);
+            i += 2;
+        }
+    }
+    std::str::from_utf8(&out).is_ok()
+}
+
 #[derive(Clone, Copy, PartialEq)]
 enum Frame {
     /// Emitted `(`...`)`.
@@ -495,7 +578,7 @@ pub fn verified_by_reparse_folding<T: Copy>(
     apply: impl Fn(&mut Corrector, T),
     fold: bool,
 ) -> Vec<T> {
-    let opts = ReparseOpts { fold, report_oversized: false, raw_text: src.raw_text };
+    let opts = ReparseOpts { fold, report_oversized: false, raw_text: src.raw_text, binary: src.binary };
     verified_by_reparse_opts(src.text, src.version, src.legacy(), program, items, range, apply, opts)
 }
 
@@ -530,7 +613,7 @@ pub fn verified_by_reparse_with<T: Copy>(
     apply: impl Fn(&mut Corrector, T),
     report_oversized: bool,
 ) -> Vec<T> {
-    let opts = ReparseOpts { fold: false, report_oversized, raw_text: src.raw_text };
+    let opts = ReparseOpts { fold: false, report_oversized, raw_text: src.raw_text, binary: src.binary };
     verified_by_reparse_opts(src.text, src.version, src.legacy(), program, items, range, apply, opts)
 }
 
@@ -546,6 +629,8 @@ struct ReparseOpts<'a> {
     report_oversized: bool,
     /// `processed_source.raw_source` (CRLF intact): the whole-file size for `report_oversized`.
     raw_text: &'a str,
+    /// The file is binary (ASCII-8BIT) by its magic comment (`Source::binary`).
+    binary: bool,
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -559,7 +644,7 @@ fn verified_by_reparse_opts<T: Copy>(
     apply: impl Fn(&mut Corrector, T),
     opts: ReparseOpts,
 ) -> Vec<T> {
-    let ReparseOpts { fold, report_oversized, raw_text } = opts;
+    let ReparseOpts { fold, report_oversized, raw_text, binary } = opts;
     let crlf = if raw_text.len() == text.len() { 0 } else { raw_text.matches("\r\n").count() };
     let source: Arc<str> = Arc::from(text);
     // (scope range, normalized original, items) in order of first appearance.
@@ -596,8 +681,10 @@ fn verified_by_reparse_opts<T: Copy>(
         match scope {
             Some((s, e)) => {
                 let end = (e as isize + corrected.len() as isize - text.len() as isize) as usize;
-                scope_fragment(&corrected, s, end, crlf)
-                    .is_some_and(|fragment| parses_equivalently_folding(original, fragment, false, version, legacy, fold))
+                scope_fragment(&corrected, s, end, crlf).is_some_and(|fragment| {
+                    !(binary && utf8_fragment_differs(fragment, version, legacy))
+                        && parses_equivalently_folding(original, fragment, false, version, legacy, fold)
+                })
             }
             None => parses_equivalently_folding(original, &corrected, true, version, legacy, fold),
         }
