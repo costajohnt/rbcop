@@ -1,0 +1,7 @@
+dup.rb:2:6: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `OS`.
+mix.rb:2:6: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `OS`.
+not.rb:4:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `OS`.
+only.rb:2:6: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `OS`.
+ref.rb:2:6: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `OS`.
+two.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `OS`.
+two.rb:3:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `OS`.

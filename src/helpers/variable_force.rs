@@ -119,6 +119,16 @@ fn loc(node: &Node) -> (usize, usize) {
     (l.start_offset(), l.end_offset())
 }
 
+/// Parser's `match_op`: `regexp =~ x` on a regexp literal without interpolation is a
+/// `match_with_lvasgn` (Prism makes a MatchWriteNode only when a group name is a valid local).
+fn is_match_op(c: &ruby_prism::CallNode) -> bool {
+    c.name().as_slice() == b"=~"
+        && c.call_operator_loc().is_none()
+        && c.block().is_none()
+        && c.receiver().is_some_and(|r| r.as_regular_expression_node().is_some())
+        && c.arguments().is_some_and(|a| a.arguments().len() == 1)
+}
+
 fn name_of(c: &ruby_prism::ConstantId) -> String {
     String::from_utf8_lossy(c.as_slice()).into_owned()
 }
@@ -304,6 +314,17 @@ impl Tree {
     fn named(&mut self, t: T, range: (usize, usize), name: String) -> usize {
         let i = self.mk(t, range);
         self.nodes[i].name = name;
+        i
+    }
+
+    /// `match_with_lvasgn`: VariableForce assigns every named group of `regexp.to_regexp`, local
+    /// variable names or not (#817).
+    fn match_with_lvasgn(&mut self, call: &ruby_prism::CallNode, range: (usize, usize)) -> usize {
+        let i = self.mk(T::MatchWithLvasgn, range);
+        self.nodes[i].names = call.receiver().map_or_else(Vec::new, |r| crate::helpers::regexp_captures::capture_names(&r));
+        self.conv_kid(i, call.receiver());
+        let arg = call.arguments().and_then(|a| a.arguments().iter().next());
+        self.conv_kid(i, arg);
         i
     }
 
@@ -778,20 +799,7 @@ impl Tree {
                 self.conv_kid(i, Some(m.value()));
                 i
             }
-            kind::MATCH_WRITE_NODE => {
-                let m = node.as_match_write_node().unwrap();
-                let i = self.mk(T::MatchWithLvasgn, range);
-                self.nodes[i].names = m
-                    .targets()
-                    .iter()
-                    .filter_map(|t| t.as_local_variable_target_node().map(|t| name_of(&t.name())))
-                    .collect();
-                let call = m.call();
-                self.conv_kid(i, call.receiver());
-                let arg = call.arguments().and_then(|a| a.arguments().iter().next());
-                self.conv_kid(i, arg);
-                i
-            }
+            kind::MATCH_WRITE_NODE => self.match_with_lvasgn(&node.as_match_write_node().unwrap().call(), range),
             kind::DEF_NODE => {
                 let d = node.as_def_node().unwrap();
                 let i = self.mk(if d.receiver().is_some() { T::Defs } else { T::Def }, range);
@@ -809,6 +817,9 @@ impl Tree {
                 let body = self.body(d.body());
                 self.kid(i, body);
                 i
+            }
+            kind::CALL_NODE if is_match_op(&node.as_call_node().unwrap()) => {
+                self.match_with_lvasgn(&node.as_call_node().unwrap(), range)
             }
             kind::CALL_NODE => {
                 let c = node.as_call_node().unwrap();
