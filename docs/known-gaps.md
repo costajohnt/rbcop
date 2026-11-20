@@ -530,7 +530,9 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
   its config is read (as ResultCache.source_checksum): the child reports those before inspecting
   any file and skips the files rbcop has offenses for. Nothing is kept for a file a cop raised an
   error or a warning on, nor when a cop declares an external dependency
-  (`external_dependency_checksum`), which rbcop cannot key on.
+  (`external_dependency_checksum`), which rbcop cannot key on. What a fallback cop's constructor
+  does (output, say) may happen a different number of times than in RuboCop when RuboCop inspects
+  several files in parallel worker processes, whose count depends on the machine.
 - Cops rbcop cannot run (a non-native plugin's, custom cops): Lint/RedundantCopDisableDirective
   never reports a directive naming one, nor a `disable all` while any is loaded, since their
   offenses are unknown (RuboCop reports those that turn out redundant). With custom cops loaded, a

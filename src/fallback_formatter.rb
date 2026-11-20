@@ -160,16 +160,13 @@ RuboCop::Runner.prepend(Module.new do
 
   private def rbcop_inspects?(file)
     config = @config_store.for_file(file)
-    # Not constructed: Base#relevant_file? reads only the config, and RuboCop runs no constructor
-    # here (what one prints would come one time too many).
-    @rbcop_teams ||= {}.compare_by_identity
-    team = @rbcop_teams[config] ||= mobilized_cop_classes(config).enabled(config)
-                                                                 .reject { |c| c.cop_name == 'Lint/Syntax' }
-                                                                 .map do |c|
-      c.allocate.tap { |cop| cop.instance_variable_set(:@config, config) }
-    end
-    relevant = team.any? do |cop|
-      !cop.excluded_file?(file)
+    # Runner#mobilize_team's own memo: the team RuboCop builds to inspect files of this config,
+    # built now rather than when the first of them is parsed (no constructor runs more often).
+    @inspection_team_by_config ||= {}.compare_by_identity
+    team = @inspection_team_by_config[config] ||= assemble_team(config)
+    registry = mobilized_cop_classes(config)
+    relevant = team.cops.any? do |cop|
+      cop.cop_name != 'Lint/Syntax' && registry.enabled?(cop, config) && !cop.excluded_file?(file)
     rescue StandardError
       true
     end

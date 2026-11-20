@@ -1447,5 +1447,51 @@ fn cop_constructor_output_matches_rubocop() {
         same_cached(&dir, &[], &["-f", "e", "a.rb"]);
     }
     same(&dir, &[], &["-f", "e", "--cache", "false", "a.rb"]);
+    // Several files inspected one after another (in parallel, RuboCop's count depends on its
+    // worker processes: docs/known-gaps.md).
+    fs::write(dir.join("b.rb"), "# frozen_string_literal: true\n\nfoo\n").unwrap();
+    fs::write(dir.join("c.rb"), "# frozen_string_literal: true\n\nbar\n").unwrap();
+    for _ in 0..2 {
+        same_cached(&dir, &[], &["-f", "e", "--no-parallel", "a.rb", "b.rb", "c.rb"]);
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// #805 review R4: the child's skip asks the cops RuboCop builds (constructed, as
+/// Team#roundup_relevant_cops does) whether they take a file, so a `relevant_file?` that reads
+/// state its constructor set still sees it.
+#[test]
+fn relevance_uses_constructed_cops() {
+    if !have_rubocop() {
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
+        return;
+    }
+    let dir = project("constructed");
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nfoo\n").unwrap();
+    let on_send =
+        "    def on_send(node)\n      add_offense(node, message: 'foo') if node.method?(:foo)\n    end\n  end\nend\n";
+    for (state, config) in [
+        (
+            "    def initialize(config = nil, options = nil)\n      super\n      @active = true\n    end\n\n    \
+             def relevant_file?(file)\n      @active == true && super\n    end\n\n",
+            "",
+        ),
+        (
+            "    def initialize(config = nil, options = nil)\n      super\n      @globs = cop_config.fetch('Paths', [])\n    \
+             end\n\n    def relevant_file?(file)\n      Array(@globs).any? { |g| File.fnmatch?(g, file, File::FNM_PATHNAME \
+             | File::FNM_EXTGLOB) }\n    end\n\n",
+            "Custom/NoFoo:\n  Paths:\n    - '**/*.rb'\n",
+        ),
+    ] {
+        fs::write(
+            dir.join("cops.rb"),
+            format!("module RuboCop::Cop::Custom\n  class NoFoo < RuboCop::Cop::Base\n{state}{on_send}"),
+        )
+        .unwrap();
+        fs::write(dir.join(".rubocop.yml"), format!("require:\n  - ./cops.rb\n{REQUIRE_ONLY}{config}")).unwrap();
+        same(&dir, &[], &["-f", "e", "--cache", "false", "a.rb"]);
+        same_cached(&dir, &[], &["-f", "e", "a.rb"]);
+        same_cached(&dir, &[], &["-f", "e", "a.rb"]);
+    }
     let _ = fs::remove_dir_all(&dir);
 }
