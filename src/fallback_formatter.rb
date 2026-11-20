@@ -44,6 +44,15 @@ RuboCop::ConfigStore.prepend(Module.new do
   end
 end)
 RuboCop::FeatureLoader.prepend(Module.new { def load = RbcopQuiet.loud { super } })
+# With --stdin and -a/-A the corrected source goes to the file rbcop names (RBCOP_FALLBACK_STDIN),
+# which then corrects it further and prints it, rather than to stdout.
+RuboCop::CLI::Command::ExecuteRunner.prepend(Module.new do
+  private def maybe_print_corrected_source
+    path = ENV.fetch('RBCOP_FALLBACK_STDIN', nil) or return super
+
+    File.binwrite(path, @options[:stdin]) if @options[:stdin] && @options[:autocorrect]
+  end
+end)
 RuboCop::PendingCopsReporter.singleton_class.prepend(Module.new { def warn_if_needed(_config) = nil })
 # rbcop warns about bare directive names of the cops in its registry (RBCOP_REGISTRY: the ones it
 # implements, a plugin's lib/ classes, a `require:`d file's cop classes).

@@ -188,6 +188,8 @@ pub struct Found {
     /// A cop it may run declares an external dependency (Base#external_dependency_checksum),
     /// which ResultCache hashes and rbcop cannot.
     pub external_dependency: bool,
+    /// With `--stdin` and -a/-A: the source as RuboCop corrected it.
+    pub stdin: Option<Vec<u8>>,
 }
 
 /// With rbcop's result cache, the child tells it the Ruby files it has loaded, before inspecting
@@ -228,6 +230,8 @@ pub struct Child<'a> {
     pub only_guide: bool,
     pub force_exclusion: bool,
     pub autocorrect: Option<Mode>,
+    /// The `--stdin` source; `files` is then its one path.
+    pub stdin: Option<&'a [u8]>,
 }
 
 /// Runs RuboCop (`c.program`) on `files` with every cop rbcop implements excluded (the child
@@ -358,12 +362,28 @@ pub fn run(
         }
     }
     // ponytail: one argv for every file; ARG_MAX (1 MiB on macOS) fits ~10k typical paths.
-    cmd.arg("--").args(files);
+    // With --stdin, RuboCop reads the same source on its stdin; under -a/-A the formatter file
+    // writes the corrected source to `stdin` rather than printing it.
+    let stdin_out = dir.0.join("stdin");
+    match c.stdin {
+        Some(_) => {
+            cmd.arg("--stdin").args(files).stdin(Stdio::piped()).env("RBCOP_FALLBACK_STDIN", &stdin_out);
+        }
+        None => {
+            cmd.arg("--").args(files);
+        }
+    }
     // Under -a/-A the offsets refer to the source RuboCop read, which it then rewrites.
     let originals: HashMap<&PathBuf, Arc<str>> = if c.autocorrect.is_some() {
         files
             .iter()
-            .filter_map(|p| std::fs::read_to_string(p).ok().map(|t| (p, Arc::from(t.replace("\r\n", "\n")))))
+            .filter_map(|p| {
+                let text = match c.stdin {
+                    Some(b) => String::from_utf8_lossy(b).into_owned(),
+                    None => std::fs::read_to_string(p).ok()?,
+                };
+                Some((p, Arc::from(text.replace("\r\n", "\n"))))
+            })
             .collect()
     } else {
         HashMap::new()
@@ -374,6 +394,12 @@ pub fn run(
         .stderr(Stdio::piped())
         .spawn()
         .map_err(|e| format!("rbcop: RBCOP_FALLBACK: cannot run {program}: {e}"))?;
+    // Written from a thread, so a child that reads it late (or never) does not block rbcop.
+    let feeder = child.stdin.take().zip(c.stdin.map(<[u8]>::to_vec)).map(|(mut pipe, text)| {
+        std::thread::spawn(move || {
+            let _ = std::io::Write::write_all(&mut pipe, &text);
+        })
+    });
     let mut answer = answer.map(|(read, write)| {
         drop(read);
         write
@@ -414,9 +440,13 @@ pub fn run(
     }
     drop(answer);
     let status = child.wait();
+    if let Some(feeder) = feeder {
+        let _ = feeder.join();
+    }
     let err = reader.join().unwrap_or_default();
     let _ = std::io::Write::write_all(&mut std::io::stderr(), &err);
     let report = std::fs::read(&report).unwrap_or_default();
+    found.stdin = std::fs::read(&stdin_out).ok();
     drop(dir);
     let status = status.map_err(|e| format!("rbcop: RBCOP_FALLBACK: cannot run {program}: {e}"))?;
     // 0: no offenses, 1: offenses; anything else is RuboCop failing (its stderr was passed through).

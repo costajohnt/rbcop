@@ -1886,7 +1886,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
         rbcop::cop::record_edits();
     }
 
-    let (files, stdin_text) = find_target_files(&cli, &mut store, &cwd)?;
+    let (files, mut stdin_text) = find_target_files(&cli, &mut store, &cwd)?;
     // Config loading while finding the targets (a directory's config), then each file's, printed
     // when that file's turn comes (`-d`).
     print!("{}", rbcop::config::take_debug());
@@ -2092,7 +2092,11 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     let plugin_files: std::collections::HashSet<PathBuf> =
         jobs.iter().filter(|(p, c)| store.copless_plugin_file(c, p)).map(|(p, _)| p.clone()).collect();
     let unrunnable = !skipped.is_empty() || store.requires_ruby_code();
-    let usable = stdin_text.is_none() && config_error.is_none() && team_error.is_none();
+    // --stdin with -a/-A: the source as the RuboCop child corrected it, which rbcop corrects further.
+    let mut child_stdin = None;
+    // The child's copy (fallback_per_file keeps it for the whole loop).
+    let stdin_given = stdin_text.clone();
+    let usable = config_error.is_none() && team_error.is_none();
     // Looked up only when needed: a project that needs nothing never starts Ruby.
     let program = if usable && (unrunnable || !copless.is_empty()) { fallback::rubocop() } else { None };
     let what = fallback::what(&skipped, store.requires_ruby_code(), &copless);
@@ -2115,8 +2119,10 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                 only_guide: cli.only_guide,
                 force_exclusion: cli.force_exclusion,
                 autocorrect: cli.autocorrect,
+                stdin: stdin_given.as_deref(),
             };
-            if cli.fail_fast && cli.autocorrect.is_some() {
+            // (One file with --stdin: the whole run is that file's.)
+            if cli.fail_fast && cli.autocorrect.is_some() && stdin_text.is_none() {
                 fallback_per_file = Some(child);
             } else {
                 let whole: Vec<PathBuf> =
@@ -2172,8 +2178,11 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                     }
                     fallback_offenses.extend(hits);
                     fallback_offenses.extend(found.offenses);
+                    child_stdin = found.stdin;
                 }
-                fallback_offenses.extend(fallback::run(&whole, &cwd, &[], child, None)?.offenses);
+                let found = fallback::run(&whole, &cwd, &[], child, None)?;
+                fallback_offenses.extend(found.offenses);
+                child_stdin = child_stdin.or(found.stdin);
             }
         } else {
             eprintln!("{}", fallback::notice(&skipped, store.requires_ruby_code(), &copless));
@@ -2181,6 +2190,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                 eprintln!("{m}");
             }
         }
+    }
+    if child_stdin.is_some() {
+        stdin_text = child_stdin;
     }
     let stdin_text = &stdin_text;
     // --stdin with -a/-A: the corrected source, printed after the report.
