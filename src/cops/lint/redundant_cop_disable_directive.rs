@@ -223,7 +223,9 @@ pub fn check(cx: &mut Cx, checked: &[Span]) {
         let Some(ranges) = cc.ranges.get(cop) else { continue };
         // Deliberate difference: a cop RuboCop would run but rbcop cannot (a plugin rbcop does not
         // implement, custom cops) may have offenses there, so its directives are never redundant.
-        if pending_not_run(cx, cop) || disabled_by_preview(cx, cop) || crate::helpers::cop_registry::is_unrunnable(cop) {
+        // One the config disables runs in neither, so it has none (#813).
+        let unrunnable = crate::helpers::cop_registry::is_unrunnable(cop) && !facts.config_disabled.contains(&cop.as_str());
+        if pending_not_run(cx, cop) || disabled_by_preview(cx, cop) || unrunnable {
             continue;
         }
         // each_already_disabled
@@ -256,7 +258,7 @@ pub fn check(cx: &mut Cx, checked: &[Span]) {
             let (i, d) = (r.2.unwrap(), d.unwrap());
             let found = if d.disabled_all() {
                 let next_follows = ranges.get(idx + 1).is_some_and(|n| r.1 == n.0);
-                let unknowable = crate::helpers::cop_registry::has_unrunnable();
+                let unknowable = crate::helpers::cop_registry::has_unrunnable(&facts.config_disabled);
                 (!next_follows && !unknowable && ctx.free(r, |_| true)).then(|| "all".to_string())
             } else {
                 // line_range_through_repeated_disables: the range runs on through the ranges that
