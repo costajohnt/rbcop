@@ -29,6 +29,14 @@ pub(crate) fn index(root: &Node) -> HashMap<(usize, usize), Node<'static>, FnvBu
         fn visit_leaf_node_enter(&mut self, node: Node<'pr>) {
             self.add(node);
         }
+        // A body reached through its parent's StatementsNode field skips the enter hooks above;
+        // with several statements it is parser's `begin` and has a range of its own (#818).
+        fn visit_statements_node(&mut self, node: &ruby_prism::StatementsNode<'pr>) {
+            if node.body().len() > 1 {
+                self.add(node.as_node());
+            }
+            ruby_prism::visit_statements_node(self, node);
+        }
     }
     let mut ix = Index(HashMap::default());
     ix.visit(root);
