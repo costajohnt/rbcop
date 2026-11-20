@@ -304,7 +304,7 @@ pub fn has_unrunnable(disabled: &[&str]) -> bool {
     let open = OPEN.read().unwrap();
     let (unknown, foreign) = (open.custom || !open.constants.is_empty(), open.foreign);
     drop(open);
-    unknown || (foreign && REGISTRY.iter().any(|c| !disabled.contains(&c) && is_unrunnable(c)))
+    unknown || (foreign && REGISTRY.iter().any(|c| !disabled.contains(c) && is_unrunnable(c)))
 }
 
 /// Documentation.builtin?: one of RuboCop's own cops.
