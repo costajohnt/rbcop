@@ -176,6 +176,46 @@ pub fn what(skipped: &BTreeSet<String>, required_code: bool, copless_plugins: &[
     parts.join(" or ")
 }
 
+/// What a child run reports.
+#[derive(Default)]
+pub struct Found {
+    /// Its offenses by file.
+    pub offenses: HashMap<PathBuf, Vec<Offense>>,
+    /// The files a cop raised an error or a warning on (Runner#save_in_cache keeps nothing then).
+    pub uncached: HashSet<PathBuf>,
+    /// The digest of the Ruby files it had loaded before inspecting any file (`Cached`).
+    pub loaded: Option<String>,
+    /// A cop it may run declares an external dependency (Base#external_dependency_checksum),
+    /// which ResultCache hashes and rbcop cannot.
+    pub external_dependency: bool,
+}
+
+/// With rbcop's result cache, the child tells it the Ruby files it has loaded, before inspecting
+/// any file: called with their digest (each path and its contents, as ResultCache.source_checksum
+/// reads them), it returns the files whose offenses rbcop has cached, which the child skips.
+pub type Cached<'a> = &'a dyn Fn(&str) -> HashSet<PathBuf>;
+
+/// The digest of the Ruby files listed in `list` (one per line): each path with its contents (a
+/// feature without a readable file, as such).
+fn loaded_digest(list: &str) -> String {
+    let mut h = xxhash_rust::xxh3::Xxh3::new();
+    for f in list.lines() {
+        h.update(f.as_bytes());
+        match std::fs::read(f) {
+            Ok(b) => {
+                h.update(&(b.len() as u64).to_le_bytes());
+                h.update(&b);
+            }
+            Err(_) => h.update(b"\0missing"),
+        }
+        h.update(b"\0");
+    }
+    format!("{:032x}", h.digest128())
+}
+
+/// The line the child writes to stderr once `loaded` is in place (the formatter's `started`).
+const LOADED: &[u8] = b"\x1Erbcop-fallback-loaded\n";
+
 /// What the RuboCop subprocess needs from the command line.
 #[derive(Clone, Copy)]
 pub struct Child<'a> {
@@ -190,8 +230,9 @@ pub struct Child<'a> {
     pub autocorrect: Option<Mode>,
 }
 
-/// Runs RuboCop (`c.program`) on `files` with every cop rbcop implements
-/// excluded, and returns its offenses by file. With `implemented` empty RuboCop runs every cop,
+/// Runs RuboCop (`c.program`) on `files` with every cop rbcop implements excluded (the child
+/// itself skips the files none of its cops may inspect, and those `cached` names), and returns
+/// what it reports (`Found`). With `implemented` empty RuboCop runs every cop,
 /// Lint/Syntax included: the files rbcop leaves wholly to it (Store::copless_plugin_file). Under -a/-A RuboCop corrects (and writes) first, so
 /// rbcop then inspects the result; its offenses refer to the source before correction.
 pub fn run(
@@ -199,10 +240,12 @@ pub fn run(
     cwd: &Path,
     implemented: &[&str],
     c: Child,
-) -> Result<HashMap<PathBuf, Vec<Offense>>, String> {
+    cached: Option<Cached>,
+) -> Result<Found, String> {
     let mut out = HashMap::new();
+    let mut found = Found::default();
     if files.is_empty() {
-        return Ok(out);
+        return Ok(found);
     }
     let program = c.program;
     announce(program, c.what);
@@ -263,6 +306,24 @@ pub fn run(
         .env("RUBYOPT", rubyopt)
         .env("RBCOP_REGISTRY", rbcop::helpers::cop_registry::REGISTRY.join(","))
         .stdin(Stdio::null());
+    // The handshake's answer goes to the child's fd 3, so its stdin stays RuboCop's.
+    let answer = match cached {
+        Some(_) => {
+            let (read, write) = std::io::pipe().map_err(|e| format!("rbcop: RBCOP_FALLBACK: {e}"))?;
+            let fd = std::os::fd::AsRawFd::as_raw_fd(&read);
+            // SAFETY: dup2 and fcntl are async-signal-safe. dup2 leaves an fd that already is 3
+            // as it is (close-on-exec, as std::io::pipe makes it), so that one is cleared instead.
+            unsafe {
+                std::os::unix::process::CommandExt::pre_exec(&mut cmd, move || {
+                    let r = if fd == 3 { libc::fcntl(3, libc::F_SETFD, 0) } else { libc::dup2(fd, 3) };
+                    if r == -1 { Err(std::io::Error::last_os_error()) } else { Ok(()) }
+                });
+            }
+            cmd.env("RBCOP_FALLBACK_HANDSHAKE", &dir.0);
+            Some((read, write))
+        }
+        None => None,
+    };
     let o = c.opts;
     if let Some(cfg) = &o.config_file {
         cmd.arg("--config").arg(cfg);
@@ -307,7 +368,54 @@ pub fn run(
     } else {
         HashMap::new()
     };
-    let status = cmd.status();
+    // Its stderr is passed on once it exits, without the handshake's line.
+    let mut child = cmd
+        .stdout(Stdio::inherit())
+        .stderr(Stdio::piped())
+        .spawn()
+        .map_err(|e| format!("rbcop: RBCOP_FALLBACK: cannot run {program}: {e}"))?;
+    let mut answer = answer.map(|(read, write)| {
+        drop(read);
+        write
+    });
+    let mut pipe = child.stderr.take().expect("piped");
+    let (ready, at_loaded) = std::sync::mpsc::channel();
+    let reader = std::thread::spawn(move || {
+        use std::io::Read;
+        let mut err = Vec::new();
+        let mut buf = [0; 1 << 14];
+        let mut told = false;
+        while let Ok(n @ 1..) = pipe.read(&mut buf) {
+            err.extend_from_slice(&buf[..n]);
+            if !told && let Some(at) = err.windows(LOADED.len()).position(|w| w == LOADED) {
+                err.drain(at..at + LOADED.len());
+                told = true;
+                let _ = ready.send(());
+            }
+        }
+        err
+    });
+    // The child stops after `loaded` until it reads the cached files (to the end of fd 3); a
+    // child that ends before (a config error) never says it is ready.
+    if let Some(cached) = cached
+        && at_loaded.recv().is_ok()
+        && let Ok(list) = std::fs::read_to_string(dir.0.join("loaded"))
+    {
+        let loaded = loaded_digest(&list);
+        let skip = cached(&loaded);
+        found.loaded = Some(loaded);
+        if let Some(mut write) = answer.take() {
+            let mut text = String::new();
+            for p in &skip {
+                text.push_str(&format!("{}\n", p.display()));
+            }
+            let _ = std::io::Write::write_all(&mut write, text.as_bytes());
+        }
+    }
+    drop(answer);
+    let status = child.wait();
+    let err = reader.join().unwrap_or_default();
+    let _ = std::io::Write::write_all(&mut std::io::stderr(), &err);
     let report = std::fs::read(&report).unwrap_or_default();
     drop(dir);
     let status = status.map_err(|e| format!("rbcop: RBCOP_FALLBACK: cannot run {program}: {e}"))?;
@@ -323,6 +431,14 @@ pub fn run(
     };
     let mut names: HashMap<String, &'static str> = HashMap::new();
     for line in body.lines() {
+        if let Some(path) = line.strip_prefix("rbcop-fallback-uncached\t") {
+            found.uncached.insert(PathBuf::from(unescape(path)));
+            continue;
+        }
+        if line == "rbcop-fallback-external-dependency" {
+            found.external_dependency = true;
+            continue;
+        }
         let mut f: Vec<&str> = line.split('\t').collect();
         // The corrections field is optional (a stand-in child may print the eleven before it).
         if f.len() == 11 {
@@ -353,7 +469,8 @@ pub fn run(
         };
         out.entry(path).or_insert_with(Vec::new).push(offense);
     }
-    Ok(out)
+    found.offenses = out;
+    Ok(found)
 }
 
 /// One `begin,end,hex(replacement)` correction of the formatter's last field.

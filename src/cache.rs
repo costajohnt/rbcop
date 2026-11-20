@@ -220,6 +220,16 @@ impl Cache {
     /// (the caller knows the offenses are those of a plain inspection), but warns as RuboCop does
     /// either way.
     pub fn save(&self, key: &str, report: &FileReport, write: bool) {
+        self.store(key, &entry_text(report), write, true);
+    }
+
+    /// `save` of what RuboCop does not save itself (the fallback child's offenses, #805): never
+    /// warns, so a cache that cannot be written warns only as RuboCop would.
+    pub fn save_quiet(&self, key: &str, report: &FileReport) {
+        self.store(key, &entry_text(report), true, false);
+    }
+
+    fn store(&self, key: &str, out: &str, write: bool, warn: bool) {
         use std::sync::atomic::Ordering::Relaxed;
         // Checked until a save finds the directory fine and opens it (about ten syscalls per file
         // before, #778), so every refused save still warns.
@@ -228,13 +238,19 @@ impl Cache {
             match mkdir_p(&self.dir) {
                 Ok(()) => {}
                 Err(Some(msg)) => {
-                    return eprintln!("Couldn't create cache directory. Continuing without cache.\n  {msg}");
+                    if warn {
+                        eprintln!("Couldn't create cache directory. Continuing without cache.\n  {msg}");
+                    }
+                    return;
                 }
                 Err(None) => return,
             }
             // A symbolic link anywhere in the cache directory's path can be a symlink attack.
             if let Some(link) = self.refused_symlink(&self.dir) {
-                return eprintln!("Warning: {} is a symlink, which is not allowed.", link.display());
+                if warn {
+                    eprintln!("Warning: {} is a symlink, which is not allowed.", link.display());
+                }
+                return;
             }
             // Every later save goes through this descriptor, so a symlink swapped into the path
             // after the check is never followed. Failing here is such a swap: skip quietly.
@@ -242,16 +258,6 @@ impl Cache {
             *dir_fd = Some(d);
         }
         let Some(dir) = dir_fd.as_ref() else { return };
-        let mut out = format!("{} {}\n", report.text.len(), text_check(&report.text));
-        for o in &report.offenses {
-            let flags = format!("{}{}{}", u8::from(o.correctable), u8::from(o.global), u8::from(o.disabled));
-            let mut message = escape(&o.message);
-            if let Some(j) = &o.justification {
-                message = format!("{message}\t{}", escape(j));
-            }
-            let edits = encode_edits(&o.edits);
-            out.push_str(&format!("{} {} {} {flags} {} {edits} {message}\n", o.start, o.end, o.severity.name(), o.cop));
-        }
         // Written aside and renamed, so a parallel run never reads half an entry. The temporary
         // name is unpredictable and created fresh (never through an existing file or symlink);
         // any failure skips saving, with ResultCache#write_cache_file's warning for EACCES, EPERM and
@@ -281,6 +287,7 @@ impl Cache {
             *dir_fd = None;
         }
         if let Err((e, at)) = written
+            && warn
             && let Some(what) = errno_message(&e)
         {
             eprintln!("Couldn't write cache file. Continuing without cache.\n  {what} @ {at}");
@@ -354,6 +361,21 @@ impl Cache {
             dirs = dirs.iter().filter_map(|d| d.parent().map(Path::to_path_buf)).collect();
         }
     }
+}
+
+/// A report as an entry: the saved text's length and digest, then one line per offense.
+fn entry_text(report: &FileReport) -> String {
+    let mut out = format!("{} {}\n", report.text.len(), text_check(&report.text));
+    for o in &report.offenses {
+        let flags = format!("{}{}{}", u8::from(o.correctable), u8::from(o.global), u8::from(o.disabled));
+        let mut message = escape(&o.message);
+        if let Some(j) = &o.justification {
+            message = format!("{message}\t{}", escape(j));
+        }
+        let edits = encode_edits(&o.edits);
+        out.push_str(&format!("{} {} {} {flags} {} {edits} {message}\n", o.start, o.end, o.severity.name(), o.cop));
+    }
+    out
 }
 
 /// One line, no tabs: an entry line is space-separated fields, then the message and an optional
