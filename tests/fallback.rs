@@ -25,7 +25,35 @@ end
 
 const CONFIG: &str = "require:\n  - ./no_foo.rb\nAllCops:\n  NewCops: enable\n  SuggestExtensions: false\n";
 
-fn project(name: &str) -> PathBuf {
+/// A test project directory, removed when dropped (also when the test fails).
+struct Project(PathBuf);
+
+impl std::ops::Deref for Project {
+    type Target = PathBuf;
+    fn deref(&self) -> &PathBuf {
+        &self.0
+    }
+}
+
+impl AsRef<Path> for Project {
+    fn as_ref(&self) -> &Path {
+        &self.0
+    }
+}
+
+impl AsRef<std::ffi::OsStr> for Project {
+    fn as_ref(&self) -> &std::ffi::OsStr {
+        self.0.as_os_str()
+    }
+}
+
+impl Drop for Project {
+    fn drop(&mut self) {
+        let _ = fs::remove_dir_all(&self.0);
+    }
+}
+
+fn project(name: &str) -> Project {
     let dir = std::env::temp_dir().join(format!("rbcop-fallback-{name}-{}", std::process::id()));
     let _ = fs::remove_dir_all(&dir);
     fs::create_dir_all(&dir).unwrap();
@@ -34,7 +62,7 @@ fn project(name: &str) -> PathBuf {
     fs::write(dir.join(".rubocop.yml"), CONFIG).unwrap();
     fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nfoo(1)\nx = \"é\"; foo 2\nputs x\n").unwrap();
     fs::write(dir.join("b.rb"), "# frozen_string_literal: true\n\nfoo(3)\n").unwrap();
-    dir
+    Project(dir)
 }
 
 fn rbcop(dir: &Path, fallback: bool, args: &[&str]) -> Output {
