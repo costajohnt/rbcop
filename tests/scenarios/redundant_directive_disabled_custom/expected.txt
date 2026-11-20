@@ -1,0 +1,13 @@
+Gemfile:1:1: W: Lint/EmptyFile: Empty file detected.
+disable_all.rb:3:5: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of all cops.
+disable_dept.rb:3:5: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Custom` department.
+disable_line.rb:3:5: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Custom/NoFoo`.
+disable_next.rb:3:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Custom/NoFoo`.
+disable_open.rb:3:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Custom/NoFoo`.
+disable_range.rb:3:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Custom/NoFoo`.
+todo_all.rb:3:5: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of all cops.
+todo_dept.rb:3:5: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Custom` department.
+todo_line.rb:3:5: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Custom/NoFoo`.
+todo_next.rb:3:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Custom/NoFoo`.
+todo_open.rb:3:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Custom/NoFoo`.
+todo_range.rb:3:1: W: [Correctable] Lint/RedundantCopDisableDirective: Unnecessary disabling of `Custom/NoFoo`.
