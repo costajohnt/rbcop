@@ -1434,9 +1434,9 @@ thread_local! {
 /// raised at (#815): RuboCop never adds it, nor its correction.
 pub fn force_raised(cop: &str, at: usize, message: &str) -> bool {
     FORCE_RAISE.with(|r| {
-        r.borrow().as_ref().is_some_and(|(scopes, cut)| {
-            force_offense_key(scopes, cop, at, message).is_some_and(|(key, _)| key > *cut)
-        })
+        r.borrow()
+            .as_ref()
+            .is_some_and(|(scopes, cut)| force_offense_key(scopes, cop, at, message).is_some_and(|(key, _)| key > *cut))
     })
 }
 

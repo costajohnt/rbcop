@@ -70,7 +70,8 @@ fn variable_force_errors_at_encoding_option_matches() {
     let mut errors: Vec<&str> = stderr.lines().filter(|l| l.starts_with("An error")).collect();
     errors.sort();
     let at = |file: &str| format!("An error occurred while VariableForce cop was inspecting {file}.");
-    let mut expected: Vec<String> = ["e1.rb", "s1.rb", "s2.rb", "s3.rb", "s4.rb"].iter().flat_map(|f| [at(f), at(f)]).collect();
+    let mut expected: Vec<String> =
+        ["e1.rb", "s1.rb", "s2.rb", "s3.rb", "s4.rb"].iter().flat_map(|f| [at(f), at(f)]).collect();
     expected.sort();
     assert_eq!(errors, expected, "{stderr}");
 }
