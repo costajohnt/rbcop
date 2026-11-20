@@ -164,14 +164,25 @@ RuboCop::Runner.prepend(Module.new do
     # built now rather than when the first of them is parsed (no constructor runs more often).
     @inspection_team_by_config ||= {}.compare_by_identity
     team = @inspection_team_by_config[config] ||= assemble_team(config)
+    # Asked within RuboCop's per-file cycle (Team#investigate_with_corrector): be_ready gives the
+    # file fresh cop instances (the investigation then uses them), and a file not inspected
+    # leaves the team not ready, as that method's ensure does, so the next file gets fresh ones.
+    team.send(:be_ready)
     registry = mobilized_cop_classes(config)
     relevant = team.cops.any? do |cop|
       cop.cop_name != 'Lint/Syntax' && registry.enabled?(cop, config) && !cop.excluded_file?(file)
     rescue StandardError
       true
     end
-    return true if relevant
+    return true if relevant || rbcop_opted_in?(file)
 
+    team.instance_variable_set(:@ready, false)
+    false
+  end
+
+  # A directive in the file may opt one of the child's cops in (any mode, naming the cop or its
+  # department).
+  private def rbcop_opted_in?(file)
     lines = File.binread(file).scan(RbcopFiles::DIRECTIVE)
     return false if lines.empty?
 

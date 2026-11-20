@@ -1495,3 +1495,41 @@ fn relevance_uses_constructed_cops() {
     }
     let _ = fs::remove_dir_all(&dir);
 }
+
+/// #805 review R5: the child asks whether a cop takes a file of the cop instances RuboCop would
+/// ask (fresh for each file, Team#investigate_with_corrector's be_ready), so a `relevant_file?`
+/// that keeps state per instance answers for that file only.
+#[test]
+fn relevance_is_asked_of_fresh_cops_per_file() {
+    if !have_rubocop() {
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
+        return;
+    }
+    let dir = project("fresh");
+    fs::write(
+        dir.join("cops.rb"),
+        "module RuboCop::Cop::Custom\n  class NoFoo < RuboCop::Cop::Base\n    def relevant_file?(file)\n      \
+         return @relevant if defined?(@relevant)\n\n      @relevant = super\n    end\n\n    def on_send(node)\n      \
+         add_offense(node, message: 'foo') if node.method?(:foo)\n    end\n  end\nend\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.join(".rubocop.yml"),
+        format!("require:\n  - ./cops.rb\n{REQUIRE_ONLY}Custom/NoFoo:\n  Exclude:\n    - a.rb\n"),
+    )
+    .unwrap();
+    for f in ["a.rb", "b.rb", "c.rb"] {
+        fs::write(dir.join(f), "# frozen_string_literal: true\n\nfoo\n").unwrap();
+    }
+    for files in [["a.rb", "b.rb", "c.rb"], ["b.rb", "a.rb", "c.rb"]] {
+        for parallel in [&[][..], &["--no-parallel"]] {
+            let args: Vec<&str> = ["-f", "e"].iter().chain(parallel).chain(&files).copied().collect();
+            let cold: Vec<&str> = args.iter().copied().chain(["--cache", "false"]).collect();
+            same(&dir, &[], &cold);
+            same_cached(&dir, &[], &args);
+            same_cached(&dir, &[], &args);
+            let _ = fs::remove_dir_all(dir.join(".cache"));
+        }
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
