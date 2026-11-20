@@ -78,15 +78,17 @@ Limits of the fallback:
 
 | Corpus | Offenses (RuboCop = rbcop) | Differences |
 |---|---:|---:|
-| specs (RuboCop's spec examples) | 78,303 | 0 |
-| rails | 371,334 | 0 |
-| discourse | 905,462 | 0 |
-| rubocop-src | 34,296 | 0 |
-| jekyll | 15,218 | 0 |
-| chef | 170,509 | 0 |
-| fastlane | 119,121 | 0 |
-| brew | 257,707 | 0 |
-| mastodon | 73,899 | 0 |
+| specs (RuboCop's spec examples) | 78,225 | 0 |
+| rails | 371,067 | 0 |
+| discourse | 904,224 | 0 |
+| rubocop-src | 34,217 | 0 |
+| jekyll | 15,205 | 0 |
+| chef | 170,319 | 0 |
+| fastlane | 118,997 | 0 |
+| brew | 257,246 | 0 |
+| mastodon | 73,881 | 0 |
+
+Counts are from the gate run on 2026-11-19 at commit 831eea1 against RuboCop 1.92.2.
 
 `scripts/check-cold.sh` covers cops that rarely fire on those corpora, using RuboCop's own spec examples with their config variants: 1,443 offenses, 0 differences, and `-A` output identical to a live `rubocop -A` run. `scripts/check-autocorrect.sh` and `scripts/check-autocorrect-all.sh` compare `-a`/`-A` output with RuboCop on corpus files. Files skipped by the gates are listed in `scripts/check-skip.txt`, `scripts/cold-skip.txt` and `scripts/autocorrect-skip.txt`, with the reasons in docs/known-gaps.md.
 

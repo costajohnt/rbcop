@@ -298,10 +298,13 @@ pub fn is_unrunnable(cop: &str) -> bool {
     is_known(cop) && (!IMPLEMENTED.contains(cop) || is_custom(cop))
 }
 
-/// Whether any loaded cop is unrunnable (then a `disable all` range is never judged redundant).
-pub fn has_unrunnable() -> bool {
+/// Whether any loaded cop not in `disabled` (the cops the config turns off) is unrunnable (then a
+/// `disable all` range is never judged redundant). Unenumerable cops count as enabled.
+pub fn has_unrunnable(disabled: &[&str]) -> bool {
     let open = OPEN.read().unwrap();
-    open.custom || open.foreign || !open.constants.is_empty()
+    let (unknown, foreign) = (open.custom || !open.constants.is_empty(), open.foreign);
+    drop(open);
+    unknown || (foreign && REGISTRY.iter().any(|c| !disabled.contains(c) && is_unrunnable(c)))
 }
 
 /// Documentation.builtin?: one of RuboCop's own cops.
