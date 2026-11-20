@@ -523,8 +523,8 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
   warnings, #804) reaches stderr from the fallback, but after rbcop's own config warnings, where
   RuboCop prints it before them, and once per RuboCop start (one per file under `-F` with `-a`/`-A`).
 - Cops rbcop cannot run (a non-native plugin's, custom cops): Lint/RedundantCopDisableDirective
-  never reports a directive naming one, nor a `disable all` while any is loaded, since their
-  offenses are unknown (RuboCop reports those that turn out redundant). With custom cops loaded, a
+  never reports a directive naming one, nor a `disable all` while any is loaded, unless the config
+  disables it (#813), since their offenses are unknown (RuboCop reports those that turn out redundant). With custom cops loaded, a
   directive naming a cop in a department rbcop does not know is not reported as unknown.
 - A native plugin uses its vendored default.yml and pinned behaviour whatever version of the gem is
   installed, and works when the gem is not installed (RuboCop fails to load it then).
