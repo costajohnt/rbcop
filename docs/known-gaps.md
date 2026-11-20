@@ -332,6 +332,24 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
 
 ## Open gaps
 
+- Lint/ShadowedException and `Timeout::*` / `Resolv::*` (#814): RuboCop resolves a rescued
+  constant with `Kernel.const_get`, and those classes exist only once some code required `resolv`
+  (and with it `timeout`). In a RuboCop run that is Style/IpAddresses' file, which the lazy cop
+  registry loads only when the cop is mobilized: not excluded by `--except`, kept by `--only`, and
+  enabled (or named exactly in `--only`). Once loaded it stays loaded for the rest of the process.
+  rbcop resolves them for a file exactly when Style/IpAddresses is mobilized for that file's
+  config. It cannot follow what earlier files did, since RuboCop's answer depends on which files
+  it inspected before (RuboCop 1.92.2, `m.rb` holding `rescue RuntimeError, ::Timeout::Error`,
+  a config that leaves Style/IpAddresses disabled):
+  - `rubocop a.rb m.rb`, where `a.rb` has `# rubocop:disable Style/IpAddresses` (or
+    `# rubocop:disable Style`): the directive's cop lookup loads the cop, so `m.rb` gets the
+    offense. `rubocop m.rb z.rb` with the same directive in `z.rb` does not.
+  - A nested `.rubocop.yml` enabling Style/IpAddresses in `s/`: `rubocop s/m.rb m.rb` reports both
+    files, `rubocop m.rb s/m.rb` only `s/m.rb`.
+  - A remote `inherit_from` URL loads `net/http` (and so `timeout`) only when its cached copy is
+    older than a day and RuboCop downloads it again; rbcop does not model that either.
+  rbcop's table (scripts/dump-ruby-exceptions.rb) is a default-config run's classes plus the ones
+  `require 'resolv'` adds, flagged as such.
 - An `else` without `rescue` in a def, class, module or (from 2.5) do/end block body below 2.6:
   rbcop lints the file as the parser gem does (Lint/UselessElseWithoutRescue), but Prism's tree
   has the `else` statements as plain body statements where the parser gem wraps them in a `begin`

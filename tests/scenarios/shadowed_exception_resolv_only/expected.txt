@@ -1,0 +1,1 @@
+c.rb:5:1: W: Lint/ShadowedException: Do not shadow rescued Exceptions.
