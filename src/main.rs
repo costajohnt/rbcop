@@ -2027,57 +2027,6 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     let known: std::collections::HashSet<&str> =
         configs.iter().flat_map(|c| c.hash.0.iter().map(|(k, _)| k.as_str())).collect();
     let names: Vec<&'static str> = names.into_iter().filter(|&n| n == "Lint/Syntax" || known.contains(n)).collect();
-    let mut fallback_offenses = std::collections::HashMap::new();
-    // -F with -a/-A: RuboCop corrects no file after the first failing one, so the child corrects
-    // one file at a time, as each is reached (in the loop below).
-    let mut fallback_per_file = None;
-    // Files a cop-less plugin rbcop does not implement brings in (rubocop-erb's ERB views): rbcop
-    // runs no cops on them, and the fallback runs every cop there.
-    let copless = store.copless_plugins();
-    let plugin_files: std::collections::HashSet<PathBuf> =
-        jobs.iter().filter(|(p, c)| store.copless_plugin_file(c, p)).map(|(p, _)| p.clone()).collect();
-    let unrunnable = !skipped.is_empty() || store.requires_ruby_code();
-    let usable = stdin_text.is_none() && config_error.is_none() && team_error.is_none();
-    // Looked up only when needed: a project that needs nothing never starts Ruby.
-    let program = if usable && (unrunnable || !copless.is_empty()) { fallback::rubocop() } else { None };
-    let what = fallback::what(&skipped, store.requires_ruby_code(), &copless);
-    if rbcop::no_ruby::on() {
-        cx.skipped = Some((skipped.iter().cloned().collect(), store.requires_ruby_code() || !copless.is_empty()));
-    }
-    if unrunnable || !copless.is_empty() {
-        let forced = env::var_os("RBCOP_FALLBACK").is_some_and(|v| v == "1");
-        // Deliberate difference: the RuboCop child corrects by writing the files, which `--diff`
-        // promises not to do. Refused under RBCOP_FALLBACK=1; otherwise the notice is printed.
-        if let Some(program) = program.as_deref().filter(|_| !cli.diff || forced) {
-            if cli.diff {
-                return Err("rbcop: --diff cannot be combined with RBCOP_FALLBACK=1".into());
-            }
-            let child = fallback::Child {
-                program,
-                what: &what,
-                opts: &cli.opts,
-                except,
-                only_guide: cli.only_guide,
-                force_exclusion: cli.force_exclusion,
-                autocorrect: cli.autocorrect,
-            };
-            if cli.fail_fast && cli.autocorrect.is_some() {
-                fallback_per_file = Some(child);
-            } else {
-                let (whole, rest): (Vec<PathBuf>, Vec<PathBuf>) =
-                    jobs.iter().map(|(p, _)| p.clone()).partition(|p| plugin_files.contains(p));
-                if unrunnable {
-                    fallback_offenses = fallback::run(&rest, &cwd, &names, child)?;
-                }
-                fallback_offenses.extend(fallback::run(&whole, &cwd, &[], child)?);
-            }
-        } else {
-            eprintln!("{}", fallback::notice(&skipped, store.requires_ruby_code(), &copless));
-            if let Some(m) = fallback::missing().filter(|_| usable && program.is_none()) {
-                eprintln!("{m}");
-            }
-        }
-    }
     // Runner#cached_run?: `--cache true|false`, else `AllCops: UseCache`; never for --stdin. Under
     // --auto-gen-config (AutoGenerateConfig#use_temporary_cache: a cache root of its own, removed
     // afterwards) every file is inspected and nothing is kept.
@@ -2120,7 +2069,8 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             &context,
             all.truthy("AllowSymlinksInCacheRootDirectory"),
             all.int("MaxFilesInCache"),
-            implemented.clone(),
+            // The RuboCop child's offenses are kept too (#805): any registered cop's.
+            implemented.iter().copied().chain(rbcop::helpers::cop_registry::REGISTRY.to_vec()).collect(),
         )
     });
     // Each config's signature (Config#signature), once.
@@ -2130,6 +2080,106 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             signatures
                 .entry(std::sync::Arc::as_ptr(c) as usize)
                 .or_insert_with(|| cache::digest(&[c.signature().as_bytes()]));
+        }
+    }
+    let mut fallback_offenses = std::collections::HashMap::new();
+    // -F with -a/-A: RuboCop corrects no file after the first failing one, so the child corrects
+    // one file at a time, as each is reached (in the loop below).
+    let mut fallback_per_file = None;
+    // Files a cop-less plugin rbcop does not implement brings in (rubocop-erb's ERB views): rbcop
+    // runs no cops on them, and the fallback runs every cop there.
+    let copless = store.copless_plugins();
+    let plugin_files: std::collections::HashSet<PathBuf> =
+        jobs.iter().filter(|(p, c)| store.copless_plugin_file(c, p)).map(|(p, _)| p.clone()).collect();
+    let unrunnable = !skipped.is_empty() || store.requires_ruby_code();
+    let usable = stdin_text.is_none() && config_error.is_none() && team_error.is_none();
+    // Looked up only when needed: a project that needs nothing never starts Ruby.
+    let program = if usable && (unrunnable || !copless.is_empty()) { fallback::rubocop() } else { None };
+    let what = fallback::what(&skipped, store.requires_ruby_code(), &copless);
+    if rbcop::no_ruby::on() {
+        cx.skipped = Some((skipped.iter().cloned().collect(), store.requires_ruby_code() || !copless.is_empty()));
+    }
+    if unrunnable || !copless.is_empty() {
+        let forced = env::var_os("RBCOP_FALLBACK").is_some_and(|v| v == "1");
+        // Deliberate difference: the RuboCop child corrects by writing the files, which `--diff`
+        // promises not to do. Refused under RBCOP_FALLBACK=1; otherwise the notice is printed.
+        if let Some(program) = program.as_deref().filter(|_| !cli.diff || forced) {
+            if cli.diff {
+                return Err("rbcop: --diff cannot be combined with RBCOP_FALLBACK=1".into());
+            }
+            let child = fallback::Child {
+                program,
+                what: &what,
+                opts: &cli.opts,
+                except,
+                only_guide: cli.only_guide,
+                force_exclusion: cli.force_exclusion,
+                autocorrect: cli.autocorrect,
+            };
+            if cli.fail_fast && cli.autocorrect.is_some() {
+                fallback_per_file = Some(child);
+            } else {
+                let whole: Vec<PathBuf> =
+                    jobs.iter().map(|(p, _)| p).filter(|p| plugin_files.contains(*p)).cloned().collect();
+                if unrunnable {
+                    // Each file's offenses are kept in the result cache (#805), keyed also on the
+                    // RuboCop command and the Ruby files the child has loaded once its config is
+                    // read (their contents, as ResultCache.source_checksum): it tells rbcop those
+                    // before inspecting any file, and skips the files rbcop has offenses for. Not
+                    // under -a/-A, where it corrects.
+                    let cache = result_cache.as_ref().filter(|_| cli.autocorrect.is_none());
+                    let rest: Vec<&(PathBuf, std::sync::Arc<Resolved>)> =
+                        jobs.iter().filter(|(p, _)| !plugin_files.contains(p)).collect();
+                    let paths: Vec<PathBuf> = rest.iter().map(|(p, _)| p.clone()).collect();
+                    let signature = |c: &std::sync::Arc<Resolved>, loaded: &str| {
+                        format!("{}|fallback|{program}|{loaded}", signatures[&(std::sync::Arc::as_ptr(c) as usize)])
+                    };
+                    let hits = std::cell::RefCell::new(std::collections::HashMap::new());
+                    let lookup = |loaded: &str| {
+                        let mut hits = hits.borrow_mut();
+                        for (p, c) in &rest {
+                            if let Some(cache) = cache
+                                && let Ok(b) = fs::read(p)
+                                && let Some(key) = cache.key(p, &signature(c, loaded), &b)
+                                && let Some(report) = cache.load(&key, &b)
+                            {
+                                hits.insert(p.clone(), report.offenses);
+                            }
+                        }
+                        hits.keys().cloned().collect()
+                    };
+                    let found = fallback::run(&paths, &cwd, &names, child, cache.map(|_| &lookup as fallback::Cached))?;
+                    let hits = hits.into_inner();
+                    // As Runner#save_in_cache: nothing for a file a cop raised an error or a
+                    // warning on; nor anything when a cop has an external dependency, which
+                    // ResultCache keys on and rbcop cannot.
+                    if let (Some(cache), Some(loaded)) = (cache, &found.loaded)
+                        && !found.external_dependency
+                    {
+                        for (p, c) in rest.iter().filter(|(p, _)| !hits.contains_key(p) && !found.uncached.contains(p))
+                        {
+                            let Ok(b) = fs::read(p) else { continue };
+                            let Some(key) = cache.key(p, &signature(c, loaded), &b) else { continue };
+                            let report = FileReport {
+                                offenses: found.offenses.get(p).cloned().unwrap_or_default(),
+                                text: String::from_utf8_lossy(&b).into_owned(),
+                                warnings: Vec::new(),
+                                abort: None,
+                                diffs: Vec::new(),
+                            };
+                            cache.save_quiet(&key, &report);
+                        }
+                    }
+                    fallback_offenses.extend(hits);
+                    fallback_offenses.extend(found.offenses);
+                }
+                fallback_offenses.extend(fallback::run(&whole, &cwd, &[], child, None)?.offenses);
+            }
+        } else {
+            eprintln!("{}", fallback::notice(&skipped, store.requires_ruby_code(), &copless));
+            if let Some(m) = fallback::missing().filter(|_| usable && program.is_none()) {
+                eprintln!("{m}");
+            }
         }
     }
     let stdin_text = &stdin_text;
@@ -2356,9 +2406,9 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
             if let Some(child) = fallback_per_file {
                 let one = std::slice::from_ref(path);
                 if plugin_files.contains(path) {
-                    fallback_offenses.extend(fallback::run(one, &cwd, &[], child)?);
+                    fallback_offenses.extend(fallback::run(one, &cwd, &[], child, None)?.offenses);
                 } else if unrunnable {
-                    fallback_offenses.extend(fallback::run(one, &cwd, &names, child)?);
+                    fallback_offenses.extend(fallback::run(one, &cwd, &names, child, None)?.offenses);
                 }
             }
             let linted = match linted.take() {
