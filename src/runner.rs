@@ -737,6 +737,16 @@ fn investigate(
         POISON.with(|s| *s.borrow_mut() = Some((p.warnings.clone(), Vec::new())));
         FORCE.with(|f| *f.borrow_mut() = (force_scopes(&program, src.text.len()), None));
     }
+    // VariableForce raises at a match whose regexp has the `s` or `e` option (rubocop-ast's
+    // RegexpNode#options has no bit for them, #815): its joining cops add only the offenses of
+    // the scopes it left before (`force_raised`).
+    let force_raise = active
+        .iter()
+        .any(|a| FORCE_COPS.contains(&a.name))
+        .then(|| crate::helpers::variable_force::encoding_option_match(&program))
+        .flatten()
+        .map(|at| (force_scopes(&program, src.text.len()), at));
+    FORCE_RAISE.with(|r| *r.borrow_mut() = force_raise);
     let mut fixes: Vec<Fixes> = active
         .iter()
         .map(|a| Fixes {
@@ -793,6 +803,10 @@ fn investigate(
             fixes,
         };
         guarded(a.name, &src, None, || a.cop.on_file(&mut cx));
+    }
+    // VariableForce raised at a match whose regexp has the `s` or `e` option (#815): one cop error.
+    if FORCE_RAISE.with(|r| r.take()).is_some() {
+        cop_error_at("VariableForce", &src, None);
     }
     // RSpec/LeakyLocalVariable raised leaving a VariableForce scope: the force's walk ended there
     // for every joining cop, so their offenses from scopes left later are not added (#631).
@@ -1407,6 +1421,23 @@ thread_local! {
 /// (None once its investigation finished).
 pub fn force_leaving(end: Option<usize>) {
     FORCE_CUT.with(|c| c.set(end));
+}
+
+thread_local! {
+    /// The VariableForce scopes and the offset VariableForce raises at in the file being inspected.
+    #[allow(clippy::type_complexity)]
+    static FORCE_RAISE: std::cell::RefCell<Option<(Vec<(usize, usize)>, usize)>> =
+        const { std::cell::RefCell::new(None) };
+}
+
+/// An offense of a VariableForce joining cop whose force event comes after the point the force
+/// raised at (#815): RuboCop never adds it, nor its correction.
+pub fn force_raised(cop: &str, at: usize, message: &str) -> bool {
+    FORCE_RAISE.with(|r| {
+        r.borrow().as_ref().is_some_and(|(scopes, cut)| {
+            force_offense_key(scopes, cop, at, message).is_some_and(|(key, _)| key > *cut)
+        })
+    })
 }
 
 /// The force event an offense of a VariableForce joining cop comes from, as (offset, team order):

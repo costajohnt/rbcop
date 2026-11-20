@@ -129,6 +129,31 @@ fn is_match_op(c: &ruby_prism::CallNode) -> bool {
         && c.arguments().is_some_and(|a| a.arguments().len() == 1)
 }
 
+/// Start of the first `match_with_lvasgn` whose regexp has the `s` or `e` option: VariableForce's
+/// `regexp.to_regexp` raises there (rubocop-ast's RegexpNode#options has no bit for them, #815).
+// ponytail: first by source offset; VariableForce visits a match's argument before its regexp, so
+// for a match nested in another's argument RuboCop may raise at the inner one (same error, the
+// cut moves only within that statement).
+pub fn encoding_option_match(program: &Node) -> Option<usize> {
+    struct Find(Option<usize>);
+    impl<'pr> Visit<'pr> for Find {
+        fn visit_call_node(&mut self, c: &ruby_prism::CallNode<'pr>) {
+            if self.0.is_none()
+                && is_match_op(c)
+                && c.receiver()
+                    .and_then(|r| r.as_regular_expression_node())
+                    .is_some_and(|r| crate::helpers::regexp_parser::encoding_option(r.closing_loc().as_slice()))
+            {
+                self.0 = Some(c.location().start_offset());
+            }
+            ruby_prism::visit_call_node(self, c);
+        }
+    }
+    let mut f = Find(None);
+    f.visit(program);
+    f.0
+}
+
 fn name_of(c: &ruby_prism::ConstantId) -> String {
     String::from_utf8_lossy(c.as_slice()).into_owned()
 }

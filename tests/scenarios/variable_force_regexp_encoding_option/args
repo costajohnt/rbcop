@@ -1,0 +1,1 @@
+--only Lint/UselessAssignment,Lint/UnusedMethodArgument,Lint/ShadowingOuterLocalVariable,Lint/OutOfRangeRegexpRef,Lint/MixedRegexpCaptureTypes
