@@ -305,10 +305,25 @@ pub fn run(
         .env_remove("RUBOCOP_OPTS")
         .env("RUBYOPT", rubyopt)
         .env("RBCOP_REGISTRY", rbcop::helpers::cop_registry::REGISTRY.join(","))
-        .stdin(if cached.is_some() { Stdio::piped() } else { Stdio::null() });
-    if cached.is_some() {
-        cmd.env("RBCOP_FALLBACK_HANDSHAKE", &dir.0);
-    }
+        .stdin(Stdio::null());
+    // The handshake's answer goes to the child's fd 3, so its stdin stays RuboCop's.
+    let answer = match cached {
+        Some(_) => {
+            let (read, write) = std::io::pipe().map_err(|e| format!("rbcop: RBCOP_FALLBACK: {e}"))?;
+            let fd = std::os::fd::AsRawFd::as_raw_fd(&read);
+            // SAFETY: dup2 and fcntl are async-signal-safe. dup2 leaves an fd that already is 3
+            // as it is (close-on-exec, as std::io::pipe makes it), so that one is cleared instead.
+            unsafe {
+                std::os::unix::process::CommandExt::pre_exec(&mut cmd, move || {
+                    let r = if fd == 3 { libc::fcntl(3, libc::F_SETFD, 0) } else { libc::dup2(fd, 3) };
+                    if r == -1 { Err(std::io::Error::last_os_error()) } else { Ok(()) }
+                });
+            }
+            cmd.env("RBCOP_FALLBACK_HANDSHAKE", &dir.0);
+            Some((read, write))
+        }
+        None => None,
+    };
     let o = c.opts;
     if let Some(cfg) = &o.config_file {
         cmd.arg("--config").arg(cfg);
@@ -359,7 +374,10 @@ pub fn run(
         .stderr(Stdio::piped())
         .spawn()
         .map_err(|e| format!("rbcop: RBCOP_FALLBACK: cannot run {program}: {e}"))?;
-    let mut stdin = child.stdin.take();
+    let mut answer = answer.map(|(read, write)| {
+        drop(read);
+        write
+    });
     let mut pipe = child.stderr.take().expect("piped");
     let (ready, at_loaded) = std::sync::mpsc::channel();
     let reader = std::thread::spawn(move || {
@@ -377,7 +395,7 @@ pub fn run(
         }
         err
     });
-    // The child stops after `loaded` until it reads the cached files (or the end of stdin); a
+    // The child stops after `loaded` until it reads the cached files (to the end of fd 3); a
     // child that ends before (a config error) never says it is ready.
     if let Some(cached) = cached
         && at_loaded.recv().is_ok()
@@ -386,15 +404,15 @@ pub fn run(
         let loaded = loaded_digest(&list);
         let skip = cached(&loaded);
         found.loaded = Some(loaded);
-        if let Some(mut stdin) = stdin.take() {
+        if let Some(mut write) = answer.take() {
             let mut text = String::new();
             for p in &skip {
                 text.push_str(&format!("{}\n", p.display()));
             }
-            let _ = std::io::Write::write_all(&mut stdin, text.as_bytes());
+            let _ = std::io::Write::write_all(&mut write, text.as_bytes());
         }
     }
-    drop(stdin);
+    drop(answer);
     let status = child.wait();
     let err = reader.join().unwrap_or_default();
     let _ = std::io::Write::write_all(&mut std::io::stderr(), &err);

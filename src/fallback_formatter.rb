@@ -84,7 +84,7 @@ class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
   # With rbcop's result cache (#805, RBCOP_FALLBACK_HANDSHAKE: a directory), before any file is
   # inspected, where ResultCache.source_checksum would read them: the Ruby files loaded (but
   # this one, in a fresh directory each run) go to `loaded` there, a line to stderr says so, and
-  # rbcop answers on stdin with the files it has offenses for, which are then skipped.
+  # rbcop answers on fd 3 with the files it has offenses for, which are then skipped.
   def started(_target_files)
     dir = ENV.fetch('RBCOP_FALLBACK_HANDSHAKE', nil) or return
 
@@ -92,7 +92,10 @@ class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
     File.write(File.join(dir, 'loaded'), $LOADED_FEATURES.reject { |f| f.start_with?(*here) }.join("\n"))
     STDERR.write("\x1Erbcop-fallback-loaded\n")
     STDERR.flush
-    $stdin.each_line { |line| RbcopFiles::CACHED << File.expand_path(line.chomp) }
+    # A wrapper that closed fd 3 leaves nothing skipped (rbcop then takes the child's offenses).
+    IO.new(3, 'r').each_line { |line| RbcopFiles::CACHED << File.expand_path(line.chomp) }
+  rescue SystemCallError, ArgumentError
+    nil
   end
 
   # rbcop checks for this line: RuboCop ran to the end (Runner calls it from an ensure). Before
@@ -135,11 +138,15 @@ end
 module RbcopFiles
   CACHED = Set.new
   UNCACHED = Set.new
-  DIRECTIVE = /(?:rubocop|standard)\s*:\s*(?:enable|todo|push)\b.*/
+  # Any mode (CommentConfig#opted_in_by: enable, push, next, ...).
+  DIRECTIVE = /(?:rubocop|standard)\s*:\s*[\w-]+.*/
 end
 
 RuboCop::Runner.prepend(Module.new do
   private def process_file(file)
+    # Runner#file_offense_cache: with RuboCop's cache on (rbcop's here) the standby team is built
+    # for every file's config, inspected or not.
+    standby_team(@config_store.for_file(file)) if ENV['RBCOP_FALLBACK_HANDSHAKE']
     return [] if RbcopFiles::CACHED.include?(File.expand_path(file))
     return [] unless ENV['RBCOP_FALLBACK_SYNTAX'] || rbcop_inspects?(file)
 
@@ -153,11 +160,20 @@ RuboCop::Runner.prepend(Module.new do
 
   private def rbcop_inspects?(file)
     config = @config_store.for_file(file)
+    # Not constructed: Base#relevant_file? reads only the config, and RuboCop runs no constructor
+    # here (what one prints would come one time too many).
     @rbcop_teams ||= {}.compare_by_identity
     team = @rbcop_teams[config] ||= mobilized_cop_classes(config).enabled(config)
                                                                  .reject { |c| c.cop_name == 'Lint/Syntax' }
-                                                                 .map { |c| c.new(config, @options) }
-    return true if team.any? { |cop| !cop.excluded_file?(file) }
+                                                                 .map do |c|
+      c.allocate.tap { |cop| cop.instance_variable_set(:@config, config) }
+    end
+    relevant = team.any? do |cop|
+      !cop.excluded_file?(file)
+    rescue StandardError
+      true
+    end
+    return true if relevant
 
     lines = File.binread(file).scan(RbcopFiles::DIRECTIVE)
     return false if lines.empty?

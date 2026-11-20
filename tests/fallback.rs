@@ -1001,7 +1001,7 @@ fn fallback_file_selection_matches_rubocop() {
 fn fallback_results_are_cached() {
     let dir = project("cached");
     let rc = dir.join("rc");
-    // A stand-in RuboCop that answers rbcop's handshake (no_foo.rb is what it loaded), logs the
+    // A stand-in RuboCop that takes rbcop's handshake (no_foo.rb is what it loaded), logs the
     // files it inspects, reports one offense in a.rb, marks b.rb uncached while `warn` exists, and
     // writes to stderr while `noisy` exists.
     fs::write(
@@ -1009,7 +1009,7 @@ fn fallback_results_are_cached() {
         "#!/bin/sh\no=/dev/null\nwhile [ $# -gt 0 ]; do case $1 in --out) o=$2; shift;; --) shift; break;; esac; \
          shift; done\nd=${0%/*}\nskip=\nif [ -n \"$RBCOP_FALLBACK_HANDSHAKE\" ]; then\n  \
          printf '%s\\n' \"$d/no_foo.rb\" > \"$RBCOP_FALLBACK_HANDSHAKE/loaded\"\n  \
-         printf '\\036rbcop-fallback-loaded\\n' >&2\n  skip=$(cat)\nfi\n: > \"$o\"\nfor f; do\n  \
+         printf '\\036rbcop-fallback-loaded\\n' >&2\n  skip=$(cat <&3)\nfi\n: > \"$o\"\nfor f; do\n  \
          case \"\n$skip\n\" in *\"\n$f\n\"*) continue;; esac\n  printf '%s ' \"${f##*/}\" >> \"$d/log\"\n  \
          case $f in */a.rb) printf '%s\\t2\\t5\\tconvention\\t0\\t0\\t0\\tCustom/NoFoo\\tAvoid.\\t0\\t\\n' \"$f\" >> \
          \"$o\";; */b.rb) [ -e \"$d/warn\" ] && printf 'rbcop-fallback-uncached\\t%s\\n' \"$f\" >> \"$o\";; esac\n\
@@ -1354,5 +1354,98 @@ fn cop_errors_are_not_cached() {
         assert_eq!(text(&ours.stderr), text(&theirs.stderr));
         assert!(text(&theirs.stderr).contains("1 error occurred"), "{}", text(&theirs.stderr));
     }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+const NO_FOO_CUSTOM: &str = "module RuboCop\n  module Cop\n    module Custom\n      class NoFoo < Base\n        \
+                             def on_send(node)\n          add_offense(node, message: 'foo') if node.method?(:foo)\n        \
+                             end\n      end\n    end\n  end\nend\n";
+
+/// #805 review R1: a directive in any mode can opt a disabled fallback cop in (`next +Cop`,
+/// `next +Dept`, `push`, `enable-next`), so the child parses those files.
+#[test]
+fn directives_in_any_mode_opt_fallback_cops_in() {
+    if !have_rubocop() {
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
+        return;
+    }
+    let dir = project("next");
+    fs::write(dir.join("cops.rb"), NO_FOO_CUSTOM).unwrap();
+    fs::write(
+        dir.join(".rubocop.yml"),
+        format!("require:\n  - ./cops.rb\n{REQUIRE_ONLY}Custom/NoFoo:\n  Enabled: false\n"),
+    )
+    .unwrap();
+    let head = "# frozen_string_literal: true\n\n";
+    fs::write(dir.join("next.rb"), format!("{head}# rubocop:next +Custom/NoFoo\nfoo\n")).unwrap();
+    fs::write(dir.join("nextdep.rb"), format!("{head}# rubocop:next +Custom\nfoo\n")).unwrap();
+    fs::write(dir.join("push.rb"), format!("{head}# rubocop:push +Custom/NoFoo\nfoo\n# rubocop:pop\n")).unwrap();
+    fs::write(dir.join("enext.rb"), format!("{head}# rubocop:enable-next Custom/NoFoo\nfoo\n")).unwrap();
+    let args = ["-f", "e", "next.rb", "push.rb", "enext.rb", "nextdep.rb"];
+    same(&dir, &[], &args);
+    same_cached(&dir, &[], &args);
+    same_cached(&dir, &[], &args);
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// #805 review R2: the child's stdin is RuboCop's (empty here), also with the result cache on,
+/// so required code that reads it while loading goes on (rather than waiting for rbcop).
+#[test]
+fn required_code_reading_stdin_goes_on() {
+    if !have_rubocop() {
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
+        return;
+    }
+    let dir = project("stdin");
+    fs::write(
+        dir.join("cops.rb"),
+        format!("ACME_INPUT = $stdin.read\nwarn \"tty: #{{$stdin.tty?}}\"\n{NO_FOO_CUSTOM}"),
+    )
+    .unwrap();
+    fs::write(dir.join(".rubocop.yml"), format!("require:\n  - ./cops.rb\n{REQUIRE_ONLY}")).unwrap();
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nfoo\n").unwrap();
+    for _ in 0..2 {
+        // A child that hangs fails the test instead of hanging it.
+        let mut child = common::command(env!("CARGO_BIN_EXE_rbcop"))
+            .env("HOME", &dir)
+            .env("RBCOP_FALLBACK", "1")
+            .args(["-f", "e", "a.rb"])
+            .current_dir(&dir)
+            .stdin(std::process::Stdio::null())
+            .stdout(std::process::Stdio::null())
+            .stderr(std::process::Stdio::null())
+            .spawn()
+            .unwrap();
+        let start = std::time::Instant::now();
+        while child.try_wait().unwrap().is_none() {
+            if start.elapsed() > std::time::Duration::from_secs(60) {
+                let _ = child.kill();
+                panic!("rbcop did not finish in 60 s");
+            }
+            std::thread::sleep(std::time::Duration::from_millis(100));
+        }
+        same_cached(&dir, &[], &["-f", "e", "a.rb"]);
+    }
+    let _ = fs::remove_dir_all(&dir);
+}
+
+/// #805 review R3: what a fallback cop's constructor prints comes as often as from RuboCop, warm
+/// too (RuboCop builds the cops' standby team for its cache key even when every file is cached).
+#[test]
+fn cop_constructor_output_matches_rubocop() {
+    if !have_rubocop() {
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
+        return;
+    }
+    let dir = project("init");
+    let init = "RuboCop::Cop::Base.prepend(Module.new { def initialize(*a) = super.tap { warn \"init #{self.class.name}\" \
+                if self.class.name == 'RuboCop::Cop::Custom::NoFoo' } })\n";
+    fs::write(dir.join("cops.rb"), format!("{init}{NO_FOO_CUSTOM}")).unwrap();
+    fs::write(dir.join(".rubocop.yml"), format!("require:\n  - ./cops.rb\n{REQUIRE_ONLY}")).unwrap();
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nfoo\n").unwrap();
+    for _ in 0..2 {
+        same_cached(&dir, &[], &["-f", "e", "a.rb"]);
+    }
+    same(&dir, &[], &["-f", "e", "--cache", "false", "a.rb"]);
     let _ = fs::remove_dir_all(&dir);
 }
