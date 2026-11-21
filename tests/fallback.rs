@@ -1672,3 +1672,101 @@ fn prepended_native_cop_runs_in_rubocop() {
     let theirs = text(&rubocop(&dir, &args).stdout);
     assert!(theirs.contains("other/client_spec.rb") && !theirs.contains("deepl/client_spec.rb"), "{theirs}");
 }
+
+/// #831: the child inspects in RuboCop's worker processes when RuboCop would (its result cache in a
+/// directory of the run's own, removed afterwards), in one process when it would not, and its
+/// output matches RuboCop's either way.
+#[test]
+fn child_inspects_in_parallel_workers() {
+    if !have_rubocop() {
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
+        return;
+    }
+    let dir = project("parallel");
+    fs::write(dir.join(".rubocop.yml"), format!("require:\n  - ./cops.rb\n{REQUIRE_ONLY}")).unwrap();
+    // Logs the process that loads it, then each file's inspecting process and cache root.
+    fs::write(
+        dir.join("cops.rb"),
+        "File.write('pids', \"load #{Process.pid}\\n\", mode: 'a')\nmodule RuboCop\n  module Cop\n    module Custom\n      \
+         class Pid < Base\n        def on_new_investigation\n          File.write('pids', \"#{Process.pid} \
+         #{ENV['RUBOCOP_CACHE_ROOT']}\\n\", mode: 'a')\n        end\n\n        def on_send(node)\n          \
+         add_offense(node, message: 'foo') if node.method?(:foo)\n        end\n      end\n    end\n  end\nend\n",
+    )
+    .unwrap();
+    fs::remove_file(dir.join("no_foo.rb")).unwrap();
+    for i in 0..6 {
+        fs::write(dir.join(format!("f{i}.rb")), format!("# frozen_string_literal: true\n\nfoo({i})\nbar\n")).unwrap();
+    }
+    let args = ["-f", "e"];
+    same(&dir, &[], &args);
+    same_cached(&dir, &[], &args);
+    same_cached(&dir, &[], &args);
+    for extra in ["--no-parallel", "-F"] {
+        same(&dir, &[], &[extra, "-f", "e"]);
+    }
+    same_cached(&dir, &[], &["-P", "-f", "e"]);
+    same(&dir, &[], &["-f", "e", "--cache", "false"]);
+    let pids = |args: &[&str]| -> (String, Vec<(String, String)>) {
+        // Cold: rbcop's cache (under HOME) would keep the child from inspecting the files.
+        let _ = fs::remove_dir_all(dir.join(".cache/rbcop_cache"));
+        let _ = fs::remove_file(dir.join("pids"));
+        let out = rbcop(&dir, true, args);
+        assert_eq!(out.status.code(), Some(1), "{}", text(&out.stderr));
+        let log = fs::read_to_string(dir.join("pids")).unwrap();
+        let mut lines = log.lines();
+        let load = lines.next().unwrap().strip_prefix("load ").unwrap().to_string();
+        let files = lines.map(|l| l.split_once(' ').map(|(p, r)| (p.into(), r.into())).unwrap()).collect();
+        (load, files)
+    };
+    // In parallel also where RuboCop itself would not (--cache false, -F): only the counts of
+    // what cop constructors do can tell (docs/known-gaps.md).
+    for parallel in [&args[..], &["--cache", "false", "-f", "e"], &["-F", "-f", "e"]] {
+        let (load, files) = pids(parallel);
+        assert!(files.len() >= 6, "{parallel:?} {files:?}");
+        for (pid, root) in &files {
+            assert_ne!(pid, &load, "{parallel:?}: a file inspected in the main RuboCop process");
+            assert!(!root.is_empty() && !Path::new(root).exists(), "{parallel:?} {root:?}");
+        }
+    }
+    let (load, files) = pids(&["--no-parallel", "-f", "e"]);
+    assert!(files.len() >= 6 && files.iter().all(|(pid, root)| pid == &load && root.is_empty()), "{files:?}");
+}
+
+/// #831: the child's arguments with and without parallel inspection, and its cache directory
+/// removed when it fails.
+#[test]
+fn parallel_child_cache_is_removed_on_failure() {
+    let dir = project("parallel-fail");
+    let rc = dir.join("rc");
+    fs::write(&rc, "#!/bin/sh\nprintf '%s|%s\\n' \"$RUBOCOP_CACHE_ROOT\" \"$*\" > \"${0%/*}/log\"\nexit 2\n").unwrap();
+    Command::new("chmod").arg("755").arg(&rc).status().unwrap();
+    let run = |args: &[&str]| -> (String, String) {
+        let mut cmd = common::command(env!("CARGO_BIN_EXE_rbcop"));
+        let out = cmd
+            .env("HOME", &dir)
+            .env("RBCOP_FALLBACK", "1")
+            .env("RBCOP_RUBOCOP", &rc)
+            .args(args)
+            .current_dir(&dir)
+            .output()
+            .unwrap();
+        assert_eq!(out.status.code(), Some(2), "{}", text(&out.stderr));
+        let log = fs::read_to_string(dir.join("log")).unwrap();
+        let (root, argv) = log.trim_end().split_once('|').unwrap();
+        (root.to_string(), argv.to_string())
+    };
+    for parallel in [&["a.rb", "b.rb"][..], &["--cache", "false", "a.rb", "b.rb"]] {
+        let (root, argv) = run(parallel);
+        assert!(argv.contains("--parallel") && !argv.contains("--cache"), "{parallel:?} {argv}");
+        assert!(root.ends_with("/cache") && !Path::new(&root).parent().unwrap().exists(), "{root}");
+    }
+    let serial = |args: &[&str]| {
+        let (root, argv) = run(args);
+        assert!(root.is_empty() && argv.contains("--cache false") && !argv.contains("--parallel"), "{args:?} {argv}");
+    };
+    serial(&["--no-parallel", "a.rb", "b.rb"]);
+    serial(&["a.rb"]);
+    // RuboCop refuses -P with it (CLI#validate_options_vs_config).
+    fs::write(dir.join(".rubocop.yml"), format!("{CONFIG}  UseCache: false\n")).unwrap();
+    serial(&["a.rb", "b.rb"]);
+}

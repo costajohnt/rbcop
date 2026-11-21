@@ -9,44 +9,51 @@ Tracking issues: #388, #808.
 rbcop at e2804db7 against RuboCop 1.92.2, each corpus linted with its own `.rubocop.yml` (brew:
 default config), pinned to 2 and 4 vCPUs, RuboCop with an empty result cache. Median of 3 runs,
 wall seconds. rbcop runs as users get it: `RBCOP_FALLBACK` unset, so cops it does not implement
-run in a RuboCop child (README, "Plugins and custom cops"). Raw rows:
+run in a RuboCop child (README, "Plugins and custom cops"). The rbcop rows of discourse, mastodon,
+solidus and fastlane and the one-file rows were rerun at 1a576635, where that child inspects in
+parallel (#831); the RuboCop rows are from the e2804db7 run on the same machine. Raw rows:
 [benchmarks/ci.tsv](benchmarks/ci.tsv), [benchmarks/boot.tsv](benchmarks/boot.tsv),
 [benchmarks/file.tsv](benchmarks/file.tsv).
 
 | corpus | files | RuboCop, 1 process, 2 vCPU | RuboCop `--parallel`, 2 vCPU | rbcop, 2 vCPU | speedup, 2 vCPU | RuboCop `--parallel`, 4 vCPU | rbcop, 4 vCPU | speedup, 4 vCPU |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | rails | 3,476 | 109.6 | 99.0 | 3.78 | 26.2x | 51.2 | 2.02 | 25.4x |
-| discourse | 12,441 | 306.8 | 274.9 | 96.56 | 2.8x | 142.4 | 90.72 | 1.6x |
-| mastodon | 3,297 | 138.5 | 118.3 | 17.69 | 6.7x | 61.8 | 14.07 | 4.4x |
+| discourse | 12,441 | 306.8 | 274.9 | 92.34 | 3.0x | 142.4 | 48.67 | 2.9x |
+| mastodon | 3,297 | 138.5 | 118.3 | 17.65 | 6.7x | 61.8 | 9.73 | 6.4x |
 | brew (default config) | 1,977 | 156.6 | 138.8 | 6.50 | 21.4x | 71.1 | 3.51 | 20.3x |
-| solidus | 2,171 | 60.4 | 54.0 | 19.06 | 2.8x | 28.5 | 17.39 | 1.6x |
-| fastlane | 1,355 | 66.4 | 58.3 | 25.95 | 2.2x | 30.6 | 24.33 | 1.3x |
+| solidus | 2,171 | 60.4 | 54.0 | 18.25 | 3.0x | 28.5 | 9.78 | 2.9x |
+| fastlane | 1,355 | 66.4 | 58.3 | 24.08 | 2.4x | 30.6 | 12.93 | 2.4x |
 
 Speedup is RuboCop `--parallel` over rbcop at the same vCPU count. Against single-process RuboCop
-at 2 vCPUs it is 2.6x (fastlane) to 29.0x (rails). Files are those `rubocop -L` lists.
+at 2 vCPUs it is 2.8x (fastlane) to 29.0x (rails). Files are those `rubocop -L` lists.
 
 On rails and brew rbcop implements every enabled cop and starts no RuboCop. discourse, mastodon,
 solidus and fastlane enable cops rbcop does not implement (21 rubocop-discourse cops on
 discourse; on the other three the cops of the Ruby files their configs `require:`), so rbcop
-starts RuboCop for them. That child is one RuboCop process (no `--parallel`) that parses every
-file one of those cops may inspect, and it is most of rbcop's time there. The same runs with
+starts RuboCop for them. That child parses every file one of those cops may inspect, in
+RuboCop's parallel worker processes (`--parallel` with a cold result cache of its own, #831),
+and it is most of rbcop's time there. At 2 vCPUs its two workers share one physical core, so it
+gains up to 7% over the single process it was before #831 (mastodon none); at 4 vCPUs it halves rbcop's wall time
+(discourse 90.27 s to 48.67 s, fastlane 24.13 s to 12.93 s). The same runs with
 `RBCOP_FALLBACK=0` (those cops skipped, with a notice on stderr):
 
 | corpus | rbcop, 2 vCPU | `RBCOP_FALLBACK=0`, 2 vCPU | speedup, 2 vCPU | rbcop, 4 vCPU | `RBCOP_FALLBACK=0`, 4 vCPU | speedup, 4 vCPU |
 |---|---:|---:|---:|---:|---:|---:|
-| discourse | 96.56 | 11.92 | 23.1x | 90.72 | 6.80 | 20.9x |
-| mastodon | 17.69 | 7.30 | 16.2x | 14.07 | 3.91 | 15.8x |
-| solidus | 19.06 | 2.75 | 19.6x | 17.39 | 1.53 | 18.6x |
-| fastlane | 25.95 | 2.92 | 20.0x | 24.33 | 1.57 | 19.5x |
+| discourse | 92.34 | 11.92 | 23.1x | 48.67 | 6.80 | 20.9x |
+| mastodon | 17.65 | 7.30 | 16.2x | 9.73 | 3.91 | 15.8x |
+| solidus | 18.25 | 2.75 | 19.6x | 9.78 | 1.53 | 18.6x |
+| fastlane | 24.08 | 2.92 | 20.0x | 12.93 | 1.57 | 19.5x |
 
 The speedup columns here are RuboCop `--parallel` over rbcop with `RBCOP_FALLBACK=0`. On these
 trees the skipped cops report no offenses, so the output is the same either way (see Method);
 on another tree they may.
 
 CPU time (user) per run, which does not depend on the pinning: rails 194 s RuboCop `--parallel`
-vs 7.2 s rbcop, discourse 538 s vs 106 s (22 s with `RBCOP_FALLBACK=0`), mastodon 232 s vs 24 s
-(14 s), brew 273 s vs 12 s, solidus 105 s vs 21 s (5.2 s), fastlane 114 s vs 28 s (5.6 s) (2
-vCPU rows). RuboCop's `--parallel` user time is about 1.8x its single-process time because its
+vs 7.2 s rbcop, discourse 538 s vs 177 s (22 s with `RBCOP_FALLBACK=0`), mastodon 232 s vs 33 s
+(14 s), brew 273 s vs 12 s, solidus 105 s vs 34 s (5.2 s), fastlane 114 s vs 46 s (5.6 s) (2
+vCPU rows). The fallback child's parallel workers cost about 65% more CPU time than its single
+process did (discourse 107 s, mastodon 24 s, solidus 21 s, fastlane 28 s before #831): each
+worker builds its own cop teams, and hyperthread pairs run slower per thread. RuboCop's `--parallel` user time is about 1.8x its single-process time because its
 two workers share one physical core; wall time improves 10 to 15% over a single process at 2
 vCPUs.
 
@@ -62,9 +69,9 @@ Start-up and one file (2 vCPUs, median of 3):
 | `rubocop --version` | 0.69 |
 | `bundle exec rubocop --version` (Gemfile with rubocop, -performance, -rails, -rspec) | 0.93 |
 | `rbcop --version` | 0.07 |
-| RuboCop on mastodon's `app/models/account.rb` (mastodon's config, 6 plugins), empty cache | 2.50 |
-| rbcop on the same file | 1.20 |
-| rbcop on the same file, `RBCOP_FALLBACK=0` | 0.23 |
+| RuboCop on mastodon's `app/models/account.rb` (mastodon's config, 6 plugins), empty cache | 2.44 |
+| rbcop on the same file | 1.17 |
+| rbcop on the same file, `RBCOP_FALLBACK=0` | 0.24 |
 
 ### Method
 
@@ -75,7 +82,8 @@ Start-up and one file (2 vCPUs, median of 3):
   rubocop-factory_bot 2.28.0, rubocop-minitest 0.41.0, rubocop-i18n 3.3.0, rubocop-packaging
   0.6.0 (the versions docs/plugins.md pins), and for discourse rubocop-discourse 3.20.0 with
   rubocop-discourse-base 1.0.0 (the versions discourse's Gemfile.lock has). rbcop release build
-  of e2804db7, built fresh for the run.
+  of e2804db7, built fresh for the run, and of 1a576635 for the #831 rerun (rbcop rows of
+  discourse, mastodon, solidus, fastlane and the one-file rows).
 - RuboCop invocation: rails, mastodon, brew, solidus and fastlane ran RuboCop from a gem home
   that holds RuboCop 1.92.2 and the plugins above (a wrapper that sets `GEM_HOME`/`GEM_PATH` and
   runs `ruby .../bin/rubocop`). discourse needs rubocop-discourse, which that gem home lacks, so
@@ -91,7 +99,8 @@ Start-up and one file (2 vCPUs, median of 3):
   vCPUs would not change it.
 - RuboCop `--parallel` got a fresh `--cache-root` per run (cold cache, as on a runner without a
   restored cache), then a second run on the same root (warm); single-process RuboCop ran with
-  `--cache false`. rbcop ran with `--cache false`, which its RuboCop child gets too. The corpus
+  `--cache false`. rbcop ran with `--cache false`; its RuboCop child then still inspects in parallel, with a cold
+  result cache in a directory of its own. The corpus
   files were in the OS page cache for every run.
 - Plugins each config loads: rails: minitest, packaging, performance, rails (`DisabledByDefault`,
   so only the cops it lists run). discourse: rubocop-discourse's `stree-compat.yml`, which loads
@@ -123,6 +132,13 @@ contaminated column is 0 in all 168 rows. Before the runs no other process was b
 `ps` samples taken every 10 s through the runs. The load average recorded before each run (0.56
 to 4.38) is mostly the previous run decaying, since runs follow each other; the container sees
 the host's load average. The other containers on the host were not sampled this time.
+
+The #831 rerun ran on the same box, idle inside the container before it started (`ps`; no
+`ps` sampling during it), with no gate during any run (contaminated 0 in every row), each run
+interleaved with the same run of ae3ca215 (the commit before) as the before. Before timing, both
+printed byte-identical stdout, stderr and exit status on the four corpora (`--format emacs`,
+cold cache, warm cache and `--cache false`), the same as RuboCop's but for one rbenv warning on
+mastodon's stderr from both builds (its `.ruby-version` names a Ruby the box does not have).
 
 ### Caveats
 

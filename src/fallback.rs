@@ -239,6 +239,8 @@ pub struct Child<'a> {
     pub autocorrect: Option<Mode>,
     /// The `--stdin` source; `files` is then its one path.
     pub stdin: Option<&'a [u8]>,
+    /// RuboCop's worker processes may inspect the files: not under --no-parallel (#831).
+    pub parallel: bool,
 }
 
 /// Runs RuboCop (`c.program`) on `files` with every cop rbcop implements excluded (the child
@@ -301,7 +303,19 @@ pub fn run(
     // The offenses go to a file: what cops print themselves (rubocop-require_tools' notes) reaches
     // stdout as it would from RuboCop.
     let report = dir.0.join("offenses");
-    cmd.args(words).args(["--cache", "false", "--require"]).arg(&fmt).args(["--format", "RbcopFallbackFormatter"]);
+    cmd.args(words);
+    // RuboCop inspects in parallel only with its result cache on (#831), also when rbcop's is off:
+    // the child's lives in this run's directory, so it is always cold (no cached offenses come
+    // back) and removed with it. RUBOCOP_CACHE_ROOT wins over the config's CacheRootDirectory;
+    // resolved, as ResultCache#symlink_protection_triggered? warns about a symlink in it (macOS's
+    // /var).
+    if c.parallel && c.stdin.is_none() && files.len() > 1 {
+        let root = std::fs::canonicalize(&dir.0).unwrap_or_else(|_| dir.0.clone());
+        cmd.arg("--parallel").env("RUBOCOP_CACHE_ROOT", root.join("cache"));
+    } else {
+        cmd.args(["--cache", "false"]);
+    }
+    cmd.arg("--require").arg(&fmt).args(["--format", "RbcopFallbackFormatter"]);
     cmd.arg("--out").arg(&report);
     if !except.is_empty() {
         cmd.args(["--except", &except.join(",")]);
