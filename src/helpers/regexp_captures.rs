@@ -5,13 +5,21 @@ use crate::prelude::*;
 
 /// (named, numbered) capture group counts of a Prism regexp literal; None when parser would call
 /// it `interpolation?` (a `#{}` part; `#@ivar` parts stay in the source as written).
+/// A regexp with the `s` or `e` option has no `parsed_tree`, so no captures (#815).
 pub fn regexp_captures(node: &Node) -> Option<(usize, usize)> {
+    use crate::helpers::regexp_parser::encoding_option;
     if let Some(r) = node.as_regular_expression_node() {
+        if encoding_option(r.closing_loc().as_slice()) {
+            return Some((0, 0));
+        }
         return Some(count_captures(text(&r.content_loc()).as_bytes(), r.is_extended()));
     }
     let r = node.as_interpolated_regular_expression_node()?;
     if r.parts().iter().any(|p| p.as_embedded_statements_node().is_some()) {
         return None;
+    }
+    if encoding_option(r.closing_loc().as_slice()) {
+        return Some((0, 0));
     }
     let (open, close) = (r.opening_loc().end_offset(), r.closing_loc().start_offset());
     let src = r.location();
