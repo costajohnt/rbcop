@@ -86,6 +86,7 @@ class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
   # this one, in a fresh directory each run) go to `loaded` there, a line to stderr says so, and
   # rbcop answers on fd 3 with the files it has offenses for, which are then skipped.
   def started(_target_files)
+    RbcopFiles.take_foreign_cops(options)
     dir = ENV.fetch('RBCOP_FALLBACK_HANDSHAKE', nil) or return
 
     here = [File.dirname(File.expand_path(__FILE__)), File.dirname(File.realpath(__FILE__))]
@@ -108,6 +109,7 @@ class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
       c < RuboCop::Cop::Base && c.name && !except.include?(c.cop_name) &&
         c.instance_method(:external_dependency_checksum).owner != RuboCop::Cop::Base
     end
+    RbcopFiles::FOREIGN.each { |c| output.puts "rbcop-fallback-custom\t#{c.cop_name}\t#{c.support_autocorrect? ? 1 : 0}" }
     output.puts 'rbcop-fallback-done'
   end
 
@@ -140,6 +142,45 @@ module RbcopFiles
   UNCACHED = Set.new
   # Any mode (CommentConfig#opted_in_by: enable, push, next, ...).
   DIRECTIVE = /(?:rubocop|standard)\s*:\s*[\w-]+.*/
+  FOREIGN = []
+
+  # A cop rbcop implements (excluded here) whose registered class is not RuboCop's or a native
+  # plugin's own, as the Ruby code the config requires can make it: a class of its own with the
+  # same badge (`Class.new`, #809) or a module prepended or included into the cop's class
+  # (rubocop-inflector, #819). Such a class, or a method of it or of its ancestors below
+  # Base, comes from a file outside those gems and Ruby's own library. RuboCop runs that class,
+  # so the child does (it is taken off --except) and rbcop does not. Lazily registered cops not
+  # loaded yet are RuboCop's own.
+  def self.take_foreign_cops(options)
+    except = Array(options[:except])
+    return if except.empty?
+
+    native = except.to_set
+    gems = %w[rubocop rubocop-ast] + ENV.fetch('RBCOP_NATIVE_GEMS', '').split(',')
+    roots = gems.filter_map { |g| Gem.loaded_specs[g]&.full_gem_path }
+    roots << File.expand_path('../../../..', Object.const_source_location('RuboCop::Cop::Base').first)
+    roots << RbConfig::CONFIG['rubylibdir']
+    real = Hash.new do |h, f|
+      h[f] = begin
+        File.realpath(f)
+      rescue SystemCallError
+        f
+      end
+    end
+    roots = roots.map { |r| "#{real[r]}/" }
+    foreign = ->(location) { (file = location&.first) && !roots.any? { |r| real[file].start_with?(r) } }
+    registry = RuboCop::Cop::Registry.global
+    registry.send(:clear_enrollment_queue)
+    registry.instance_variable_get(:@cops_by_badge).each_value do |cop|
+      next unless cop.is_a?(Class) && cop.name && native.include?(cop.cop_name)
+
+      own = cop.ancestors.take_while { |m| m != RuboCop::Cop::Base }
+      methods = own.flat_map { |m| (m.instance_methods(false) + m.private_instance_methods(false)).map { [m, _1] } }
+      FOREIGN << cop if foreign.(Object.const_source_location(cop.name)) ||
+                        methods.any? { |m, name| foreign.(m.instance_method(name).source_location) }
+    end
+    options[:except] = except - FOREIGN.map(&:cop_name)
+  end
 end
 
 RuboCop::Runner.prepend(Module.new do

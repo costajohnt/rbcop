@@ -517,8 +517,14 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
   `--stdin` and (without `RBCOP_FALLBACK=1`) `--diff` skip the fallback with the notice.
   A cop rbcop implements whose class a `require:`d local file defines or reopens (`class
   RuboCop::Cop::Style::OneClassPerFile`, compact or in nested `module` lines) counts as such a
-  custom cop, so RuboCop runs the patched class (#801); a class patched through `prepend`,
-  `class_eval` or a dynamically built name is not seen, and rbcop's own port runs.
+  custom cop, so RuboCop runs the patched class (#801). So does one whose class, as the RuboCop
+  child finds it once the config is loaded, is not RuboCop's or a native plugin's own: a class
+  registered under its badge in a form rbcop cannot read (`Class.new`, #809), or one with a module
+  prepended or included, or a method defined, from a file outside those gems and Ruby's library.
+  The child reports it and runs it; rbcop's port does not. Without the fallback (none found,
+  `RBCOP_FALLBACK=0`, or no other reason to start RuboCop) such a patch is not seen, and rbcop's
+  own port runs. A patch to a module cops share (a mixin under `RuboCop::Cop`) is seen only for
+  the cops RuboCop has loaded by then (it loads most lazily).
   What required code prints on stderr while it loads (Ruby's `already initialized constant`
   warnings, #804) reaches stderr from the fallback, but after rbcop's own config warnings, where
   RuboCop prints it before them, and once per RuboCop start (one per file under `-F` with `-a`/`-A`).
