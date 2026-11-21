@@ -1,0 +1,1 @@
+--only Lint/OutOfRangeRegexpRef,Style/RedundantRegexpEscape,Lint/MixedRegexpCaptureTypes,Lint/DuplicateRegexpCharacterClassElement,Style/RedundantRegexpCharacterClass,Lint/MixedCaseRange,Lint/RedundantRegexpQuantifiers,Lint/UnescapedBracketInRegexp,Style/CaseLikeIf

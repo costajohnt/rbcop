@@ -1,0 +1,22 @@
+fe.rb:2:5: W: Lint/OutOfRangeRegexpRef: $1 is out of range (no regexp capture groups detected).
+fe.rb:8:5: W: Lint/OutOfRangeRegexpRef: $1 is out of range (no regexp capture groups detected).
+fn.rb:1:11: W: Lint/MixedRegexpCaptureTypes: Do not mix named captures and numbered captures in a Regexp literal.
+fn.rb:1:16: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+fn.rb:1:20: W: [Correctable] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+fn.rb:1:22: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+fn.rb:1:31: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `+` with a single `+`.
+fn.rb:1:35: W: [Correctable] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+fn.rb:1:39: W: [Correctable] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+fn.rb:4:18: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+fn.rb:7:15: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+fs.rb:2:5: W: Lint/OutOfRangeRegexpRef: $1 is out of range (no regexp capture groups detected).
+fs.rb:8:5: W: Lint/OutOfRangeRegexpRef: $1 is out of range (no regexp capture groups detected).
+fu.rb:1:11: W: Lint/MixedRegexpCaptureTypes: Do not mix named captures and numbered captures in a Regexp literal.
+fu.rb:1:16: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+fu.rb:1:20: W: [Correctable] Lint/DuplicateRegexpCharacterClassElement: Duplicate element inside regexp character class
+fu.rb:1:22: C: [Correctable] Style/RedundantRegexpCharacterClass: Redundant single-element character class, `[a]` can be replaced with `a`.
+fu.rb:1:31: W: [Correctable] Lint/RedundantRegexpQuantifiers: Replace redundant quantifiers `+` and `+` with a single `+`.
+fu.rb:1:35: W: [Correctable] Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.
+fu.rb:1:39: W: [Correctable] Lint/UnescapedBracketInRegexp: Regular expression has `]` without escape.
+fu.rb:4:18: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
+fu.rb:7:15: C: [Correctable] Style/RedundantRegexpEscape: Redundant escape inside regexp literal
