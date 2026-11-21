@@ -1,6 +1,9 @@
-1	mastodon	2	rubocop-file	2.39	2.185	0.203	0	0.50	0	1792239291
-1	mastodon	2	rbcop-file	0.23	0.195	0.032	0	0.54	0	1792239296
-2	mastodon	2	rubocop-file	2.39	2.205	0.184	0	0.58	0	1792239301
-2	mastodon	2	rbcop-file	0.23	0.187	0.039	0	0.53	0	1792239306
-3	mastodon	2	rubocop-file	2.39	2.192	0.198	0	0.49	0	1792239311
-3	mastodon	2	rbcop-file	0.23	0.191	0.035	0	0.45	0	1792239316
+1	mastodon	2	rubocop-file	2.79	2.628	0.160	0	0.63	0	1795269817
+1	mastodon	2	rbcop-file	1.20	1.047	0.157	0	0.74	0	1795269822
+1	mastodon	2	rbcop-file-nofallback	0.23	0.163	0.068	0	0.92	0	1795269827
+2	mastodon	2	rubocop-file	2.50	2.331	0.166	0	0.93	0	1795269832
+2	mastodon	2	rbcop-file	1.13	0.985	0.142	0	1.01	0	1795269837
+2	mastodon	2	rbcop-file-nofallback	0.15	0.110	0.036	0	1.17	0	1795269842
+3	mastodon	2	rubocop-file	2.38	2.216	0.161	0	1.32	0	1795269847
+3	mastodon	2	rbcop-file	1.21	1.053	0.160	0	1.45	0	1795269852
+3	mastodon	2	rbcop-file-nofallback	0.23	0.164	0.064	0	1.58	0	1795269857

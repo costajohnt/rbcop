@@ -1,94 +1,128 @@
 # Benchmarks
 
-These numbers are from the RuboCop 1.91.0 era and were not rerun for later targets.
-
-How fast rbcop is against RuboCop 1.91 in the setting most users care about: a CI step on a
+How fast rbcop is against RuboCop 1.92.2 in the setting most users care about: a CI step on a
 GitHub-hosted runner, which starts with no RuboCop result cache unless the workflow restores one.
-Tracking issue: #388.
+Tracking issues: #388, #808.
 
 ## CI-shaped runs (Linux container)
 
-rbcop at 4b08150 against RuboCop 1.91.0, each corpus linted with its own `.rubocop.yml` (brew: default config), pinned to
-2 and 4 vCPUs, RuboCop with an empty result cache. Median of 3 runs, wall seconds. Raw rows:
+rbcop at e2804db7 against RuboCop 1.92.2, each corpus linted with its own `.rubocop.yml` (brew:
+default config), pinned to 2 and 4 vCPUs, RuboCop with an empty result cache. Median of 3 runs,
+wall seconds. rbcop runs as users get it: `RBCOP_FALLBACK` unset, so cops it does not implement
+run in a RuboCop child (README, "Plugins and custom cops"). Raw rows:
 [benchmarks/ci.tsv](benchmarks/ci.tsv), [benchmarks/boot.tsv](benchmarks/boot.tsv),
 [benchmarks/file.tsv](benchmarks/file.tsv).
 
 | corpus | files | RuboCop, 1 process, 2 vCPU | RuboCop `--parallel`, 2 vCPU | rbcop, 2 vCPU | speedup, 2 vCPU | RuboCop `--parallel`, 4 vCPU | rbcop, 4 vCPU | speedup, 4 vCPU |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| rails | 3,476 | 109.3 | 98.7 | 4.89 | 20.2x | 50.6 | 2.64 | 19.2x |
-| discourse | 12,441 | 303.9 | 273.7 | 19.31 | 14.2x | 140.6 | 10.16 | 13.8x |
-| mastodon | 3,297 | 137.2 | 116.0 | 12.11 | 9.6x | 61.2 | 6.10 | 10.0x |
-| brew (default config) | 1,977 | 153.5 | 134.0 | 8.26 | 16.2x | 69.0 | 4.39 | 15.7x |
-| solidus | 2,171 | 59.9 | 53.4 | 4.05 | 13.2x | 28.3 | 2.12 | 13.3x |
-| fastlane | 1,355 | 66.0 | 58.6 | 3.91 | 15.0x | 30.3 | 2.02 | 15.0x |
+| rails | 3,476 | 109.6 | 99.0 | 3.78 | 26.2x | 51.2 | 2.02 | 25.4x |
+| discourse | 12,441 | 306.8 | 274.9 | 96.56 | 2.8x | 142.4 | 90.72 | 1.6x |
+| mastodon | 3,297 | 138.5 | 118.3 | 17.69 | 6.7x | 61.8 | 14.07 | 4.4x |
+| brew (default config) | 1,977 | 156.6 | 138.8 | 6.50 | 21.4x | 71.1 | 3.51 | 20.3x |
+| solidus | 2,171 | 60.4 | 54.0 | 19.06 | 2.8x | 28.5 | 17.39 | 1.6x |
+| fastlane | 1,355 | 66.4 | 58.3 | 25.95 | 2.2x | 30.6 | 24.33 | 1.3x |
 
 Speedup is RuboCop `--parallel` over rbcop at the same vCPU count. Against single-process RuboCop
-at 2 vCPUs it is 11.3x (mastodon) to 22.3x (rails). Files are those `rubocop -L` lists.
+at 2 vCPUs it is 2.6x (fastlane) to 29.0x (rails). Files are those `rubocop -L` lists.
 
-CPU time (user) per run, which does not depend on the pinning: rails 193 s RuboCop `--parallel` vs
-9.3 s rbcop, discourse 536 s vs 36 s, mastodon 228 s vs 23 s, brew 264 s vs 16 s, solidus 103 s
-vs 7.8 s, fastlane 114 s vs 7.6 s (2 vCPU rows). RuboCop's `--parallel` user time is about 1.8x its
-single-process time because its two workers share one physical core; wall time improves 10 to 15%
-over a single process at 2 vCPUs.
+On rails and brew rbcop implements every enabled cop and starts no RuboCop. discourse, mastodon,
+solidus and fastlane enable cops rbcop does not implement (21 rubocop-discourse cops on
+discourse; on the other three the cops of the Ruby files their configs `require:`), so rbcop
+starts RuboCop for them. That child is one RuboCop process (no `--parallel`) that parses every
+file one of those cops may inspect, and it is most of rbcop's time there. The same runs with
+`RBCOP_FALLBACK=0` (those cops skipped, with a notice on stderr):
+
+| corpus | rbcop, 2 vCPU | `RBCOP_FALLBACK=0`, 2 vCPU | speedup, 2 vCPU | rbcop, 4 vCPU | `RBCOP_FALLBACK=0`, 4 vCPU | speedup, 4 vCPU |
+|---|---:|---:|---:|---:|---:|---:|
+| discourse | 96.56 | 11.92 | 23.1x | 90.72 | 6.80 | 20.9x |
+| mastodon | 17.69 | 7.30 | 16.2x | 14.07 | 3.91 | 15.8x |
+| solidus | 19.06 | 2.75 | 19.6x | 17.39 | 1.53 | 18.6x |
+| fastlane | 25.95 | 2.92 | 20.0x | 24.33 | 1.57 | 19.5x |
+
+The speedup columns here are RuboCop `--parallel` over rbcop with `RBCOP_FALLBACK=0`. On these
+trees the skipped cops report no offenses, so the output is the same either way (see Method);
+on another tree they may.
+
+CPU time (user) per run, which does not depend on the pinning: rails 194 s RuboCop `--parallel`
+vs 7.2 s rbcop, discourse 538 s vs 106 s (22 s with `RBCOP_FALLBACK=0`), mastodon 232 s vs 24 s
+(14 s), brew 273 s vs 12 s, solidus 105 s vs 21 s (5.2 s), fastlane 114 s vs 28 s (5.6 s) (2
+vCPU rows). RuboCop's `--parallel` user time is about 1.8x its single-process time because its
+two workers share one physical core; wall time improves 10 to 15% over a single process at 2
+vCPUs.
+
+A RuboCop run with a warm cache (the same `--cache-root` again on the unchanged tree, the
+`rubocop-par-warm` rows) took 2.1 s (rails), 6.8 s (discourse), 3.5 s (mastodon), 5.5 s (brew),
+2.7 s (solidus) and 2.1 s (fastlane) at 4 vCPUs. That is not what the tables above measure (see
+Caveats).
 
 Start-up and one file (2 vCPUs, median of 3):
 
 | run | wall s |
 |---|---:|
-| `rubocop --version` | 0.72 |
-| `bundle exec rubocop --version` (Gemfile with rubocop, -performance, -rails, -rspec) | 0.85 |
-| `rbcop --version` | 0.02 |
-| RuboCop on mastodon's `app/models/account.rb` (607 lines, mastodon's config, 6 plugins), empty cache | 2.39 |
-| rbcop on the same file | 0.23 |
+| `rubocop --version` | 0.69 |
+| `bundle exec rubocop --version` (Gemfile with rubocop, -performance, -rails, -rspec) | 0.93 |
+| `rbcop --version` | 0.07 |
+| RuboCop on mastodon's `app/models/account.rb` (mastodon's config, 6 plugins), empty cache | 2.50 |
+| rbcop on the same file | 1.20 |
+| rbcop on the same file, `RBCOP_FALLBACK=0` | 0.23 |
 
 ### Method
 
-- Machine: a Linux container on an Intel Core i9-8950HK host (6 cores / 12 threads), Debian 13.6,
-  kernel 7.0.14-22, x86_64. Ruby 4.0.6 with
-  RuboCop 1.91.0, rubocop-performance 1.27.0, rubocop-rails 2.38.0, rubocop-rspec 3.10.2,
-  rubocop-rspec_rails 2.33.0, rubocop-capybara 3.0.0, rubocop-factory_bot 2.28.0,
-  rubocop-minitest 0.41.0, rubocop-i18n 3.3.0, rubocop-packaging 0.6.0, rubocop-discourse 3.20.0.
-  rbcop release build of 4b08150.
+- Machine: CT 440, a Linux container on an Intel Core i9-8950HK host (6 cores / 12 threads; the
+  container sees CPUs 0-9), Debian 13.7, kernel 7.0.14-30-pve, x86_64. Ruby 4.0.6 with
+  RuboCop 1.92.2 (Parser 3.3.12.0, rubocop-ast 1.50.0), rubocop-performance 1.27.0,
+  rubocop-rails 2.38.0, rubocop-rspec 3.10.2, rubocop-rspec_rails 2.33.0, rubocop-capybara 3.1.0,
+  rubocop-factory_bot 2.28.0, rubocop-minitest 0.41.0, rubocop-i18n 3.3.0, rubocop-packaging
+  0.6.0 (the versions docs/plugins.md pins), and for discourse rubocop-discourse 3.20.0 with
+  rubocop-discourse-base 1.0.0 (the versions discourse's Gemfile.lock has). rbcop release build
+  of e2804db7, built fresh for the run.
+- RuboCop invocation: rails, mastodon, brew, solidus and fastlane ran RuboCop from a gem home
+  that holds RuboCop 1.92.2 and the plugins above (a wrapper that sets `GEM_HOME`/`GEM_PATH` and
+  runs `ruby .../bin/rubocop`). discourse needs rubocop-discourse, which that gem home lacks, so
+  it ran `bundle exec rubocop` (Bundler 4.0.16) with a Gemfile that pins the same versions plus
+  rubocop-discourse. rbcop's fallback ran the same RuboCop as the corpus (`RBCOP_RUBOCOP`). The
+  `--version` rows ran the gem home wrapper and, for `bundle exec`, a Gemfile with rubocop,
+  rubocop-performance, rubocop-rails and rubocop-rspec at the versions above.
 - `scripts/bench-ci.sh` with `PROJECT_CONFIG=1` (brew without it), 3 reps. Each rep runs every
-  corpus and tool in turn, so slow drift spreads over all rows. 2 vCPUs are CPUs 1,7 (one
-  physical core, both hyperthreads), 4 vCPUs are 1,7,2,8 (two cores), on the assumption that a
-  hosted runner's vCPUs are hyperthreads. Single-process RuboCop ran at 2 vCPUs only; it uses one
-  thread, so 4 vCPUs would not change it.
+  corpus and tool in turn, so slow drift spreads over all rows (the script ran once per corpus
+  and rep, to give each corpus its RuboCop). 2 vCPUs are CPUs 1,7 (one physical core, both
+  hyperthreads), 4 vCPUs are 1,7,2,8 (two cores), on the assumption that a hosted runner's
+  vCPUs are hyperthreads. Single-process RuboCop ran at 2 vCPUs only; it uses one thread, so 4
+  vCPUs would not change it.
 - RuboCop `--parallel` got a fresh `--cache-root` per run (cold cache, as on a runner without a
-  restored cache); single-process RuboCop ran with `--cache false`. rbcop at 4b08150 had no cache (`scripts/bench-ci.sh` now runs it with `--cache false`). The
-  corpus files were in the OS page cache for every run.
+  restored cache), then a second run on the same root (warm); single-process RuboCop ran with
+  `--cache false`. rbcop ran with `--cache false`, which its RuboCop child gets too. The corpus
+  files were in the OS page cache for every run.
 - Plugins each config loads: rails: minitest, packaging, performance, rails (`DisabledByDefault`,
   so only the cops it lists run). discourse: rubocop-discourse's `stree-compat.yml`, which loads
   capybara, factory_bot, rspec, rails and rubocop-discourse's own cops (`DisabledByDefault`).
   mastodon: capybara, i18n, performance, rails, rspec, rspec_rails, plus a local cop
   (Style/MiddleDot). solidus: performance, rails, plus a local cop. fastlane: performance, plus
   three local cops. brew ran with the default config (see below).
-- The corpora were copied, and four configs edited so that RuboCop loads them on this box:
+- The corpora were copied, and three configs edited so that RuboCop loads them on this box:
   rails without rubocop-md (not installed; rbcop does not lint Markdown) and its `Markdown:`
   section; fastlane without rubocop-require_tools (not installed) and its
-  `Require/MissingRequireStatement` section; solidus without `storefront/.rubocop.yml`, which
-  RuboCop 1.91 rejects (`Metrics/LineLength` moved to `Layout/LineLength`); brew is
-  `Library/Homebrew` only, whose config inherits `../.rubocop.yml`, which the corpus does not have,
-  so it ran with `--force-default-config`.
-- RuboCop ran cops rbcop does not implement, and rbcop skipped them (no `RBCOP_FALLBACK`): 21
-  rubocop-discourse cops on discourse, I18n/RailsI18n and Style/MiddleDot on mastodon, the local
-  cops on solidus and fastlane. On those four corpora RuboCop does that much more work; the cost
-  of `RBCOP_FALLBACK=1` was not measured.
-- Output was compared before timing: each corpus linted once by both tools with the same config
-  (`--format emacs`). Offenses were identical (rails 0, discourse 57, mastodon 5, brew 113,541,
-  solidus 4,172, fastlane 0) and so were the exit statuses; every timed run's exit status also
-  matches between the tools (see the TSVs).
-- Spread: the 3 runs of each corpus row were within 4% of each other, except fastlane rbcop at 4
-  vCPUs (2.02 to 2.18 s, 8%); `bundle exec rubocop --version` ranged 0.85 to 1.00 s.
+  `Require/MissingRequireStatement` section; solidus without `storefront/.rubocop.yml`, which RuboCop
+  1.92.2 rejects (`Metrics/LineLength` moved to `Layout/LineLength`). discourse and mastodon ran unedited. brew is
+  `Library/Homebrew` only, whose config inherits `../.rubocop.yml`, which the corpus does not
+  have, so it ran with `--force-default-config`.
+- Output was compared before timing: each corpus linted once by RuboCop, by rbcop and by rbcop
+  with `RBCOP_FALLBACK=0`, with the same config (`--format emacs`). Offenses were identical in all
+  three (rails 0, discourse 57, mastodon 17, brew 113,506, solidus 4,172, fastlane 0) and so were
+  the exit statuses; every timed run's exit status also matches between the tools (see the
+  TSVs).
+- Spread: the 3 runs of each corpus row were within 4% of each other, except RuboCop's warm runs
+  at 4 vCPUs (solidus 2.59 to 2.93 s, discourse 6.78 to 7.15 s); one-file and `--version` rows
+  are below a second and vary more (`rbcop --version` 0.03 to 0.09 s).
 
 ### Load and contamination
 
 The box was reserved for this benchmark. No gate (`ci-run.sh`) ran during any run: the
-contaminated column is 0 in all 105 rows. The load average recorded before each run (0.41 to 5.61)
-is mostly the previous run decaying, since runs follow each other; the container sees the host's
-load average. To check the rest of the host, CPU counters of the four other containers on the host
-were sampled every 5 s through the runs: together they used at most 0.14
-CPU-seconds per second during any run, and a `top` on the host during a run showed only the benchmark busy.
+contaminated column is 0 in all 168 rows. Before the runs no other process was busy on the box
+(`ps`), and no cargo, RuboCop, RSpec or gate process other than the benchmark's own showed up in
+`ps` samples taken every 10 s through the runs. The load average recorded before each run (0.56
+to 4.38) is mostly the previous run decaying, since runs follow each other; the container sees
+the host's load average. The other containers on the host were not sampled this time.
 
 ### Caveats
 
@@ -99,9 +133,15 @@ CPU-seconds per second during any run, and a `top` on the host during a run show
   physical cores. If a runner's vCPUs are on separate cores, RuboCop `--parallel` gains more from
   its second worker than it does here (10 to 15%), and the 2-vCPU speedups shrink.
 - Only lint time is measured: not checkout, Ruby setup or `bundle install`, which a CI job pays
-  for RuboCop and its plugins and which the rbcop binary (action or gem) does not need.
+  for RuboCop and its plugins and which the rbcop binary (action or gem) does not need unless
+  the fallback runs.
 - RuboCop's cache is cold, as on a runner without a restored cache. A workflow that restores
-  RuboCop's cache from an earlier run on the same files is not what this measures.
+  RuboCop's cache from an earlier run on the same files is not what the tables measure: on these
+  trees such a run took 2 to 7 s, faster than rbcop with the fallback on discourse, mastodon,
+  solidus and fastlane.
+- The 1.91.0 numbers this replaces (rbcop at 4b08150, RBCOP_FALLBACK off) are in git history:
+  rbcop at 4 vCPUs was 2.64 s (rails), 10.16 s (discourse), 6.10 s (mastodon), 4.39 s (brew),
+  2.12 s (solidus) and 2.02 s (fastlane).
 
 ## Result cache (#281)
 
@@ -249,14 +289,16 @@ local builds, and `scripts/dist/build.sh` builds the archives with fat LTO. `pan
 
 ## Reproducing
 
-CI-shaped runs (Linux, needs `taskset` and RuboCop 1.91 on `PATH`):
+CI-shaped runs (Linux, needs `taskset` and RuboCop 1.92.2 with the plugins the corpus loads;
+`RUBOCOP` names it, `RBCOP_RUBOCOP` the one rbcop's fallback runs):
 
-    PROJECT_CONFIG=1 scripts/bench-ci.sh ci.tsv 3 rubocop-par,rbcop,rubocop-single <corpus dir>...
+    PROJECT_CONFIG=1 scripts/bench-ci.sh ci.tsv 3 rubocop-par,rbcop,rbcop-nofallback,rubocop-single <corpus dir>...
     scripts/bench-ci.sh boot.tsv 3 boot <dir with a Gemfile that has rubocop>
     PROJECT_CONFIG=1 FILE=app/models/account.rb scripts/bench-ci.sh file.tsv 3 file <mastodon>
 
 It times each tool pinned to an emulated runner (`CPUS_2`, `CPUS_4` override the CPU lists), with
-a fresh RuboCop cache root per run, and redoes a run when a CI gate ran meanwhile. Without
+a fresh RuboCop cache root per run, and redoes a run when a CI gate ran meanwhile. `rbcop` runs
+with `RBCOP_FALLBACK` unset, `rbcop-nofallback` with `RBCOP_FALLBACK=0`. Without
 `PROJECT_CONFIG=1` both tools run with `--force-default-config`. Rows are rep, corpus, vCPUs,
 tool, wall, user, sys, exit status, load average, contaminated, start time (epoch seconds).
 
