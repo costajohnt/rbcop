@@ -532,7 +532,8 @@ worktree's `.gitattributes` still apply. Those are files the user, not an MCP cl
   run (exit status other than 0 or 1, or no complete report) is an error, exit 2. What a fallback
   cop prints on its own (rubocop-require_tools' `Note: Could not load` lines) reaches stdout
   before rbcop's report rather than interleaved with the offenses, as RuboCop prints it.
-  `--stdin` and (without `RBCOP_FALLBACK=1`) `--diff` skip the fallback with the notice.
+  `--stdin` and `--diff` without `RBCOP_FALLBACK=1` skip the fallback with the notice (with it,
+  `--stdin` hands the child the same source, #812).
   A cop rbcop implements whose class a `require:`d local file defines or reopens (`class
   RuboCop::Cop::Style::OneClassPerFile`, compact or in nested `module` lines) counts as such a
   custom cop, so RuboCop runs the patched class (#801); a class patched through `prepend`,

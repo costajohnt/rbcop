@@ -66,8 +66,8 @@ rbcop: RuboCop runs them when one is found: add the rubocop gem to the bundle, p
 
 Limits of the fallback:
 
-- With `-a`/`-A`, RuboCop corrects its cops first, then rbcop corrects the result; the two never iterate together, so a correction that triggers the other side's cop is fixed on the next run.
-- `--stdin` does not use the fallback (the notice is printed instead), nor does `--diff` (the RuboCop child corrects by writing files; with `RBCOP_FALLBACK=1` the combination is refused).
+- With `-a`/`-A`, RuboCop corrects its cops first, then rbcop corrects the result; the two never iterate together, so a correction that triggers the other side's cop is fixed on the next run, and a formatter that quotes source lines (the default one) quotes rbcop's own offenses from the source RuboCop corrected.
+- `--diff` does not use the fallback (the RuboCop child corrects by writing files; with `RBCOP_FALLBACK=1` the combination is refused). `--stdin` uses it only with `RBCOP_FALLBACK=1` (above): the child reads the same source and, with `-a`/`-A`, corrects it before rbcop does.
 - What a fallback cop prints itself (rubocop-require_tools' `Note: Could not load` lines) comes before rbcop's report instead of interleaved with RuboCop's.
 - `Lint/RedundantCopDisableDirective` never reports a directive naming a plugin or custom cop rbcop does not implement (nor a `disable all` while one is loaded), with or without the fallback; RuboCop reports those that turn out redundant (docs/known-gaps.md).
 - The `offenses` formatter does not mark plugin cops `[Safe Correctable]`, and `--display-only-safe-correctable` leaves them out.
