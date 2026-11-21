@@ -560,7 +560,18 @@ pub fn literal(node: &ruby_prism::Node) -> Option<Literal> {
         }
         _ => return None,
     };
+    let base = node.location().start_offset();
+    if encoding_option(&node.location().as_slice()[close.0 - base..close.1 - base]) {
+        return None;
+    }
     Some(Literal { open, close: (close.0, close.0 + 1), content: (open.1, close.0), pattern, extended })
+}
+
+/// Whether a regexp's closing (delimiter and options) has the `s` (Windows-31J) or `e` (EUC-JP)
+/// option. rubocop-ast's `RegexpNode#options` has no bit for them and raises, so RuboCop's
+/// `parsed_tree` is nil and `each_capture` finds nothing for such a regexp (#815).
+pub fn encoding_option(closing: &[u8]) -> bool {
+    closing.iter().skip(1).any(|&b| b == b's' || b == b'e')
 }
 
 impl Literal {

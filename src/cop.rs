@@ -178,18 +178,19 @@ impl Cx<'_, '_> {
     /// Report an offense whose `[Correctable]` flag differs from the cop's default
     /// (e.g. LineLength is only correctable when it finds a place to break the line).
     pub fn add_with(&mut self, start: usize, end: usize, message: impl Into<String>, correctable: bool) {
+        let message = message.into();
         // Base#add_offense: `return unless current_offense_locations.add?(range)`, whatever the
         // message, so a cop's second offense on an identical range is dropped.
-        if !self.fixes.seen.insert((start, end)) {
+        if crate::runner::force_raised(self.cop, start, &message) || !self.fixes.seen.insert((start, end)) {
             return;
         }
         if self.fixes.todo && !self.suppressed(start, end) {
-            if self.push_todo(start, end, message.into()) {
+            if self.push_todo(start, end, message) {
                 self.cop_error();
             }
             return;
         }
-        self.push(start, end, message.into(), correctable, false);
+        self.push(start, end, message, correctable, false);
     }
 
     fn suppressed(&self, start: usize, end: usize) -> bool {
@@ -286,13 +287,14 @@ impl Cx<'_, '_> {
         message: impl Into<String>,
         fix: impl FnOnce(&mut Corrector),
     ) -> bool {
-        if !self.fixes.seen.insert((start, end)) {
+        let message = message.into();
+        if crate::runner::force_raised(self.cop, start, &message) || !self.fixes.seen.insert((start, end)) {
             return false;
         }
         let (first, last) = (self.src.line_of(start), self.src.line_of(end));
         if crate::directives::suppressed(&self.facts.disabled, self.cop, first, last) {
             // Reported as :disabled (the runner drops it); the block never runs.
-            self.push(start, end, message.into(), false, false);
+            self.push(start, end, message, false, false);
             return false;
         }
         let mut corrector = Corrector::new(self.facts.text.clone());
@@ -303,10 +305,10 @@ impl Cx<'_, '_> {
         // Base#use_corrector: under --disable-uncorrectable an offense without a correction (or
         // whose unsafe correction -a skips) gets a todo comment instead.
         if self.fixes.todo && (corrector.is_empty() || !self.fixes.autocorrect) {
-            return self.push_todo(start, end, message.into());
+            return self.push_todo(start, end, message);
         }
         if corrector.is_empty() {
-            self.push(start, end, message.into(), false, false);
+            self.push(start, end, message, false, false);
             return false;
         }
         let edits = recording_edits().then(|| corrector.as_replacements());
@@ -317,7 +319,7 @@ impl Cx<'_, '_> {
                 return true;
             }
         }
-        self.push(start, end, message.into(), true, self.fixes.autocorrect);
+        self.push(start, end, message, true, self.fixes.autocorrect);
         if let Some(o) = self.out.last_mut() {
             o.edits = edits;
         }
@@ -328,12 +330,13 @@ impl Cx<'_, '_> {
     /// the text it would insert comes from string/symbol content that is not inert Ruby
     /// (docs/known-gaps.md, "Deliberate differences"). The source is left untouched.
     pub fn add_withheld_fix(&mut self, start: usize, end: usize, message: impl Into<String>) {
-        if !self.fixes.seen.insert((start, end)) {
+        let message = message.into();
+        if crate::runner::force_raised(self.cop, start, &message) || !self.fixes.seen.insert((start, end)) {
             return;
         }
         let (first, last) = (self.src.line_of(start), self.src.line_of(end));
         let correctable = !crate::directives::suppressed(&self.facts.disabled, self.cop, first, last);
-        self.push(start, end, message.into(), correctable, false);
+        self.push(start, end, message, correctable, false);
     }
 
     /// A corrector raised ClobberingError: RuboCop reports the cop error (at the node the cop was
