@@ -704,6 +704,10 @@ fn investigate(
     let pn = program.as_program_node().unwrap();
     let first_code = pn.statements().body().iter().next().map(|n| n.location().start_offset());
     facts.first_code = first_code;
+    // Registry#enabled loads a lazy cop's file only when the cop is mobilized and enabled.
+    // ponytail: per file; in RuboCop resolv stays loaded once any earlier file's config, or a
+    // directive naming the cop, loaded Style/IpAddresses (docs/known-gaps.md).
+    facts.resolv_loaded = selected("Style/IpAddresses") && cfg.cop_enabled("Style/IpAddresses");
     if directives::may_have_directives(src.text) {
         // Registry#disabled_names of the --only/--except filtered registry (only directives read
         // it, so a file without one skips the scan of every cop name, #388).
