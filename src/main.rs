@@ -2701,7 +2701,7 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
     }
     // `all_passed || @options[:auto_gen_config]`
     all_passed |= phase.is_some();
-    let mut status = if all_passed && cop_errors.is_empty() { 0 } else { OFFENSES };
+    let mut status = if all_passed && cop_errors.is_empty() && !fallback::errored() { 0 } else { OFFENSES };
     // ExecuteRunner#merge_todo_audit_status
     if cli.report_unused_todo {
         let names: Vec<&'static str> = cops::ALL.iter().map(|c| c.name).chain(["Lint/Syntax"]).collect();

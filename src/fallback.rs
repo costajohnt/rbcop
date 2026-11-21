@@ -42,6 +42,13 @@ pub fn rubocop() -> Option<String> {
 
 static EDITOR: AtomicBool = AtomicBool::new(false);
 static ANNOUNCED: AtomicBool = AtomicBool::new(false);
+static ERRORED: AtomicBool = AtomicBool::new(false);
+
+/// A cop the RuboCop child ran raised an error (its Runner#errors): the run fails, as
+/// ExecuteRunner#runner_status.
+pub fn errored() -> bool {
+    ERRORED.load(Relaxed)
+}
 
 /// The run comes from an editor or a server (`editor_context` in src/main.rs): no RuboCop unless
 /// RBCOP_FALLBACK=1.
@@ -441,6 +448,10 @@ pub fn run(
         }
         if line == "rbcop-fallback-external-dependency" {
             found.external_dependency = true;
+            continue;
+        }
+        if line == "rbcop-fallback-errors" {
+            ERRORED.store(true, Relaxed);
             continue;
         }
         // A cop rbcop implements whose class the required code replaced or patched: the child ran

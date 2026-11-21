@@ -49,3 +49,29 @@ fn line_length_string_max_errors_at_short_lines() {
     let at = |loc: &str| format!("An error occurred while Layout/LineLength cop was inspecting short.rb{loc}.");
     assert_eq!(errors, [at(""), at(":3:0"), at(":4:4"), at(":7:7")], "{stderr}");
 }
+
+/// A `regexp =~ x` match whose regexp has the `s` or `e` option makes VariableForce raise
+/// (rubocop-ast's RegexpNode#options has no bit for them): one cop error without a location per
+/// file, and only the offenses of scopes left before it (#815). RuboCop 1.92.2's lines for
+/// tests/scenarios/variable_force_regexp_encoding_option (offenses in its expected.txt).
+#[test]
+fn variable_force_errors_at_encoding_option_matches() {
+    let dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("tests/scenarios/variable_force_regexp_encoding_option/project");
+    let args = std::fs::read_to_string(dir.join("../args")).unwrap();
+    let out = common::command(env!("CARGO_BIN_EXE_rbcop"))
+        .args(["--cache", "false", "-f", "emacs"])
+        .args(args.split_whitespace())
+        .current_dir(&dir)
+        .output()
+        .unwrap();
+    let prefix = format!("{}/", dir.display());
+    let stderr = String::from_utf8_lossy(&out.stderr).replace(&prefix, "");
+    let mut errors: Vec<&str> = stderr.lines().filter(|l| l.starts_with("An error")).collect();
+    errors.sort();
+    let at = |file: &str| format!("An error occurred while VariableForce cop was inspecting {file}.");
+    let mut expected: Vec<String> =
+        ["e1.rb", "s1.rb", "s2.rb", "s3.rb", "s4.rb"].iter().flat_map(|f| [at(f), at(f)]).collect();
+    expected.sort();
+    assert_eq!(errors, expected, "{stderr}");
+}

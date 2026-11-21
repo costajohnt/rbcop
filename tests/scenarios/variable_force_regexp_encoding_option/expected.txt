@@ -1,0 +1,6 @@
+s2.rb:1:7: W: [Correctable] Lint/UnusedMethodArgument: Unused method argument - `u`. If it's necessary, use `_` or `_u` as an argument name to indicate that it won't be used. If it's unnecessary, remove it. You can also write as `g(*)` if you want the method to accept any arguments but don't care about them.
+s2.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `y`.
+s3.rb:3:7: W: Lint/OutOfRangeRegexpRef: $1 is out of range (no regexp capture groups detected).
+s5.rb:3:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `q`.
+u.rb:2:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
+u.rb:3:3: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - `a`.
