@@ -2120,6 +2120,8 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
                 force_exclusion: cli.force_exclusion,
                 autocorrect: cli.autocorrect,
                 stdin: stdin_given.as_deref(),
+                // CLI#validate_options_vs_config refuses -P with `AllCops: UseCache: false`.
+                parallel: cli.parallel != Some(false) && pwd_config.all_cops().truthy("UseCache"),
             };
             // (One file with --stdin: the whole run is that file's.)
             if cli.fail_fast && cli.autocorrect.is_some() && stdin_text.is_none() {
