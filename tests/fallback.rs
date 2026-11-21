@@ -1554,6 +1554,45 @@ fn relevance_is_asked_of_fresh_cops_per_file() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+/// #809: required code that registers a cop under the badge of one rbcop implements, in a form
+/// rbcop cannot read (`Class.new`), replaces RuboCop's class, so the child runs it and rbcop's port
+/// does not; cold and warm, also when the required file changes between runs.
+#[test]
+fn required_class_new_replaces_a_native_cop() {
+    if !have_rubocop() {
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
+        return;
+    }
+    let dir = project("classnew");
+    fs::write(dir.join(".rubocop.yml"), format!("require:\n  - ./cops.rb\n{REQUIRE_ONLY}")).unwrap();
+    fs::write(dir.join("cops.rb"), "ACME = 1\n").unwrap();
+    fs::write(dir.join("a.rb"), "# frozen_string_literal: true\n\nfoo(\"a\")\n").unwrap();
+    let args = ["-f", "e", "a.rb"];
+    same_cached(&dir, &[], &args);
+    fs::write(
+        dir.join("cops.rb"),
+        "Acme = Module.new\nAcme::Style = Module.new\nAcme::Style::StringLiterals = Class.new(RuboCop::Cop::Base) do\n  \
+         extend RuboCop::Cop::AutoCorrector\n\n  def on_send(node)\n    return unless node.method?(:foo)\n\n    \
+         add_offense(node, message: 'custom') { |c| c.replace(node.loc.selector, 'bar') }\n  end\nend\n",
+    )
+    .unwrap();
+    same_cached(&dir, &[], &args);
+    same_cached(&dir, &[], &args);
+    same(&dir, &[], &args);
+    same(&dir, &[], &["--no-parallel", "-f", "e", "a.rb"]);
+    same(&dir, &[], &["--only", "Style/StringLiterals", "-f", "e", "a.rb"]);
+    assert!(text(&rubocop(&dir, &args).stdout).contains("Style/StringLiterals: custom"));
+    let theirs = project("classnew-theirs");
+    for f in [".rubocop.yml", "cops.rb", "a.rb"] {
+        fs::copy(dir.join(f), theirs.join(f)).unwrap();
+    }
+    let a = rbcop(&dir, true, &["--cache", "false", "-a", "-f", "e"]);
+    let b = rubocop(&theirs, &["--cache", "false", "-a", "-f", "e"]);
+    let rel = |s: String, d: &Path| s.replace(&d.display().to_string(), "DIR");
+    assert_eq!(rel(text(&a.stdout), &dir), rel(text(&b.stdout), &theirs));
+    assert_eq!(fs::read_to_string(dir.join("a.rb")).unwrap(), fs::read_to_string(theirs.join("a.rb")).unwrap());
+}
+
 /// #812: with `--stdin` the child runs the required code's cops on the same source, and with
 /// -a/-A corrects it before rbcop does (the corrected source is printed after the report).
 #[test]

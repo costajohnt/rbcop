@@ -247,6 +247,11 @@ pub fn is_custom(cop: &str) -> bool {
     CUSTOM.read().unwrap().iter().any(|c| c == cop)
 }
 
+/// Every custom cop, for the result cache's key: which of rbcop's own cops run depends on it.
+pub fn custom_key() -> String {
+    CUSTOM.read().unwrap().join(",")
+}
+
 static FOREIGN_AUTOCORRECT: RwLock<Vec<String>> = RwLock::new(Vec::new());
 
 /// The cops of plugins rbcop does not implement that support autocorrect (`extend AutoCorrector`).

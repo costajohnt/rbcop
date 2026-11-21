@@ -2222,7 +2222,12 @@ fn run(mut cli: Cli, global: bool, parse_color: bool, phase: Option<u8>) -> Resu
         if let Some(cache) = &result_cache {
             let bytes = fs::read(path).map_err(|e| runner::io_error(&e, path))?;
             let config = &signatures[&(std::ptr::from_ref(cfg) as usize)];
-            let signature = format!("{config}|{:?}|{plugin_file}", registry_at.get(path));
+            // The custom cops: the RuboCop child may have taken one of rbcop's own (#809).
+            let signature = format!(
+                "{config}|{:?}|{plugin_file}|{}",
+                registry_at.get(path),
+                rbcop::helpers::cop_registry::custom_key()
+            );
             key = cache.key(path, &signature, &bytes);
             if let Some(k) = &key
                 && let Some(report) = cache.load(k, &bytes)

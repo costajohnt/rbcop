@@ -316,6 +316,10 @@ pub fn run(
         .env_remove("RUBOCOP_OPTS")
         .env("RUBYOPT", rubyopt)
         .env("RBCOP_REGISTRY", rbcop::helpers::cop_registry::REGISTRY.join(","))
+        .env(
+            "RBCOP_NATIVE_GEMS",
+            rbcop::helpers::cop_registry::NATIVE_PLUGINS.iter().map(|p| p.gem).collect::<Vec<_>>().join(","),
+        )
         .stdin(Stdio::null());
     // The handshake's answer goes to the child's fd 3, so its stdin stays RuboCop's.
     let answer = match cached {
@@ -478,6 +482,15 @@ pub fn run(
         }
         if line == "rbcop-fallback-errors" {
             ERRORED.store(true, Relaxed);
+            continue;
+        }
+        // A cop rbcop implements whose class the required code replaced or patched: the child ran
+        // it, so rbcop's port must not (#809).
+        if let Some(cop) = line.strip_prefix("rbcop-fallback-custom\t") {
+            let (cop, autocorrect) = cop.split_once('\t').unwrap_or((cop, "0"));
+            if !rbcop::helpers::cop_registry::is_custom(cop) {
+                rbcop::helpers::cop_registry::register_custom(vec![(cop.to_string(), autocorrect == "1")]);
+            }
             continue;
         }
         let mut f: Vec<&str> = line.split('\t').collect();
