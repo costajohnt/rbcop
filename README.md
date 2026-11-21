@@ -2,7 +2,7 @@
 
 <p align="center"><img src="docs/rbcop.jpg" alt="rbcop logo: a rust-colored shield with a ruby" width="480"></p>
 
-Drop-in replacement for RuboCop 1.92.2. Same config, same command line, same output, [about 14x faster](#speed) than `rubocop --parallel` in CI.
+Drop-in replacement for RuboCop 1.92.2. Same config, same command line, same output, [1.3x to 25x faster](#speed) than `rubocop --parallel` in CI (20x to 25x when rbcop implements every enabled cop).
 
 `gem "rbcop", require: false`, then `bundle exec rbcop`.
 
@@ -94,16 +94,16 @@ Counts are from the gate run on 2026-11-19 at commit 831eea1 against RuboCop 1.9
 
 ## Speed
 
-CI-shaped runs (Linux container, 4 vCPUs, each project's own config, RuboCop with an empty result cache, median of 3): rbcop is 10x to 19x faster than `rubocop --parallel`, about 14x on average.
+CI-shaped runs (Linux container, 4 vCPUs, each project's own config, RuboCop 1.92.2 with an empty result cache, median of 3): rbcop is 20x to 25x faster than `rubocop --parallel` where it implements every enabled cop (rails, brew). Where the config enables cops rbcop does not implement, rbcop runs them with RuboCop (on by default, see [Plugins and custom cops](#plugins-and-custom-cops)), and that one RuboCop process takes most of the time: 1.3x to 4.4x. With `RBCOP_FALLBACK=0` (those cops skipped) it is 16x to 21x there.
 
-| Codebase | Files | `rubocop --parallel` | rbcop | Speedup |
-|---|---:|---:|---:|---:|
-| rails | 3,476 | 50.6 s | 2.64 s | 19x |
-| discourse | 12,441 | 140.6 s | 10.16 s | 14x |
-| mastodon | 3,297 | 61.2 s | 6.10 s | 10x |
-| brew | 1,977 | 69.0 s | 4.39 s | 16x |
-| solidus | 2,171 | 28.3 s | 2.12 s | 13x |
-| fastlane | 1,355 | 30.3 s | 2.02 s | 15x |
+| Codebase | Files | `rubocop --parallel` | rbcop | Speedup | rbcop, `RBCOP_FALLBACK=0` | Speedup |
+|---|---:|---:|---:|---:|---:|---:|
+| rails | 3,476 | 51.2 s | 2.02 s | 25x | | |
+| discourse | 12,441 | 142.4 s | 90.72 s | 1.6x | 6.80 s | 21x |
+| mastodon | 3,297 | 61.8 s | 14.07 s | 4.4x | 3.91 s | 16x |
+| brew | 1,977 | 71.1 s | 3.51 s | 20x | | |
+| solidus | 2,171 | 28.5 s | 17.39 s | 1.6x | 1.53 s | 19x |
+| fastlane | 1,355 | 30.6 s | 24.33 s | 1.3x | 1.57 s | 19x |
 
 rbcop with a warm result cache (an unchanged tree, as RuboCop's cache serves it) takes about 3% of the CPU time of an uncached run: 0.9 s of CPU instead of 27 s on rails, 3.0 s instead of 82 s on discourse. Method, 2 vCPU numbers and raw data: [docs/benchmarks.md](docs/benchmarks.md).
 
