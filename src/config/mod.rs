@@ -1933,6 +1933,10 @@ impl Store {
                         ruby_file_constants(file, &mut self.open_constants);
                     }
                 }
+                // Code that names the class of a cop rbcop implements may patch it
+                // (rubocop-inflector prepends into RSpec::SpecFilePathFormat, #819): the RuboCop
+                // child starts, and runs the cop if its class turns out patched (#809).
+                self.custom_cops |= load == Load::Require && files.iter().any(|f| names_native_cop(f));
                 continue;
             }
             // RuboCop's registry holds the cop classes the gem defines, whether or not its
@@ -2707,6 +2711,18 @@ fn ruby_files(dir: &Path) -> Vec<PathBuf> {
     files
 }
 
+/// A Ruby file naming the class of a cop rbcop implements (`RuboCop::Cop::RSpec::SpecFilePathFormat`).
+// ponytail: a text match; a class reached through a computed name is not seen.
+fn names_native_cop(path: &Path) -> bool {
+    static RE: std::sync::LazyLock<Regex> =
+        std::sync::LazyLock::new(|| Regex::new(r"RuboCop::Cop::((?:[A-Z]\w*::)+[A-Z]\w*)").unwrap());
+    let Ok(text) = std::fs::read_to_string(path) else { return false };
+    RE.captures_iter(&text).any(|c| {
+        let name = c[1].replace("::", "/");
+        crate::cops::ALL.iter().any(|r| r.name == name)
+    })
+}
+
 /// Class and module names a Ruby file defines: a plugin registers cops its config/default.yml
 /// need not list, and RuboCop's registry knows them.
 // ponytail: a name match, not a registry; `Dept/Cop` counts as known when both are defined.
@@ -3238,5 +3254,23 @@ mod relevant_tests {
                 assert_eq!(got, want, "{file}");
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn names_native_cop_finds_a_patched_class() {
+        let dir = std::env::temp_dir().join(format!("rbcop-names-native-{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        let f = dir.join("rspec.rb");
+        // rubocop-inflector 1.0.0's lib/rubocop/inflector/extensions/rspec.rb.
+        std::fs::write(&f, "::RuboCop::Cop::RSpec::SpecFilePathFormat.prepend Cop::RSpec::SpecFilePathFormat\n")
+            .unwrap();
+        assert!(super::names_native_cop(&f));
+        std::fs::write(&f, "::RuboCop::Cop::RSpec::FilePath.prepend Cop::RSpec::FilePath\nRuboCop::Cop::Base\n")
+            .unwrap();
+        assert!(!super::names_native_cop(&f));
+        let _ = std::fs::remove_dir_all(&dir);
     }
 }
