@@ -3265,9 +3265,11 @@ mod tests {
         std::fs::create_dir_all(&dir).unwrap();
         let f = dir.join("rspec.rb");
         // rubocop-inflector 1.0.0's lib/rubocop/inflector/extensions/rspec.rb.
-        std::fs::write(&f, "::RuboCop::Cop::RSpec::SpecFilePathFormat.prepend Cop::RSpec::SpecFilePathFormat\n").unwrap();
+        std::fs::write(&f, "::RuboCop::Cop::RSpec::SpecFilePathFormat.prepend Cop::RSpec::SpecFilePathFormat\n")
+            .unwrap();
         assert!(super::names_native_cop(&f));
-        std::fs::write(&f, "::RuboCop::Cop::RSpec::FilePath.prepend Cop::RSpec::FilePath\nRuboCop::Cop::Base\n").unwrap();
+        std::fs::write(&f, "::RuboCop::Cop::RSpec::FilePath.prepend Cop::RSpec::FilePath\nRuboCop::Cop::Base\n")
+            .unwrap();
         assert!(!super::names_native_cop(&f));
         let _ = std::fs::remove_dir_all(&dir);
     }
