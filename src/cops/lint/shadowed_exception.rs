@@ -14,6 +14,8 @@ pub struct ShadowedException;
 struct Class {
     chain: &'static str,
     sce: bool,
+    /// Defined only once resolv is loaded (Timeout::*, Resolv::*).
+    resolv: bool,
 }
 
 impl Class {
@@ -38,15 +40,15 @@ impl Class {
 }
 
 static TABLE: LazyLock<HashMap<&'static str, Class>> =
-    LazyLock::new(|| EXCEPTIONS.iter().map(|&(p, chain, _, sce)| (p, Class { chain, sce })).collect());
+    LazyLock::new(|| EXCEPTIONS.iter().map(|&(p, chain, _, sce, resolv)| (p, Class { chain, sce, resolv })).collect());
 
-/// `Kernel.const_get(source)` restricted to exception classes.
-fn resolve(source: &str) -> Option<Class> {
+/// `Kernel.const_get(source)` restricted to exception classes, with resolv loaded or not.
+fn resolve(source: &str, resolv_loaded: bool) -> Option<Class> {
     let mut s = source.strip_prefix("::").unwrap_or(source);
     while let Some(rest) = s.strip_prefix("Object::") {
         s = rest;
     }
-    TABLE.get(s).copied()
+    TABLE.get(s).copied().filter(|c| resolv_loaded || !c.resolv)
 }
 
 type Group = Vec<Option<Class>>;
@@ -109,9 +111,9 @@ impl Cop for ShadowedException {
         while let Some(r) = clause {
             let exceptions: Vec<Node> = r.exceptions().iter().collect();
             groups.push(if exceptions.is_empty() {
-                vec![resolve("StandardError")]
+                vec![resolve("StandardError", true)]
             } else {
-                exceptions.iter().map(|e| resolve(node_text(e))).collect()
+                exceptions.iter().map(|e| resolve(node_text(e), cx.facts.resolv_loaded)).collect()
             });
             rescues.push(resbody::range(cx.src, &r));
             clause = r.subsequent();
