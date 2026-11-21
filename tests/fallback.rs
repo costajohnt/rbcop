@@ -1593,6 +1593,52 @@ fn required_class_new_replaces_a_native_cop() {
     assert_eq!(fs::read_to_string(dir.join("a.rb")).unwrap(), fs::read_to_string(theirs.join("a.rb")).unwrap());
 }
 
+/// #812: with `--stdin` the child runs the required code's cops on the same source, and with
+/// -a/-A corrects it before rbcop does (the corrected source is printed after the report).
+#[test]
+fn stdin_runs_fallback_cops() {
+    if !have_rubocop() {
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
+        return;
+    }
+    let dir = project("stdin-cops");
+    let src = fs::read(dir.join("a.rb")).unwrap();
+    let run = |mut cmd: Command, args: &[&str]| -> Output {
+        let mut child = cmd
+            .env("HOME", &dir)
+            .args(args)
+            .current_dir(&dir)
+            .stdin(std::process::Stdio::piped())
+            .stdout(std::process::Stdio::piped())
+            .stderr(std::process::Stdio::piped())
+            .spawn()
+            .unwrap();
+        std::io::Write::write_all(&mut child.stdin.take().unwrap(), &src).unwrap();
+        child.wait_with_output().unwrap()
+    };
+    for args in [
+        &["--stdin", "a.rb"][..],
+        &["-f", "e", "--stdin", "a.rb"],
+        // (-f e under -a/-A: the source lines another formatter quotes for rbcop's own offenses
+        // come from the child's corrected source, as for files; README, "Limits of the fallback".)
+        &["-a", "-f", "e", "--stdin", "a.rb"],
+        &["-A", "-f", "e", "--stdin", "a.rb"],
+        &["-a", "-F", "-f", "e", "--stdin", "a.rb"],
+        &["-a", "--stderr", "-f", "e", "--stdin", "a.rb"],
+    ] {
+        let mut ours = common::command(env!("CARGO_BIN_EXE_rbcop"));
+        ours.env("RBCOP_FALLBACK", "1");
+        let ours = run(ours, args);
+        let theirs = run(common::command("rubocop"), args);
+        assert_eq!(text(&ours.stdout), text(&theirs.stdout), "{args:?}");
+        assert_eq!(text(&ours.stderr), text(&theirs.stderr), "{args:?}");
+        assert_eq!(ours.status.code(), theirs.status.code(), "{args:?}");
+    }
+    assert!(text(&run(common::command("rubocop"), &["--stdin", "a.rb"]).stdout).contains("Custom/NoFoo"));
+    // The file itself is never written.
+    assert_eq!(fs::read(dir.join("a.rb")).unwrap(), src);
+}
+
 /// #819: required code that prepends into a native cop's class (rubocop-inflector's
 /// `RSpec::SpecFilePathFormat.prepend`, here from a local file) changes what RuboCop reports; the
 /// child runs the patched class and rbcop's port does not, cold and warm.
