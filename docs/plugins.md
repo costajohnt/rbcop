@@ -99,6 +99,10 @@ installed; a different installed version is ignored.
   (docs/known-gaps.md).
 - RSpec/SpecFilePathFormat's `EnforcedInflector: active_support` uses ActiveSupport's default
   inflections (`src/helpers/inflector.rs`); an `InflectorPath` file is not evaluated.
+- rubocop-inflector (a `require:` gem, not a plugin) prepends into RSpec/SpecFilePathFormat's class
+  so it underscores with ActiveSupport and the project's own acronyms. A `require:`d gem whose code
+  names the class of a cop rbcop implements starts the RuboCop fallback, which runs that cop when
+  its class turns out patched (#819, #809); rbcop's port then does not.
 - rubocop-rspec's obsoletion file is vendored as `config/plugins/rubocop-rspec-obsoletion.yml`.
 - Corrections that would write string or symbol content into new literals are withheld when that
   content is not inert; see docs/known-gaps.md.

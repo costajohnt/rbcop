@@ -1592,3 +1592,37 @@ fn required_class_new_replaces_a_native_cop() {
     assert_eq!(rel(text(&a.stdout), &dir), rel(text(&b.stdout), &theirs));
     assert_eq!(fs::read_to_string(dir.join("a.rb")).unwrap(), fs::read_to_string(theirs.join("a.rb")).unwrap());
 }
+
+/// #819: required code that prepends into a native cop's class (rubocop-inflector's
+/// `RSpec::SpecFilePathFormat.prepend`, here from a local file) changes what RuboCop reports; the
+/// child runs the patched class and rbcop's port does not, cold and warm.
+#[test]
+fn prepended_native_cop_runs_in_rubocop() {
+    if !have_rubocop() {
+        eprintln!("skipped: RuboCop 1.92.2 is not on PATH");
+        return;
+    }
+    let dir = project("prepend");
+    fs::write(
+        dir.join(".rubocop.yml"),
+        format!("plugins:\n  - rubocop-rspec\nrequire:\n  - ./inflector.rb\n{REQUIRE_ONLY}"),
+    )
+    .unwrap();
+    fs::write(
+        dir.join("inflector.rb"),
+        "module Acronyms\n  def camel_to_snake_case(string)\n    string.gsub('DeepL', 'Deepl').then { super(_1) }\n  \
+         end\nend\nRuboCop::Cop::RSpec::SpecFilePathFormat.prepend(Acronyms)\n",
+    )
+    .unwrap();
+    fs::create_dir_all(dir.join("spec/deepl")).unwrap();
+    fs::write(dir.join("spec/deepl/client_spec.rb"), "RSpec.describe DeepL::Client do\nend\n").unwrap();
+    fs::create_dir_all(dir.join("spec/other")).unwrap();
+    fs::write(dir.join("spec/other/client_spec.rb"), "RSpec.describe DeepL::Client do\nend\n").unwrap();
+    let args = ["--only", "RSpec/SpecFilePathFormat", "-f", "e", "spec"];
+    same_cached(&dir, &[], &args);
+    same_cached(&dir, &[], &args);
+    same(&dir, &[], &args);
+    same(&dir, &[], &["--no-parallel", "--only", "RSpec/SpecFilePathFormat", "-f", "e", "spec"]);
+    let theirs = text(&rubocop(&dir, &args).stdout);
+    assert!(theirs.contains("other/client_spec.rb") && !theirs.contains("deepl/client_spec.rb"), "{theirs}");
+}
