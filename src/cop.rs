@@ -122,6 +122,9 @@ pub struct Facts {
     /// Under `--disable-uncorrectable`: the ranges of heredocs, backslash-continued strings, percent
     /// arrays and multi-line dstrs, in AST pre-order (AutocorrectLogic#multiline_ranges).
     pub literal_ranges: Vec<(usize, usize)>,
+    /// Style/IpAddresses is mobilized for this file's config, so its file (which requires
+    /// resolv, and with it timeout) is loaded in RuboCop's process (#814).
+    pub resolv_loaded: bool,
 }
 
 /// Autocorrect state of the running cop for one file (RuboCop's per-cop `current_corrector`).
