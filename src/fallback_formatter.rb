@@ -1,7 +1,7 @@
 # Loaded by `rubocop --require` when rbcop runs RuboCop for the cops it does not implement
 # (src/fallback.rs). One line per offense (and `rbcop-fallback-uncached<TAB>path` after a file a cop
-# raised an error or a warning on), whether a cop has an external dependency, then
-# `rbcop-fallback-done`. Offenses are tab-separated:
+# raised an error or a warning on), whether a cop has an external dependency, whether a cop raised
+# an error, then `rbcop-fallback-done`. Offenses are tab-separated:
 #   path  begin_byte  end_byte  severity  correctable  corrected  global  cop  message  disabled  justification
 #   corrections
 # (justification empty when there is none; disabled offenses come only under --display-suppressed)
@@ -117,6 +117,8 @@ class RbcopFallbackFormatter < RuboCop::Formatter::BaseFormatter
       c < RuboCop::Cop::Base && c.name && !except.include?(c.cop_name) &&
         c.instance_method(:external_dependency_checksum).owner != RuboCop::Cop::Base
     end
+    # Runner#errors is not empty: RuboCop's run fails (ExecuteRunner#runner_status).
+    output.puts 'rbcop-fallback-errors' if RbcopFiles::ERRORED.any?
     output.puts 'rbcop-fallback-done'
   end
 
@@ -147,6 +149,7 @@ end
 module RbcopFiles
   CACHED = Set.new
   UNCACHED = Set.new
+  ERRORED = Set.new
   # Any mode (CommentConfig#opted_in_by: enable, push, next, ...).
   DIRECTIVE = /(?:rubocop|standard)\s*:\s*[\w-]+.*/
 end
@@ -164,6 +167,7 @@ RuboCop::Runner.prepend(Module.new do
 
   private def file_problems(file, errors, warnings)
     RbcopFiles::UNCACHED << file
+    RbcopFiles::ERRORED << file unless errors.empty?
     super
   end
 
