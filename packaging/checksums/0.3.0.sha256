@@ -1,0 +1,14 @@
+97e1b599afef2d17c746e17774f704c22b9626183f00b560e1e919ce0903a69c  rbcop-0.3.0-aarch64-apple-darwin.tar.gz
+25af05f63d1b19a2cb4ae5d79dd161f08a0fb3ab9b702ddb19d2a9f239323d87  rbcop-0.3.0-aarch64-linux-gnu.gem
+837ff2ceb65c923dbd836caea1b8a4a867ae2846fb26720a59bc9a460c04d4c2  rbcop-0.3.0-aarch64-linux-musl.gem
+83d63b51a5f3b73bd7b0f39acecb524b5028f3295e87918b9743e1675f01e1b1  rbcop-0.3.0-aarch64-unknown-linux-gnu.tar.gz
+117d281c67616c795a09d137446485d842204d552a8eba32f6be1cfef1fbd530  rbcop-0.3.0-aarch64-unknown-linux-musl.tar.gz
+d7a0ab72d2233bbbad5296a25c2dc687f8f8ba37bec4739d1d15f9788c4f9c52  rbcop-0.3.0-arm64-darwin.gem
+4684619cf744ebe9fa20dbf082c66077ab4c91a81be6ae91cf612e305a51c6ad  rbcop-0.3.0-x86_64-apple-darwin.tar.gz
+fb19a8303eddf60812ac8f2439f801533e154964b029ed6381fe19b237ee3ce2  rbcop-0.3.0-x86_64-darwin.gem
+96113e929e90d63f4bfe981240439a30b7a813e2a62c5910aa8cd0f7638e4738  rbcop-0.3.0-x86_64-linux-gnu.gem
+db8cbce03c74d29c617cb48fd7f17f4088235b0dab864f158ced01f5525f46e9  rbcop-0.3.0-x86_64-linux-musl.gem
+48adb2f93ed2aff0824cc91753a48dad1231892df2c99a5cedb12bfcc29881c3  rbcop-0.3.0-x86_64-unknown-linux-gnu.tar.gz
+bfe283d78ae97debaf81314ae4f9bf992eefdadfebd10ac638fdabfbdac0788b  rbcop-0.3.0-x86_64-unknown-linux-musl.tar.gz
+bd2547d85a179e08caca7357137896f16ed42d07c64f8c05d231a86dd71f114a  rbcop-0.3.0.gem
+0b8fc14400866d25a65205bdd3f48d7d3f89aa1a1ab3b3ecff0fd978dc5dfb8c  rbcop.rb
