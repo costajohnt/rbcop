@@ -510,7 +510,7 @@ scripts/check-cops.sh Style/Example,Style/Other                # full gate: ever
 ```
 
 Corpora (shallow clones in `$RBCOP_CORPUS`, oracles in `$RBCOP_ORACLE/<name>.txt` from
-`scripts/oracle.sh`): `specs` (RuboCop's spec snippets), `rails`, `discourse`, `rubocop-src`
+`scripts/oracle.sh`): `specs` (RuboCop's spec snippets), `rails` (rails/rails 48dc419a), `discourse` (discourse/discourse 7d3d93e0), `rubocop-src`
 (RuboCop's own source), `jekyll` (jekyll/jekyll 541d8b2e), `chef` (chef/chef bf7c6ede, target 2.7),
 `fastlane` (fastlane/fastlane 511c0726), `brew` (Library/Homebrew of Homebrew/brew 16f166d3),
 `mastodon` (mastodon/mastodon 9e3fab27). Each of the last six adds under a minute to `check-cops.sh all`. Files
